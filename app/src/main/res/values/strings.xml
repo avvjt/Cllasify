@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Cllasify</string>
+    <string name="splash_heading">Hi there !</string>
+    <string name="done">Welcome</string>
 </resources>
