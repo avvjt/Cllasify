@@ -9,4 +9,10 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#2B2B2B</color>
     <color name="transparent">#00000000</color>
+
+    <color name="fragment_blue">#2B2B2B</color>
+    <color name="fragment_gray">#5A5C67</color>
+    <color name="fragment_pink">#D76CEA</color>
+    <color name="fragment_green">#7BED80</color>
+    <color name="fragment_sky">#63EADA</color>
 </resources>

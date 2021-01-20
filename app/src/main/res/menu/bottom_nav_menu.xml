@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bottom_nav_home"
+        android:title="@string/home"
+        android:icon="@drawable/home"
+        app:cnb_iconColor="@color/purple_blue"/>
+
+    <item
+        android:id="@+id/bottom_nav_friends"
+        android:title="@string/friends"
+        android:icon="@drawable/friends"
+        app:cnb_iconColor="@color/purple_blue"/>
+    <item
+        android:id="@+id/bottom_nav_feed"
+        android:title="@string/feed"
+        android:icon="@drawable/feed"
+        app:cnb_iconColor="@color/purple_blue"/>
+    <item
+        android:id="@+id/bottom_nav_notification"
+        android:title="@string/notification"
+        android:icon="@drawable/notification"
+        app:cnb_iconColor="@color/purple_blue"/>
+    <item
+        android:id="@+id/bottom_nav_profile"
+        android:title="@string/profile"
+        android:icon="@drawable/profile"
+        app:cnb_iconColor="@color/purple_blue"/>
+
+
+
+</menu>

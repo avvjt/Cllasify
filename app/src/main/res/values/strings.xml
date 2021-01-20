@@ -2,4 +2,14 @@
     <string name="app_name">Cllasify</string>
     <string name="splash_heading">Hi there !</string>
     <string name="done">Welcome</string>
+
+
+    <string name="home">Home</string>
+    <string name="friends">Friends</string>
+    <string name="feed">Feed</string>
+    <string name="notification">Notification</string>
+    <string name="profile">Profile</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>
