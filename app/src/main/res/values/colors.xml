@@ -15,4 +15,7 @@
     <color name="fragment_pink">#D76CEA</color>
     <color name="fragment_green">#7BED80</color>
     <color name="fragment_sky">#63EADA</color>
+
+    <color name="turquoise">#03DAC5</color>
+    <color name="light_grey">#E8E8E8</color>
 </resources>
