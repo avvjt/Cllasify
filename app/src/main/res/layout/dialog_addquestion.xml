@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorAccent"
+            android:layout_margin="4dp"
+            android:padding="2dp"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:text="Add Question"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            app:boxCollapsedPaddingTop="4dp"
+            android:hint="Enter Category (Php,Android,Java,Phythn etc) "
+            app:hintTextColor="@color/colorPrimary"
+            android:textColor="@color/colorPrimary"
+            app:boxBackgroundColor="@android:color/white"
+            android:background="@drawable/rounded_corner">
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/colorPrimary"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:id="@+id/quesCaterory_et" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:boxCollapsedPaddingTop="4dp"
+        android:hint="Ask Question?"
+        app:hintTextColor="@color/colorPrimary"
+        android:textColor="@color/colorPrimary"
+        app:boxBackgroundColor="@color/colorAccent"
+        android:background="@drawable/rounded_corner">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:textColor="@color/colorPrimary"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:id="@+id/addQuestion_et" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+    <Button
+        android:id="@+id/buttonCancel"
+        android:textColor="@color/colorAccent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="4dp"
+        android:textSize="20sp"
+        android:fontFamily="sans-serif-medium"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:text="Ask Later" />
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:textColor="@color/colorPrimary"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:textSize="20sp"
+        android:text="Add"
+        android:backgroundTint="@color/colorAccent"
+        android:layout_weight="1" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,5 +1,14 @@
 package com.cllasify.cllasify;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -7,7 +16,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -15,15 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -46,7 +45,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -54,9 +52,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-
-public class FeedFragment extends Fragment {
-
+public class Landing_Feed extends AppCompatActivity {
     Button button;
     RecyclerView recyclerView;
     FloatingActionButton fab_addQ;
@@ -84,12 +80,10 @@ public class FeedFragment extends Fragment {
     Uri userPhoto;
     String userID,userEmailID,userName;
     boolean searchShow=true;
-    ChipNavigationBar chipNavigationBar;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_feed, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.landing_feed_activity);
 
 
 
@@ -97,25 +91,23 @@ public class FeedFragment extends Fragment {
 //        username_tv=findViewById(R.id.loginstatus);
 
 
-        notifyPB=new ProgressDialog(getContext());
+        notifyPB=new ProgressDialog(Landing_Feed.this);
         notifyPB.setTitle("Exam Doubt");
         notifyPB.setMessage("Loading Questions..");
         notifyPB.setCanceledOnTouchOutside(true);
         notifyPB.show();
 
-        searchView=view.findViewById(R.id.quesSearchView);
-        fab_addQ=view.findViewById(R.id.fab_addQ);
-        ib_quesCategory=view.findViewById(R.id.ib_quesCategory);
-        ib_quesSearch=view.findViewById(R.id.ib_quesSearch);
-        ib_userLogin=view.findViewById(R.id.ib_userLogin);
-        rl_feed=view.findViewById(R.id.rl_feed);
-        chipNavigationBar = getActivity().findViewById(R.id.bottom_nav_menu);
-        chipNavigationBar.setVisibility(View.GONE);
+        searchView=findViewById(R.id.quesSearchView);
+        fab_addQ=findViewById(R.id.fab_addQ);
+        ib_quesCategory=findViewById(R.id.ib_quesCategory);
+        ib_quesSearch=findViewById(R.id.ib_quesSearch);
+        ib_userLogin=findViewById(R.id.ib_userLogin);
+        rl_feed=findViewById(R.id.rl_feed);
+
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             firebaseAuth = FirebaseAuth.getInstance();
             currentUser = firebaseAuth.getCurrentUser();
-            chipNavigationBar.setVisibility(View.VISIBLE);
-            Glide.with(getContext())
+            Glide.with(Landing_Feed.this)
                     .load(currentUser.getPhotoUrl())
                     .into(ib_userLogin);
         }
@@ -125,8 +117,9 @@ public class FeedFragment extends Fragment {
                 if (FirebaseAuth.getInstance().getCurrentUser() == null) {
                     showLoginDialog();
                 } else {
-                    Toast.makeText(getContext(), "Opening User Profile ", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getContext(),User_Profile.class));
+                    Toast.makeText(Landing_Feed.this, "Opening User Profile ", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Landing_Feed.this,
+                            User_Profile.class));
                 }
 
 
@@ -137,7 +130,7 @@ public class FeedFragment extends Fragment {
             public void onClick(View v) {
 
                 if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-                    loginDialog(v);
+                    loginDialog();
                 } else {
                     addQuestion();
                 }
@@ -161,7 +154,7 @@ public class FeedFragment extends Fragment {
                 .requestEmail()
                 .build();
 
-        googleSignInClient= GoogleSignIn.getClient(getContext(),googleSignInOptions);
+        googleSignInClient= GoogleSignIn.getClient(Landing_Feed.this,googleSignInOptions);
 
         refshowQues = FirebaseDatabase.getInstance().getReference().child( "FeedQuestions" ).child( "Question_Added" );
         refaddQuestion= FirebaseDatabase.getInstance().getReference().child( "FeedQuestions" ).child( "Question_Added" );
@@ -171,9 +164,9 @@ public class FeedFragment extends Fragment {
         refaddQuestion.keepSynced(true);
 
 
-        recyclerView = view.findViewById(R.id.rv_showquestion);
+        recyclerView = findViewById(R.id.rv_showquestion);
 
-        swipeRefreshLayout=view.findViewById(R.id.swipe);
+        swipeRefreshLayout=findViewById(R.id.swipe);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -198,12 +191,10 @@ public class FeedFragment extends Fragment {
         }
 
         showQuestionRV();
-
-        return view;
     }
 
-    private void loginDialog(View v) {
-        final AlertDialog dialogBuilder = new AlertDialog.Builder(getContext()).create();
+    private void loginDialog() {
+        final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
         dialogBuilder.setCanceledOnTouchOutside(false);
         //dialogBuilder.setCancelable(false);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -233,17 +224,17 @@ public class FeedFragment extends Fragment {
     }
 
     public void addQuestion()       {
-        firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = firebaseAuth.getCurrentUser();
-        assert currentUser != null;
-        userID=currentUser.getUid();
-        userEmailID= currentUser.getEmail();
-        userPhoto=currentUser.getPhotoUrl();
-        userName=currentUser.getDisplayName();
-        refuserQues = FirebaseDatabase.getInstance().getReference().child( "FeedQuestions" ).child( "User_Question" ).child(userID);
-        refuserQues.keepSynced(true);
+            firebaseAuth = FirebaseAuth.getInstance();
+            currentUser = firebaseAuth.getCurrentUser();
+            assert currentUser != null;
+            userID=currentUser.getUid();
+            userEmailID= currentUser.getEmail();
+            userPhoto=currentUser.getPhotoUrl();
+            userName=currentUser.getDisplayName();
+            refuserQues = FirebaseDatabase.getInstance().getReference().child( "FeedQuestions" ).child( "User_Question" ).child(userID);
+            refuserQues.keepSynced(true);
 
-        final AlertDialog dialogBuilder = new AlertDialog.Builder(getContext()).create();
+        final AlertDialog dialogBuilder = new AlertDialog.Builder(this).create();
         dialogBuilder.setCanceledOnTouchOutside(false);
         //dialogBuilder.setCancelable(false);
         LayoutInflater inflater = this.getLayoutInflater();
@@ -274,14 +265,14 @@ public class FeedFragment extends Fragment {
                 //String TotalOtherForm=examName+"=="+addQuestion;
 
                 if (quesCategory.isEmpty() && addQuestion.isEmpty()) {
-                    Toast.makeText(getContext(), "Please Fill All Details", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Landing_Feed.this, "Please Fill All Details", Toast.LENGTH_LONG).show();
                     quesCaterory_et.setError("Please Fill");
                     addQuestion_et.setError("Please Fill");
                 }else   if(quesCategory.isEmpty()){
-                    Toast.makeText(getContext(), "Please Enter Exam Name", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Landing_Feed.this, "Please Enter Exam Name", Toast.LENGTH_LONG).show();
                     quesCaterory_et.setError("Exam Name?");
                 }else if(addQuestion.isEmpty()){
-                    Toast.makeText(getContext(), "Please Enter Questions", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Landing_Feed.this, "Please Enter Questions", Toast.LENGTH_LONG).show();
                     addQuestion_et.setError("Ask Question");
                 }
                 else {
@@ -304,7 +295,7 @@ public class FeedFragment extends Fragment {
 //                            new Response.ErrorListener() {
 //                                @Override
 //                                public void onErrorResponse(VolleyError error) {
-//                                    Toast.makeText(getContext(),"Error"+error,Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(Landing_Feed.this,"Error"+error,Toast.LENGTH_SHORT).show();
 //                                }
 //                            }
 //                    ) {
@@ -332,7 +323,7 @@ public class FeedFragment extends Fragment {
 //                    int socketTimeOut = 50000;// u can change this .. here it is 50 seconds
 //                    RetryPolicy retryPolicy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 //                    stringRequest.setRetryPolicy(retryPolicy);
-//                    RequestQueue queue = Volley.newRequestQueue(getContext());
+//                    RequestQueue queue = Volley.newRequestQueue(Landing_Feed.this);
 //                    queue.add(stringRequest);
 //notification
                     String AdminToken="All_Notify";
@@ -349,7 +340,7 @@ public class FeedFragment extends Fragment {
                         }
                     });
                     //startActivity( new Intent( landing_OtherForms.this, user_Profile_UploadDoc.class ) );
-                    Toast.makeText(getContext(), "Question has been Submitted Successfully", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Landing_Feed.this, "Question has been Submitted Successfully", Toast.LENGTH_LONG).show();
 
                     dialogBuilder.dismiss();
                 }
@@ -368,13 +359,13 @@ public class FeedFragment extends Fragment {
 
     }
     public void showQuestionRV() {
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         listnewQues = new ArrayList<>();
 
-        showQuesadaptor = new adaptor_QueryQuestions(getContext(), listnewQues);
+        showQuesadaptor = new adaptor_QueryQuestions(this, listnewQues);
         recyclerView.setAdapter(showQuesadaptor);
 
 
@@ -382,7 +373,7 @@ public class FeedFragment extends Fragment {
             @Override
             public void shareQues(int position,String Title) {
 //                generateLink(Title);
-                Toast.makeText(getContext(), "share", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Landing_Feed.this, "share", Toast.LENGTH_SHORT).show();
             }
         });
         ChildEventListener childEventListener = new ChildEventListener() {
@@ -394,7 +385,7 @@ public class FeedFragment extends Fragment {
                     showQuesadaptor.notifyDataSetChanged();
                     notifyPB.dismiss();
                 } else {
-                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Landing_Feed.this, "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
                     notifyPB.dismiss();
                 }
 
@@ -439,23 +430,23 @@ public class FeedFragment extends Fragment {
 //            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 //                switch (item.getItemId()) {
 //                    case R.id.action_Home:
-//                        startActivity( new Intent( getContext(), landing_Page.class ) );
-//                        Toast.makeText(getContext(), "HomePage", Toast.LENGTH_SHORT).show();
+//                        startActivity( new Intent( Landing_Feed.this, landing_Page.class ) );
+//                        Toast.makeText(Landing_Feed.this, "HomePage", Toast.LENGTH_SHORT).show();
 //                        break;
 //                    case R.id.action_Notifications:
-//                        Toast.makeText(getContext(), "Notifications & Favorites", Toast.LENGTH_SHORT).show();
-//                        startActivity( new Intent( getContext(), user_Notification.class ) );
+//                        Toast.makeText(Landing_Feed.this, "Notifications & Favorites", Toast.LENGTH_SHORT).show();
+//                        startActivity( new Intent( Landing_Feed.this, user_Notification.class ) );
 //                        break;
 //                    case R.id.action_Settings:
-//                        Toast.makeText(getContext(), "Settings", Toast.LENGTH_SHORT).show();
-//                        startActivity( new Intent( getContext(), user_Settings.class ) );
+//                        Toast.makeText(Landing_Feed.this, "Settings", Toast.LENGTH_SHORT).show();
+//                        startActivity( new Intent( Landing_Feed.this, user_Settings.class ) );
 //                        break;
 //                    case R.id.action_Profile:
-//                        Toast.makeText(getContext(), "User Profile", Toast.LENGTH_SHORT).show();
-//                        startActivity( new Intent( getContext(), user_Profile.class ) );
+//                        Toast.makeText(Landing_Feed.this, "User Profile", Toast.LENGTH_SHORT).show();
+//                        startActivity( new Intent( Landing_Feed.this, user_Profile.class ) );
 //                        break;
 //                    case R.id.action_Share:
-//                        Toast.makeText(getContext(), "Refer and Earn", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(Landing_Feed.this, "Refer and Earn", Toast.LENGTH_LONG).show();
 //                        String Title="Refer and Clear you Exam Doubts";
 //                        generateLink(Title);
 //                        break;
@@ -596,7 +587,7 @@ public class FeedFragment extends Fragment {
                 listSearchQues.add(classUserSearch);
             }
         }
-        adaptor_QueryQuestions adapSearchQues= new adaptor_QueryQuestions(getContext(),listSearchQues);
+        adaptor_QueryQuestions adapSearchQues= new adaptor_QueryQuestions(this,listSearchQues);
         recyclerView.setAdapter(adapSearchQues);
     }
 
@@ -645,7 +636,7 @@ public class FeedFragment extends Fragment {
 
     private void showLoginDialog() {
 
-        BottomSheetDialog bottomSheetDialoglogin=new BottomSheetDialog(getContext());
+        BottomSheetDialog bottomSheetDialoglogin=new BottomSheetDialog(Landing_Feed.this);
         bottomSheetDialoglogin.setCancelable(false);
         bottomSheetDialoglogin.setContentView(R.layout.dialog_btm_login);
 
@@ -665,7 +656,7 @@ public class FeedFragment extends Fragment {
         btn_phonelogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),Phone_Login.class));
+                startActivity(new Intent(Landing_Feed.this,Phone_Login.class));
             }
         });
 
@@ -673,9 +664,8 @@ public class FeedFragment extends Fragment {
 
     }
 
-
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode==100){
@@ -687,7 +677,7 @@ public class FeedFragment extends Fragment {
 
                 String s= "Google Signin is sucessful";
 
-                Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
 
                 try {
                     GoogleSignInAccount googleSignInAccount=signInAccountTask.getResult(ApiException.class);
@@ -696,14 +686,14 @@ public class FeedFragment extends Fragment {
                         AuthCredential authCredential= GoogleAuthProvider.getCredential(googleSignInAccount.getIdToken(),null);
                         FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
 
-                        firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
                                     showBottomDialog();
 
                                 }else{
-                                    Toast.makeText(getContext(), "Authentication Failed: "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Landing_Feed.this, "Authentication Failed: "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -718,8 +708,8 @@ public class FeedFragment extends Fragment {
     }
 
     private void showBottomDialog() {
-//        rl_feed.setBackgroundColor(Color.GRAY);
-        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(getContext());
+        rl_feed.setBackgroundColor(Color.GRAY);
+        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(Landing_Feed.this);
         bottomSheetDialog.setCancelable(false);
         bottomSheetDialog.setContentView(R.layout.dialog_btm_studteach);
 
@@ -727,10 +717,10 @@ public class FeedFragment extends Fragment {
         LinearLayout teacher_ll=bottomSheetDialog.findViewById(R.id.teacher_ll);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String userID = currentUser.getUid();
-        final String userName = currentUser.getDisplayName();
-        final String userEmail = currentUser.getEmail();
-        final Uri userPhoto = currentUser.getPhotoUrl();
+         final String userID = currentUser.getUid();
+         final String userName = currentUser.getDisplayName();
+         final String userEmail = currentUser.getEmail();
+         final Uri userPhoto = currentUser.getPhotoUrl();
         Calendar calenderCC= Calendar.getInstance();
         SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
         final String udateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
@@ -746,10 +736,9 @@ public class FeedFragment extends Fragment {
                 refUserRegister.child( "UserId" ).setValue( userID );
                 refUserRegister.child( "DateTime" ).setValue( udateTimeCC );
                 refUserRegister.child( "Category" ).setValue("Student");
-//                startActivity(new Intent(getContext(),Landing_Activity.class)
-//                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                Toast.makeText(getContext(), "Firebase Authentication Sucessful", Toast.LENGTH_SHORT).show();
-                bottomSheetDialog.dismiss();
+                startActivity(new Intent(Landing_Feed.this,Dashboard.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                Toast.makeText(Landing_Feed.this, "Firebase Authentication Sucessful", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -764,10 +753,10 @@ public class FeedFragment extends Fragment {
                 refUserRegister.child( "UserId" ).setValue( userID );
                 refUserRegister.child( "DateTime" ).setValue( udateTimeCC );
                 refUserRegister.child( "Category" ).setValue("Teacher");
-//                startActivity(new Intent(getContext(),Landing_Activity.class)
-//                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                Toast.makeText(getActivity(), "Firebase Authentication Sucessful", Toast.LENGTH_SHORT).show();
-                bottomSheetDialog.dismiss();
+                startActivity(new Intent(Landing_Feed.this,Dashboard.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                Toast.makeText(Landing_Feed.this, "Firebase Authentication Sucessful", Toast.LENGTH_SHORT).show();
+
             }
         });
 

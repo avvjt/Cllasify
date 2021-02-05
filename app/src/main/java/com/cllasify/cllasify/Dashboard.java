@@ -1,5 +1,6 @@
 package com.cllasify.cllasify;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +18,7 @@ public class Dashboard extends AppCompatActivity {
 
         chipNavigationBar = findViewById(R.id.bottom_nav_menu);
         chipNavigationBar.setItemSelected(R.id.bottom_nav_home,true);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FeedFragment()).commit();
         bottomMenu();
     }
 
@@ -34,6 +35,7 @@ public class Dashboard extends AppCompatActivity {
                         fragment = new FriendsFragment();
                         break;
                     case R.id.bottom_nav_feed:
+//                        fragment = new FeedFragment();
                         fragment = new FeedFragment();
                         break;
                     case R.id.bottom_nav_notification:
