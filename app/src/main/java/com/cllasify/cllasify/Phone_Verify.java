@@ -2,6 +2,8 @@ package com.cllasify.cllasify;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.cllasify.cllasify.Fragment.FeedFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -148,7 +151,7 @@ public class Phone_Verify extends AppCompatActivity {
 
         BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(Phone_Verify.this);
         bottomSheetDialog.setCancelable(false);
-        bottomSheetDialog.setContentView(R.layout.dialog_btm_studteach);
+        bottomSheetDialog.setContentView(R.layout.btmdialog_studteach);
 
         LinearLayout student_ll=bottomSheetDialog.findViewById(R.id.student_ll);
         LinearLayout teacher_ll=bottomSheetDialog.findViewById(R.id.teacher_ll);
@@ -171,8 +174,17 @@ public class Phone_Verify extends AppCompatActivity {
                 refUserRegister.child( "UserId" ).setValue( userID );
                 refUserRegister.child( "Date & Time" ).setValue( udateTimeCC );
                 refUserRegister.child( "Category" ).setValue("Student");
-                startActivity(new Intent(Phone_Verify.this,FeedFragment.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+//                startActivity(new Intent(Phone_Verify.this, FeedFragment.class)
+//                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+
+                Fragment fragment=null;
+                FragmentTransaction ft;
+                fragment = new FeedFragment();
+                ft = getSupportFragmentManager().beginTransaction();
+                ft.addToBackStack(null);
+                ft.replace(R.id.fragment_container, fragment);
+                ft.commit();
+
                 Toast.makeText(Phone_Verify.this, "Firebase Authentication Sucessful", Toast.LENGTH_SHORT).show();
                 bottomSheetDialog.dismiss();
             }
@@ -187,8 +199,13 @@ public class Phone_Verify extends AppCompatActivity {
                 refUserRegister.child( "UserId" ).setValue( userID );
                 refUserRegister.child( "Date & Time" ).setValue( udateTimeCC );
                 refUserRegister.child( "Category" ).setValue("Teacher");
-                startActivity(new Intent(Phone_Verify.this,FeedFragment.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                Fragment fragment=null;
+                FragmentTransaction ft;
+                fragment = new FeedFragment();
+                ft = getSupportFragmentManager().beginTransaction();
+                ft.addToBackStack(null);
+                ft.replace(R.id.fragment_container, fragment);
+                ft.commit();
                 Toast.makeText(Phone_Verify.this, "Firebase Authentication Sucessful", Toast.LENGTH_SHORT).show();
                 bottomSheetDialog.dismiss();
             }

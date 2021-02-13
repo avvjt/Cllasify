@@ -10,5 +10,6 @@ public class InternetConnection {
     public static boolean checkConnection(@NonNull Context context) {
         return  ((ConnectivityManager) context.getSystemService
                 (Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo() != null;
+
     }
 }

@@ -1,8 +1,7 @@
-package com.cllasify.cllasify;
+package com.cllasify.cllasify.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,14 +17,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.Phone_Login;
+import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Adaptor.Adaptor_QueryQuestions;
+import com.cllasify.cllasify.Class_Answer;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -46,7 +49,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.ismaeldivita.chipnavigation.ChipNavigationBar;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -56,7 +59,6 @@ import java.util.List;
 
 
 public class FeedFragment extends Fragment {
-
     Button button;
     RecyclerView recyclerView;
     FloatingActionButton fab_addQ;
@@ -67,10 +69,14 @@ public class FeedFragment extends Fragment {
     SwipeRefreshLayout swipeRefreshLayout;
 
     RelativeLayout rl_feed;
-    DatabaseReference refshowQues, refaddQuestion,refuserQues,refuserName;
-    class_Answer userOtherForm,userOtherFormHi,userAddQues,userQues;
-    List<class_Answer> listnewQues;
-    adaptor_QueryQuestions showQuesadaptor;
+
+    DatabaseReference refAddQuesUsers,refAddQuesUsersPrivacy,refAddQuesUsersCategory,
+            refAddQues,refAddQuesCategory, refShowAllQues;
+
+    Class_Answer addQuesUsers, addQuesUsersPrivacy,addQuesUsersCategory,
+            userAddQues,addQuesCategory;
+    List<Class_Answer> listnewQues;
+    Adaptor_QueryQuestions showQuesadaptor;
 
     ImageButton ib_quesCategory,ib_quesSearch,ib_userLogin;
 
@@ -84,22 +90,16 @@ public class FeedFragment extends Fragment {
     Uri userPhoto;
     String userID,userEmailID,userName;
     boolean searchShow=true;
-    ChipNavigationBar chipNavigationBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_feed, container, false);
-
-
-
-
 //        username_tv=findViewById(R.id.loginstatus);
-
-
         notifyPB=new ProgressDialog(getContext());
-        notifyPB.setTitle("Exam Doubt");
-        notifyPB.setMessage("Loading Questions..");
+        notifyPB.setTitle("Welcome to Feed");
+        notifyPB.setMessage("Updating Feed..");
         notifyPB.setCanceledOnTouchOutside(true);
         notifyPB.show();
 
@@ -108,38 +108,55 @@ public class FeedFragment extends Fragment {
         ib_quesCategory=view.findViewById(R.id.ib_quesCategory);
         ib_quesSearch=view.findViewById(R.id.ib_quesSearch);
         ib_userLogin=view.findViewById(R.id.ib_userLogin);
-        rl_feed=view.findViewById(R.id.rl_feed);
-        chipNavigationBar = getActivity().findViewById(R.id.bottom_nav_menu);
-        chipNavigationBar.setVisibility(View.GONE);
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            firebaseAuth = FirebaseAuth.getInstance();
-            currentUser = firebaseAuth.getCurrentUser();
-            chipNavigationBar.setVisibility(View.VISIBLE);
-            Glide.with(getContext())
-                    .load(currentUser.getPhotoUrl())
-                    .into(ib_userLogin);
-        }
+//        rl_feed=view.findViewById(R.id.rl_feed);
+
+//
+//
+//        userID=currentUser.getUid();
+
+
+        refShowAllQues = FirebaseDatabase.getInstance().getReference().child( "Feed" ).child( "Questions_List" ).child( "Feed_All_Question" );
+        refShowAllQues.keepSynced(true);
+
+//        refAddQuesUsers.keepSynced(true);
+//        refAddQuesUsersPrivacy.keepSynced(true);
+//        refAddQues.keepSynced(true);
+//        refAddQuesCategory.keepSynced(true);
+
         ib_userLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-                    showLoginDialog();
+                    loginDialogPopUp();
                 } else {
                     Toast.makeText(getContext(), "Opening User Profile ", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getContext(),User_Profile.class));
+//                    startActivity(new Intent(getContext(),User_Profile.class));
+                    Fragment fragment=null;
+                    FragmentTransaction ft;
+                    fragment = new ProfileFragment();
+                    ft = getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.addToBackStack(null);
+                    ft.replace(R.id.fragment_container, fragment);
+                    ft.commit();
                 }
 
 
             }
         });
+
+
+
         fab_addQ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-                    loginDialog(v);
+//                    loginDialog();
+                    loginDialogPopUp();
+//                    Intent intent= new Intent(getActivity(), Landing_Feed.class);
+//                    startActivity(intent);
                 } else {
-                    addQuestion();
+                    addFeedQuestion();
                 }
             }
         });
@@ -163,12 +180,8 @@ public class FeedFragment extends Fragment {
 
         googleSignInClient= GoogleSignIn.getClient(getContext(),googleSignInOptions);
 
-        refshowQues = FirebaseDatabase.getInstance().getReference().child( "FeedQuestions" ).child( "Question_Added" );
-        refaddQuestion= FirebaseDatabase.getInstance().getReference().child( "FeedQuestions" ).child( "Question_Added" );
 
         //        String user=FirebaseAuth.getInstance().getUid();
-        refshowQues.keepSynced(true);
-        refaddQuestion.keepSynced(true);
 
 
         recyclerView = view.findViewById(R.id.rv_showquestion);
@@ -179,7 +192,7 @@ public class FeedFragment extends Fragment {
             public void onRefresh() {
                 // cancel the Visual indication of a refresh
                 swipeRefreshLayout.setRefreshing(false);
-                showQuestionRV();
+                showFeedQuestionRV();
             }
         });
 
@@ -191,48 +204,26 @@ public class FeedFragment extends Fragment {
                 }
                 @Override
                 public boolean onQueryTextChange(String newText) {
-                    search(newText);
+                    searchFeed(newText);
                     return false;
                 }
             });
         }
 
-        showQuestionRV();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            Glide.with(getContext())
+                    .load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl())
+                    .into(ib_userLogin);
+        }
+        showFeedQuestionRV();
+
 
         return view;
     }
 
-    private void loginDialog(View v) {
-        final AlertDialog dialogBuilder = new AlertDialog.Builder(getContext()).create();
-        dialogBuilder.setCanceledOnTouchOutside(false);
-        //dialogBuilder.setCancelable(false);
-        LayoutInflater inflater = this.getLayoutInflater();
 
-        final View dialogView = inflater.inflate(R.layout.dialog_loginaccess, null);
-        Button tapCancel=dialogView.findViewById(R.id.buttonCancel);
-        Button tapSubmit=dialogView.findViewById(R.id.buttonSubmit);
-//        int width = (int)(getResources().getDisplayMetrics().widthPixels*1.00);
-//        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.90);
 
-        tapCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogBuilder.dismiss();
-            }
-
-        });
-        tapSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLoginDialog();
-            }
-        });
-        dialogBuilder.setView(dialogView);
-        dialogBuilder.show();
-
-    }
-
-    public void addQuestion()       {
+    public void addFeedQuestion() {
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
         assert currentUser != null;
@@ -240,38 +231,51 @@ public class FeedFragment extends Fragment {
         userEmailID= currentUser.getEmail();
         userPhoto=currentUser.getPhotoUrl();
         userName=currentUser.getDisplayName();
-        refuserQues = FirebaseDatabase.getInstance().getReference().child( "FeedQuestions" ).child( "User_Question" ).child(userID);
-        refuserQues.keepSynced(true);
+//        refuserQues.keepSynced(true);
 
-        final AlertDialog dialogBuilder = new AlertDialog.Builder(getContext()).create();
-        dialogBuilder.setCanceledOnTouchOutside(false);
-        //dialogBuilder.setCancelable(false);
-        LayoutInflater inflater = this.getLayoutInflater();
+//        final android.app.AlertDialog dialogBuilder = new AlertDialog.Builder(getContext()).create();
+//        dialogBuilder.setCanceledOnTouchOutside(false);
+//        //dialogBuilder.setCancelable(false);
+//        LayoutInflater inflater = this.getLayoutInflater();
+////        int width = (int)(getResources().getDisplayMetrics().widthPixels*1.00);
+//        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.90);/
+//        final View dialogView = inflater.inflate(R.layout.dialog_addquestion, null);
 
-        final View dialogView = inflater.inflate(R.layout.dialog_addquestion, null);
-        final EditText quesCaterory_et=dialogView.findViewById(R.id.quesCaterory_et);
-        final EditText addQuestion_et=dialogView.findViewById(R.id.addQuestion_et);
 
-        Button tapCancel=dialogView.findViewById(R.id.buttonCancel);
-        Button tapSubmit=dialogView.findViewById(R.id.buttonSubmit);
-//        int width = (int)(getResources().getDisplayMetrics().widthPixels*1.00);
-//        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.90);
+        BottomSheetDialog btmDialogAddQues=new BottomSheetDialog(getContext());
+        btmDialogAddQues.setCancelable(true);
+        btmDialogAddQues.setContentView(R.layout.btmdialog_addquestion);
 
-        tapCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogBuilder.dismiss();
-            }
+        final EditText quesCaterory_et=btmDialogAddQues.findViewById(R.id.feedCategory_et);
+        final EditText addQuestion_et=btmDialogAddQues.findViewById(R.id.addQuestion_et);
 
-        });
+//        Button tapCancel=btmDialogAddQues.findViewById(R.id.buttonCancel);
+        Button tapSubmit=btmDialogAddQues.findViewById(R.id.buttonSubmit);
+       int width = (int)(getResources().getDisplayMetrics().widthPixels*1.00);
+        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.60);
+
+
+
+//        tapCancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                btmDialogAddQues.dismiss();
+//            }
+//
+//        });
         tapSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
                 quesCategory = quesCaterory_et.getText().toString();
                 addQuestion=addQuestion_et.getText().toString();
+                String userPrivacy="Public";
                 //String TotalOtherForm=examName+"=="+addQuestion;
+                refAddQuesUsers = FirebaseDatabase.getInstance().getReference().child( "Feed" ).child( "User_Questions" ).child( "User_All_Question" ).child(userID);
+                refAddQuesUsersCategory = FirebaseDatabase.getInstance().getReference().child( "Feed" ).child( "User_Questions" ).child( "User_Question_Category" ).child(userID).child(quesCategory);
+                refAddQuesUsersPrivacy = FirebaseDatabase.getInstance().getReference().child( "Feed" ).child( "User_Questions" ).child( "User_Question_Privacy" ).child(userID).child(userPrivacy);
+                refAddQues = FirebaseDatabase.getInstance().getReference().child( "Feed" ).child( "Questions_List" ).child( "Feed_All_Question" );
+                refAddQuesCategory = FirebaseDatabase.getInstance().getReference().child( "Feed" ).child( "Questions_List" ).child( "Feed_Question_Category").child(quesCategory);
 
                 if (quesCategory.isEmpty() && addQuestion.isEmpty()) {
                     Toast.makeText(getContext(), "Please Fill All Details", Toast.LENGTH_LONG).show();
@@ -285,13 +289,61 @@ public class FeedFragment extends Fragment {
                     addQuestion_et.setError("Ask Question");
                 }
                 else {
-                    String exam= quesCategory +"_"+addQuestion;
+                    String compQues= quesCategory +"_"+addQuestion;
 
-                    userAddQues = new class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,exam);
-                    userQues = new class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,exam);
 
-                    refaddQuestion.push().setValue(userAddQues);
-                    refuserQues.push().setValue(userQues);
+                    DatabaseReference reference= FirebaseDatabase.getInstance().getReference().
+                        child( "Feed" ).child( "Questions_List" ).child( "Feed_Question_Category").child(quesCategory);
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
+                            long noofQuesinCategory=snapshot.getChildrenCount()+1;
+                            String push=quesCategory+"_Qno_"+noofQuesinCategory;
+                            userAddQues = new Class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,compQues,push);
+                            addQuesCategory = new Class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,compQues,push);
+                            addQuesUsers = new Class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,compQues,push);
+                            addQuesUsersCategory = new Class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,compQues,push);
+                            addQuesUsersPrivacy = new Class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,compQues,push);
+
+                            refAddQues.child(push).setValue(userAddQues);
+                            refAddQuesCategory.child(push).setValue(addQuesCategory);
+                            refAddQuesUsers.child(push).setValue(addQuesUsers);
+                            refAddQuesUsersCategory.child(push).setValue(addQuesUsersCategory);
+                            refAddQuesUsersPrivacy.child(push).setValue(addQuesUsersPrivacy);
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+
+//                    DatabaseReference reference= FirebaseDatabase.getInstance().getReference()
+//                            .child("FeedQuestions").child("Question_Category").child(quesCategory);
+//                    reference.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+////                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
+//                            long noofQuesinCategory=snapshot.getChildrenCount()+1;
+//                            String push=quesCategory+noofQuesinCategory;
+//                            userAddQues = new Class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,compQues,push);
+//                            addQuesCategory = new Class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,compQues,push);
+//                            addQuesUsers = new Class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,compQues,push);
+//                            addQuesUsersPrivacy = new Class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,compQues,push);
+//
+//                            refAddQues.child(push).setValue(userAddQues);
+//                            refAddQuesCategory.child(push).setValue(addQuesCategory);
+//                            refAddQuesUsers.child(push).setValue(addQuesUsers);
+//                            refAddQuesUsersPrivacy.child(push).setValue(addQuesUsersPrivacy);
+//                        }
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//                        }
+//                    });
+//
+//                    refAddQues.push().setValue(userAddQues);
+//                    refAddQuesCategory.push().setValue(addQuesCategory);
+//                    refAddQuesUsers.push().setValue(addQuesUsers);
+//                    refAddQuesUsersPrivacy.push().setValue(addQuesUsersPrivacy);
 //                            refaddQuestion.setValue(userAddQues);
 //drive update.
 //                    StringRequest stringRequest = new StringRequest(Request.Method.POST,
@@ -304,7 +356,7 @@ public class FeedFragment extends Fragment {
 //                            new Response.ErrorListener() {
 //                                @Override
 //                                public void onErrorResponse(VolleyError error) {
-//                                    Toast.makeText(getContext(),"Error"+error,Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(Landing_Feed.this,"Error"+error,Toast.LENGTH_SHORT).show();
 //                                }
 //                            }
 //                    ) {
@@ -332,7 +384,7 @@ public class FeedFragment extends Fragment {
 //                    int socketTimeOut = 50000;// u can change this .. here it is 50 seconds
 //                    RetryPolicy retryPolicy = new DefaultRetryPolicy(socketTimeOut, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 //                    stringRequest.setRetryPolicy(retryPolicy);
-//                    RequestQueue queue = Volley.newRequestQueue(getContext());
+//                    RequestQueue queue = Volley.newRequestQueue(Landing_Feed.this);
 //                    queue.add(stringRequest);
 //notification
                     String AdminToken="All_Notify";
@@ -351,12 +403,13 @@ public class FeedFragment extends Fragment {
                     //startActivity( new Intent( landing_OtherForms.this, user_Profile_UploadDoc.class ) );
                     Toast.makeText(getContext(), "Question has been Submitted Successfully", Toast.LENGTH_LONG).show();
 
-                    dialogBuilder.dismiss();
+                    btmDialogAddQues.dismiss();
                 }
             }
         });
-        dialogBuilder.setView(dialogView);
-        dialogBuilder.show();
+//        dialogBuilder.setView(dialogView);
+        btmDialogAddQues.show();
+//        btmDialogAddQues.getWindow().setLayout(width, height);
 
 //        dialogBuilder.getWindow().setLayout(width, height);
 
@@ -367,18 +420,17 @@ public class FeedFragment extends Fragment {
 
 
     }
-    public void showQuestionRV() {
+    public void showFeedQuestionRV() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setReverseLayout(true);
         linearLayoutManager.setStackFromEnd(true);
+
         recyclerView.setLayoutManager(linearLayoutManager);
         listnewQues = new ArrayList<>();
-
-        showQuesadaptor = new adaptor_QueryQuestions(getContext(), listnewQues);
+        showQuesadaptor = new Adaptor_QueryQuestions(getContext(), listnewQues);
         recyclerView.setAdapter(showQuesadaptor);
 
-
-        showQuesadaptor.setOnItemClickListener(new adaptor_QueryQuestions.OnItemClickListener() {
+        showQuesadaptor.setOnItemClickListener(new Adaptor_QueryQuestions.OnItemClickListener() {
             @Override
             public void shareQues(int position,String Title) {
 //                generateLink(Title);
@@ -389,7 +441,7 @@ public class FeedFragment extends Fragment {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if (dataSnapshot.getChildrenCount()>0) {
-                    class_Answer userQuestions = dataSnapshot.getValue(class_Answer.class);
+                    Class_Answer userQuestions = dataSnapshot.getValue(Class_Answer.class);
                     listnewQues.add(userQuestions);
                     showQuesadaptor.notifyDataSetChanged();
                     notifyPB.dismiss();
@@ -417,7 +469,7 @@ public class FeedFragment extends Fragment {
             }
         };
         //refAdmin.addChildEventListener(childEventListener);
-        refshowQues.addChildEventListener(childEventListener);
+        refShowAllQues.addChildEventListener(childEventListener);
 
 
 //        Bundle intent=getIntent().getExtras();
@@ -439,23 +491,23 @@ public class FeedFragment extends Fragment {
 //            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 //                switch (item.getItemId()) {
 //                    case R.id.action_Home:
-//                        startActivity( new Intent( getContext(), landing_Page.class ) );
-//                        Toast.makeText(getContext(), "HomePage", Toast.LENGTH_SHORT).show();
+//                        startActivity( new Intent( Landing_Feed.this, landing_Page.class ) );
+//                        Toast.makeText(Landing_Feed.this, "HomePage", Toast.LENGTH_SHORT).show();
 //                        break;
 //                    case R.id.action_Notifications:
-//                        Toast.makeText(getContext(), "Notifications & Favorites", Toast.LENGTH_SHORT).show();
-//                        startActivity( new Intent( getContext(), user_Notification.class ) );
+//                        Toast.makeText(Landing_Feed.this, "Notifications & Favorites", Toast.LENGTH_SHORT).show();
+//                        startActivity( new Intent( Landing_Feed.this, user_Notification.class ) );
 //                        break;
 //                    case R.id.action_Settings:
-//                        Toast.makeText(getContext(), "Settings", Toast.LENGTH_SHORT).show();
-//                        startActivity( new Intent( getContext(), user_Settings.class ) );
+//                        Toast.makeText(Landing_Feed.this, "Settings", Toast.LENGTH_SHORT).show();
+//                        startActivity( new Intent( Landing_Feed.this, user_Settings.class ) );
 //                        break;
 //                    case R.id.action_Profile:
-//                        Toast.makeText(getContext(), "User Profile", Toast.LENGTH_SHORT).show();
-//                        startActivity( new Intent( getContext(), user_Profile.class ) );
+//                        Toast.makeText(Landing_Feed.this, "User Profile", Toast.LENGTH_SHORT).show();
+//                        startActivity( new Intent( Landing_Feed.this, user_Profile.class ) );
 //                        break;
 //                    case R.id.action_Share:
-//                        Toast.makeText(getContext(), "Refer and Earn", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(Landing_Feed.this, "Refer and Earn", Toast.LENGTH_LONG).show();
 //                        String Title="Refer and Clear you Exam Doubts";
 //                        generateLink(Title);
 //                        break;
@@ -589,27 +641,18 @@ public class FeedFragment extends Fragment {
 //
 //    }
 
-    public void search(String newText) {
-        ArrayList<class_Answer> listSearchQues=new ArrayList<>();
-        for (class_Answer classUserSearch:listnewQues){
+    public void searchFeed(String newText) {
+        ArrayList<Class_Answer> listSearchQues=new ArrayList<>();
+        for (Class_Answer classUserSearch:listnewQues){
             if (classUserSearch.getExamfQues().toLowerCase().contains(newText.toLowerCase())){
                 listSearchQues.add(classUserSearch);
             }
         }
-        adaptor_QueryQuestions adapSearchQues= new adaptor_QueryQuestions(getContext(),listSearchQues);
+        Adaptor_QueryQuestions adapSearchQues= new Adaptor_QueryQuestions(getContext(),listSearchQues);
         recyclerView.setAdapter(adapSearchQues);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        //Check if user is signed in (non-null) and update UI accordingly.
-//        currentUser = firebaseAuth.getCurrentUser();
-//        updateUI(currentUser);
-//        userID= FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        updateUser(userID);
-//        loadLocale();
-    }
+
 //    private void updateUser(String userID) {
 //        refuserName = FirebaseDatabase.getInstance().getReference().child("Admin").child("UserRegister").child(userID);
 //        refuserName.addValueEventListener(new ValueEventListener() {
@@ -643,11 +686,54 @@ public class FeedFragment extends Fragment {
 //
 //    }
 
-    private void showLoginDialog() {
+
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //Check if user is signed in (non-null) and update UI accordingly.
+//        currentUser = firebaseAuth.getCurrentUser();
+//        updateUI(currentUser);
+//        userID= FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        updateUser(userID);
+//        loadLocale();
+    }
+    private void loginDialogPopUp() {
+        final android.app.AlertDialog dialogBuilder = new android.app.AlertDialog.Builder(getContext()).create();
+        dialogBuilder.setCanceledOnTouchOutside(true);
+        //dialogBuilder.setCancelable(false);
+        LayoutInflater inflater = this.getLayoutInflater();
+
+        final View dialogView = inflater.inflate(R.layout.dialog_loginaccess, null);
+        Button tapCancel=dialogView.findViewById(R.id.buttonCancel);
+        Button tapSubmit=dialogView.findViewById(R.id.buttonSubmit);
+//        int width = (int)(getResources().getDisplayMetrics().widthPixels*1.00);
+//        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.90);
+
+        tapCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialogBuilder.dismiss();
+            }
+
+        });
+        tapSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLoginBtmDialog();
+                dialogBuilder.dismiss();
+            }
+        });
+        dialogBuilder.setView(dialogView);
+        dialogBuilder.show();
+
+    }
+    private void showLoginBtmDialog() {
 
         BottomSheetDialog bottomSheetDialoglogin=new BottomSheetDialog(getContext());
-        bottomSheetDialoglogin.setCancelable(false);
-        bottomSheetDialoglogin.setContentView(R.layout.dialog_btm_login);
+        bottomSheetDialoglogin.setCancelable(true);
+        bottomSheetDialoglogin.setContentView(R.layout.btmdialog_login);
 
         Button btn_phonelogin=bottomSheetDialoglogin.findViewById(R.id.btn_phonelogin);
         SignInButton btn_googlelogin=bottomSheetDialoglogin.findViewById(R.id.btn_googlelogin);
@@ -658,6 +744,7 @@ public class FeedFragment extends Fragment {
                 Intent intent=googleSignInClient.getSignInIntent();
 
                 startActivityForResult(intent,100);
+                bottomSheetDialoglogin.dismiss();
 
             }
         });
@@ -665,63 +752,19 @@ public class FeedFragment extends Fragment {
         btn_phonelogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getActivity(),Phone_Login.class));
+                startActivity(new Intent(getContext(),Phone_Login.class));
+                bottomSheetDialoglogin.dismiss();
             }
         });
 
         bottomSheetDialoglogin.show();
 
     }
-
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode==100){
-
-            Task<GoogleSignInAccount> signInAccountTask=GoogleSignIn
-                    .getSignedInAccountFromIntent(data);
-
-            if (signInAccountTask.isSuccessful()){
-
-                String s= "Google Signin is sucessful";
-
-                Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
-
-                try {
-                    GoogleSignInAccount googleSignInAccount=signInAccountTask.getResult(ApiException.class);
-
-                    if (googleSignInAccount!=null){
-                        AuthCredential authCredential= GoogleAuthProvider.getCredential(googleSignInAccount.getIdToken(),null);
-                        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
-
-                        firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()){
-                                    showBottomDialog();
-
-                                }else{
-                                    Toast.makeText(getContext(), "Authentication Failed: "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                    }
-
-
-                } catch (ApiException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    private void showBottomDialog() {
+    private void showStudTeachBtmDialog() {
 //        rl_feed.setBackgroundColor(Color.GRAY);
         BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(getContext());
         bottomSheetDialog.setCancelable(false);
-        bottomSheetDialog.setContentView(R.layout.dialog_btm_studteach);
+        bottomSheetDialog.setContentView(R.layout.btmdialog_studteach);
 
         LinearLayout student_ll=bottomSheetDialog.findViewById(R.id.student_ll);
         LinearLayout teacher_ll=bottomSheetDialog.findViewById(R.id.teacher_ll);
@@ -748,7 +791,7 @@ public class FeedFragment extends Fragment {
                 refUserRegister.child( "Category" ).setValue("Student");
 //                startActivity(new Intent(getContext(),Landing_Activity.class)
 //                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                Toast.makeText(getContext(), "Firebase Authentication Sucessful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Login Sucessful as Student", Toast.LENGTH_SHORT).show();
                 bottomSheetDialog.dismiss();
 
             }
@@ -766,13 +809,70 @@ public class FeedFragment extends Fragment {
                 refUserRegister.child( "Category" ).setValue("Teacher");
 //                startActivity(new Intent(getContext(),Landing_Activity.class)
 //                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                Toast.makeText(getActivity(), "Firebase Authentication Sucessful", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Login Sucessful as Teacher", Toast.LENGTH_SHORT).show();
                 bottomSheetDialog.dismiss();
+
             }
         });
 
         bottomSheetDialog.show();
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getContext(), "on activity result called", Toast.LENGTH_SHORT).show();
+
+        if (requestCode==100){
+            Toast.makeText(getContext(), "100", Toast.LENGTH_SHORT).show();
+
+            Task<GoogleSignInAccount> signInAccountTask=GoogleSignIn
+                    .getSignedInAccountFromIntent(data);
+            Toast.makeText(getContext(), "checking", Toast.LENGTH_SHORT).show();
+
+
+            if (signInAccountTask.isSuccessful()){
+
+                String s= "Google Signin is sucessful";
+
+                Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+
+                try {
+                    GoogleSignInAccount googleSignInAccount=signInAccountTask.getResult(ApiException.class);
+
+                    if (googleSignInAccount!=null){
+                        AuthCredential authCredential= GoogleAuthProvider.getCredential(googleSignInAccount.getIdToken(),null);
+                        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+
+                        firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()){
+                                    showStudTeachBtmDialog();
+
+                                }else{
+                                    Toast.makeText(getContext(), "Authentication Failed: "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    }
+                    else{
+                        Toast.makeText(getContext(), "google account null", Toast.LENGTH_SHORT).show();
+
+                    }
+
+
+                } catch (ApiException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+        else{
+            Toast.makeText(getContext(), "wrong request code", Toast.LENGTH_SHORT).show();
+
+        }
     }
 
 }

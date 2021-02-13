@@ -1,8 +1,6 @@
-package com.cllasify.cllasify;
+package com.cllasify.cllasify.Adaptor;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.Class_Answer;
+import com.cllasify.cllasify.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,10 +23,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
-public class adaptor_QueryQuestions extends RecyclerView.Adapter<adaptor_QueryQuestions.MyViewHolder> {
+public class Adaptor_QueryAnswer extends RecyclerView.Adapter<Adaptor_QueryAnswer.MyViewHolder> {
 
     private Context context;
-    private List<class_Answer> mDatalistNew;
+    private List<Class_Answer> mDatalistNew;
 
     private OnItemClickListener mListener;
 
@@ -34,7 +35,10 @@ public class adaptor_QueryQuestions extends RecyclerView.Adapter<adaptor_QueryQu
         //void fillbyOfficialLink(int position, String offWeb);
 
         //void dislikeAns(int position, String tag);
-        void shareQues(int position, String question);
+//        void shareQues(int position, String question);
+
+
+        void listitem(int position, String question, String pushQues, String pushAns,String category);
         //void likeAns(int position, String tag);
 //        void saveAns(int position, String tag);
 //        void likeAns(View v, int position, Boolean clicked);
@@ -44,7 +48,7 @@ public class adaptor_QueryQuestions extends RecyclerView.Adapter<adaptor_QueryQu
         mListener=listener;
     }
 
-    public adaptor_QueryQuestions(Context context, List<class_Answer> mDatalistNew) {
+    public Adaptor_QueryAnswer(Context context, List<Class_Answer> mDatalistNew) {
         this.context = context;
         this.mDatalistNew = mDatalistNew;
     }
@@ -60,26 +64,38 @@ public class adaptor_QueryQuestions extends RecyclerView.Adapter<adaptor_QueryQu
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
-        final class_Answer user = mDatalistNew.get(position);
+//        final Class_Answer user = mDatalistNew.get(position);
 
 //        DatabaseReference refLike;
-//        FirebaseUser mUser= FirebaseAuth.getInstance().getCurrentUser();
-//        assert mUser != null;
-//        final String userId=mUser.getUid();
-        String user1=user.getUserId();
-        String userName=user.getUserName();
-        String examname = user.getQuesCategory();
-        String ques = user.getQuestion();
-        String time=user.getDateTime();
-        String userAns=user.getAns();
-        Uri userPhoto=user.getUserPhoto();
 
-//        holder.examName_tv.setText("Exam Name: "+examname);
-        holder.examQues_tv.setText(ques);
-        holder.tv_UserName.setText(userName);
-        Glide.with(context)
-                .load(userPhoto)
-                .into(holder.ib_UserProfile);
+
+//        String user1=user.getUserId();
+//        String userName=user.getUserName();
+//        String examname = user.getQuesCategory();
+//        String ques = user.getQuestion();
+//        String time=user.getDateTime();
+//        String userAns=user.getAns();
+//        Uri userPhoto=user.getUserPhoto();
+//        String pushid= user.getPushId();
+//
+////        holder.examName_tv.setText("Exam Name: "+examname);
+//        holder.examQues_tv.setText(ques);
+//        holder.tv_UserName.setText(userName);
+//        Glide.with(context)
+//                .load(userPhoto)
+//                .into(holder.ib_UserProfile);
+        Class_Answer Answers=mDatalistNew.get(position);
+
+
+        String userAnswers=Answers.getAns();
+        String userName=Answers.getUserName();
+        String answerUserName=Answers.getAnsUserName();
+        String date=Answers.getDateTime();
+        String quespushid= Answers.getPushId();
+        String anspushid= Answers.getAnsPushId();
+
+            holder.examQues_tv.setText(userAnswers);
+            holder.tv_UserName.setText(answerUserName+" Answered on: "+date);
 
 //        if (examname != null) {
 //            holder.examName_tv.setText("Exam Name: "+examname);
@@ -128,38 +144,129 @@ public class adaptor_QueryQuestions extends RecyclerView.Adapter<adaptor_QueryQu
 //            holder.LikebtnStatus(position);
 //            holder.LikeCount(position);
 //            holder.SavedQStatus(position);
-            holder.getAnswersCount(userAns,position);
+            holder.getCommentCount(userAnswers,position,quespushid,anspushid);
+            holder.getAnsLikesCount(userAnswers,position,quespushid,anspushid);
+            holder.getAnsDislikeCount(userAnswers,position,quespushid,anspushid);
+            holder.getAnsFlagCount(userAnswers,position,quespushid,anspushid);
 //
-//            holder.like_ll.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (mListener != null) {
-//                        if (position != RecyclerView.NO_POSITION) {
-//                            //mListener.dislikeAns();
-//                            String tag = String.valueOf(v.getTag());
-//                            // int id = (int) dislike_ib.getTag();
-//                            if (holder.like_ib.getTag().equals("like")){
-//                                FirebaseDatabase.getInstance().getReference()
-//                                        .child("FeedQuestions")
-//                                        .child("Likes")
-//                                        .child(String.valueOf(position))
-//                                        .child(userId).setValue(true);
-//                                holder.like_ib.setImageResource(R.drawable.like_hover);
-//                            }else{
-//                                FirebaseDatabase.getInstance().getReference()
-//                                        .child("FeedQuestions")
-//                                        .child("Likes")
-//                                        .child(String.valueOf(position))
-//                                        .child(userId).removeValue();
-//                                holder.like_ib.setImageResource(R.drawable.like);
-//
-//                            }
-//                            //mListener.likeAns(position, tag);
-//                        }
-//                    }
-//
-//                }
-//            });
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+            assert mUser != null;
+            String userId = mUser.getUid();
+            holder.getUserLikeDislikes(quespushid,anspushid,userId);
+
+
+            holder.tv_AnslikeCount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        if (position != RecyclerView.NO_POSITION) {
+                            //mListener.dislikeAns();
+                            String tag = String.valueOf(v.getTag());
+                            // int id = (int) dislike_ib.getTag();
+                            if (holder.tv_AnslikeCount.getTag().equals("Like")) {
+                                FirebaseDatabase.getInstance().getReference()
+                                        .child("Feed")
+                                        .child("AllAnswerReview")
+                                        .child("Like")
+                                        .child(quespushid)
+                                        .child(anspushid)
+                                        .child(userId).setValue(true);
+                                holder.tv_AnslikeCount.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.thumbupdark16, 0, 0, 0);
+                                holder.tv_AnslikeCount.setTag("Like_user");
+                            } else {
+                                FirebaseDatabase.getInstance().getReference()
+                                        .child("Feed")
+                                        .child("AllAnswerReview")
+                                        .child("Like")
+                                        .child(quespushid)
+                                        .child(anspushid)
+                                        .child(userId).removeValue();
+                                holder.tv_AnslikeCount.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.thumbup_16, 0, 0, 0);
+                                holder.tv_AnslikeCount.setTag("Like");
+                            }
+                            //mListener.likeAns(position, tag);
+                        }
+                    }
+
+                }
+            });
+            holder.tv_AnsdislikeCount.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (mListener != null) {
+                                    if (position != RecyclerView.NO_POSITION) {
+                                        //mListener.dislikeAns();
+                                        String tag = String.valueOf(v.getTag());
+                                        // int id = (int) dislike_ib.getTag();
+                                        if (holder.tv_AnsdislikeCount.getTag().equals("Dislike")) {
+                                            FirebaseDatabase.getInstance().getReference()
+                                                    .child("Feed")
+                                                    .child("AllAnswerReview")
+                                                    .child("Dislike")
+                                                    .child(quespushid)
+                                                    .child(anspushid)
+                                                    .child(userId).setValue(true);
+                                            holder.tv_AnsdislikeCount.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.thumbdowndark_16, 0, 0, 0);
+                                            holder.tv_AnsdislikeCount.setTag("Dislike_user");
+                                        } else {
+                                            FirebaseDatabase.getInstance().getReference()
+                                                    .child("Feed")
+                                                    .child("AllAnswerReview")
+                                                    .child("Dislike")
+                                                    .child(quespushid)
+                                                    .child(anspushid)
+                                                    .child(userId).removeValue();
+                                            holder.tv_AnsdislikeCount.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.thumbdowndark_16, 0, 0, 0);
+                                            holder.tv_AnsdislikeCount.setTag("Dislike");
+                                        }
+                                        //mListener.likeAns(position, tag);
+                                    }
+                                }
+
+                            }
+                        });
+            holder.tv_AnsflagCount.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (mListener != null) {
+                                    if (position != RecyclerView.NO_POSITION) {
+                                        //mListener.dislikeAns();
+                                        String tag = String.valueOf(v.getTag());
+                                        // int id = (int) dislike_ib.getTag();
+                                        if (holder.tv_AnsflagCount.getTag().equals("Flag")) {
+                                            FirebaseDatabase.getInstance().getReference()
+                                                    .child("Feed")
+                                                    .child("AllAnswerReview")
+                                                    .child("Flag")
+                                                    .child(quespushid)
+                                                    .child(anspushid)
+                                                    .child(userId).setValue(true);
+                                            holder.tv_AnsflagCount.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.flagdark_16, 0, 0, 0);
+                                            holder.tv_AnsflagCount.setTag("Flag_user");
+                                        } else {
+                                            FirebaseDatabase.getInstance().getReference()
+                                                    .child("Feed")
+                                                    .child("AllAnswerReview")
+                                                    .child("Flag")
+                                                    .child(quespushid)
+                                                    .child(anspushid)
+                                                    .child(userId).removeValue();
+                                            holder.tv_AnsflagCount.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.flags_16, 0, 0, 0);
+                                            holder.tv_AnsflagCount.setTag("Flag");
+
+                                        }
+                                        //mListener.likeAns(position, tag);
+                                    }
+                                }
+
+                            }
+                        });
+        }else{
+            holder.tv_AnsflagCount.setEnabled(false);
+            holder.tv_AnsdislikeCount.setEnabled(false);
+            holder.tv_AnslikeCount.setEnabled(false);
+        }
 //            holder.save_ib.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -188,28 +295,29 @@ public class adaptor_QueryQuestions extends RecyclerView.Adapter<adaptor_QueryQu
 //
 //                }
 //            });
-            holder.touchll.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null) {
-                        if (position != RecyclerView.NO_POSITION) {
+//            holder.touchll.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if (mListener != null) {
+//                        if (position != RecyclerView.NO_POSITION) {
                             //mListener.dislikeAns();
-                            //String pos= String.valueOf(position);
-                            String examQues=user.getExamfQues();
-                            String userName=user.getUserName();
-                            String askedDate=user.getDateTime();
-
-                            Intent intent=new Intent(context, Landing_Feed_Answer.class);
-                            intent.putExtra("position",position);
-                            intent.putExtra("publisherName",userName);
-                            intent.putExtra("quesask",examQues);
-                            intent.putExtra("quesaskDate",askedDate);
-                            context.startActivity(intent);
-                        }
-                    }
-
-                }
-            });
+//                            String pos= user.getPushId();
+//                            String examQues=user.getExamfQues();
+//                            String userName=user.getUserName();
+//                            String askedDate=user.getDateTime();
+//
+//                            Intent intent=new Intent(context, Landing_Feed_Answer.class);
+//                            intent.putExtra("position",position);
+//                            intent.putExtra("publisherName",userName);
+//                            intent.putExtra("quesask",ques);
+//                            intent.putExtra("quesaskDate",askedDate);
+//                            intent.putExtra("pushId",pos);
+//                            context.startActivity(intent);
+//                        }
+//                    }
+//
+//                }
+//            });
 
 //
 //        }
@@ -307,12 +415,11 @@ public class adaptor_QueryQuestions extends RecyclerView.Adapter<adaptor_QueryQu
         TextView examQues_tv;
         TextView date_tv;
 //        TextView likedislike_tv;
-        TextView tv_UserName;
         TextView userAns_tv;
-        TextView userallAns_tv,ib_AnsCount;
+        TextView userallAns_tv, tv_CommentCount, tv_AnslikeCount, tv_AnsflagCount, tv_AnsdislikeCount,tv_UserName;
 
-        TextView saveQ, like_count_tv,shareQ;
-        ImageButton save_ib,like_ib,share_ib,ib_UserProfile;
+        TextView saveQ, tv_anslikecount,shareQ;
+        ImageButton save_ib,like_ib,share_ib, ib_AnsUserProfile;
        // LinearLayout l1,l2,l3,l4,expandLL,touchExpandll;
 //        LinearLayout like_ll,viewAns_ll,touchexpand_ll;
         LinearLayout touchll;
@@ -326,12 +433,22 @@ public class adaptor_QueryQuestions extends RecyclerView.Adapter<adaptor_QueryQu
             super(itemView);
 
 //            mCurrentUser= FirebaseAuth.getInstance().getCurrentUser();
-            tv_UserName=itemView.findViewById(R.id.tv_UserName);
 //            examName_tv = itemView.findViewById(R.id.tv_ExamName);
+            tv_UserName=itemView.findViewById(R.id.tv_Name);
             examQues_tv = itemView.findViewById(R.id.tv_AskQuestion);
             touchll = itemView.findViewById(R.id.touch_ll);
-            ib_AnsCount = itemView.findViewById(R.id.ib_AnsCount);
-            ib_UserProfile = itemView.findViewById(R.id.ib_UserProfile);
+            tv_CommentCount = itemView.findViewById(R.id.tv_AnsCount);
+            tv_AnslikeCount = itemView.findViewById(R.id.tv_likeCount);
+            tv_AnsdislikeCount = itemView.findViewById(R.id.tv_dislikeCount);
+            tv_AnsflagCount = itemView.findViewById(R.id.tv_flagCount);
+            userAns_tv=itemView.findViewById(R.id.userAns_tv);
+            userallAns_tv=itemView.findViewById(R.id.userallAns_tv);
+
+            ib_AnsUserProfile = itemView.findViewById(R.id.ib_UserProfile);
+
+            tv_AnsflagCount.setTag("Flag");
+            tv_AnslikeCount.setTag("Like");
+            tv_AnsdislikeCount.setTag("Dislike");
 //            date_tv = itemView.findViewById(R.id.tv_date);
 //            likedislike_tv=itemView.findViewById(R.id.tv_like);
 
@@ -345,15 +462,13 @@ public class adaptor_QueryQuestions extends RecyclerView.Adapter<adaptor_QueryQu
 //            like_ib= itemView.findViewById(R.id.ib_like);
 //            dislike_ib= itemView.findViewById(R.id.ib_dislike);
 //            share_ib= itemView.findViewById(R.id.ib_share);
-            like_count_tv=itemView.findViewById(R.id.like_count_tv);
+
 //            dislike_count_tv=itemView.findViewById(R.id.dislike_count_tv);
 
 //            dislike_ib.setTag("dislike");
 //            like_ib.setTag("like");
 //            save_ib.setTag("save");
 
-            userAns_tv=itemView.findViewById(R.id.userAns_tv);
-            userallAns_tv=itemView.findViewById(R.id.userallAns_tv);
             //expandLL=itemView.findViewById(R.id.expandAns_ll);
 
 //            refLike= FirebaseDatabase.getInstance().getReference().child("FeedQuestions").child("Likes");
@@ -390,6 +505,26 @@ public class adaptor_QueryQuestions extends RecyclerView.Adapter<adaptor_QueryQu
 //                    }
 //                }
 //            });
+
+            touchll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mListener!=null){
+                        int position=getAdapterPosition();
+                        Class_Answer user = mDatalistNew.get(getAdapterPosition());
+                        String question = user.getQuestion();
+                        String pushQues = user.getPushId();
+                        String pushAns = user.getAnsPushId();
+                        String answer = user.getAns();
+                        String category = user.getQuesCategory();
+
+                            //mListener.dislikeAns();
+                        if (position != RecyclerView.NO_POSITION) {
+                            mListener.listitem(position, question,pushQues,pushAns,category);
+                        }
+                    }
+                }
+            });
 //            like_ib.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -675,21 +810,148 @@ public class adaptor_QueryQuestions extends RecyclerView.Adapter<adaptor_QueryQu
 //                }
 //            });
 //        }
-        private void getAnswersCount(String Answer, int position){
+        private void getCommentCount(String Answer, int position, String quespushid,String ansPushid){
             DatabaseReference reference= FirebaseDatabase.getInstance().getReference()
-                    .child("FeedQuestions").child("Answer_Ques").child(String.valueOf(position));
+                    .child("Feed").child("Comment_List").child("Feed_All_Comment").child(quespushid).child(ansPushid);
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 //                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
 
-                    ib_AnsCount.setText(""+snapshot.getChildrenCount());
+                    tv_CommentCount.setText(""+snapshot.getChildrenCount());
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
             });
         }
+        private void getAnsLikesCount(String Answer, int position, String quespushid,String anspushid){
+        DatabaseReference referenceLike=FirebaseDatabase.getInstance().getReference()
+                .child("Feed").child("AllAnswerReview").child("Like").child(quespushid).child(anspushid);
+
+        referenceLike.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
+
+                    tv_AnslikeCount.setText(""+snapshot.getChildrenCount());
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        }
+    private void getAnsDislikeCount(String Answer, int position, String quespushid,String anspushid){
+        DatabaseReference referencedisLike=FirebaseDatabase.getInstance().getReference()
+                .child("Feed").child("AllAnswerReview").child("Dislike").child(quespushid).child(anspushid);
+        referencedisLike.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
+
+                    tv_AnsdislikeCount.setText(""+snapshot.getChildrenCount());
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        }
+    private void getAnsFlagCount(String Answer, int position, String quespushid,String anspushid){
+            DatabaseReference reference= FirebaseDatabase.getInstance().getReference()
+                    .child("Feed").child("AllAnswerReview").child("Flag").child(quespushid).child(anspushid);
+            reference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
+
+                    tv_AnsflagCount.setText(""+snapshot.getChildrenCount());
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+        }
+
+        public void getUserLikeDislikes(String quespushid, String anspushid, String userId) {
+
+            DatabaseReference referencedislike=FirebaseDatabase.getInstance().getReference()
+                    .child("Feed")
+                    .child("AllAnswerReview")
+                    .child("Dislike")
+                    .child(quespushid)
+                    .child(anspushid);
+            referencedislike.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.child(userId).exists()){
+                        tv_AnsdislikeCount.setTag("Dislike_user");
+                        tv_AnsdislikeCount.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.thumbdowndark_16, 0, 0, 0);//                        ib_likeQues.setEnabled(false);
+//                        ib_flagQues.setEnabled(false);
+                    }else{
+                        tv_AnsdislikeCount.setTag("Dislike");
+                        tv_AnsdislikeCount.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.thumbdown_16, 0, 0, 0);//                        ib_likeQues.setEnabled(false);
+//                        ib_likeQues.setEnabled(true);
+//                        ib_flagQues.setEnabled(true);
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            DatabaseReference referencelike=FirebaseDatabase.getInstance().getReference()
+                    .child("Feed")
+                    .child("AllAnswerReview")
+                    .child("Like")
+                    .child(quespushid)
+                    .child(anspushid);
+            referencelike.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.child(userId).exists()){
+                        tv_AnslikeCount.setTag("Like_user");
+                        tv_AnslikeCount.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.thumbupdark16, 0, 0, 0);//                        ib_likeQues.setEnabled(false);
+//                        ib_flagQues.setEnabled(false);
+                    }else{
+                        tv_AnslikeCount.setTag("Like");
+                        tv_AnslikeCount.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.thumbup_16, 0, 0, 0);//                        ib_likeQues.setEnabled(false);
+//                        ib_likeQues.setEnabled(true);
+//                        ib_flagQues.setEnabled(true);
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            DatabaseReference referenceFlag=FirebaseDatabase.getInstance().getReference()
+                    .child("Feed")
+                    .child("AllAnswerReview")
+                    .child("Flag")
+                    .child(quespushid)
+                    .child(anspushid);
+            referenceFlag.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.child(userId).exists()){
+                        tv_AnsflagCount.setTag("Flag_user");
+                        tv_AnsflagCount.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.flagdark_16, 0, 0, 0);//                        ib_likeQues.setEnabled(false);
+//                        ib_flagQues.setEnabled(false);
+                    }else{
+                        tv_AnsflagCount.setTag("Flag");
+                        tv_AnsflagCount.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.flags_16, 0, 0, 0);//                        ib_likeQues.setEnabled(false);
+//                        ib_likeQues.setEnabled(true);
+//                        ib_flagQues.setEnabled(true);
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        }
+
     }
 }
 

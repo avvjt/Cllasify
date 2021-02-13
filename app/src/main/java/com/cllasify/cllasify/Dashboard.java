@@ -1,11 +1,15 @@
 package com.cllasify.cllasify;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.cllasify.cllasify.Fragment.FeedFragment;
+import com.cllasify.cllasify.Fragment.FriendsFragment;
+import com.cllasify.cllasify.Fragment.HomeFragment;
+import com.cllasify.cllasify.Fragment.NotificationFragment;
+import com.cllasify.cllasify.Fragment.ProfileFragment;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class Dashboard extends AppCompatActivity {

@@ -1,13 +1,5 @@
 package com.cllasify.cllasify;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -24,7 +16,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.Adaptor.Adaptor_QueryQuestions;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -64,14 +65,14 @@ public class Landing_Feed extends AppCompatActivity {
 
     RelativeLayout rl_feed;
     DatabaseReference refshowQues, refaddQuestion,refuserQues,refuserName;
-    class_Answer userOtherForm,userOtherFormHi,userAddQues,userQues;
-    List<class_Answer> listnewQues;
-    adaptor_QueryQuestions showQuesadaptor;
+    Class_Answer userOtherForm,userOtherFormHi,userAddQues,userQues;
+    List<Class_Answer> listnewQues;
+    Adaptor_QueryQuestions showQuesadaptor;
 
     ImageButton ib_quesCategory,ib_quesSearch,ib_userLogin;
 
     GoogleSignInClient googleSignInClient;
-    Calendar calenderCC=Calendar.getInstance();
+    Calendar calenderCC= Calendar.getInstance();
     SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
     String dateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
     ProgressDialog notifyPB;
@@ -91,7 +92,7 @@ public class Landing_Feed extends AppCompatActivity {
 //        username_tv=findViewById(R.id.loginstatus);
 
 
-        notifyPB=new ProgressDialog(Landing_Feed.this);
+        notifyPB=new ProgressDialog(this);
         notifyPB.setTitle("Exam Doubt");
         notifyPB.setMessage("Loading Questions..");
         notifyPB.setCanceledOnTouchOutside(true);
@@ -118,8 +119,7 @@ public class Landing_Feed extends AppCompatActivity {
                     showLoginDialog();
                 } else {
                     Toast.makeText(Landing_Feed.this, "Opening User Profile ", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(Landing_Feed.this,
-                            User_Profile.class));
+//                    startActivity(new Intent(Landing_Feed.this,User_Profile.class));
                 }
 
 
@@ -150,7 +150,7 @@ public class Landing_Feed extends AppCompatActivity {
         });
 
         GoogleSignInOptions googleSignInOptions=new GoogleSignInOptions.Builder(
-                GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken("1085537073642-dq2djhhvidcgmb4c3a5ushet55jk6hf5.apps.googleusercontent.com")
+                GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken("1085537073642-cs67e43s871c2tm1ddcbfgdrcruio7dv.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
 
@@ -239,8 +239,8 @@ public class Landing_Feed extends AppCompatActivity {
         //dialogBuilder.setCancelable(false);
         LayoutInflater inflater = this.getLayoutInflater();
 
-        final View dialogView = inflater.inflate(R.layout.dialog_addquestion, null);
-        final EditText quesCaterory_et=dialogView.findViewById(R.id.quesCaterory_et);
+        final View dialogView = inflater.inflate(R.layout.btmdialog_addquestion, null);
+        final EditText quesCaterory_et=dialogView.findViewById(R.id.feedCategory_et);
         final EditText addQuestion_et=dialogView.findViewById(R.id.addQuestion_et);
 
         Button tapCancel=dialogView.findViewById(R.id.buttonCancel);
@@ -278,8 +278,8 @@ public class Landing_Feed extends AppCompatActivity {
                 else {
                     String exam= quesCategory +"_"+addQuestion;
 
-                    userAddQues = new class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,exam);
-                    userQues = new class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,exam);
+                    userAddQues = new Class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,exam);
+                    userQues = new Class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,exam);
 
                     refaddQuestion.push().setValue(userAddQues);
                     refuserQues.push().setValue(userQues);
@@ -327,7 +327,7 @@ public class Landing_Feed extends AppCompatActivity {
 //                    queue.add(stringRequest);
 //notification
                     String AdminToken="All_Notify";
-                    HashMap<String,Object> map= new HashMap<>();
+                    HashMap<String, Object> map= new HashMap<>();
                     map.put("token",AdminToken);
                     map.put("title", quesCategory);
                     map.put("Description",addQuestion);
@@ -365,13 +365,13 @@ public class Landing_Feed extends AppCompatActivity {
         recyclerView.setLayoutManager(linearLayoutManager);
         listnewQues = new ArrayList<>();
 
-        showQuesadaptor = new adaptor_QueryQuestions(this, listnewQues);
+        showQuesadaptor = new Adaptor_QueryQuestions(this, listnewQues);
         recyclerView.setAdapter(showQuesadaptor);
 
 
-        showQuesadaptor.setOnItemClickListener(new adaptor_QueryQuestions.OnItemClickListener() {
+        showQuesadaptor.setOnItemClickListener(new Adaptor_QueryQuestions.OnItemClickListener() {
             @Override
-            public void shareQues(int position,String Title) {
+            public void shareQues(int position, String Title) {
 //                generateLink(Title);
                 Toast.makeText(Landing_Feed.this, "share", Toast.LENGTH_SHORT).show();
             }
@@ -380,7 +380,7 @@ public class Landing_Feed extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if (dataSnapshot.getChildrenCount()>0) {
-                    class_Answer userQuestions = dataSnapshot.getValue(class_Answer.class);
+                    Class_Answer userQuestions = dataSnapshot.getValue(Class_Answer.class);
                     listnewQues.add(userQuestions);
                     showQuesadaptor.notifyDataSetChanged();
                     notifyPB.dismiss();
@@ -581,13 +581,13 @@ public class Landing_Feed extends AppCompatActivity {
 //    }
 
     public void search(String newText) {
-        ArrayList<class_Answer> listSearchQues=new ArrayList<>();
-        for (class_Answer classUserSearch:listnewQues){
+        ArrayList<Class_Answer> listSearchQues=new ArrayList<>();
+        for (Class_Answer classUserSearch:listnewQues){
             if (classUserSearch.getExamfQues().toLowerCase().contains(newText.toLowerCase())){
                 listSearchQues.add(classUserSearch);
             }
         }
-        adaptor_QueryQuestions adapSearchQues= new adaptor_QueryQuestions(this,listSearchQues);
+        Adaptor_QueryQuestions adapSearchQues= new Adaptor_QueryQuestions(this,listSearchQues);
         recyclerView.setAdapter(adapSearchQues);
     }
 
@@ -636,9 +636,9 @@ public class Landing_Feed extends AppCompatActivity {
 
     private void showLoginDialog() {
 
-        BottomSheetDialog bottomSheetDialoglogin=new BottomSheetDialog(Landing_Feed.this);
+        BottomSheetDialog bottomSheetDialoglogin=new BottomSheetDialog(this);
         bottomSheetDialoglogin.setCancelable(false);
-        bottomSheetDialoglogin.setContentView(R.layout.dialog_btm_login);
+        bottomSheetDialoglogin.setContentView(R.layout.btmdialog_login);
 
         Button btn_phonelogin=bottomSheetDialoglogin.findViewById(R.id.btn_phonelogin);
         SignInButton btn_googlelogin=bottomSheetDialoglogin.findViewById(R.id.btn_googlelogin);
@@ -670,7 +670,7 @@ public class Landing_Feed extends AppCompatActivity {
 
         if (requestCode==100){
 
-            Task<GoogleSignInAccount> signInAccountTask=GoogleSignIn
+            Task<GoogleSignInAccount> signInAccountTask= GoogleSignIn
                     .getSignedInAccountFromIntent(data);
 
             if (signInAccountTask.isSuccessful()){
@@ -684,7 +684,7 @@ public class Landing_Feed extends AppCompatActivity {
 
                     if (googleSignInAccount!=null){
                         AuthCredential authCredential= GoogleAuthProvider.getCredential(googleSignInAccount.getIdToken(),null);
-                        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+                        FirebaseAuth firebaseAuth= FirebaseAuth.getInstance();
 
                         firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -711,7 +711,7 @@ public class Landing_Feed extends AppCompatActivity {
         rl_feed.setBackgroundColor(Color.GRAY);
         BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(Landing_Feed.this);
         bottomSheetDialog.setCancelable(false);
-        bottomSheetDialog.setContentView(R.layout.dialog_btm_studteach);
+        bottomSheetDialog.setContentView(R.layout.btmdialog_studteach);
 
         LinearLayout student_ll=bottomSheetDialog.findViewById(R.id.student_ll);
         LinearLayout teacher_ll=bottomSheetDialog.findViewById(R.id.teacher_ll);
@@ -736,8 +736,8 @@ public class Landing_Feed extends AppCompatActivity {
                 refUserRegister.child( "UserId" ).setValue( userID );
                 refUserRegister.child( "DateTime" ).setValue( udateTimeCC );
                 refUserRegister.child( "Category" ).setValue("Student");
-                startActivity(new Intent(Landing_Feed.this,Dashboard.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+//                startActivity(new Intent(in.dreamworld.cllasify.Landing_Feed.this,Landing_Activity.class)
+//                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
                 Toast.makeText(Landing_Feed.this, "Firebase Authentication Sucessful", Toast.LENGTH_SHORT).show();
 
             }
@@ -753,9 +753,9 @@ public class Landing_Feed extends AppCompatActivity {
                 refUserRegister.child( "UserId" ).setValue( userID );
                 refUserRegister.child( "DateTime" ).setValue( udateTimeCC );
                 refUserRegister.child( "Category" ).setValue("Teacher");
-                startActivity(new Intent(Landing_Feed.this,Dashboard.class)
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                Toast.makeText(Landing_Feed.this, "Firebase Authentication Sucessful", Toast.LENGTH_SHORT).show();
+//                startActivity(new Intent(in.dreamworld.cllasify.Landing_Feed.this,Landing_Activity.class)
+//                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                Toast.makeText(Landing_Feed.this,"rebase Authentication Sucessful", Toast.LENGTH_SHORT).show();
 
             }
         });
