@@ -22,7 +22,7 @@ public class NotificationFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_notification, container, false);
         chipNavigationBar = getActivity().findViewById(R.id.bottom_nav_menu);
 
-        chipNavigationBar.setItemSelected(R.id.bottom_nav_home,true);
+        chipNavigationBar.setItemSelected(R.id.bottom_nav_notification,true);
 
         return view;
     }

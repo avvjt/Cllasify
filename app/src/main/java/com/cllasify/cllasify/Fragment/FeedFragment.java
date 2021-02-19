@@ -50,6 +50,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -91,6 +92,8 @@ public class FeedFragment extends Fragment {
     String userID,userEmailID,userName;
     boolean searchShow=true;
 
+    ChipNavigationBar chipNavigationBar;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -103,12 +106,20 @@ public class FeedFragment extends Fragment {
         notifyPB.setCanceledOnTouchOutside(true);
         notifyPB.show();
 
+        chipNavigationBar=getActivity().findViewById(R.id.bottom_nav_menu);
         searchView=view.findViewById(R.id.quesSearchView);
         fab_addQ=view.findViewById(R.id.fab_addQ);
         ib_quesCategory=view.findViewById(R.id.ib_quesCategory);
         ib_quesSearch=view.findViewById(R.id.ib_quesSearch);
         ib_userLogin=view.findViewById(R.id.ib_userLogin);
 //        rl_feed=view.findViewById(R.id.rl_feed);
+
+
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            chipNavigationBar.setVisibility(View.GONE);
+        } else {
+           chipNavigationBar.setVisibility(View.VISIBLE);
+        }
 
 //
 //
@@ -850,6 +861,7 @@ public class FeedFragment extends Fragment {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
                                     showStudTeachBtmDialog();
+                                    chipNavigationBar.setVisibility(View.VISIBLE);
 
                                 }else{
                                     Toast.makeText(getContext(), "Authentication Failed: "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
