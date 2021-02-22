@@ -6,20 +6,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Dashboard"
     android:layout_gravity="center"
-    android:background="@color/white"
     android:id="@+id/fragment_container">
 
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/bottom_nav_menu"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         app:cnb_menuResource="@menu/bottom_nav_menu"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/round_corners"
-        app:cnb_unselectedColor="@color/black"
-        app:cnb_radius="8dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         app:cnb_orientationMode="horizontal"
-        android:layout_margin="20dp"
-        android:elevation="8dp" />
+        android:elevation="1dp"
+        android:background="@color/black"
+        app:cnb_unselectedColor="@color/unselected_color_nav"/>
 
 </RelativeLayout>

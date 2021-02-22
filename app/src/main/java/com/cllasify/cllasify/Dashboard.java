@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.cllasify.cllasify.Fragment.FeedFragment;
-import com.cllasify.cllasify.Fragment.FriendsFragment;
 import com.cllasify.cllasify.Fragment.HomeFragment;
 import com.cllasify.cllasify.Fragment.NotificationFragment;
 import com.cllasify.cllasify.Fragment.ProfileFragment;
@@ -34,9 +33,6 @@ public class Dashboard extends AppCompatActivity {
                 switch (i) {
                     case R.id.bottom_nav_home:
                         fragment = new HomeFragment();
-                        break;
-                    case R.id.bottom_nav_friends:
-                        fragment = new FriendsFragment();
                         break;
                     case R.id.bottom_nav_feed:
 //                        fragment = new FeedFragment();
