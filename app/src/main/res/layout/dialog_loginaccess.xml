@@ -15,7 +15,7 @@
             android:textSize="24sp"
             android:layout_weight="1"
             style="@style/TextAppearance.AppCompat.Subhead"
-            android:text="Would you like to Log In"/>
+            android:text="@string/wanna_login"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             android:textSize="20sp"
             android:fontFamily="sans-serif-medium"
             style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:text="Cancel" />
+            android:text="@string/cancel" />
         <Button
             android:id="@+id/buttonSubmit"
             android:layout_width="wrap_content"
@@ -41,7 +41,7 @@
             android:textColor="@color/colorPrimary"
             style="@style/TextAppearance.AppCompat.Title"
             android:textSize="20sp"
-            android:text="Log in"
+            android:text="@string/log_in"
             android:backgroundTint="@color/colorAccent"
             android:layout_weight="1" />
     </LinearLayout>

@@ -17,7 +17,7 @@
             android:textSize="24sp"
             android:layout_alignParentTop="true"
             style="@style/TextAppearance.AppCompat.Subhead"
-            android:text="Comment"
+            android:text="@string/comment"
             android:id="@+id/tv_askQuesTitle"/>
     <View
         android:layout_width="match_parent"
@@ -37,9 +37,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:layout_alignParentLeft="true"
         app:boxCollapsedPaddingTop="4dp"
-        android:hint="Ask Question?"
+        android:hint="@string/ask_question"
         android:layout_weight="4"
         app:hintTextColor="@color/colorPrimary"
         android:textColor="@color/colorPrimary"
@@ -67,7 +66,7 @@
         android:textColor="@color/colorPrimary"
         style="@style/TextAppearance.AppCompat.Title"
         android:textSize="20sp"
-        android:text="Add"
+        android:text="@string/add"
         android:backgroundTint="@color/colorAccent"/>
     </LinearLayout>
 

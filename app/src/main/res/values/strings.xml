@@ -24,6 +24,49 @@
     <string name="scroll_item_3">scroll item 3</string>
     <string name="scroll_item_4">scroll item 4</string>
     <string name="scroll_item_5">scroll item 5</string>
-    <string name="show_toast">show toast</string>
+
+    <string name="user_profile">User Profile</string>
+    <string name="edit">edit</string>
+    <string name="username">Username</string>
+    <string name="user_badge">User Badge</string>
+    <string name="user_coin">User Coin</string>
+    <string name="introduction">Introduction</string>
+    <string name="facebook">Facebook</string>
+    <string name="instagram">Instagram</string>
+    <string name="email">Email</string>
+    <string name="phone_No">Phone No</string>
+    <string name="friend_request">Friend Request</string>
+    <string name="chats">Chats</string>
+    <string name="follow">Follow</string>
+    <string name="answers">Answers</string>
+    <string name="thanks">Thanks</string>
+    <string name="questions">Questions</string>
+    <string name="user_signout">User Signout</string>
+    <string name="category">Category</string>
+    <string name="ask_question">Ask Question</string>
+    <string name="user_asked">User Asked</string>
+    <string name="enter_category">Enter Category in which you want to add question</string>
+    <string name="category_hint"> ( Php, Android, Java, Python etc) </string>
+    <string name="add">Add</string>
+    <string name="comment">Comment</string>
+    <string name="account_type">Choose your Account Type</string>
+    <string name="sign_phone">Sign in Using Phone No</string>
+    <string name="student">Student</string>
+    <string name="teacher">Teacher</string>
+    <string name="register_student">Register as a student</string>
+    <string name="register_teacher">Register as a teacher</string>
+    <string name="wanna_login">Would you like to Log In</string>
+    <string name="cancel">Cancel</string>
+    <string name="log_in">Log in</string>
+    <string name="add_answer">Add Answer..</string>
+    <string name="post">Post</string>
+    <string name="asked_on">Asked on:</string>
+    <string name="please_answer">Please Answer, If you Know?</string>
+    <string name="view_answer">View All Answer</string>
+    <string name="enter_phone">Enter Phone No</string>
+    <string name="submit">Submit</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="verify_otp">Verify OTP</string>
+
 
 </resources>

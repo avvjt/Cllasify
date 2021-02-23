@@ -94,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:hint="Add Answer.."
+            android:hint="@string/add_answer"
             android:textColorHint="@color/colorPrimary"
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
@@ -102,11 +102,7 @@
             android:layout_marginBottom="8dp"
             android:background="@android:color/transparent"
             android:id="@+id/add_Answer_et"
-            android:layout_toStartOf="@+id/post_Answer_tv"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="4dp"
-            android:layout_toLeftOf="@+id/post_Answer_tv" />
+            android:layout_toStartOf="@+id/post_Answer_tv" />
 
         <Button
             android:layout_width="wrap_content"
@@ -116,9 +112,8 @@
             android:layout_centerVertical="true"
             android:layout_margin="4dp"
             android:textSize="20sp"
-            android:text="Post"
-            android:textColor="@color/colorAccent"
-            android:layout_alignParentRight="true" />
+            android:text="@string/post"
+            android:textColor="@color/colorAccent" />
 
 
     </RelativeLayout>

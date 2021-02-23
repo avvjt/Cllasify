@@ -17,7 +17,7 @@
             android:textSize="24sp"
             android:layout_alignParentTop="true"
             style="@style/TextAppearance.AppCompat.Subhead"
-            android:text="Ask Question"
+            android:text="@string/ask_question"
             android:id="@+id/tv_askQuesTitle"/>
     <View
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
         android:layout_margin="4dp"
         android:padding="4dp"
         style="@style/TextAppearance.AppCompat.Subhead"
-        android:text="User Asked"
+        android:text="@string/user_asked"
         android:id="@+id/tv_UserName"/>
     </LinearLayout>
 
@@ -59,7 +59,7 @@
         android:padding="4dp"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:text="Enter Category in which you want to add question"
+        android:text="@string/enter_category"
         android:textColor="@color/colorAccent" />
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -68,7 +68,7 @@
             android:layout_below="@id/tv_FeedCategoryTitle"
             android:id="@+id/feedCategory_tv"
             app:boxCollapsedPaddingTop="4dp"
-            android:hint=" (Php,Android,Java,Phythn etc) "
+            android:hint="@string/category_hint"
             app:hintTextColor="@color/colorPrimary"
             android:textColor="@color/colorPrimary"
             app:boxBackgroundColor="@android:color/white"
@@ -94,14 +94,14 @@
         android:padding="4dp"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:text="Ask question"
+        android:text="@string/ask_question"
         android:textColor="@color/colorAccent" />
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         app:boxCollapsedPaddingTop="4dp"
-        android:hint="Ask Question?"
+        android:hint="@string/ask_question"
         android:layout_below="@id/tv_askFeedTitle"
         app:hintTextColor="@color/colorPrimary"
         android:textColor="@color/colorPrimary"
@@ -129,7 +129,7 @@
         android:textColor="@color/colorPrimary"
         style="@style/TextAppearance.AppCompat.Title"
         android:textSize="20sp"
-        android:text="Add"
+        android:text="@string/add"
         android:backgroundTint="@color/colorAccent"
         />
 

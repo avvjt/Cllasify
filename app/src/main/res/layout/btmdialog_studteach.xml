@@ -11,7 +11,7 @@
         android:padding="4dp"
         android:layout_margin="4dp"
         android:textSize="18sp"
-        android:text="Choose your Account Type"/>
+        android:text="@string/account_type"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Student"
+                android:text="@string/student"
                 android:id="@+id/stud_tv"
                 android:gravity="center_vertical"
                 android:padding="4dp"
@@ -43,7 +43,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Co-ordinates with Friends &amp; Family"
+                android:text="@string/register_student"
                 android:gravity="center_vertical"
                 android:padding="2dp"
                 android:layout_weight="1"
@@ -78,7 +78,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Teacher"
+                android:text="@string/teacher"
                 android:id="@+id/teach_tv"
                 android:gravity="center_vertical"
                 android:padding="4dp"
@@ -90,7 +90,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Co-ordinates with Collegues &amp; Organisation"
+                android:text="@string/register_teacher"
                 android:gravity="center_vertical"
                 android:padding="2dp"
                 android:layout_weight="1"

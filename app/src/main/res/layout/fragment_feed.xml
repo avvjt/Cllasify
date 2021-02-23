@@ -21,7 +21,6 @@
             android:id="@+id/ib_quesCategory"
             android:layout_margin="2dp"
             android:background="@android:color/transparent"
-            android:layout_alignParentLeft="true"
             android:src="@drawable/ic_dynamic_feed_24"
             android:layout_alignParentStart="true" />
         <ImageButton
@@ -30,7 +29,6 @@
             android:id="@+id/ib_quesSearch"
             android:background="@android:color/transparent"
             android:layout_margin="2dp"
-            android:layout_toLeftOf="@id/ib_userLogin"
             android:src="@drawable/ic_search_24"
             android:layout_toStartOf="@id/ib_userLogin" />
         <ImageButton
@@ -38,7 +36,6 @@
             android:layout_height="50dp"
             android:id="@+id/ib_userLogin"
             android:layout_margin="2dp"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:src="@drawable/ic_account_24"/>
 
@@ -57,7 +54,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="start"
-        android:text="Questions"
+        android:text="@string/questions"
         style="@style/TextAppearance.AppCompat.Subhead"
         android:textColor="@color/purple_pink"/>
     <TextView
@@ -69,7 +66,7 @@
         android:layout_margin="4dp"
         android:textSize="20sp"
         android:gravity="start"
-        android:text="Category"
+        android:text="@string/category"
         style="@style/TextAppearance.AppCompat.Subhead"
         android:textColor="@color/purple_pink"/>
     <androidx.appcompat.widget.SearchView

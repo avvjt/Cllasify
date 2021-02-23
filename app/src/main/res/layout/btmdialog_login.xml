@@ -9,7 +9,7 @@
         android:padding="4dp"
         android:layout_margin="4dp"
         android:textSize="18sp"
-        android:text="Choose your Account Type"/>
+        android:text="@string/account_type"/>
 
     <com.google.android.gms.common.SignInButton
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:text="Sign in Using Phone No"
+        android:text="@string/sign_phone"
         android:layout_gravity="center_vertical"
         android:id="@+id/btn_phonelogin"/>
 

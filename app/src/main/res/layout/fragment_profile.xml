@@ -22,8 +22,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_Prof_Title"
-                android:text="User Profile"
-                android:textSize="24dp"
+                android:text="@string/user_profile"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:layout_margin="4dp"
@@ -32,16 +32,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_user_edit"
-                android:drawableEnd="@drawable/thumbup_16"
                 android:drawablePadding="4dp"
-                android:text="edit"
+                android:text="@string/edit"
                 android:layout_gravity="end"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:gravity="end"
                 android:layout_margin="4dp"
-                android:padding="4dp"/>
+                android:padding="4dp"
+                app:drawableEndCompat="@drawable/thumbup_16" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_user_name"
-                android:text="Username"
+                android:text="@string/username"
                 android:gravity="center_vertical"
                 android:layout_weight="1"
                 android:textSize="18sp"
@@ -78,22 +78,22 @@
                 android:id="@+id/tv_user_badge"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
-                android:text="User Badge"
-                android:drawableStart="@drawable/thumbup_16"
+                android:text="@string/user_badge"
                 android:drawablePadding="4dp"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/thumbup_16" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_user_coin"
                 android:layout_gravity="center_vertical"
-                android:text="User Coin"
-                android:drawableStart="@drawable/thumbdown_16"
+                android:text="@string/user_coin"
                 android:drawablePadding="4dp"
                 android:layout_weight="1"
                 android:textSize="18sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                app:drawableStartCompat="@drawable/thumbdown_16" />
         </LinearLayout>
         </LinearLayout>
 
@@ -107,7 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_user_intro"
-                    android:text="Introduction"
+                    android:text="@string/introduction"
                     android:textSize="18sp"
                     android:layout_margin="4dp"
                     android:padding="4dp" />
@@ -115,32 +115,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_user_fb"
-                    android:text="Facebook"
-                    android:drawableStart="@drawable/thumbup_16"
+                    android:text="@string/facebook"
                     android:drawablePadding="4dp"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    app:drawableStartCompat="@drawable/thumbup_16" />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_user_insta"
-                    android:text="Instagram"
+                    android:text="@string/instagram"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/prof_email"
-                    android:text="email"
+                    android:text="@string/email"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_user_email"
-                    android:text="Phone No"
-                    android:drawableStart="@drawable/thumbup_16"
+                    android:text="@string/phone_No"
                     android:drawablePadding="4dp"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    app:drawableStartCompat="@drawable/thumbup_16" />
             </LinearLayout>
 
         <LinearLayout
@@ -175,7 +175,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Friend Request"/>
+                        android:text="@string/friend_request"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
@@ -200,7 +200,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
-                            android:text="Chats"/>
+                            android:text="@string/chats"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
@@ -230,7 +230,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Follow"/>
+                        android:text="@string/follow"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
@@ -255,7 +255,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
-                            android:text="Chats"/>
+                            android:text="@string/chats"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
@@ -285,7 +285,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:text="Answers"/>
+                        android:text="@string/answers"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
                 <androidx.cardview.widget.CardView
@@ -310,7 +310,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
-                            android:text="Thanks"/>
+                            android:text="@string/thanks"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
@@ -321,7 +321,7 @@
             android:id="@+id/btn_user_question"
             android:layout_margin="8dp"
             android:layout_below="@id/ll_follow"
-            android:text="Questions"/>
+            android:text="@string/questions"/>
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -340,7 +340,7 @@
             android:layout_margin="8dp"
             android:layout_below="@id/btn_userques_Category"
             android:id="@+id/btn_signout"
-            android:text="User Signout"/>
+            android:text="@string/user_signout"/>
     </RelativeLayout>
     </ScrollView>
 </FrameLayout>

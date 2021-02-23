@@ -13,12 +13,12 @@
         android:id="@+id/enterotp_et"
         android:layout_margin="8dp"
         android:layout_centerInParent="true"
-        android:hint="Enter OTP"/>
+        android:hint="@string/enter_otp"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/verifyotp_btn"
-        android:text="Verify OTP"
+        android:text="@string/verify_otp"
         android:layout_margin="8dp"
         android:layout_below="@id/enterotp_et"/>
     <ProgressBar
