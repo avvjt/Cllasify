@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.ProfileFragment"
-    android:background="@color/fragment_pink">
+    android:background="@color/page_black">
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -52,7 +52,7 @@
             android:layout_margin="8dp">
         <de.hdodenhof.circleimageview.CircleImageView
             app:civ_border_width="3dp"
-            app:civ_border_color="@color/black"
+            app:civ_border_color="@color/page_black"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="4dp"

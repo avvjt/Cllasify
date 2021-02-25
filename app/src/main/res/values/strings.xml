@@ -67,6 +67,9 @@
     <string name="submit">Submit</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="verify_otp">Verify OTP</string>
+    <string name="login">How you want to Login</string>
+    <string name="signin">Sign In with Google</string>
+    <string name="or">OR</string>
 
 
 </resources>

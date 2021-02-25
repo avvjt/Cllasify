@@ -17,7 +17,7 @@
         android:fontFamily="sans-serif-black"
         android:text="@string/splash_heading"
         android:textAlignment="center"
-        android:textColor="@color/white"
+        android:textColor="@color/text_white"
         android:textSize="40sp">
 
     </TextView>

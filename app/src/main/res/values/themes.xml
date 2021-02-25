@@ -4,18 +4,18 @@
     <!-- Primary brand color. -->
     <item name="colorPrimary">@color/purple</item>
     <item name="colorPrimaryVariant">@color/purple_blue</item>
-    <item name="colorOnPrimary">@color/white</item>
+    <item name="colorOnPrimary">@color/text_white</item>
     <!-- Secondary brand color. -->
-    <item name="colorSecondary">@color/purple_pink</item>
-    <item name="colorSecondaryVariant">@color/white</item>
-    <item name="colorOnSecondary">@color/black</item>
+    <item name="colorSecondary">@color/page_black</item>
+    <item name="colorSecondaryVariant">@color/page_light_black</item>
+    <item name="colorOnSecondary">@color/page_black</item>
     <!-- Status bar color. -->
     <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
     <!-- Customize your theme here. -->
 </style>
 
     <style name="Panel">
-        <item name="android:background">@color/black</item>
+        <item name="android:background">@color/page_black</item>
         <item name="android:padding">16dp</item>
     </style>
 
@@ -24,7 +24,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/text_white</item>
     </style>
 
     <style name="PanelBodyText">
@@ -32,7 +32,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/text_white</item>
     </style>
 
     <style name="PanelChildHorizontalScrollViewItem">
@@ -41,15 +41,15 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginEnd">16dp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@color/black</item>
+        <item name="android:textColor">@color/text_white</item>
+        <item name="android:background">@color/page_black</item>
     </style>
 
     <style name="MyMaterialTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Add attributes here -->
         <item name="colorPrimary">@color/purple</item>
         <item name="colorPrimaryVariant">@color/purple_blue</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorOnPrimary">@color/text_white</item>
         <item name="textAppearanceButton">@style/AppTextAppearance.Button</item>
     </style>
     <!--To fix rendering in preview -->

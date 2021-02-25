@@ -2,6 +2,8 @@ package com.cllasify.cllasify.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -138,7 +140,7 @@ public class FeedFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-                    loginDialogPopUp();
+                    showLoginBtmDialog();
                 } else {
                     Toast.makeText(getContext(), "Opening User Profile ", Toast.LENGTH_SHORT).show();
 //                    startActivity(new Intent(getContext(),User_Profile.class));
@@ -163,7 +165,7 @@ public class FeedFragment extends Fragment {
 
                 if (FirebaseAuth.getInstance().getCurrentUser() == null) {
 //                    loginDialog();
-                    loginDialogPopUp();
+                    showLoginBtmDialog();
 //                    Intent intent= new Intent(getActivity(), Landing_Feed.class);
 //                    startActivity(intent);
                 } else {
@@ -710,45 +712,55 @@ public class FeedFragment extends Fragment {
 //        updateUser(userID);
 //        loadLocale();
     }
-    private void loginDialogPopUp() {
-        final android.app.AlertDialog dialogBuilder = new android.app.AlertDialog.Builder(getContext()).create();
-        dialogBuilder.setCanceledOnTouchOutside(true);
-        //dialogBuilder.setCancelable(false);
-        LayoutInflater inflater = this.getLayoutInflater();
-
-        final View dialogView = inflater.inflate(R.layout.dialog_loginaccess, null);
-        Button tapCancel=dialogView.findViewById(R.id.buttonCancel);
-        Button tapSubmit=dialogView.findViewById(R.id.buttonSubmit);
-//        int width = (int)(getResources().getDisplayMetrics().widthPixels*1.00);
-//        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.90);
-
-        tapCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialogBuilder.dismiss();
-            }
-
-        });
-        tapSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLoginBtmDialog();
-                dialogBuilder.dismiss();
-            }
-        });
-        dialogBuilder.setView(dialogView);
-        dialogBuilder.show();
-
-    }
+//    private void loginDialogPopUp() {
+//        android.app.AlertDialog dialogBuilder = new android.app.AlertDialog.Builder(getContext()).create();
+//        dialogBuilder.setCanceledOnTouchOutside(true);
+//        dialogBuilder.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        //dialogBuilder.setCancelable(false);
+//        LayoutInflater inflater = this.getLayoutInflater();
+//
+//        View dialogView = inflater.inflate(R.layout.dialog_loginaccess, null);
+//        Button tapCancel=dialogView.findViewById(R.id.buttonCancel);
+//        Button tapSubmit=dialogView.findViewById(R.id.buttonSubmit);
+////        int width = (int)(getResources().getDisplayMetrics().widthPixels*1.00);
+////        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.90);
+//
+//        tapCancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                dialogBuilder.dismiss();
+//            }
+//
+//        });
+//        tapSubmit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showLoginBtmDialog();
+//                dialogBuilder.dismiss();
+//            }
+//        });
+//        dialogBuilder.setView(dialogView);
+//        dialogBuilder.show();
+//
+//    }
     private void showLoginBtmDialog() {
 
         BottomSheetDialog bottomSheetDialoglogin=new BottomSheetDialog(getContext());
         bottomSheetDialoglogin.setCancelable(true);
+
         bottomSheetDialoglogin.setContentView(R.layout.btmdialog_login);
 
-        Button btn_phonelogin=bottomSheetDialoglogin.findViewById(R.id.btn_phonelogin);
-        SignInButton btn_googlelogin=bottomSheetDialoglogin.findViewById(R.id.btn_googlelogin);
 
+        Button btn_phonelogin=bottomSheetDialoglogin.findViewById(R.id.btn_phonelogin);
+        Button btn_Cancel=bottomSheetDialoglogin.findViewById(R.id.btn_Cancel);
+        Button btn_googlelogin=bottomSheetDialoglogin.findViewById(R.id.btn_googlelogin);
+
+        btn_Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialoglogin.dismiss();
+            }
+        });
         btn_googlelogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -767,7 +779,7 @@ public class FeedFragment extends Fragment {
                 bottomSheetDialoglogin.dismiss();
             }
         });
-
+        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         bottomSheetDialoglogin.show();
 
     }

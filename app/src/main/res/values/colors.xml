@@ -3,24 +3,19 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="purple_pink">#FFBB86FC</color>
     <color name="purple">#FF6200EE</color>
     <color name="purple_blue">#FF3700B3</color>
-    <color name="light_green">#FF03DAC5</color>
-    <color name="green">#FF018786</color>
-    <color name="black">#000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="gray">#2B2B2B</color>
     <color name="transparent">#00000000</color>
 
-    <color name="fragment_blue">#2B2B2B</color>
-    <color name="fragment_gray">#5A5C67</color>
-    <color name="fragment_pink">#D76CEA</color>
-    <color name="fragment_green">#7BED80</color>
-    <color name="fragment_sky">#63EADA</color>
 
-    <color name="turquoise">#03DAC5</color>
+
     <color name="unselected_color_nav">#454545</color>
     <color name="light_black">#1C1B1B</color>
-    <color name="light_grey">#272727</color>
+    <color name="page_black">#000000</color>
+    <color name="page_light_black">#333333</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_light_black">#4C4C4C</color>
+
+    <color name="blue">#0128FF</color>
+    <color name="red">#FF0000</color>
 </resources>

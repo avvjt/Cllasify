@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragment.FeedFragment"
-    android:background="@color/fragment_blue">
+    tools:context=".Fragment.FeedFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -56,7 +55,7 @@
         android:gravity="start"
         android:text="@string/questions"
         style="@style/TextAppearance.AppCompat.Subhead"
-        android:textColor="@color/purple_pink"/>
+        android:textColor="@color/text_white"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,7 +67,7 @@
         android:gravity="start"
         android:text="@string/category"
         style="@style/TextAppearance.AppCompat.Subhead"
-        android:textColor="@color/purple_pink"/>
+        android:textColor="@color/text_white"/>
     <androidx.appcompat.widget.SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

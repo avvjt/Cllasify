@@ -18,7 +18,7 @@
         android:layout_alignParentEnd="true"
         app:cnb_orientationMode="horizontal"
         android:elevation="1dp"
-        android:background="@color/black"
+        android:background="@color/page_black"
         app:cnb_unselectedColor="@color/unselected_color_nav"/>
 
 </RelativeLayout>

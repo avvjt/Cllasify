@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment.HomeFragment"
-    android:background="@color/fragment_gray">
+    android:background="@color/page_black">
 
 
     <com.discord.panels.OverlappingPanelsLayout
         android:id="@+id/overlapping_panels"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/light_grey">
+        android:background="@color/page_black">
 
         <LinearLayout
             android:id="@+id/start_panel"
