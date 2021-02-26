@@ -6,7 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Dashboard"
     android:layout_gravity="center"
-    android:id="@+id/fragment_container">
+    android:id="@+id/fragment_container"
+    android:background="@color/text_white">
 
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/bottom_nav_menu"
@@ -18,7 +19,7 @@
         android:layout_alignParentEnd="true"
         app:cnb_orientationMode="horizontal"
         android:elevation="1dp"
-        android:background="@color/page_black"
-        app:cnb_unselectedColor="@color/unselected_color_nav"/>
+        app:cnb_unselectedColor="@color/page_black"
+        android:background="@color/text_white"/>
 
 </RelativeLayout>

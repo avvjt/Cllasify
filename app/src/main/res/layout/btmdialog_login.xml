@@ -35,11 +35,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:layout_marginLeft="4dp"
+        android:layout_marginStart="4dp"
         android:layout_marginBottom="10dp"
         android:textSize="18sp"
         android:text="@string/login"
-        android:textColor="@color/text_white"/>
+        android:textColor="@color/page_black"/>
 
     <Button
         android:id="@+id/btn_googlelogin"
@@ -57,7 +57,7 @@
         android:padding="10dp"
         android:text="@string/or"
         android:gravity="center"
-        android:textColor="@color/text_white"/>
+        android:textColor="@color/page_black"/>
 
 
     <Button

@@ -3,13 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.NotificationFragment"
-    android:background="@color/page_black">
+    tools:context=".Fragment.NotificationFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/notification"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textColor="@color/page_black"/>
 
 </FrameLayout>

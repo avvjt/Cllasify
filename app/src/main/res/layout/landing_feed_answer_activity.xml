@@ -4,36 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Landing_Feed_Answer">
+    tools:context=".Landing_Feed_Answer"
+    android:background="@color/text_white">
 
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/toolbar"
-        app:titleTextColor="@color/colorPrimary"
-        android:background="@color/colorAccent"/>
+        app:titleTextColor="@color/page_black"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/displayQues_tv"
         android:textSize="24sp"
-        android:textColor="@color/colorAccent"
         style="@style/TextAppearance.AppCompat.Subhead"
         android:layout_below="@id/toolbar"
         android:layout_margin="4dp"
-        android:padding="2dp"/>
+        android:padding="2dp"
+        android:textColor="@color/page_black"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/QuesAskedByTime_tv"
         android:textSize="14sp"
         android:textStyle="italic"
-        android:textColor="@color/colorAccent"
         style="@style/TextAppearance.AppCompat.Subhead"
         android:layout_below="@id/displayQues_tv"
         android:layout_margin="4dp"
-        android:padding="2dp"/>
+        android:padding="2dp"
+        android:textColor="@color/light_black"/>
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -83,7 +83,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/bottom"
-        android:background="@color/colorAccent"
         android:padding="4dp"
         android:layout_alignParentBottom="true">
         <!--        <ImageView-->
@@ -95,14 +94,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:hint="@string/add_answer"
-            android:textColorHint="@color/colorPrimary"
             android:layout_centerVertical="true"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="8dp"
             android:background="@android:color/transparent"
             android:id="@+id/add_Answer_et"
-            android:layout_toStartOf="@+id/post_Answer_tv" />
+            android:layout_toStartOf="@+id/post_Answer_tv"
+            android:textColor="@color/text_light_black"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -113,7 +112,7 @@
             android:layout_margin="4dp"
             android:textSize="20sp"
             android:text="@string/post"
-            android:textColor="@color/colorAccent" />
+            android:textColor="@color/text_white"/>
 
 
     </RelativeLayout>

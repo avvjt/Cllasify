@@ -11,23 +11,24 @@
     app:cardUseCompatPadding="true"
     app:strokeWidth="2dp"
     android:layout_height="match_parent"
-    android:layout_width="wrap_content">
+    android:layout_width="wrap_content"
+    android:backgroundTint="@color/text_white">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/touch_ll"
         android:orientation="vertical">
-<TextView
-                    android:id="@+id/tv_AskQuestion"
-                    style="@style/TextAppearance.AppCompat.Body2"
-                    android:layout_gravity="center_horizontal"
-                    android:padding="4dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginBottom="2dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/text_white"/>
+        <TextView
+            android:id="@+id/tv_AskQuestion"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_gravity="center_horizontal"
+            android:padding="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="2dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/page_black"/>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="65dp"
@@ -51,7 +52,8 @@
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:textStyle="italic"
-                    android:id="@+id/tv_Name"/>
+                    android:id="@+id/tv_Name"
+                    android:textColor="@color/light_black"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -120,7 +122,6 @@
                 android:layout_height="0dp"
                 android:gravity="start"
                 android:padding="2dp"
-                android:textColor="@color/text_white"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:layout_weight="1"
                 android:textStyle="italic"
@@ -132,7 +133,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/userAns_tv"
                 android:padding="2dp"
-                android:textColor="@color/text_white"
                 android:textStyle="bold"
                 style="@style/TextAppearance.AppCompat.Subhead"
                 android:text="@string/please_answer"/>
@@ -141,7 +141,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/userallAns_tv"
                 android:padding="2dp"
-                android:textColor="@color/text_white"
                 style="@style/TextAppearance.AppCompat.Body1"
                 android:hint="@string/view_answer"/>
 

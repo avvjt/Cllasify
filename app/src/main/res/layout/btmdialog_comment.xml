@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@color/text_white">
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="24dp"
@@ -18,7 +18,8 @@
             android:layout_alignParentTop="true"
             style="@style/TextAppearance.AppCompat.Subhead"
             android:text="@string/comment"
-            android:id="@+id/tv_askQuesTitle"/>
+            android:id="@+id/tv_askQuesTitle"
+            android:textColor="@color/page_black"/>
     <View
         android:layout_width="match_parent"
         android:layout_below="@id/tv_askQuesTitle"
@@ -40,14 +41,13 @@
         app:boxCollapsedPaddingTop="4dp"
         android:hint="@string/ask_question"
         android:layout_weight="4"
-        app:hintTextColor="@color/colorPrimary"
-        android:textColor="@color/colorPrimary"
+        app:hintTextColor="@color/text_light_black"
+        android:textColor="@color/page_black"
         android:background="@drawable/rounded_corner">
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/page_black"
             android:inputType="textMultiLine"
             android:lines="3"
             android:textSize="18sp"
@@ -63,11 +63,9 @@
         android:padding="8dp"
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
-        android:textColor="@color/colorPrimary"
         style="@style/TextAppearance.AppCompat.Title"
         android:textSize="20sp"
-        android:text="@string/add"
-        android:backgroundTint="@color/colorAccent"/>
+        android:text="@string/add" />
     </LinearLayout>
 
 </RelativeLayout>
