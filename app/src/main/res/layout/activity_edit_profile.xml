@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".EditProfile">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:id="@+id/ll_edit"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp">
+
+            <Button
+                android:layout_width="36dp"
+                android:layout_height="16dp"
+                android:drawableEnd="@drawable/ic_cancel"
+                android:id="@+id/btn_Cancel"
+                android:background="@color/transparent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="8dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_profile"
+                android:textSize="18sp"
+                android:layout_marginStart="20dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/ll_titfle"
+            android:layout_marginTop="45dp"
+            >
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_margin="20dp"
+                android:id="@+id/prof_pic"
+                android:src="@drawable/maharaji"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/page_black"
+                android:textStyle="bold"
+                android:text="@string/change_dp"
+                android:layout_gravity="center"
+                android:textSize="20sp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/edittext_holder"
+            android:orientation="vertical"
+            android:layout_marginTop="220dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/page_black"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:id="@+id/feedCategoryj_et"
+                android:hint="@string/username"
+                android:layout_marginTop="30dp"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/TextAppearance.AppCompat.Subhead"
+                android:textColor="@color/page_black"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:id="@+id/feedCgategory_et"
+                android:layout_marginTop="30dp"
+                android:hint="@string/bio"/>
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/text_light_black"
+                android:textStyle="bold"
+                android:text="@string/save"
+                android:textSize="12sp"
+                android:layout_marginTop="30dp"/>
+
+
+        </LinearLayout>
+
+</FrameLayout>

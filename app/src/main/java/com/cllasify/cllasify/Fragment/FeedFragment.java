@@ -298,7 +298,7 @@ public class FeedFragment extends Fragment {
                     Toast.makeText(getContext(), "Please Enter Exam Name", Toast.LENGTH_LONG).show();
                     quesCaterory_et.setError("Exam Name?");
                 }else if(addQuestion.isEmpty()){
-                    Toast.makeText(getContext(), "Please Enter Questions", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Please Enter QuestionsTab", Toast.LENGTH_LONG).show();
                     addQuestion_et.setError("Ask Question");
                 }
                 else {
@@ -310,7 +310,7 @@ public class FeedFragment extends Fragment {
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
+//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" AnswersTab");
                             long noofQuesinCategory=snapshot.getChildrenCount()+1;
                             String push=quesCategory+"_Qno_"+noofQuesinCategory;
                             userAddQues = new Class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,compQues,push);
@@ -335,7 +335,7 @@ public class FeedFragment extends Fragment {
 //                    reference.addValueEventListener(new ValueEventListener() {
 //                        @Override
 //                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-////                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
+////                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" AnswersTab");
 //                            long noofQuesinCategory=snapshot.getChildrenCount()+1;
 //                            String push=quesCategory+noofQuesinCategory;
 //                            userAddQues = new Class_Answer(quesCategory,addQuestion,dateTimeCC,userName,userID,userEmailID,compQues,push);
@@ -459,7 +459,7 @@ public class FeedFragment extends Fragment {
                     showQuesadaptor.notifyDataSetChanged();
                     notifyPB.dismiss();
                 } else {
-                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First QuestionsTab", Toast.LENGTH_SHORT).show();
                     notifyPB.dismiss();
                 }
 

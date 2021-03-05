@@ -71,5 +71,38 @@
     <string name="signin">Sign In with Google</string>
     <string name="or">OR</string>
 
+    <string name="account">Account</string>
+    <string name="online_status">Online Status</string>
+    <string name="subscriptions">Subscriptions</string>
+    <string name="servers">Servers</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="set_presence">Set Presence</string>
+    <string name="feedback">Feedback</string>
+    <string name="my_account">My Account</string>
+    <string name="title_activity_profile_mine">ProfileMine</string>
+    <string name="bio">Bio</string>
+    <string name="flowers">Flowers</string>
+    <string name="about">About</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="no_content_available">No content available</string>
+    <string name="no_content_available2">No content available at this time</string>
+    <string name="change_dp">Change profile photo</string>
+    <string name="save">save</string>
+    <string name="no_subscriptions">No subscriptions</string>
+    <string name="browse_channels">Browse channels</string>
+    <string name="browse_channels_benefits">Browse channels to check out different subscriptions benefits</string>
+    <string name="better_together">Cllasify is better together</string>
+    <string name="add_friend">Add Friends</string>
+
+    <string name="social">Social</string>
+    <string name="friend">Friends</string>
+    <string name="request">Request</string>
+    <string name="presence">Presence</string>
+    <string name="online">Online</string>
+    <string name="busy">Busy</string>
+    <string name="invisible">Invisible</string>
+    <string name="friends_see">How friends see you in their Friends list</string>
+    <string name="share_activity">Share my activity</string>
+    <string name="watching_status">Let your friends know which channel you are currently watching</string>
 
 </resources>

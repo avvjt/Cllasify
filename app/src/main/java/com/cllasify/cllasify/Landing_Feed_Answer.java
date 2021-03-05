@@ -144,7 +144,7 @@ public class Landing_Feed_Answer extends AppCompatActivity {
 
             Toolbar toolbar=findViewById(R.id.toolbar);
             setSupportActionBar(toolbar);
-            getSupportActionBar().setTitle("Answers");
+            getSupportActionBar().setTitle("AnswersTab");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
@@ -385,7 +385,7 @@ public class Landing_Feed_Answer extends AppCompatActivity {
             reference.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
+//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" AnswersTab");
                     long noofQuesinCategory=snapshot.getChildrenCount()+1;
 //                    String push=quesCategory+"_Qno_"+noofQuesinCategory;
 
@@ -511,8 +511,8 @@ public class Landing_Feed_Answer extends AppCompatActivity {
 //            public void onDataChange(@NonNull DataSnapshot snapshot) {
 //                list_answer.clear();
 //                for (DataSnapshot snapshot1:snapshot.getChildren()){
-//                    class_Answers Answers=snapshot1.getValue(class_Answers.class);
-//                    list_answer.add(Answers);
+//                    class_Answers AnswersTab=snapshot1.getValue(class_Answers.class);
+//                    list_answer.add(AnswersTab);
 //
 //                }
 //                answerAdaptor.notifyDataSetChanged();
@@ -560,7 +560,7 @@ public class Landing_Feed_Answer extends AppCompatActivity {
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
+//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" AnswersTab");
                             long noofQuesinCategory = snapshot.getChildrenCount() + 1;
 //                    String push=quesCategory+"_Qno_"+noofQuesinCategory;
 
@@ -823,7 +823,7 @@ public class Landing_Feed_Answer extends AppCompatActivity {
                     showCommentadaptor.notifyDataSetChanged();
 //                    notifyPB.dismiss();
                 } else {
-                    Toast.makeText(Landing_Feed_Answer.this, "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Landing_Feed_Answer.this, "No Question asked yet,Please Ask First QuestionsTab", Toast.LENGTH_SHORT).show();
 //                    notifyPB.dismiss();
                 }
 

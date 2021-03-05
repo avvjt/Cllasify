@@ -94,7 +94,7 @@ public class Landing_Feed extends AppCompatActivity {
 
         notifyPB=new ProgressDialog(this);
         notifyPB.setTitle("Exam Doubt");
-        notifyPB.setMessage("Loading Questions..");
+        notifyPB.setMessage("Loading QuestionsTab..");
         notifyPB.setCanceledOnTouchOutside(true);
         notifyPB.show();
 
@@ -272,7 +272,7 @@ public class Landing_Feed extends AppCompatActivity {
                     Toast.makeText(Landing_Feed.this, "Please Enter Exam Name", Toast.LENGTH_LONG).show();
                     quesCaterory_et.setError("Exam Name?");
                 }else if(addQuestion.isEmpty()){
-                    Toast.makeText(Landing_Feed.this, "Please Enter Questions", Toast.LENGTH_LONG).show();
+                    Toast.makeText(Landing_Feed.this, "Please Enter QuestionsTab", Toast.LENGTH_LONG).show();
                     addQuestion_et.setError("Ask Question");
                 }
                 else {
@@ -385,7 +385,7 @@ public class Landing_Feed extends AppCompatActivity {
                     showQuesadaptor.notifyDataSetChanged();
                     notifyPB.dismiss();
                 } else {
-                    Toast.makeText(Landing_Feed.this, "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Landing_Feed.this, "No Question asked yet,Please Ask First QuestionsTab", Toast.LENGTH_SHORT).show();
                     notifyPB.dismiss();
                 }
 

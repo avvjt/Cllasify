@@ -56,7 +56,7 @@ public class User_Question extends AppCompatActivity {
 
         Toolbar toolbar=findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Your Questions");
+        getSupportActionBar().setTitle("Your QuestionsTab");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,8 +131,8 @@ public class User_Question extends AppCompatActivity {
 //            public void onDataChange(@NonNull DataSnapshot snapshot) {
 //                list_answer.clear();
 //                for (DataSnapshot snapshot1:snapshot.getChildren()){
-//                    class_Answers Answers=snapshot1.getValue(class_Answers.class);
-//                    list_answer.add(Answers);
+//                    class_Answers AnswersTab=snapshot1.getValue(class_Answers.class);
+//                    list_answer.add(AnswersTab);
 //
 //                }
 //                answerAdaptor.notifyDataSetChanged();

@@ -694,7 +694,7 @@ public class Adaptor_QueryQuestions extends RecyclerView.Adapter<Adaptor_QueryQu
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
+//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" AnswersTab");
 
                     tv_AnsCount.setText(""+snapshot.getChildrenCount());
                 }
@@ -710,7 +710,7 @@ public class Adaptor_QueryQuestions extends RecyclerView.Adapter<Adaptor_QueryQu
         referenceLike.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
+//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" AnswersTab");
 
                     tv_likeCount.setText(""+snapshot.getChildrenCount());
                 }
@@ -725,7 +725,7 @@ public class Adaptor_QueryQuestions extends RecyclerView.Adapter<Adaptor_QueryQu
         referencedisLike.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
+//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" AnswersTab");
 
                     tv_dislikeCount.setText(""+snapshot.getChildrenCount());
                 }
@@ -740,7 +740,7 @@ public class Adaptor_QueryQuestions extends RecyclerView.Adapter<Adaptor_QueryQu
             reference.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
+//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" AnswersTab");
 
                     tv_flagCount.setText(""+snapshot.getChildrenCount());
                 }
