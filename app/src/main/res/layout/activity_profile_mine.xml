@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutDescription="@xml/activity_prpfile_mine_scene"
-    tools:context=".PrpfileMine"
+    tools:context=".ProfileMine"
     android:id="@+id/rootLayout">
 
     <LinearLayout
@@ -124,7 +124,7 @@
         android:background="@color/design_default_color_on_primary"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parentparent"
+        app:layout_constraintRight_toRightOf="parent"
         app:tabIndicatorColor="@color/purple"
         app:tabSelectedTextColor="@color/purple"
         app:tabTextColor="@color/black"

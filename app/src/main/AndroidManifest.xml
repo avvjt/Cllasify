@@ -13,11 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
-        <activity android:name=".Presence"></activity>
+        <activity android:name=".Presence"/>
         <activity android:name=".Social" />
         <activity android:name=".Fragment.Subscriptions" />
         <activity android:name=".EditProfile" />
-        <activity android:name=".PrpfileMine" />
+        <activity android:name=".ProfileMine" />
         <activity android:name=".Account" />
         <activity android:name=".User_Question" />
         <activity android:name=".Phone_Verify" />

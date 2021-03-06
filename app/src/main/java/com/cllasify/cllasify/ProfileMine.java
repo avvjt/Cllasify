@@ -9,7 +9,7 @@ import com.cllasify.cllasify.Adaptor.Adaptor_ProfileTab;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
-public class PrpfileMine extends AppCompatActivity {
+public class ProfileMine extends AppCompatActivity {
 
     TabLayout tabLayout;
     TabItem tabItem1,tabItem2,tabItem3,tabItem4;
@@ -20,7 +20,7 @@ public class PrpfileMine extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_prpfile_mine);
+        setContentView(R.layout.activity_profile_mine);
 
         tabLayout= findViewById(R.id.tablayout1);
         tabItem1= findViewById(R.id.HomeTab);
