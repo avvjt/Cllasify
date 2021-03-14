@@ -4,13 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import com.cllasify.cllasify.Fragment.FriendsTab;
-import com.cllasify.cllasify.Fragment.RequestTab;
+import com.cllasify.cllasify.Fragment.ServersRequestTab;
+import com.cllasify.cllasify.Fragment.ServersTab;
 
-public class Adaptor_SocialTab extends FragmentPagerAdapter {
+public class Adaptor_ServersTab extends FragmentPagerAdapter {
     int tabcount;
 
-    public Adaptor_SocialTab(@NonNull FragmentManager fm, int behavior) {
+    public Adaptor_ServersTab(@NonNull FragmentManager fm, int behavior) {
         super(fm, behavior);
         tabcount = behavior;
     }
@@ -20,9 +20,9 @@ public class Adaptor_SocialTab extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new FriendsTab();
+                return new ServersTab();
             case 1:
-                return new RequestTab();
+                return new ServersRequestTab();
             default:
                 return null;
         }

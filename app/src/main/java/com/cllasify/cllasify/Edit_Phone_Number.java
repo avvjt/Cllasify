@@ -1,16 +1,14 @@
-package com.cllasify.cllasify.Fragment;
+package com.cllasify.cllasify;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.cllasify.cllasify.R;
-
-public class Subscriptions extends AppCompatActivity {
+public class Edit_Phone_Number extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_subscriptions);
+        setContentView(R.layout.activity_edit__phone__number);
     }
 }

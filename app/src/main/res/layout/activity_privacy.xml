@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/rootLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/ll_edit"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toTopOf="@+id/rootLayout"
+            app:layout_constraintLeft_toLeftOf="@+id/rootLayout"
+            app:layout_constraintRight_toRightOf="@+id/rootLayout">
+
+            <Button
+                android:layout_width="36dp"
+                android:layout_height="16dp"
+                android:drawableEnd="@drawable/ic_left_back"
+                android:id="@+id/btn_Cancel"
+                android:background="@color/transparent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/ll_edit"
+                app:layout_constraintBottom_toBottomOf="@id/ll_edit"
+                android:layout_marginStart="20dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/privacy"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="120dp"
+                app:layout_constraintBottom_toBottomOf="@+id/ll_edit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/ll_edit"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="48dp">
+
+        <LinearLayout
+            android:id="@+id/text_holder"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_edit">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/safe_direct_messaging"
+            android:textColor="@color/page_black"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textSize="16sp"
+                android:textColor="@color/page_black"
+                android:text="@string/auto_delete_msg"/>
+
+
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layoutDirection="rtl">
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/scan_everyone"
+                    android:textColor="@color/page_black"
+                    android:textSize="17sp"
+                    android:checked="true"/>
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/scan_everyone_not_friends"
+                    android:textColor="@color/page_black"
+                    android:textSize="17sp"
+                    android:layout_marginTop="20dp"
+                    android:checked="false"/>
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/not_scan"
+                    android:textColor="@color/page_black"
+                    android:textSize="17sp"
+                    android:layout_marginTop="20dp"
+                    android:checked="false"/>
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/server_privacy"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/page_black"/>
+
+            <CheckedTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@color/page_black"
+                android:text="@string/allow_msg_servers"
+                android:layout_marginTop="30dp"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:checked="true"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/who_send_req"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/page_black"/>
+
+            <CheckedTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@color/page_black"
+                android:text="@string/everyone"
+                android:layout_marginTop="30dp"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:checked="true"/>
+
+            <CheckedTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@color/page_black"
+                android:text="@string/friends_of_friends"
+                android:layout_marginTop="20dp"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:checked="false"/>
+
+            <CheckedTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="17sp"
+                android:textColor="@color/page_black"
+                android:text="@string/server_members"
+                android:layout_marginTop="20dp"
+                android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+                android:checked="false"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/how_use_data"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/page_black"/>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/use_data_improved"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/page_black"
+                android:textSize="17sp"
+                android:checked="true"/>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/use_data_customize"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/page_black"
+                android:textSize="17sp"
+                android:checked="true"/>
+
+            <com.google.android.material.switchmaterial.SwitchMaterial
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/track_screen"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/page_black"
+                android:textSize="17sp"
+                android:checked="true"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/white"
+                android:text="@string/request_data"
+                android:layout_marginBottom="50dp"/>
+
+
+
+
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

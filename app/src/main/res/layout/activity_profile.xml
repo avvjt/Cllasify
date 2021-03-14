@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Account">
+    tools:context=".Profile">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -48,12 +49,27 @@
                 android:layout_marginTop="45dp"
                 android:layout_marginLeft="22dp"
                 android:layout_marginRight="22dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_margin="20dp"
                     android:id="@+id/prof_pic"
                     android:src="@drawable/maharaji"/>
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/go_premium"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="100dp"/>
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -71,6 +87,7 @@
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:layout_marginStart="20dp"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -86,18 +103,8 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_user_intro"
-                    android:text="@string/my_account"
-                    android:textSize="22sp"
-                    android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_my_account"
-                    android:drawablePadding="20dp"
-                    android:paddingBottom="25dp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:id="@+id/tv_usegr_intro"
-                    android:text="@string/subscriptions"
+                    android:text="@string/set_status"
                     android:textSize="22sp"
                     android:textColor="@color/light_black"
                     app:drawableStartCompat="@drawable/ic_subscription"
@@ -106,8 +113,41 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_user_hintro"
-                    android:text="@string/friends"
+                    android:id="@+id/tv_user_intro"
+                    android:text="@string/my_account"
+                    android:textSize="22sp"
+                    android:textColor="@color/light_black"
+                    app:drawableStartCompat="@drawable/ic_subscription"
+                    android:drawablePadding="20dp"
+                    android:paddingBottom="25dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_us_intro"
+                    android:text="@string/friend"
+                    android:textSize="22sp"
+                    android:textColor="@color/light_black"
+                    app:drawableStartCompat="@drawable/ic_subscription"
+                    android:drawablePadding="20dp"
+                    android:paddingBottom="25dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_usgr_intro"
+                    android:text="@string/servers"
+                    android:textSize="22sp"
+                    android:textColor="@color/light_black"
+                    app:drawableStartCompat="@drawable/ic_subscription"
+                    android:drawablePadding="20dp"
+                    android:paddingBottom="25dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_user_hint"
+                    android:text="@string/notification"
                     android:textSize="22sp"
                     android:textColor="@color/light_black"
                     app:drawableStartCompat="@drawable/ic_friends"
@@ -117,55 +157,61 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_user_hintfro"
-                    android:text="@string/account_settings"
+                    android:id="@+id/tv_us"
+                    android:text="@string/theme"
                     android:textSize="22sp"
                     android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_settings"
+                    app:drawableStartCompat="@drawable/ic_friends"
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_user_hgintfro"
-                    android:text="@string/set_presence"
+                    android:id="@+id/tv_user_hino"
+                    android:text="@string/privacy"
                     android:textSize="22sp"
                     android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_presence"
+                    app:drawableStartCompat="@drawable/ic_friends"
+                    android:drawablePadding="20dp"
+                    android:paddingBottom="25dp"/>
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_user_hio"
+                    android:text="@string/help"
+                    android:textSize="22sp"
+                    android:textColor="@color/light_black"
+                    app:drawableStartCompat="@drawable/ic_friends"
+                    android:drawablePadding="20dp"
+                    android:paddingBottom="25dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_user_ntro"
+                    android:text="@string/about"
+                    android:textSize="22sp"
+                    android:textColor="@color/light_black"
+                    app:drawableStartCompat="@drawable/ic_friends"
+                    android:drawablePadding="20dp"
+                    android:paddingBottom="25dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_user_ntr"
+                    android:text="@string/log_out"
+                    android:textSize="22sp"
+                    android:textColor="@color/light_black"
+                    app:drawableStartCompat="@drawable/ic_friends"
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ll_userContacts"
-                android:id="@+id/you"
-                android:orientation="vertical"
-                android:layout_marginTop="22dp"
-                android:layout_marginLeft="22dp"
-                android:layout_marginRight="22dp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_user_hjgintfro"
-                    android:text="@string/servers"
-                    android:textSize="22sp"
-                    android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_server"
-                    android:drawablePadding="20dp"
-                    android:paddingBottom="25dp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_user_hginthfro"
-                    android:text="@string/feedback"
-                    android:textSize="22sp"
-                    android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_feedback"
-                    android:drawablePadding="20dp"
-                    android:paddingBottom="25dp"/>
-            </LinearLayout>
+
 
         </RelativeLayout>
     </ScrollView>

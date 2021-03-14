@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutDescription="@xml/activity_prpfile_mine_scene"
-    tools:context=".ProfileMine"
+    tools:context=".ProfileOthers"
     android:id="@+id/rootLayout">
 
     <LinearLayout

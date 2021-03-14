@@ -5,40 +5,39 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
-import com.cllasify.cllasify.Adaptor.Adaptor_ProfileTab;
+import com.cllasify.cllasify.Adaptor.Adaptor_ServersTab;
+import com.cllasify.cllasify.Adaptor.Adaptor_SocialTab;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 
-public class ProfileMine extends AppCompatActivity {
+public class Servers extends AppCompatActivity {
 
     TabLayout tabLayout;
-    TabItem tabItem1,tabItem2,tabItem3,tabItem4;
+    TabItem tabItem1,tabItem2;
     ViewPager viewPager;
-    Adaptor_ProfileTab adaptor_profileTab;
-
+    Adaptor_ServersTab adaptor_serversTab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile_mine);
+        setContentView(R.layout.activity_servers);
+
 
         tabLayout= findViewById(R.id.tablayout1);
-        tabItem1= findViewById(R.id.HomeTab);
-        tabItem2= findViewById(R.id.QuestionsTab);
-        tabItem3= findViewById(R.id.AnswersTab);
-        tabItem4= findViewById(R.id.AboutTab);
+        tabItem1= findViewById(R.id.serversTab);
+        tabItem2= findViewById(R.id.requestTab);
         viewPager= findViewById(R.id.vpager);
 
-        adaptor_profileTab =new Adaptor_ProfileTab(getSupportFragmentManager(),tabLayout.getTabCount());
-        viewPager.setAdapter(adaptor_profileTab);
+        adaptor_serversTab =new Adaptor_ServersTab(getSupportFragmentManager(),tabLayout.getTabCount());
+        viewPager.setAdapter(adaptor_serversTab);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
 
-                if(tab.getPosition()==0 || tab.getPosition()==1 || tab.getPosition()==2 || tab.getPosition()==3)
-                    adaptor_profileTab.notifyDataSetChanged();
+                if(tab.getPosition()==0 || tab.getPosition()==1)
+                    adaptor_serversTab.notifyDataSetChanged();
             }
 
             @Override
