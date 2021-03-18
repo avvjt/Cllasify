@@ -196,5 +196,14 @@
     <string name="light">Light</string>
     <string name="dark">Dark</string>
     <string name="system_default">System Default</string>
+    <string name="report_problem">Report problem</string>
+    <string name="report_a_problem">Report a problem</string>
+    <string name="help_centre">Help Centre</string>
+    <string name="send_feedback">Send Feedback</string>
+    <string name="report_spam_abuse">Report Spam or Abuse</string>
+    <string name="app_updates">App updates</string>
+    <string name="data_policy">Data Policy</string>
+    <string name="terms_of_use">Terms of Use</string>
+    <string name="open_source">Open-source libraries</string>
 
 </resources>

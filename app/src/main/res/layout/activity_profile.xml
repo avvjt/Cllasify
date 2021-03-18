@@ -67,7 +67,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/go_premium"
                         android:layout_gravity="center"
-                        android:layout_marginStart="100dp"/>
+                        android:layout_marginStart="100dp"
+                        android:drawableStart="@drawable/ic_premium"/>
 
                 </LinearLayout>
 
@@ -107,7 +108,7 @@
                     android:text="@string/set_status"
                     android:textSize="22sp"
                     android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_subscription"
+                    app:drawableStartCompat="@drawable/ic_status"
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
                 <TextView
@@ -117,7 +118,7 @@
                     android:text="@string/my_account"
                     android:textSize="22sp"
                     android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_subscription"
+                    app:drawableStartCompat="@drawable/ic_account"
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
 
@@ -128,7 +129,7 @@
                     android:text="@string/friend"
                     android:textSize="22sp"
                     android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_subscription"
+                    app:drawableStartCompat="@drawable/ic_friends"
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
 
@@ -139,7 +140,7 @@
                     android:text="@string/servers"
                     android:textSize="22sp"
                     android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_subscription"
+                    app:drawableStartCompat="@drawable/ic_server"
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
 
@@ -150,7 +151,7 @@
                     android:text="@string/notification"
                     android:textSize="22sp"
                     android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_friends"
+                    app:drawableStartCompat="@drawable/ic_noti"
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
 
@@ -161,7 +162,7 @@
                     android:text="@string/theme"
                     android:textSize="22sp"
                     android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_friends"
+                    app:drawableStartCompat="@drawable/ic_theme"
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
 
@@ -172,7 +173,7 @@
                     android:text="@string/privacy"
                     android:textSize="22sp"
                     android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_friends"
+                    app:drawableStartCompat="@drawable/ic_privicy"
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
 
@@ -184,7 +185,7 @@
                     android:text="@string/help"
                     android:textSize="22sp"
                     android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_friends"
+                    app:drawableStartCompat="@drawable/ic_help"
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
 
@@ -195,7 +196,7 @@
                     android:text="@string/about"
                     android:textSize="22sp"
                     android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_friends"
+                    app:drawableStartCompat="@drawable/ic_about"
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
 
@@ -206,7 +207,7 @@
                     android:text="@string/log_out"
                     android:textSize="22sp"
                     android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_friends"
+                    app:drawableStartCompat="@drawable/ic_logout"
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
             </LinearLayout>
