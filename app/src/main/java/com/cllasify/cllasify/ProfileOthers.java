@@ -20,7 +20,7 @@ public class ProfileOthers extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_others);
+        setContentView(R.layout.activity_profile_others);
 
         tabLayout= findViewById(R.id.tablayout1);
         tabItem1= findViewById(R.id.HomeTab);
