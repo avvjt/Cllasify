@@ -208,5 +208,6 @@
     <string name="why_needed">Why is it needed?</string>
     <string name="resend">Resend OTP</string>
     <string name="sent_otp">We have sent OTP to your mobile number.</string>
+    <string name="number">Number</string>
 
 </resources>
