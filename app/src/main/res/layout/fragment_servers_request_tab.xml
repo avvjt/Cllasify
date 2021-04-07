@@ -8,7 +8,11 @@
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="servers request tab"
+        android:layout_marginTop="100dp"
+        android:layout_gravity="center"
+        android:textAlignment="center"/>
 
 </FrameLayout>
