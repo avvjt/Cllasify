@@ -22,10 +22,39 @@ public class Class_Answer {
     public String pushId;
     public String ansPushId;
     public String cmntAnsPushId;
+    public String groupName;
+    public String group1;
+    public String group2;
+    public String group3;
+    public String group4;
+    public String group5;
+    public String group6;
+    public String group7;
+    public String group8;
+    public String group9;
+
 
     private boolean expandable;
 
+    public Class_Answer(String dateTime, String userName, String userId, String userEmailId, String position, String groupName) {
+        this.dateTime = dateTime;
+        this.userName = userName;
+        this.userId = userId;
+        this.userEmailId = userEmailId;
+        this.position = position;
+        this.groupName = groupName;
+        this.expandable = expandable;
+        this.group1=group1;
+        this.group2=group2;
+        this.group3=group3;
+        this.group4=group4;
+        this.group5=group5;
+        this.group6=group6;
+        this.group7=group7;
+        this.group8=group8;
+        this.group9=group9;
 
+    }
 
     public Class_Answer(String quesCategory, String question, String dateTime, String userName, String userId, String userEmailId, String quesCombined) {
         this.quesCategory = quesCategory;
@@ -107,6 +136,79 @@ public class Class_Answer {
 
 
     public Class_Answer() {
+    }
+
+
+    public String getGroup1() {
+        return group1;
+    }
+
+    public void setGroup1(String group1) {
+        this.group1 = group1;
+    }
+
+    public String getGroup2() {
+        return group2;
+    }
+
+    public void setGroup2(String group2) {
+        this.group2 = group2;
+    }
+
+    public String getGroup3() {
+        return group3;
+    }
+
+    public void setGroup3(String group3) {
+        this.group3 = group3;
+    }
+
+    public String getGroup4() {
+        return group4;
+    }
+
+    public void setGroup4(String group4) {
+        this.group4 = group4;
+    }
+
+    public String getGroup5() {
+        return group5;
+    }
+
+    public void setGroup5(String group5) {
+        this.group5 = group5;
+    }
+
+    public String getGroup6() {
+        return group6;
+    }
+
+    public void setGroup6(String group6) {
+        this.group6 = group6;
+    }
+
+    public String getGroup7() {
+        return group7;
+    }
+
+    public void setGroup7(String group7) {
+        this.group7 = group7;
+    }
+
+    public String getGroup8() {
+        return group8;
+    }
+
+    public void setGroup8(String group8) {
+        this.group8 = group8;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     public String getQuesCategory() {
@@ -235,5 +337,13 @@ public class Class_Answer {
 
     public void setCmntAnsPushId(String cmntAnsPushId) {
         this.cmntAnsPushId = cmntAnsPushId;
+    }
+
+    public String getGroup9() {
+        return group9;
+    }
+
+    public void setGroup9(String group9) {
+        this.group9 = group9;
     }
 }

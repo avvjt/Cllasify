@@ -40,19 +40,14 @@ public class ProfileOthers extends AppCompatActivity {
                 if(tab.getPosition()==0 || tab.getPosition()==1 || tab.getPosition()==2 || tab.getPosition()==3)
                     adaptor_profileTab.notifyDataSetChanged();
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
-
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        //listen for scroll or page change
+            //listen for scroll or page change
     }
 }

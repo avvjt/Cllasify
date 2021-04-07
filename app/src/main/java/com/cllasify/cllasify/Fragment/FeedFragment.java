@@ -1,8 +1,14 @@
 package com.cllasify.cllasify.Fragment;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +27,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -35,7 +41,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -62,17 +67,14 @@ import java.util.List;
 
 
 public class FeedFragment extends Fragment {
-    Button button;
     RecyclerView recyclerView;
     FloatingActionButton fab_addQ;
-    String rName, rPhoneno,userdbName, TitleNew,currUser, quesCategory,addQuestion;
-    TextView username_tv;
-    int like=0,dislike=0;
+    String  quesCategory,addQuestion;
+
+    Paint p = new Paint();
+
     SearchView searchView;
     SwipeRefreshLayout swipeRefreshLayout;
-
-    RelativeLayout rl_feed;
-
     DatabaseReference refAddQuesUsers,refAddQuesUsersPrivacy,refAddQuesUsersCategory,
             refAddQues,refAddQuesCategory, refShowAllQues;
 
@@ -96,6 +98,8 @@ public class FeedFragment extends Fragment {
 
     ChipNavigationBar chipNavigationBar;
 
+    TextView tv_Question;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -108,6 +112,19 @@ public class FeedFragment extends Fragment {
         notifyPB.setCanceledOnTouchOutside(true);
         notifyPB.show();
 
+        tv_Question=view.findViewById(R.id.tv_Question);
+        tv_Question.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment=null;
+                FragmentTransaction ft;
+                fragment = new HomeFragment();
+                ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.addToBackStack(null);
+                ft.replace(R.id.fragment_container, fragment);
+                ft.commit();
+            }
+        });
         chipNavigationBar=getActivity().findViewById(R.id.bottom_nav_menu);
         searchView=view.findViewById(R.id.quesSearchView);
         fab_addQ=view.findViewById(R.id.fab_addQ);
@@ -119,8 +136,10 @@ public class FeedFragment extends Fragment {
 
         if (FirebaseAuth.getInstance().getCurrentUser() == null) {
             chipNavigationBar.setVisibility(View.GONE);
+            chipNavigationBar.setItemSelected(R.id.bottom_nav_feed,true);
         } else {
            chipNavigationBar.setVisibility(View.VISIBLE);
+            chipNavigationBar.setItemSelected(R.id.bottom_nav_feed,true);
         }
 
 //
@@ -230,10 +249,176 @@ public class FeedFragment extends Fragment {
         }
         showFeedQuestionRV();
 
+//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+//        itemTouchHelper.attachToRecyclerView(recyclerView);
 
+
+        initSwipe();
         return view;
     }
 
+    private void initSwipe(){
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                int position = viewHolder.getAdapterPosition();
+
+                if (direction == ItemTouchHelper.LEFT){
+//                    adapter.removeItem(position);
+                    Toast.makeText(getContext(), "check left", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "check right", Toast.LENGTH_SHORT).show();
+
+//                    removeView();
+//                    edit_position = position;
+//                    alertDialog.setTitle("Edit Country");
+//                    et_country.setText(countries.get(position));
+//                    alertDialog.show();
+                }
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+
+                Bitmap icon;
+                if(actionState == ItemTouchHelper.ACTION_STATE_SWIPE){
+
+                    View itemView = viewHolder.itemView;
+                    float height = (float) itemView.getBottom() - (float) itemView.getTop();
+                    float width = height / 3;
+
+                    if(dX > 0){
+                        p.setColor(Color.parseColor("#388E3C"));
+                        RectF background = new RectF((float) itemView.getLeft(), (float) itemView.getTop(), dX,(float) itemView.getBottom());
+                        c.drawRect(background,p);
+                        icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_edit_white);
+                        RectF icon_dest = new RectF((float) itemView.getLeft() + width ,(float) itemView.getTop() + width,(float) itemView.getLeft()+ 2*width,(float)itemView.getBottom() - width);
+                        c.drawBitmap(icon,null,icon_dest,p);
+                    } else {
+                        p.setColor(Color.parseColor("#D32F2F"));
+                        RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(),(float) itemView.getRight(), (float) itemView.getBottom());
+                        c.drawRect(background,p);
+                        icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_delete_white);
+                        RectF icon_dest = new RectF((float) itemView.getRight() - 2*width ,(float) itemView.getTop() + width,(float) itemView.getRight() - width,(float)itemView.getBottom() - width);
+                        c.drawBitmap(icon,null,icon_dest,p);
+                    }
+                }
+                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+    }
+
+
+//    private void removeView(){
+//        if(view.getParent()!=null) {
+//            ((ViewGroup) view.getParent()).removeView(view);
+//        }
+//    }
+//    private void initDialog(){
+//        alertDialog = new AlertDialog.Builder(this);
+//        view = getLayoutInflater().inflate(R.layout.dialog_layout,null);
+//        alertDialog.setView(view);
+//        alertDialog.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                if(add){
+//                    add =false;
+//                    adapter.addItem(et_country.getText().toString());
+//                    dialog.dismiss();
+//                } else {
+//                    countries.set(edit_position,et_country.getText().toString());
+//                    adapter.notifyDataSetChanged();
+//                    dialog.dismiss();
+//                }
+//
+//            }
+//        });
+//        et_country = (EditText)view.findViewById(R.id.et_country);
+//    }
+//
+//    ItemTouchHelper.SimpleCallback simpleCallback= new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT){
+//
+//        @Override
+//        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+//
+//            return false;
+//        }
+//
+//        @Override
+//        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//
+//            switch (direction){
+//                case ItemTouchHelper.LEFT :
+//                    Toast.makeText(getContext(), "left swipe", Toast.LENGTH_SHORT).show();
+//                    break;
+//                    case ItemTouchHelper.RIGHT:
+//                        Toast.makeText(getContext(), "Right swipe", Toast.LENGTH_SHORT).show();
+//
+//                        break;
+//
+//            }
+//        }
+//    };
+//
+
+//
+//ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
+//    @Override
+//    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+//        return false;
+//    }
+//
+//    @Override
+//    public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
+//        final int position = viewHolder.getAdapterPosition();
+//            switch (direction){
+//                case ItemTouchHelper.LEFT :
+//                    Toast.makeText(getContext(), "left swipe", Toast.LENGTH_SHORT).show();
+//                    break;
+//                case ItemTouchHelper.RIGHT:
+//                    Toast.makeText(getContext(), "Right swipe", Toast.LENGTH_SHORT).show();
+//                    break;
+//
+//            }
+//    }
+//
+//    @Override
+//    public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+//        try {
+//
+//            Bitmap icon;
+//            Paint paint = null;
+//            if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+//                View itemView = viewHolder.itemView;
+//                float height = (float) itemView.getBottom() - (float) itemView.getTop();
+//                float width = height / 5;
+//                viewHolder.itemView.setTranslationX(dX / 5);
+//
+//                paint.setColor(Color.parseColor("#D32F2F"));
+//                RectF background = new RectF((float) itemView.getRight() + dX / 5, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom());
+//                c.drawRect(background, paint);
+//                icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_home);
+//                RectF icon_dest = new RectF((float) (itemView.getRight() + dX /7), (float) itemView.getTop()+width, (float) itemView.getRight()+dX/20, (float) itemView.getBottom()-width);
+//                c.drawBitmap(icon, null, icon_dest, paint);
+//            } else {
+//                super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//    }
+//};
+//
 
 
     public void addFeedQuestion() {
@@ -751,9 +936,9 @@ public class FeedFragment extends Fragment {
         bottomSheetDialoglogin.setContentView(R.layout.btmdialog_login);
 
 
-        Button btn_phonelogin=bottomSheetDialoglogin.findViewById(R.id.btn_phonelogin);
-        Button btn_Cancel=bottomSheetDialoglogin.findViewById(R.id.btn_Cancel);
-        Button btn_googlelogin=bottomSheetDialoglogin.findViewById(R.id.btn_googlelogin);
+        Button btn_phonelogin=bottomSheetDialoglogin.findViewById(R.id.btn_JoinGroup);
+        Button btn_Cancel=bottomSheetDialoglogin.findViewById(R.id.btn_CreateGroup);
+        Button btn_googlelogin=bottomSheetDialoglogin.findViewById(R.id.btn_CreateGroup);
 
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override

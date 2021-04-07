@@ -640,8 +640,8 @@ public class Landing_Feed extends AppCompatActivity {
         bottomSheetDialoglogin.setCancelable(false);
         bottomSheetDialoglogin.setContentView(R.layout.btmdialog_login);
 
-        Button btn_phonelogin=bottomSheetDialoglogin.findViewById(R.id.btn_phonelogin);
-        SignInButton btn_googlelogin=bottomSheetDialoglogin.findViewById(R.id.btn_googlelogin);
+        Button btn_phonelogin=bottomSheetDialoglogin.findViewById(R.id.btn_JoinGroup);
+        SignInButton btn_googlelogin=bottomSheetDialoglogin.findViewById(R.id.btn_CreateGroup);
 
         btn_googlelogin.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,9 +13,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="start_panel_name">Start Panel</string>
-    <string name="center_panel_name">Center Panel</string>
+    <string name="center_panel_name">Welcome to Server</string>
     <string name="end_panel_name">End Panel</string>
-    <string name="swipe_gesture_instructions">Swipe left or right to open side panels with gestures.</string>
+    <string name="swipe_gesture_instructions">Swipe left to see your Group or right to Open profile.</string>
     <string name="open_start_panel_instructions">Alternatively, call methods like openStartPanel() (e.g. in response to a button click).</string>
     <string name="open_start_panel_button_text">Open Start Panel</string>
     <string name="child_gesture_region_instructions">Use PanelsChildGestureRegionObserver to not handle panel gestures on selected child views.</string>

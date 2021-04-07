@@ -21,7 +21,7 @@ public class Dashboard extends AppCompatActivity {
 
         chipNavigationBar = findViewById(R.id.bottom_nav_menu);
         chipNavigationBar.setItemSelected(R.id.bottom_nav_home,true);
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new FeedFragment()).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
         bottomMenu();
     }
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.HomeFragment">
 
 
@@ -24,10 +25,60 @@
             <TextView
                 style="@style/PanelHeader"
                 android:text="@string/start_panel_name" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_AddGroup"
+                android:text="Add Group"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_lteachattend"
+                android:visibility="gone"
+                android:text="Attendance"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_lteachexam"
+                android:visibility="gone"
+                android:text="Exam"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_lteachresult"
+                android:visibility="gone"
+                android:text="Result"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:id="@+id/tv_UserPrivateTitle"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:id="@+id/rv_UserGroupTitle"/>
+<androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_UserPrivateGroupTitle"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:id="@+id/tv_UserPublicTitle"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_UserPublicGroupTitle"/>
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/center_panel"
             style="@style/Panel"
             android:layout_width="match_parent"
@@ -36,15 +87,74 @@
 
             <TextView
                 style="@style/PanelHeader"
-                android:layout_marginBottom="32dp"
+                android:layout_marginBottom="16dp"
+                android:layout_alignParentTop="true"
+                android:id="@+id/tv_cpaneltitle"
                 android:text="@string/center_panel_name" />
 
             <TextView
                 style="@style/PanelBodyText"
+                android:id="@+id/tv_cpanelbody"
+                android:layout_below="@id/tv_cpaneltitle"
                 android:text="@string/swipe_gesture_instructions" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_below="@+id/tv_cpanelbody"
+                android:background="@color/colorPrimary"
+                android:layout_height="2dp"/>
 
-
-        </LinearLayout>
+            <androidx.appcompat.widget.SearchView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:queryHint="Search Groups"
+                android:layout_below="@+id/tv_cpanelbody"
+                android:id="@+id/cgroupSearchView"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_below="@id/cgroupSearchView"
+                android:background="@color/colorPrimary"
+                android:layout_height="2dp"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="Add Group"
+                android:layout_below="@id/cgroupSearchView"
+                android:id="@+id/btn_caddgroup"
+                android:textSize="30sp"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@id/btn_caddgroup"
+                android:id="@+id/btn_csearchgroup"
+                android:text="Search Group"
+                android:textSize="30sp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cgroupSearchView"
+                android:id="@+id/rv_cGroupDashData"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_weight="3"
+                    android:id="@+id/ib_cattach"/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:id="@+id/et_ctext"/>
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                        android:id="@+id/ib_csubmit"
+                    android:layout_weight="3" />
+            </LinearLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/end_panel"
@@ -53,14 +163,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="end"
             android:orientation="vertical">
-
             <TextView
                 style="@style/PanelHeader"
                 android:text="@string/end_panel_name" />
-
         </LinearLayout>
-
     </com.discord.panels.OverlappingPanelsLayout>
-
-
 </LinearLayout>

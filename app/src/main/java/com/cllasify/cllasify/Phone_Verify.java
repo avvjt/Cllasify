@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.cllasify.cllasify.Fragment.FeedFragment;
+import com.cllasify.cllasify.Fragment.HomeFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -201,7 +202,7 @@ public class Phone_Verify extends AppCompatActivity {
                 refUserRegister.child( "Category" ).setValue("Teacher");
                 Fragment fragment=null;
                 FragmentTransaction ft;
-                fragment = new FeedFragment();
+                fragment = new HomeFragment();
                 ft = getSupportFragmentManager().beginTransaction();
                 ft.addToBackStack(null);
                 ft.replace(R.id.fragment_container, fragment);
