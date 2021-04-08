@@ -13,8 +13,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.Adaptor.Adaptor_ProfileTab;
 import com.cllasify.cllasify.Fragment.Feed.Dashboard;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Fragment.Feed.User_Question;
@@ -23,20 +25,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class ProfileFragment extends Fragment {
 
-    private Button btn_signout,btn_feed;
-    private TextView name,email;
-    private ImageView prof_pic;
-    FirebaseAuth firebaseAuth;
-    Button btn_userques_Category,btn_user_question;
-    RecyclerView rv_Questionlist;
-
-    GoogleSignInClient googleSignInClient;
+    TabLayout tabLayout;
+    TabItem tabItem1,tabItem2,tabItem3,tabItem4;
+    ViewPager viewPager;
+    Adaptor_ProfileTab adaptor_profileTab;
     ChipNavigationBar chipNavigationBar;
 
     @Override
@@ -45,67 +45,36 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
         chipNavigationBar = getActivity().findViewById(R.id.bottom_nav_menu);
-
         chipNavigationBar.setItemSelected(R.id.bottom_nav_profile,true);
 
+        tabLayout= view.findViewById(R.id.tablayout1);
+        tabItem1= view.findViewById(R.id.HomeTab);
+        tabItem2= view.findViewById(R.id.QuestionsTab);
+        tabItem3= view.findViewById(R.id.AnswersTab);
+        tabItem4= view.findViewById(R.id.AboutTab);
+        viewPager= view.findViewById(R.id.vpager);
 
-        rv_Questionlist=view.findViewById(R.id.rv_userques_category);
-        btn_user_question=view.findViewById(R.id.btn_user_question);
-        btn_userques_Category=view.findViewById(R.id.btn_userques_Category);
-        prof_pic=view.findViewById(R.id.prof_pic);
-        name=view.findViewById(R.id.tv_user_name);
-        btn_signout=view.findViewById(R.id.btn_signout);
-        email=view.findViewById(R.id.prof_email);
+        adaptor_profileTab =new Adaptor_ProfileTab(getChildFragmentManager(),tabLayout.getTabCount());
+        viewPager.setAdapter(adaptor_profileTab);
 
-        firebaseAuth=FirebaseAuth.getInstance();
-
-        FirebaseUser firebaseUser=firebaseAuth.getCurrentUser();
-        if (firebaseUser!=null){
-            Glide.with(getActivity())
-                    .load(firebaseUser.getPhotoUrl())
-                    .into(prof_pic);
-            name.setText(firebaseUser.getDisplayName());
-            email.setText(firebaseUser.getEmail());
-
-        }
-
-        btn_user_question.setOnClickListener(new View.OnClickListener() {
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getContext(), User_Question.class));
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
 
+                if(tab.getPosition()==0 || tab.getPosition()==1 || tab.getPosition()==2 || tab.getPosition()==3)
+                    adaptor_profileTab.notifyDataSetChanged();
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-        googleSignInClient = GoogleSignIn.getClient(getActivity(), GoogleSignInOptions.DEFAULT_SIGN_IN);
-        btn_signout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                googleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        firebaseAuth.signOut();
-                        Toast.makeText(getActivity(), "User SUcessfully signout", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getActivity(), Dashboard.class));
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        //listen for scroll or page change
 
-
-                    }
-                });
-            }
-        });
-//        btn_feed.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(getContext(), "Opening User Profile ", Toast.LENGTH_SHORT).show();
-//                Fragment fragment=null;
-//                FragmentTransaction ft;
-//                fragment = new FeedFragment();
-//                ft = getActivity().getSupportFragmentManager().beginTransaction();
-//                ft.addToBackStack(null);
-//                ft.replace(R.id.fragment_container, fragment);
-//                ft.commit();
-//            }
-//        });
         return view;
+      }
     }
-
-}

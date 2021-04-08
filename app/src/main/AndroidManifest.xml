@@ -31,7 +31,6 @@
         <activity android:name=".Fragment.ProfileMine.MyAccount" />
         <activity android:name=".Fragment.ProfileMine.Set_Status" />
         <activity android:name=".Fragment.ProfileMine.Social" />
-        <activity android:name=".Fragment.ProfileOthers.ProfileOthers" />
         <activity android:name=".Fragment.ProfileMine.Profile" />
         <activity android:name=".Fragment.Feed.User_Question" />
         <activity android:name=".Fragment.Register.Phone_Verify" />
