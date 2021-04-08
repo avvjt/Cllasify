@@ -2,7 +2,6 @@ package com.cllasify.cllasify.Fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -27,8 +26,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGroup;
-import com.cllasify.cllasify.Class_Group;
-import com.cllasify.cllasify.Phone_Login;
+import com.cllasify.cllasify.Fragment.Groups.Class_Group;
+import com.cllasify.cllasify.Fragment.Register.Phone_Login;
 import com.cllasify.cllasify.R;
 import com.discord.panels.OverlappingPanelsLayout;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -55,7 +54,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 

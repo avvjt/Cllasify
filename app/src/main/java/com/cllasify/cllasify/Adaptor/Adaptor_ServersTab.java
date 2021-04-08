@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import com.cllasify.cllasify.Fragment.ServersRequestTab;
-import com.cllasify.cllasify.Fragment.ServersTab;
+import com.cllasify.cllasify.Fragment.ProfileMine.UnderServers.ServersRequestTab;
+import com.cllasify.cllasify.Fragment.ProfileMine.UnderServers.ServersTab;
 
 public class Adaptor_ServersTab extends FragmentPagerAdapter {
     int tabcount;

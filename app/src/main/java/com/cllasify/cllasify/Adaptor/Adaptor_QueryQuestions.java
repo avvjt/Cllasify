@@ -14,8 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.cllasify.cllasify.Class_Answer;
-import com.cllasify.cllasify.Landing_Feed_Answer;
+import com.cllasify.cllasify.Fragment.Feed.Class_Answer;
+import com.cllasify.cllasify.Fragment.Feed.Landing_Feed_Answer;
 import com.cllasify.cllasify.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

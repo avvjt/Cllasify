@@ -1,7 +1,6 @@
 package com.cllasify.cllasify.Fragment;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,10 +32,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
-import com.cllasify.cllasify.Phone_Login;
+import com.cllasify.cllasify.Fragment.Register.Phone_Login;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryQuestions;
-import com.cllasify.cllasify.Class_Answer;
+import com.cllasify.cllasify.Fragment.Feed.Class_Answer;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;

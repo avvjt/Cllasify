@@ -1,0 +1,280 @@
+package com.cllasify.cllasify.Fragment.Groups;
+
+import android.net.Uri;
+
+public class Class_Group {
+
+    public String dateTime;
+    public String userName;
+    public String quesUserName;
+    public String ansUserName;
+    public String cmntAnsUserName;
+    public String userId;
+    public Uri userPhoto;
+    public String userEmailId;
+    public String userPhone;
+    public String position;
+    public String quesCombined;
+    public String groupName;
+    public String groupCategory;
+    public String group1;
+    public String group2;
+    public String group3;
+    public String group4;
+    public String group5;
+    public String group6;
+    public String group7;
+    public String group8;
+    public String group9;
+    public String groupUserCmnt;
+    public String groupOtherUserCmnt;
+    public long groupno;
+
+
+
+    private boolean expandable;
+
+
+    public Class_Group(String dateTime, String userName, String userId, String userEmailId, String position, String groupName, String groupCategory, long groupno) {
+        this.dateTime = dateTime;
+        this.userName = userName;
+        this.userId = userId;
+        this.userEmailId = userEmailId;
+        this.position = position;
+        this.groupName = groupName;
+        this.groupCategory = groupCategory;
+        this.groupno = groupno;
+    }
+
+    public Class_Group(String dateTime, String userName, String userId, String userEmailId, String position, String groupName, String groupCategory) {
+        this.dateTime = dateTime;
+        this.userName = userName;
+        this.userId = userId;
+        this.userEmailId = userEmailId;
+        this.position = position;
+        this.groupName = groupName;
+        this.groupCategory = groupCategory;
+
+        this.expandable = expandable;
+        this.group1=group1;
+        this.group2=group2;
+        this.group3=group3;
+        this.group4=group4;
+        this.group5=group5;
+        this.group6=group6;
+        this.group7=group7;
+        this.group8=group8;
+        this.group9=group9;
+
+    }
+
+    public Class_Group() {
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getQuesUserName() {
+        return quesUserName;
+    }
+
+    public void setQuesUserName(String quesUserName) {
+        this.quesUserName = quesUserName;
+    }
+
+    public String getAnsUserName() {
+        return ansUserName;
+    }
+
+    public void setAnsUserName(String ansUserName) {
+        this.ansUserName = ansUserName;
+    }
+
+    public String getCmntAnsUserName() {
+        return cmntAnsUserName;
+    }
+
+    public void setCmntAnsUserName(String cmntAnsUserName) {
+        this.cmntAnsUserName = cmntAnsUserName;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Uri getUserPhoto() {
+        return userPhoto;
+    }
+
+    public void setUserPhoto(Uri userPhoto) {
+        this.userPhoto = userPhoto;
+    }
+
+    public String getUserEmailId() {
+        return userEmailId;
+    }
+
+    public void setUserEmailId(String userEmailId) {
+        this.userEmailId = userEmailId;
+    }
+
+    public String getUserPhone() {
+        return userPhone;
+    }
+
+    public void setUserPhone(String userPhone) {
+        this.userPhone = userPhone;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public String getQuesCombined() {
+        return quesCombined;
+    }
+
+    public void setQuesCombined(String quesCombined) {
+        this.quesCombined = quesCombined;
+    }
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getGroup1() {
+        return group1;
+    }
+
+    public void setGroup1(String group1) {
+        this.group1 = group1;
+    }
+
+    public String getGroup2() {
+        return group2;
+    }
+
+    public void setGroup2(String group2) {
+        this.group2 = group2;
+    }
+
+    public String getGroup3() {
+        return group3;
+    }
+
+    public void setGroup3(String group3) {
+        this.group3 = group3;
+    }
+
+    public String getGroup4() {
+        return group4;
+    }
+
+    public void setGroup4(String group4) {
+        this.group4 = group4;
+    }
+
+    public String getGroup5() {
+        return group5;
+    }
+
+    public void setGroup5(String group5) {
+        this.group5 = group5;
+    }
+
+    public String getGroup6() {
+        return group6;
+    }
+
+    public void setGroup6(String group6) {
+        this.group6 = group6;
+    }
+
+    public String getGroup7() {
+        return group7;
+    }
+
+    public void setGroup7(String group7) {
+        this.group7 = group7;
+    }
+
+    public String getGroup8() {
+        return group8;
+    }
+
+    public void setGroup8(String group8) {
+        this.group8 = group8;
+    }
+
+    public String getGroup9() {
+        return group9;
+    }
+
+    public void setGroup9(String group9) {
+        this.group9 = group9;
+    }
+
+    public boolean isExpandable() {
+        return expandable;
+    }
+
+    public void setExpandable(boolean expandable) {
+        this.expandable = expandable;
+    }
+
+    public String getGroupCategory() {
+        return groupCategory;
+    }
+
+    public void setGroupCategory(String groupCategory) {
+        this.groupCategory = groupCategory;
+    }
+
+    public String getGroupUserCmnt() {
+        return groupUserCmnt;
+    }
+
+    public void setGroupUserCmnt(String groupUserCmnt) {
+        this.groupUserCmnt = groupUserCmnt;
+    }
+
+    public String getGroupOtherUserCmnt() {
+        return groupOtherUserCmnt;
+    }
+
+    public void setGroupOtherUserCmnt(String groupOtherUserCmnt) {
+        this.groupOtherUserCmnt = groupOtherUserCmnt;
+    }
+
+    public long getGroupno() {
+        return groupno;
+    }
+
+    public void setGroupno(long groupno) {
+        this.groupno = groupno;
+    }
+}

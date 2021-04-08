@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layoutDescription="@xml/activity_servers_scene"
-    tools:context=".Servers"
+    tools:context=".Fragment.ProfileMine.Servers"
     android:id="@+id/root"
     android:background="@color/white">
 

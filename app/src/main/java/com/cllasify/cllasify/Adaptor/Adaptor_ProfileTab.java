@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.cllasify.cllasify.Fragment.AboutTab;
-import com.cllasify.cllasify.Fragment.AnswersTab;
-import com.cllasify.cllasify.Fragment.HomeTab;
-import com.cllasify.cllasify.Fragment.QuestionsTab;
+import com.cllasify.cllasify.Fragment.ProfileOthers.AboutTab;
+import com.cllasify.cllasify.Fragment.ProfileOthers.AnswersTab;
+import com.cllasify.cllasify.Fragment.ProfileOthers.HomeTab;
+import com.cllasify.cllasify.Fragment.ProfileOthers.QuestionsTab;
 
 
 public class Adaptor_ProfileTab extends FragmentPagerAdapter
