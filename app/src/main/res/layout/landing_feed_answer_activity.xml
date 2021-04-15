@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.Feed.Landing_Feed_Answer"
+    tools:context=".Feed.Landing_Feed_Answer"
     android:background="@color/text_white">
 
 

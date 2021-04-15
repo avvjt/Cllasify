@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.ProfileMine.Set_Status"
+    tools:context=".ProfileMine.Set_Status"
     android:id="@+id/rootLayout">
 
     <LinearLayout

@@ -6,29 +6,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
-import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adaptor.Adaptor_ProfileTab;
-import com.cllasify.cllasify.Fragment.Feed.Dashboard;
 import com.cllasify.cllasify.R;
-import com.cllasify.cllasify.Fragment.Feed.User_Question;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class ProfileFragment extends Fragment {
@@ -38,6 +27,7 @@ public class ProfileFragment extends Fragment {
     ViewPager viewPager;
     Adaptor_ProfileTab adaptor_profileTab;
     ChipNavigationBar chipNavigationBar;
+    Button btn_EditProfile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +43,8 @@ public class ProfileFragment extends Fragment {
         tabItem3= view.findViewById(R.id.AnswersTab);
         tabItem4= view.findViewById(R.id.AboutTab);
         viewPager= view.findViewById(R.id.vpager);
+
+        btn_EditProfile=view.findViewById(R.id.btn_EditProfile);
 
         adaptor_profileTab =new Adaptor_ProfileTab(getChildFragmentManager(),tabLayout.getTabCount());
         viewPager.setAdapter(adaptor_profileTab);
@@ -74,6 +66,13 @@ public class ProfileFragment extends Fragment {
         });
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         //listen for scroll or page change
+
+        btn_EditProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+            }
+        });
 
         return view;
       }

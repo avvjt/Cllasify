@@ -41,6 +41,7 @@
                 android:backgroundTint="@color/text_light_black"
                 android:layout_gravity="center"
                 android:textStyle="bold"
+                android:id="@+id/btn_EditProfile"
                 android:text="@string/edit_profile"
                 android:textSize="12sp" />
 

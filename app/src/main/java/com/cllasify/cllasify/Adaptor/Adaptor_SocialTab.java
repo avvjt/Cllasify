@@ -4,8 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
-import com.cllasify.cllasify.Fragment.ProfileMine.UnderSocial.FriendsTab;
-import com.cllasify.cllasify.Fragment.ProfileMine.UnderSocial.RequestTab;
+import com.cllasify.cllasify.ProfileMine.UnderSocial.FriendsTab;
+import com.cllasify.cllasify.ProfileMine.UnderSocial.RequestTab;
 
 public class Adaptor_SocialTab extends FragmentPagerAdapter {
     int tabcount;

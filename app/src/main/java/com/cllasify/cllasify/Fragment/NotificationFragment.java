@@ -1,18 +1,51 @@
 package com.cllasify.cllasify.Fragment;
 
+import android.app.ProgressDialog;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.cllasify.cllasify.Adaptor.Adaptor_Notify;
+import com.cllasify.cllasify.Adaptor.Adaptor_SearchGroup;
+import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 
 public class NotificationFragment extends Fragment {
+    ProgressDialog notifyPB;
+    Adaptor_Notify showAllGroupAdaptor;
+    List<Class_Group> listGroupSTitle;
+    DatabaseReference refSearchShowGroup;
+    RecyclerView rv_AllNotifications;
+    Calendar calenderCC=Calendar.getInstance();
+    SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+    String dateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
 
+    SearchView sv_notifySearchView;
 
     ChipNavigationBar chipNavigationBar;
     @Override
@@ -24,6 +57,125 @@ public class NotificationFragment extends Fragment {
 
         chipNavigationBar.setItemSelected(R.id.bottom_nav_notification,true);
 
+
+        sv_notifySearchView =view.findViewById(R.id.sv_notifySearchView);
+        rv_AllNotifications =view.findViewById(R.id.rv_AllNotifications);
+
+        notifyPB = new ProgressDialog(getContext());
+        notifyPB.setTitle("Join Group");
+        notifyPB.setMessage("Loading All Groups");
+        notifyPB.setCanceledOnTouchOutside(true);
+        notifyPB.show();
+
+        rv_AllNotifications.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        listGroupSTitle=new ArrayList<>();
+        showAllGroupAdaptor = new Adaptor_Notify(getContext(), listGroupSTitle);
+        rv_AllNotifications.setAdapter(showAllGroupAdaptor);
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        final String userID = currentUser.getUid();
+        final String userName = currentUser.getDisplayName();
+        final String userEmail = currentUser.getEmail();
+        final Uri userPhoto = currentUser.getPhotoUrl();
+
+        refSearchShowGroup = FirebaseDatabase.getInstance().getReference().child( "Notification" ).child( "User" ).child(userID);
+
+        if (sv_notifySearchView != null) {
+            sv_notifySearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String query) {
+                    return false;
+                }
+                @Override
+                public boolean onQueryTextChange(String newText) {
+//                    searchGroup(newText);
+                    return false;
+                }
+            });
+        }
+        showEAllGroupSearchRV();
+
         return view;
     }
+
+    private void showEAllGroupSearchRV() {
+//        listGroupSTitle=new ArrayList<>();
+
+        showAllGroupAdaptor.setOnItemClickListener(new Adaptor_Notify.OnItemClickListener() {
+            @Override
+            public void createGroupDialog(String adminGroupID, String groupName) {
+
+            }
+
+            @Override
+            public void rejectNotify(String reqUserID, String currUserId, String groupName, String userName) {
+
+                DatabaseReference refNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("User").child(currUserId);
+                refNotify.child("groupno").setValue("Reject");
+                //mListener.dislikeAns();
+                Toast.makeText(getContext(), "Group request from "+userName+"has been Reject", Toast.LENGTH_SHORT).show();
+
+            }
+
+            @Override
+            public void acceptNotify(String reqUserID, String currUserId, String groupName, String userName) {
+                DatabaseReference refSubsGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups").child(groupName);
+                        refSubsGroup.child(reqUserID).setValue(true);
+                        DatabaseReference refNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("User").child(currUserId);
+                        refNotify.child("groupno").setValue("Approve");
+                        Toast.makeText(getContext(), "Group request from "+userName+"has been Approve", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if (dataSnapshot.getChildrenCount()>0) {
+                    Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
+                    listGroupSTitle.add(class_userDashBoard);
+                    notifyPB.dismiss();
+                    showAllGroupAdaptor.notifyDataSetChanged();
+
+                } else {
+                    Toast.makeText(getContext(), "No group yet created", Toast.LENGTH_SHORT).show();
+                    notifyPB.dismiss();
+                }
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        };
+        //refAdmin.addChildEventListener(childEventListener);
+
+        refSearchShowGroup.addChildEventListener(childEventListener);
+//
+//        refSearchShowGroup.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//            }
+//        });
+    }
+
 }

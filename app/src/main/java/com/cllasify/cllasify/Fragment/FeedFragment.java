@@ -32,10 +32,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
-import com.cllasify.cllasify.Fragment.Register.Phone_Login;
+import com.cllasify.cllasify.Register.Phone_Login;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryQuestions;
-import com.cllasify.cllasify.Fragment.Feed.Class_Answer;
+import com.cllasify.cllasify.Class.Class_Answer;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -120,7 +120,7 @@ public class FeedFragment extends Fragment {
                 fragment = new HomeFragment();
                 ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.addToBackStack(null);
-                ft.replace(R.id.fragment_container, fragment);
+                ft.replace(R.id.fragment_container, fragment,"home");
                 ft.commit();
             }
         });
@@ -167,7 +167,7 @@ public class FeedFragment extends Fragment {
                     fragment = new ProfileFragment();
                     ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ft.addToBackStack(null);
-                    ft.replace(R.id.fragment_container, fragment);
+                    ft.replace(R.id.fragment_container, fragment,"profile");
                     ft.commit();
                 }
 
@@ -464,8 +464,8 @@ public class FeedFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                quesCategory = quesCaterory_et.getText().toString();
-                addQuestion=addQuestion_et.getText().toString();
+                quesCategory = quesCaterory_et.getText().toString().trim();
+                addQuestion=addQuestion_et.getText().toString().trim();
                 String userPrivacy="Public";
                 //String TotalOtherForm=examName+"=="+addQuestion;
                 refAddQuesUsers = FirebaseDatabase.getInstance().getReference().child( "Feed" ).child( "User_Questions" ).child( "User_All_Question" ).child(userID);

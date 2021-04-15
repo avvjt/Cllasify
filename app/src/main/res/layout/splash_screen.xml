@@ -7,7 +7,7 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:background="@color/purple"
-    tools:context=".Fragment.Register.SplashScreen">
+    tools:context=".Register.SplashScreen">
 
 
     <TextView

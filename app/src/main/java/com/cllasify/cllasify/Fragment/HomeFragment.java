@@ -1,3 +1,4 @@
+
 package com.cllasify.cllasify.Fragment;
 
 import android.app.ProgressDialog;
@@ -25,14 +26,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup;
+import com.cllasify.cllasify.Adaptor.Adaptor_SearchGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGroup;
-import com.cllasify.cllasify.Fragment.Groups.Class_Group;
-import com.cllasify.cllasify.Fragment.Register.Phone_Login;
+import com.cllasify.cllasify.Class.Class_Group;
+import com.cllasify.cllasify.Group_Join;
+import com.cllasify.cllasify.Register.Phone_Login;
 import com.cllasify.cllasify.R;
 import com.discord.panels.OverlappingPanelsLayout;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -57,9 +61,17 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    RecyclerView rv_GroupTitle,rv_GroupData,rv_GroupDashData,rv_UserPrivateGroupTitle,rv_UserPublicGroupTitle;
+    RecyclerView rv_GroupTitle,rv_GroupData,
+            rv_GroupDashData,rv_UserPrivateGroupTitle,rv_UserPublicGroupTitle;
     DatabaseReference refShowAllGroup,refTempGroupDB,refGroupDashboard;
-    List<Class_Group> listGroupTitle,listDashboard,listUserPrivateGroupTitle,listUserPublicGroupTitle;
+    DatabaseReference refuserPersonalGroup,refuserAllGroup,
+            refuserPublicGroup,refAllPublicGroup,refAddSubGroup,
+            refSearchShowGroup,refShowUserPublicGroup,refShowUserPrivateGroup,
+            refteachStud,
+            refSubsGroup;
+
+    List<Class_Group> listGroupTitle,listUserPrivateGroupTitle,listUserPublicGroupTitle,
+            listDashboard,listGroupSTitle;
     Adaptor_QueryGroup showGroupadaptor,showUserPrivateGroupadaptor,showUserPublicGroupadaptor;
     Adaptor_ShowGroup showDashadaptor;
 
@@ -78,21 +90,18 @@ public class HomeFragment extends Fragment {
     OverlappingPanelsLayout overlappingPanels;
      Button openStartPanelButton, btn_AddGroup,btn_show;
      //
-     DatabaseReference refuserPersonalGroup,refuserAllGroup,
-             refuserPublicGroup,refAllPublicGroup,refAddSubGroup,
-             refShowUserGroup,refShowUserPublicGroup,refShowUserPrivateGroup,
-    refteachStud;
     Class_Group userAddGroup,addAnswer;
 
-    SearchView groupSearchView;
+    SearchView sv_textSearchView,esv_groupSearchView;
     EditText addAnswer_et, et_ctext;
     TextView postAnswer_tv, dispQues_tv,QuesAskedByTime_tv,
             tv_UserPublicTitle,tv_UserPrivateTitle,
             tv_cpaneltitle,tv_cpanelbody;
 
     ImageButton ib_cattach, ib_csubmit;
-    Button btn_caddgroup, btn_csearchgroup;
+    Button btn_caddgroup, btn_cjoingroup;
     Button btn_lteachresult,btn_lteachattend,btn_lteachexam;
+    LinearLayout ll_bottom_send;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -114,6 +123,15 @@ public class HomeFragment extends Fragment {
             notifyPB.setCanceledOnTouchOutside(true);
             notifyPB.show();
 
+
+            GoogleSignInOptions googleSignInOptions=new GoogleSignInOptions.Builder(
+                    GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken("1085537073642-dq2djhhvidcgmb4c3a5ushet55jk6hf5.apps.googleusercontent.com")
+                    .requestEmail()
+                    .build();
+
+            googleSignInClient= GoogleSignIn.getClient(getContext(),googleSignInOptions);
+
+
             chipNavigationBar = getActivity().findViewById(R.id.bottom_nav_menu);
             chipNavigationBar.setItemSelected(R.id.bottom_nav_home,true);
 
@@ -130,8 +148,10 @@ public class HomeFragment extends Fragment {
 
 
             overlappingPanels = view.findViewById(R.id.overlapping_panels);
+
+
             btn_AddGroup =view.findViewById(R.id.btn_AddGroup);
-            groupSearchView=view.findViewById(R.id.cgroupSearchView);
+            sv_textSearchView =view.findViewById(R.id.sv_textSearchView);
 
             firebaseAuth = FirebaseAuth.getInstance();
             currentUser = firebaseAuth.getCurrentUser();
@@ -140,7 +160,7 @@ public class HomeFragment extends Fragment {
 
 //        openStartPanelButton = view.findViewById(R.id.open_start_panel_button);
 
-            refShowUserGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "User_All_Group" ).child(userID);
+            refSearchShowGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "User_All_Group" ).child(userID);
             refShowUserPrivateGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child("User_Private_Group").child(userID);
             refShowUserPublicGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child("User_Public_Group").child(userID);
             refteachStud = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child("User_Public_Group").child(userID);
@@ -155,25 +175,26 @@ public class HomeFragment extends Fragment {
             rv_GroupTitle.setLayoutManager(new LinearLayoutManager(getContext()));
             rv_UserPublicGroupTitle.setLayoutManager(new LinearLayoutManager(getContext()));
             rv_UserPrivateGroupTitle.setLayoutManager(new LinearLayoutManager(getContext()));
+//            erv_GroupSearchData.setLayoutManager(new LinearLayoutManager(getContext()));
 
             listGroupTitle = new ArrayList<>();
             listUserPrivateGroupTitle = new ArrayList<>();
             listUserPublicGroupTitle = new ArrayList<>();
+            listDashboard = new ArrayList<>();
+//            listGroupSTitle=new ArrayList<>();
 
             showGroupadaptor = new Adaptor_QueryGroup(getContext(), listGroupTitle);
             showUserPrivateGroupadaptor = new Adaptor_QueryGroup(getContext(), listUserPrivateGroupTitle);
             showUserPublicGroupadaptor = new Adaptor_QueryGroup(getContext(), listUserPublicGroupTitle);
+            showDashadaptor = new Adaptor_ShowGroup(getContext(), listDashboard);
+//            showAllGroupAdaptor = new Adaptor_SearchGroup(getContext(), listGroupSTitle);
 
             rv_GroupTitle.setAdapter(showGroupadaptor);
             rv_UserPrivateGroupTitle.setAdapter(showUserPrivateGroupadaptor);
             rv_UserPublicGroupTitle.setAdapter(showUserPublicGroupadaptor);
-//            rv_GroupTitle.keepSynced(true);
-//        recyclerView1.setAdapter(showQuesadaptor);
 
             rv_GroupDashData=view.findViewById(R.id.rv_cGroupDashData);
             rv_GroupDashData.setLayoutManager(new LinearLayoutManager(getContext()));
-            listDashboard = new ArrayList<>();
-            showDashadaptor = new Adaptor_ShowGroup(getContext(), listDashboard);
             rv_GroupDashData.setAdapter(showDashadaptor);
 
 //Left Panel
@@ -181,12 +202,13 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
 //                    btn_show.setVisibility(View.VISIBLE);
-                    addGroupBtmDialog();
+//                    addGroupBtmDialog();
+                    createGroupDialog();
                 }
             });
 
 //            showUserGroupRV();
-            showUserPrivateGroupRV();
+//            showUserPrivateGroupRV();
 
             DatabaseReference refUserStatus = FirebaseDatabase.getInstance().getReference().child("Registration").child(userID);
             refUserStatus.addValueEventListener(new ValueEventListener() {
@@ -194,15 +216,16 @@ public class HomeFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getChildrenCount()>0){
 //                        Class_Group class_group=new Class_Group();
-                        String getTeach=snapshot.child("Category").getValue().toString();
+                        String getTeach=snapshot.child("Category").getValue().toString().trim();
                         if (getTeach.equals("Teacher")){
                             btn_lteachattend.setVisibility(View.VISIBLE);
                             btn_lteachexam.setVisibility(View.VISIBLE);
                             btn_lteachresult.setVisibility(View.VISIBLE);
 
-                        }else{
-                            Toast.makeText(getContext(), "You Registered as Student", Toast.LENGTH_SHORT).show();
                         }
+//                        else{
+////                            Toast.makeText(getContext(), "You Registered as Student", Toast.LENGTH_SHORT).show();
+//                        }
 
                     }
 //                    else {
@@ -221,24 +244,6 @@ public class HomeFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getChildrenCount()>0){
                         showUserPublicGroupRV();
-                    }else {
-                        Toast.makeText(getContext(), "No groups created yet", Toast.LENGTH_SHORT).show();
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
-
-            refShowUserPublicGroup.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.getChildrenCount()>0){
-                        showUserPublicGroupRV();
-                    }else {
-                        Toast.makeText(getContext(), "No groups created yet", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -252,8 +257,6 @@ public class HomeFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getChildrenCount()>0){
                         showUserPrivateGroupRV();
-                    }else {
-                        Toast.makeText(getContext(), "No groups created yet", Toast.LENGTH_SHORT).show();
                     }
 
                 }
@@ -268,22 +271,24 @@ public class HomeFragment extends Fragment {
             ib_csubmit =view.findViewById(R.id.ib_csubmit);
             et_ctext =view.findViewById(R.id.et_ctext);
             btn_caddgroup =view.findViewById(R.id.btn_caddgroup);
-            btn_csearchgroup =view.findViewById(R.id.btn_csearchgroup);
+            btn_cjoingroup =view.findViewById(R.id.btn_cjoingroup);
             tv_cpaneltitle =view.findViewById(R.id.tv_cpaneltitle);
             tv_cpanelbody =view.findViewById(R.id.tv_cpanelbody);
+            ll_bottom_send =view.findViewById(R.id.ll_bottom_send);
 
 
             btn_caddgroup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    addGroupBtmDialog();
+//                    addGroupBtmDialog();
+                    createGroupDialog();
                 }
             });
 
-            btn_csearchgroup.setOnClickListener(new View.OnClickListener() {
+            btn_cjoingroup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    overlappingPanels.openEndPanel();
+                    startActivity(new Intent(getContext(), Group_Join.class));
                 }
             });
 
@@ -336,31 +341,32 @@ public class HomeFragment extends Fragment {
 //                }
 //            });
 
-            if (groupSearchView != null) {
-                groupSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            if (sv_textSearchView != null) {
+                sv_textSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
                         return false;
                     }
                     @Override
                     public boolean onQueryTextChange(String newText) {
-                        search(newText);
+                        searchText(newText);
                         return false;
                     }
                 });
             }
+
+            //END Discord
+
         }else{
             showLoginBtmDialog();
         }
-
-
-
-
         return view;
 
     }
 
-    public void search(String newText) {
+
+
+    public void searchText(String newText) {
         ArrayList<Class_Group> listSearchQues=new ArrayList<>();
         for (Class_Group classUserSearch:listGroupTitle){
             if (classUserSearch.getGroupName().toLowerCase().contains(newText.toLowerCase())){
@@ -370,6 +376,7 @@ public class HomeFragment extends Fragment {
         Adaptor_QueryGroup adapSearchJob= new Adaptor_QueryGroup(getContext(),listSearchQues);
         rv_GroupDashData.setAdapter(adapSearchJob);
     }
+
 
     private void showLoginBtmDialog() {
 
@@ -392,6 +399,14 @@ public class HomeFragment extends Fragment {
         btn_googlelogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GoogleSignInOptions googleSignInOptions=new GoogleSignInOptions.Builder(
+                        GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken("1085537073642-dq2djhhvidcgmb4c3a5ushet55jk6hf5.apps.googleusercontent.com")
+                        .requestEmail()
+                        .build();
+
+                googleSignInClient= GoogleSignIn.getClient(getContext(),googleSignInOptions);
+
+
                 Intent intent=googleSignInClient.getSignInIntent();
 
                 startActivityForResult(intent,100);
@@ -501,7 +516,7 @@ public class HomeFragment extends Fragment {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
                                     showStudTeachBtmDialog();
-                                    chipNavigationBar.setVisibility(View.VISIBLE);
+//                                    chipNavigationBar.setVisibility(View.VISIBLE);
 
                                 }else{
                                     Toast.makeText(getContext(), "Authentication Failed: "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -535,7 +550,7 @@ public class HomeFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 long noofQuesinCategory=snapshot.getChildrenCount()+1;
                 String push=groupTitle+"_Cmntno_"+noofQuesinCategory;
-                String Comment=addAnswer_et.getText().toString();
+                String Comment=addAnswer_et.getText().toString().trim();
 
 //                String groupTitle=snapshot.child(userID).getValue().toString();
                 refAddSubGroup = FirebaseDatabase.getInstance().getReference().
@@ -630,36 +645,36 @@ public class HomeFragment extends Fragment {
 //        }
 //        addAnswer_et.setText("");
 //    }
-
-    private void addGroupBtmDialog() {
-
-        BottomSheetDialog bottomSheetDialoglogin=new BottomSheetDialog(getContext());
-        bottomSheetDialoglogin.setCancelable(true);
-        bottomSheetDialoglogin.setContentView(R.layout.btmdialog_addgroup);
-        Button btn_CreateGroup=bottomSheetDialoglogin.findViewById(R.id.btn_CreateGroup);
-        Button btn_JoinGroup=bottomSheetDialoglogin.findViewById(R.id.btn_JoinGroup);
-        btn_CreateGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                startActivity(new Intent(getContext(), Group_AddPrivPublic.class));
-                createGroupDialog();
-                bottomSheetDialoglogin.dismiss();
-
-            }
-        });
-        btn_JoinGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                startActivity(new Intent(getContext(), Group_AddPrivPublic.class));
-
-            }
-        });
-
-
-        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        bottomSheetDialoglogin.show();
-
-    }
+//
+//    private void addGroupBtmDialog() {
+//
+//        BottomSheetDialog bottomSheetDialoglogin=new BottomSheetDialog(getContext());
+//        bottomSheetDialoglogin.setCancelable(true);
+//        bottomSheetDialoglogin.setContentView(R.layout.btmdialog_addgroup);
+//        Button btn_CreateGroup=bottomSheetDialoglogin.findViewById(R.id.btn_CreateGroup);
+//        Button btn_JoinGroup=bottomSheetDialoglogin.findViewById(R.id.btn_JoinGroup);
+//        btn_CreateGroup.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                startActivity(new Intent(getContext(), Group_AddPrivPublic.class));
+//                createGroupDialog();
+//                bottomSheetDialoglogin.dismiss();
+//
+//            }
+//        });
+//        btn_JoinGroup.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                startActivity(new Intent(getContext(), Group_AddPrivPublic.class));
+//
+//            }
+//        });
+//
+//
+//        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        bottomSheetDialoglogin.show();
+//
+//    }
     private void createGroupDialog() {
         android.app.AlertDialog dialogBuilder = new android.app.AlertDialog.Builder(getContext()).create();
         dialogBuilder.setCanceledOnTouchOutside(true);
@@ -709,16 +724,15 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String GroupName=et_GroupName.getText().toString();
+                String GroupName=et_GroupName.getText().toString().trim();
                 if (GroupName.isEmpty()) {
                     Toast.makeText(getContext(), "Enter Group Name", Toast.LENGTH_SHORT).show();
                     et_GroupName.setError("Enter Group Name");
                 }
                 else {
-
-                    DatabaseReference reference= FirebaseDatabase.getInstance().getReference().
+                    DatabaseReference referenceALLGroup= FirebaseDatabase.getInstance().getReference().
                             child( "Groups" ).child( "User_All_Group" ).child(userID);
-                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    referenceALLGroup.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
 //                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
@@ -729,26 +743,140 @@ public class HomeFragment extends Fragment {
                             SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
                             String dateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
 
-                            refuserPersonalGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID).child(push);
-                            refuserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID).child(push);
+//                            refuserPersonalGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID).child(push);
+//                            refuserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID).child(push);
                             refuserAllGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_All_Group").child(userID).child(push);
-                            refAllPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Public_Group").child(push);
+                            refSubsGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups").child(push);
+//                            refAllPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Public_Group").child(push);
 
                             if (GroupCategory.equals("Private")) {
                                 userAddGroup = new Class_Group(dateTimeCC,userName, userID, userEmailID,push, GroupName,GroupCategory,noofGroupinCategory);
-                                refuserPersonalGroup.setValue(userAddGroup);
+//                                refuserPersonalGroup.setValue(userAddGroup);
                                 refuserAllGroup.setValue(userAddGroup);
                             } else if (GroupCategory.equals("Public")) {
                                 userAddGroup = new Class_Group(dateTimeCC,userName, userID, userEmailID,push, GroupName,GroupCategory,noofGroupinCategory);
-                                refuserPublicGroup.setValue(userAddGroup);
-                                refAllPublicGroup.setValue(userAddGroup);
+//                                refuserPublicGroup.setValue(userAddGroup);
+//                                refAllPublicGroup.setValue(userAddGroup);
                                 refuserAllGroup.setValue(userAddGroup);
                             }
+                            refSubsGroup.child(userID).setValue(true);
+
+
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                         }
                     });
+
+                    if (GroupCategory.equals("Private")) {
+
+                        DatabaseReference referencePVTGroup = FirebaseDatabase.getInstance().getReference().
+                                child("Groups").child("User_Private_Group").child(userID);
+                        referencePVTGroup.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
+                                long noofGroupinCategory = snapshot.getChildrenCount() + 1;
+//                            String position=getString((int) noofQuesinCategory);
+                                String push = "GroupNo_" + noofGroupinCategory + "_" + GroupName;
+                                Calendar calenderCC = Calendar.getInstance();
+                                SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+                                String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
+
+                                refuserPersonalGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID).child(push);
+//                            refuserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID).child(push);
+//                            refuserAllGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_All_Group").child(userID).child(push);
+//                            refAllPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Public_Group").child(push);
+
+//                            if (GroupCategory.equals("Private")) {
+                                userAddGroup = new Class_Group(dateTimeCC, userName, userID, userEmailID, push, GroupName, GroupCategory, noofGroupinCategory);
+                                refuserPersonalGroup.setValue(userAddGroup);
+//                                refuserAllGroup.setValue(userAddGroup);
+//                            } else if (GroupCategory.equals("Public")) {
+//                                userAddGroup = new Class_Group(dateTimeCC,userName, userID, userEmailID,push, GroupName,GroupCategory,noofGroupinCategory);
+//                                refuserPublicGroup.setValue(userAddGroup);
+//                                refAllPublicGroup.setValue(userAddGroup);
+//                                refuserAllGroup.setValue(userAddGroup);
+//                            }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+
+                    }
+                    else if(GroupCategory.equals("Public")) {
+
+                        DatabaseReference referencePBLCGroup = FirebaseDatabase.getInstance().getReference().
+                                child("Groups").child("User_Public_Group").child(userID);
+                        referencePBLCGroup.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
+                                long noofGroupinCategory = snapshot.getChildrenCount() + 1;
+//                            String position=getString((int) noofQuesinCategory);
+                                String push = "GroupNo_" + noofGroupinCategory + "_" + GroupName;
+                                Calendar calenderCC = Calendar.getInstance();
+                                SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+                                String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
+
+//                            refuserPersonalGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID).child(push);
+                                refuserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID).child(push);
+//                            refuserAllGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_All_Group").child(userID).child(push);
+//                            refAllPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Public_Group").child(push);
+
+//                            if (GroupCategory.equals("Private")) {
+//                                userAddGroup = new Class_Group(dateTimeCC,userName, userID, userEmailID,push, GroupName,GroupCategory,noofGroupinCategory);
+//                                refuserPersonalGroup.setValue(userAddGroup);
+//                                refuserAllGroup.setValue(userAddGroup);
+//                            } else if (GroupCategory.equals("Public")) {
+                                userAddGroup = new Class_Group(dateTimeCC, userName, userID, userEmailID, push, GroupName, GroupCategory, noofGroupinCategory);
+                                refuserPublicGroup.setValue(userAddGroup);
+//                                refAllPublicGroup.setValue(userAddGroup);
+//                                refuserAllGroup.setValue(userAddGroup);
+//                            }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                    }
+                    DatabaseReference referenceALLPBLCGroup= FirebaseDatabase.getInstance().getReference().
+                            child( "Groups" ).child( "All_Public_Group" );
+                    referenceALLPBLCGroup.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
+                            long noofGroupinCategory=snapshot.getChildrenCount()+1;
+//                            String position=getString((int) noofQuesinCategory);
+                            String push="GroupNo_"+noofGroupinCategory+"_"+GroupName;
+                            Calendar calenderCC= Calendar.getInstance();
+                            SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+                            String dateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
+
+//                            refuserPersonalGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID).child(push);
+//                            refuserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID).child(push);
+//                            refuserAllGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_All_Group").child(userID).child(push);
+                            refAllPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Public_Group").child(push);
+
+//                            if (GroupCategory.equals("Private")) {
+//                                userAddGroup = new Class_Group(dateTimeCC,userName, userID, userEmailID,push, GroupName,GroupCategory,noofGroupinCategory);
+//                                refuserPersonalGroup.setValue(userAddGroup);
+//                                refuserAllGroup.setValue(userAddGroup);
+//                            } else if (GroupCategory.equals("Public")) {
+                                userAddGroup = new Class_Group(dateTimeCC,userName, userID, userEmailID,push, GroupName,GroupCategory,noofGroupinCategory);
+//                                refuserPublicGroup.setValue(userAddGroup);
+                                refAllPublicGroup.setValue(userAddGroup);
+//                                refuserAllGroup.setValue(userAddGroup);
+//                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+
                     Toast.makeText(getContext(), "Group Successfully Created", Toast.LENGTH_SHORT).show();
                     dialogBuilder.dismiss();
                 }
@@ -860,18 +988,8 @@ public class HomeFragment extends Fragment {
             }
         };
         //refAdmin.addChildEventListener(childEventListener);
-        refShowUserGroup.addChildEventListener(childEventListener);
+        refSearchShowGroup.addChildEventListener(childEventListener);
 
-        refShowUserGroup.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
 //
 //    }
 
@@ -888,6 +1006,7 @@ public class HomeFragment extends Fragment {
             public void addSubChild1(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
                 showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+
             }
 
             @Override
@@ -979,7 +1098,8 @@ public class HomeFragment extends Fragment {
         };
         //refAdmin.addChildEventListener(childEventListener);
         refShowUserPrivateGroup.orderByChild("groupno").addChildEventListener(childEventListener);
-    refShowUserPrivateGroup.addValueEventListener(new ValueEventListener() {
+
+        refShowUserPrivateGroup.addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot snapshot) {
             if (snapshot.getChildrenCount()>0){
@@ -1100,7 +1220,8 @@ public class HomeFragment extends Fragment {
         //refAdmin.addChildEventListener(childEventListener);
         refShowUserPublicGroup.orderByChild("groupno").addChildEventListener(childEventListener);
 
-    refShowUserPublicGroup.addValueEventListener(new ValueEventListener() {
+
+        refShowUserPublicGroup.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildrenCount()>0){
@@ -1153,7 +1274,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String subChildGroupName=et_GroupName.getText().toString();
+                String subChildGroupName=et_GroupName.getText().toString().trim();
                 if (subChildGroupName.isEmpty()) {
                     Toast.makeText(getContext(), "Enter Group Name", Toast.LENGTH_SHORT).show();
                     et_GroupName.setError("Enter Group Name");
@@ -1270,7 +1391,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String subChildGroupName=et_GroupName.getText().toString();
+                String subChildGroupName=et_GroupName.getText().toString().trim();
                 if (subChildGroupName.isEmpty()) {
                     Toast.makeText(getContext(), "Enter Group Name", Toast.LENGTH_SHORT).show();
                     et_GroupName.setError("Enter Group Name");
@@ -1387,7 +1508,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                String subChildGroupName=et_GroupName.getText().toString();
+                String subChildGroupName=et_GroupName.getText().toString().trim();
                 if (subChildGroupName.isEmpty()) {
                     Toast.makeText(getContext(), "Enter Group Name", Toast.LENGTH_SHORT).show();
                     et_GroupName.setError("Enter Group Name");
@@ -1476,6 +1597,8 @@ public class HomeFragment extends Fragment {
 //        linearLayoutManager.setStackFromEnd(true);
 //
 
+        ll_bottom_send.setVisibility(View.VISIBLE);
+        sv_textSearchView.setVisibility(View.VISIBLE);
 
         switch(position){
             case 0 :
@@ -1599,13 +1722,13 @@ public class HomeFragment extends Fragment {
         tv_cpaneltitle.setText(groupName);
         tv_cpanelbody.setText(subgroupName);
         btn_caddgroup.setVisibility(View.GONE);
-        btn_csearchgroup.setVisibility(View.GONE);
+        btn_cjoingroup.setVisibility(View.GONE);
 
         ib_csubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String GroupName = et_ctext.getText().toString();
+                String GroupName = et_ctext.getText().toString().trim();
                 if (GroupName.isEmpty()) {
                     Toast.makeText(getContext(), "Enter text", Toast.LENGTH_SHORT).show();
                     et_ctext.setError("Enter text");
@@ -1650,4 +1773,8 @@ public class HomeFragment extends Fragment {
             }
         });
         }
-    }
+
+
+
+
+}

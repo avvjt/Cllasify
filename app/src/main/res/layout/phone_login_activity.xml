@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.Register.Phone_Login">
+    tools:context=".Register.Phone_Login">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

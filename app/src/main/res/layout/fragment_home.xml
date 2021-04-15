@@ -107,36 +107,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:queryHint="Search Groups"
+                android:visibility="gone"
                 android:layout_below="@+id/tv_cpanelbody"
-                android:id="@+id/cgroupSearchView"/>
+                android:id="@+id/sv_textSearchView"/>
             <View
                 android:layout_width="match_parent"
-                android:layout_below="@id/cgroupSearchView"
+                android:layout_below="@id/sv_textSearchView"
                 android:background="@color/colorPrimary"
                 android:layout_height="2dp"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:text="Add Group"
-                android:layout_below="@id/cgroupSearchView"
+                android:layout_below="@id/sv_textSearchView"
                 android:id="@+id/btn_caddgroup"
                 android:textSize="30sp"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_below="@id/btn_caddgroup"
-                android:id="@+id/btn_csearchgroup"
-                android:text="Search Group"
+                android:id="@+id/btn_cjoingroup"
+                android:text="Join Group"
                 android:textSize="30sp"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/cgroupSearchView"
+                android:layout_below="@+id/sv_textSearchView"
                 android:id="@+id/rv_cGroupDashData"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="36dp"
                 android:layout_alignParentBottom="true"
+                android:id="@+id/ll_bottom_send"
+                android:visibility="gone"
                 android:orientation="horizontal">
                 <ImageButton
                     android:layout_width="match_parent"
@@ -165,7 +169,9 @@
             android:orientation="vertical">
             <TextView
                 style="@style/PanelHeader"
+                android:id="@+id/tv_etite"
                 android:text="@string/end_panel_name" />
+
         </LinearLayout>
     </com.discord.panels.OverlappingPanelsLayout>
 </LinearLayout>
