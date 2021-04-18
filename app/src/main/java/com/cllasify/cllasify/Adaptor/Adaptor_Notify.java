@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,9 +43,9 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
 
         void createGroupDialog(String adminGroupID, String groupName);
 
-        void rejectNotify(String reqUserID, String currUserId, String groupName, String userName);
+        void rejectNotify(String reqUserID, String currUserId, String groupName, String userName,String pushId,String groupPushId);
 
-        void acceptNotify(String reqUserID, String currUserId, String groupName, String userName);
+        void acceptNotify(String reqUserID, String currUserId, String groupName, String userName,String pushId,String groupPushId);
         //void likeAns(int position, String tag);
 //        void saveAns(int position, String tag);
 //        void likeAns(View v, int position, Boolean clicked);
@@ -74,20 +75,34 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
         String GroupName=class_GroupDetails.getGroupName();
         String userName=class_GroupDetails.getUserName();
         String reqDate=class_GroupDetails.getDateTime();
+        String inviteStatus=class_GroupDetails.getGrpJoiningStatus();
 
             FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
             assert mUser != null;
             String userId = mUser.getUid();
-            if (GroupName.isEmpty()){
-                holder.tv_Groupinvite.setVisibility(View.GONE);
-            }else{
-                holder.tv_Groupinvite.setText("User "+userName+" wants to join Group : "+GroupName);
 
-            }
-            if (GroupName.isEmpty()){
-                holder.tv_ReqDate.setVisibility(View.GONE);
-            }else{
-                holder.tv_ReqDate.setText("Requested on : "+reqDate);
+            if (inviteStatus.equals("Approve")){
+                holder.tv_Groupinvite.setText("User " + userName + " request to join Group : " + GroupName+" has been approved");
+                holder.ll_groupdetails.setVisibility(View.GONE);
+                holder.tv_Groupinvite.setBackgroundColor(Color.GREEN);
+            }else if (inviteStatus.equals("Reject")){
+                holder.tv_Groupinvite.setBackgroundColor(Color.RED);
+                holder.ll_groupdetails.setVisibility(View.GONE);
+                holder.tv_Groupinvite.setText("User " + userName + " request to join Group : " + GroupName+" has been rejected");
+            }else {
+
+                holder.ll_groupdetails.setVisibility(View.VISIBLE);
+                if (GroupName.isEmpty()) {
+                    holder.tv_Groupinvite.setVisibility(View.GONE);
+                } else {
+                    holder.tv_Groupinvite.setText("User " + userName + " wants to join Group : " + GroupName);
+
+                }
+                if (GroupName.isEmpty()) {
+                    holder.tv_ReqDate.setVisibility(View.GONE);
+                } else {
+                    holder.tv_ReqDate.setText("Requested on : " + reqDate);
+                }
             }
 //
 //        holder.tv_approve.setOnClickListener(new View.OnClickListener() {
@@ -175,6 +190,7 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_Groupinvite,tv_approve,tv_reject,tv_ReqDate;
+        LinearLayout ll_groupdetails;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -183,6 +199,7 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
             tv_approve = itemView.findViewById(R.id.tv_approve);
             tv_reject = itemView.findViewById(R.id.tv_reject);
             tv_ReqDate = itemView.findViewById(R.id.tv_ReqDate);
+            ll_groupdetails = itemView.findViewById(R.id.ll_groupdetails);
 
 
             tv_reject.setOnClickListener(new View.OnClickListener() {
@@ -192,14 +209,16 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                         int position = getAdapterPosition();
                         Class_Group user = mDatalistNew.get(getAdapterPosition());
                         String reqUserID=user.userId;
-                        String currUserId=user.groupCategory;
+                        String currUserId=user.adminUserId;
                         String groupName=user.groupName;
                         String userName=user.userName;
+                        String pushid=user.position;
+                        String groupPushId=user.groupPositionId;
 
                         if (position != RecyclerView.NO_POSITION) {
 //                            DatabaseReference refSubsGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups").child(groupName);
 //                            refSubsGroup.child(reqUserID).setValue(false);
-                            mListener.rejectNotify(reqUserID,currUserId,groupName,userName);
+                            mListener.rejectNotify(reqUserID,currUserId,groupName,userName,pushid,groupPushId);
                                             tv_approve.setBackgroundColor(Color.RED);
                 tv_approve.setEnabled(false);
 
@@ -214,14 +233,17 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                         int position = getAdapterPosition();
                         Class_Group user = mDatalistNew.get(getAdapterPosition());
                         String reqUserID=user.userId;
-                        String currUserId=user.groupCategory;
+                        String currUserId=user.adminUserId;
                         String groupName=user.groupName;
                         String userName=user.userName;
+                        String pushid=user.position;
+                        String groupPushId=user.groupPositionId;
+
 
                         if (position != RecyclerView.NO_POSITION) {
 //                            DatabaseReference refSubsGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups").child(groupName);
 //                            refSubsGroup.child(reqUserID).setValue(false);
-                            mListener.acceptNotify(reqUserID,currUserId,groupName,userName);
+                            mListener.acceptNotify(reqUserID,currUserId,groupName,userName,pushid,groupPushId);
                             tv_approve.setBackgroundColor(Color.GREEN);
                             tv_reject.setEnabled(false);
 

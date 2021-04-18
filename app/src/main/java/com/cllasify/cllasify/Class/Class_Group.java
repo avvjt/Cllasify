@@ -19,6 +19,7 @@ public class Class_Group {
     public String quesCombined;
     public String groupName;
     public String groupCategory;
+    public String groupPositionId;
     public String group1;
     public String group2;
     public String group3;
@@ -82,6 +83,18 @@ public class Class_Group {
         this.userEmailId = userEmailId;
         this.position = position;
         this.groupName = groupName;
+    }
+
+    public Class_Group(String dateTime, String userName, String userId, String adminUserId, String grpJoiningStatus, String userEmailId, String position, String groupName, String groupPositionId) {
+        this.dateTime = dateTime;
+        this.userName = userName;
+        this.userId = userId;
+        this.adminUserId = adminUserId;
+        this.grpJoiningStatus = grpJoiningStatus;
+        this.userEmailId = userEmailId;
+        this.position = position;
+        this.groupName = groupName;
+        this.groupPositionId = groupPositionId;
     }
 
     public String getDateTime() {
@@ -305,5 +318,13 @@ public class Class_Group {
 
     public void setGrpJoiningStatus(String grpJoiningStatus) {
         this.grpJoiningStatus = grpJoiningStatus;
+    }
+
+    public String getGroupPositionId() {
+        return groupPositionId;
+    }
+
+    public void setGroupPositionId(String groupPositionId) {
+        this.groupPositionId = groupPositionId;
     }
 }

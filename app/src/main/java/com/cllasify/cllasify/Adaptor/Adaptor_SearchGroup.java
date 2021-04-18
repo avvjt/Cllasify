@@ -49,7 +49,7 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
 
 //        void listitem(int position, String question, String pushQues, String pushAns,String category);
 
-        void createGroupDialog(String adminGroupID, String groupName);
+        void createGroupDialog(String adminGroupID, String groupName,String groupPushId);
         //void likeAns(int position, String tag);
 //        void saveAns(int position, String tag);
 //        void likeAns(View v, int position, Boolean clicked);
@@ -80,39 +80,44 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
         String userComment=class_GroupDetails.getGroupCategory();
         String groupUserName=class_GroupDetails.getUserName();
         String pushid=class_GroupDetails.getPosition();
+//        String userid=class_GroupDetails.getUserId();
 
         String databaseUserId=class_GroupDetails.getUserId();
             FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
             assert mUser != null;
-            String userId = mUser.getUid();
-            if (userComment.isEmpty()){
-                holder.tv_groupname.setVisibility(View.GONE);
-            }else{
-                holder.tv_groupname.setText(groupName);
-            }
+            String currUserId = mUser.getUid();
+//
+//            if(!currUserId.equals(databaseUserId)) {
+//
+//                holder.ll_list_group_search.setVisibility(View.VISIBLE);
+                if (userComment.isEmpty()) {
+                    holder.tv_groupname.setVisibility(View.GONE);
+                } else {
+                    holder.tv_groupname.setText(groupName);
+                }
 
-            if (userComment.isEmpty()){
-                holder.tv_groupownername.setVisibility(View.GONE);
-            }else{
-                holder.tv_groupownername.setText(groupUserName);
-            }
+                if (userComment.isEmpty()) {
+                    holder.tv_groupownername.setVisibility(View.GONE);
+                } else {
+                    holder.tv_groupownername.setText(groupUserName);
+                }
 
 //        holder.getGroupStatus(groupName, position, pushid);
 
-        DatabaseReference referenceALLGroup= FirebaseDatabase.getInstance().getReference().
-                child( "Groups" ).child( "User_Subscribed_Groups" );
-        referenceALLGroup.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChild(userId)) {
-                    if (snapshot.child(userId).getValue().equals(true)) {
-                        holder.tv_GroupStatus.setText("Subscribed");
-                    } else {
-                        holder.tv_GroupStatus.setText("Join");
-                    }
-                }else {
-                    holder.tv_GroupStatus.setText("Join");
-                }
+                DatabaseReference referenceALLGroup = FirebaseDatabase.getInstance().getReference().
+                        child("Groups").child("User_Subscribed_Groups");
+                referenceALLGroup.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.hasChild(currUserId)) {
+                            if (snapshot.child(currUserId).getValue().equals(true)) {
+                                holder.tv_GroupStatus.setText("Subscribed");
+                            } else {
+                                holder.tv_GroupStatus.setText("Join");
+                            }
+                        } else {
+                            holder.tv_GroupStatus.setText("Join");
+                        }
 
 ////                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
 //                long noofGroupinCategory=snapshot.getChildrenCount()+1;
@@ -141,12 +146,16 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
 //                refSubsGroup.child(userID).setValue(true);
 
 
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+                    }
 
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
+//            }
+//            else{
+//                holder.ll_list_group_search.setVisibility(View.GONE);
+//            }
     }
 
     @Override
@@ -157,6 +166,7 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_groupname,tv_groupownername,tv_GroupStatus;
+        LinearLayout ll_list_group_search;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -164,6 +174,8 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
             tv_groupname=itemView.findViewById(R.id.tv_groupname);
             tv_groupownername = itemView.findViewById(R.id.tv_groupownername);
             tv_GroupStatus = itemView.findViewById(R.id.tv_GroupStatus);
+            ll_list_group_search = itemView.findViewById(R.id.ll_list_group_search);
+
 
             tv_GroupStatus.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -173,9 +185,11 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
                         Class_Group user = mDatalistNew.get(getAdapterPosition());
                         String adminGroupID=user.userId;
                         String groupName=user.groupName;
+                        String groupPushId=user.position;
+
 
                         if (position != RecyclerView.NO_POSITION) {
-                            mListener.createGroupDialog(adminGroupID,groupName);
+                            mListener.createGroupDialog(adminGroupID,groupName,groupPushId);
                                                         //mListener.dislikeAns();
                         }
                     }

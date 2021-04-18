@@ -27,6 +27,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.text.SimpleDateFormat;
@@ -62,8 +63,8 @@ public class NotificationFragment extends Fragment {
         rv_AllNotifications =view.findViewById(R.id.rv_AllNotifications);
 
         notifyPB = new ProgressDialog(getContext());
-        notifyPB.setTitle("Join Group");
-        notifyPB.setMessage("Loading All Groups");
+        notifyPB.setTitle("Notification");
+        notifyPB.setMessage("Loading All Notifications");
         notifyPB.setCanceledOnTouchOutside(true);
         notifyPB.show();
 
@@ -79,7 +80,7 @@ public class NotificationFragment extends Fragment {
         final String userEmail = currentUser.getEmail();
         final Uri userPhoto = currentUser.getPhotoUrl();
 
-        refSearchShowGroup = FirebaseDatabase.getInstance().getReference().child( "Notification" ).child( "User" ).child(userID);
+        refSearchShowGroup = FirebaseDatabase.getInstance().getReference().child( "Notification" ).child( "User" ).child("GetReq").child(userID);
 
         if (sv_notifySearchView != null) {
             sv_notifySearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -94,7 +95,25 @@ public class NotificationFragment extends Fragment {
                 }
             });
         }
-        showEAllGroupSearchRV();
+
+        DatabaseReference refGroupReqCount = FirebaseDatabase.getInstance().getReference().
+                child( "Notification" ).child( "User" ).child("GetReq").child(userID);
+        refGroupReqCount.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildrenCount()>0) {
+                    showEAllGroupSearchRV();
+                }else{
+                    notifyPB.dismiss();
+                    Toast.makeText(getContext(), "No group Notifications", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
 
         return view;
     }
@@ -109,22 +128,29 @@ public class NotificationFragment extends Fragment {
             }
 
             @Override
-            public void rejectNotify(String reqUserID, String currUserId, String groupName, String userName) {
+            public void rejectNotify(String reqUserID, String currUserId, String groupName, String userName,String pushId,String groupPushId) {
 
-                DatabaseReference refNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("User").child(currUserId);
-                refNotify.child("groupno").setValue("Reject");
+                DatabaseReference refrejuserNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("User").child("GetReq").child(currUserId).child(pushId);
+                DatabaseReference refrejadminNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("User").child("SubmitReq").child(reqUserID).child(pushId);
+                refrejuserNotify.child("grpJoiningStatus").setValue("Reject");
+                refrejadminNotify.child("grpJoiningStatus").setValue("Reject");
                 //mListener.dislikeAns();
                 Toast.makeText(getContext(), "Group request from "+userName+"has been Reject", Toast.LENGTH_SHORT).show();
 
             }
 
             @Override
-            public void acceptNotify(String reqUserID, String currUserId, String groupName, String userName) {
-                DatabaseReference refSubsGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups").child(groupName);
+            public void acceptNotify(String reqUserID, String currUserId, String groupName, String userName, String pushId,String groupPushId) {
+                        DatabaseReference refSubsGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Public_Group").child(groupPushId);
                         refSubsGroup.child(reqUserID).setValue(true);
-                        DatabaseReference refNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("User").child(currUserId);
-                        refNotify.child("groupno").setValue("Approve");
+
+                        DatabaseReference refAccUserNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("User").child("GetReq").child(currUserId).child(pushId);
+                        DatabaseReference refAccAdminNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("User").child("SubmitReq").child(reqUserID).child(pushId);
+                        refAccUserNotify.child("grpJoiningStatus").setValue("Approve");
+                        refAccAdminNotify.child("grpJoiningStatus").setValue("Approve");
                         Toast.makeText(getContext(), "Group request from "+userName+"has been Approve", Toast.LENGTH_SHORT).show();
+
+
 
             }
         });
@@ -135,12 +161,17 @@ public class NotificationFragment extends Fragment {
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if (dataSnapshot.getChildrenCount()>0) {
                     Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
-                    listGroupSTitle.add(class_userDashBoard);
-                    notifyPB.dismiss();
-                    showAllGroupAdaptor.notifyDataSetChanged();
+                    assert class_userDashBoard != null;
+                    String groupjoinStatus=class_userDashBoard.getGrpJoiningStatus();
+                    Toast.makeText(getContext(), "status"+groupjoinStatus, Toast.LENGTH_SHORT).show();
+//                    if ((!groupjoinStatus.equals("Approve")) && (!groupjoinStatus.equals("Reject"))) {
+                        listGroupSTitle.add(class_userDashBoard);
+                        notifyPB.dismiss();
+                        showAllGroupAdaptor.notifyDataSetChanged();
+//                    }
 
                 } else {
-                    Toast.makeText(getContext(), "No group yet created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "No Group request Pending", Toast.LENGTH_SHORT).show();
                     notifyPB.dismiss();
                 }
 
