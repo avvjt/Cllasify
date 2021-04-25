@@ -1,14 +1,17 @@
 package com.cllasify.cllasify.Fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_ProfileTab;
@@ -18,6 +21,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class ProfileFragment extends Fragment {
@@ -28,6 +32,7 @@ public class ProfileFragment extends Fragment {
     Adaptor_ProfileTab adaptor_profileTab;
     ChipNavigationBar chipNavigationBar;
     Button btn_EditProfile;
+    TextView tv_User_Name,tv_User_Email;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,14 +42,25 @@ public class ProfileFragment extends Fragment {
         chipNavigationBar = getActivity().findViewById(R.id.bottom_nav_menu);
         chipNavigationBar.setItemSelected(R.id.bottom_nav_profile,true);
 
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        final String userID = currentUser.getUid();
+        final String userName = currentUser.getDisplayName();
+        final String userEmail = currentUser.getEmail();
+        final Uri userPhoto = currentUser.getPhotoUrl();
+
         tabLayout= view.findViewById(R.id.tablayout1);
         tabItem1= view.findViewById(R.id.HomeTab);
         tabItem2= view.findViewById(R.id.QuestionsTab);
         tabItem3= view.findViewById(R.id.AnswersTab);
         tabItem4= view.findViewById(R.id.AboutTab);
         viewPager= view.findViewById(R.id.vpager);
+        tv_User_Name= view.findViewById(R.id.tv_User_Name);
+        tv_User_Email= view.findViewById(R.id.tv_User_Email);
 
         btn_EditProfile=view.findViewById(R.id.btn_EditProfile);
+
+        tv_User_Name.setText(userName);
+        tv_User_Email.setText(userEmail);
 
         adaptor_profileTab =new Adaptor_ProfileTab(getChildFragmentManager(),tabLayout.getTabCount());
         viewPager.setAdapter(adaptor_profileTab);
@@ -71,6 +87,11 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 FirebaseAuth.getInstance().signOut();
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, new HomeFragment());
+                //transaction.addToBackStack(null);
+                transaction.commit();
+
             }
         });
 

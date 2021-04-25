@@ -130,10 +130,15 @@ public class NotificationFragment extends Fragment {
             @Override
             public void rejectNotify(String reqUserID, String currUserId, String groupName, String userName,String pushId,String groupPushId) {
 
+                DatabaseReference refSubsGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups").child(groupPushId);
+                refSubsGroup.child(reqUserID).setValue(false);
+                DatabaseReference refSubs_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Public_J_Group").child(groupPushId).child("User_Subscribed_Groups");
+                refSubs_J_Group.child(reqUserID).setValue(false);
                 DatabaseReference refrejuserNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("User").child("GetReq").child(currUserId).child(pushId);
                 DatabaseReference refrejadminNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("User").child("SubmitReq").child(reqUserID).child(pushId);
                 refrejuserNotify.child("grpJoiningStatus").setValue("Reject");
                 refrejadminNotify.child("grpJoiningStatus").setValue("Reject");
+
                 //mListener.dislikeAns();
                 Toast.makeText(getContext(), "Group request from "+userName+"has been Reject", Toast.LENGTH_SHORT).show();
 
@@ -141,8 +146,10 @@ public class NotificationFragment extends Fragment {
 
             @Override
             public void acceptNotify(String reqUserID, String currUserId, String groupName, String userName, String pushId,String groupPushId) {
-                        DatabaseReference refSubsGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Public_Group").child(groupPushId);
+                        DatabaseReference refSubsGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups").child(groupPushId);
+                        DatabaseReference refSubs_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Public_J_Group").child(groupPushId).child("User_Subscribed_Groups");
                         refSubsGroup.child(reqUserID).setValue(true);
+                refSubs_J_Group.child(reqUserID).setValue(true);
 
                         DatabaseReference refAccUserNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("User").child("GetReq").child(currUserId).child(pushId);
                         DatabaseReference refAccAdminNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("User").child("SubmitReq").child(reqUserID).child(pushId);
