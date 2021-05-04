@@ -16,11 +16,7 @@ import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -40,8 +36,8 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 
 
 //        void listitem(int position, String question, String pushQues, String pushAns,String category);
-
-        void addSubGroup(int position, String groupTitle, String groupUserID);
+//
+//        void addSubGroup(int position, String groupTitle, String groupUserID);
 
         void addSubChild1(int position, String groupName, String subgroupName);
         void addSubChild2(int position, String groupName, String subgroupName);
@@ -573,7 +569,7 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //        TextView userallAns_tv, tv_CommentCount, tv_AnslikeCount, tv_AnsflagCount, tv_AnsdislikeCount, tv_GroupTitle;
 
         TextView saveQ, tv_anslikecount,shareQ;
-        ImageButton save_ib,like_ib,share_ib, ib_ib_AddGroup;
+        ImageButton save_ib,like_ib,share_ib;
        // LinearLayout l1,l2,l3,l4;
 //        LinearLayout like_ll,viewAns_ll,touchexpand_ll;
         LinearLayout touchexpand_ll,expandable_ll;
@@ -610,7 +606,7 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //            userAns_tv=itemView.findViewById(R.id.userAns_tv);
 //            userallAns_tv=itemView.findViewById(R.id.userallAns_tv);
 
-            ib_ib_AddGroup = itemView.findViewById(R.id.ib_AddGroup);
+//            ib_ib_AddGroup = itemView.findViewById(R.id.ib_AddGroup);
 
 //            tv_AnsflagCount.setTag("Flag");
 //            tv_AnslikeCount.setTag("Like");
@@ -784,34 +780,34 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
                     }
                 }
             });
-
-            ib_ib_AddGroup.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(mListener!=null){
-                        int position=getAdapterPosition();
-                        if (position!=RecyclerView.NO_POSITION){
-                            //mListener.dislikeAns();
-//                            String tag=String.valueOf(v.getTag());
-//                            int id = (int) dislike_ib.getTag();
-//                            if(tag.equals("save")){
-//                                save_ib.setTag("save_hover");
-//                                save_ib.setImageResource(R.drawable.save_hover);
-//                            }else{
-//                                save_ib.setTag("save");
-//                                save_ib.setImageResource(R.drawable.save);
-//                            }
-
-                            Class_Group user = mDatalistNew.get(getAdapterPosition());
-                        String groupName = user.getGroupName();
-                        String groupTitle = user.getPosition();
-                        String groupUserID = user.getUserId();
-
-                            mListener.addSubGroup(position,groupTitle,groupUserID);
-                        }
-                    }
-                }
-            });
+//
+//            ib_ib_AddGroup.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if(mListener!=null){
+//                        int position=getAdapterPosition();
+//                        if (position!=RecyclerView.NO_POSITION){
+//                            //mListener.dislikeAns();
+////                            String tag=String.valueOf(v.getTag());
+////                            int id = (int) dislike_ib.getTag();
+////                            if(tag.equals("save")){
+////                                save_ib.setTag("save_hover");
+////                                save_ib.setImageResource(R.drawable.save_hover);
+////                            }else{
+////                                save_ib.setTag("save");
+////                                save_ib.setImageResource(R.drawable.save);
+////                            }
+//
+//                            Class_Group user = mDatalistNew.get(getAdapterPosition());
+//                        String groupName = user.getGroupName();
+//                        String groupTitle = user.getPosition();
+//                        String groupUserID = user.getUserId();
+//
+//                            mListener.addSubGroup(position,groupTitle,groupUserID);
+//                        }
+//                    }
+//                }
+//            });
 
 //            touchll.setOnClickListener(new View.OnClickListener() {
 //                @Override

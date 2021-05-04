@@ -28,7 +28,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup1;
-import com.cllasify.cllasify.Adaptor.Adaptor_SearchGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGroup;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Group_Join;
@@ -67,7 +66,7 @@ public class HomeFragment extends Fragment {
             rv_GroupDashData,
             rv_UserPrivateGroupTitle,rv_UserPublicGroupTitle,rv_OtherPublicGroupTitle;
 
-    DatabaseReference refShowAllGroup,refTempGroupDB,refGroupDashboard;
+    DatabaseReference refShowAllGroup,refTempGroupDB, refGroupChildUserDashboard,refGrpChildAllDashboard;
     DatabaseReference refuserPersonalGroup,refuserAllGroup,
             refuserPublicGroup,refAllPublicGroup,refAllPublicJGroup,
             refotheruserPublicGroup,
@@ -131,7 +130,7 @@ public class HomeFragment extends Fragment {
             notifyPB.setTitle("Govt Jobs");
             notifyPB.setMessage("Loading All Jobs");
             notifyPB.setCanceledOnTouchOutside(true);
-            notifyPB.show();
+
 
 
             GoogleSignInOptions googleSignInOptions=new GoogleSignInOptions.Builder(
@@ -201,6 +200,7 @@ public class HomeFragment extends Fragment {
             listOtherUserPublicGroupTitle = new ArrayList<>();
 //            listGroupSTitle=new ArrayList<>();
 
+
             showGroupadaptor = new Adaptor_QueryGroup(getContext(), listGroupTitle);
             showUserPrivateGroupadaptor = new Adaptor_QueryGroup(getContext(), listUserPrivateGroupTitle);
             showUserPublicGroupadaptor = new Adaptor_QueryGroup(getContext(), listUserPublicGroupTitle);
@@ -264,6 +264,7 @@ public class HomeFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getChildrenCount()>0){
                         showUserPublicGroupRV();
+                        notifyPB.show();
                     }
 
                 }
@@ -277,6 +278,21 @@ public class HomeFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getChildrenCount()>0){
                         showUserPrivateGroupRV();
+                        notifyPB.show();
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
+            refotheruserPublicGroup.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.getChildrenCount()>0){
+                        showOtherUserGroupRV();
+                        notifyPB.show();
                     }
 
                 }
@@ -288,7 +304,7 @@ public class HomeFragment extends Fragment {
 //
 
 
-            showOtherUserGroupRV();
+
 
 //Center Panel
             ib_cattach =view.findViewById(R.id.ib_cattach);
@@ -578,7 +594,7 @@ public class HomeFragment extends Fragment {
 
     private void addComment(String groupTitle) {
 
-        refAddSubGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "Users_Show_Group" ).child( userID ).child(groupTitle);
+        refAddSubGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "Show_Group" ).child( userID ).child(groupTitle);
         refAddSubGroup.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -588,7 +604,7 @@ public class HomeFragment extends Fragment {
 
 //                String groupTitle=snapshot.child(userID).getValue().toString();
                 refAddSubGroup = FirebaseDatabase.getInstance().getReference().
-                        child( "Groups" ).child( "Users_Show_Group" ).child( userID ).child(groupTitle);
+                        child( "Groups" ).child( "Show_Group" ).child( userID ).child(groupTitle);
                 Class_Group  userAddComment= new Class_Group(dateTimeCC, userName, userID, userEmailID, push, groupTitle,Comment);
                 refAddSubGroup.child(push).setValue(userAddComment);
             }
@@ -833,26 +849,14 @@ public class HomeFragment extends Fragment {
                         referencePBLCGroup.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
                                 long noofGroupinCategory = snapshot.getChildrenCount() + 1;
-//                            String position=getString((int) noofQuesinCategory);
                                 String push = "Group_UPubG_No_" + noofGroupinCategory + "_" + GroupName;
 
-//                            refuserPersonalGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID).child(push);
                                 refuserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID).child(push);
-//                            refuserAllGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_All_Group").child(userID).child(push);
-//                            refAllPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Public_Group").child(push);
 
-//                            if (GroupCategory.equals("Private")) {
-//                                userAddGroup = new Class_Group(dateTimeCC,userName, userID, userEmailID,push, GroupName,GroupCategory,noofGroupinCategory);
-//                                refuserPersonalGroup.setValue(userAddGroup);
-//                                refuserAllGroup.setValue(userAddGroup);
-//                            } else if (GroupCategory.equals("Public")) {
                                 userAddGroup = new Class_Group(dateTimeCC, userName, userID, userEmailID, push, GroupName, GroupCategory, noofGroupinCategory);
                                 refuserPublicGroup.setValue(userAddGroup);
 
-//                                refAllPublicGroup.setValue(userAddGroup);
-//                                refuserAllGroup.setValue(userAddGroup);
 //                            }
                             }
 
@@ -867,7 +871,6 @@ public class HomeFragment extends Fragment {
                     referenceALLPBLCGroup.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
                             long noofGroupinCategory=snapshot.getChildrenCount()+1;
                             String push="Group_AllPubG_No_"+noofGroupinCategory+"_"+GroupName;
                             refAllPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Public_Group").child(push);
@@ -910,62 +913,62 @@ public class HomeFragment extends Fragment {
             @Override
             public void addSubChild1(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
                 }
 
             @Override
             public void addSubChild2(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
                 
             }
 
             @Override
             public void addSubChild3(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
                 
             }
 
             @Override
             public void addSubChild4(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
                 
             }
 
             @Override
             public void addSubChild5(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
                 
             }
 
             @Override
             public void addSubChild6(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
                 
             }
 
             @Override
             public void addSubChild7(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
                 
             }
 
             @Override
             public void addSubChild8(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
                 
             }
 
             @Override
             public void addSubChild9(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
                 
             }
         });
@@ -1027,63 +1030,63 @@ public class HomeFragment extends Fragment {
             @Override
             public void addSubChild1(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild2(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild3(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild4(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild5(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild6(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild7(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild8(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild9(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
         });
@@ -1139,71 +1142,71 @@ public class HomeFragment extends Fragment {
     public void showOtherUserGroupRV() {
 
         showOtherUserPublicGroupAdaptor.setOnItemClickListener(new Adaptor_QueryGroup1.OnItemClickListener() {
-            @Override
-            public void addSubGroup(int position, String groupTitle, String groupUserID) {
-                addSubPrivateChild0(position,groupTitle,groupUserID);
-            }
+//            @Override
+//            public void addSubGroup(int position, String groupTitle, String groupUserID) {
+//                addSubPrivateChild0(position,groupTitle,groupUserID);
+//            }
 
             @Override
             public void addSubChild1(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild2(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild3(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild4(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild5(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild6(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild7(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild8(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild9(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
         });
@@ -1232,7 +1235,7 @@ public class HomeFragment extends Fragment {
 //                });
                 if (dataSnapshot.child("User_Subscribed_Groups").child(userID).exists()){
                     String check=dataSnapshot.child("User_Subscribed_Groups").child(userID).getValue().toString();
-                    Toast.makeText(getContext(),"chch"+check,Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(),"chch"+check,Toast.LENGTH_SHORT).show();
 
                     Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
                     listOtherUserPublicGroupTitle.add(userQuestions);
@@ -1291,7 +1294,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void addSubChild1(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
 
             }
@@ -1299,56 +1302,56 @@ public class HomeFragment extends Fragment {
             @Override
             public void addSubChild2(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild3(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild4(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild5(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild6(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild7(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild8(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
 
             @Override
             public void addSubChild9(int position, String groupName, String subgroupName) {
                 overlappingPanels.closePanels();
-                showDashBoardRV(position,groupName+subgroupName,groupName,subgroupName);
+                showDashBoardRV(position,groupName+"_"+subgroupName,groupName,subgroupName);
 
             }
         });
@@ -1569,6 +1572,8 @@ public class HomeFragment extends Fragment {
 
                     DatabaseReference reference= FirebaseDatabase.getInstance().getReference().
                             child( "Groups" ).child( "User_Public_Group" ).child(userID).child(groupTitle);
+//                    DatabaseReference referenceJoinOther= FirebaseDatabase.getInstance().getReference().
+//                            child("Groups").child("All_Public_J_Group").child(groupTitle);
 
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -1589,56 +1594,76 @@ public class HomeFragment extends Fragment {
                             String groupCategory=userQuestions.getGroupCategory();
 
                             switch(noofQuesinCategory){
-                                case 9:
+                                case 10:
                                     reference.child( "group1" ).setValue( subChildGroupName );
+//                                    referenceAllGroup.child( "SubGroup1" ).setValue( subChildGroupName );
+//                                    referenceJoinOther.child( "SubGroup1" ).setValue( subChildGroupName );
+
                                     Toast.makeText(getContext(), "Sub Group Created Sucessfully", Toast.LENGTH_SHORT).show();
                                     AllPublicJGroup(groupAdmin,groupName,groupCategory,"group1",subChildGroupName);
 
                                     break;
-                                case 10:
+                                case 11:
                                     reference.child( "group2" ).setValue( subChildGroupName );
+//                                    referenceAllGroup.child( "SubGroup2" ).setValue( subChildGroupName );
+//                                    referenceJoinOther.child( "SubGroup2" ).setValue( subChildGroupName );
                                     Toast.makeText(getContext(), "Sub Group Created Sucessfully", Toast.LENGTH_SHORT).show();
                                     AllPublicJGroup(groupAdmin,groupName,groupCategory,"group2",subChildGroupName);
 
                                     break;
-                                case 11:
+                                case 12:
                                     reference.child( "group3" ).setValue( subChildGroupName );
+//                                    referenceAllGroup.child( "SubGroup3" ).setValue( subChildGroupName );
+//                                    referenceJoinOther.child( "SubGroup3" ).setValue( subChildGroupName );
+
                                     Toast.makeText(getContext(), "Sub Group Created Sucessfully", Toast.LENGTH_SHORT).show();
                                     AllPublicJGroup(groupAdmin,groupName,groupCategory,"group3",subChildGroupName);
 
                                     break;
-                                case 12:
+                                case 13:
                                     reference.child( "group4" ).setValue( subChildGroupName );
+//                                    referenceAllGroup.child( "SubGroup4" ).setValue( subChildGroupName );
+//                                    referenceJoinOther.child( "SubGroup4" ).setValue( subChildGroupName );
                                     AllPublicJGroup(groupAdmin,groupName,groupCategory,"group4",subChildGroupName);
 
                                     Toast.makeText(getContext(), "Sub Group Created Sucessfully", Toast.LENGTH_SHORT).show();
                                     break;
-                                case 13:
+                                case 14:
                                     reference.child( "group5" ).setValue( subChildGroupName );
+//                                    referenceAllGroup.child( "SubGroup5" ).setValue( subChildGroupName );
+//                                    referenceJoinOther.child( "SubGroup5" ).setValue( subChildGroupName );
                                     Toast.makeText(getContext(), "Sub Group Created Sucessfully", Toast.LENGTH_SHORT).show();
                                     AllPublicJGroup(groupAdmin,groupName,groupCategory,"group5",subChildGroupName);
 
                                     break;
-                                case 14:
+                                case 15:
                                     reference.child( "group6" ).setValue( subChildGroupName );
+//                                    referenceAllGroup.child( "SubGroup6" ).setValue( subChildGroupName );
+//                                    referenceJoinOther.child( "SubGroup6" ).setValue( subChildGroupName );
                                     Toast.makeText(getContext(), "Sub Group Created Sucessfully", Toast.LENGTH_SHORT).show();
                                     AllPublicJGroup(groupAdmin,groupName,groupCategory,"group6",subChildGroupName);
 
                                     break;
-                                case 15:
+                                case 16:
                                     reference.child( "group7" ).setValue( subChildGroupName );
+//                                    referenceAllGroup.child( "SubGroup7" ).setValue( subChildGroupName );
+//                                    referenceJoinOther.child( "SubGroup7" ).setValue( subChildGroupName );
                                     Toast.makeText(getContext(), "Sub Group Created Sucessfully", Toast.LENGTH_SHORT).show();
                                     AllPublicJGroup(groupAdmin,groupName,groupCategory,"group7",subChildGroupName);
 
                                     break;
-                                case 16:
+                                case 17:
                                     reference.child( "group8" ).setValue( subChildGroupName );
+//                                    referenceAllGroup.child( "SubGroup8" ).setValue( subChildGroupName );
+//                                    referenceJoinOther.child( "SubGroup8" ).setValue( subChildGroupName );
                                     Toast.makeText(getContext(), "Sub Group Created Sucessfully", Toast.LENGTH_SHORT).show();
                                     AllPublicJGroup(groupAdmin,groupName,groupCategory,"group8",subChildGroupName);
 
                                     break;
-                                case 17:
+                                case 18:
                                     reference.child( "group9" ).setValue( subChildGroupName );
+//                                    referenceAllGroup.child( "SubGroup9" ).setValue( subChildGroupName );
+//                                    referenceJoinOther.child( "SubGroup9" ).setValue( subChildGroupName );
                                     AllPublicJGroup(groupAdmin,groupName,groupCategory,"group9",subChildGroupName);
 
                                     Toast.makeText(getContext(), "Sub Group Created Sucessfully", Toast.LENGTH_SHORT).show();
@@ -1669,6 +1694,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void AllPublicJGroup(String groupAdmin, String groupName, String groupCategory, String subChild,String subChildGroupName) {
+
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference().
                 child( "Groups" ).child( "All_Public_J_Group" );
         reference.addValueEventListener(new ValueEventListener() {
@@ -1684,8 +1710,37 @@ public class HomeFragment extends Fragment {
                                 ds.child("groupCategory").getValue().equals(groupCategory)) {
 
                             String grouppushid=ds.getKey();
-                        Toast.makeText(getContext(), "g"+grouppushid, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), "g"+grouppushid, Toast.LENGTH_SHORT).show();
                             reference.child(grouppushid).child(subChild).setValue(subChildGroupName);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        DatabaseReference referenceAllGroup= FirebaseDatabase.getInstance().getReference().
+                child("Groups").child("User_All_Group").child(userID);
+
+        referenceAllGroup.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    if (ds.child("userId").exists() || ds.child("groupName").exists() ||
+                            ds.child("groupCategory").exists()) {
+
+
+                        if (ds.child("userId").getValue().equals(groupAdmin) &&
+                                ds.child("groupName").getValue().equals(groupName) &&
+                                ds.child("groupCategory").getValue().equals(groupCategory)) {
+
+                            String grouppushid=ds.getKey();
+//                        Toast.makeText(getContext(), "g"+grouppushid, Toast.LENGTH_SHORT).show();
+                            referenceAllGroup.child(grouppushid).child(subChild).setValue(subChildGroupName);
                         }
                     }
                 }
@@ -1826,6 +1881,9 @@ public class HomeFragment extends Fragment {
 //        linearLayoutManager.setStackFromEnd(true);
 //
 
+        refGroupChildUserDashboard = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "Show_Group" ).child("User_Show_Group").child( userID ).child(groupCombined);
+        refGrpChildAllDashboard = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "Show_Group" ).child("Show_All_Group").child(groupCombined);
+
         ll_bottom_send.setVisibility(View.VISIBLE);
         sv_textSearchView.setVisibility(View.VISIBLE);
 
@@ -1889,6 +1947,45 @@ public class HomeFragment extends Fragment {
 //                Toast.makeText(getContext(), "share", Toast.LENGTH_SHORT).show();
 //            }
 //        });
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.detach(HomeFragment.this).attach(HomeFragment.this).commit();
+
+//        Bundle intent=getIntent().getExtras();
+//        if (intent!=null){
+//            String publisher=intent.getString("publisherid");
+//            SharedPreferences.Editor editor=getSharedPreferences("PUBLISH",MODE_PRIVATE).edit();
+//            editor.putString("publisherid",publisher);
+//            editor.apply();
+//
+//        }
+
+    }
+
+    private void upDateDashboard(int position, String groupCombined, String subgroupName, String groupName) {
+
+        refTempGroupDB = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "TempCmntGroup" ).child( userID );
+        refGroupChildUserDashboard = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "Show_Group" ).child("User_Show_Group").child( userID ).child(groupCombined);
+        refGrpChildAllDashboard = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "Show_Group" ).child("Show_All_Group").child(groupCombined);
+        refGroupChildUserDashboard.keepSynced(true);
+        refGrpChildAllDashboard.keepSynced(true);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
+        assert currentUser != null;
+        userID=currentUser.getUid();
+        userEmailID= currentUser.getEmail();
+        userPhoto=currentUser.getPhotoUrl();
+        userName=currentUser.getDisplayName();
+
+        refTempGroupDB.setValue(groupCombined);
+        tv_cpaneltitle.setText(groupName);
+        tv_cpanelbody.setText(subgroupName);
+
+        btn_caddgroup.setVisibility(View.GONE);
+        btn_cjoingroup.setVisibility(View.GONE);
+
+        listDashboard.clear();
+//        listDashboard=new ArrayList<>();
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -1896,6 +1993,7 @@ public class HomeFragment extends Fragment {
                     Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
                     listDashboard.add(class_userDashBoard);
                     showDashadaptor.notifyDataSetChanged();
+
                     notifyPB.dismiss();
                 } else {
                     Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
@@ -1921,40 +2019,9 @@ public class HomeFragment extends Fragment {
             }
         };
         //refAdmin.addChildEventListener(childEventListener);
-        refGroupDashboard.addChildEventListener(childEventListener);
-        FragmentTransaction ft = getFragmentManager().beginTransaction();
-        ft.detach(HomeFragment.this).attach(HomeFragment.this).commit();
+        refGrpChildAllDashboard.addChildEventListener(childEventListener);
 
-//        Bundle intent=getIntent().getExtras();
-//        if (intent!=null){
-//            String publisher=intent.getString("publisherid");
-//            SharedPreferences.Editor editor=getSharedPreferences("PUBLISH",MODE_PRIVATE).edit();
-//            editor.putString("publisherid",publisher);
-//            editor.apply();
-//
-//        }
 
-    }
-
-    private void upDateDashboard(int position, String groupCombined, String subgroupName, String groupName) {
-
-        refTempGroupDB = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "TempCmntGroup" ).child( userID );
-        refGroupDashboard = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "Users_Show_Group" ).child( userID ).child(groupCombined);
-        refGroupDashboard.keepSynced(true);
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = firebaseAuth.getCurrentUser();
-        assert currentUser != null;
-        userID=currentUser.getUid();
-        userEmailID= currentUser.getEmail();
-        userPhoto=currentUser.getPhotoUrl();
-        userName=currentUser.getDisplayName();
-
-        refTempGroupDB.setValue(groupCombined);
-        tv_cpaneltitle.setText(groupName);
-        tv_cpanelbody.setText(subgroupName);
-        btn_caddgroup.setVisibility(View.GONE);
-        btn_cjoingroup.setVisibility(View.GONE);
 
         ib_csubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1967,43 +2034,46 @@ public class HomeFragment extends Fragment {
                 } else {
 
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
-                            child("Groups").child("Users_Show_Group").child(userID).child(groupCombined);
+                            child("Groups").child("Show_Group").child("Show_All_Group").child(groupCombined);
                     reference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
                             long noofGroupinCategory = snapshot.getChildrenCount() + 1;
-//                            String position=getString((int) noofQuesinCategory);
                             String push = "mszno_" + noofGroupinCategory + "_" + groupCombined;
 
                             Calendar calenderCC = Calendar.getInstance();
                             SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
                             String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-//
-//                            refuserPersonalGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID).child(push);
-//                            refuserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID).child(push);
-//                            refuserAllGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_All_Group").child(userID).child(push);
-//                            refAllPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Public_Group").child(push);
-
-//                            if (GroupCategory.equals("Private")) {
-//                                userAddGroup = new Class_Group(dateTimeCC,userName, userID, userEmailID,push, GroupName,GroupCategory,noofGroupinCategory);
-//                                refuserPersonalGroup.setValue(userAddGroup);
-//                                refuserAllGroup.setValue(userAddGroup);
-//                            } else if (GroupCategory.equals("Public")) {
                             userAddGroup = new Class_Group(dateTimeCC, userName, userID, userEmailID, push, groupCombined,GroupName, noofGroupinCategory);
-//                                refuserPublicGroup.setValue(userAddGroup);
-//                                refAllPublicGroup.setValue(userAddGroup);
-                            refGroupDashboard.child(push).setValue(userAddGroup);
-
-                            FragmentTransaction ft = getFragmentManager().beginTransaction();
-                            ft.detach(HomeFragment.this).attach(HomeFragment.this).commit();
-//                            }
+                            reference.child(push).setValue(userAddGroup);
                         }
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
                         }
                     });
+
+                    DatabaseReference referenceUser = FirebaseDatabase.getInstance().getReference().
+                            child("Groups").child("Show_Group").child("User_Show_Group").child(userID).child(groupCombined);
+                    referenceUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            long noofGroupinCategory = snapshot.getChildrenCount() + 1;
+                            String push = "mszno_" + noofGroupinCategory + "_" + groupCombined;
+
+                            Calendar calenderCC = Calendar.getInstance();
+                            SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+                            String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
+                            userAddGroup = new Class_Group(dateTimeCC, userName, userID, userEmailID, push, groupCombined,GroupName, noofGroupinCategory);
+                            referenceUser.child(push).setValue(userAddGroup);
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+
                 }
             }
         });

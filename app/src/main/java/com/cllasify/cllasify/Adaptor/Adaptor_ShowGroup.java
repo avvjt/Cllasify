@@ -83,18 +83,19 @@ public class Adaptor_ShowGroup extends RecyclerView.Adapter<Adaptor_ShowGroup.My
         String userComment=class_GroupDetails.getGroupCategory();
         String otherUserComment=class_GroupDetails.getGroupOtherUserCmnt();
         String databaseUserId=class_GroupDetails.getUserId();
+
             FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
             assert mUser != null;
             String userId = mUser.getUid();
 
         if(userId.equals(databaseUserId)) {
-            if (userComment.isEmpty()){
+            if (userComment.isEmpty()) {
                 holder.tv_MyMsz.setVisibility(View.GONE);
-            }else{
+            } else {
                 holder.tv_MyMsz.setText(userComment);
             }
-
-        }else{
+        }
+        else {
             if (userComment.isEmpty()){
                 holder.tv_OtherMsz.setVisibility(View.GONE);
             }else{

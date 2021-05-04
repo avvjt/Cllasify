@@ -29,6 +29,8 @@ public class Class_Group {
     public String group7;
     public String group8;
     public String group9;
+
+
     public String groupUserCmnt;
     public String groupOtherUserCmnt;
     public long groupno;
@@ -59,15 +61,6 @@ public class Class_Group {
         this.groupCategory = groupCategory;
 
         this.expandable = expandable;
-        this.group1=group1;
-        this.group2=group2;
-        this.group3=group3;
-        this.group4=group4;
-        this.group5=group5;
-        this.group6=group6;
-        this.group7=group7;
-        this.group8=group8;
-        this.group9=group9;
 
     }
 
@@ -95,6 +88,16 @@ public class Class_Group {
         this.position = position;
         this.groupName = groupName;
         this.groupPositionId = groupPositionId;
+
+        this.group1 = group1;
+        this.group2 = group2;
+        this.group3 = group3;
+        this.group4 = group4;
+        this.group5 = group5;
+        this.group6 = group6;
+        this.group7 = group7;
+        this.group8 = group8;
+        this.group9 = group9;
     }
 
     public String getDateTime() {
@@ -192,6 +195,70 @@ public class Class_Group {
         this.groupName = groupName;
     }
 
+    public boolean isExpandable() {
+        return expandable;
+    }
+
+    public void setExpandable(boolean expandable) {
+        this.expandable = expandable;
+    }
+
+    public String getGroupCategory() {
+        return groupCategory;
+    }
+
+    public void setGroupCategory(String groupCategory) {
+        this.groupCategory = groupCategory;
+    }
+
+    public String getGroupUserCmnt() {
+        return groupUserCmnt;
+    }
+
+    public void setGroupUserCmnt(String groupUserCmnt) {
+        this.groupUserCmnt = groupUserCmnt;
+    }
+
+    public String getGroupOtherUserCmnt() {
+        return groupOtherUserCmnt;
+    }
+
+    public void setGroupOtherUserCmnt(String groupOtherUserCmnt) {
+        this.groupOtherUserCmnt = groupOtherUserCmnt;
+    }
+
+    public long getGroupno() {
+        return groupno;
+    }
+
+    public void setGroupno(long groupno) {
+        this.groupno = groupno;
+    }
+
+    public String getAdminUserId() {
+        return adminUserId;
+    }
+
+    public void setAdminUserId(String adminUserId) {
+        this.adminUserId = adminUserId;
+    }
+
+    public String getGrpJoiningStatus() {
+        return grpJoiningStatus;
+    }
+
+    public void setGrpJoiningStatus(String grpJoiningStatus) {
+        this.grpJoiningStatus = grpJoiningStatus;
+    }
+
+    public String getGroupPositionId() {
+        return groupPositionId;
+    }
+
+    public void setGroupPositionId(String groupPositionId) {
+        this.groupPositionId = groupPositionId;
+    }
+
     public String getGroup1() {
         return group1;
     }
@@ -262,69 +329,5 @@ public class Class_Group {
 
     public void setGroup9(String group9) {
         this.group9 = group9;
-    }
-
-    public boolean isExpandable() {
-        return expandable;
-    }
-
-    public void setExpandable(boolean expandable) {
-        this.expandable = expandable;
-    }
-
-    public String getGroupCategory() {
-        return groupCategory;
-    }
-
-    public void setGroupCategory(String groupCategory) {
-        this.groupCategory = groupCategory;
-    }
-
-    public String getGroupUserCmnt() {
-        return groupUserCmnt;
-    }
-
-    public void setGroupUserCmnt(String groupUserCmnt) {
-        this.groupUserCmnt = groupUserCmnt;
-    }
-
-    public String getGroupOtherUserCmnt() {
-        return groupOtherUserCmnt;
-    }
-
-    public void setGroupOtherUserCmnt(String groupOtherUserCmnt) {
-        this.groupOtherUserCmnt = groupOtherUserCmnt;
-    }
-
-    public long getGroupno() {
-        return groupno;
-    }
-
-    public void setGroupno(long groupno) {
-        this.groupno = groupno;
-    }
-
-    public String getAdminUserId() {
-        return adminUserId;
-    }
-
-    public void setAdminUserId(String adminUserId) {
-        this.adminUserId = adminUserId;
-    }
-
-    public String getGrpJoiningStatus() {
-        return grpJoiningStatus;
-    }
-
-    public void setGrpJoiningStatus(String grpJoiningStatus) {
-        this.grpJoiningStatus = grpJoiningStatus;
-    }
-
-    public String getGroupPositionId() {
-        return groupPositionId;
-    }
-
-    public void setGroupPositionId(String groupPositionId) {
-        this.groupPositionId = groupPositionId;
     }
 }
