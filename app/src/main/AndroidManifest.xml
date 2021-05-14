@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
-        <activity android:name=".Group_Join"></activity>
+        <activity android:name=".Group_Join"/>
         <activity android:name=".ProfileMine.UnderNotification.QusAndAns" />
         <activity android:name=".ProfileMine.UnderNotification.ServerMessages" />
         <activity android:name=".ProfileMine.UnderNotification.DirectMessages" />

@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.motion.widget.MotionLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_gravity="center"
-    android:gravity="center"
-    android:background="@color/purple"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/splash_background"
+    app:layoutDescription="@xml/splash_screen_scence"
     tools:context=".Register.SplashScreen">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@drawable/ic_logotext"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/splash_txt"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:fontFamily="sans-serif-black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="@string/splash_heading"
+        android:textSize="40sp"
         android:textAlignment="center"
         android:textColor="@color/text_white"
-        android:textSize="40sp">
+        android:fontFamily="sans-serif-black"/>
 
-    </TextView>
 
-</LinearLayout>
+</androidx.constraintlayout.motion.widget.MotionLayout>

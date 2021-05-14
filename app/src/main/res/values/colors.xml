@@ -28,4 +28,7 @@
     <color name="white_light">#CCCCCC</color>
     <color name="red_deep">#BA3030</color>
 
+    <color name="splash_start">#9A00E9</color>
+    <color name="splash_end">#6E00D4</color>
+
 </resources>
