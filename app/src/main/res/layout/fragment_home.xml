@@ -24,6 +24,7 @@
 
             <TextView
                 style="@style/PanelHeader"
+                android:id="@+id/tv_StartPanel"
                 android:text="@string/start_panel_name" />
             <Button
                 android:layout_width="match_parent"
@@ -31,25 +32,15 @@
                 android:id="@+id/btn_AddGroup"
                 android:text="Add Group"/>
 
-            <Button
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/btn_lteachattend"
-                android:visibility="gone"
-                android:text="Attendance"/>
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_lteachexam"
-                android:visibility="gone"
-                android:text="Exam"/>
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_lteachresult"
-                android:visibility="gone"
-                android:text="Result"/>
-
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -85,6 +76,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/rv_OtherPublicGroupTitle"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:id="@+id/ll_SubChild">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rv_SubChild"/>
+                </LinearLayout>
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -144,7 +149,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/sv_textSearchView"
                 android:layout_marginBottom="84dp"
-                android:id="@+id/rv_cGroupDashData"/>
+                android:id="@+id/rv_GroupDashData"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -182,7 +187,46 @@
                 style="@style/PanelHeader"
                 android:id="@+id/tv_etite"
                 android:text="@string/end_panel_name" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/ll_childData">
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_lteachattend"
+                android:visibility="gone"
+                android:text="Attendance"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_lteachexam"
+                android:visibility="gone"
+                android:text="Exam"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_lteachresult"
+                android:visibility="gone"
+                android:text="Result"/>
+
+            <TextView
+                android:layout_below="@+id/tv_etite"
+                android:id="@+id/tv_GroupMember"
+                android:text="Group Members"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tv_GroupMember"
+                android:layout_marginBottom="84dp"
+                android:id="@+id/rv_GrpMemberList"/>
+
+            </LinearLayout>
         </LinearLayout>
     </com.discord.panels.OverlappingPanelsLayout>
 </LinearLayout>

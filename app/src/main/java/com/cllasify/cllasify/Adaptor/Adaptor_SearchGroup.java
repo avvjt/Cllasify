@@ -105,18 +105,24 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
 //        holder.getGroupStatus(groupName, position, pushid);
 
                 DatabaseReference referenceALLGroup = FirebaseDatabase.getInstance().getReference().
-                        child("Groups").child("User_Subscribed_Groups");
+                        child("Groups").child("All_Universal_Group").child(pushid).child("User_Subscribed_Groups");
                 referenceALLGroup.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.hasChild(currUserId)) {
-                            if (snapshot.child(currUserId).getValue().equals(true)) {
-                                holder.tv_GroupStatus.setText("Subscribed");
+                        if (snapshot.hasChildren()){
+                            if (snapshot.hasChild(currUserId)) {
+                                holder.tv_GroupStatus.setEnabled(false);
+                                String joinStatus=snapshot.child(currUserId).child("subsStatus").getValue().toString();
+                                if (joinStatus.equals("true")) {
+                                    holder.tv_GroupStatus.setText("Subscribed");
+                                } else if(joinStatus.equals("req_sent")) {
+                                    holder.tv_GroupStatus.setText("Req Sent");
+                                } else if(joinStatus.equals("reject")) {
+                                    holder.tv_GroupStatus.setText("Rejected");
+                                }
                             } else {
                                 holder.tv_GroupStatus.setText("Join");
                             }
-                        } else {
-                            holder.tv_GroupStatus.setText("Join");
                         }
 
 ////                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");

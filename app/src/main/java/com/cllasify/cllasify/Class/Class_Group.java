@@ -9,9 +9,10 @@ public class Class_Group {
     public String quesUserName;
     public String ansUserName;
     public String cmntAnsUserName;
+    public String grpJoiningStatus;
+
     public String userId;
     public String adminUserId;
-    public String grpJoiningStatus;
     public Uri userPhoto;
     public String userEmailId;
     public String userPhone;
@@ -30,26 +31,51 @@ public class Class_Group {
     public String group8;
     public String group9;
 
+    public String subsStatus;
+    public String userStatus;
 
     public String groupUserCmnt;
     public String groupOtherUserCmnt;
     public long groupno;
 
+    public String subGroupName;
+    public String groupSubGroupComb;
+
+    public boolean isChecked;
 
 
-    private boolean expandable;
 
 
-    public Class_Group(String dateTime, String userName, String userId, String userEmailId, String position, String groupName, String groupCategory, long groupno) {
+    public Class_Group(String dateTime, String userId, String position, String groupName, String subGroupName, String groupSubGroupComb) {
+        this.dateTime = dateTime;
+        this.userId = userId;
+        this.position = position;
+        this.groupName = groupName;
+        this.subGroupName = subGroupName;
+        this.groupSubGroupComb = groupSubGroupComb;
+    }
+
+    public Class_Group(String dateTime, String userName, String userId, String position, String groupName, String groupCategory, long groupno) {
         this.dateTime = dateTime;
         this.userName = userName;
         this.userId = userId;
-        this.userEmailId = userEmailId;
         this.position = position;
         this.groupName = groupName;
         this.groupCategory = groupCategory;
         this.groupno = groupno;
     }
+
+    public Class_Group(String dateTime, String userName, String userId, String adminUserId, String groupName, String groupPositionId, String subsStatus, String userStatus) {
+        this.dateTime = dateTime;
+        this.userName = userName;
+        this.userId = userId;
+        this.adminUserId = adminUserId;
+        this.groupName = groupName;
+        this.groupPositionId = groupPositionId;
+        this.subsStatus = subsStatus;
+        this.userStatus = userStatus;
+    }
+
 
     public Class_Group(String dateTime, String userName, String userId, String userEmailId, String position, String groupName, String groupCategory) {
         this.dateTime = dateTime;
@@ -60,23 +86,12 @@ public class Class_Group {
         this.groupName = groupName;
         this.groupCategory = groupCategory;
 
-        this.expandable = expandable;
 
     }
 
     public Class_Group() {
     }
 
-    public Class_Group(String dateTime, String userName, String userId, String adminUserId, String grpJoiningStatus, String userEmailId, String position, String groupName) {
-        this.dateTime = dateTime;
-        this.userName = userName;
-        this.userId = userId;
-        this.adminUserId = adminUserId;
-        this.grpJoiningStatus = grpJoiningStatus;
-        this.userEmailId = userEmailId;
-        this.position = position;
-        this.groupName = groupName;
-    }
 
     public Class_Group(String dateTime, String userName, String userId, String adminUserId, String grpJoiningStatus, String userEmailId, String position, String groupName, String groupPositionId) {
         this.dateTime = dateTime;
@@ -89,17 +104,7 @@ public class Class_Group {
         this.groupName = groupName;
         this.groupPositionId = groupPositionId;
 
-        this.group1 = group1;
-        this.group2 = group2;
-        this.group3 = group3;
-        this.group4 = group4;
-        this.group5 = group5;
-        this.group6 = group6;
-        this.group7 = group7;
-        this.group8 = group8;
-        this.group9 = group9;
     }
-
     public String getDateTime() {
         return dateTime;
     }
@@ -193,14 +198,6 @@ public class Class_Group {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
-    }
-
-    public boolean isExpandable() {
-        return expandable;
-    }
-
-    public void setExpandable(boolean expandable) {
-        this.expandable = expandable;
     }
 
     public String getGroupCategory() {
@@ -329,5 +326,45 @@ public class Class_Group {
 
     public void setGroup9(String group9) {
         this.group9 = group9;
+    }
+
+    public String getSubsStatus() {
+        return subsStatus;
+    }
+
+    public void setSubsStatus(String subsStatus) {
+        this.subsStatus = subsStatus;
+    }
+
+    public String getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(String userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public String getSubGroupName() {
+        return subGroupName;
+    }
+
+    public void setSubGroupName(String subGroupName) {
+        this.subGroupName = subGroupName;
+    }
+
+    public String getGroupSubGroupComb() {
+        return groupSubGroupComb;
+    }
+
+    public void setGroupSubGroupComb(String groupSubGroupComb) {
+        this.groupSubGroupComb = groupSubGroupComb;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }

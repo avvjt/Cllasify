@@ -20,7 +20,6 @@ public class Adaptor_ShowGroup extends RecyclerView.Adapter<Adaptor_ShowGroup.My
 
     private Context context;
     private List<Class_Group> mDatalistNew;
-
     private OnItemClickListener mListener;
 
     public interface  OnItemClickListener{
@@ -93,6 +92,7 @@ public class Adaptor_ShowGroup extends RecyclerView.Adapter<Adaptor_ShowGroup.My
                 holder.tv_MyMsz.setVisibility(View.GONE);
             } else {
                 holder.tv_MyMsz.setText(userComment);
+                holder.tv_OtherMsz.setVisibility(View.GONE);
             }
         }
         else {
@@ -100,6 +100,7 @@ public class Adaptor_ShowGroup extends RecyclerView.Adapter<Adaptor_ShowGroup.My
                 holder.tv_OtherMsz.setVisibility(View.GONE);
             }else{
                 holder.tv_OtherMsz.setText(userComment);
+                holder.tv_MyMsz.setVisibility(View.GONE);
             }
         }
 

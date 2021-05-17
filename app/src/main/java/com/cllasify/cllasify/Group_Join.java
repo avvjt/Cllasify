@@ -5,7 +5,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,8 +13,12 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cllasify.cllasify.Adaptor.Adaptor_JoinGroupReq;
 import com.cllasify.cllasify.Adaptor.Adaptor_SearchGroup;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Fragment.HomeFragment;
@@ -28,7 +31,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.security.acl.Group;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -37,8 +39,9 @@ import java.util.List;
 public class Group_Join extends AppCompatActivity {
     ProgressDialog notifyPB;
     Adaptor_SearchGroup showAllGroupAdaptor;
-    List<Class_Group> listAllGroupStatus;
-    DatabaseReference refSearchShowGroup;
+    Adaptor_JoinGroupReq showSubChild_Adaptor;
+    List<Class_Group> listAllGroupStatus,list_SubChild;
+    DatabaseReference refSearchShowGroup,refChildGroup;
     RecyclerView rv_AllGroupStatus;
     Calendar calenderCC=Calendar.getInstance();
     SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
@@ -66,7 +69,7 @@ public class Group_Join extends AppCompatActivity {
         rv_AllGroupStatus.setAdapter(showAllGroupAdaptor);
 
 
-        refSearchShowGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Public_Group" );
+        refSearchShowGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Universal_Group" );
 
         if (esv_groupSearchView != null) {
             esv_groupSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -83,7 +86,7 @@ public class Group_Join extends AppCompatActivity {
         }
 
         DatabaseReference refGroupReqCount = FirebaseDatabase.getInstance().getReference().
-                child( "Groups" ).child( "All_Public_Group" );
+                child( "Groups" ).child( "All_Universal_Group" );
         refGroupReqCount.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -121,11 +124,12 @@ public class Group_Join extends AppCompatActivity {
                 if (dataSnapshot.getChildrenCount()>0) {
                     Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
                     String databaseUserId=class_userDashBoard.getUserId();
-                    if (!currUserId.equals(databaseUserId)){
+                    String groupCategory=class_userDashBoard.getGroupCategory();
+                    if (!currUserId.equals(databaseUserId) && groupCategory.equals("Public")){
+
                         listAllGroupStatus.add(class_userDashBoard);
                         notifyPB.dismiss();
                         showAllGroupAdaptor.notifyDataSetChanged();
-
                     }
 
                 } else {
@@ -167,7 +171,8 @@ public class Group_Join extends AppCompatActivity {
 //        });
     }
 
-    private void sentInvitation(String adminGroupID, String groupName,String groupPushId) {
+
+    private void sentInvitation1(String adminGroupID, String groupName,String groupPushId) {
 
         AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(Group_Join.this);
         alertdialogbuilder.setTitle("Please confirm !!!")
@@ -200,22 +205,6 @@ public class Group_Join extends AppCompatActivity {
                                     public void onCancelled(@NonNull DatabaseError error) {
                                     }
                                 });
-//
-//                                refacceptingReq.addListenerForSingleValueEvent(new ValueEventListener() {
-//                                    @Override
-//                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                        long noofQuesinCategory=snapshot.getChildrenCount()+1;
-//                                        String push="Accepting Reqno_"+noofQuesinCategory;
-//
-//                                        Class_Group  userAddComment= new Class_Group(dateTimeCC, userName, userID,adminGroupID, "req_pending",userEmail, push, groupName);
-////                                        refjoiningReq.child(push).setValue(userAddComment);
-//                                        refacceptingReq.child(push).setValue(userAddComment);
-//                                    }
-//                                    @Override
-//                                    public void onCancelled(@NonNull DatabaseError error) {
-//                                    }
-//                                });
-
 
                             }
                         })
@@ -230,31 +219,88 @@ public class Group_Join extends AppCompatActivity {
         alert.show();
 
     }
+    private void sentInvitation(String adminGroupID, String groupName,String groupPushId) {
+    final android.app.AlertDialog dialogBuilder = new android.app.AlertDialog.Builder(Group_Join.this).create();
+    dialogBuilder.setCanceledOnTouchOutside(true);
+    //dialogBuilder.setCancelable(false);
+    LayoutInflater inflater = this.getLayoutInflater();
+
+    final View dialogView = inflater.inflate(R.layout.dialog_creategroup1, null);
+    TextView tapCancel=dialogView.findViewById(R.id.tv_Cancel);
+    TextView tapSubmit=dialogView.findViewById(R.id.tv_Submit);
+    RecyclerView rv_JoinGroupReq=dialogView.findViewById(R.id.rv_JoinGroupReq);
+     rv_JoinGroupReq.setLayoutManager(new LinearLayoutManager(Group_Join.this));
+
+        list_SubChild = new ArrayList<>();
+//            listGroupSTitle=new ArrayList<>();
+
+        refChildGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId);
+
+        showSubChild_Adaptor = new Adaptor_JoinGroupReq(Group_Join.this, list_SubChild);
+        rv_JoinGroupReq.setAdapter(showSubChild_Adaptor);
+
+
+
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
+                list_SubChild.add(userQuestions);
+                showSubChild_Adaptor.notifyDataSetChanged();
+                notifyPB.dismiss();
+//                } else {
+//                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
+//                    notifyPB.dismiss();
+////                }
+
+//                }
+
+            }
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            }
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        };
+        //refAdmin.addChildEventListener(childEventListener);
+        refChildGroup.orderByChild("position").addChildEventListener(childEventListener);
+
+//        int width = (int)(getResources().getDisplayMetrics().widthPixels*1.00);
+//        int height = (int)(getResources().getDisplayMetrics().heightPixels*0.90);
+
+    tapCancel.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            dialogBuilder.dismiss();
+        }
+
+    });
+    tapSubmit.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            dialogBuilder.dismiss();
+        }
+    });
+    dialogBuilder.setView(dialogView);
+    dialogBuilder.show();
+    }
 
     @Override
     public void onBackPressed() {
-
-        Fragment fragment=null;
+        super.onBackPressed();
         FragmentTransaction ft;
-        fragment = new HomeFragment();
+        HomeFragment fragment = new HomeFragment();
         ft = getSupportFragmentManager().beginTransaction();
         ft.addToBackStack(null);
         ft.replace(R.id.fragment_container, fragment,"home");
         ft.commit();
-
-//        super.onBackPressed();
     }
-
-//    public void searchGroup(String newText) {
-//
-//        ArrayList<Class_Group> listGroupSearch=new ArrayList<>();
-//        for (Class_Group classUserSearch:listGroupSTitle){
-//            if (classUserSearch.getGroupName().toLowerCase().contains(newText.toLowerCase())){
-//                listGroupSearch.add(classUserSearch);
-//            }
-//        }
-//        Adaptor_QueryGroup adapSearchJob= new Adaptor_QueryGroup(getContext(),listGroupSearch);
-////        erv_GroupSearchData.setAdapter(adapSearchJob);
-//
-//    }
 }

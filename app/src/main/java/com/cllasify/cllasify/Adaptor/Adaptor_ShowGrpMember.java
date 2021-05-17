@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 
 import java.util.List;
 
-public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup1.MyViewHolder> {
+public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpMember.MyViewHolder> {
 
     private Context context;
     private List<Class_Group> mDatalistNew;
@@ -28,7 +28,6 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
     private OnItemClickListener mListener;
 
     public interface  OnItemClickListener{
-        void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID);
 //        void onSaveQues(int position, String mTitle, String mDesc);
         //void fillbyOfficialLink(int position, String offWeb);
 
@@ -37,28 +36,24 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 
 
 //        void listitem(int position, String question, String pushQues, String pushAns,String category);
-//
-//        void addSubGroup(int position, String groupTitle, String groupUserID);
 
-//        void addSubChild1(int position, String groupName, String subgroupName, String groupPushId);
-//        void addSubChild2(int position, String groupName, String subgroupName, String groupPushId);
-//        void addSubChild3(int position, String groupName, String subgroupName, String groupPushId);
-//        void addSubChild4(int position, String groupName, String subgroupName, String groupPushId);
-//        void addSubChild5(int position, String groupName, String subgroupName, String groupPushId);
-//        void addSubChild6(int position, String groupName, String subgroupName, String groupPushId);
-//        void addSubChild7(int position, String groupName, String subgroupName, String groupPushId);
-//        void addSubChild8(int position, String groupName, String subgroupName, String groupPushId);
-//        void addSubChild9(int position, String groupName, String subgroupName, String groupPushId);
-        //void likeAns(int position, String tag);
-//        void saveAns(int position, String tag);
-//        void likeAns(View v, int position, Boolean clicked);
-//        void onWebLinkClick(int position);
+        void addSubGroup(int position, String groupTitle, String groupUserID);
+
+        void addSubChild1(int position, String groupName, String subgroupName, String groupPushId);
+        void addSubChild2(int position, String groupName, String subgroupName, String groupPushId);
+        void addSubChild3(int position, String groupName, String subgroupName, String groupPushId);
+        void addSubChild4(int position, String groupName, String subgroupName, String groupPushId);
+        void addSubChild5(int position, String groupName, String subgroupName, String groupPushId);
+        void addSubChild6(int position, String groupName, String subgroupName, String groupPushId);
+        void addSubChild7(int position, String groupName, String subgroupName, String groupPushId);
+        void addSubChild8(int position, String groupName, String subgroupName, String groupPushId);
+        void addSubChild9(int position, String groupName, String subgroupName, String groupPushId);
     }
     public void setOnItemClickListener(OnItemClickListener listener){
         mListener=listener;
     }
 
-    public Adaptor_QueryGroup1(Context context, List<Class_Group> mDatalistNew) {
+    public Adaptor_ShowGrpMember(Context context, List<Class_Group> mDatalistNew) {
         this.context = context;
         this.mDatalistNew = mDatalistNew;
     }
@@ -78,12 +73,11 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         assert currentUser != null;
         String userID=currentUser.getUid();
-
         Class_Group Answers=mDatalistNew.get(position);
 
-        String groupName=Answers.getGroupName();
-        String groupPushId=Answers.getPosition();
-
+        String userName=Answers.getUserName();
+//
+//
 //        String group1=mDatalistNew.get(position).getGroup1();
 //        String group2=mDatalistNew.get(position).getGroup2();
 //        String group3=mDatalistNew.get(position).getGroup3();
@@ -93,7 +87,8 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //        String group7=mDatalistNew.get(position).getGroup7();
 //        String group8=mDatalistNew.get(position).getGroup8();
 //        String group9=mDatalistNew.get(position).getGroup9();
-
+//
+//
 //        if(group1==null){
 //            holder.tv_Group1.setVisibility(View.GONE);
 //        }else{
@@ -142,7 +137,7 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //
 //        Boolean isExpanded=mDatalistNew.get(position).isExpandable();
 //        holder.expandable_ll.setVisibility(isExpanded?View.VISIBLE:View.GONE);
-        holder.tv_GroupTitle.setText(groupName);
+        holder.tv_GroupTitle.setText(userName);
 
     }
 
@@ -157,16 +152,15 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
         TextView examQues_tv;
         TextView date_tv;
 //        TextView likedislike_tv;
-        TextView tv_GroupTitle;
-//        ,tv_Group1,tv_Group2,tv_Group3,tv_Group4,
-//        tv_Group5,tv_Group6,tv_Group7,tv_Group8,tv_Group9;
+        TextView tv_GroupTitle,tv_Group1,tv_Group2,tv_Group3,tv_Group4,
+        tv_Group5,tv_Group6,tv_Group7,tv_Group8,tv_Group9;
 //        TextView userallAns_tv, tv_CommentCount, tv_AnslikeCount, tv_AnsflagCount, tv_AnsdislikeCount, tv_GroupTitle;
 
         TextView saveQ, tv_anslikecount,shareQ;
-        ImageButton save_ib,like_ib,share_ib;
+//        ImageButton save_ib,like_ib,share_ib, ib_ib_AddGroup;
        // LinearLayout l1,l2,l3,l4;
 //        LinearLayout like_ll,viewAns_ll,touchexpand_ll;
-        LinearLayout touchexpand_ll,expandable_ll;
+//        LinearLayout touchexpand_ll,expandable_ll,ll_Group;
 
         Class_Group class_Group;
         Boolean clicked;
@@ -180,26 +174,7 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //            mCurrentUser= FirebaseAuth.getInstance().getCurrentUser();
 //            examName_tv = itemView.findViewById(R.id.tv_ExamName);
             tv_GroupTitle =itemView.findViewById(R.id.tv_GroupTitle);
-
-
-            tv_GroupTitle.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(mListener!=null){
-                        int position=getAdapterPosition();
-                        if (position!=RecyclerView.NO_POSITION){
-
-
-                            Class_Group user = mDatalistNew.get(getAdapterPosition());
-                            String groupName = user.getGroupName();
-                            String groupPushId = user.getPosition();
-                            String groupUserID = user.getUserId();
-
-                            mListener.showChildGroupAdaptor(position,groupName,groupPushId,groupUserID);
-                        }
-                    }
-                }
-            });
+//            ll_Group =itemView.findViewById(R.id.ll_Group);
 
 //            tv_Group1=itemView.findViewById(R.id.tv_Group1);
 //            tv_Group2=itemView.findViewById(R.id.tv_Group2);
@@ -221,7 +196,7 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //            userAns_tv=itemView.findViewById(R.id.userAns_tv);
 //            userallAns_tv=itemView.findViewById(R.id.userallAns_tv);
 
-//            ib_ib_AddGroup = itemView.findViewById(R.id.ib_AddGroup);
+//            ib_ib_AddGroup = itemView.findViewById(R.id.ib_AddChildGroup);
 
 //            tv_AnsflagCount.setTag("Flag");
 //            tv_AnslikeCount.setTag("Like");
@@ -251,7 +226,7 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //            refLike= FirebaseDatabase.getInstance().getReference().child("FeedQuestions").child("Likes");
 //            mAuth= FirebaseAuth.getInstance();
 //            refLike.keepSynced(true);
-
+//
 //            touchexpand_ll.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -260,7 +235,6 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //                    notifyItemChanged(getAdapterPosition());
 //                }
 //            });
-
 //            tv_Group1.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
@@ -271,6 +245,7 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //                            String groupName = class_Group.getGroupName();
 //                            String subgroupName = class_Group.getGroup1();
 //                            String groupTitle = class_Group.getPosition();
+//
 //                            mListener.addSubChild1(position,groupName,subgroupName,groupTitle);
 //                        }
 //                    }
@@ -286,6 +261,7 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //                            String groupName = class_Group.getGroupName();
 //                            String subgroupName = class_Group.getGroup2();
 //                            String groupTitle = class_Group.getPosition();
+//
 //                            mListener.addSubChild2(position,groupName,subgroupName,groupTitle);
 //                        }
 //                    }
@@ -301,6 +277,7 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //                            String groupName = class_Group.getGroupName();
 //                            String subgroupName = class_Group.getGroup3();
 //                            String groupTitle = class_Group.getPosition();
+//
 //                            mListener.addSubChild3(position,groupName,subgroupName,groupTitle);
 //                        }
 //                    }
@@ -316,6 +293,7 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //                            String groupName = class_Group.getGroupName();
 //                            String subgroupName = class_Group.getGroup4();
 //                            String groupTitle = class_Group.getPosition();
+//
 //                            mListener.addSubChild4(position,groupName,subgroupName,groupTitle);
 //                        }
 //                    }
@@ -331,6 +309,7 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //                            String groupName = class_Group.getGroupName();
 //                            String subgroupName = class_Group.getGroup5();
 //                            String groupTitle = class_Group.getPosition();
+//
 //                            mListener.addSubChild5(position,groupName,subgroupName,groupTitle);
 //                        }
 //                    }
@@ -346,6 +325,7 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //                            String groupName = class_Group.getGroupName();
 //                            String subgroupName = class_Group.getGroup6();
 //                            String groupTitle = class_Group.getPosition();
+//
 //                            mListener.addSubChild6(position,groupName,subgroupName,groupTitle);
 //                        }
 //                    }
@@ -361,6 +341,7 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //                            String groupName = class_Group.getGroupName();
 //                            String subgroupName = class_Group.getGroup7();
 //                            String groupTitle = class_Group.getPosition();
+//
 //                            mListener.addSubChild7(position,groupName,subgroupName,groupTitle);
 //                        }
 //                    }
@@ -376,6 +357,7 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //                            String groupName = class_Group.getGroupName();
 //                            String subgroupName = class_Group.getGroup8();
 //                            String groupTitle = class_Group.getPosition();
+//
 //                            mListener.addSubChild8(position,groupName,subgroupName,groupTitle);
 //                        }
 //                    }
@@ -396,7 +378,7 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 //                    }
 //                }
 //            });
-//
+
 //            ib_ib_AddGroup.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {

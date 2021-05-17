@@ -252,7 +252,7 @@ public class FeedFragment extends Fragment {
 //        itemTouchHelper.attachToRecyclerView(recyclerView);
 
 
-        initSwipe();
+//        initSwipe();
         return view;
     }
 
