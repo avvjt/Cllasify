@@ -100,21 +100,54 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                style="@style/PanelHeader"
-                android:layout_marginBottom="16dp"
-                android:layout_alignParentTop="true"
-                android:id="@+id/tv_cpaneltitle"
-                android:text="@string/center_panel_name" />
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tablayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/design_default_color_on_primary"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/scrollView"
+                app:tabIndicatorColor="@color/purple"
+                app:tabSelectedTextColor="@color/purple"
+                app:tabTextColor="@color/black"
+                app:cnb_unselectedColor="@color/page_black">
 
-            <TextView
-                style="@style/PanelBodyText"
-                android:id="@+id/tv_cpanelbody"
-                android:layout_below="@id/tv_cpaneltitle"
-                android:text="@string/swipe_gesture_instructions" />
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/ChatTab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chats" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:id="@+id/DoubtTab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/doubt" />
+            </com.google.android.material.tabs.TabLayout>
+
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@+id/tablayout1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:id="@+id/scrollView">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/vpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/tablayout1"/>
+
+            </androidx.core.widget.NestedScrollView>
+
+
             <View
                 android:layout_width="match_parent"
-                android:layout_below="@+id/tv_cpanelbody"
+                android:layout_below="@+id/tablayout1"
                 android:background="@color/colorPrimary"
                 android:layout_height="2dp"/>
 
@@ -123,7 +156,7 @@
                 android:layout_height="wrap_content"
                 app:queryHint="Search Groups"
                 android:visibility="gone"
-                android:layout_below="@+id/tv_cpanelbody"
+                android:layout_below="@+id/tablayout1"
                 android:id="@+id/sv_textSearchView"/>
             <View
                 android:layout_width="match_parent"
@@ -213,7 +246,6 @@
                 android:text="Result"/>
 
             <TextView
-                android:layout_below="@+id/tv_etite"
                 android:id="@+id/tv_GroupMember"
                 android:text="Group Members"
                 android:layout_height="wrap_content"
@@ -222,7 +254,6 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/tv_GroupMember"
                 android:layout_marginBottom="84dp"
                 android:id="@+id/rv_GrpMemberList"/>
 

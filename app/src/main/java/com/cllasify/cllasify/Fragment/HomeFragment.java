@@ -28,12 +28,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_ChildGroup;
+import com.cllasify.cllasify.Adaptor.Adaptor_DashboardTab;
+import com.cllasify.cllasify.Adaptor.Adaptor_ProfileTab;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup1;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
+import com.cllasify.cllasify.Adaptor.Adaptor_SocialTab;
 import com.cllasify.cllasify.Attendance_Activity;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Group_Join;
@@ -48,6 +52,8 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -67,6 +73,11 @@ import java.util.Calendar;
 import java.util.List;
 
 public class HomeFragment extends Fragment {
+
+    TabLayout tabLayout;
+    TabItem tabItem1,tabItem2;
+    ViewPager viewPager;
+    Adaptor_DashboardTab adaptor_dashboardTab;
 
     RecyclerView rv_GroupTitle,rv_GroupData,
             rv_GroupDashData,
@@ -242,6 +253,40 @@ public class HomeFragment extends Fragment {
             rv_GroupDashData.setLayoutManager(new LinearLayoutManager(getContext()));
             rv_GroupDashData.setAdapter(showDashadaptor);
 
+            //TabLayout
+            tabLayout= view.findViewById(R.id.tablayout1);
+            tabItem1= view.findViewById(R.id.ChatTab);
+            tabItem2= view.findViewById(R.id.DoubtTab);
+            viewPager= view.findViewById(R.id.vpager);
+
+            adaptor_dashboardTab = new Adaptor_DashboardTab(getChildFragmentManager(),tabLayout.getTabCount());
+            viewPager.setAdapter(adaptor_dashboardTab);
+
+            tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    viewPager.setCurrentItem(tab.getPosition());
+
+                    if(tab.getPosition()==0 || tab.getPosition()==1)
+                        adaptor_dashboardTab.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+
+            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            //listen for scroll or page change
+
+
+
 //Left Panel
 
             tv_StartPanel.setOnClickListener(new View.OnClickListener() {
@@ -329,8 +374,6 @@ public class HomeFragment extends Fragment {
             et_ctext =view.findViewById(R.id.et_ctext);
             btn_caddgroup =view.findViewById(R.id.btn_caddgroup);
             btn_cjoingroup =view.findViewById(R.id.btn_cjoingroup);
-            tv_cpaneltitle =view.findViewById(R.id.tv_cpaneltitle);
-            tv_cpanelbody =view.findViewById(R.id.tv_cpanelbody);
             ll_bottom_send =view.findViewById(R.id.ll_bottom_send);
 
 
