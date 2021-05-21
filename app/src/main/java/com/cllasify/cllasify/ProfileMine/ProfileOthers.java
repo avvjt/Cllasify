@@ -6,11 +6,11 @@ import android.os.Bundle;
 
 import com.cllasify.cllasify.R;
 
-public class Profile extends AppCompatActivity {
+public class ProfileOthers extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_profile_others);
     }
 }

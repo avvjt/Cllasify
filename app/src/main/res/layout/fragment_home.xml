@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_AddGroup"
-                android:text="Add Group"/>
+                android:text="@string/add_group"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -166,7 +166,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:text="Add Group"
+                android:text="@string/add_group"
                 android:layout_below="@id/sv_textSearchView"
                 android:id="@+id/btn_caddgroup"
                 android:textSize="30sp"/>
@@ -175,7 +175,7 @@
                 android:layout_height="100dp"
                 android:layout_below="@id/btn_caddgroup"
                 android:id="@+id/btn_cjoingroup"
-                android:text="Join Group"
+                android:text="@string/join_group"
                 android:textSize="30sp"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
@@ -231,7 +231,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_lteachattend"
                 android:visibility="gone"
-                android:text="Attendance"/>
+                android:text="@string/attendance"/>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -247,7 +247,7 @@
 
             <TextView
                 android:id="@+id/tv_GroupMember"
-                android:text="Group Members"
+                android:text="@string/group_members"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"/>
 

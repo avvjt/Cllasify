@@ -32,12 +32,10 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_ChildGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_DashboardTab;
-import com.cllasify.cllasify.Adaptor.Adaptor_ProfileTab;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup1;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
-import com.cllasify.cllasify.Adaptor.Adaptor_SocialTab;
 import com.cllasify.cllasify.Attendance_Activity;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Group_Join;

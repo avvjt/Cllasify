@@ -212,5 +212,9 @@
     <string name="yes">YES</string>
     <string name="no">NO</string>
     <string name="doubt">Doubt</string>
+    <string name="add_group">Add Group</string>
+    <string name="join_group">Join group</string>
+    <string name="attendance">Attendance</string>
+    <string name="group_members">Group Members</string>
 
 </resources>

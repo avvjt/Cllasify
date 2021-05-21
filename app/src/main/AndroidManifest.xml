@@ -33,7 +33,7 @@
         <activity android:name=".ProfileMine.MyAccount" />
         <activity android:name=".ProfileMine.Set_Status" />
         <activity android:name=".ProfileMine.Social" />
-        <activity android:name=".ProfileMine.Profile" />
+        <activity android:name=".ProfileMine.ProfileOthers" />
         <activity android:name=".Feed.User_Question" />
         <activity android:name=".Register.Phone_Verify" />
         <activity android:name=".Register.Phone_Login" />

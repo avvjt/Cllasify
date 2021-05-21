@@ -5,7 +5,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
-import com.cllasify.cllasify.Adaptor.Adaptor_ProfileTab;
 import com.cllasify.cllasify.Adaptor.Adaptor_SocialTab;
 import com.cllasify.cllasify.R;
 import com.google.android.material.tabs.TabItem;
