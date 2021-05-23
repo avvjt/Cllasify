@@ -172,7 +172,7 @@ public class Group_Join extends AppCompatActivity {
     }
 
 
-    private void sentInvitation1(String adminGroupID, String groupName,String groupPushId) {
+    private void sentInvitation(String adminGroupID, String groupName,String groupPushId) {
 
         AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(Group_Join.this);
         alertdialogbuilder.setTitle("Please confirm !!!")
@@ -219,7 +219,7 @@ public class Group_Join extends AppCompatActivity {
         alert.show();
 
     }
-    private void sentInvitation(String adminGroupID, String groupName,String groupPushId) {
+    private void sentInvitation1(String adminGroupID, String groupName,String groupPushId) {
     final android.app.AlertDialog dialogBuilder = new android.app.AlertDialog.Builder(Group_Join.this).create();
     dialogBuilder.setCanceledOnTouchOutside(true);
     //dialogBuilder.setCancelable(false);

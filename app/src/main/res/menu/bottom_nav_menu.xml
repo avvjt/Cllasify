@@ -23,6 +23,4 @@
         android:icon="@drawable/ic_profile"
         app:cnb_iconColor="@color/purple"/>
 
-
-
 </menu>

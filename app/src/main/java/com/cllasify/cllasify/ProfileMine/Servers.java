@@ -6,7 +6,6 @@ import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_ServersTab;
-import com.cllasify.cllasify.Adaptor.Adaptor_SocialTab;
 import com.cllasify.cllasify.R;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -24,10 +23,10 @@ public class Servers extends AppCompatActivity {
         setContentView(R.layout.activity_servers);
 
 
-        tabLayout= findViewById(R.id.tablayout1);
+        tabLayout= findViewById(R.id.tabLayout);
         tabItem1= findViewById(R.id.serversTab);
         tabItem2= findViewById(R.id.requestTab);
-        viewPager= findViewById(R.id.vpager);
+        viewPager= findViewById(R.id.viewPager);
 
         adaptor_serversTab =new Adaptor_ServersTab(getSupportFragmentManager(),tabLayout.getTabCount());
         viewPager.setAdapter(adaptor_serversTab);

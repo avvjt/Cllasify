@@ -25,10 +25,10 @@ public class Social extends AppCompatActivity {
         setContentView(R.layout.activity_social);
 
 
-        tabLayout= findViewById(R.id.tablayout1);
+        tabLayout= findViewById(R.id.tabLayout);
         tabItem1= findViewById(R.id.friendsTab);
         tabItem2= findViewById(R.id.requestTab);
-        viewPager= findViewById(R.id.vpager);
+        viewPager= findViewById(R.id.viewPager);
 
         adaptor_socialTab =new Adaptor_SocialTab(getSupportFragmentManager(),tabLayout.getTabCount());
         viewPager.setAdapter(adaptor_socialTab);

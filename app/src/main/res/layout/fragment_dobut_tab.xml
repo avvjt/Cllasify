@@ -3,12 +3,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.DashboardTab.DobutTab">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.SearchView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        app:queryHint="Search Groups"
+
+        android:id="@+id/sv_SearchDoubt"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sv_SearchDoubt"
+        android:layout_marginBottom="84dp"
+        android:id="@+id/rv_DoubtDash"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab_addDoubtQ"
+                style="@style/MyMaterialTheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="80dp"
+                android:layout_marginEnd="16dp"
+                app:fabSize="normal"
+                android:src="@drawable/ic_add"
+                app:useCompatPadding="true" />
+            <!--            <TextView android:layout_height="wrap_content"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:text="OK"-->
+            <!--                android:elevation="6dp"-->
+            <!--                android:textSize="18dp"-->
+            <!--                android:textColor="#fff"-->
+            <!--                app:layout_anchor="@id/fab_Chats"-->
+            <!--                app:layout_anchorGravity="center"/>-->
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </RelativeLayout>
 
 </FrameLayout>

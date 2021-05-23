@@ -9,6 +9,7 @@
     <string name="feed">Feed</string>
     <string name="notification">Notification</string>
     <string name="profile">Profile</string>
+    <string name="attendance">Attendance</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -214,7 +215,7 @@
     <string name="doubt">Doubt</string>
     <string name="add_group">Add Group</string>
     <string name="join_group">Join group</string>
-    <string name="attendance">Attendance</string>
+<!--    <string name="attendance">Attendance</string>-->
     <string name="group_members">Group Members</string>
 
 </resources>

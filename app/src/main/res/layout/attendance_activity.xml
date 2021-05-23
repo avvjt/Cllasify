@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,15 +11,32 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/tv_titleAttendance"
         android:text="Attendance Portal" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_grpName"/>
+        android:layout_below="@+id/tv_titleAttendance"
+        android:id="@+id/tv_groupName"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_groupName"
+        android:id="@+id/tv_subGroupName"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_below="@+id/tv_subGroupName"
         android:id="@+id/rv_GrpMemberAttendance"/>
 
-</LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:id="@+id/btn_ShowAttendStatus"
+        android:layout_alignParentBottom="true"
+        android:text="Show Attendance Status"/>
+</RelativeLayout>

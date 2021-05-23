@@ -25,6 +25,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,12 +33,14 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_ChildGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_DashboardTab;
+//import com.cllasify.cllasify.Adaptor.Adaptor_ProfileTab;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup1;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
 import com.cllasify.cllasify.Attendance_Activity;
 import com.cllasify.cllasify.Class.Class_Group;
+import com.cllasify.cllasify.Fragment.DashboardTab.ChatTab;
 import com.cllasify.cllasify.Group_Join;
 import com.cllasify.cllasify.Register.Phone_Login;
 import com.cllasify.cllasify.R;
@@ -49,6 +52,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
@@ -73,13 +77,12 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     TabLayout tabLayout;
-    TabItem tabItem1,tabItem2;
+    TabItem tabChatItem, tabDoubtItem;
     ViewPager viewPager;
     Adaptor_DashboardTab adaptor_dashboardTab;
 
-    RecyclerView rv_GroupTitle,rv_GroupData,
-            rv_GroupDashData,
-            rv_UserPrivateGroupTitle,rv_UserPublicGroupTitle,rv_OtherPublicGroupTitle
+//    RecyclerView rv_GroupTitle,rv_GroupData,rv_GroupDashData
+            RecyclerView rv_UserPrivateGroupTitle,rv_UserPublicGroupTitle,rv_OtherPublicGroupTitle
             ,rv_GrpMemberList,rv_SubChild;
 
     ArrayList<String> arrayList=new ArrayList<>();
@@ -122,7 +125,8 @@ public class HomeFragment extends Fragment {
      //
     Class_Group userAddGroupClass,addAnswer,userSubsGroupClass;
 
-    SearchView sv_textSearchView,esv_groupSearchView;
+    SearchView esv_groupSearchView;
+//    SearchView sv_textSearchView,esv_groupSearchView;
     EditText addAnswer_et, et_ctext;
     TextView postAnswer_tv, dispQues_tv,QuesAskedByTime_tv,
             tv_UserPublicTitle,tv_UserPrivateTitle,tv_OtherTitle,
@@ -131,7 +135,8 @@ public class HomeFragment extends Fragment {
     ImageButton ib_cattach, ib_csubmit;
     Button btn_caddgroup, btn_cjoingroup;
     Button btn_lteachresult,btn_lteachattend,btn_lteachexam;
-    LinearLayout ll_bottom_send,ll_SubChild,ll_childData;
+    LinearLayout ll_SubChild,ll_childData;
+//    LinearLayout ll_bottom_send;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -168,7 +173,7 @@ public class HomeFragment extends Fragment {
             chipNavigationBar = getActivity().findViewById(R.id.bottom_nav_menu);
             chipNavigationBar.setItemSelected(R.id.bottom_nav_home,true);
 
-            rv_GroupTitle =view.findViewById(R.id.rv_UserGroupTitle);
+//            rv_GroupTitle =view.findViewById(R.id.rv_UserGroupTitle);
             rv_UserPrivateGroupTitle =view.findViewById(R.id.rv_UserPrivateGroupTitle);
             rv_UserPublicGroupTitle =view.findViewById(R.id.rv_UserPublicGroupTitle);
             rv_OtherPublicGroupTitle =view.findViewById(R.id.rv_OtherPublicGroupTitle);
@@ -186,9 +191,11 @@ public class HomeFragment extends Fragment {
             ll_childData =view.findViewById(R.id.ll_childData);
 
             overlappingPanels = view.findViewById(R.id.overlapping_panels);
+            tv_cpaneltitle = view.findViewById(R.id.tv_cpaneltitle);
+            tv_cpanelbody = view.findViewById(R.id.tv_cpanelbody);
 
             btn_AddGroup =view.findViewById(R.id.btn_AddGroup);
-            sv_textSearchView =view.findViewById(R.id.sv_textSearchView);
+//            sv_textSearchView =view.findViewById(R.id.sv_textSearchView);
 
             firebaseAuth = FirebaseAuth.getInstance();
             currentUser = firebaseAuth.getCurrentUser();
@@ -217,7 +224,7 @@ public class HomeFragment extends Fragment {
 //        recyclerView1.setLayoutManager(new LinearLayoutManager(getContext()));
 //        recyclerView.setLayoutManager(linearLayoutManager);
 
-            rv_GroupTitle.setLayoutManager(new LinearLayoutManager(getContext()));
+//            rv_GroupTitle.setLayoutManager(new LinearLayoutManager(getContext()));
             rv_UserPublicGroupTitle.setLayoutManager(new LinearLayoutManager(getContext()));
             rv_UserPrivateGroupTitle.setLayoutManager(new LinearLayoutManager(getContext()));
             rv_OtherPublicGroupTitle.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -241,21 +248,21 @@ public class HomeFragment extends Fragment {
             showSubChild_Adaptor = new Adaptor_ChildGroup(getContext(), list_SubChild);
 //            showAllGroupAdaptor = new Adaptor_SearchGroup(getContext(), listGroupSTitle);
 
-            rv_GroupTitle.setAdapter(showGroupadaptor);
+//            rv_GroupTitle.setAdapter(showGroupadaptor);
             rv_UserPrivateGroupTitle.setAdapter(showUserPrivateGroupadaptor);
             rv_UserPublicGroupTitle.setAdapter(showUserPublicGroupadaptor);
             rv_OtherPublicGroupTitle.setAdapter(showOtherUserPublicGroupAdaptor);
             rv_SubChild.setAdapter(showSubChild_Adaptor);
 
-            rv_GroupDashData=view.findViewById(R.id.rv_GroupDashData);
-            rv_GroupDashData.setLayoutManager(new LinearLayoutManager(getContext()));
-            rv_GroupDashData.setAdapter(showDashadaptor);
+//            rv_GroupDashData=view.findViewById(R.id.rv_GroupDashData);
+//            rv_GroupDashData.setLayoutManager(new LinearLayoutManager(getContext()));
+//            rv_GroupDashData.setAdapter(showDashadaptor);
 
             //TabLayout
-            tabLayout= view.findViewById(R.id.tablayout1);
-            tabItem1= view.findViewById(R.id.ChatTab);
-            tabItem2= view.findViewById(R.id.DoubtTab);
-            viewPager= view.findViewById(R.id.vpager);
+            tabLayout= view.findViewById(R.id.tabLayout);
+            tabChatItem = view.findViewById(R.id.tabChatItem);
+            tabDoubtItem = view.findViewById(R.id.tabDoubtItem);
+            viewPager= view.findViewById(R.id.viewPager);
 
             adaptor_dashboardTab = new Adaptor_DashboardTab(getChildFragmentManager(),tabLayout.getTabCount());
             viewPager.setAdapter(adaptor_dashboardTab);
@@ -294,13 +301,19 @@ public class HomeFragment extends Fragment {
                     ll_SubChild.setVisibility(View.GONE);
                     list_SubChild.clear();
 
-                    ll_bottom_send.setVisibility(View.GONE);
-                    sv_textSearchView.setVisibility(View.GONE);
-                    tv_cpaneltitle.setText(R.string.center_panel_name);
-                    tv_cpanelbody.setText(R.string.swipe_gesture_instructions);
-                    btn_caddgroup.setVisibility(View.VISIBLE);
-                    btn_cjoingroup.setVisibility(View.VISIBLE);
-                    rv_GroupDashData.setVisibility(View.GONE);
+//                    ll_bottom_send.setVisibility(View.GONE);
+//                    sv_textSearchView.setVisibility(View.GONE);
+//                    rv_GroupDashData.setVisibility(View.GONE);
+//                    tabLayout.setVisibility(View.GONE);
+//                    tabChatItem.setVisibility(View.GONE);
+//                    tabDoubtItem.setVisibility(View.GONE);
+
+//
+//                    tv_cpaneltitle.setText(R.string.center_panel_name);
+//                    tv_cpanelbody.setText(R.string.swipe_gesture_instructions);
+//
+//                    btn_caddgroup.setVisibility(View.VISIBLE);
+//                    btn_cjoingroup.setVisibility(View.VISIBLE);
                     list_Dashboard.clear();
 
 
@@ -372,7 +385,7 @@ public class HomeFragment extends Fragment {
             et_ctext =view.findViewById(R.id.et_ctext);
             btn_caddgroup =view.findViewById(R.id.btn_caddgroup);
             btn_cjoingroup =view.findViewById(R.id.btn_cjoingroup);
-            ll_bottom_send =view.findViewById(R.id.ll_bottom_send);
+//            ll_bottom_send =view.findViewById(R.id.ll_bottom_send);
 
 
             btn_caddgroup.setOnClickListener(new View.OnClickListener() {
@@ -442,19 +455,19 @@ public class HomeFragment extends Fragment {
 //                }
 //            });
 
-            if (sv_textSearchView != null) {
-                sv_textSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                    @Override
-                    public boolean onQueryTextSubmit(String query) {
-                        return false;
-                    }
-                    @Override
-                    public boolean onQueryTextChange(String newText) {
-                        searchText(newText);
-                        return false;
-                    }
-                });
-            }
+//            if (sv_textSearchView != null) {
+//                sv_textSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//                    @Override
+//                    public boolean onQueryTextSubmit(String query) {
+//                        return false;
+//                    }
+//                    @Override
+//                    public boolean onQueryTextChange(String newText) {
+//                        searchText(newText);
+//                        return false;
+//                    }
+//                });
+//            }
 
 
 
@@ -1438,13 +1451,25 @@ public class HomeFragment extends Fragment {
     }
     private void upDateDashboard(int position, String groupName, String subGroupName, String groupPushId,String subGroupPushId) {
 
-        ll_bottom_send.setVisibility(View.VISIBLE);
-        sv_textSearchView.setVisibility(View.VISIBLE);
-        ll_childData.setVisibility(View.VISIBLE);
 
-        refTempGroupDB = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Sub_Group" ).child( userID );
-//        refGroupChildUserDashboard = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Sub_Group" ).child(groupPushId).child(subGroupPushId);
-        refGrpChildAllDashboard = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Sub_Group" ).child(groupPushId).child(subGroupPushId).child("Chat_Message");
+
+        btn_caddgroup.setVisibility(View.GONE);
+        btn_cjoingroup.setVisibility(View.GONE);
+
+
+//        ll_bottom_send.setVisibility(View.VISIBLE);
+        ll_childData.setVisibility(View.VISIBLE);
+//
+//        tabLayout.setVisibility(View.VISIBLE);
+//        tabChatItem.setVisibility(View.VISIBLE);
+//        tabDoubtItem.setVisibility(View.VISIBLE);
+//
+//        tv_cpanelbody.setVisibility(View.VISIBLE);
+//        tv_cpaneltitle.setVisibility(View.VISIBLE);
+//
+//        refTempGroupDB = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Sub_Group" ).child( userID );
+////        refGroupChildUserDashboard = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Sub_Group" ).child(groupPushId).child(subGroupPushId);
+//        refGrpChildAllDashboard = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Sub_Group" ).child(groupPushId).child(subGroupPushId).child("Chat_Message");
 //        refGroupChildUserDashboard.keepSynced(true);
 //        refGrpChildAllDashboard.keepSynced(true);
 
@@ -1456,13 +1481,12 @@ public class HomeFragment extends Fragment {
         userPhoto=currentUser.getPhotoUrl();
         userName=currentUser.getDisplayName();
 
-        refTempGroupDB.setValue(subGroupPushId);
+
+//        refTempGroupDB.setValue(subGroupPushId);
 
         tv_cpaneltitle.setText(groupName);
         tv_cpanelbody.setText(subGroupName);
 
-        btn_caddgroup.setVisibility(View.GONE);
-        btn_cjoingroup.setVisibility(View.GONE);
 
 
 //        refGrpMemberList.addValueEventListener(new ValueEventListener() {
@@ -1561,75 +1585,92 @@ public class HomeFragment extends Fragment {
             }
         });
 
+//        Fragment fragment=new tasks();
+
+        Bundle bundle =new Bundle();
+        bundle.putString("groupName",groupName);
+        bundle.putString("subGroupName",subGroupName);
+        bundle.putString("groupPushId",groupPushId);
+        bundle.putString("subGroupPushId",subGroupPushId);
+
+        Fragment fragment=new ChatTab();
+        fragment.setArguments(bundle);
+        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container,fragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+
+
 //        showGroupMembers();
-        list_Dashboard.clear();
+//        list_Dashboard.clear();
 //        listDashboard=new ArrayList<>();
-        ChildEventListener childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.getChildrenCount()>0) {
-                    Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
-                    list_Dashboard.add(class_userDashBoard);
-                    showDashadaptor.notifyDataSetChanged();
+//        ChildEventListener childEventListener = new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                if (dataSnapshot.getChildrenCount()>0) {
+//                    Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
+//                    list_Dashboard.add(class_userDashBoard);
+//                    showDashadaptor.notifyDataSetChanged();
+//
+//                    notifyPB.dismiss();
+//                } else {
+//                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
+//                    notifyPB.dismiss();
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//            }
+//        };
+//        //refAdmin.addChildEventListener(childEventListener);
+//        refGrpChildAllDashboard.addChildEventListener(childEventListener);
 
-                    notifyPB.dismiss();
-                } else {
-                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
-                    notifyPB.dismiss();
-                }
 
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        };
-        //refAdmin.addChildEventListener(childEventListener);
-        refGrpChildAllDashboard.addChildEventListener(childEventListener);
-
-
-
-        ib_csubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String subGroupMsg = et_ctext.getText().toString().trim();
-                if (subGroupMsg.isEmpty()) {
-                    Toast.makeText(getContext(), "Enter text", Toast.LENGTH_SHORT).show();
-                    et_ctext.setError("Enter text");
-                } else {
-
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
-                            child("Groups").child("All_Sub_Group").child(groupPushId).child(subGroupPushId).child("Chat_Message");
-                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            long noofGroupinCategory = snapshot.getChildrenCount() + 1;
-                            String push = "mszno_" + noofGroupinCategory + "_" +subGroupName;
-
-                            Calendar calenderCC = Calendar.getInstance();
-                            SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
-                            String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, groupPushId,subGroupPushId,subGroupMsg);
-                            reference.child(push).setValue(userAddGroupClass);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
-                    });
+//
+//        ib_csubmit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                String subGroupMsg = et_ctext.getText().toString().trim();
+//                if (subGroupMsg.isEmpty()) {
+//                    Toast.makeText(getContext(), "Enter text", Toast.LENGTH_SHORT).show();
+//                    et_ctext.setError("Enter text");
+//                } else {
+//
+//                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
+//                            child("Groups").child("All_Sub_Group").child(groupPushId).child(subGroupPushId).child("Chat_Message");
+//                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                            long noofGroupinCategory = snapshot.getChildrenCount() + 1;
+//                            String push = "mszno_" + noofGroupinCategory + "_" +subGroupName;
+//
+//                            Calendar calenderCC = Calendar.getInstance();
+//                            SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+//                            String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
+//                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, groupPushId,subGroupPushId,subGroupMsg);
+//                            reference.child(push).setValue(userAddGroupClass);
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError error) {
+//                        }
+//                    });
 
 //                    DatabaseReference referenceUser = FirebaseDatabase.getInstance().getReference().
 //                            child("Groups").child("Show_Group").child("User_Show_Group").child(userID).child(subGroupPushId);
@@ -1651,9 +1692,9 @@ public class HomeFragment extends Fragment {
 //                        }
 //                    });
 
-                }
-            }
-        });
+//                }
+//            }
+//        });
     }
 
     public void searchText(String newText) {
@@ -1664,7 +1705,7 @@ public class HomeFragment extends Fragment {
             }
         }
         Adaptor_QueryGroup adapSearchJob= new Adaptor_QueryGroup(getContext(),listSearchQues);
-        rv_GroupDashData.setAdapter(adapSearchJob);
+//        rv_GroupDashData.setAdapter(adapSearchJob);
     }
 
     //    private void addComment(String groupTitle) {
