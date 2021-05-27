@@ -1,8 +1,10 @@
 package com.cllasify.cllasify;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 
 import androidx.appcompat.app.AlertDialog;
@@ -17,6 +19,8 @@ import com.cllasify.cllasify.Fragment.HomeFragment;
 import com.cllasify.cllasify.Fragment.NotificationFragment;
 import com.cllasify.cllasify.Fragment.ProfileFragment;
 import com.cllasify.cllasify.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 public class Dashboard extends AppCompatActivity {
@@ -143,4 +147,14 @@ public class Dashboard extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            // User is signed in
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment(),"home").commit();
+        }
+
+    }
 }

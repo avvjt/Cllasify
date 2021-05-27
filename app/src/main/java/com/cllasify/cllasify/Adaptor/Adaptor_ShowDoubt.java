@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,9 +17,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
-public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpMember.MyViewHolder> {
+public class Adaptor_ShowDoubt extends RecyclerView.Adapter<Adaptor_ShowDoubt.MyViewHolder> {
 
     private Context context;
     private List<Class_Group> mDatalistNew;
@@ -34,7 +36,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
         mListener=listener;
     }
 
-    public Adaptor_ShowGrpMember(Context context, List<Class_Group> mDatalistNew) {
+    public Adaptor_ShowDoubt(Context context, List<Class_Group> mDatalistNew) {
         this.context = context;
         this.mDatalistNew = mDatalistNew;
     }
@@ -42,7 +44,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View rootview = LayoutInflater.from(context).inflate(R.layout.list_item_childgroup, parent, false);
+        View rootview = LayoutInflater.from(context).inflate(R.layout.list_item_doubt, parent, false);
         return new  MyViewHolder(rootview);
     }
 
@@ -54,71 +56,37 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         assert currentUser != null;
         String userID=currentUser.getUid();
-        Class_Group Answers=mDatalistNew.get(position);
+        Class_Group class_Doubt=mDatalistNew.get(position);
+        Calendar calenderCC= Calendar.getInstance();
+        SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+        final String dateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
 
-        String userName=Answers.getUserName();
-//
-//
-//        String group1=mDatalistNew.get(position).getGroup1();
-//        String group2=mDatalistNew.get(position).getGroup2();
-//        String group3=mDatalistNew.get(position).getGroup3();
-//        String group4=mDatalistNew.get(position).getGroup4();
-//        String group5=mDatalistNew.get(position).getGroup5();
-//        String group6=mDatalistNew.get(position).getGroup6();
-//        String group7=mDatalistNew.get(position).getGroup7();
-//        String group8=mDatalistNew.get(position).getGroup8();
-//        String group9=mDatalistNew.get(position).getGroup9();
-//
-//
-//        if(group1==null){
-//            holder.tv_Group1.setVisibility(View.GONE);
-//        }else{
-//            holder.tv_Group1.setText(group1);
-//        }
-//        if(group2==null){
-//            holder.tv_Group2.setVisibility(View.GONE);
-//        }else{
-//            holder.tv_Group2.setText(group2);
-//        }
-//        if(group3==null){
-//            holder.tv_Group3.setVisibility(View.GONE);
-//        }else{
-//            holder.tv_Group3.setText(group3);
-//        }
-//        if(group4==null){
-//            holder.tv_Group4.setVisibility(View.GONE);
-//        }else{
-//            holder.tv_Group4.setText(group4);
-//        }
-//        if(group5==null){
-//            holder.tv_Group5.setVisibility(View.GONE);
-//        }else{
-//            holder.tv_Group5.setText(group5);
-//        }
-//        if(group6==null){
-//            holder.tv_Group6.setVisibility(View.GONE);
-//        }else{
-//            holder.tv_Group6.setText(group6);
-//        }
-//        if(group7==null){
-//            holder.tv_Group7.setVisibility(View.GONE);
-//        }else{
-//            holder.tv_Group7.setText(group7);
-//        }
-//        if(group8==null){
-//            holder.tv_Group8.setVisibility(View.GONE);
-//        }else{
-//            holder.tv_Group8.setText(group8);
-//        }
-//        if(group9==null){
-//            holder.tv_Group9.setVisibility(View.GONE);
-//        }else{
-//            holder.tv_Group9.setText(group9);
-//        }
-//
-//        Boolean isExpanded=mDatalistNew.get(position).isExpandable();
-//        holder.expandable_ll.setVisibility(isExpanded?View.VISIBLE:View.GONE);
-        holder.tv_GroupTitle.setText(userName);
+        String topic=class_Doubt.getSubsStatus();
+        String doubt=class_Doubt.getUserStatus();
+        String doubtUserName=class_Doubt.getUserName();
+
+        holder.tv_DateTime.setText(dateTimeCC);
+
+        if(topic==null){
+            holder.tv_Topic.setVisibility(View.GONE);
+        }else{
+            holder.tv_Topic.setText(topic);
+        }
+        if(doubtUserName==null){
+            holder.tv_Username.setVisibility(View.GONE);
+        }else{
+            holder.tv_Username.setText(doubtUserName);
+        }
+        if(doubt==null){
+            holder.tv_Doubt.setVisibility(View.GONE);
+        }else{
+            holder.tv_Doubt.setText(doubt);
+        }
+
+        int[] androidColors = context.getResources().getIntArray(R.array.androidcolors);
+        int randomAndroidColor = androidColors[new Random().nextInt(androidColors.length)];
+        holder.ll_Doubt.setBackgroundColor(randomAndroidColor);
+
 
     }
 
@@ -129,55 +97,22 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-//        TextView examName_tv;
-        TextView examQues_tv;
-        TextView date_tv;
-//        TextView likedislike_tv;
-        TextView tv_GroupTitle,tv_Group1,tv_Group2,tv_Group3,tv_Group4,
-        tv_Group5,tv_Group6,tv_Group7,tv_Group8,tv_Group9;
-//        TextView userallAns_tv, tv_CommentCount, tv_AnslikeCount, tv_AnsflagCount, tv_AnsdislikeCount, tv_GroupTitle;
+        TextView tv_Topic,tv_Username,tv_Doubt,tv_DateTime;
+        LinearLayout ll_Doubt;
 
-        TextView saveQ, tv_anslikecount,shareQ;
-//        ImageButton save_ib,like_ib,share_ib, ib_ib_AddGroup;
-       // LinearLayout l1,l2,l3,l4;
-//        LinearLayout like_ll,viewAns_ll,touchexpand_ll;
-//        LinearLayout touchexpand_ll,expandable_ll,ll_Group;
 
         Class_Group class_Group;
         Boolean clicked;
         DatabaseReference refLike;
-//        FirebaseAuth mAuth;
-//        FirebaseUser mCurrentUser;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-//            mCurrentUser= FirebaseAuth.getInstance().getCurrentUser();
-//            examName_tv = itemView.findViewById(R.id.tv_ExamName);
-            tv_GroupTitle =itemView.findViewById(R.id.tv_GroupTitle);
-//            ll_Group =itemView.findViewById(R.id.ll_Group);
-
-//            tv_Group1=itemView.findViewById(R.id.tv_Group1);
-//            tv_Group2=itemView.findViewById(R.id.tv_Group2);
-//            tv_Group3=itemView.findViewById(R.id.tv_Group3);
-//            tv_Group4=itemView.findViewById(R.id.tv_Group4);
-//            tv_Group5=itemView.findViewById(R.id.tv_Group5);
-//            tv_Group6=itemView.findViewById(R.id.tv_Group6);
-//            tv_Group7=itemView.findViewById(R.id.tv_Group7);
-//            tv_Group8=itemView.findViewById(R.id.tv_Group8);
-//            tv_Group9=itemView.findViewById(R.id.tv_Group9);
-
-//            tv_Group8=itemView.findViewById(R.id.tv_Group8);
-////            examQues_tv = itemView.findViewById(R.id.tv_AskQuestion);
-//            touchll = itemView.findViewById(R.id.touch_ll);
-//            tv_CommentCount = itemView.findViewById(R.id.tv_AnsCount);
-//            tv_AnslikeCount = itemView.findViewById(R.id.tv_likeCount);
-//            tv_AnsdislikeCount = itemView.findViewById(R.id.tv_dislikeCount);
-//            tv_AnsflagCount = itemView.findViewById(R.id.tv_flagCount);
-//            userAns_tv=itemView.findViewById(R.id.userAns_tv);
-//            userallAns_tv=itemView.findViewById(R.id.userallAns_tv);
-
-//            ib_ib_AddGroup = itemView.findViewById(R.id.ib_AddChildGroup);
+            tv_Topic =itemView.findViewById(R.id.tv_Topic);
+            tv_Username =itemView.findViewById(R.id.tv_Username);
+            tv_Doubt =itemView.findViewById(R.id.tv_Doubt);
+            tv_DateTime =itemView.findViewById(R.id.tv_DateTime);
+            ll_Doubt =itemView.findViewById(R.id.ll_Doubt);
 
 //            tv_AnsflagCount.setTag("Flag");
 //            tv_AnslikeCount.setTag("Like");

@@ -87,18 +87,17 @@ public class Adaptor_ShowGroup extends RecyclerView.Adapter<Adaptor_ShowGroup.My
             assert mUser != null;
             String userId = mUser.getUid();
 
+        if (userComment.equals(null)) {
+            holder.tv_MyMsz.setVisibility(View.GONE);
+            holder.tv_OtherMsz.setVisibility(View.GONE);
+
+        }else{
+
         if(userId.equals(databaseUserId)) {
-            if (userComment.isEmpty()) {
-                holder.tv_MyMsz.setVisibility(View.GONE);
-            } else {
-                holder.tv_MyMsz.setText(userComment);
-                holder.tv_OtherMsz.setVisibility(View.GONE);
+            holder.tv_MyMsz.setText(userComment);
+            holder.tv_OtherMsz.setVisibility(View.GONE);
             }
-        }
         else {
-            if (userComment.isEmpty()){
-                holder.tv_OtherMsz.setVisibility(View.GONE);
-            }else{
                 holder.tv_OtherMsz.setText(userComment);
                 holder.tv_MyMsz.setVisibility(View.GONE);
             }

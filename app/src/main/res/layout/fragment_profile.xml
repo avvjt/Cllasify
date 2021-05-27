@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ProfileMine.ProfileOthers">
+    tools:context=".Fragment.HomeFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,22 +14,33 @@
         android:orientation="horizontal"
         android:layout_marginTop="10dp">
 
-        <Button
-            android:layout_width="36dp"
-            android:layout_height="16dp"
-            android:drawableEnd="@drawable/ic_cancel"
-            android:id="@+id/btn_Cancel"
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_cancel"
+            android:id="@+id/ib_EditProfile"
+            android:layout_weight="2"
             android:background="@color/transparent"
             android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"/>
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:text="@string/account"
             android:textSize="25sp"
-            android:layout_marginStart="100dp"
+            android:gravity="center"
+            android:layout_weight="1"
             android:textColor="@color/black"
             android:textStyle="bold"/>
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:src="@drawable/ic_logout"
+            android:id="@+id/ib_Logout"
+            android:background="@color/transparent"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="8dp"/>
 
     </LinearLayout>
 
@@ -56,26 +67,27 @@
                     android:orientation="horizontal">
 
                     <de.hdodenhof.circleimageview.CircleImageView
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_margin="20dp"
                         android:id="@+id/prof_pic"
-                        android:src="@drawable/maharaji"/>
-
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_margin="20dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/maharaji" />
                     <Button
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/go_premium"
+                        android:layout_margin="24dp"
+                        android:layout_weight="1"
                         android:layout_gravity="center"
-                        android:layout_marginStart="100dp"
                         android:drawableStart="@drawable/ic_premium"/>
-
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/username"
+                    android:id="@+id/tv_User_Name"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="22sp"
@@ -87,6 +99,7 @@
                     android:text="@string/online_status"
                     android:textColor="@color/black"
                     android:textSize="16sp"
+                    android:id="@+id/tv_User_Status"
                     android:layout_marginStart="20dp"/>
 
             </LinearLayout>
@@ -166,17 +179,17 @@
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
 
+
                 <TextView
+                    android:id="@+id/tv_user_hino"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_user_hino"
-                    android:text="@string/privacy"
-                    android:textSize="22sp"
-                    android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_privicy"
                     android:drawablePadding="20dp"
-                    android:paddingBottom="25dp"/>
-
+                    android:paddingBottom="25dp"
+                    android:text="@string/privacy"
+                    android:textColor="@color/light_black"
+                    android:textSize="22sp"
+                    app:drawableStartCompat="@drawable/ic_privicy" />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -200,16 +213,6 @@
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_user_ntr"
-                    android:text="@string/log_out"
-                    android:textSize="22sp"
-                    android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_logout"
-                    android:drawablePadding="20dp"
-                    android:paddingBottom="25dp"/>
             </LinearLayout>
 
 
@@ -217,4 +220,4 @@
         </RelativeLayout>
     </ScrollView>
 
-</FrameLayout>
+</RelativeLayout>

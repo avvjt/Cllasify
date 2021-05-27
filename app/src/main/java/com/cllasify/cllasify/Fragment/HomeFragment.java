@@ -19,28 +19,25 @@ import android.widget.LinearLayout;
 import androidx.appcompat.widget.SearchView;
 
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_ChildGroup;
-import com.cllasify.cllasify.Adaptor.Adaptor_DashboardTab;
-//import com.cllasify.cllasify.Adaptor.Adaptor_ProfileTab;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup1;
+import com.cllasify.cllasify.Adaptor.Adaptor_ShowDoubt;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
 import com.cllasify.cllasify.Attendance_Activity;
 import com.cllasify.cllasify.Class.Class_Group;
-import com.cllasify.cllasify.Fragment.DashboardTab.ChatTab;
 import com.cllasify.cllasify.Group_Join;
 import com.cllasify.cllasify.Register.Phone_Login;
 import com.cllasify.cllasify.R;
@@ -52,10 +49,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.tabs.TabItem;
-import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -76,36 +71,37 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-    TabLayout tabLayout;
-    TabItem tabChatItem, tabDoubtItem;
-    ViewPager viewPager;
-    Adaptor_DashboardTab adaptor_dashboardTab;
+    RecyclerView rv_GroupTitle,rv_GroupData;
+    RecyclerView rv_UserPrivateGroupTitle,rv_UserPublicGroupTitle,rv_OtherPublicGroupTitle
+            ,rv_GrpMemberList,rv_SubChild,rv_DoubtDashData,rv_ChatDashData;
 
-//    RecyclerView rv_GroupTitle,rv_GroupData,rv_GroupDashData
-            RecyclerView rv_UserPrivateGroupTitle,rv_UserPublicGroupTitle,rv_OtherPublicGroupTitle
-            ,rv_GrpMemberList,rv_SubChild;
+    RelativeLayout rl_ChatDash,rl_DoubtDash;
 
     ArrayList<String> arrayList=new ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
 
     ListView listView;
-    DatabaseReference refShowAllGroup,refTempGroupDB, refGroupChildUserDashboard,refGrpChildAllDashboard;
+    DatabaseReference refShowAllGroup,refTempGroupDB, refGroupChildUserDashboard, refChatDashboard,refDoubtDashboard;
     DatabaseReference refuserPersonalGroup,refuserAllGroup,
             refuserPublicGroup, refAllGroup,refAllPublicJGroup,
-            refotheruserPublicGroup,
+            refotheruserPublicGroup,refUserStatus,
             refAddSubGroup,
-            refSearchShowGroup,refShowUserPublicGroup,refShowUserPrivateGroup,
+            refSearchShowGroup,refShowUserPublicGroup,refShowUserPrivateGroup,refShowUserAllGroup,
             refteachStud,
             refChildGroup, refChildGroupSubsList,
             refGroupSubsList,refGrpMemberList;
 
     List<Class_Group> list_GroupTitle, list_UserPrivateGroupTitle, list_UserPublicGroupTitle, list_OtherUserPublicGroupTitle,
-            list_Dashboard,listGroupSTitle,listGrpMemberList,list_SubChild;
+            list_ChatDashboard,list_DoubtDashboard,listGroupSTitle,listGrpMemberList,list_SubChild;
+
     Adaptor_QueryGroup showGroupadaptor,showUserPrivateGroupadaptor,showUserPublicGroupadaptor;
     Adaptor_ShowGrpMember showGrpMemberList;
     Adaptor_QueryGroup1 showOtherUserPublicGroupAdaptor;
-    Adaptor_ShowGroup showDashadaptor;
+    Adaptor_ShowGroup showChatDashadaptor;
     Adaptor_ChildGroup showSubChild_Adaptor;
+    Adaptor_ShowDoubt showDoubtDashAdaptor;
+
+    FloatingActionButton fab_addDoubtQ;
 
 
     String GroupCategory;
@@ -126,17 +122,18 @@ public class HomeFragment extends Fragment {
     Class_Group userAddGroupClass,addAnswer,userSubsGroupClass;
 
     SearchView esv_groupSearchView;
-//    SearchView sv_textSearchView,esv_groupSearchView;
+    SearchView sv_textSearchView,sv_ChatSearch,sv_DoubtSearch;
     EditText addAnswer_et, et_ctext;
     TextView postAnswer_tv, dispQues_tv,QuesAskedByTime_tv,
             tv_UserPublicTitle,tv_UserPrivateTitle,tv_OtherTitle,
-            tv_cpaneltitle,tv_cpanelbody,tv_StartPanel;
+            tv_cpaneltitle,tv_cpanelbody,tv_StartPanel,
+            tv_ChatDashboard,tv_DoubtDashboard;
 
     ImageButton ib_cattach, ib_csubmit;
     Button btn_caddgroup, btn_cjoingroup;
     Button btn_lteachresult,btn_lteachattend,btn_lteachexam;
-    LinearLayout ll_SubChild,ll_childData;
-//    LinearLayout ll_bottom_send;
+    LinearLayout ll_SubChild,ll_childData,ll_TabChatDoubt;
+    LinearLayout ll_bottom_send;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -179,6 +176,16 @@ public class HomeFragment extends Fragment {
             rv_OtherPublicGroupTitle =view.findViewById(R.id.rv_OtherPublicGroupTitle);
             rv_SubChild=view.findViewById(R.id.rv_SubChild);
 
+            rv_ChatDashData=view.findViewById(R.id.rv_ChatDashData);
+            rv_DoubtDashData=view.findViewById(R.id.rv_DoubtDashData);
+
+            rl_ChatDash=view.findViewById(R.id.rl_ChatDash);
+            rl_DoubtDash=view.findViewById(R.id.rl_DoubtDash);
+            tv_ChatDashboard=view.findViewById(R.id.tv_ChatDashboard);
+            tv_DoubtDashboard=view.findViewById(R.id.tv_DoubtDashboard);
+            sv_DoubtSearch=view.findViewById(R.id.sv_DoubtSearch);
+            sv_ChatSearch=view.findViewById(R.id.sv_ChatSearch);
+
             tv_UserPublicTitle =view.findViewById(R.id.tv_UserPublicTitle);
             tv_UserPrivateTitle =view.findViewById(R.id.tv_UserPrivateTitle);
             tv_OtherTitle =view.findViewById(R.id.tv_OtherTitle);
@@ -189,12 +196,14 @@ public class HomeFragment extends Fragment {
 //            listView =view.findViewById(R.id.listView);
             ll_SubChild =view.findViewById(R.id.ll_SubChild);
             ll_childData =view.findViewById(R.id.ll_childData);
+            ll_TabChatDoubt =view.findViewById(R.id.ll_TabChatDoubt);
 
             overlappingPanels = view.findViewById(R.id.overlapping_panels);
             tv_cpaneltitle = view.findViewById(R.id.tv_cpaneltitle);
             tv_cpanelbody = view.findViewById(R.id.tv_cpanelbody);
 
             btn_AddGroup =view.findViewById(R.id.btn_AddGroup);
+            fab_addDoubtQ =view.findViewById(R.id.fab_addDoubtQ);
 //            sv_textSearchView =view.findViewById(R.id.sv_textSearchView);
 
             firebaseAuth = FirebaseAuth.getInstance();
@@ -203,16 +212,17 @@ public class HomeFragment extends Fragment {
             userID=currentUser.getUid();
 
 //        openStartPanelButton = view.findViewById(R.id.open_start_panel_button);
-        tv_StartPanel = view.findViewById(R.id.tv_StartPanel);
+            tv_StartPanel = view.findViewById(R.id.tv_StartPanel);
 
             refSearchShowGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Universal_Group" ).child(userID);
             refShowUserPrivateGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child("User_Private_Group").child(userID);
             refShowUserPublicGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child("User_Public_Group").child(userID);
+            refShowUserAllGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child("User_All_Group").child(userID);
             refteachStud = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child("User_Public_Group").child(userID);
             refGroupSubsList = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups");
 //            refotheruserPublicGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child("User_Private_Group").child(userID);
             refotheruserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group");
-
+            refUserStatus= FirebaseDatabase.getInstance().getReference().child("Registration");
 
 
             //            refShowUserGroup.keepSynced(true);
@@ -234,18 +244,20 @@ public class HomeFragment extends Fragment {
             list_GroupTitle = new ArrayList<>();
             list_UserPrivateGroupTitle = new ArrayList<>();
             list_UserPublicGroupTitle = new ArrayList<>();
-            list_Dashboard = new ArrayList<>();
+            list_ChatDashboard = new ArrayList<>();
             list_OtherUserPublicGroupTitle = new ArrayList<>();
             list_SubChild = new ArrayList<>();
+            list_DoubtDashboard = new ArrayList<>();
 //            listGroupSTitle=new ArrayList<>();
 
 
             showGroupadaptor = new Adaptor_QueryGroup(getContext(), list_GroupTitle);
             showUserPrivateGroupadaptor = new Adaptor_QueryGroup(getContext(), list_UserPrivateGroupTitle);
             showUserPublicGroupadaptor = new Adaptor_QueryGroup(getContext(), list_UserPublicGroupTitle);
-            showDashadaptor = new Adaptor_ShowGroup(getContext(), list_Dashboard);
+            showChatDashadaptor = new Adaptor_ShowGroup(getContext(), list_ChatDashboard);
             showOtherUserPublicGroupAdaptor = new Adaptor_QueryGroup1(getContext(), list_OtherUserPublicGroupTitle);
             showSubChild_Adaptor = new Adaptor_ChildGroup(getContext(), list_SubChild);
+            showDoubtDashAdaptor = new Adaptor_ShowDoubt(getContext(), list_DoubtDashboard);
 //            showAllGroupAdaptor = new Adaptor_SearchGroup(getContext(), listGroupSTitle);
 
 //            rv_GroupTitle.setAdapter(showGroupadaptor);
@@ -254,43 +266,10 @@ public class HomeFragment extends Fragment {
             rv_OtherPublicGroupTitle.setAdapter(showOtherUserPublicGroupAdaptor);
             rv_SubChild.setAdapter(showSubChild_Adaptor);
 
-//            rv_GroupDashData=view.findViewById(R.id.rv_GroupDashData);
-//            rv_GroupDashData.setLayoutManager(new LinearLayoutManager(getContext()));
-//            rv_GroupDashData.setAdapter(showDashadaptor);
-
-            //TabLayout
-            tabLayout= view.findViewById(R.id.tabLayout);
-            tabChatItem = view.findViewById(R.id.tabChatItem);
-            tabDoubtItem = view.findViewById(R.id.tabDoubtItem);
-            viewPager= view.findViewById(R.id.viewPager);
-
-            adaptor_dashboardTab = new Adaptor_DashboardTab(getChildFragmentManager(),tabLayout.getTabCount());
-            viewPager.setAdapter(adaptor_dashboardTab);
-
-            tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(TabLayout.Tab tab) {
-                    viewPager.setCurrentItem(tab.getPosition());
-
-                    if(tab.getPosition()==0 || tab.getPosition()==1)
-                        adaptor_dashboardTab.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onTabUnselected(TabLayout.Tab tab) {
-
-                }
-
-                @Override
-                public void onTabReselected(TabLayout.Tab tab) {
-
-                }
-            });
-
-            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-            //listen for scroll or page change
-
-
+            rv_ChatDashData.setLayoutManager(new LinearLayoutManager(getContext()));
+            rv_DoubtDashData.setLayoutManager(new LinearLayoutManager(getContext()));
+            rv_ChatDashData.setAdapter(showChatDashadaptor);
+            rv_DoubtDashData.setAdapter(showDoubtDashAdaptor);
 
 //Left Panel
 
@@ -314,7 +293,7 @@ public class HomeFragment extends Fragment {
 //
 //                    btn_caddgroup.setVisibility(View.VISIBLE);
 //                    btn_cjoingroup.setVisibility(View.VISIBLE);
-                    list_Dashboard.clear();
+//                    list_Dashboard.clear();
 
 
                     ll_childData.setVisibility(View.GONE);
@@ -332,52 +311,42 @@ public class HomeFragment extends Fragment {
                 }
             });
 
-//            showUserGroupRV();
-//            showUserPrivateGroupRV();
-
-
-            refShowUserPublicGroup.addValueEventListener(new ValueEventListener() {
+            refShowUserAllGroup.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getChildrenCount()>0){
-                        notifyPB.show();
-                        showUserPublicGroupRV();
+                        notifyPB.dismiss();
+                    }else{
+                        Toast.makeText(getContext(), "Please create Group using left swipe", Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
             });
-
-
-            refShowUserPrivateGroup.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.getChildrenCount()>0){
-                        notifyPB.show();
-                        showUserPrivateGroupRV();
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
-            refotheruserPublicGroup.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.getChildrenCount()>0){
-                        showOtherUserGroupRV();
-                        notifyPB.show();
-                    }
-                }
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
+//            refShowUserPrivateGroup.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    if (snapshot.getChildrenCount()>0){
+//                        notifyPB.show();
+//                    }
+//                }
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//                }
+//            });
+//            refotheruserPublicGroup.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                    if (snapshot.getChildrenCount()>0){
 //
-
-
-
+//                        notifyPB.show();
+//                    }
+//                }
+//                @Override
+//                public void onCancelled(@NonNull DatabaseError error) {
+//                }
+//            });
 
 //Center Panel
             ib_cattach =view.findViewById(R.id.ib_cattach);
@@ -385,8 +354,8 @@ public class HomeFragment extends Fragment {
             et_ctext =view.findViewById(R.id.et_ctext);
             btn_caddgroup =view.findViewById(R.id.btn_caddgroup);
             btn_cjoingroup =view.findViewById(R.id.btn_cjoingroup);
-//            ll_bottom_send =view.findViewById(R.id.ll_bottom_send);
-
+            ll_bottom_send =view.findViewById(R.id.ll_bottom_send);
+//            rv_ChatDashData =view.findViewById(R.id.rv_ChatDashData);
 
             btn_caddgroup.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -402,6 +371,22 @@ public class HomeFragment extends Fragment {
                     startActivity(new Intent(getContext(), Group_Join.class));
                 }
             });
+
+            tv_ChatDashboard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    rl_ChatDash.setVisibility(View.VISIBLE);
+                    rl_DoubtDash.setVisibility(View.GONE);
+                }
+            });
+            tv_DoubtDashboard.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    rl_DoubtDash.setVisibility(View.VISIBLE);
+                    rl_ChatDash.setVisibility(View.GONE);
+                }
+            });
+
 //
 ////
 
@@ -493,21 +478,18 @@ public class HomeFragment extends Fragment {
             rv_GrpMemberList=view.findViewById(R.id.rv_GrpMemberList);
             rv_GrpMemberList.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
             listGrpMemberList = new ArrayList<>();
-//            listGroupSTitle=new ArrayList<>();
-
 
             showGrpMemberList = new Adaptor_ShowGrpMember(getContext(), listGrpMemberList);
             rv_GrpMemberList.setAdapter(showGrpMemberList);
 
-
-
+            showOtherUserGroupRV();
+            showUserPublicGroupRV();
+            showUserPrivateGroupRV();
         }else{
             showLoginBtmDialog();
         }
         return view;
-
     }
 
 //    private void showGroupMembers() {
@@ -584,14 +566,11 @@ public class HomeFragment extends Fragment {
 //
 //    }
 
-
     private void showLoginBtmDialog() {
 
         BottomSheetDialog bottomSheetDialoglogin=new BottomSheetDialog(getContext());
         bottomSheetDialoglogin.setCancelable(true);
-
         bottomSheetDialoglogin.setContentView(R.layout.btmdialog_login);
-
 
         Button btn_phonelogin=bottomSheetDialoglogin.findViewById(R.id.btn_JoinGroup);
 //        Button btn_Cancel=bottomSheetDialoglogin.findViewById(R.id.btn_CreateGroup);
@@ -652,44 +631,145 @@ public class HomeFragment extends Fragment {
         SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
         final String udateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
 
-        student_ll.setOnClickListener(new View.OnClickListener() {
+        refUserStatus.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onClick(View v) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildrenCount()>0){
+                    if (!snapshot.child(userID).exists()){
 
-                DatabaseReference refUserRegister = FirebaseDatabase.getInstance().getReference().child("Registration").child(userID);
-                refUserRegister.child( "Name" ).setValue( userName );
-                refUserRegister.child( "Email" ).setValue( userEmailID );
+                        student_ll.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                DatabaseReference refUserRegister = FirebaseDatabase.getInstance().getReference().child("Registration").child(userID);
+                                refUserRegister.child( "Name" ).setValue( userName );
+                                refUserRegister.child( "Email" ).setValue( userEmailID );
 //                refUserRegister.child( "photo" ).setValue( userPhoto );
-                refUserRegister.child( "UserId" ).setValue( userID );
-                refUserRegister.child( "DateTime" ).setValue( udateTimeCC );
-                refUserRegister.child( "Category" ).setValue("Student");
-//                startActivity(new Intent(getContext(),Landing_Activity.class)
-//                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                Toast.makeText(getContext(), "Login Sucessful as Student", Toast.LENGTH_SHORT).show();
-                bottomSheetDialog.dismiss();
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.detach(HomeFragment.this).attach(HomeFragment.this).commit();
+                                refUserRegister.child( "UserId" ).setValue( userID );
+                                refUserRegister.child( "DateTime" ).setValue( udateTimeCC );
+                                refUserRegister.child( "Category" ).setValue("Student");
+                                refUserRegister.child( "userStatus" ).setValue("Online");
+                                Toast.makeText(getContext(), "Login Successful as Student", Toast.LENGTH_SHORT).show();
+                                bottomSheetDialog.dismiss();
+                                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                ft.detach(HomeFragment.this).attach(HomeFragment.this).commit();
+                            }
+                        });
+                        teacher_ll.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                DatabaseReference refUserRegister = FirebaseDatabase.getInstance().getReference().child("Registration").child(userID);
+                                refUserRegister.child( "Name" ).setValue( userName );
+                                refUserRegister.child( "Email" ).setValue( userEmailID );
+                                refUserRegister.child( "UserId" ).setValue( userID );
+                                refUserRegister.child( "DateTime" ).setValue( udateTimeCC );
+                                refUserRegister.child( "Category" ).setValue("Teacher");
+                                refUserRegister.child( "userStatus" ).setValue("Online");
+                                Toast.makeText(getContext(), "Login Successful as Teacher", Toast.LENGTH_SHORT).show();
+                                bottomSheetDialog.dismiss();
+                                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                                ft.detach(HomeFragment.this).attach(HomeFragment.this).commit();
+                            }
+                        });
+                    }
 
+                    notifyPB.dismiss();
+                }else{
+                    Toast.makeText(getContext(), "Please create Group using left swipe", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        teacher_ll.setOnClickListener(new View.OnClickListener() {
+
+
+
+        bottomSheetDialog.show();
+
+    }
+
+    private void showAddDoubtBtmDialog(String groupPushId,String subGroupPushId) {
+//        rl_feed.setBackgroundColor(Color.GRAY);
+        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(getContext());
+        bottomSheetDialog.setCancelable(false);
+        bottomSheetDialog.setContentView(R.layout.btmdialog_adddoubt);
+
+        Button btn_Cancel=bottomSheetDialog.findViewById(R.id.btn_Cancel);
+        Button btn_Submit=bottomSheetDialog.findViewById(R.id.btn_Submit);
+        EditText et_AddTopic=bottomSheetDialog.findViewById(R.id.et_AddTopic);
+        EditText et_AddDoubt=bottomSheetDialog.findViewById(R.id.et_AddDoubt);
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        userID = currentUser.getUid();
+        userName = currentUser.getDisplayName();
+        userEmailID = currentUser.getEmail();
+        userPhoto = currentUser.getPhotoUrl();
+        Calendar calenderCC= Calendar.getInstance();
+        SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+        final String udateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
+
+        btn_Submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                DatabaseReference refUserRegister = FirebaseDatabase.getInstance().getReference().child("Registration").child(userID);
-                refUserRegister.child( "Name" ).setValue( userName );
-                refUserRegister.child( "Email" ).setValue( userEmailID );
-//                refUserRegister.child( "photo" ).setValue( userPhoto );
-                refUserRegister.child( "UserId" ).setValue( userID );
-                refUserRegister.child( "DateTime" ).setValue( udateTimeCC );
-                refUserRegister.child( "Category" ).setValue("Teacher");
-//                startActivity(new Intent(getContext(),Landing_Activity.class)
-//                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                Toast.makeText(getContext(), "Login Sucessful as Teacher", Toast.LENGTH_SHORT).show();
+
+                String addTopic = et_AddTopic.getText().toString().trim();
+                String addDoubt = et_AddDoubt.getText().toString().trim();
+                if (addTopic.isEmpty() && addDoubt.isEmpty() ) {
+                    Toast.makeText(getContext(), "Enter text", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    DatabaseReference allDoubtReference = FirebaseDatabase.getInstance().getReference().
+                            child("Groups").child("All_Sub_Group").child(groupPushId).child(subGroupPushId).child("Doubt_Message").child("All_Doubt");
+                    allDoubtReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            long noofGroupinCategory = snapshot.getChildrenCount() + 1;
+                            String push = "Doubtno_" + noofGroupinCategory + "_" +addTopic;
+
+                            Calendar calenderCC = Calendar.getInstance();
+                            SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+                            String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
+                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, groupPushId,subGroupPushId,addTopic,addDoubt);
+                            allDoubtReference.child(push).setValue(userAddGroupClass);
+                            Toast.makeText(getContext(),"Doubt Successfully Added",Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
+                            child("Groups").child("All_Sub_Group").child(groupPushId).child(subGroupPushId).child("Doubt_Message").child("Topic");
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            long noofGroupinCategory = snapshot.getChildrenCount() + 1;
+                            String push = "Doubtno_" + noofGroupinCategory + "_" +addTopic;
+
+                            Calendar calenderCC = Calendar.getInstance();
+                            SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+                            String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
+                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, groupPushId,subGroupPushId, addTopic,addDoubt);
+                            reference.child(push).setValue(userAddGroupClass);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+
+                }
+                bottomSheetDialog.dismiss();
+            }
+        });
+        btn_Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 bottomSheetDialog.dismiss();
 
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                ft.detach(HomeFragment.this).attach(HomeFragment.this).commit();
             }
         });
 
@@ -946,9 +1026,6 @@ public class HomeFragment extends Fragment {
         dialogBuilder.show();
     }
 
-
-
-
     public void showUserPrivateGroupRV() {
 
         showUserPrivateGroupadaptor.setOnItemClickListener(new Adaptor_QueryGroup.OnItemClickListener() {
@@ -1042,7 +1119,6 @@ public class HomeFragment extends Fragment {
 
                 Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
                 list_UserPrivateGroupTitle.add(userQuestions);
-                showUserPrivateGroupadaptor.notifyDataSetChanged();
                 notifyPB.dismiss();
 //                } else {
 //                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
@@ -1066,6 +1142,7 @@ public class HomeFragment extends Fragment {
             }
         };
         //refAdmin.addChildEventListener(childEventListener);
+        showUserPrivateGroupadaptor.notifyDataSetChanged();
         refShowUserPrivateGroup.orderByChild("groupno").addChildEventListener(childEventListener);
 
         refShowUserPrivateGroup.addValueEventListener(new ValueEventListener() {
@@ -1105,6 +1182,7 @@ public class HomeFragment extends Fragment {
         });
                 int count=0;
 
+                list_UserPublicGroupTitle.clear();
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -1112,7 +1190,9 @@ public class HomeFragment extends Fragment {
                     Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
                     list_UserPublicGroupTitle.add(userQuestions);
                     showUserPublicGroupadaptor.notifyDataSetChanged();
-                    notifyPB.dismiss();
+//                showUserPublicGroupadaptor.notifyDataSetChanged();
+
+                notifyPB.dismiss();
 //                } else {
 //                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
 //                    notifyPB.dismiss();
@@ -1243,15 +1323,12 @@ public class HomeFragment extends Fragment {
                     if(check.equals("true")) {
                         Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
                         list_OtherUserPublicGroupTitle.add(userQuestions);
-                        showOtherUserPublicGroupAdaptor.notifyDataSetChanged();
+                        notifyPB.dismiss();
 //                        Toast.makeText(getContext(),"chch"+check,Toast.LENGTH_SHORT).show();
-
                     }
 //                    Toast.makeText(getContext(),"chch",Toast.LENGTH_SHORT).show();
-
                 }
-
-                notifyPB.dismiss();
+//                notifyPB.dismiss();
 //                } else {
 //                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
 //                    notifyPB.dismiss();
@@ -1273,38 +1350,25 @@ public class HomeFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         };
-        //refAdmin.addChildEventListener(childEventListener);
+        showOtherUserPublicGroupAdaptor.notifyDataSetChanged();
         refotheruserPublicGroup.orderByChild("groupno").addChildEventListener(childEventListener);
-
 
         refotheruserPublicGroup.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildrenCount()>0){
-                    tv_OtherTitle.setText("Other Groups");
+                    if (snapshot.child("User_Subscribed_Groups").child(userID).exists()){
+                        String check=snapshot.child("User_Subscribed_Groups").child(userID).child("subsStatus").getValue().toString();
+                        if(check.equals("true")) {
+                            tv_OtherTitle.setText("Other Server");
+                        }
+                    }
                 }
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-//        refotheruserPublicGroup.addValueEventListener(new ValueEventListener() {
-//        @Override
-//        public void onDataChange(@NonNull DataSnapshot snapshot) {
-//            if (snapshot.getChildrenCount()>0){
-//                tv_OtherPublicGroupTitle.setText("Private Server");
-//            }
-//
-//        }
-
-//        @Override
-//        public void onCancelled(@NonNull DatabaseError error) {
-//        }
-//    });
-
     }
 
     private void addChildGroup(int position, String groupName,String groupPushId, String groupUserID, String category) {
@@ -1382,8 +1446,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void showchildGroupRV(int position, String groupName, String groupPushId, String groupUserID) {
-
-
         list_SubChild.clear();
         refChildGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId);
 
@@ -1396,12 +1458,9 @@ public class HomeFragment extends Fragment {
                     Toast.makeText(getContext(), "Please Create Sub Group using (+) Sign", Toast.LENGTH_LONG).show();
                     ll_SubChild.setVisibility(View.GONE);
                 }
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 
@@ -1423,7 +1482,7 @@ public class HomeFragment extends Fragment {
                 Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
                 list_SubChild.add(userQuestions);
                 showSubChild_Adaptor.notifyDataSetChanged();
-                notifyPB.dismiss();
+//                notifyPB.dismiss();
 //                } else {
 //                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
 //                    notifyPB.dismiss();
@@ -1450,11 +1509,10 @@ public class HomeFragment extends Fragment {
 
     }
     private void upDateDashboard(int position, String groupName, String subGroupName, String groupPushId,String subGroupPushId) {
-
-
-
+        ll_TabChatDoubt.setVisibility(View.VISIBLE);
         btn_caddgroup.setVisibility(View.GONE);
         btn_cjoingroup.setVisibility(View.GONE);
+        rl_ChatDash.setVisibility(View.VISIBLE);
 
 
 //        ll_bottom_send.setVisibility(View.VISIBLE);
@@ -1467,12 +1525,11 @@ public class HomeFragment extends Fragment {
 //        tv_cpanelbody.setVisibility(View.VISIBLE);
 //        tv_cpaneltitle.setVisibility(View.VISIBLE);
 //
-//        refTempGroupDB = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Sub_Group" ).child( userID );
-////        refGroupChildUserDashboard = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Sub_Group" ).child(groupPushId).child(subGroupPushId);
-//        refGrpChildAllDashboard = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Sub_Group" ).child(groupPushId).child(subGroupPushId).child("Chat_Message");
+        refTempGroupDB = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Sub_Group" ).child( userID );
+//        refGroupChildUserDashboard = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Sub_Group" ).child(groupPushId).child(subGroupPushId);
 //        refGroupChildUserDashboard.keepSynced(true);
 //        refGrpChildAllDashboard.keepSynced(true);
-
+//
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
         assert currentUser != null;
@@ -1480,14 +1537,9 @@ public class HomeFragment extends Fragment {
         userEmailID= currentUser.getEmail();
         userPhoto=currentUser.getPhotoUrl();
         userName=currentUser.getDisplayName();
-
-
-//        refTempGroupDB.setValue(subGroupPushId);
-
+        refTempGroupDB.setValue(subGroupPushId);
         tv_cpaneltitle.setText(groupName);
         tv_cpanelbody.setText(subGroupName);
-
-
 
 //        refGrpMemberList.addValueEventListener(new ValueEventListener() {
 //            @Override
@@ -1517,6 +1569,164 @@ public class HomeFragment extends Fragment {
         });
 
 
+//        Fragment fragment=new tasks();
+
+//        Bundle bundle =new Bundle();
+//        bundle.putString("groupName",groupName);
+//        bundle.putString("subGroupName",subGroupName);
+//        bundle.putString("groupPushId",groupPushId);
+//        bundle.putString("subGroupPushId",subGroupPushId);
+//
+//        Fragment fragment=new ChatTab();
+//        fragment.setArguments(bundle);
+//        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
+//        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+//        fragmentTransaction.replace(R.id.fragment_container,fragment);
+//        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.commit();
+
+//        showGroupMembers();
+//        list_Dashboard.clear();
+//        list_ChatDashboard=new ArrayList<>();
+
+        refChatDashboard = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Sub_Group" ).child(groupPushId).child(subGroupPushId).child("Chat_Message");
+        ChildEventListener childEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if (dataSnapshot.getChildrenCount()>0) {
+                    Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
+                    list_ChatDashboard.add(class_userDashBoard);
+                    showChatDashadaptor.notifyDataSetChanged();
+
+//                    notifyPB.dismiss();
+                } else {
+                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
+//                    notifyPB.dismiss();
+                }
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        };
+        //refAdmin.addChildEventListener(childEventListener);
+        refChatDashboard.addChildEventListener(childEventListener);
+
+        refDoubtDashboard = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId).child(subGroupPushId).child("Doubt_Message").child("All_Doubt");
+//        refDoubtDashboard = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Sub_Group" ).child(groupPushId).child(subGroupPushId).child("Doubt_Message");
+        ChildEventListener doubtchildEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if (dataSnapshot.getChildrenCount()>0) {
+                    Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
+                    list_DoubtDashboard.add(class_userDashBoard);
+                    showDoubtDashAdaptor.notifyDataSetChanged();
+
+//                    notifyPB.dismiss();
+                } else {
+                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
+//                    notifyPB.dismiss();
+                }
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        };
+        //refAdmin.addChildEventListener(childEventListener);
+        refDoubtDashboard.addChildEventListener(doubtchildEventListener);
+
+
+
+//
+        ib_csubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String subGroupMsg = et_ctext.getText().toString().trim();
+                if (subGroupMsg.isEmpty()) {
+                    Toast.makeText(getContext(), "Enter text", Toast.LENGTH_SHORT).show();
+                    et_ctext.setError("Enter text");
+                } else {
+
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
+                            child("Groups").child("All_Sub_Group").child(groupPushId).child(subGroupPushId).child("Chat_Message");
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            long noofGroupinCategory = snapshot.getChildrenCount() + 1;
+                            String push = "mszno_" + noofGroupinCategory + "_" +subGroupName;
+
+                            Calendar calenderCC = Calendar.getInstance();
+                            SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+                            String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
+                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, groupPushId,subGroupPushId,subGroupMsg);
+                            reference.child(push).setValue(userAddGroupClass);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+
+                    DatabaseReference referenceUser = FirebaseDatabase.getInstance().getReference().
+                            child("Groups").child("Show_Group").child("User_Show_Group").child(userID).child(subGroupPushId);
+                    referenceUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            long noofGroupinCategory = snapshot.getChildrenCount() + 1;
+                            String push = "mszno_" + noofGroupinCategory + "_" + subGroupPushId;
+
+                            Calendar calenderCC = Calendar.getInstance();
+                            SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+                            String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
+                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, subGroupPushId,groupPushId, noofGroupinCategory);
+                            referenceUser.child(push).setValue(userAddGroupClass);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+
+                }
+            }
+        });
+
+        fab_addDoubtQ.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showAddDoubtBtmDialog(groupPushId,subGroupPushId);
+            }
+        });
+
+
         DatabaseReference refUserStatus = FirebaseDatabase.getInstance().getReference().child("Registration").child(userID);
         refUserStatus.addValueEventListener(new ValueEventListener() {
             @Override
@@ -1528,40 +1738,32 @@ public class HomeFragment extends Fragment {
                         btn_lteachattend.setVisibility(View.VISIBLE);
                         btn_lteachexam.setVisibility(View.VISIBLE);
                         btn_lteachresult.setVisibility(View.VISIBLE);
-
                     }
 //                        else{
 ////                            Toast.makeText(getContext(), "You Registered as Student", Toast.LENGTH_SHORT).show();
 //                        }
-
                 }
 //                    else {
 //                        Toast.makeText(getContext(), "You Registered as Student", Toast.LENGTH_SHORT).show();
 //                    }
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
 
         refGrpMemberList = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Sub_Group" ).child(groupPushId).child(subGroupPushId).child("SubGroup_SubsList");
-
         refGrpMemberList.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
 //                String value=snapshot.getValue(String.class);
 //                Toast.makeText(getContext(), "c"+value, Toast.LENGTH_SHORT).show();
 ////                arrayList.add(value);
 ////                arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,arrayList);
 ////                listView.setAdapter(arrayAdapter);
-
                 Class_Group class_userDashBoard = snapshot.getValue(Class_Group.class);
                 listGrpMemberList.add(class_userDashBoard);
                 showGrpMemberList.notifyDataSetChanged();
-
             }
 
             @Override
@@ -1585,116 +1787,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-//        Fragment fragment=new tasks();
-
-        Bundle bundle =new Bundle();
-        bundle.putString("groupName",groupName);
-        bundle.putString("subGroupName",subGroupName);
-        bundle.putString("groupPushId",groupPushId);
-        bundle.putString("subGroupPushId",subGroupPushId);
-
-        Fragment fragment=new ChatTab();
-        fragment.setArguments(bundle);
-        FragmentManager fragmentManager=getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.fragment_container,fragment);
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
-
-
-//        showGroupMembers();
-//        list_Dashboard.clear();
-//        listDashboard=new ArrayList<>();
-//        ChildEventListener childEventListener = new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                if (dataSnapshot.getChildrenCount()>0) {
-//                    Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
-//                    list_Dashboard.add(class_userDashBoard);
-//                    showDashadaptor.notifyDataSetChanged();
-//
-//                    notifyPB.dismiss();
-//                } else {
-//                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
-//                    notifyPB.dismiss();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//            }
-//        };
-//        //refAdmin.addChildEventListener(childEventListener);
-//        refGrpChildAllDashboard.addChildEventListener(childEventListener);
-
-
-//
-//        ib_csubmit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                String subGroupMsg = et_ctext.getText().toString().trim();
-//                if (subGroupMsg.isEmpty()) {
-//                    Toast.makeText(getContext(), "Enter text", Toast.LENGTH_SHORT).show();
-//                    et_ctext.setError("Enter text");
-//                } else {
-//
-//                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
-//                            child("Groups").child("All_Sub_Group").child(groupPushId).child(subGroupPushId).child("Chat_Message");
-//                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                            long noofGroupinCategory = snapshot.getChildrenCount() + 1;
-//                            String push = "mszno_" + noofGroupinCategory + "_" +subGroupName;
-//
-//                            Calendar calenderCC = Calendar.getInstance();
-//                            SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
-//                            String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-//                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, groupPushId,subGroupPushId,subGroupMsg);
-//                            reference.child(push).setValue(userAddGroupClass);
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//                        }
-//                    });
-
-//                    DatabaseReference referenceUser = FirebaseDatabase.getInstance().getReference().
-//                            child("Groups").child("Show_Group").child("User_Show_Group").child(userID).child(subGroupPushId);
-//                    referenceUser.addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                            long noofGroupinCategory = snapshot.getChildrenCount() + 1;
-//                            String push = "mszno_" + noofGroupinCategory + "_" + subGroupPushId;
-//
-//                            Calendar calenderCC = Calendar.getInstance();
-//                            SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
-//                            String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-//                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, subGroupPushId,groupPushId, noofGroupinCategory);
-//                            referenceUser.child(push).setValue(userAddGroupClass);
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//                        }
-//                    });
-
-//                }
-//            }
-//        });
     }
 
     public void searchText(String newText) {
