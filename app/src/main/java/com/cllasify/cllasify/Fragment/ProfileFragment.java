@@ -23,7 +23,8 @@ public class ProfileFragment extends Fragment {
     ChipNavigationBar chipNavigationBar;
 
     ImageButton ib_EditProfile,ib_Logout;
-    TextView tv_User_Name,tv_User_Status;
+    TextView tv_User_Name,tv_User_Status,tv_user_Notify;
+
 //    ,tv_User_Email;
 
     @Override
@@ -46,6 +47,7 @@ public class ProfileFragment extends Fragment {
         tv_User_Status= view.findViewById(R.id.tv_User_Status);
         ib_EditProfile=view.findViewById(R.id.ib_EditProfile);
         ib_Logout=view.findViewById(R.id.ib_Logout);
+        tv_user_Notify=view.findViewById(R.id.tv_user_Notify);
 
         tv_User_Name.setText(userName);
 //        tv_User_Email.setText(userEmail);
@@ -67,6 +69,16 @@ public class ProfileFragment extends Fragment {
                 FirebaseAuth.getInstance().signOut();
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, new HomeFragment());
+                //transaction.addToBackStack(null);
+                transaction.commit();
+
+            }
+        });
+        tv_user_Notify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, new NotificationFragment());
                 //transaction.addToBackStack(null);
                 transaction.commit();
 

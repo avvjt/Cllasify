@@ -74,12 +74,9 @@ public class HomeFragment extends Fragment {
     RecyclerView rv_GroupTitle,rv_GroupData;
     RecyclerView rv_UserPrivateGroupTitle,rv_UserPublicGroupTitle,rv_OtherPublicGroupTitle
             ,rv_GrpMemberList,rv_SubChild,rv_DoubtDashData,rv_ChatDashData;
-
     RelativeLayout rl_ChatDash,rl_DoubtDash;
-
     ArrayList<String> arrayList=new ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
-
     ListView listView;
     DatabaseReference refShowAllGroup,refTempGroupDB, refGroupChildUserDashboard, refChatDashboard,refDoubtDashboard;
     DatabaseReference refuserPersonalGroup,refuserAllGroup,
@@ -103,7 +100,6 @@ public class HomeFragment extends Fragment {
 
     FloatingActionButton fab_addDoubtQ;
 
-
     String GroupCategory;
     GoogleSignInClient googleSignInClient;
     Calendar calenderCC=Calendar.getInstance();
@@ -117,10 +113,9 @@ public class HomeFragment extends Fragment {
     boolean searchShow=true;
     ChipNavigationBar chipNavigationBar;
     OverlappingPanelsLayout overlappingPanels;
-     Button openStartPanelButton, btn_AddGroup,btn_show;
-     //
-    Class_Group userAddGroupClass,addAnswer,userSubsGroupClass;
+    Button openStartPanelButton, btn_AddGroup,btn_show;
 
+    Class_Group userAddGroupClass,addAnswer,userSubsGroupClass;
     SearchView esv_groupSearchView;
     SearchView sv_textSearchView,sv_ChatSearch,sv_DoubtSearch;
     EditText addAnswer_et, et_ctext;
@@ -157,15 +152,11 @@ public class HomeFragment extends Fragment {
             notifyPB.setMessage("Loading All Jobs");
             notifyPB.setCanceledOnTouchOutside(true);
 
-
-
             GoogleSignInOptions googleSignInOptions=new GoogleSignInOptions.Builder(
                     GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken("1085537073642-dq2djhhvidcgmb4c3a5ushet55jk6hf5.apps.googleusercontent.com")
                     .requestEmail()
                     .build();
-
             googleSignInClient= GoogleSignIn.getClient(getContext(),googleSignInOptions);
-
 
             chipNavigationBar = getActivity().findViewById(R.id.bottom_nav_menu);
             chipNavigationBar.setItemSelected(R.id.bottom_nav_home,true);
@@ -1119,6 +1110,7 @@ public class HomeFragment extends Fragment {
 
                 Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
                 list_UserPrivateGroupTitle.add(userQuestions);
+                showUserPrivateGroupadaptor.notifyDataSetChanged();
                 notifyPB.dismiss();
 //                } else {
 //                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
@@ -1142,7 +1134,7 @@ public class HomeFragment extends Fragment {
             }
         };
         //refAdmin.addChildEventListener(childEventListener);
-        showUserPrivateGroupadaptor.notifyDataSetChanged();
+        list_UserPrivateGroupTitle.clear();
         refShowUserPrivateGroup.orderByChild("groupno").addChildEventListener(childEventListener);
 
         refShowUserPrivateGroup.addValueEventListener(new ValueEventListener() {
@@ -1182,7 +1174,7 @@ public class HomeFragment extends Fragment {
         });
                 int count=0;
 
-                list_UserPublicGroupTitle.clear();
+//                list_UserPublicGroupTitle.clear();
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -1215,6 +1207,7 @@ public class HomeFragment extends Fragment {
             }
         };
         //refAdmin.addChildEventListener(childEventListener);
+        list_UserPublicGroupTitle.clear();
         refShowUserPublicGroup.orderByChild("groupno").addChildEventListener(childEventListener);
 
 
@@ -1315,27 +1308,14 @@ public class HomeFragment extends Fragment {
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
                 if (dataSnapshot.child("User_Subscribed_Groups").child(userID).exists()){
                     String check=dataSnapshot.child("User_Subscribed_Groups").child(userID).child("subsStatus").getValue().toString();
-//                    String check1=dataSnapshot.child("User_Subscribed_Groups").child(userID).getKey();
-
                     if(check.equals("true")) {
                         Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
                         list_OtherUserPublicGroupTitle.add(userQuestions);
                         notifyPB.dismiss();
-//                        Toast.makeText(getContext(),"chch"+check,Toast.LENGTH_SHORT).show();
                     }
-//                    Toast.makeText(getContext(),"chch",Toast.LENGTH_SHORT).show();
                 }
-//                notifyPB.dismiss();
-//                } else {
-//                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
-//                    notifyPB.dismiss();
-////                }
-
-//                }
-
             }
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -1350,6 +1330,7 @@ public class HomeFragment extends Fragment {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         };
+
         showOtherUserPublicGroupAdaptor.notifyDataSetChanged();
         refotheruserPublicGroup.orderByChild("groupno").addChildEventListener(childEventListener);
 

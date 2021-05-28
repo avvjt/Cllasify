@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,9 +60,22 @@ public class NotificationFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_notification, container, false);
         chipNavigationBar = getActivity().findViewById(R.id.bottom_nav_menu);
-
         chipNavigationBar.setItemSelected(R.id.bottom_nav_notification,true);
 
+        //initialize the toolbar
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        toolbar.setTitle("Notification");
+        toolbar.setNavigationIcon(R.drawable.ic_left_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //open navigation drawer when click navigation back button
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, new HomeFragment());
+                //transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
 
         sv_notifySearchView =view.findViewById(R.id.sv_notifySearchView);
         rv_AllNotifications =view.findViewById(R.id.rv_AllNotifications);
@@ -174,7 +191,7 @@ public class NotificationFragment extends Fragment {
                     Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
                     assert class_userDashBoard != null;
                     String groupjoinStatus=class_userDashBoard.getGrpJoiningStatus();
-                    Toast.makeText(getContext(), "status"+groupjoinStatus, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "status"+groupjoinStatus, Toast.LENGTH_SHORT).show();
 //                    if ((!groupjoinStatus.equals("Approve")) && (!groupjoinStatus.equals("Reject"))) {
                         listGroupSTitle.add(class_userDashBoard);
                         notifyPB.dismiss();

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.HomeFragment">
 
@@ -11,17 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/ll_edit"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp">
+        android:orientation="horizontal">
 
         <ImageButton
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:src="@drawable/ic_cancel"
             android:id="@+id/ib_EditProfile"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:background="@color/transparent"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"/>
         <TextView
             android:layout_width="match_parent"
@@ -35,11 +34,10 @@
         <ImageButton
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_weight="2"
+            android:layout_weight="3"
             android:src="@drawable/ic_logout"
             android:id="@+id/ib_Logout"
             android:background="@color/transparent"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="8dp"/>
 
     </LinearLayout>
@@ -47,25 +45,22 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="45dp">
-        <RelativeLayout
+        android:layout_marginBottom="64dp">
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-
+            android:layout_width="match_parent"
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:id="@+id/ll_title"
-                android:layout_marginTop="45dp"
                 android:layout_marginLeft="22dp"
                 android:layout_marginRight="22dp">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/prof_pic"
                         android:layout_width="100dp"
@@ -82,7 +77,6 @@
                         android:layout_gravity="center"
                         android:drawableStart="@drawable/ic_premium"/>
                 </LinearLayout>
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -92,7 +86,6 @@
                     android:textColor="@color/black"
                     android:textSize="22sp"
                     android:layout_marginStart="20dp"/>
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -101,40 +94,35 @@
                     android:textSize="16sp"
                     android:id="@+id/tv_User_Status"
                     android:layout_marginStart="20dp"/>
-
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ll_title"
                 android:id="@+id/ll_userContacts"
                 android:orientation="vertical"
                 android:layout_marginTop="22dp"
                 android:layout_marginLeft="22dp"
                 android:layout_marginRight="22dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_usegr_intro"
-                    android:text="@string/set_status"
-                    android:textSize="22sp"
-                    android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_status"
-                    android:drawablePadding="20dp"
-                    android:paddingBottom="25dp"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_user_intro"
-                    android:text="@string/my_account"
-                    android:textSize="22sp"
-                    android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_account"
-                    android:drawablePadding="20dp"
-                    android:paddingBottom="25dp"/>
-
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/tv_usegr_intro"-->
+<!--                    android:text="@string/set_status"-->
+<!--                    android:textSize="22sp"-->
+<!--                    android:textColor="@color/light_black"-->
+<!--                    app:drawableStartCompat="@drawable/ic_status"-->
+<!--                    android:drawablePadding="20dp"-->
+<!--                    android:paddingBottom="25dp"/>-->
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/tv_user_intro"-->
+<!--                    android:text="@string/my_account"-->
+<!--                    android:textSize="22sp"-->
+<!--                    android:textColor="@color/light_black"-->
+<!--                    app:drawableStartCompat="@drawable/ic_account"-->
+<!--                    android:drawablePadding="20dp"-->
+<!--                    android:paddingBottom="25dp"/>-->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -145,7 +133,6 @@
                     app:drawableStartCompat="@drawable/ic_friends"
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -156,30 +143,26 @@
                     app:drawableStartCompat="@drawable/ic_server"
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tv_user_hint"
+                    android:id="@+id/tv_user_Notify"
                     android:text="@string/notification"
                     android:textSize="22sp"
                     android:textColor="@color/light_black"
                     app:drawableStartCompat="@drawable/ic_noti"
                     android:drawablePadding="20dp"
                     android:paddingBottom="25dp"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_us"
-                    android:text="@string/theme"
-                    android:textSize="22sp"
-                    android:textColor="@color/light_black"
-                    app:drawableStartCompat="@drawable/ic_theme"
-                    android:drawablePadding="20dp"
-                    android:paddingBottom="25dp"/>
-
-
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:id="@+id/tv_us"-->
+<!--                    android:text="@string/theme"-->
+<!--                    android:textSize="22sp"-->
+<!--                    android:textColor="@color/light_black"-->
+<!--                    app:drawableStartCompat="@drawable/ic_theme"-->
+<!--                    android:drawablePadding="20dp"-->
+<!--                    android:paddingBottom="25dp"/>-->
                 <TextView
                     android:id="@+id/tv_user_hino"
                     android:layout_width="match_parent"
@@ -217,7 +200,7 @@
 
 
 
-        </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 
-</RelativeLayout>
+</LinearLayout>
