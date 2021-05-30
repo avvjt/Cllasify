@@ -19,6 +19,7 @@ import com.cllasify.cllasify.Fragment.HomeFragment;
 import com.cllasify.cllasify.Fragment.NotificationFragment;
 import com.cllasify.cllasify.Fragment.ProfileFragment;
 import com.cllasify.cllasify.R;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
@@ -30,6 +31,11 @@ public class Dashboard extends AppCompatActivity {
     private DrawerLayout drawer;
     String tag = null;
 
+    public static final String CHANNEL_ID="cllasify";
+    private static final String CHANNEL_NAME="cllasify";
+    private static final String CHANNEL_DESC="cllasify notification";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +45,8 @@ public class Dashboard extends AppCompatActivity {
         chipNavigationBar.setItemSelected(R.id.bottom_nav_home,true);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment(),"feed").commit();
         bottomMenu();
+
+
     }
 
     private void bottomMenu() {
@@ -65,7 +73,11 @@ public class Dashboard extends AppCompatActivity {
                         tag="profile";
                         break;
                 }
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment,tag).commit();
+                FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container,fragment,tag);
+                transaction.addToBackStack(tag);
+                transaction.commit();
+
             }
         });
 
@@ -73,7 +85,14 @@ public class Dashboard extends AppCompatActivity {
 
     @Override
    public void onBackPressed() {
-        exitApp();
+
+        if (getFragmentManager().getBackStackEntryCount()!=0){
+            getFragmentManager().popBackStack();
+        }else{
+            exitApp();
+
+        }
+
 
 //        Fragment fragment = getSupportFragmentManager().findFragmentByTag("home");
 //        if (fragment != null && fragment.isVisible()) {

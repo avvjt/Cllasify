@@ -42,6 +42,7 @@ import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
 import com.cllasify.cllasify.Attendance_Activity;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Group_Join;
+import com.cllasify.cllasify.JoinGroupFragment;
 import com.cllasify.cllasify.Register.Phone_Login;
 import com.cllasify.cllasify.R;
 import com.discord.panels.OverlappingPanelsLayout;
@@ -312,7 +313,7 @@ public class HomeFragment extends Fragment {
                     if (snapshot.getChildrenCount()>0){
                         notifyPB.dismiss();
                     }else{
-                        Toast.makeText(getContext(), "Please create Group using left swipe", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(view.getContext(), "Please create Group using left swipe", Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override
@@ -363,8 +364,16 @@ public class HomeFragment extends Fragment {
             btn_cjoingroup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    startActivity(new Intent(getContext(), Group_Join.class));
+//                    startActivity(new Intent(getContext(), Group_Join.class));
+                    Fragment fragment = null;
+                    FragmentTransaction transaction;
+                    fragment = new JoinGroupFragment();
+                    transaction=getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragment_container,fragment,"JoinGroup");
+                    transaction.addToBackStack("JoinGroup");
+                    transaction.commit();
                 }
+
             });
 
             tv_ChatDashboard.setOnClickListener(new View.OnClickListener() {
@@ -710,16 +719,6 @@ public class HomeFragment extends Fragment {
         Calendar calenderCC= Calendar.getInstance();
         SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
         final String udateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
-//
-//        refUserStatus.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.getChildrenCount()>0){
-//                    if (!snapshot.child(userID).exists()){
-//
-////                        student_ll.setOnClickListener(new View.OnClickListener() {
-////                            @Override
-////                            public void onClick(View v) {
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
@@ -736,7 +735,6 @@ public class HomeFragment extends Fragment {
                         DatabaseReference refUserRegister = FirebaseDatabase.getInstance().getReference().child("Registration").child(userID);
                         refUserRegister.child( "Name" ).setValue( userName );
                         refUserRegister.child( "Email" ).setValue( userEmailID );
-//                refUserRegister.child( "photo" ).setValue( userPhoto );
                         refUserRegister.child( "UserId" ).setValue( userID );
                         refUserRegister.child( "DateTime" ).setValue( udateTimeCC );
                         refUserRegister.child( "Category" ).setValue("Student");
@@ -744,51 +742,10 @@ public class HomeFragment extends Fragment {
                         refUserRegister.child( "token" ).setValue(token);
 
                         notifyPB.dismiss();
-                        // Log and toast
-//                        String msg = getString(R.string.msg_token_fmt, token);
-//                        Log.d(TAG, msg);
-//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+
                         Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-
-//                                bottomSheetDialog.dismiss();
-//                                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                                ft.detach(HomeFragment.this).attach(HomeFragment.this).commit();
-//                            }
-//                        });
-//                        teacher_ll.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                DatabaseReference refUserRegister = FirebaseDatabase.getInstance().getReference().child("Registration").child(userID);
-//                                refUserRegister.child( "Name" ).setValue( userName );
-//                                refUserRegister.child( "Email" ).setValue( userEmailID );
-//                                refUserRegister.child( "UserId" ).setValue( userID );
-//                                refUserRegister.child( "DateTime" ).setValue( udateTimeCC );
-//                                refUserRegister.child( "Category" ).setValue("Teacher");
-//                                refUserRegister.child( "userStatus" ).setValue("Online");
-//                                Toast.makeText(getContext(), "Login Successful as Teacher", Toast.LENGTH_SHORT).show();
-//                                bottomSheetDialog.dismiss();
-//                                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                                ft.detach(HomeFragment.this).attach(HomeFragment.this).commit();
-//                            }
-//                        });
-//                    }
-
-                    notifyPB.dismiss();
-//                }else{
-//                    Toast.makeText(getContext(), "Please create Group using left swipe", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//            }
-//        });
-
-
-
-//        bottomSheetDialog.show();
 
     }
 
@@ -890,21 +847,13 @@ public class HomeFragment extends Fragment {
             Task<GoogleSignInAccount> signInAccountTask= GoogleSignIn
                     .getSignedInAccountFromIntent(data);
 //            Toast.makeText(getContext(), "checking", Toast.LENGTH_SHORT).show();
-
-
             if (signInAccountTask.isSuccessful()){
-
                 String s= "Google Signin is sucessful";
-
-//                Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
-
                 try {
                     GoogleSignInAccount googleSignInAccount=signInAccountTask.getResult(ApiException.class);
-
                     if (googleSignInAccount!=null){
                         AuthCredential authCredential= GoogleAuthProvider.getCredential(googleSignInAccount.getIdToken(),null);
                         FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
-
                         firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -921,10 +870,7 @@ public class HomeFragment extends Fragment {
                     }
                     else{
                         Toast.makeText(getContext(), "google account null", Toast.LENGTH_SHORT).show();
-
                     }
-
-
                 } catch (ApiException e) {
                     e.printStackTrace();
                 }
