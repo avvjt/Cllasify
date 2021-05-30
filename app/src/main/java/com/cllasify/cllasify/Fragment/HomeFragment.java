@@ -7,9 +7,12 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,6 +65,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.text.SimpleDateFormat;
@@ -560,12 +564,13 @@ public class HomeFragment extends Fragment {
     private void showLoginBtmDialog() {
 
         BottomSheetDialog bottomSheetDialoglogin=new BottomSheetDialog(getContext());
-        bottomSheetDialoglogin.setCancelable(true);
+        bottomSheetDialoglogin.setCancelable(false);
         bottomSheetDialoglogin.setContentView(R.layout.btmdialog_login);
 
-        Button btn_phonelogin=bottomSheetDialoglogin.findViewById(R.id.btn_JoinGroup);
+//        Button btn_phonelogin=bottomSheetDialoglogin.findViewById(R.id.btn_JoinGroup);
 //        Button btn_Cancel=bottomSheetDialoglogin.findViewById(R.id.btn_CreateGroup);
         Button btn_googlelogin=bottomSheetDialoglogin.findViewById(R.id.btn_CreateGroup);
+
 
 //        btn_Cancel.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -576,12 +581,18 @@ public class HomeFragment extends Fragment {
         btn_googlelogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 GoogleSignInOptions googleSignInOptions=new GoogleSignInOptions.Builder(
                         GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken("1085537073642-dq2djhhvidcgmb4c3a5ushet55jk6hf5.apps.googleusercontent.com")
                         .requestEmail()
                         .build();
 
                 googleSignInClient= GoogleSignIn.getClient(getContext(),googleSignInOptions);
+                notifyPB = new ProgressDialog(getContext());
+                notifyPB.setTitle("Govt Jobs");
+                notifyPB.setMessage("Loading All Jobs");
+                notifyPB.setCanceledOnTouchOutside(true);
+                notifyPB.show();
 
 
                 Intent intent=googleSignInClient.getSignInIntent();
@@ -591,14 +602,14 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
-        btn_phonelogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), Phone_Login.class));
-                bottomSheetDialoglogin.dismiss();
-            }
-        });
+//
+//        btn_phonelogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(getContext(), Phone_Login.class));
+//                bottomSheetDialoglogin.dismiss();
+//            }
+//        });
 
         bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         bottomSheetDialoglogin.show();
@@ -677,6 +688,107 @@ public class HomeFragment extends Fragment {
 
 
         bottomSheetDialog.show();
+
+    }
+
+
+    private void submitLoginData() {
+//        rl_feed.setBackgroundColor(Color.GRAY);
+//        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(getContext());
+//        bottomSheetDialog.setCancelable(false);
+//        bottomSheetDialog.setContentView(R.layout.btmdialog_studteach);
+//
+//        LinearLayout student_ll=bottomSheetDialog.findViewById(R.id.student_ll);
+//        LinearLayout teacher_ll=bottomSheetDialog.findViewById(R.id.teacher_ll);
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        userID = currentUser.getUid();
+        userName = currentUser.getDisplayName();
+        userEmailID = currentUser.getEmail();
+        userPhoto = currentUser.getPhotoUrl();
+
+        Calendar calenderCC= Calendar.getInstance();
+        SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+        final String udateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
+//
+//        refUserStatus.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.getChildrenCount()>0){
+//                    if (!snapshot.child(userID).exists()){
+//
+////                        student_ll.setOnClickListener(new View.OnClickListener() {
+////                            @Override
+////                            public void onClick(View v) {
+
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(getContext(), "Token Failed"+task.getException().toString(), Toast.LENGTH_SHORT).show();
+//                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+                            return;
+                        }
+
+                        // Get new FCM registration token
+                        String token = task.getResult();
+                        DatabaseReference refUserRegister = FirebaseDatabase.getInstance().getReference().child("Registration").child(userID);
+                        refUserRegister.child( "Name" ).setValue( userName );
+                        refUserRegister.child( "Email" ).setValue( userEmailID );
+//                refUserRegister.child( "photo" ).setValue( userPhoto );
+                        refUserRegister.child( "UserId" ).setValue( userID );
+                        refUserRegister.child( "DateTime" ).setValue( udateTimeCC );
+                        refUserRegister.child( "Category" ).setValue("Student");
+                        refUserRegister.child( "userStatus" ).setValue("Online");
+                        refUserRegister.child( "token" ).setValue(token);
+
+                        notifyPB.dismiss();
+                        // Log and toast
+//                        String msg = getString(R.string.msg_token_fmt, token);
+//                        Log.d(TAG, msg);
+//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+//                                bottomSheetDialog.dismiss();
+//                                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                                ft.detach(HomeFragment.this).attach(HomeFragment.this).commit();
+//                            }
+//                        });
+//                        teacher_ll.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                DatabaseReference refUserRegister = FirebaseDatabase.getInstance().getReference().child("Registration").child(userID);
+//                                refUserRegister.child( "Name" ).setValue( userName );
+//                                refUserRegister.child( "Email" ).setValue( userEmailID );
+//                                refUserRegister.child( "UserId" ).setValue( userID );
+//                                refUserRegister.child( "DateTime" ).setValue( udateTimeCC );
+//                                refUserRegister.child( "Category" ).setValue("Teacher");
+//                                refUserRegister.child( "userStatus" ).setValue("Online");
+//                                Toast.makeText(getContext(), "Login Successful as Teacher", Toast.LENGTH_SHORT).show();
+//                                bottomSheetDialog.dismiss();
+//                                FragmentTransaction ft = getFragmentManager().beginTransaction();
+//                                ft.detach(HomeFragment.this).attach(HomeFragment.this).commit();
+//                            }
+//                        });
+//                    }
+
+                    notifyPB.dismiss();
+//                }else{
+//                    Toast.makeText(getContext(), "Please create Group using left swipe", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//            }
+//        });
+
+
+
+//        bottomSheetDialog.show();
 
     }
 
@@ -773,18 +885,18 @@ public class HomeFragment extends Fragment {
         Toast.makeText(getContext(), "on activity result called", Toast.LENGTH_SHORT).show();
 
         if (requestCode==100){
-            Toast.makeText(getContext(), "100", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "100", Toast.LENGTH_SHORT).show();
 
             Task<GoogleSignInAccount> signInAccountTask= GoogleSignIn
                     .getSignedInAccountFromIntent(data);
-            Toast.makeText(getContext(), "checking", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), "checking", Toast.LENGTH_SHORT).show();
 
 
             if (signInAccountTask.isSuccessful()){
 
                 String s= "Google Signin is sucessful";
 
-                Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
 
                 try {
                     GoogleSignInAccount googleSignInAccount=signInAccountTask.getResult(ApiException.class);
@@ -797,7 +909,8 @@ public class HomeFragment extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()){
-                                    showStudTeachBtmDialog();
+                                    submitLoginData();
+//                                    showStudTeachBtmDialog();
 //                                    chipNavigationBar.setVisibility(View.VISIBLE);
 
                                 }else{
