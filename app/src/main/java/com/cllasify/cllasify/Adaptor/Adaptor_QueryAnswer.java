@@ -116,7 +116,7 @@ public class Adaptor_QueryAnswer extends RecyclerView.Adapter<Adaptor_QueryAnswe
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildrenCount()>0){
-
+// Test
                     if (snapshot.child("profilePic").exists()){
                         String profilePic=snapshot.child("profilePic").getValue().toString();
                         Glide.with(context).load(profilePic).into(holder.ib_AnsUserProfile);
