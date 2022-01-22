@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Server.DoubtFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:id="@+id/tv_DoubtGroupName" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_DoubtGroupClass"
+        android:textSize="20sp"
+        android:layout_below="@+id/tv_DoubtGroupName"
+        android:text="@string/hello_blank_fragment" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_margin="8dp"
+        android:background="@color/green"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:textColor="@color/white"
+        android:layout_below="@+id/tv_DoubtGroupClass"
+        android:id="@+id/tv_DoubtGroupClassSubject" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_below="@id/tv_DoubtGroupClassSubject"
+        android:id="@+id/rv_DoubtAnswer"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="96dp"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/ll_bottom_send"
+        android:orientation="horizontal">
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="3"
+            android:id="@+id/ib_attachDoubtAns"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:id="@+id/et_DoubtAns"/>
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/ib_submitDoubtAns"
+            android:layout_weight="3" />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

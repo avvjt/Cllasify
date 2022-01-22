@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/ll_list_group_search">
+    <!--
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll_groupdetails"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="100dp"
+                android:textSize="20sp"
+                android:background="@drawable/rounded_corner"
+                android:id="@+id/tv_groupname"
+                android:textStyle="bold"
+                android:padding="2dp"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_corner"
+                android:textSize="16sp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="100dp"
+                android:layout_below="@id/tv_groupname"
+                android:id="@+id/tv_groupownername"
+                android:padding="2dp"/>
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="50dp"
+            android:padding="4dp"
+            android:textSize="20sp"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_alignEnd="@id/ll_groupdetails"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/tv_GroupStatus"/>
+     -->
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="25dp"
+        android:layout_margin="15dp">
+
+        <RelativeLayout
+            android:id="@+id/ll_groupdetails"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/schImg"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/demo_sch" />
+
+            <RelativeLayout
+                android:id="@+id/shortDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/schImg">
+
+                <Button
+                    android:id="@+id/tv_GroupStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="50dp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="Join the class"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@id/schLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    app:cardCornerRadius="5dp">
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:scaleType="center"
+                        android:src="@drawable/default_school_logo" />
+
+                </androidx.cardview.widget.CardView>
+
+                <TextView
+                    android:id="@+id/tv_groupname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@+id/schLogo"
+                    android:fontFamily="sans-serif-black"
+                    android:text="Sample School"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tv_groupownername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_groupname"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/schLogo"
+                    android:text="Admin name" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/showAllClassesBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_below="@+id/shortDescription"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="sans-serif-black"
+                android:text="Show All Classes"
+                android:textAllCaps="false"
+                android:textColor="@color/black" />
+
+            <LinearLayout
+                android:id="@+id/showClasses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_below="@+id/showAllClassesBtn"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:paddingStart="10dp">
+
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="sans-serif-black"
+                    android:gravity="center"
+                    android:text="Select the class: "
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
+                <NumberPicker
+                    android:id="@+id/classPicker"
+                    android:layout_width="50dp"
+                    android:layout_height="70dp"
+                    android:layout_marginStart="20dp" />
+
+                <Button
+                    android:id="@+id/tv_GroupStatuss"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="50dp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="Join the class"
+                    android:textAllCaps="false"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>
+

@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Fragment.HomeFragment">
+
+    <com.discord.panels.OverlappingPanelsLayout
+        android:id="@+id/overlapping_panels"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/start_panel"
+            style="@style/Panel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingEnd="0dp">
+            <TextView
+                style="@style/PanelHeader"
+                android:id="@+id/headerNameWelcome"
+                android:text="@string/start_panel_name" />
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/ic_friends"
+                android:id="@+id/ib_FrndsList"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:background="#E8E8E8"
+                    android:orientation="vertical">
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/ic_add"
+                        android:id="@+id/ib_AddGroup"/>
+<!--                    <Button-->
+<!--                        android:layout_width="100dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:id="@+id/btn_AddGroup"-->
+<!--                        android:text="@string/add_group"/>-->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:id="@+id/tv_UserPrivateTitle"/>
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:visibility="gone"-->
+<!--                android:id="@+id/rv_UserGroupTitle"/>-->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rv_UserPrivateGroupTitle"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:id="@+id/tv_UserPublicTitle"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rv_UserPublicGroupTitle"/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:id="@+id/tv_OtherTitle"/>
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rv_OtherPublicGroupTitle"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:id="@+id/groupSection">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:id="@+id/groupName"/>
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/addNewClassButton"
+                        android:text="Add New Class"/>
+
+                    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/swipeUpRefreshLayoutInClass">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:id="@+id/recyclerViewGroupNameList"/>
+                    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Please click on (+) sign in front of Class name to add Topic"
+                        android:visibility="gone"
+                        android:id="@+id/classNameTextView"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:id="@+id/topicNamesRecyclerView"/>
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/center_panel"
+            style="@style/Panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:visibility="gone"
+                android:id="@+id/tv_cpaneltitle"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_below="@+id/tv_cpaneltitle"
+                android:id="@+id/tv_cpanelbody"/>
+
+<!--            <com.google.android.material.tabs.TabLayout-->
+<!--                android:id="@+id/tabLayout"-->
+<!--                android:layout_below="@+id/tv_cpanelbody"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@color/design_default_color_on_primary"-->
+<!--                app:tabIndicatorColor="@color/purple"-->
+<!--                app:tabSelectedTextColor="@color/purple"-->
+<!--                app:tabTextColor="@color/black"-->
+<!--                app:cnb_unselectedColor="@color/page_black">-->
+
+<!--                <com.google.android.material.tabs.TabItem-->
+<!--                    android:id="@+id/tabChatItem"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/chats" />-->
+
+<!--                <com.google.android.material.tabs.TabItem-->
+<!--                    android:id="@+id/tabDoubtItem"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="@string/doubt" />-->
+<!--            </com.google.android.material.tabs.TabLayout>-->
+
+<!--                <androidx.viewpager.widget.ViewPager-->
+<!--                    android:id="@+id/viewPager"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"/>-->
+
+
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_below="@+id/tabLayout"-->
+<!--                android:background="@color/colorPrimary"-->
+<!--                android:layout_height="2dp"/>-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:id="@+id/rl_ChatDoubt">
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:id="@+id/appbar_layout">
+                <com.google.android.material.tabs.TabLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tabl_chatdis">
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Chat"/>
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Discussion"/>
+                </com.google.android.material.tabs.TabLayout>
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/appbar_layout"
+                android:id="@+id/view_Pager"/>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/rl_FrndChatLayout"
+                android:visibility="gone"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:gravity="center"
+                    android:text="Friends List"
+                    android:layout_marginBottom="16dp"
+                    android:textSize="40sp"
+                    android:background="@color/colorPrimary"
+                    android:id="@+id/tv_FrndP_Title"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_FrndP_Title"
+                    android:layout_above="@id/ll_FrndP_btm_send"
+                    android:id="@+id/rv_FrndP_Chatting"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:id="@+id/ll_FrndP_btm_send"
+                    android:orientation="horizontal">
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_weight="3"
+                        android:id="@+id/ib_FrndP_attach"/>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/chat_input_background"
+                        android:hint="Message..."
+                        android:imeOptions="actionDone"
+                        android:importantForAutofill="no"
+                        android:inputType="text"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/light_black"
+                        android:layout_weight="1"
+                        android:id="@+id/et_FrndP_text"/>
+                    <ImageButton
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:id="@+id/ib_FrndP_csubmit"
+                        android:layout_weight="3" />
+                </LinearLayout>
+
+            </RelativeLayout>
+
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:id="@+id/rl_ChatView">
+                <com.google.android.material.appbar.AppBarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:id="@+id/appbar_Chatlayout">
+                    <com.google.android.material.tabs.TabLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/tabl_ChatView">
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="All Chat"/>
+                        <com.google.android.material.tabs.TabItem
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="New Chat"/>
+                    </com.google.android.material.tabs.TabLayout>
+                </com.google.android.material.appbar.AppBarLayout>
+
+                <androidx.viewpager.widget.ViewPager
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/appbar_Chatlayout"
+                    android:id="@+id/view_Pager_ChatView"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/ll_AddJoinGrp"
+                android:visibility="gone"
+                android:orientation="vertical">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="@string/add_group"
+                android:id="@+id/btn_caddgroup"
+                android:textSize="30sp"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@id/btn_caddgroup"
+                android:id="@+id/btn_cjoingroup"
+                android:text="@string/join_group"
+                android:textSize="30sp"/>
+            </LinearLayout>
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/ll_TabChatDoubt"-->
+<!--                android:visibility="gone"-->
+<!--                android:orientation="horizontal">-->
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Chat"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:gravity="center"-->
+<!--                    android:id="@+id/tv_ChatDashboard"-->
+<!--                    android:layout_weight="1"/>-->
+<!--                <TextView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Doubt"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:id="@+id/tv_DoubtDashboard"-->
+<!--                    android:layout_weight="1"/>-->
+<!--            </LinearLayout>-->
+
+<!--            <RelativeLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/rl_ChatDash"-->
+<!--                android:visibility="gone"-->
+<!--                android:layout_below="@id/ll_TabChatDoubt"-->
+<!--                android:orientation="vertical">-->
+<!--            <androidx.appcompat.widget.SearchView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:queryHint="Search Groups"-->
+<!--                android:id="@+id/sv_ChatSearch"/>-->
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/sv_ChatSearch"-->
+<!--                android:layout_marginBottom="96dp"-->
+<!--                android:id="@+id/rv_ChatDashData"/>-->
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="96dp"-->
+<!--                android:layout_alignParentBottom="true"-->
+<!--                android:id="@+id/ll_bottom_send"-->
+<!--                android:orientation="horizontal">-->
+<!--                <ImageButton-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:layout_weight="3"-->
+<!--                    android:id="@+id/ib_cattach"/>-->
+<!--                <EditText-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_marginStart="16dp"-->
+<!--                    android:layout_marginEnd="8dp"-->
+<!--                    android:layout_marginBottom="12dp"-->
+<!--                    android:background="@drawable/chat_input_background"-->
+<!--                    android:hint="Message..."-->
+<!--                    android:imeOptions="actionDone"-->
+<!--                    android:importantForAutofill="no"-->
+<!--                    android:inputType="text"-->
+<!--                    android:paddingStart="16dp"-->
+<!--                    android:paddingEnd="16dp"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textColorHint="@color/light_black"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:id="@+id/et_ctext"/>-->
+<!--                <ImageButton-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="50dp"-->
+<!--                    android:id="@+id/ib_csubmit"-->
+<!--                    android:layout_weight="3" />-->
+
+
+<!--            </LinearLayout>-->
+<!--            </RelativeLayout>-->
+<!--            <RelativeLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:id="@+id/rl_DoubtDash"-->
+<!--                android:visibility="gone"-->
+<!--                android:layout_below="@id/ll_TabChatDoubt"-->
+<!--                android:orientation="vertical">-->
+<!--            <androidx.appcompat.widget.SearchView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:queryHint="Search Groups"-->
+<!--                android:id="@+id/sv_DoubtSearch"/>-->
+<!--            <androidx.recyclerview.widget.RecyclerView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_below="@+id/sv_DoubtSearch"-->
+<!--                android:layout_marginBottom="84dp"-->
+<!--                android:id="@+id/rv_DoubtDashData" />-->
+<!--                <RelativeLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent">-->
+<!--                    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent">-->
+<!--                        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--                            android:id="@+id/fab_addDoubtQ"-->
+<!--                            style="@style/MyMaterialTheme"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="bottom|end"-->
+<!--                            android:layout_marginBottom="80dp"-->
+<!--                            android:layout_marginEnd="16dp"-->
+<!--                            app:fabSize="normal"-->
+<!--                            android:src="@drawable/ic_add"-->
+<!--                            app:useCompatPadding="true"-->
+<!--                            android:contentDescription="TODO" />-->
+<!--                        &lt;!&ndash;            <TextView android:layout_height="wrap_content"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                android:layout_width="wrap_content"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                android:text="OK"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                android:elevation="6dp"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                android:textSize="18dp"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                android:textColor="#fff"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                app:layout_anchor="@id/fab_Chats"&ndash;&gt;-->
+<!--                        &lt;!&ndash;                app:layout_anchorGravity="center"/>&ndash;&gt;-->
+
+<!--                    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+<!--                </RelativeLayout>-->
+
+<!--            </RelativeLayout>-->
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/end_panel"
+            style="@style/Panel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:id="@+id/endPanelLinearLayout">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/endPanelAllFriendsButton"
+                    android:text="All Friends"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/endPanelAllFriendsRecyclerView"/>
+
+                <TextView
+                    android:id="@+id/tv_GroupMember"
+                    android:text="@string/group_members"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="84dp"
+                    android:id="@+id/rv_GrpMemberList"/>
+
+
+                <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_lteachattend"
+                android:visibility="gone"
+                android:text="@string/attendance"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_lteachexam"
+                android:visibility="gone"
+                android:text="Exam"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_lteachresult"
+                android:visibility="gone"
+                android:text="Result"/>
+
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+        </RelativeLayout>
+    </com.discord.panels.OverlappingPanelsLayout>
+</LinearLayout>

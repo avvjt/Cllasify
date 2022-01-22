@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialogrounded_corner">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+
+            <Button
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:drawableEnd="@drawable/ic_cancel"
+                android:id="@+id/btn_Cancel"
+                android:textColor="@color/page_black"
+                android:textStyle="bold"
+                android:background="@color/transparent"
+                android:layout_marginStart="20dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:textSize="18sp"
+                android:id="@+id/tv_SettingTitle"
+                android:textColor="@color/page_black"
+                android:textStyle="bold"
+                android:text="@string/enter_phoneno"
+                android:layout_gravity="center" />
+        </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Please enter new Details"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        android:id="@+id/tv_subTitle"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_editDetails"
+        android:layout_margin="8dp"
+        android:orientation="vertical">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="enter new details"
+            android:padding="8dp"
+            android:id="@+id/et_NewDetails"/>
+
+    </LinearLayout>
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:id="@+id/btn_Submit"
+            android:text="Submit"/>
+
+    </LinearLayout>

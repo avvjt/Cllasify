@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/text_white">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:padding="4dp"
+            android:textSize="24sp"
+            android:layout_alignParentTop="true"
+            style="@style/TextAppearance.AppCompat.Subhead"
+            android:text="@string/comment"
+            android:id="@+id/tv_askQuesTitle"
+            android:textColor="@color/page_black"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_below="@id/tv_askQuesTitle"
+        android:layout_height="3dp"/>
+   <androidx.recyclerview.widget.RecyclerView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_below="@id/tv_askQuesTitle"
+       android:id="@+id/rv_Comment"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/rv_Comment">
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        app:boxCollapsedPaddingTop="4dp"
+        android:hint="@string/ask_question"
+        android:layout_weight="4"
+        app:hintTextColor="@color/text_light_black"
+        android:textColor="@color/page_black"
+        android:background="@drawable/rounded_corner">
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/page_black"
+            android:inputType="textMultiLine"
+            android:lines="3"
+            android:textSize="18sp"
+            android:padding="4dp"
+            android:id="@+id/addComment_et" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/buttonSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="8dp"
+        android:layout_weight="1"
+        android:layout_gravity="center_vertical"
+        style="@style/TextAppearance.AppCompat.Title"
+        android:textSize="20sp"
+        android:text="@string/add" />
+    </LinearLayout>
+
+</RelativeLayout>
