@@ -37,7 +37,7 @@
                 android:textSize="15sp"
                 android:layout_marginStart="10dp"
                 android:gravity="center_vertical"
-                android:id="@+id/tv_GroupTitle"/>
+                android:id="@+id/tv_classGroupTitle"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -142,14 +142,36 @@
         </LinearLayout>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal">
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_margin="4dp"
+            android:id="@+id/ib_present"
+            android:src="@drawable/ic_subscriptions_24"/>
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:layout_margin="4dp"
+            android:id="@+id/ib_absent"
+            android:src="@drawable/ic_friends"/>
+
+    </LinearLayout>
+
 
 
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:orientation="horizontal">
         <ImageButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -170,6 +192,7 @@
             android:layout_weight="2"
             android:layout_margin="4dp"
             android:id="@+id/ib_SubMenu"
+            android:visibility="gone"
             android:src="@drawable/ic_baseline_drag_indicator_24"/>
     </LinearLayout>
 

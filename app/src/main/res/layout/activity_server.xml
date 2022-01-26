@@ -8,12 +8,15 @@
     tools:context=".Home.Server_Activity">
 
 
+
     <com.discord.panels.OverlappingPanelsLayout
         android:id="@+id/overlapping_panels"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_above="@+id/bottom_nav">
+
+
 
 
 
@@ -49,21 +52,18 @@
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
                 android:orientation="horizontal">
 
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="80dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:background="@color/white"
                     android:orientation="vertical">
-
-
-
 
                     <!--Public server-->
                     <TextView
@@ -99,7 +99,7 @@
                         app:cardCornerRadius="50dp">
 
                         <ImageView
-                            android:id="@+id/ib_AddGroup"
+                            android:id="@+id/addNewTopicButton"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:src="@drawable/ic_add" />
@@ -108,22 +108,46 @@
 
                 </LinearLayout>
 
+
+                <!-- Friends Section -->
+                <LinearLayout
+                    android:id="@+id/friendsSection"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/FriendName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerViewFriendsNameList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:elevation="5dp"/>
+
+
+                </LinearLayout>
+
                 <!-- Group Section-->
                 <LinearLayout
                     android:id="@+id/groupSection"
-                    android:layout_width="match_parent"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/groupName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
+                        android:textStyle="bold" />
 
                     <Button
                         android:id="@+id/addNewClassButton"
@@ -137,28 +161,28 @@
                         android:layout_height="wrap_content">
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerViewGroupNameList"
+                            android:id="@+id/recyclerViewClassList"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone" />
+                            android:layout_height="wrap_content"/>
                     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
                     <TextView
                         android:id="@+id/classNameTextView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Please click on (+) sign in front of Class name to add Topic"
-                        android:visibility="gone" />
+                        android:text="Please click on (+) sign in front of Class name to add Topic"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/topicNamesRecyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone" />
+                        android:layout_height="wrap_content"/>
 
                 </LinearLayout>
+
+
             </LinearLayout>
         </LinearLayout>
+
 
 
 
@@ -242,7 +266,7 @@
 
             </RelativeLayout>
 
-<!--            Not knew where it used -->
+            <!--            Not knew where it used -->
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

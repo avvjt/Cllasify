@@ -179,7 +179,7 @@ public class Adaptor_QueryGroup1 extends RecyclerView.Adapter<Adaptor_QueryGroup
 
 //            mCurrentUser= FirebaseAuth.getInstance().getCurrentUser();
 //            examName_tv = itemView.findViewById(R.id.tv_ExamName);
-            tv_GroupTitle =itemView.findViewById(R.id.tv_GroupTitle);
+            tv_GroupTitle =itemView.findViewById(R.id.tv_classGroupTitle);
 
 
             tv_GroupTitle.setOnClickListener(new View.OnClickListener() {

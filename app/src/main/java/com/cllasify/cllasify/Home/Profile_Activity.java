@@ -3,6 +3,7 @@ package com.cllasify.cllasify.Home;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -20,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.Fragment.FriendsFragment;
 import com.cllasify.cllasify.Profile.AccountSetting_Activity;
 import com.cllasify.cllasify.Profile.ProfileSetting_Activity;
 import com.cllasify.cllasify.R;
@@ -70,7 +72,7 @@ public class Profile_Activity extends AppCompatActivity {
 
     Button btn_AddBio, btn_AddBioCancel,
             btn_AddInstitute, btn_AddInstituteCancel,
-            btn_AddUserName, btn_AddUserNameCancel;
+            btn_AddUserName, btn_AddUserNameCancel,toFriendFrag;
 
     ImageButton ib_ShareApp, ib_Settings;
 
@@ -89,6 +91,17 @@ public class Profile_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
+
+        toFriendFrag = findViewById(R.id.toFriendFrag);
+
+        toFriendFrag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Fragment fragment = new FriendsFragment();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.friendsTest, fragment).commit();
+            }
+        });
 
         AdManagerAdRequest adRequest = new AdManagerAdRequest.Builder().build();
         //Add the adUnitId -> ca-app-pub-3940256099942544/1033173712

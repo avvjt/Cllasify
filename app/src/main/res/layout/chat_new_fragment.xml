@@ -21,38 +21,42 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_FrndP_Title"
             android:id="@+id/rv_FrndP_Chatting"/>
-        <LinearLayout
+
+    <LinearLayout
+        android:id="@+id/ll_FrndP_btm_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/ib_FrndP_attach"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:id="@+id/ll_FrndP_btm_send"
-            android:orientation="horizontal">
-            <ImageButton
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_weight="3"
-                android:id="@+id/ib_FrndP_attach"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="12dp"
-                android:background="@drawable/chat_input_background"
-                android:hint="Message..."
-                android:imeOptions="actionDone"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/light_black"
-                android:layout_weight="1"
-                android:id="@+id/et_FrndP_text"/>
-            <ImageButton
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/ib_FrndP_csubmit"
-                android:layout_weight="3" />
-        </LinearLayout>
+            android:layout_height="50dp"
+            android:layout_weight="3" />
+
+        <EditText
+            android:id="@+id/et_FrndP_text"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="12dp"
+            android:layout_weight="1"
+            android:background="@drawable/chat_input_background"
+            android:hint="Message..."
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/light_black" />
+
+        <ImageButton
+            android:id="@+id/ib_FrndP_csubmit"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="3" />
+    </LinearLayout>
     </RelativeLayout>

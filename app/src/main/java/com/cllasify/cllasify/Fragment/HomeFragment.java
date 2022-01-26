@@ -40,7 +40,6 @@ import com.cllasify.cllasify.Adaptor.Adaptor_Friends;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
-import com.cllasify.cllasify.Adaptor.Adaptor_lvl2QueryGroup;
 import com.cllasify.cllasify.Adaptor_Tab_ChatDiscussion;
 import com.cllasify.cllasify.Server.AttendanceFragment;
 import com.cllasify.cllasify.Server.ChatFragment;
@@ -115,7 +114,7 @@ public class HomeFragment extends Fragment {
     Adaptor_QueryGroup showGroupadaptor,showUserPrivateGroupadaptor,showUserPublicGroupadaptor;
     Adaptor_ShowGrpMember showGrpMemberList;
     Adaptor_QueryGroup showOtherUserPublicGroupAdaptor;
-    Adaptor_lvl2QueryGroup showSubChild_Adaptor;
+//    Adaptor_lvl2QueryGroup showSubChild_Adaptor;
     Adaptor_Friends show_FriendAdaptor,showChatListDashadaptor;
     Adaptor_ShowGroup showChatDashadaptor;
 
@@ -198,7 +197,7 @@ public class HomeFragment extends Fragment {
             rv_UserPrivateGroupTitle =view.findViewById(R.id.rv_UserPrivateGroupTitle);
             rv_UserPublicGroupTitle =view.findViewById(R.id.rv_UserPublicGroupTitle);
             rv_OtherPublicGroupTitle =view.findViewById(R.id.rv_OtherPublicGroupTitle);
-            rv_SubChild=view.findViewById(R.id.recyclerViewGroupNameList);
+            rv_SubChild=view.findViewById(R.id.recyclerViewClassList);
             rv_FriendList=view.findViewById(R.id.topicNamesRecyclerView);
             rv_AllFriendList=view.findViewById(R.id.endPanelAllFriendsRecyclerView);
 
@@ -250,7 +249,7 @@ public class HomeFragment extends Fragment {
             ib_FrndsList=view.findViewById(R.id.ib_FrndsList);
 
 //            btn_AddGroup =view.findViewById(R.id.btn_AddGroup);
-            ib_AddGroup =view.findViewById(R.id.ib_AddGroup);
+            ib_AddGroup =view.findViewById(R.id.addNewTopicButton);
             fab_addDoubtQ =view.findViewById(R.id.fab_addDoubtQ);
 //            sv_textSearchView =view.findViewById(R.id.sv_textSearchView);
 
@@ -306,7 +305,7 @@ public class HomeFragment extends Fragment {
             showUserPublicGroupadaptor = new Adaptor_QueryGroup(getContext(), list_UserPublicGroupTitle);
 //            showChatDashadaptor = new Adaptor_ShowGroup(getContext(), list_ChatDashboard);
             showOtherUserPublicGroupAdaptor = new Adaptor_QueryGroup(getContext(), list_OtherUserPublicGroupTitle);
-            showSubChild_Adaptor = new Adaptor_lvl2QueryGroup(getContext(), list_SubChild);
+//            showSubChild_Adaptor = new Adaptor_lvl2QueryGroup(getContext(), list_SubChild);
 //            showDoubtDashAdaptor = new Adaptor_ShowDoubt(getContext(), list_DoubtDashboard);
 //            showDoubtDashAdaptor = new Adaptor_ShowDoubt(getContext(), list_DoubtDashboard);
             show_FriendAdaptor = new Adaptor_Friends(getContext(), list_Friend);
@@ -317,7 +316,7 @@ public class HomeFragment extends Fragment {
             rv_UserPrivateGroupTitle.setAdapter(showUserPrivateGroupadaptor);
             rv_UserPublicGroupTitle.setAdapter(showUserPublicGroupadaptor);
             rv_OtherPublicGroupTitle.setAdapter(showOtherUserPublicGroupAdaptor);
-            rv_SubChild.setAdapter(showSubChild_Adaptor);
+//            rv_SubChild.setAdapter(showSubChild_Adaptor);
 //            rv_FriendList.setAdapter(show_FriendAdaptor);
             rv_FriendList.setAdapter(showChatListDashadaptor);
 
@@ -391,7 +390,7 @@ public class HomeFragment extends Fragment {
                 public void onRefresh() {
                     srl_rv_SubChild.setRefreshing(false);
 //                    list_SubChild.clear();
-                    showSubChild_Adaptor.notifyDataSetChanged();
+//                    showSubChild_Adaptor.notifyDataSetChanged();
 
                     FragmentTransaction ft=getFragmentManager().beginTransaction();
                     if (Build.VERSION.SDK_INT>=26){
@@ -1900,7 +1899,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID,String groupCategory) {
 
-                showchildGroupRV(position,groupName,groupPushId,groupUserID,groupCategory);
+//                showchildGroupRV(position,groupName,groupPushId,groupUserID,groupCategory);
             }
 
             @Override
@@ -2034,7 +2033,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID,String groupCategory) {
-                showchildGroupRV(position,groupName,groupPushId,groupUserID,groupCategory);
+//                showchildGroupRV(position,groupName,groupPushId,groupUserID,groupCategory);
 
             }
 
@@ -2109,12 +2108,12 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
-                showchildGroupRV(position,groupName,groupPushId,groupUserID,"Others_Group");
+//                showchildGroupRV(position,groupName,groupPushId,groupUserID,"Others_Group");
             }
 
             @Override
             public void showll_Group(int position, String groupName, String groupPushId, String groupUserID) {
-                showchildGroupRV(position,groupName,groupPushId,groupUserID,"Others_Group");
+//                showchildGroupRV(position,groupName,groupPushId,groupUserID,"Others_Group");
             }
 //
 //            @Override
@@ -2291,207 +2290,207 @@ public class HomeFragment extends Fragment {
         list_ChatListDashboard.clear();
     }
 
-    private void showchildGroupRV(int position, String groupName, String groupPushId, String groupUserID, String Category) {
-
-//        Toast.makeText(getContext(),groupPushId,Toast.LENGTH_SHORT).show();
+//    private void showchildGroupRV(int position, String groupName, String groupPushId, String groupUserID, String Category) {
 //
-//        if (Category.equals("Public") || Category.equals("Private")){
-//            btn_AddSubChild.setVisibility(View.VISIBLE);
-//        }else{
-//            btn_AddSubChild.setVisibility(View.GONE);
-//        }
-        btn_AddSubChild.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                addChildGroup( position, groupName,groupPushId, groupUserID,Category );
-                addSubChild0( position, groupName,groupPushId, groupUserID,Category,"newClass");
-
-            }
-        });
-
-        ll_SubChild.setVisibility(View.VISIBLE);
-        refChildGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId);
-        refChildGroup.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount() > 0) {
-                    rv_SubChild.setVisibility(View.VISIBLE);
-                    tv_GroupName.setVisibility(View.VISIBLE);
-                    tv_addTopic.setVisibility(View.VISIBLE);
-
-                } else {
-                    Toast.makeText(getContext(), "Please Create Sub Group using (+) Sign", Toast.LENGTH_LONG).show();
-                    rv_SubChild.setVisibility(View.GONE);
-                    tv_GroupName.setVisibility(View.GONE);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
-        DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
-
-        showSubChild_Adaptor.setOnItemClickListener(new Adaptor_lvl2QueryGroup.OnItemClickListener() {
-            @Override
-            public void addSubGroup(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID) {
-                addSubChild0( position, groupName,groupPushId, groupUserID,Category,groupClassName);
-
-            }
-
-            @Override
-            public void viewChildGroup1(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
-                overlappingPanels.closePanels();
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-
-            }
-
-            @Override
-            public void viewChildGroup2(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-
-                overlappingPanels.closePanels();
-            }
-            @Override
-            public void viewChildGroup3(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-
-                overlappingPanels.closePanels();
-            }
-            @Override
-            public void viewChildGroup4(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-
-                overlappingPanels.closePanels();
-            }
-            @Override
-            public void viewChildGroup5(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-
-                overlappingPanels.closePanels();
-            }
-            @Override
-            public void viewChildGroup6(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-
-                overlappingPanels.closePanels();
-            }
-
-            @Override
-            public void viewChildGroup7(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-
-                overlappingPanels.closePanels();
-
-            }
-
-            @Override
-            public void viewChildGroup8(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-
-                overlappingPanels.closePanels();
-
-            }
-
-            @Override
-            public void viewChildGroup9(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-
-                overlappingPanels.closePanels();
-
-            }
-
+////        Toast.makeText(getContext(),groupPushId,Toast.LENGTH_SHORT).show();
+////
+////        if (Category.equals("Public") || Category.equals("Private")){
+////            btn_AddSubChild.setVisibility(View.VISIBLE);
+////        }else{
+////            btn_AddSubChild.setVisibility(View.GONE);
+////        }
+//        btn_AddSubChild.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void showChildChatAdaptor(int position, String groupName, String subGroupName, String groupPushId, String subGroupPushID) {
-//                overlappingPanels.closePanels();
-//                upDateDashboard(position, groupName, subGroupName, groupPushId, subGroupPushID);
+//            public void onClick(View view) {
+////                addChildGroup( position, groupName,groupPushId, groupUserID,Category );
+//                addSubChild0( position, groupName,groupPushId, groupUserID,Category,"newClass");
+//
 //            }
-
-
-        });
-
-        ChildEventListener childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
-                list_SubChild.add(userQuestions);
-                showSubChild_Adaptor.notifyDataSetChanged();
-                tv_GroupName.setText(userQuestions.getGroupName());
-
-//                notifyPB.dismiss();
+//        });
+//
+//        ll_SubChild.setVisibility(View.VISIBLE);
+//        refChildGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId);
+//        refChildGroup.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.getChildrenCount() > 0) {
+//                    rv_SubChild.setVisibility(View.VISIBLE);
+//                    tv_GroupName.setVisibility(View.VISIBLE);
+//                    tv_addTopic.setVisibility(View.VISIBLE);
+//
 //                } else {
-//                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
-//                    notifyPB.dismiss();
-////                }
-
+//                    Toast.makeText(getContext(), "Please Create Sub Group using (+) Sign", Toast.LENGTH_LONG).show();
+//                    rv_SubChild.setVisibility(View.GONE);
+//                    tv_GroupName.setVisibility(View.GONE);
 //                }
-
-            }
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//            }
+//        });
+//
+//        DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+//
+//        showSubChild_Adaptor.setOnItemClickListener(new Adaptor_lvl2QueryGroup.OnItemClickListener() {
+//            @Override
+//            public void addSubGroup(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID) {
+//                addSubChild0( position, groupName,groupPushId, groupUserID,Category,groupClassName);
+//
+//            }
+//
+//            @Override
+//            public void viewChildGroup1(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
+//                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
+//                overlappingPanels.closePanels();
+//                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
+//                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
+//                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
+//                refSaveCurrentData.child("groupName").setValue(groupName);
+//                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
+//
+//            }
+//
+//            @Override
+//            public void viewChildGroup2(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
+//                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
+//                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
+//                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
+//                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
+//                refSaveCurrentData.child("groupName").setValue(groupName);
+//                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
+//
+//                overlappingPanels.closePanels();
+//            }
+//            @Override
+//            public void viewChildGroup3(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
+//                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
+//                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
+//                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
+//                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
+//                refSaveCurrentData.child("groupName").setValue(groupName);
+//                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
+//
+//                overlappingPanels.closePanels();
+//            }
+//            @Override
+//            public void viewChildGroup4(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
+//                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
+//                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
+//                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
+//                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
+//                refSaveCurrentData.child("groupName").setValue(groupName);
+//                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
+//
+//                overlappingPanels.closePanels();
+//            }
+//            @Override
+//            public void viewChildGroup5(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
+//                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
+//                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
+//                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
+//                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
+//                refSaveCurrentData.child("groupName").setValue(groupName);
+//                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
+//
+//                overlappingPanels.closePanels();
+//            }
+//            @Override
+//            public void viewChildGroup6(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
+//                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
+//                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
+//                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
+//                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
+//                refSaveCurrentData.child("groupName").setValue(groupName);
+//                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
+//
+//                overlappingPanels.closePanels();
+//            }
+//
+//            @Override
+//            public void viewChildGroup7(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
+//                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
+//                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
+//                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
+//                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
+//                refSaveCurrentData.child("groupName").setValue(groupName);
+//                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
+//
+//                overlappingPanels.closePanels();
+//
+//            }
+//
+//            @Override
+//            public void viewChildGroup8(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
+//                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
+//                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
+//                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
+//                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
+//                refSaveCurrentData.child("groupName").setValue(groupName);
+//                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
+//
+//                overlappingPanels.closePanels();
+//
+//            }
+//
+//            @Override
+//            public void viewChildGroup9(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
+//                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName,groupClassSubjects);
+//                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
+//                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
+//                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
+//                refSaveCurrentData.child("groupName").setValue(groupName);
+//                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
+//
+//                overlappingPanels.closePanels();
+//
+//            }
+//
+////            @Override
+////            public void showChildChatAdaptor(int position, String groupName, String subGroupName, String groupPushId, String subGroupPushID) {
+////                overlappingPanels.closePanels();
+////                upDateDashboard(position, groupName, subGroupName, groupPushId, subGroupPushID);
+////            }
+//
+//
+//        });
+//
+//        ChildEventListener childEventListener = new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//                Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
+//                list_SubChild.add(userQuestions);
 //                showSubChild_Adaptor.notifyDataSetChanged();
-
-            }
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-            }
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        };
-        //refAdmin.addChildEventListener(childEventListener);
-        list_SubChild.clear();
-        refChildGroup.orderByChild("position").addChildEventListener(childEventListener);
-    }
+//                tv_GroupName.setText(userQuestions.getGroupName());
+//
+////                notifyPB.dismiss();
+////                } else {
+////                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
+////                    notifyPB.dismiss();
+//////                }
+//
+////                }
+//
+//            }
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+////                showSubChild_Adaptor.notifyDataSetChanged();
+//
+//            }
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//            }
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//            }
+//        };
+//        //refAdmin.addChildEventListener(childEventListener);
+//        list_SubChild.clear();
+//        refChildGroup.orderByChild("position").addChildEventListener(childEventListener);
+//    }
 
     private void upDateDashboard(int position, String groupName, String subGroupName, String groupPushId,String subGroupPushId, String groupClassSubjects) {
 
@@ -3282,7 +3281,7 @@ public class HomeFragment extends Fragment {
                                 refChildGroup.child(sbChildGroupName).setValue(subGroup_Class);
                                 refChildGroupSubsList.child(userID).setValue(subGroupSubsList_Class);
 
-                                showSubChild_Adaptor.notifyDataSetChanged();
+//                                showSubChild_Adaptor.notifyDataSetChanged();
                             }
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {

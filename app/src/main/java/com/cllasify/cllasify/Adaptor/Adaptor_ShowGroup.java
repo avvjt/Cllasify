@@ -1,7 +1,6 @@
 package com.cllasify.cllasify.Adaptor;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,14 +21,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -104,7 +101,7 @@ public class Adaptor_ShowGroup extends RecyclerView.Adapter<Adaptor_ShowGroup.My
                 holder.tv_OtherMsz.setText(userComment);
                 holder.tvOtherDateTime.setText(display);
             holder.tv_MyMsz.setVisibility(View.GONE);
-
+/*
             DatabaseReference refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(databaseUserId);
             refUserStatus.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -121,6 +118,7 @@ public class Adaptor_ShowGroup extends RecyclerView.Adapter<Adaptor_ShowGroup.My
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
             });
+            */
         }
         }
 

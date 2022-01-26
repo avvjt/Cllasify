@@ -26,6 +26,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
         <activity
+            android:name=".Friend_Chat_Activity"
+            android:exported="false" />
+        <activity
             android:name=".Home.Discover_Item"
             android:exported="false" />
         <activity android:name=".EditLocationActivity" />
@@ -67,6 +70,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDDq851TO1DznZVgMsCbdPRvLcu5pvhlwo" />

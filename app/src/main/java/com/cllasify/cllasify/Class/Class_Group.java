@@ -50,8 +50,29 @@ public class Class_Group {
 
     private String imageUrl;
 
+
+    public Class_Group(String dateTime, String userName, String userId, String groupName) {
+        this.dateTime = dateTime;
+        this.userName = userName;
+        this.userId = userId;
+        this.groupName = groupName;
+    }
+
+    public Class_Group(String userName, String userId) {
+        this.userName = userName;
+        this.userId = userId;
+    }
+
     public Class_Group(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Class_Group(String userName, String userId, Uri userPhoto, String userEmailId, String userPhone) {
+        this.userName = userName;
+        this.userId = userId;
+        this.userPhoto = userPhoto;
+        this.userEmailId = userEmailId;
+        this.userPhone = userPhone;
     }
 
     public Class_Group(String dateTime, String userId, String position, String groupName, String subGroupName, String groupSubGroupComb) {

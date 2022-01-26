@@ -43,7 +43,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:src="@drawable/ic_add"
-                        android:id="@+id/ib_AddGroup"/>
+                        android:id="@+id/addNewTopicButton"/>
 <!--                    <Button-->
 <!--                        android:layout_width="100dp"-->
 <!--                        android:layout_height="wrap_content"-->
@@ -110,7 +110,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="gone"
-                        android:id="@+id/recyclerViewGroupNameList"/>
+                        android:id="@+id/recyclerViewClassList"/>
                     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
                     <TextView
                         android:layout_width="match_parent"

@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".Home.Profile_Activity">
 
+    <Button
+        android:id="@+id/toFriendFrag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+    <RelativeLayout
+        android:id="@+id/friendsTest"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toFriendFrag"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

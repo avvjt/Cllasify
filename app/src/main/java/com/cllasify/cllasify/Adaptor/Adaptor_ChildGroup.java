@@ -79,7 +79,7 @@ public class Adaptor_ChildGroup extends RecyclerView.Adapter<Adaptor_ChildGroup.
             super(itemView);
 
             ll_Group = itemView.findViewById(R.id.ll_Group);
-            tv_GroupTitle=itemView.findViewById(R.id.tv_GroupTitle);
+            tv_GroupTitle=itemView.findViewById(R.id.tv_classGroupTitle);
 
             ll_Group.setOnClickListener(new View.OnClickListener() {
                 @Override

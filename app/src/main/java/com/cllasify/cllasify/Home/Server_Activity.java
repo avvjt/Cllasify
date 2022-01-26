@@ -34,20 +34,30 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import com.cllasify.cllasify.Adaptor.Adapter_ClassGroup;
+import com.cllasify.cllasify.Adaptor.Adapter_TopicList;
 import com.cllasify.cllasify.Adaptor.Adaptor_Friends;
+import com.cllasify.cllasify.Adaptor.Adaptor_FriendsList;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowDoubt;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
-import com.cllasify.cllasify.Adaptor.Adaptor_lvl2QueryGroup;
 import com.cllasify.cllasify.Adaptor_Tab_ChatDiscussion;
 import com.cllasify.cllasify.Class.Class_Group;
+import com.cllasify.cllasify.Class_Group_Names;
+import com.cllasify.cllasify.Constant;
+import com.cllasify.cllasify.Friend_Chat_Activity;
+import com.cllasify.cllasify.FriendsListClass;
+import com.cllasify.cllasify.Group_Students;
+import com.cllasify.cllasify.MessageAdapter;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Register.getStarted;
 import com.cllasify.cllasify.Server.Attendance_Activity;
 import com.cllasify.cllasify.Server.Chat_List_Fragment;
 import com.cllasify.cllasify.Server.Chat_New_Fragment;
 import com.cllasify.cllasify.Server.DoubtFragment;
+import com.cllasify.cllasify.Subject_Details_Model;
+import com.cllasify.cllasify.Utility.SharePref;
 import com.discord.panels.OverlappingPanelsLayout;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -79,14 +89,15 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 
-public class Server_Activity extends AppCompatActivity {
+public class Server_Activity extends AppCompatActivity implements Adapter_ClassGroup.onAddSubjectClickListener {
     TabLayout tabLayout, tabl_ChatView;
     ViewPager viewPager, view_Pager_ChatView;
     BottomNavigationView bottomNavigationView;
 
-    RecyclerView rv_UserPublicGroupTitle, rv_OtherPublicGroupTitle, rv_GrpMemberList, recyclerViewGroupNameList, topicNamesRecyclerView, endPanelAllFriendsRecyclerView;
+    RecyclerView rv_UserPublicGroupTitle, rv_OtherPublicGroupTitle, rv_GrpMemberList, recyclerViewClassList, topicNamesRecyclerView, endPanelAllFriendsRecyclerView;
     RelativeLayout rl_ChatView;
-    DatabaseReference refFriendList, refChatDashboard, refDoubtDashboard;
+    FirebaseDatabase refFriendList;
+    DatabaseReference refChatDashboard, refDoubtDashboard;
     DatabaseReference refuserPersonalGroup, refuserAllGroup, refGroupTopic,
             refuserPublicGroup, refAllGroup,
             refotheruserPublicGroup, refUserStatus,
@@ -95,6 +106,8 @@ public class Server_Activity extends AppCompatActivity {
             refChildGroup, refChildGroupSubsList,
             refGroupSubsList, refGrpMemberList;
 
+    DatabaseReference checkFriends;
+
     List<Class_Group> list_GroupTitle, list_UserPrivateGroupTitle, list_UserPublicGroupTitle, list_OtherUserPublicGroupTitle,
             listGrpMemberList, list_SubChild,
             list_ChatDashboard, list_DoubtDashboard, list_Friend, list_ChatListDashboard, list_NewChatDashboard;
@@ -102,7 +115,6 @@ public class Server_Activity extends AppCompatActivity {
     Adaptor_QueryGroup showGroupadaptor, showUserPrivateGroupadaptor, showUserPublicGroupadaptor;
     Adaptor_ShowGrpMember showGrpMemberList;
     Adaptor_QueryGroup showOtherUserPublicGroupAdaptor;
-    Adaptor_lvl2QueryGroup showSubChild_Adaptor;
     Adaptor_Friends show_FriendAdaptor, showChatListDashadaptor;
     Adaptor_ShowGroup showChatDashadaptor;
     Adaptor_ShowDoubt showDoubtDashAdaptor;
@@ -118,6 +130,7 @@ public class Server_Activity extends AppCompatActivity {
     Uri userPhoto;
     String userID, userEmailID, userName;
     OverlappingPanelsLayout overlappingPanels;
+
 
 
     ImageView imageViewAddPanelAddGroup;
@@ -136,6 +149,12 @@ public class Server_Activity extends AppCompatActivity {
     Button endPanelAllFriendsButton;
     LinearLayout groupSection, ll_AddJoinGrp;
 
+    RecyclerView rvFriendsList;
+    Adaptor_FriendsList adaptor_friendsList;
+    List<Class_Group> friendsListClasses;
+    TextView recChats;
+
+
     LinearLayout ll_bottom_send, ll_ChatDoubtDashboard,
             endPanelLinearLayout, ll_TabChatDoubt;
     TextView tv_ChatDashboard, tv_DoubtDashboard;
@@ -150,6 +169,26 @@ public class Server_Activity extends AppCompatActivity {
     FragmentManager fragmentManager;
     DoubtFragment doubtFragment;
 
+    LinearLayout friendSection;
+
+
+    //Right Panel Class and Sub-class
+    Adapter_ClassGroup adapter_classGroup;
+    List<Class_Group_Names> class_groupList;
+
+
+    //1389
+    //Chat_Activity
+    private static final String TAG = "ChatActivity";
+    ValueEventListener seenListener, readLiveMessageListener;
+    private DatabaseReference reference;
+    private String user_name, userId;
+    private ArrayList<Class_Group> chats;
+    private MessageAdapter messageAdapter;
+    private boolean onScreen;
+
+    //Topic - Subjects;
+    Adapter_TopicList adapter_topicList;
 
     /*
         Initialisalisation
@@ -194,6 +233,14 @@ public class Server_Activity extends AppCompatActivity {
         btn_lteachresult = findViewById(R.id.btn_lteachresult);
 
 
+        recChats = findViewById(R.id.FriendName);
+        rvFriendsList = findViewById(R.id.recyclerViewFriendsNameList);
+        refFriendList = FirebaseDatabase.getInstance();
+        friendsListClasses = new ArrayList<>();
+
+        friendSection = findViewById(R.id.friendsSection);
+
+
         /*
         End Panel Initialisation
          */
@@ -208,11 +255,10 @@ public class Server_Activity extends AppCompatActivity {
         groupSection = findViewById(R.id.groupSection);
         textViewGroupName = findViewById(R.id.groupName);
         addNewClassButton = findViewById(R.id.addNewClassButton);
-        recyclerViewGroupNameList = findViewById(R.id.recyclerViewGroupNameList);
+        recyclerViewClassList = findViewById(R.id.recyclerViewClassList);
         swipeUpRefreshLayoutInClass = findViewById(R.id.swipeUpRefreshLayoutInClass);
         classNameTextView = findViewById(R.id.classNameTextView);
         topicNamesRecyclerView = findViewById(R.id.topicNamesRecyclerView);
-
 
         ll_TabChatDoubt = findViewById(R.id.ll_TabChatDoubt);
 
@@ -225,7 +271,7 @@ public class Server_Activity extends AppCompatActivity {
         ImageViewRecentChat = findViewById(R.id.ib_FrndsList);
 
         //start panel initialisation
-        imageViewAddPanelAddGroup = findViewById(R.id.ib_AddGroup);
+        imageViewAddPanelAddGroup = findViewById(R.id.addNewTopicButton);
         srl_ChatDashbaord = findViewById(R.id.srl_ChatDashbaord);
         fab_addDoubtQ = findViewById(R.id.fab_addDoubtQ);
 
@@ -239,21 +285,313 @@ public class Server_Activity extends AppCompatActivity {
         list_Friend = new ArrayList<>();
         list_ChatListDashboard = new ArrayList<>();
 
+
+        ib_csubmit = findViewById(R.id.ib_csubmit);
+
+
+
+
+
+
+        //Class-Group
+        adapter_classGroup = new Adapter_ClassGroup(getApplicationContext(), this);
+        class_groupList = new ArrayList<>();
+        adapter_classGroup.setClass_groupList(class_groupList);
+        recyclerViewClassList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        recyclerViewClassList.setAdapter(adapter_classGroup);
+
+/*
+        //Topic Adapter
+        adapter_topicList = new Adapter_TopicList(getApplicationContext());
+        DatabaseReference refSaveCurrDataForSubj = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+        adapter_topicList.setOnItemClickListener(new Adapter_TopicList.OnItemClickListener() {
+
+            @Override
+            public void subjectChildClick(String groupName, String groupPushId, String groupSubjectPushId, String groupClassSubjects) {
+                Toast.makeText(getApplicationContext(), "Testing the subject Server_Activity!!", Toast.LENGTH_SHORT).show();
+
+                setReference(groupPushId,groupSubjectPushId,groupClassSubjects);
+                refSaveCurrDataForSubj.child("groupName").setValue(groupName);
+                refSaveCurrDataForSubj.child("SubGroupPushId").setValue(groupSubjectPushId);
+                refSaveCurrDataForSubj.child("GroupPushId").setValue(groupPushId);
+                refSaveCurrDataForSubj.child("groupClassSubjects").setValue(groupClassSubjects);
+                overlappingPanels.closePanels();
+            }
+        });
+*/
+
+        final String[] GroupName = new String[1];
+        final String[] subGroupName = new String[1];
+        final String[] groupPushId = new String[1];
+        final String[] subGroupPushId = new String[1];
+        final String[] groupClassSubjects = new String[1];
+
+
+        DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+        refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildrenCount() > 0) {
+                    if (snapshot.child("GroupPushId").exists() && snapshot.child("GroupPushId").exists() && snapshot.child("subGroupName").exists()) {
+                        Log.d(TAG, "onDataChange: Clicked");
+                        groupPushId[0] = snapshot.child("GroupPushId").getValue().toString().trim();
+                        subGroupPushId[0] = snapshot.child("SubGroupPushId").getValue().toString().trim();
+                        groupClassSubjects[0] = snapshot.child("groupClassSubjects").getValue().toString().trim();
+                        GroupName[0] = snapshot.child("groupName").getValue().toString().trim();
+                        subGroupName[0] = snapshot.child("subGroupName").getValue().toString().trim();
+                        int position = 1;
+
+                        setReference(groupPushId[0], subGroupPushId[0], groupClassSubjects[0]);
+
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        //Chat_Activity
+        onScreen = false;
+        chats = new ArrayList<>();
+        messageAdapter = new MessageAdapter(getApplicationContext());
+        LinearLayoutManager linearLayout = new LinearLayoutManager(getApplicationContext());
+        linearLayout.setStackFromEnd(true);
+        rv_ChatDashboard.setLayoutManager(linearLayout);
+        rv_ChatDashboard.setAdapter(messageAdapter);
+
+        ib_csubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String subGroupMsg = et_ctext.getText().toString().trim();
+
+                if (subGroupMsg.isEmpty()) {
+                    Toast.makeText(Server_Activity.this, "Enter text", Toast.LENGTH_SHORT).show();
+//                    et_ctext.setError("Enter text");
+                } else {
+                    et_ctext.getText().clear();
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            long noofGroupinCategory = snapshot.getChildrenCount() + 1;
+//                            String push = "mszno_" + noofGroupinCategory + "_" + subGroupName[0];
+
+                            Calendar calenderCC = Calendar.getInstance();
+                            SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+                            String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
+                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId[0], subGroupPushId[0], subGroupMsg);
+                            reference.push().setValue(userAddGroupClass);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+/*
+                    DatabaseReference referenceUser = FirebaseDatabase.getInstance().getReference().
+                            child("Groups").child("Show_Group").child("User_Show_Group").child(userID).child(subGroupPushId[0]);
+                    referenceUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            long noofGroupinCategory = snapshot.getChildrenCount() + 1;
+                            String push = "mszno_" + noofGroupinCategory + "_" + subGroupPushId[0];
+
+                            Calendar calenderCC = Calendar.getInstance();
+                            SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+                            String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
+                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, subGroupPushId[0], groupPushId[0], noofGroupinCategory);
+                            referenceUser.child(push).setValue(userAddGroupClass);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+*/
+
+                }
+            }
+        });
+
+
+    }
+
+    private void saveClassGroup(String groupPushId, String sbChildGroupName) {
+        Class_Group_Names subGroup_Class = new Class_Group_Names(dateTimeCC, userName, SharePref.getDataFromPref(Constant.USER_ID), sbChildGroupName);
+        subGroup_Class.setAdmin(true);
+        refChildGroup.child(sbChildGroupName).setValue(subGroup_Class);
+    }
+
+    private void setReference(String groupPushId, String subGroupPushId, String groupClassSubject) {
+        reference = FirebaseDatabase.getInstance().getReference().child("Groups").child("Chat_Message").child(groupPushId).child(subGroupPushId).child(groupClassSubject);
+
+        if (reference != null) {
+            readLiveMessageListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    chats.clear();
+                    Log.d(TAG, "onDataChange: " + snapshot.getChildrenCount());
+                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                        Class_Group class_userDashBoard = postSnapshot.getValue(Class_Group.class);
+                        chats.add(class_userDashBoard);
+                    }
+                    messageAdapter.setList(chats);
+                    messageAdapter.notifyDataSetChanged();
+                    rv_ChatDashboard.smoothScrollToPosition(rv_ChatDashboard.getAdapter().getItemCount());
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            };
+
+            reference.addValueEventListener(readLiveMessageListener);
+        }
+
+
+        showDoubt(groupPushId, subGroupPushId, groupClassSubject);
+
+
+        //Endpanel
+        showGrpMemberList.setOnItemClickListener(new Adaptor_ShowGrpMember.OnItemClickListener() {
+            @Override
+            public void AddFrndDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId) {
+                sentInvitation(adminGroupID, adminUserName, "AddFrnd");
+            }
+
+            @Override
+            public void FollowFriendDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId) {
+                sentInvitation(adminGroupID, adminUserName, "FollowFrnd");
+            }
+
+            @Override
+            public void MemberProfile(String memberUserId, String memberUserName) {
+                showBtmDialogUserProfile(memberUserId, memberUserName);
+            }
+
+        });
+
+
+        refGrpMemberList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("User_Subscribed_Groups");
+
+        refGrpMemberList.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Class_Group class_userDashBoard = snapshot.getValue(Class_Group.class);
+                listGrpMemberList.add(class_userDashBoard);
+                showGrpMemberList.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+        listGrpMemberList.clear();
+
+        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.DOWN | ItemTouchHelper.UP, 0) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                int fromPosition = viewHolder.getAdapterPosition();
+                int toPosition = target.getAdapterPosition();
+
+                Toast.makeText(Server_Activity.this, "From" + fromPosition + "gggto" + toPosition, Toast.LENGTH_SHORT).show();
+                Collections.swap(listGrpMemberList, fromPosition, toPosition);
+                recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
+
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+            }
+        };
+
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+        itemTouchHelper.attachToRecyclerView(rv_GrpMemberList);
+
+
+    }
+
+    /*
+        private void readMessage(String OrderId) {
+            readLiveMessageListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    chats.clear();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        if (dataSnapshot.getKey().equals(OrderId)) {
+                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                Chat chat = child.getValue(Chat.class);
+                                chats.add(chat);
+                            }
+                        }
+                    }
+                    messageAdapter.setList(chats);
+                    messageAdapter.notifyDataSetChanged();
+                    chatBinding.shimmerFrame.stopShimmer();
+                    chatBinding.shimmerFrame.setVisibility(View.GONE);
+                    chatBinding.conversationList.smoothScrollToPosition(chatBinding.conversationList.getAdapter().getItemCount());
+                    chatBinding.conversationList.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            };
+        }
+    */
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (onScreen) {
+            reference.addValueEventListener(readLiveMessageListener);
+            onScreen = false;
+        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server);
-        init();
+        SharePref sharePref = new SharePref(this);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            bottomNavigationView.setSelectedItemId(R.id.bottom_nav_home);
 
             firebaseAuth = FirebaseAuth.getInstance();
             currentUser = firebaseAuth.getCurrentUser();
             assert currentUser != null;
             userID = currentUser.getUid();
+
+
+            init();
+
+
+            bottomNavigationView.setSelectedItemId(R.id.bottom_nav_home);
+            SharePref.setDataPref(Constant.USER_ID, userID);
             userEmailID = currentUser.getEmail();
             userPhoto = currentUser.getPhotoUrl();
             userName = currentUser.getDisplayName();
@@ -269,6 +607,7 @@ public class Server_Activity extends AppCompatActivity {
             googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
 
 
+
             bottomMenu();
 
 
@@ -282,16 +621,23 @@ public class Server_Activity extends AppCompatActivity {
             refShowUserPrivateGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID);
             refShowUserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID);
             refShowUserAllGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_All_Group").child(userID);
+
+
             refteachStud = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID);
             refGroupSubsList = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups");
             refotheruserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group");
             refUserStatus = FirebaseDatabase.getInstance().getReference().child("Registration");
 
 
+            checkFriends = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends");
+
+            Log.d("TAG", "onCreate: " + checkFriends);
+
+
             //Setting up layout manager
             rv_UserPublicGroupTitle.setLayoutManager(new LinearLayoutManager(this));
             rv_OtherPublicGroupTitle.setLayoutManager(new LinearLayoutManager(this));
-            recyclerViewGroupNameList.setLayoutManager(new LinearLayoutManager(this));
+
             topicNamesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
@@ -301,20 +647,18 @@ public class Server_Activity extends AppCompatActivity {
             showUserPublicGroupadaptor = new Adaptor_QueryGroup(this, list_UserPublicGroupTitle);
             showChatDashadaptor = new Adaptor_ShowGroup(this, list_ChatDashboard);
             showOtherUserPublicGroupAdaptor = new Adaptor_QueryGroup(this, list_OtherUserPublicGroupTitle);
-            showSubChild_Adaptor = new Adaptor_lvl2QueryGroup(this, list_SubChild);
 
             showDoubtDashAdaptor = new Adaptor_ShowDoubt(this, list_DoubtDashboard);
             show_FriendAdaptor = new Adaptor_Friends(this, list_Friend);
             showChatListDashadaptor = new Adaptor_Friends(this, list_ChatListDashboard);
             rv_UserPublicGroupTitle.setAdapter(showUserPublicGroupadaptor);
             rv_OtherPublicGroupTitle.setAdapter(showOtherUserPublicGroupAdaptor);
-            recyclerViewGroupNameList.setAdapter(showSubChild_Adaptor);
 
             topicNamesRecyclerView.setAdapter(showChatListDashadaptor);
 
-            rv_ChatDashboard.setLayoutManager(new LinearLayoutManager(this));
+//            rv_ChatDashboard.setLayoutManager(new LinearLayoutManager(this));
             rv_DoubtDashboard.setLayoutManager(new LinearLayoutManager(this));
-            rv_ChatDashboard.setAdapter(showChatDashadaptor);
+//            rv_ChatDashboard.setAdapter(showChatDashadaptor);
             showChatDashadaptor.scrollDownl();
             rv_DoubtDashboard.setAdapter(showDoubtDashAdaptor);
 //---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -329,7 +673,7 @@ public class Server_Activity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     groupSection.setVisibility(View.GONE);
-                    recyclerViewGroupNameList.setVisibility(View.GONE);
+                    recyclerViewClassList.setVisibility(View.GONE);
                     textViewGroupName.setVisibility(View.GONE);
                     endPanelLinearLayout.setVisibility(View.GONE);
                     listGrpMemberList.clear();
@@ -349,30 +693,37 @@ public class Server_Activity extends AppCompatActivity {
             ImageViewRecentChat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    groupSection.setVisibility(View.VISIBLE);
-                    textViewGroupName.setVisibility(View.VISIBLE);
-                    topicNamesRecyclerView.setVisibility(View.VISIBLE);
-                    addNewClassButton.setVisibility(View.GONE);
-                    textViewGroupName.setText("Recent Chats");
+//                    groupSection.setVisibility(View.VISIBLE);
+//                    textViewGroupName.setVisibility(View.VISIBLE);
+//                    topicNamesRecyclerView.setVisibility(View.GONE);
+//                    recyclerViewGroupNameList.setVisibility(View.VISIBLE);
+//                    textViewGroupName.setText("Recent Chats");
+//                    addNewClassButton.setVisibility(View.GONE);
+                    imageViewAddPanelAddGroup.setVisibility(View.GONE);
+                    recChats.setText("Recent Chats");
+                    groupSection.setVisibility(View.GONE);
+                    friendSection.setVisibility(View.VISIBLE);
 
-                    recyclerViewGroupNameList.setVisibility(View.GONE);
+
+//                    rvFriendsList.setVisibility(View.VISIBLE);
+
+                    adaptor_friendsList = new Adaptor_FriendsList(getApplicationContext(), friendsListClasses);
+                    rvFriendsList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                    rvFriendsList.setAdapter(adaptor_friendsList);
                     chatListDashboard();
+
                 }
             });
 
 
-            //swipeup refresh layout in left swipeable
-            swipeUpRefreshLayoutInClass.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    swipeUpRefreshLayoutInClass.setRefreshing(false);
-                    showSubChild_Adaptor.notifyDataSetChanged();
-                }
-            });
+
             refShowUserAllGroup.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getChildrenCount() > 0) {
+
+//                        Log.d("TAGG", "onCreate: " + );
+
                         notifyPB.dismiss();
                         ll_AddJoinGrp.setVisibility(View.GONE);
                         overlappingPanels.openStartPanel();
@@ -387,6 +738,8 @@ public class Server_Activity extends AppCompatActivity {
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
             });
+
+
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 
             /*
@@ -448,7 +801,7 @@ public class Server_Activity extends AppCompatActivity {
                     // cancel the Visual indication of a refresh
                     srl_ChatDashbaord.setRefreshing(false);
 //                    list_ChatDashboard.clear();
-                    rv_ChatDashboard.removeAllViews();
+//                    rv_ChatDashboard.removeAllViews();
                     showChatDashadaptor.notifyDataSetChanged();
                     showChatDashadaptor.scrollDownl();
 
@@ -507,32 +860,6 @@ public class Server_Activity extends AppCompatActivity {
                 public void onClick(View view) {
 
                     updateFriendList();
-                }
-            });
-
-
-            DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
-
-            refSaveCurrentData.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.getChildrenCount() > 0) {
-                        if (snapshot.child("GroupPushId").exists() && snapshot.child("GroupPushId").exists() && snapshot.child("subGroupName").exists()) {
-                            String GroupPushId = snapshot.child("GroupPushId").getValue().toString().trim();
-                            String SubGroupPushId = snapshot.child("SubGroupPushId").getValue().toString().trim();
-                            String groupClassSubjects = snapshot.child("groupClassSubjects").getValue().toString().trim();
-                            String GroupName = snapshot.child("groupName").getValue().toString().trim();
-                            String subGroupName = snapshot.child("subGroupName").getValue().toString().trim();
-                            int position = 1;
-
-                            overlappingPanels.openStartPanel();
-                            upDateDashboard(position, GroupName, subGroupName, GroupPushId, SubGroupPushId, groupClassSubjects);
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
                 }
             });
 
@@ -743,13 +1070,111 @@ public class Server_Activity extends AppCompatActivity {
     public void showUserPublicGroupRV() {
 
         showUserPublicGroupadaptor.setOnItemClickListener(new Adaptor_QueryGroup.OnItemClickListener() {
+
+
             @Override
             public void addChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID) {
             }
 
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
-                showchildGroupRV(position, groupName, groupPushId, groupUserID, groupCategory);
+                Log.d(TAG, "showChildGroupAdaptor: Clicked");
+
+                refChildGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId);
+
+
+                refChildGroup.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        class_groupList.clear();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                            Class_Group_Names class_group_names = dataSnapshot.getValue(Class_Group_Names.class);
+                                List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
+                                for (DataSnapshot subjectSnapShot : dataSnapshot.getChildren()) {
+                                    Subject_Details_Model subject_details_model = new Subject_Details_Model();
+                                    subject_details_model.setSubjectTitle(subjectSnapShot.child("subjectTitle").getValue(String.class));
+                                    subject_details_model.setGroupName(subjectSnapShot.child("groupName").getValue(String.class));
+                                    subject_details_model.setSubjectCreationDate(subjectSnapShot.child("subjectCreationDate").getValue(String.class));
+                                    List<Group_Students> groupStudentsList = new ArrayList<>();
+                                    if(subjectSnapShot.child("groupStudentList").hasChildren()){
+                                        for(DataSnapshot groupSnap :subjectSnapShot.child("groupStudentList").getChildren() ){
+
+                                            Group_Students group_students = groupSnap.getValue(Group_Students.class);
+                                            Log.d(TAG, "STUDENT: "+group_students.getUserName());
+                                            groupStudentsList.add(group_students);
+                                        }
+                                        subject_details_model.setGroupStudentList(groupStudentsList);
+                                        Log.d(TAG, "LIST SIZE: "+groupStudentsList.size());
+                                    }
+                                    subjectDetailsModelList.add(subject_details_model);
+                                }
+                                class_group_names.setSubjectDetailsModelList(subjectDetailsModelList);
+
+
+                            class_groupList.add(class_group_names);
+                        }
+                        adapter_classGroup.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                addNewClassButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+//                addSubChild0(position, groupName, groupPushId, groupUserID, Category, "newClass");
+                        openDialog();
+
+                    }
+
+                    private void openDialog() {
+
+                        View customAlertDialog = LayoutInflater.from(Server_Activity.this).inflate(R.layout.dialog_add_class_group, null, false);
+
+
+                        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(Server_Activity.this);
+                        EditText et_ClassName = customAlertDialog.findViewById(R.id.et_ClassName);
+                        Button btn_nextAddTopic = customAlertDialog.findViewById(R.id.btn_nextAddTopic);
+
+
+                        dialogBuilder.setView(customAlertDialog);
+                        AlertDialog dialog = dialogBuilder.show();
+
+                        btn_nextAddTopic.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String sbChildGroupName = et_ClassName.getText().toString().trim();
+                                if (sbChildGroupName.isEmpty()) {
+                                    Toast.makeText(Server_Activity.this, "Enter All Details", Toast.LENGTH_SHORT).show();
+                                    et_ClassName.setError("Enter Class Name");
+                                } else {
+                                    dialog.cancel();
+                                    saveClassGroup(groupPushId, sbChildGroupName);
+                                }
+                            }
+                        });
+
+
+                        //dialogBuilder.setCancelable(false);
+
+                        firebaseAuth = FirebaseAuth.getInstance();
+                        currentUser = firebaseAuth.getCurrentUser();
+                        assert currentUser != null;
+                        userID = currentUser.getUid();
+                        userEmailID = currentUser.getEmail();
+                        userPhoto = currentUser.getPhotoUrl();
+                        userName = currentUser.getDisplayName();
+
+
+                    }
+
+
+                });
+//                showchildGroupRV(position, groupName, groupPushId, groupUserID, groupCategory);
 
             }
 
@@ -761,6 +1186,10 @@ public class Server_Activity extends AppCompatActivity {
 
         });
         int count = 0;
+
+        Toast.makeText(getApplicationContext(), "Clicked on Server", Toast.LENGTH_SHORT).show();
+
+        friendSection.setVisibility(View.GONE);
 
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
@@ -839,6 +1268,8 @@ public class Server_Activity extends AppCompatActivity {
         });
         int count = 0;
 
+        friendSection.setVisibility(View.GONE);
+
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -871,16 +1302,61 @@ public class Server_Activity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         };
-
         refotheruserPublicGroup.orderByChild("groupno").addChildEventListener(childEventListener);
+
+
     }
 
 
     //personal dom chat dashboard
     private void chatListDashboard() {
 
-        refFriendList = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(userID);
+        //FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(userID).child(frndUserId).child("Chat_Message");
 
+        refFriendList.getReference().child("Users").child("Friends").child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                friendsListClasses.clear();
+
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    Class_Group friendsList = postSnapshot.getValue(Class_Group.class);
+                    friendsListClasses.add(friendsList);
+                    Toast.makeText(getApplicationContext(), "........" + friendsList.getUserName(), Toast.LENGTH_SHORT).show();
+                }
+                adaptor_friendsList.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+/*
+        List<Class_Group> friends = new ArrayList<Class_Group>();
+        refFriendList.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    friends.clear();
+                    friends.add(postSnapshot.getValue(Class_Group.class));
+                    Log.d("TAG", "chatListDashboard: \n" + friends);
+                }
+
+//                String p = snapshot.getValue().toString();
+//                Log.d("TAG", "chatListDashboard: \n" + p);
+//                checkChatDashboard("b8cEWxBEoxOmZBWgwWZq8uk2UKs1");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        fetchFriendList(friends);
+*/
+//        Toast.makeText(getApplicationContext(), "refFriendList"+refFriendList, Toast.LENGTH_SHORT).show();
+/*
         showChatListDashadaptor.setOnItemClickListener(new Adaptor_Friends.OnItemClickListener() {
             @Override
             public void showChildChatAdaptor(int position, String groupName, String subGroupName, String groupPushId, String subGroupPushID, String frndUserId) {
@@ -922,18 +1398,24 @@ public class Server_Activity extends AppCompatActivity {
         };
         //refAdmin.addChildEventListener(childEventListener);
         refFriendList.addChildEventListener(childEventListener);
-        list_ChatListDashboard.clear();
+*/
+
+//        list_ChatListDashboard.clear();
+    }
+
+    private void fetchFriendList(List<Class_Group> friends) {
+        Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+        for (Class_Group friend : friends) {
+            FriendsListClass friendsList = new FriendsListClass(friend.getUserId(), friend.getUserName());
+//            friendsListClasses.add(friendsList);
+            Toast.makeText(getApplicationContext(), "" + friendsList.getName(), Toast.LENGTH_SHORT).show();
+//            Log.d("TAGN", "chatListDashboard: \n" + friend.getUserName());
+
+        }
     }
 
     private void showchildGroupRV(int position, String groupName, String groupPushId, String groupUserID, String Category) {
 
-        addNewClassButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addSubChild0(position, groupName, groupPushId, groupUserID, Category, "newClass");
-
-            }
-        });
 
         groupSection.setVisibility(View.VISIBLE);
         refChildGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId);
@@ -941,13 +1423,13 @@ public class Server_Activity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildrenCount() > 0) {
-                    recyclerViewGroupNameList.setVisibility(View.VISIBLE);
+                    recyclerViewClassList.setVisibility(View.VISIBLE);
                     textViewGroupName.setVisibility(View.VISIBLE);
                     classNameTextView.setVisibility(View.VISIBLE);
 
                 } else {
                     Toast.makeText(Server_Activity.this, "Please Create Sub Group using (+) Sign", Toast.LENGTH_LONG).show();
-                    recyclerViewGroupNameList.setVisibility(View.GONE);
+                    recyclerViewClassList.setVisibility(View.GONE);
                     textViewGroupName.setVisibility(View.GONE);
                 }
             }
@@ -959,194 +1441,18 @@ public class Server_Activity extends AppCompatActivity {
 
         DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
 
-        showSubChild_Adaptor.setOnItemClickListener(new Adaptor_lvl2QueryGroup.OnItemClickListener() {
+    }
+
+
+    private void showDoubt(String groupPushId, String subGroupPushId, String groupClassSubjects) {
+        fab_addDoubtQ.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void addSubGroup(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID) {
-                addSubChild0(position, groupName, groupPushId, groupUserID, Category, groupClassName);
-
-            }
-
-            @Override
-            public void viewChildGroup1(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName, groupClassSubjects);
-                overlappingPanels.closePanels();
-
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("tGroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("tSubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-                refSaveCurrentData.child("tgroupClassSubjects").setValue(groupClassSubjects);
-                Toast.makeText(Server_Activity.this, "Old" + groupName + groupPushId + groupClassName + groupClassSubjects, Toast.LENGTH_SHORT).show();
-
-
-            }
-
-            @Override
-            public void viewChildGroup2(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName, groupClassSubjects);
-
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("tGroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("tSubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-                refSaveCurrentData.child("tgroupClassSubjects").setValue(groupClassSubjects);
-                Toast.makeText(Server_Activity.this, "Old" + groupName + groupPushId + groupClassName + groupClassSubjects, Toast.LENGTH_SHORT).show();
-
-
-                overlappingPanels.closePanels();
-            }
-
-            @Override
-            public void viewChildGroup3(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName, groupClassSubjects);
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("tGroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("tSubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-                refSaveCurrentData.child("tgroupClassSubjects").setValue(groupClassSubjects);
-                Toast.makeText(Server_Activity.this, "Old" + groupName + groupPushId + groupClassName + groupClassSubjects, Toast.LENGTH_SHORT).show();
-                overlappingPanels.closePanels();
-            }
-
-            @Override
-            public void viewChildGroup4(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName, groupClassSubjects);
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("tGroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("tSubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-                refSaveCurrentData.child("tgroupClassSubjects").setValue(groupClassSubjects);
-                Toast.makeText(Server_Activity.this, "Old" + groupName + groupPushId + groupClassName + groupClassSubjects, Toast.LENGTH_SHORT).show();
-                overlappingPanels.closePanels();
-            }
-
-            @Override
-            public void viewChildGroup5(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName, groupClassSubjects);
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("tGroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("tSubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-                refSaveCurrentData.child("tgroupClassSubjects").setValue(groupClassSubjects);
-                Toast.makeText(Server_Activity.this, "Old" + groupName + groupPushId + groupClassName + groupClassSubjects, Toast.LENGTH_SHORT).show();
-                overlappingPanels.closePanels();
-            }
-
-            @Override
-            public void viewChildGroup6(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName, groupClassSubjects);
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("tGroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("tSubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-                refSaveCurrentData.child("tgroupClassSubjects").setValue(groupClassSubjects);
-                Toast.makeText(Server_Activity.this, "Old" + groupName + groupPushId + groupClassName + groupClassSubjects, Toast.LENGTH_SHORT).show();
-                overlappingPanels.closePanels();
-            }
-
-            @Override
-            public void viewChildGroup7(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName, groupClassSubjects);
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("tGroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("tSubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-                refSaveCurrentData.child("tgroupClassSubjects").setValue(groupClassSubjects);
-                Toast.makeText(Server_Activity.this, "Old" + groupName + groupPushId + groupClassName + groupClassSubjects, Toast.LENGTH_SHORT).show();
-
-                overlappingPanels.closePanels();
-
-            }
-
-            @Override
-            public void viewChildGroup8(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName, groupClassSubjects);
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("tGroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("tSubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-                refSaveCurrentData.child("tgroupClassSubjects").setValue(groupClassSubjects);
-                Toast.makeText(Server_Activity.this, "Old" + groupName + groupPushId + groupClassName + groupClassSubjects, Toast.LENGTH_SHORT).show();
-
-                overlappingPanels.closePanels();
-
-            }
-
-            @Override
-            public void viewChildGroup9(int position, String groupName, String groupPushId, String groupClassName, String groupCreatorName, String groupUserID, String groupClassSubjects) {
-                upDateDashboard(position, groupName, groupClassName, groupPushId, groupClassName, groupClassSubjects);
-                refSaveCurrentData.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("tGroupPushId").setValue(groupPushId);
-                refSaveCurrentData.child("SubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("tSubGroupPushId").setValue(groupClassName);
-                refSaveCurrentData.child("subGroupName").setValue(groupClassName);
-                refSaveCurrentData.child("groupName").setValue(groupName);
-                refSaveCurrentData.child("groupClassSubjects").setValue(groupClassSubjects);
-                refSaveCurrentData.child("tgroupClassSubjects").setValue(groupClassSubjects);
-                Toast.makeText(Server_Activity.this, "Old" + groupName + groupPushId + groupClassName + groupClassSubjects, Toast.LENGTH_SHORT).show();
-
-//                setupViewPagerChatDiscussion(viewPager,groupPushId,groupClassName,groupName,groupClassSubjects);
-
-                overlappingPanels.closePanels();
-
+            public void onClick(View view) {
+                showAddDoubtBtmDialog(groupPushId, subGroupPushId, groupClassSubjects);
             }
         });
-
-        ChildEventListener childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
-                list_SubChild.add(userQuestions);
-                showSubChild_Adaptor.notifyDataSetChanged();
-                textViewGroupName.setText(userQuestions.getGroupName());
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        };
-        list_SubChild.clear();
-        refChildGroup.orderByChild("position").addChildEventListener(childEventListener);
     }
+
 
     private void upDateDashboard(int position, String groupName, String subGroupName, String groupPushId,
                                  String subGroupPushId, String groupClassSubjects) {
@@ -1346,69 +1652,10 @@ public class Server_Activity extends AppCompatActivity {
         });
 
 
-        fab_addDoubtQ.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showAddDoubtBtmDialog(groupPushId, subGroupPushId, groupClassSubjects);
-            }
-        });
+
 
 
         //chat message updation in firebase realtime database
-        ib_csubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String subGroupMsg = et_ctext.getText().toString().trim();
-
-                if (subGroupMsg.isEmpty()) {
-                    Toast.makeText(Server_Activity.this, "Enter text", Toast.LENGTH_SHORT).show();
-//                    et_ctext.setError("Enter text");
-                } else {
-                    et_ctext.getText().clear();
-                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference()
-                            .child("Groups").child("Chat_Message").child(groupPushId).child(subGroupPushId).child(groupClassSubjects);
-                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            long noofGroupinCategory = snapshot.getChildrenCount() + 1;
-                            String push = "mszno_" + noofGroupinCategory + "_" + subGroupName;
-
-                            Calendar calenderCC = Calendar.getInstance();
-                            SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
-                            String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, groupPushId, subGroupPushId, subGroupMsg);
-                            reference.child(push).setValue(userAddGroupClass);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
-                    });
-
-                    DatabaseReference referenceUser = FirebaseDatabase.getInstance().getReference().
-                            child("Groups").child("Show_Group").child("User_Show_Group").child(userID).child(subGroupPushId);
-                    referenceUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            long noofGroupinCategory = snapshot.getChildrenCount() + 1;
-                            String push = "mszno_" + noofGroupinCategory + "_" + subGroupPushId;
-
-                            Calendar calenderCC = Calendar.getInstance();
-                            SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
-                            String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, subGroupPushId, groupPushId, noofGroupinCategory);
-                            referenceUser.child(push).setValue(userAddGroupClass);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
-                    });
-
-                }
-            }
-        });
 
 
         DatabaseReference refUserStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
@@ -1436,76 +1683,7 @@ public class Server_Activity extends AppCompatActivity {
         });
 
 
-        //Endpanel
-        showGrpMemberList.setOnItemClickListener(new Adaptor_ShowGrpMember.OnItemClickListener() {
-            @Override
-            public void AddFrndDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId) {
-                sentInvitation(adminGroupID, adminUserName, "AddFrnd");
-            }
 
-            @Override
-            public void FollowFriendDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId) {
-                sentInvitation(adminGroupID, adminUserName, "FollowFrnd");
-            }
-
-            @Override
-            public void MemberProfile(String memberUserId, String memberUserName) {
-                showBtmDialogUserProfile(memberUserId, memberUserName);
-            }
-
-        });
-
-
-        refGrpMemberList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("User_Subscribed_Groups");
-
-        refGrpMemberList.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Class_Group class_userDashBoard = snapshot.getValue(Class_Group.class);
-                listGrpMemberList.add(class_userDashBoard);
-                showGrpMemberList.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-        listGrpMemberList.clear();
-
-        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.DOWN | ItemTouchHelper.UP, 0) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                int fromPosition = viewHolder.getAdapterPosition();
-                int toPosition = target.getAdapterPosition();
-
-                Toast.makeText(Server_Activity.this, "From" + fromPosition + "gggto" + toPosition, Toast.LENGTH_SHORT).show();
-                Collections.swap(listGrpMemberList, fromPosition, toPosition);
-                recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
-
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
-            }
-        };
-
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(rv_GrpMemberList);
 
     }
 
@@ -1536,9 +1714,13 @@ public class Server_Activity extends AppCompatActivity {
                                 DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(adminGroupID);
                                 DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(userID);
 
+                                Log.d("Friend", "Admin Id: \t" + adminUserName + "\nUser Id: \t" + userName);
+
                                 refjoiningReq.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
                                         long noofQuesinCategory = snapshot.getChildrenCount() + 1;
                                         String push = "Joining Reqno_" + noofQuesinCategory;
 //                                        Class_Group  userAddComment= new Class_Group(dateTimeCC,userName,userID,adminGroupID, userEmail,adminEmailID,"req_sent", finalNotifyStatus);
@@ -1602,7 +1784,7 @@ public class Server_Activity extends AppCompatActivity {
         };
 
         //refAdmin.addChildEventListener(childEventListener);
-        refFriendList.addChildEventListener(childEventListener);
+//        refFriendList.addChildEventListener(childEventListener);
     }
 
 
@@ -1616,6 +1798,7 @@ public class Server_Activity extends AppCompatActivity {
 
         Button btn_SentFrndReq = btmSheetUserProfile.findViewById(R.id.btn_SentFrndReq);
         Button btn_FollowFrnd = btmSheetUserProfile.findViewById(R.id.btn_FollowFrnd);
+        Button btn_messageFrnd = btmSheetUserProfile.findViewById(R.id.btn_message);
 
         TextView tv_UserName = btmSheetUserProfile.findViewById(R.id.tv_UserName);
         TextView tv_Name = btmSheetUserProfile.findViewById(R.id.tv_Name);
@@ -1638,7 +1821,17 @@ public class Server_Activity extends AppCompatActivity {
         TextView tv_CountFollowers = btmSheetUserProfile.findViewById(R.id.tv_CountFollowers);
         TextView tv_CountFollowing = btmSheetUserProfile.findViewById(R.id.tv_CountFollowing);
 
+
         tv_Name.setText(memberUserName);
+
+        btn_messageFrnd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), Friend_Chat_Activity.class);
+                intent.putExtra("name", memberUserName);
+                startActivity(intent);
+            }
+        });
 
         refUserStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(memberUserId);
         refUserStatus.addValueEventListener(new ValueEventListener() {
@@ -1753,7 +1946,7 @@ public class Server_Activity extends AppCompatActivity {
         rl_FrndChatLayout.setVisibility(View.VISIBLE);
         overlappingPanels.closePanels();
         refChatDashboard = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(userID).child(frndUserId).child("Chat_Message");
-        list_NewChatDashboard.clear();
+//        list_NewChatDashboard.clear();
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -1826,6 +2019,7 @@ public class Server_Activity extends AppCompatActivity {
     /*
     Create new class functionality - new alert box come for creating new class and thier new topic
      */
+    /*
     private void addSubChild0(int position, String groupTitle, String groupPushId,
                               String groupUserID, String Category, String subChildGroupName) {
 
@@ -1893,7 +2087,6 @@ public class Server_Activity extends AppCompatActivity {
                             refChildGroup.child(sbChildGroupName).setValue(subGroup_Class);
                             refChildGroupSubsList.child(userID).setValue(subGroupSubsList_Class);
 
-                            showSubChild_Adaptor.notifyDataSetChanged();
                         }
 
                         @Override
@@ -2054,7 +2247,7 @@ public class Server_Activity extends AppCompatActivity {
         dialogBuilder.show();
     }
 
-
+*/
     /*
         Google Signin Result
      */
@@ -2233,6 +2426,51 @@ public class Server_Activity extends AppCompatActivity {
                         });
         AlertDialog alert = alertdialogbuilder.create();
         alert.show();
+
+    }
+
+    @Override
+    public void onAddSubjectClickListener(String groupName) {
+
+        View customAlertDialog = LayoutInflater.from(Server_Activity.this).inflate(R.layout.dialog_add_new_subject_topic, null, false);
+
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(Server_Activity.this);
+
+
+        Button btn_CreateTopic = customAlertDialog.findViewById(R.id.btn_CreateTopic);
+
+        LinearLayout ll_addTopic = customAlertDialog.findViewById(R.id.ll_addTopic);
+        LinearLayout ll_creategroup = customAlertDialog.findViewById(R.id.ll_creategroup);
+
+        EditText et_TopicName = customAlertDialog.findViewById(R.id.et_TopicName);
+        TextView tv_ClassName = customAlertDialog.findViewById(R.id.tv_ClassName);
+        dialogBuilder.setView(customAlertDialog);
+
+        AlertDialog dialog = dialogBuilder.show();
+
+
+        btn_CreateTopic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!et_TopicName.getText().toString().isEmpty()) {
+                    Subject_Details_Model subject_details_model = new Subject_Details_Model();
+                    subject_details_model.setSubjectTitle(et_TopicName.getText().toString());
+                    subject_details_model.setGroupName(groupName);
+                    List<Group_Students> groupStudentList = new ArrayList<>();
+                    Group_Students group_student = new Group_Students();
+                    group_student.setUserName(userName);
+                    group_student.setAdmin(true);
+                    group_student.setUserId(SharePref.getDataFromPref(Constant.USER_ID));
+                    groupStudentList.add(group_student);
+                    subject_details_model.setGroupStudentList(groupStudentList);
+                    subject_details_model.setSubjectCreationDate(dateTimeCC);
+                    refChildGroup.child(groupName).child(subject_details_model.getSubjectTitle()).setValue(subject_details_model);
+                    dialog.dismiss();
+                }
+            }
+        });
+
 
     }
 }

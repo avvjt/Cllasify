@@ -25,7 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -68,6 +67,8 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
+        Toast.makeText(context, "Friend List", Toast.LENGTH_SHORT).show();
+
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         assert currentUser != null;
@@ -76,6 +77,27 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
 
         String userName=Answers.getUserName();
         String userID=Answers.getUserId();
+
+
+        holder.ib_present.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                DatabaseReference databaseReference = firebaseDatabase.getReference("Groups").child("All_Universal_Group").child(Answers.getGroupName()).child("User_Subscribed_Groups").child(Answers.getUserId());
+                databaseReference.child("Attendance").setValue("Present");
+
+            }
+        });
+
+        holder.ib_absent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                DatabaseReference databaseReference = firebaseDatabase.getReference("Groups").child("All_Universal_Group").child(Answers.getGroupName()).child("User_Subscribed_Groups").child(Answers.getUserId());
+                databaseReference.child("Attendance").setValue("Absent");
+
+            }
+        });
 
         holder.tv_GroupTitle.setText(userName);
         refUserFollowing= FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(currUserID);
@@ -142,6 +164,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
         Class_Group class_Group;
         Boolean clicked;
         DatabaseReference refLike;
+        ImageButton ib_present,ib_absent;
 
         ImageButton ib_followFrnd,ib_AddFrnd,ib_SubMenu;
         CircleImageView civ_UserProfilePic;
@@ -149,7 +172,10 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            tv_GroupTitle =itemView.findViewById(R.id.tv_GroupTitle);
+            ib_present = itemView.findViewById(R.id.ib_present);
+            ib_absent = itemView.findViewById(R.id.ib_absent);
+
+            tv_GroupTitle =itemView.findViewById(R.id.tv_classGroupTitle);
             ib_followFrnd =itemView.findViewById(R.id.ib_followFrnd);
             ib_AddFrnd =itemView.findViewById(R.id.ib_AddFrnd);
             ib_SubMenu =itemView.findViewById(R.id.ib_SubMenu);
