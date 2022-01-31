@@ -26,6 +26,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
         <activity
+            android:name=".NestedRecyclerview.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".Friend_Chat_Activity"
             android:exported="false" />
         <activity
