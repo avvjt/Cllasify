@@ -130,7 +130,7 @@ public class JoinGroupFragment extends Fragment {
         listAllGroupStatus =new ArrayList<>();
         list_AllJoinUser =new ArrayList<>();
         showAllGroupAdaptor = new Adaptor_SearchGroup(getContext(), listAllGroupStatus);
-        showAllJoinUserAdaptor = new Adaptor_ShowGrpMember(getContext(), list_AllJoinUser);
+//        showAllJoinUserAdaptor = new Adaptor_ShowGrpMember(getContext(), list_AllJoinUser);
 
         rv_AllJoinGroup.setAdapter(showAllGroupAdaptor);
         rv_AllJoinUser.setAdapter(showAllJoinUserAdaptor);

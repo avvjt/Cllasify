@@ -2,7 +2,7 @@ package com.cllasify.cllasify;
 
 public class Group_Students {
 
-    String userId,userName;
+    public String userId,userName;
     boolean isAdmin;
 
     public Group_Students(){

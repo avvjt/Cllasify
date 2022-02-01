@@ -342,7 +342,7 @@ public class AttendanceFragment extends Fragment {
         initSwipe(groupPushId,subGroupPushId);
         rv_GrpMemberList.setLayoutManager(new LinearLayoutManager(getContext()));
         listGrpMemberList = new ArrayList<>();
-        showGrpMemberList = new Adaptor_ShowGrpMember(getContext(), listGrpMemberList);
+//        showGrpMemberList = new Adaptor_ShowGrpMember(getContext(), listGrpMemberList);
         rv_GrpMemberList.setAdapter(showGrpMemberList);
         refGrpMemberList = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Universal_Group" ).child(groupPushId).child("User_Subscribed_Groups");
 

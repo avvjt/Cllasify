@@ -1,11 +1,5 @@
 package com.cllasify.cllasify.Home;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,19 +14,18 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
 import com.bumptech.glide.Glide;
-import com.cllasify.cllasify.Fragment.FriendsFragment;
 import com.cllasify.cllasify.Profile.AccountSetting_Activity;
-import com.cllasify.cllasify.Profile.ProfileSetting_Activity;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Register.getStarted;
 import com.google.android.gms.ads.LoadAdError;
-import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.admanager.AdManagerAdRequest;
 import com.google.android.gms.ads.admanager.AdManagerInterstitialAd;
 import com.google.android.gms.ads.admanager.AdManagerInterstitialAdLoadCallback;
-import com.google.android.gms.ads.initialization.InitializationStatus;
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -51,19 +44,13 @@ public class Profile_Activity extends AppCompatActivity {
     ChipNavigationBar chipNavigationBar;
     CircleImageView prof_pic;
     BottomNavigationView bottom_nav;
-    LinearLayout ll_bio,ll_Institution,ll_location,ll_UserName;
-    Boolean showSpinner=false,showUserName=false,showInstitute=false,showUserBio=false,showSpinnerCategory=false;
+    LinearLayout ll_bio, ll_Institution, ll_location, ll_UserName;
+    Boolean showSpinner = false, showUserName = false, showInstitute = false, showUserBio = false, showSpinnerCategory = false;
 
 
-    TextView tv_UserName,tv_Name
-            ,tv_addBio,tv_UserBio
-            ,tv_addInstitute,tv_UserInstitute
-            ,tv_addUserName,tv_UserUserName
-            ,tv_addLocation,tv_UserLocation
-            ,tv_addCategory,tv_UserCategory
-            ,tv_CountFollowing,tv_CountFollowers;
+    TextView tv_UserName, tv_Name, tv_addBio, tv_UserBio, tv_addInstitute, tv_UserInstitute, tv_addUserName, tv_UserUserName, tv_addLocation, tv_UserLocation, tv_addCategory, tv_UserCategory, tv_CountFollowing, tv_CountFollowers;
 
-    DatabaseReference refUserStatus,refUserFollowers,refUserFollowing;
+    DatabaseReference refUserStatus, refUserFollowers, refUserFollowing;
 
     LinearLayout ll_AddBio,
             ll_AddInstitute,
@@ -72,7 +59,7 @@ public class Profile_Activity extends AppCompatActivity {
 
     Button btn_AddBio, btn_AddBioCancel,
             btn_AddInstitute, btn_AddInstituteCancel,
-            btn_AddUserName, btn_AddUserNameCancel,toFriendFrag;
+            btn_AddUserName, btn_AddUserNameCancel, toFriendFrag;
 
     ImageButton ib_ShareApp, ib_Settings;
 
@@ -81,11 +68,10 @@ public class Profile_Activity extends AppCompatActivity {
             et_AddUserName;
 
     FirebaseUser currentUser;
-    String userID,userName,userEmail;
+    String userID, userName, userEmail;
     Uri userPhoto;
     ProgressDialog notifyPB;
     private AdManagerInterstitialAd mAdManagerInterstitialAd;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,15 +83,19 @@ public class Profile_Activity extends AppCompatActivity {
         toFriendFrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new FriendsFragment();
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.friendsTest, fragment).commit();
+//                Fragment fragment = new FriendsFragment();
+//                FragmentManager fragmentManager = getSupportFragmentManager();
+//                fragmentManager.beginTransaction().replace(R.id.friendsTest, fragment).commit();
+
+//                Intent intent = new Intent(Profile_Activity.this, MainActivity.class);
+//                startActivity(intent);
+
             }
         });
 
         AdManagerAdRequest adRequest = new AdManagerAdRequest.Builder().build();
         //Add the adUnitId -> ca-app-pub-3940256099942544/1033173712
-        AdManagerInterstitialAd.load(this,"", adRequest,
+        AdManagerInterstitialAd.load(this, "", adRequest,
                 new AdManagerInterstitialAdLoadCallback() {
                     @Override
                     public void onAdLoaded(@NonNull AdManagerInterstitialAd interstitialAd) {
@@ -130,7 +120,7 @@ public class Profile_Activity extends AppCompatActivity {
                 }
 
             }
-        },4000);
+        }, 4000);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
@@ -154,20 +144,21 @@ public class Profile_Activity extends AppCompatActivity {
             tv_Name = findViewById(R.id.tv_Name);
             prof_pic = findViewById(R.id.prof_pic);
 
-            refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+            refUserStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
             refUserStatus.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.getChildrenCount()>0){
+                    if (snapshot.getChildrenCount() > 0) {
 
-                        if (snapshot.child("profilePic").exists()){
-                            String profilePic=snapshot.child("profilePic").getValue().toString();
+                        if (snapshot.child("profilePic").exists()) {
+                            String profilePic = snapshot.child("profilePic").getValue().toString();
                             Glide.with(Profile_Activity.this).load(profilePic).into(prof_pic);
-                        }else{
+                        } else {
                             Picasso.get().load(userPhoto).into(prof_pic);
                         }
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                 }
@@ -208,7 +199,7 @@ public class Profile_Activity extends AppCompatActivity {
 
                     Intent i = new Intent(Profile_Activity.this, AccountSetting_Activity.class);
                     startActivity(i);
-                    Profile_Activity.this.overridePendingTransition(0,0);
+                    Profile_Activity.this.overridePendingTransition(0, 0);
 //                    ((Activity) getActivity()).overridePendingTransition(0, 0);
 
                 }
@@ -248,12 +239,12 @@ public class Profile_Activity extends AppCompatActivity {
         tv_addInstitute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!showInstitute){
+                if (!showInstitute) {
                     ll_AddInstitute.setVisibility(View.VISIBLE);
-                    showInstitute=true;
-                }else{
+                    showInstitute = true;
+                } else {
                     ll_AddInstitute.setVisibility(View.GONE);
-                    showInstitute=false;
+                    showInstitute = false;
                 }
             }
         });
@@ -268,13 +259,13 @@ public class Profile_Activity extends AppCompatActivity {
         btn_AddInstitute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String user_Institute=et_AddInstitute.getText().toString();
-                if(!user_Institute.equals("")){
+                String user_Institute = et_AddInstitute.getText().toString();
+                if (!user_Institute.equals("")) {
                     ll_AddInstitute.setVisibility(View.GONE);
-                    refUserStatus.child( "Institute" ).setValue( user_Institute );
+                    refUserStatus.child("Institute").setValue(user_Institute);
                     tv_UserInstitute.setVisibility(View.VISIBLE);
                     tv_UserInstitute.setText(user_Institute);
-                }else{
+                } else {
                     et_AddInstitute.setError("Enter Institute");
                     tv_UserInstitute.setVisibility(View.GONE);
 
@@ -285,17 +276,18 @@ public class Profile_Activity extends AppCompatActivity {
         });
 
     }
+
     private void addUserName() {
 
         tv_addUserName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!showUserName){
+                if (!showUserName) {
                     ll_AddUserName.setVisibility(View.VISIBLE);
-                    showUserName=true;
-                }else{
+                    showUserName = true;
+                } else {
                     ll_AddUserName.setVisibility(View.GONE);
-                    showUserName=false;
+                    showUserName = false;
                 }
             }
         });
@@ -310,14 +302,14 @@ public class Profile_Activity extends AppCompatActivity {
         btn_AddUserName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String user_UserName=et_AddUserName.getText().toString();
-                if(!user_UserName.equals("")){
+                String user_UserName = et_AddUserName.getText().toString();
+                if (!user_UserName.equals("")) {
                     ll_AddUserName.setVisibility(View.GONE);
-                    refUserStatus.child( "UserName" ).setValue( user_UserName );
+                    refUserStatus.child("UserName").setValue(user_UserName);
                     tv_UserUserName.setVisibility(View.VISIBLE);
                     tv_UserUserName.setText(user_UserName);
 
-                }else{
+                } else {
                     et_AddUserName.setError("Enter Institute");
 
                 }
@@ -327,17 +319,18 @@ public class Profile_Activity extends AppCompatActivity {
 
 
     }
+
     private void addBio() {
 
         tv_addBio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!showUserBio){
+                if (!showUserBio) {
                     ll_AddBio.setVisibility(View.VISIBLE);
-                    showUserBio=true;
-                }else{
+                    showUserBio = true;
+                } else {
                     ll_AddBio.setVisibility(View.GONE);
-                    showUserBio=false;
+                    showUserBio = false;
                 }
             }
         });
@@ -353,11 +346,11 @@ public class Profile_Activity extends AppCompatActivity {
         btn_AddBio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String user_Bio=et_AddBio.getText().toString();
-                if(!user_Bio.equals("")){
+                String user_Bio = et_AddBio.getText().toString();
+                if (!user_Bio.equals("")) {
                     ll_AddBio.setVisibility(View.GONE);
-                    refUserStatus.child( "Bio" ).setValue( user_Bio );
-                }else{
+                    refUserStatus.child("Bio").setValue(user_Bio);
+                } else {
                     et_AddBio.setError("Enter Bio");
 
                 }
@@ -367,118 +360,122 @@ public class Profile_Activity extends AppCompatActivity {
 
 
     }
+
     private void showProfile() {
-        refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+        refUserStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
         refUserStatus.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount()>0){
-                    if (snapshot.child("Bio").exists()){
+                if (snapshot.getChildrenCount() > 0) {
+                    if (snapshot.child("Bio").exists()) {
 //                            tv_addBio.setVisibility(View.GONE);
-                        String bio=snapshot.child("Bio").getValue().toString();
+                        String bio = snapshot.child("Bio").getValue().toString();
 //                            tv_UserBio.setVisibility(View.VISIBLE);
                         ll_bio.setVisibility(View.VISIBLE);
                         tv_UserBio.setText(bio);
                         notifyPB.dismiss();
-                    }else{
+                    } else {
                         ll_bio.setVisibility(View.GONE);
 //                            tv_addBio.setVisibility(View.VISIBLE);
 
                     }
 
-                    if (snapshot.child("Insitution").exists()){
+                    if (snapshot.child("Insitution").exists()) {
 //                            tv_addInstitute.setVisibility(View.GONE);
-                        String bio=snapshot.child("Insitution").getValue().toString();
+                        String bio = snapshot.child("Insitution").getValue().toString();
 //                            tv_UserInstitute.setVisibility(View.VISIBLE);
                         ll_Institution.setVisibility(View.VISIBLE);
                         tv_UserInstitute.setText(bio);
 
                         notifyPB.dismiss();
-                    }else{
+                    } else {
 //                            tv_addInstitute.setVisibility(View.VISIBLE);
                         ll_Institution.setVisibility(View.GONE);
 
                     }
 
 
-                    if (snapshot.child("NickName").exists()){
+                    if (snapshot.child("NickName").exists()) {
 //                            tv_addUserName.setVisibility(View.GONE);
-                        String UserName=snapshot.child("NickName").getValue().toString();
+                        String UserName = snapshot.child("NickName").getValue().toString();
                         tv_UserUserName.setVisibility(View.VISIBLE);
                         tv_UserUserName.setText(UserName);
                         ll_UserName.setVisibility(View.VISIBLE);
                         notifyPB.dismiss();
-                    }else{
+                    } else {
 //                            tv_addUserName.setVisibility(View.VISIBLE);
                         ll_UserName.setVisibility(View.GONE);
 
 
                     }
-                    if (snapshot.child("Location").exists()){
+                    if (snapshot.child("Location").exists()) {
 //                            tv_addLocation.setVisibility(View.GONE);
 //                            spinnerLocation.setVisibility(View.GONE);
                         ll_location.setVisibility(View.VISIBLE);
-                        String Location=snapshot.child("Location").getValue().toString();
+                        String Location = snapshot.child("Location").getValue().toString();
 //                            tv_UserLocation.setVisibility(View.VISIBLE);
                         tv_UserLocation.setText(Location);
                         notifyPB.dismiss();
-                    }else{
+                    } else {
 //                            tv_addLocation.setVisibility(View.VISIBLE);
                         ll_location.setVisibility(View.GONE);
 
                     }
 
-                    if (snapshot.child("Category").exists()){
+                    if (snapshot.child("Category").exists()) {
                         tv_addCategory.setVisibility(View.GONE);
 //                            spinnerCategory.setVisibility(View.GONE);
 
-                        String Category=snapshot.child("Category").getValue().toString();
+                        String Category = snapshot.child("Category").getValue().toString();
                         tv_UserCategory.setVisibility(View.VISIBLE);
                         tv_UserCategory.setText(Category);
                         notifyPB.dismiss();
-                    }else{
+                    } else {
                         tv_addCategory.setVisibility(View.VISIBLE);
 
                     }
 //                        notifyPB.show();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
 
-        refUserFollowers= FirebaseDatabase.getInstance().getReference().child("Users").child("Followers").child(userID);
+        refUserFollowers = FirebaseDatabase.getInstance().getReference().child("Users").child("Followers").child(userID);
         refUserFollowers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount()>0){
-                    long count=snapshot.getChildrenCount();
-                    tv_CountFollowers.setText((int) count+" Followers");
+                if (snapshot.getChildrenCount() > 0) {
+                    long count = snapshot.getChildrenCount();
+                    tv_CountFollowers.setText((int) count + " Followers");
                     notifyPB.dismiss();
 //                        notifyPB.show();
-                }else{
+                } else {
                     tv_CountFollowers.setText("No Followers");
 
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
 
-        refUserFollowing= FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(userID);
+        refUserFollowing = FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(userID);
         refUserFollowing.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount()>0){
-                    long count=snapshot.getChildrenCount();
-                    tv_CountFollowing.setText((int) count+" Following");
+                if (snapshot.getChildrenCount() > 0) {
+                    long count = snapshot.getChildrenCount();
+                    tv_CountFollowing.setText((int) count + " Following");
                     notifyPB.dismiss();
-                }else {
+                } else {
                     tv_CountFollowing.setText("No Following");
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -551,7 +548,7 @@ public class Profile_Activity extends AppCompatActivity {
                     case R.id.bottom_nav_profile:
 //                        fragment = new ProfileFragment();
 //                        tag = "profile";
-                        startActivity(new Intent(Profile_Activity.this,Profile_Activity.class));
+                        startActivity(new Intent(Profile_Activity.this, Profile_Activity.class));
                         Profile_Activity.this.overridePendingTransition(0, 0);
 
                         break;

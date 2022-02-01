@@ -2,6 +2,7 @@ package com.cllasify.cllasify.Adaptor;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,8 @@ public class Adaptor_ShowDoubt extends RecyclerView.Adapter<Adaptor_ShowDoubt.My
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+
+
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();

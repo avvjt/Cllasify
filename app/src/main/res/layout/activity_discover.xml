@@ -128,17 +128,17 @@
         android:layout_below="@+id/grpSchUsers" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:id="@+id/bottom_nav"
-        app:menu="@menu/bottom_nav_menu"
         android:background="@color/white"
         app:itemIconTint="@color/bottom_navigation_color"
-        app:itemTextColor="@color/bottom_navigation_color"
         app:itemTextAppearanceActive="@style/BodyText.NavigationBar"
         app:itemTextAppearanceInactive="@style/BodyText.NavigationBar"
-        app:labelVisibilityMode="selected">
+        app:itemTextColor="@color/bottom_navigation_color"
+        app:labelVisibilityMode="selected"
+        app:menu="@menu/bottom_nav_menu">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 

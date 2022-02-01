@@ -2,6 +2,7 @@ package com.cllasify.cllasify.Adaptor;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -66,7 +67,8 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
 //        String currUserID=currentUser.getUid();
         Class_Group Answers=mDatalistNew.get(position);
 
-        String groupClassName=Answers.getUserEmailId();
+        String groupClassName=Answers.getGroupName();
+        Log.d("Grouupt", "GroupName: "+groupClassName);
 //        String userID=Answers.getUserId();
 
         holder.tv_ClassTitle.setText(groupClassName);

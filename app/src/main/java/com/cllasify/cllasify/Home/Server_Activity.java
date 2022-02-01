@@ -28,7 +28,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -86,7 +85,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 
 public class Server_Activity extends AppCompatActivity implements Adapter_ClassGroup.onAddSubjectClickListener {
@@ -108,6 +106,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
     DatabaseReference checkFriends;
 
+    List<Group_Students> group_studentsListDetails;
     List<Class_Group> list_GroupTitle, list_UserPrivateGroupTitle, list_UserPublicGroupTitle, list_OtherUserPublicGroupTitle,
             listGrpMemberList, list_SubChild,
             list_ChatDashboard, list_DoubtDashboard, list_Friend, list_ChatListDashboard, list_NewChatDashboard;
@@ -130,7 +129,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     Uri userPhoto;
     String userID, userEmailID, userName;
     OverlappingPanelsLayout overlappingPanels;
-
 
 
     ImageView imageViewAddPanelAddGroup;
@@ -174,7 +172,9 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
     //Right Panel Class and Sub-class
     Adapter_ClassGroup adapter_classGroup;
-    List<Class_Group_Names> class_groupList;
+
+    List<Class_Group_Names> parentItemArrayListClassName;
+    List<Subject_Details_Model> childItemArrayListClassName;
 
 
     //1389
@@ -286,17 +286,55 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         list_ChatListDashboard = new ArrayList<>();
 
 
+        //Group Members
+        refShowUserPrivateGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID);
+        refShowUserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID);
+        refteachStud = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID);
+        refotheruserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group");
+
+        refShowUserPrivateGroup.keepSynced(true);
+        refShowUserPublicGroup.keepSynced(true);
+
+        rv_GrpMemberList = findViewById(R.id.rv_GrpMemberList);
+        listGrpMemberList = new ArrayList<>();
+        rv_GrpMemberList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
+
+        endPanelAllFriendsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        endPanelAllFriendsRecyclerView.setAdapter(show_FriendAdaptor);
+
+
+        //Setting up layout manager
+        rv_UserPublicGroupTitle.setLayoutManager(new LinearLayoutManager(this));
+        rv_OtherPublicGroupTitle.setLayoutManager(new LinearLayoutManager(this));
+
+        topicNamesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+        //setting up Adapter
+        showGroupadaptor = new Adaptor_QueryGroup(this, list_GroupTitle);
+        showUserPrivateGroupadaptor = new Adaptor_QueryGroup(this, list_UserPrivateGroupTitle);
+        showUserPublicGroupadaptor = new Adaptor_QueryGroup(this, list_UserPublicGroupTitle);
+        showChatDashadaptor = new Adaptor_ShowGroup(this, list_ChatDashboard);
+        showOtherUserPublicGroupAdaptor = new Adaptor_QueryGroup(this, list_OtherUserPublicGroupTitle);
+
+        show_FriendAdaptor = new Adaptor_Friends(this, list_Friend);
+        showChatListDashadaptor = new Adaptor_Friends(this, list_ChatListDashboard);
+        rv_UserPublicGroupTitle.setAdapter(showUserPublicGroupadaptor);
+        rv_OtherPublicGroupTitle.setAdapter(showOtherUserPublicGroupAdaptor);
+
+        topicNamesRecyclerView.setAdapter(showChatListDashadaptor);
+
+
         ib_csubmit = findViewById(R.id.ib_csubmit);
-
-
-
-
 
 
         //Class-Group
         adapter_classGroup = new Adapter_ClassGroup(getApplicationContext(), this);
-        class_groupList = new ArrayList<>();
-        adapter_classGroup.setClass_groupList(class_groupList);
+        parentItemArrayListClassName = new ArrayList<>();
+        childItemArrayListClassName = new ArrayList<>();
+        adapter_classGroup.setChildItemArrayListSubjectName(childItemArrayListClassName);
+        adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
         recyclerViewClassList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerViewClassList.setAdapter(adapter_classGroup);
 
@@ -365,6 +403,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         rv_ChatDashboard.setLayoutManager(linearLayout);
         rv_ChatDashboard.setAdapter(messageAdapter);
 
+        setReference("Uni_Group_No_1_T group", "T class", "T topic");
+
         ib_csubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -420,11 +460,82 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         });
 
 
+        //Doubt Section
+        showDoubtDashAdaptor = new Adaptor_ShowDoubt(this, list_DoubtDashboard);
+        rv_DoubtDashboard.setLayoutManager(new LinearLayoutManager(this));
+        showChatDashadaptor.scrollDownl();
+        rv_DoubtDashboard.setAdapter(showDoubtDashAdaptor);
+
+        showDoubtDashAdaptor.setOnItemClickListener(new Adaptor_ShowDoubt.OnItemClickListener() {
+            @Override
+            public void showDoubtChat(String doubtQuestion, String groupPush, String groupClassPush, String groupSubjectPush, String doubtQuestionPush) {
+
+                Toast.makeText(getApplicationContext(), "Test doubt", Toast.LENGTH_SHORT).show();
+                Bundle bundle = new Bundle();
+                bundle.putString("groupPushId", groupPush);
+                bundle.putString("groupClassPushId", groupClassPush);
+                bundle.putString("groupClassSubjectPushId", groupSubjectPush);
+                bundle.putString("doubtQuestionPushId", doubtQuestionPush);
+
+                doubtFragment.setArguments(bundle);
+                Rv_DoubtChat.setVisibility(View.GONE);
+                rv_DoubtDashboard.setVisibility(View.GONE);
+                parentDoubtDashboard.setVisibility(View.GONE);
+                if (fragmentManager.findFragmentByTag("zero") != null) {
+                    getSupportFragmentManager().beginTransaction().show(doubtFragment).commit();
+                } else {
+                    getSupportFragmentManager().beginTransaction().add(R.id.rl_DoubtDashboard, doubtFragment, "zero").commit();
+                }
+            }
+        });
+
+
+/*
+//Uni_Group_No_1_T group -> T class -> B topic ->
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                final String[] groupPushId = new String[1];
+//                groupPushId[0] = snapshot.child("groupClassSubjects").getValue().toString().trim();
+                DatabaseReference databaseReference01 = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child("Uni_Group_No_1_T group").child("T class").child("B topic").child("groupStudentList");
+
+                databaseReference01.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        List<Group_Students> group_studentsList = new ArrayList<>();
+                        for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        group_studentsList.add(snapshot.child("0").getValue(Group_Students.class));
+                            Log.d(TAG, "Snap" + snapshot);
+//                        group_studentsListDetails.add((Group_Students) group_studentsList);
+                        Log.d(TAG, "init: " + group_studentsList.get(0).isAdmin());
+                        showGrpMemberList = new Adaptor_ShowGrpMember(Server_Activity.this, group_studentsList);
+                        rv_GrpMemberList.setAdapter(showGrpMemberList);
+                        }
+//                        String subCrDate = snapshot.child("0").child("userName").getValue().toString().trim();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+*/
+
     }
 
     private void saveClassGroup(String groupPushId, String sbChildGroupName) {
         Class_Group_Names subGroup_Class = new Class_Group_Names(dateTimeCC, userName, SharePref.getDataFromPref(Constant.USER_ID), sbChildGroupName);
-        subGroup_Class.setAdmin(true);
+//        subGroup_Class.setAdmin(true);
         refChildGroup.child(sbChildGroupName).setValue(subGroup_Class);
     }
 
@@ -459,24 +570,61 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         showDoubt(groupPushId, subGroupPushId, groupClassSubject);
 
 
+        DatabaseReference allDoubtReference = FirebaseDatabase.getInstance().getReference().
+                child("Groups").child("Doubt").child(groupPushId).child(subGroupPushId).child(groupClassSubject).child("All_Doubt");
+
+        list_DoubtDashboard.clear();
+
+        ChildEventListener doubtchildEventListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if (dataSnapshot.getChildrenCount() > 0) {
+                    Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
+                    list_DoubtDashboard.add(class_userDashBoard);
+                    showDoubtDashAdaptor.notifyDataSetChanged();
+                } else {
+                    Toast.makeText(Server_Activity.this, "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        };
+
+        allDoubtReference.addChildEventListener(doubtchildEventListener);
+
+
         //Endpanel
-        showGrpMemberList.setOnItemClickListener(new Adaptor_ShowGrpMember.OnItemClickListener() {
-            @Override
-            public void AddFrndDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId) {
-                sentInvitation(adminGroupID, adminUserName, "AddFrnd");
-            }
-
-            @Override
-            public void FollowFriendDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId) {
-                sentInvitation(adminGroupID, adminUserName, "FollowFrnd");
-            }
-
-            @Override
-            public void MemberProfile(String memberUserId, String memberUserName) {
-                showBtmDialogUserProfile(memberUserId, memberUserName);
-            }
-
-        });
+//        showGrpMemberList.setOnItemClickListener(new Adaptor_ShowGrpMember.OnItemClickListener() {
+//            @Override
+//            public void AddFrndDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId) {
+//                sentInvitation(adminGroupID, adminUserName, "AddFrnd");
+//            }
+//
+//            @Override
+//            public void FollowFriendDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId) {
+//                sentInvitation(adminGroupID, adminUserName, "FollowFrnd");
+//            }
+//
+//            @Override
+//            public void MemberProfile(String memberUserId, String memberUserName) {
+//                showBtmDialogUserProfile(memberUserId, memberUserName);
+//            }
+//
+//        });
 
 
         refGrpMemberList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("User_Subscribed_Groups");
@@ -506,7 +654,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             }
         });
         listGrpMemberList.clear();
-
+/*
         ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.DOWN | ItemTouchHelper.UP, 0) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -529,7 +677,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(rv_GrpMemberList);
-
+*/
 
     }
 
@@ -600,12 +748,12 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             notifyPB.setMessage("Loading All Jobs");
             notifyPB.setCanceledOnTouchOutside(true);
 
+
             GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(
                     GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken("61526858520-djs6utqbssvf5p5iqnki3buievn9ufhg.apps.googleusercontent.com")
                     .requestEmail()
                     .build();
             googleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
-
 
 
             bottomMenu();
@@ -634,33 +782,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             Log.d("TAG", "onCreate: " + checkFriends);
 
 
-            //Setting up layout manager
-            rv_UserPublicGroupTitle.setLayoutManager(new LinearLayoutManager(this));
-            rv_OtherPublicGroupTitle.setLayoutManager(new LinearLayoutManager(this));
-
-            topicNamesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-            //setting up Adapter
-            showGroupadaptor = new Adaptor_QueryGroup(this, list_GroupTitle);
-            showUserPrivateGroupadaptor = new Adaptor_QueryGroup(this, list_UserPrivateGroupTitle);
-            showUserPublicGroupadaptor = new Adaptor_QueryGroup(this, list_UserPublicGroupTitle);
-            showChatDashadaptor = new Adaptor_ShowGroup(this, list_ChatDashboard);
-            showOtherUserPublicGroupAdaptor = new Adaptor_QueryGroup(this, list_OtherUserPublicGroupTitle);
-
-            showDoubtDashAdaptor = new Adaptor_ShowDoubt(this, list_DoubtDashboard);
-            show_FriendAdaptor = new Adaptor_Friends(this, list_Friend);
-            showChatListDashadaptor = new Adaptor_Friends(this, list_ChatListDashboard);
-            rv_UserPublicGroupTitle.setAdapter(showUserPublicGroupadaptor);
-            rv_OtherPublicGroupTitle.setAdapter(showOtherUserPublicGroupAdaptor);
-
-            topicNamesRecyclerView.setAdapter(showChatListDashadaptor);
-
 //            rv_ChatDashboard.setLayoutManager(new LinearLayoutManager(this));
-            rv_DoubtDashboard.setLayoutManager(new LinearLayoutManager(this));
-//            rv_ChatDashboard.setAdapter(showChatDashadaptor);
-            showChatDashadaptor.scrollDownl();
-            rv_DoubtDashboard.setAdapter(showDoubtDashAdaptor);
+
 //---------------------------------------------------------------------------------------------------------------------------------------------------
             /*
 
@@ -714,7 +837,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
                 }
             });
-
 
 
             refShowUserAllGroup.addValueEventListener(new ValueEventListener() {
@@ -834,25 +956,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             /*
                 Right Panel
              */
-            refShowUserPrivateGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID);
-            refShowUserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID);
-            refteachStud = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID);
-            refotheruserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group");
-
-            refShowUserPrivateGroup.keepSynced(true);
-            refShowUserPublicGroup.keepSynced(true);
-
-
-            rv_GrpMemberList = findViewById(R.id.rv_GrpMemberList);
-
-            rv_GrpMemberList.setLayoutManager(new LinearLayoutManager(this));
-            endPanelAllFriendsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-            listGrpMemberList = new ArrayList<>();
-
-            showGrpMemberList = new Adaptor_ShowGrpMember(this, listGrpMemberList);
-            rv_GrpMemberList.setAdapter(showGrpMemberList);
-            endPanelAllFriendsRecyclerView.setAdapter(show_FriendAdaptor);
 
 
             endPanelAllFriendsButton.setOnClickListener(new View.OnClickListener() {
@@ -1012,6 +1115,10 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             public void onClick(View view) {
 
                 String GroupName = et_GroupName.getText().toString().trim();
+
+                DatabaseReference changeCOor = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+                changeCOor.child("serverName").setValue(GroupName);
+
                 if (GroupName.isEmpty()) {
                     Toast.makeText(Server_Activity.this, "Enter Group Name", Toast.LENGTH_SHORT).show();
                     et_GroupName.setError("Enter Group Name");
@@ -1084,36 +1191,47 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
 
                 refChildGroup.addValueEventListener(new ValueEventListener() {
+
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        class_groupList.clear();
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-
-                            Class_Group_Names class_group_names = dataSnapshot.getValue(Class_Group_Names.class);
-                                List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
-                                for (DataSnapshot subjectSnapShot : dataSnapshot.getChildren()) {
-                                    Subject_Details_Model subject_details_model = new Subject_Details_Model();
-                                    subject_details_model.setSubjectTitle(subjectSnapShot.child("subjectTitle").getValue(String.class));
-                                    subject_details_model.setGroupName(subjectSnapShot.child("groupName").getValue(String.class));
-                                    subject_details_model.setSubjectCreationDate(subjectSnapShot.child("subjectCreationDate").getValue(String.class));
-                                    List<Group_Students> groupStudentsList = new ArrayList<>();
-                                    if(subjectSnapShot.child("groupStudentList").hasChildren()){
-                                        for(DataSnapshot groupSnap :subjectSnapShot.child("groupStudentList").getChildren() ){
-
-                                            Group_Students group_students = groupSnap.getValue(Group_Students.class);
-                                            Log.d(TAG, "STUDENT: "+group_students.getUserName());
-                                            groupStudentsList.add(group_students);
-                                        }
-                                        subject_details_model.setGroupStudentList(groupStudentsList);
-                                        Log.d(TAG, "LIST SIZE: "+groupStudentsList.size());
-                                    }
-                                    subjectDetailsModelList.add(subject_details_model);
-                                }
-                                class_group_names.setSubjectDetailsModelList(subjectDetailsModelList);
-
-
-                            class_groupList.add(class_group_names);
-                        }
+                        parentItemArrayListClassName.clear();
+                        childItemArrayListClassName.clear();
+//                        for (int i = 0; i < snapshot.getChildrenCount(); i++) {
+//                            Log.d(TAG, "onDataChange: " +"Value: "+ snapshot.getValue());
+//                            Log.d(TAG, "onDataChange: "+"Key: "+snapshot.getKey());
+//                            Log.d(TAG, "onDataChange: "+snapshot.child(""));
+//                            Class_Group_Names class_group_names = snapshot.getValue(Class_Group_Names.class);
+//                            parentItemArrayListClassName.add(class_group_names);
+//                        }
+//                        for (DataSnapshot parentSnap : snapshot.getChildren()) {
+//                            Class_Group_Names class_group_names = parentSnap.getValue(Class_Group_Names.class);
+//                            parentItemArrayListClassName.add(class_group_names);
+//
+//                            if (parentSnap.hasChild("English")) {
+//
+//                                for (DataSnapshot childSnap : parentSnap.child("English").getChildren()) {
+//                                    Log.d(TAG, "onDataChange: "+childSnap.getValue());
+//                                    Subject_Details_Model subject_details_model = new Subject_Details_Model();
+//                                    subject_details_model.setSubjectTitle(childSnap.getValue(String.class));
+//                                    subject_details_model.setSubjectCreationDate(childSnap.getValue(String.class));
+//                                    subject_details_model.setGroupName(childSnap.getValue(String.class));
+//                                    childItemArrayListClassName.add(subject_details_model);
+//                                }
+//                            }
+//                            //Bhai 6 data aa rhe dekho double double
+//                            if (parentSnap.hasChild("History")) {
+//                                for (DataSnapshot childSnap : parentSnap.child("History").getChildren()) {
+//                                    Subject_Details_Model subject_details_model = new Subject_Details_Model();
+//                                    subject_details_model.setSubjectTitle(childSnap.getValue(String.class));
+//                                    subject_details_model.setSubjectCreationDate(childSnap.getValue(String.class));
+//                                    subject_details_model.setGroupName(childSnap.getValue(String.class));
+//                                    childItemArrayListClassName.add(subject_details_model);
+//                                }
+//                            }
+//
+//                        }
+                        adapter_classGroup.setChildItemArrayListSubjectName(childItemArrayListClassName);
+                        adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
                         adapter_classGroup.notifyDataSetChanged();
                     }
 
@@ -1123,6 +1241,51 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                     }
                 });
 
+
+
+/*
+                refChildGroup.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        parentItemArrayListClassName.clear();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                            Class_Group_Names class_group_names = dataSnapshot.getValue(Class_Group_Names.class);
+                            List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
+                            for (DataSnapshot subjectSnapShot : dataSnapshot.getChildren()) {
+                                Subject_Details_Model subject_details_model = new Subject_Details_Model();
+                                subject_details_model.setGroupPushId(groupPushId);
+                                subject_details_model.setGroupSubjectPushId(subjectSnapShot.getKey());
+                                subject_details_model.setSubjectTitle(subjectSnapShot.child("subjectTitle").getValue(String.class));
+                                subject_details_model.setGroupName(subjectSnapShot.child("groupName").getValue(String.class));
+                                subject_details_model.setSubjectCreationDate(subjectSnapShot.child("subjectCreationDate").getValue(String.class));
+                                List<Group_Students> groupStudentsList = new ArrayList<>();
+                                if (subjectSnapShot.child("groupStudentList").hasChildren()) {
+                                    for (DataSnapshot groupSnap : subjectSnapShot.child("groupStudentList").getChildren()) {
+
+                                        Group_Students group_students = groupSnap.getValue(Group_Students.class);
+                                        Log.d(TAG, "STUDENT: " + group_students.getUserName());
+                                        groupStudentsList.add(group_students);
+                                    }
+                                    subject_details_model.setGroupStudentList(groupStudentsList);
+                                    Log.d(TAG, "LIST SIZE: " + groupStudentsList.size());
+                                }
+                                subjectDetailsModelList.add(subject_details_model);
+                            }
+                            class_group_names.setSubjectDetailsModelList(subjectDetailsModelList);
+
+
+                            parentItemArrayListClassName.add(class_group_names);
+                        }
+                        adapter_classGroup.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+*/
                 addNewClassButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -1147,13 +1310,13 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                         btn_nextAddTopic.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                String sbChildGroupName = et_ClassName.getText().toString().trim();
-                                if (sbChildGroupName.isEmpty()) {
+                                String classGroupName = et_ClassName.getText().toString().trim();
+                                if (classGroupName.isEmpty()) {
                                     Toast.makeText(Server_Activity.this, "Enter All Details", Toast.LENGTH_SHORT).show();
                                     et_ClassName.setError("Enter Class Name");
                                 } else {
                                     dialog.cancel();
-                                    saveClassGroup(groupPushId, sbChildGroupName);
+                                    saveClassGroup(groupPushId, classGroupName);
                                 }
                             }
                         });
@@ -1645,14 +1808,10 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 }
 
 
-
             }
 
 
         });
-
-
-
 
 
         //chat message updation in firebase realtime database
@@ -1681,8 +1840,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
-
 
 
     }
@@ -1829,6 +1986,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), Friend_Chat_Activity.class);
                 intent.putExtra("name", memberUserName);
+                intent.putExtra("receiverUid", memberUserId);
                 startActivity(intent);
             }
         });
@@ -2454,18 +2612,20 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             @Override
             public void onClick(View view) {
                 if (!et_TopicName.getText().toString().isEmpty()) {
+
                     Subject_Details_Model subject_details_model = new Subject_Details_Model();
                     subject_details_model.setSubjectTitle(et_TopicName.getText().toString());
                     subject_details_model.setGroupName(groupName);
-                    List<Group_Students> groupStudentList = new ArrayList<>();
-                    Group_Students group_student = new Group_Students();
-                    group_student.setUserName(userName);
-                    group_student.setAdmin(true);
-                    group_student.setUserId(SharePref.getDataFromPref(Constant.USER_ID));
-                    groupStudentList.add(group_student);
-                    subject_details_model.setGroupStudentList(groupStudentList);
+//                    List<Group_Students> groupStudentList = new ArrayList<>();
+//                    Group_Students group_student = new Group_Students();
+//                    group_student.setUserName(userName);
+//                    group_student.setAdmin(true);
+//                    group_student.setUserId(SharePref.getDataFromPref(Constant.USER_ID));
+//                    groupStudentList.add(group_student);
+//                    subject_details_model.setGroupStudentList(groupStudentList);
                     subject_details_model.setSubjectCreationDate(dateTimeCC);
                     refChildGroup.child(groupName).child(subject_details_model.getSubjectTitle()).setValue(subject_details_model);
+//                    readChildData(groupName, subject_details_model.getSubjectTitle());
                     dialog.dismiss();
                 }
             }
@@ -2473,4 +2633,22 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
 
     }
+
+//    private void readChildData(String groupName, String subjectTitle) {
+//        refChildGroup.child(groupName).child(subjectTitle)
+//                .addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        for (DataSnapshot childSnap : snapshot.getChildren()) {
+//                            Subject_Details_Model subject_details_model = childSnap.getValue(Subject_Details_Model.class);
+//                            childItemArrayListClassName.add(subject_details_model);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//    }
 }

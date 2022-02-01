@@ -126,7 +126,7 @@ public class Discover_Activity extends AppCompatActivity {
         listAllGroupStatus =new ArrayList<>();
         list_AllJoinUser =new ArrayList<>();
         showAllGroupAdaptor = new Adaptor_SearchGroup(this, listAllGroupStatus);
-        showAllJoinUserAdaptor = new Adaptor_ShowGrpMember(this, list_AllJoinUser);
+//        showAllJoinUserAdaptor = new Adaptor_ShowGrpMember(this, list_AllJoinUser);
 
         rv_AllJoinGroup.setAdapter(showAllGroupAdaptor);
         rv_AllJoinUser.setAdapter(showAllJoinUserAdaptor);
@@ -283,6 +283,7 @@ public class Discover_Activity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), Discover_Item.class);
         intent.putExtra("groupName",groupName);
         intent.putExtra("groupPushId",groupPushId);
+        Log.d("Grouup", "GroupName: "+groupName+"\n"+"GroupPushId: "+groupPushId);
         startActivity(intent);
 
 /*

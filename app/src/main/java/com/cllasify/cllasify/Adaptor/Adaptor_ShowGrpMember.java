@@ -2,6 +2,7 @@ package com.cllasify.cllasify.Adaptor;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Class.Class_Group;
+import com.cllasify.cllasify.Group_Students;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,7 +35,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpMember.MyViewHolder> {
 
     private Context context;
-    private List<Class_Group> mDatalistNew;
+    private List<Group_Students> mDatalistNew;
     ProgressDialog notifyPB;
     DatabaseReference refUserFollowing;
     boolean subsClick=false;
@@ -51,7 +53,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
         mListener=listener;
     }
 
-    public Adaptor_ShowGrpMember(Context context, List<Class_Group> mDatalistNew) {
+    public Adaptor_ShowGrpMember(Context context, List<Group_Students> mDatalistNew) {
         this.context = context;
         this.mDatalistNew = mDatalistNew;
     }
@@ -73,12 +75,12 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         assert currentUser != null;
         String currUserID=currentUser.getUid();
-        Class_Group Answers=mDatalistNew.get(position);
+        Group_Students Answers=mDatalistNew.get(position);
 
         String userName=Answers.getUserName();
         String userID=Answers.getUserId();
 
-
+/*
         holder.ib_present.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,7 +100,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
 
             }
         });
-
+*/
         holder.tv_GroupTitle.setText(userName);
         refUserFollowing= FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(currUserID);
 //
@@ -188,7 +190,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
             assert currentUser != null;
             String currUserID=currentUser.getUid();
-
+/*
             ib_AddFrnd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -228,13 +230,14 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
                     }
                 }
             });
+            */
             ll_Group.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(context.getApplicationContext(), "Clicked Friend", Toast.LENGTH_SHORT).show();
                     if (mListener != null) {
                         int position = getAdapterPosition();
-                        Class_Group user = mDatalistNew.get(getAdapterPosition());
+                        Group_Students user = mDatalistNew.get(getAdapterPosition());
                         String memberUserId=user.userId;
                         String memberUserName=user.userName;
 

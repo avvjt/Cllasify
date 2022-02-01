@@ -55,16 +55,12 @@ public class Adapter_TopicList extends RecyclerView.Adapter<Adapter_TopicList.Vi
 
     @Override
     public void onBindViewHolder(@NonNull Adapter_TopicList.ViewHolder holder, int position) {
-        if(subjectDetailsModelList.get(position).getSubjectTitle()!=null){
             holder.subjectTopic.setText(subjectDetailsModelList.get(position).getSubjectTitle());
-        }else{
-            holder.subListItem.setVisibility(View.GONE);
-        }
+
     }
 
     @Override
     public int getItemCount() {
-        Log.d("Sizee", "Topic Subjects: "+subjectDetailsModelList.size());
         return subjectDetailsModelList.size();
     }
 
@@ -87,40 +83,47 @@ public class Adapter_TopicList extends RecyclerView.Adapter<Adapter_TopicList.Vi
             String userID = currentUser.getUid();
 
 
-            DatabaseReference changeCOor = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+//            DatabaseReference changeCOor = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
 
-            subjectTopic.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(context, "Testing the subject", Toast.LENGTH_SHORT).show();
-                    if (mListener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            /*
-                            When doing this in the previous commit of the project it's working
-                            Class_Group user = mDatalistNew.get(getAdapterPosition());
-                            String groupName = user.getGroupName();
-                            String groupSubjectPushId = user.getUserEmailId();
-                            String groupPushId = user.getGroupCategory();
-                            String groupClassSubjects = user.getGroup2();
-                             */
-
-                            Subject_Details_Model user = subjectDetailsModelList.get(getAdapterPosition());
-                            String groupName = user.getGroupName();
-                            String groupSubjectPushId = user.getGroupSubjectPushId();
-                            String groupPushId = user.getGroupPushId();
-                            String groupClassSubjects = user.getSubjectTitle();
-
-                            subjectTopic.setBackgroundColor(context.getColor(R.color.colorPrimary));
-//                            changeCOor.child("tgroupClassSubjects").setValue(groupClassSubjects);
-
-                            Log.d("Topiccs", "onClick: "+"GroupName: "+groupName+"\nGroupSubjectId: "+groupSubjectPushId+"\ngroupPushId: "+groupPushId+"\ngroupClassSubjects: "+groupClassSubjects);
-
-                            mListener.subjectChildClick(groupName, groupPushId, groupSubjectPushId, groupClassSubjects);
-                        }
-                    }
-                }
-            });
+//            subjectTopic.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Toast.makeText(context, "Testing the subject", Toast.LENGTH_SHORT).show();
+//                    if (mListener != null) {
+//                        int position = getAdapterPosition();
+//                        if (position != RecyclerView.NO_POSITION) {
+//                            /*
+//                            When doing this in the previous commit of the project it's working
+//                            Class_Group user = mDatalistNew.get(getAdapterPosition());
+//                            String groupName = user.getGroupName();
+//                            String groupSubjectPushId = user.getUserEmailId();
+//                            String groupPushId = user.getGroupCategory();
+//                            String groupClassSubjects = user.getGroup2();
+//                             */
+//                            Subject_Details_Model user = subjectDetailsModelList.get(getAdapterPosition());
+//
+//                            String groupPushId = user.getGroupPushId();
+//
+//                            String groupSubjectPushId = user.getGroupSubjectPushId();
+//                            String groupClassSubjects = user.getSubjectTitle();
+//                            String groupName = user.getGroupName();
+//
+//                            Log.i("lionlion", groupPushId);
+//                            Log.i("lionlion", groupSubjectPushId);
+//
+//                            Log.i("lionlion", groupClassSubjects);
+//                            Log.i("lionlion", groupName);
+//                            subjectTopic.setBackgroundColor(context.getColor(R.color.colorPrimary));
+////                            changeCOor.child("tgroupClassSubjects").setValue(groupClassSubjects);
+//
+//
+//                            Log.d("Topiccs", "onClick: "+"GroupName: "+groupName+"\nGroupSubjectId: "+groupSubjectPushId+"\ngroupPushId: "+groupPushId+"\ngroupClassSubjects: "+groupClassSubjects);
+//
+//                            mListener.subjectChildClick(groupName, groupPushId, groupSubjectPushId, groupClassSubjects);
+//                        }
+//                    }
+//                }
+//            });
 
         }
     }

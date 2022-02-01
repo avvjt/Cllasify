@@ -15,9 +15,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_Friend_Chat;
+import com.cllasify.cllasify.Utility.SharePref;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,9 +41,11 @@ public class Friend_Chat_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_chat);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         TextView friendNameTv = findViewById(R.id.tv_friend_name);
         String friendName = getIntent().getStringExtra("name");
+        messageList = new ArrayList<>();
         Log.d(TAG, "onCreate: friend name ->" + friendName);
         friendNameTv.setText(friendName);
         recyclerView = findViewById(R.id.recyclerView);
@@ -55,6 +59,7 @@ public class Friend_Chat_Activity extends AppCompatActivity {
         firebaseDatabase = FirebaseDatabase.getInstance();
         senderUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         receiverUid = getIntent().getStringExtra("receiverUid");
+        Log.d(TAG, "onCreate: receiverUserId: " + receiverUid);
         senderRoom = senderUid + receiverUid;
         receiverRoom = receiverUid + senderUid;
 

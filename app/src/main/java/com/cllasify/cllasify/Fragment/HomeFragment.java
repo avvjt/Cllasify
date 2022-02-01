@@ -594,7 +594,7 @@ public class HomeFragment extends Fragment {
 
             listGrpMemberList = new ArrayList<>();
 
-            showGrpMemberList = new Adaptor_ShowGrpMember(getContext(), listGrpMemberList);
+//            showGrpMemberList = new Adaptor_ShowGrpMember(getContext(), listGrpMemberList);
             rv_GrpMemberList.setAdapter(showGrpMemberList);
             rv_AllFriendList.setAdapter(show_FriendAdaptor);
 

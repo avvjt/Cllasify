@@ -13,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.Constant;
 import com.cllasify.cllasify.R;
@@ -22,7 +21,6 @@ import com.cllasify.cllasify.Utility.SharePref;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.ViewHolder> {
@@ -30,18 +28,22 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
     private static final String TAG = Adapter_ClassGroup.class.getSimpleName();
 
     Context context;
-    List<Class_Group_Names> class_groupList;
+    List<Class_Group_Names> parentItemArrayListClassName;
+    List<Subject_Details_Model> childItemArrayListSubjectName;
     onAddSubjectClickListener onAddSubjectClickListener;
 
+    public void setChildItemArrayListSubjectName(List<Subject_Details_Model> childItemArrayListSubjectName) {
+        this.childItemArrayListSubjectName = childItemArrayListSubjectName;
+    }
 
-    public Adapter_ClassGroup(Context context,onAddSubjectClickListener onAddSubjectClickListener) {
+    public Adapter_ClassGroup(Context context, onAddSubjectClickListener onAddSubjectClickListener) {
         this.context = context;
         this.onAddSubjectClickListener = onAddSubjectClickListener;
     }
 
 
-    public void setClass_groupList(List<Class_Group_Names> class_groupList) {
-        this.class_groupList = class_groupList;
+    public void setParentItemArrayListClassName(List<Class_Group_Names> parentItemArrayListClassName) {
+        this.parentItemArrayListClassName = parentItemArrayListClassName;
     }
 
     @NonNull
@@ -54,40 +56,42 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
     @Override
     public void onBindViewHolder(@NonNull Adapter_ClassGroup.ViewHolder holder, int position) {
 
-        holder.classGroupName.setText(class_groupList.get(position).getGroupName());
+        holder.classGroupName.setText(parentItemArrayListClassName.get(position).getGroupName());
 
         holder.addTopicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onAddSubjectClickListener.onAddSubjectClickListener(class_groupList.get(holder.getAdapterPosition()).getGroupName());
+                onAddSubjectClickListener.onAddSubjectClickListener(parentItemArrayListClassName.get(holder.getAdapterPosition()).getGroupName());
             }
         });
 
 
 
-        DatabaseReference refSaveCurrDataForSubj = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(SharePref.getDataFromPref(Constant.USER_ID));
+        DatabaseReference refSaveCurrDataForSubj = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp")
+                .child(SharePref.getDataFromPref(Constant.USER_ID));
+//        adapter_topicList.setOnItemClickListener(new Adapter_TopicList.OnItemClickListener() {
+//            @Override
+//            public void subjectChildClick(String groupName, String groupPushId, String groupSubjectPushId, String groupClassSubjects) {
+//                Toast.makeText(context, "Testing the subject on Adapter_ClassGroup!!", Toast.LENGTH_SHORT).show();
+//                refSaveCurrDataForSubj.child("groupName").setValue(groupName);
+//                refSaveCurrDataForSubj.child("SubGroupPushId").setValue(groupSubjectPushId);//*
+//                refSaveCurrDataForSubj.child("GroupPushId").setValue(groupPushId);//*
+//                refSaveCurrDataForSubj.child("groupClassSubjects").setValue(groupClassSubjects);
+//            }
+//        });
+
         Adapter_TopicList adapter_topicList = new Adapter_TopicList(context.getApplicationContext());
         holder.subjectList.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
-        adapter_topicList.setOnItemClickListener(new Adapter_TopicList.OnItemClickListener() {
-            @Override
-            public void subjectChildClick(String groupName, String groupPushId, String groupSubjectPushId, String groupClassSubjects) {
-                Toast.makeText(context, "Testing the subject on Adapter_ClassGroup!!", Toast.LENGTH_SHORT).show();
-                refSaveCurrDataForSubj.child("groupName").setValue(groupName);
-                refSaveCurrDataForSubj.child("SubGroupPushId").setValue(groupSubjectPushId);
-                refSaveCurrDataForSubj.child("GroupPushId").setValue(groupPushId);
-                refSaveCurrDataForSubj.child("groupClassSubjects").setValue(groupClassSubjects);
-            }
-        });
         holder.subjectList.setAdapter(adapter_topicList);
-        adapter_topicList.setSubjectDetailsModelList(class_groupList.get(position).getSubjectDetailsModelList());
+        Log.d(TAG, "onBindViewHolder: "+childItemArrayListSubjectName.size());
+        adapter_topicList.setSubjectDetailsModelList(childItemArrayListSubjectName);
         adapter_topicList.notifyDataSetChanged();
 
     }
 
     @Override
     public int getItemCount() {
-        Log.d("Sizee", "Class Items: "+class_groupList.size());
-        return class_groupList.size();
+        return parentItemArrayListClassName.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
