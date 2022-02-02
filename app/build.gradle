@@ -103,6 +103,9 @@ dependencies {
     //noinspection LifecycleAnnotationProcessorWithJava8
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
+    //picasso ----> for save the image in the imageview (profilePic)
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 
 }
 apply plugin: 'com.google.gms.google-services'
