@@ -4,6 +4,23 @@ import java.util.List;
 
 public class Subject_Details_Model {
 
+    private String subjectName;
+    public Subject_Details_Model(){}
+
+
+    public Subject_Details_Model(String subjectName) {
+        this.subjectName = subjectName;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
+
+/*
     String groupName,subjectTitle,subjectCreationDate;
 
 
@@ -30,6 +47,6 @@ public class Subject_Details_Model {
     public void setSubjectCreationDate(String subjectCreationDate) {
         this.subjectCreationDate = subjectCreationDate;
     }
-
+*/
 
 }

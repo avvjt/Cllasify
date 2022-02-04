@@ -22,10 +22,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -37,9 +39,20 @@ public class Adaptor_Friend_Chat extends RecyclerView.Adapter<Adaptor_Friend_Cha
     private Context context;
     private List<Class_Single_Friend> mMessages;
 
-    public Adaptor_Friend_Chat(Context context, List<Class_Single_Friend> mMessages) {
+//    final int ITEM_SENT = 1;
+//    final int ITEM_RECEIVE = 2;
+
+    String senderRoom;
+    String receiverRoom;
+
+    FirebaseRemoteConfig remoteConfig;
+
+    public Adaptor_Friend_Chat(Context context, ArrayList<Class_Single_Friend> messages, String senderRoom, String receiverRoom) {
+        remoteConfig = FirebaseRemoteConfig.getInstance();
         this.context = context;
-        this.mMessages = mMessages;
+        this.mMessages = messages;
+        this.senderRoom = senderRoom;
+        this.receiverRoom = receiverRoom;
     }
 
 

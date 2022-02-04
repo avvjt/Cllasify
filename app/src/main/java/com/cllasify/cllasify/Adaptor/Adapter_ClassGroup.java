@@ -29,12 +29,7 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
 
     Context context;
     List<Class_Group_Names> parentItemArrayListClassName;
-    List<Subject_Details_Model> childItemArrayListSubjectName;
     onAddSubjectClickListener onAddSubjectClickListener;
-
-    public void setChildItemArrayListSubjectName(List<Subject_Details_Model> childItemArrayListSubjectName) {
-        this.childItemArrayListSubjectName = childItemArrayListSubjectName;
-    }
 
     public Adapter_ClassGroup(Context context, onAddSubjectClickListener onAddSubjectClickListener) {
         this.context = context;
@@ -56,15 +51,25 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
     @Override
     public void onBindViewHolder(@NonNull Adapter_ClassGroup.ViewHolder holder, int position) {
 
-        holder.classGroupName.setText(parentItemArrayListClassName.get(position).getGroupName());
+        holder.classGroupName.setText(parentItemArrayListClassName.get(position).getClassName());
+
+        Log.d(TAG, "onBindViewHolder: Adapter Class: "+parentItemArrayListClassName.get(position).getClassName());
 
         holder.addTopicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onAddSubjectClickListener.onAddSubjectClickListener(parentItemArrayListClassName.get(holder.getAdapterPosition()).getGroupName());
+                onAddSubjectClickListener.onAddSubjectClickListener(parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(),holder.getAdapterPosition());
             }
         });
-
+/*
+        holder.classGroupName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onAddSubjectClickListener.onClassClickListener(holder.getAdapterPosition());
+                holder.addTopicButton.setVisibility(View.VISIBLE);
+            }
+        });
+*/
 
 
         DatabaseReference refSaveCurrDataForSubj = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp")
@@ -80,12 +85,13 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
 //            }
 //        });
 
-        Adapter_TopicList adapter_topicList = new Adapter_TopicList(context.getApplicationContext());
-        holder.subjectList.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
-        holder.subjectList.setAdapter(adapter_topicList);
-        Log.d(TAG, "onBindViewHolder: "+childItemArrayListSubjectName.size());
-        adapter_topicList.setSubjectDetailsModelList(childItemArrayListSubjectName);
-        adapter_topicList.notifyDataSetChanged();
+        if(parentItemArrayListClassName.get(position).getChildItemList()!=null){
+            Adapter_TopicList adapter_topicList = new Adapter_TopicList(context.getApplicationContext());
+            holder.subjectList.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
+            holder.subjectList.setAdapter(adapter_topicList);
+            adapter_topicList.setSubjectDetailsModelList(parentItemArrayListClassName.get(position).getChildItemList());
+            adapter_topicList.notifyDataSetChanged();
+        }
 
     }
 
@@ -109,7 +115,9 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
     }
 
     public interface onAddSubjectClickListener{
-        void onAddSubjectClickListener(String groupName);
+        void onAddSubjectClickListener(String groupName,int position);
+
+//        void onClassClickListener(int position);
     }
 }
 

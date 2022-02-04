@@ -61,6 +61,7 @@
         <activity android:name=".Feed.Landing_Feed_Answer" />
         <activity android:name=".Feed.Landing_Feed" />
         <activity android:name=".Dashboard" />
+        <activity android:name=".NestedRecyclerview.TestFirebaseActivity"/>
         <activity
             android:name=".Register.getStarted"
             android:theme="@style/SplashScreen">

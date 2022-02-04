@@ -1,6 +1,7 @@
 package com.cllasify.cllasify.Adaptor;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -140,6 +141,8 @@ public class Adaptor_QueryGroup extends RecyclerView.Adapter<Adaptor_QueryGroup.
 
 
                             mListener.showChildGroupAdaptor(position, groupName, groupPushId, groupUserID, groupCategory);
+
+                            Log.d("GroupCLK", "position: "+position+"\nGroupName: "+groupName+"\ngroupPushId: "+groupPushId+"\ngroupUserID: "+groupUserID+"\ngroupCategory: "+groupCategory);
                         }
                     }
                 }

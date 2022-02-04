@@ -55,7 +55,7 @@ public class Adapter_TopicList extends RecyclerView.Adapter<Adapter_TopicList.Vi
 
     @Override
     public void onBindViewHolder(@NonNull Adapter_TopicList.ViewHolder holder, int position) {
-            holder.subjectTopic.setText(subjectDetailsModelList.get(position).getSubjectTitle());
+            holder.subjectTopic.setText(subjectDetailsModelList.get(position).getSubjectName());
 
     }
 

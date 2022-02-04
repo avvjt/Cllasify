@@ -4,16 +4,24 @@ import java.util.List;
 
 public class ParentItem {
 
-    private String parentName , parentImage;
+    private String className;
     private List<ChildItem> childItemList;
 
 
     public ParentItem(){}
 
-    public ParentItem(String parentName, String parentImage, List<ChildItem> childItemList) {
-        this.parentName = parentName;
-        this.parentImage = parentImage;
+    public ParentItem(String className, List<ChildItem> childItemList) {
+        this.className = className;
         this.childItemList = childItemList;
+    }
+
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 
     public List<ChildItem> getChildItemList() {
@@ -22,21 +30,5 @@ public class ParentItem {
 
     public void setChildItemList(List<ChildItem> childItemList) {
         this.childItemList = childItemList;
-    }
-
-    public String getParentName() {
-        return parentName;
-    }
-
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
-    }
-
-    public String getParentImage() {
-        return parentImage;
-    }
-
-    public void setParentImage(String parentImage) {
-        this.parentImage = parentImage;
     }
 }

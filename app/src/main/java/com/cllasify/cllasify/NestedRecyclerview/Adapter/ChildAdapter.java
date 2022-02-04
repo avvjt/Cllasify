@@ -36,9 +36,7 @@ public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.ChildViewHol
     @Override
     public void onBindViewHolder(@NonNull ChildViewHolder holder, int position) {
         ChildItem childItem = childItemList.get(position);
-        holder.childName.setText(childItem.getChildName());
-        Glide.with(holder.itemView.getContext()).load(childItem.getChildImage())
-                .into(holder.childImageView);
+        holder.childName.setText(childItem.getSubjectName());
 
     }
 
@@ -59,7 +57,6 @@ public class ChildAdapter extends RecyclerView.Adapter<ChildAdapter.ChildViewHol
             super(itemView);
 
             childName = itemView.findViewById(R.id.eachChildItemName);
-            childImageView = itemView.findViewById(R.id.eachChildItemIV);
 
         }
     }

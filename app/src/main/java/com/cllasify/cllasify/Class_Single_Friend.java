@@ -2,12 +2,24 @@ package com.cllasify.cllasify;
 
 public class Class_Single_Friend {
 
-    String message, senderId, timestamp;
+    String messageId,message, senderId;
+    long timestamp;
 
-    public Class_Single_Friend(String message, String senderId, String timestamp) {
+    public Class_Single_Friend(String message, String senderId, long timestamp) {
         this.message = message;
         this.senderId = senderId;
         this.timestamp = timestamp;
+    }
+
+    public Class_Single_Friend() {
+    }
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.messageId = messageId;
     }
 
     public String getMessage() {
@@ -26,11 +38,11 @@ public class Class_Single_Friend {
         this.senderId = senderId;
     }
 
-    public String getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 }

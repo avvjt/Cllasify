@@ -2,30 +2,63 @@ package com.cllasify.cllasify;
 
 import android.util.Log;
 
+import com.cllasify.cllasify.NestedRecyclerview.Model.ChildItem;
+
 import java.util.List;
 
 public class Class_Group_Names {
 
+
+    private String className;
+    private List<Subject_Details_Model> childItemList;
+
+
+    public Class_Group_Names(){}
+
+    public Class_Group_Names(String className, List<Subject_Details_Model> childItemList) {
+        this.className = className;
+        this.childItemList = childItemList;
+    }
+
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public List<Subject_Details_Model> getChildItemList() {
+        return childItemList;
+    }
+
+    public void setChildItemList(List<Subject_Details_Model> childItemList) {
+        this.childItemList = childItemList;
+    }
+
+    /*
     String dateTime;
     String userName;
     String userId;
     String groupName;
-//    boolean isAdmin;
 
-//    List<Subject_Details_Model> subjectDetailsModelList;
+    boolean isAdmin;
 
-//    public void setSubjectDetailsModelList(List<Subject_Details_Model> subjectDetailsModelList) {
-//        this.subjectDetailsModelList = subjectDetailsModelList;
-//        if(        subjectDetailsModelList.get(0).getGroupStudentList()!=null){
-//            Log.d("DATA", "setSubjectDetailsModelList: "+subjectDetailsModelList.get(0).getGroupStudentList().size());
-//
-//        }
-//
-//    }
-//
-//    public List<Subject_Details_Model> getSubjectDetailsModelList() {
-//        return subjectDetailsModelList;
-//    }
+    List<Subject_Details_Model> subjectDetailsModelList;
+
+    public void setSubjectDetailsModelList(List<Subject_Details_Model> subjectDetailsModelList) {
+        this.subjectDetailsModelList = subjectDetailsModelList;
+        if(        subjectDetailsModelList.get(0).getGroupStudentList()!=null){
+            Log.d("DATA", "setSubjectDetailsModelList: "+subjectDetailsModelList.get(0).getGroupStudentList().size());
+
+        }
+
+    }
+
+    public List<Subject_Details_Model> getSubjectDetailsModelList() {
+        return subjectDetailsModelList;
+    }
 
     public Class_Group_Names(String dateTime, String userName, String userId, String groupName) {
         this.dateTime = dateTime;
@@ -78,4 +111,6 @@ public class Class_Group_Names {
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
+
+    */
 }

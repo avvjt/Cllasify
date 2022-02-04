@@ -1,5 +1,8 @@
 package com.cllasify.cllasify.NestedRecyclerview.Repo;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 
 import com.cllasify.cllasify.NestedRecyclerview.Model.ChildItem;
@@ -20,8 +23,7 @@ public class FirebaseRepo {
 
     public FirebaseRepo(OnRealtimeDbTaskComplete onRealtimeDbTaskComplete) {
         this.onRealtimeDbTaskComplete = onRealtimeDbTaskComplete;
-        databaseReference = FirebaseDatabase.getInstance().getReference()
-                .child("It industry");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("All_GRPs").child("Uni_Group_Name");
     }
 
     public void getAllData() {
@@ -31,15 +33,17 @@ public class FirebaseRepo {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 List<ParentItem> parentItemList = new ArrayList<>();
                 for (DataSnapshot ds : snapshot.getChildren()) {
+                    Log.d("Firee", "onDataChange: "+ds.child("className"));
+
                     ParentItem parentItem = new ParentItem();
-                    parentItem.setParentName(ds.child("parentName").getValue(String.class));
-                    parentItem.setParentImage(ds.child("parentImage").getValue(String.class));
+                    parentItem.setClassName(ds.child("className").getValue(String.class));
 
                     GenericTypeIndicator<ArrayList<ChildItem>> genericTypeIndicator =
                             new GenericTypeIndicator<ArrayList<ChildItem>>() {};
 
-                    parentItem.setChildItemList(ds.child("childData").getValue(genericTypeIndicator));
+                    parentItem.setChildItemList(ds.child("classSubjectData").getValue(genericTypeIndicator));
                     parentItemList.add(parentItem);
+
                 }
                 onRealtimeDbTaskComplete.onSuccess(parentItemList);
             }

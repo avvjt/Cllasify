@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.Friend_Chat_Activity;
+import com.cllasify.cllasify.NestedRecyclerview.TestFirebaseActivity;
 import com.cllasify.cllasify.Profile.AccountSetting_Activity;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Register.getStarted;
@@ -59,7 +61,8 @@ public class Profile_Activity extends AppCompatActivity {
 
     Button btn_AddBio, btn_AddBioCancel,
             btn_AddInstitute, btn_AddInstituteCancel,
-            btn_AddUserName, btn_AddUserNameCancel, toFriendFrag;
+            btn_AddUserName, btn_AddUserNameCancel,
+            toTestTree,toFriendsFrag;
 
     ImageButton ib_ShareApp, ib_Settings;
 
@@ -78,17 +81,30 @@ public class Profile_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
 
-        toFriendFrag = findViewById(R.id.toFriendFrag);
+        toTestTree = findViewById(R.id.toTestTree);
 
-        toFriendFrag.setOnClickListener(new View.OnClickListener() {
+        toTestTree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Profile_Activity.this, TestFirebaseActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
+        toFriendsFrag = findViewById(R.id.toFriendsFrag);
+
+        toFriendsFrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Fragment fragment = new FriendsFragment();
 //                FragmentManager fragmentManager = getSupportFragmentManager();
 //                fragmentManager.beginTransaction().replace(R.id.friendsTest, fragment).commit();
 
-//                Intent intent = new Intent(Profile_Activity.this, MainActivity.class);
-//                startActivity(intent);
+                Intent intent = new Intent(Profile_Activity.this, Friend_Chat_Activity.class);
+                intent.putExtra("name", "Sket Ers");
+                intent.putExtra("receiverUid","wNiVeMP6WyRLsPtetpeMxbQhIFJ2");
+                startActivity(intent);
 
             }
         });

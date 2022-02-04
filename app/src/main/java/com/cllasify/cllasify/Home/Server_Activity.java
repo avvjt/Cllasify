@@ -79,6 +79,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -87,7 +88,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+
 public class Server_Activity extends AppCompatActivity implements Adapter_ClassGroup.onAddSubjectClickListener {
+
+
     TabLayout tabLayout, tabl_ChatView;
     ViewPager viewPager, view_Pager_ChatView;
     BottomNavigationView bottomNavigationView;
@@ -186,6 +190,10 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     private ArrayList<Class_Group> chats;
     private MessageAdapter messageAdapter;
     private boolean onScreen;
+
+
+    String classPosition = null;
+
 
     //Topic - Subjects;
     Adapter_TopicList adapter_topicList;
@@ -333,7 +341,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         adapter_classGroup = new Adapter_ClassGroup(getApplicationContext(), this);
         parentItemArrayListClassName = new ArrayList<>();
         childItemArrayListClassName = new ArrayList<>();
-        adapter_classGroup.setChildItemArrayListSubjectName(childItemArrayListClassName);
         adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
         recyclerViewClassList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerViewClassList.setAdapter(adapter_classGroup);
@@ -534,9 +541,77 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     }
 
     private void saveClassGroup(String groupPushId, String sbChildGroupName) {
-        Class_Group_Names subGroup_Class = new Class_Group_Names(dateTimeCC, userName, SharePref.getDataFromPref(Constant.USER_ID), sbChildGroupName);
+//        Class_Group_Names subGroup_Class = new Class_Group_Names(dateTimeCC, userName, SharePref.getDataFromPref(Constant.USER_ID), sbChildGroupName);
 //        subGroup_Class.setAdmin(true);
-        refChildGroup.child(sbChildGroupName).setValue(subGroup_Class);
+
+
+        DatabaseReference testDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs");
+
+        testDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                DatabaseReference getServerTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+                getServerTemp.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Log.d("SerT", "Temp Server name: " + (snapshot.child("serverName").getValue()));
+                        Log.d("SerT", "Temp Group Push Id: " + (snapshot.child("tpGroupPushId").getValue()));
+                        Log.d("SerT", "Group Push Id: " + groupPushId);
+                        Log.d("SerT", "Group name: " + sbChildGroupName);
+
+
+                        testDatabaseReference.child(groupPushId).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                testDatabaseReference.child(groupPushId).child(String.valueOf(snapshot.getChildrenCount())).child("className").setValue(sbChildGroupName);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                /*
+
+                 */
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
+/*
+        DatabaseReference testDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs");
+
+        testDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                long noofGroupinCategory = snapshot.getChildrenCount();
+                String push = "Uni_Group_No_" + noofGroupinCategory + "_" + sbChildGroupName;
+                testDatabaseReference.child(push).child(String.valueOf(snapshot.getChildrenCount())).child("className").setValue(sbChildGroupName + " Testttt");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+*/
     }
 
     private void setReference(String groupPushId, String subGroupPushId, String groupClassSubject) {
@@ -1130,7 +1205,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                     referenceALLPBLCGroup.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            long noofGroupinCategory = snapshot.getChildrenCount() + 1;
+                            long noofGroupinCategory = snapshot.getChildrenCount();
                             String push = "Uni_Group_No_" + noofGroupinCategory + "_" + GroupName;
 
                             refAllGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(push);
@@ -1187,50 +1262,61 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
                 Log.d(TAG, "showChildGroupAdaptor: Clicked");
 
-                refChildGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId);
 
-
-                refChildGroup.addValueEventListener(new ValueEventListener() {
-
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
+                databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Log.d(TAG, "showChildGroupAdaptor: Clicked" + snapshot.getKey());
                         parentItemArrayListClassName.clear();
-                        childItemArrayListClassName.clear();
-//                        for (int i = 0; i < snapshot.getChildrenCount(); i++) {
-//                            Log.d(TAG, "onDataChange: " +"Value: "+ snapshot.getValue());
-//                            Log.d(TAG, "onDataChange: "+"Key: "+snapshot.getKey());
-//                            Log.d(TAG, "onDataChange: "+snapshot.child(""));
-//                            Class_Group_Names class_group_names = snapshot.getValue(Class_Group_Names.class);
-//                            parentItemArrayListClassName.add(class_group_names);
-//                        }
-//                        for (DataSnapshot parentSnap : snapshot.getChildren()) {
-//                            Class_Group_Names class_group_names = parentSnap.getValue(Class_Group_Names.class);
-//                            parentItemArrayListClassName.add(class_group_names);
-//
-//                            if (parentSnap.hasChild("English")) {
-//
-//                                for (DataSnapshot childSnap : parentSnap.child("English").getChildren()) {
-//                                    Log.d(TAG, "onDataChange: "+childSnap.getValue());
-//                                    Subject_Details_Model subject_details_model = new Subject_Details_Model();
-//                                    subject_details_model.setSubjectTitle(childSnap.getValue(String.class));
-//                                    subject_details_model.setSubjectCreationDate(childSnap.getValue(String.class));
-//                                    subject_details_model.setGroupName(childSnap.getValue(String.class));
-//                                    childItemArrayListClassName.add(subject_details_model);
-//                                }
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            Log.d(TAG, "showChildGroupAdaptor: ClickedDS" + dataSnapshot.child("className").getValue().toString());
+
+                            Class_Group_Names class_group_names = new Class_Group_Names();
+                            class_group_names.setClassName(dataSnapshot.child("className").getValue(String.class));
+
+                            GenericTypeIndicator<ArrayList<Subject_Details_Model>> genericTypeIndicator =
+                                    new GenericTypeIndicator<ArrayList<Subject_Details_Model>>() {
+                                    };
+
+                            class_group_names.setChildItemList(dataSnapshot.child("classSubjectData").getValue(genericTypeIndicator));
+                            parentItemArrayListClassName.add(class_group_names);
+
+//                            for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
+//                                Log.d(TAG, "showChildGroupAdaptor: ClickedDS 1"+dataSnapshot1.getValue().toString());
+/*
+                                Class_Group_Names class_group_names = new Class_Group_Names();
+                                class_group_names.setClassName(dataSnapshot1.child("className").getValue(String.class));
+
+                                GenericTypeIndicator<ArrayList<Subject_Details_Model>> genericTypeIndicator =
+                                        new GenericTypeIndicator<ArrayList<Subject_Details_Model>>() {
+                                        };
+
+                                class_group_names.setChildItemList(dataSnapshot1.child("classSubjectData").getValue(genericTypeIndicator));
+                                parentItemArrayListClassName.add(class_group_names);
+*/
 //                            }
-//                            //Bhai 6 data aa rhe dekho double double
-//                            if (parentSnap.hasChild("History")) {
-//                                for (DataSnapshot childSnap : parentSnap.child("History").getChildren()) {
-//                                    Subject_Details_Model subject_details_model = new Subject_Details_Model();
-//                                    subject_details_model.setSubjectTitle(childSnap.getValue(String.class));
-//                                    subject_details_model.setSubjectCreationDate(childSnap.getValue(String.class));
-//                                    subject_details_model.setGroupName(childSnap.getValue(String.class));
-//                                    childItemArrayListClassName.add(subject_details_model);
-//                                }
-//                            }
-//
-//                        }
-                        adapter_classGroup.setChildItemArrayListSubjectName(childItemArrayListClassName);
+                        }
+
+
+                        /*
+                        parentItemArrayListClassName.clear();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            for (DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()) {
+                                Class_Group_Names class_group_names = new Class_Group_Names();
+                                class_group_names.setClassName(dataSnapshot2.child("className").getValue(String.class));
+
+                                GenericTypeIndicator<ArrayList<Subject_Details_Model>> genericTypeIndicator =
+                                        new GenericTypeIndicator<ArrayList<Subject_Details_Model>>() {
+                                        };
+
+                                class_group_names.setChildItemList(dataSnapshot2.child("classSubjectData").getValue(genericTypeIndicator));
+                                parentItemArrayListClassName.add(class_group_names);
+                            }
+
+
+                        }
+                        */
                         adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
                         adapter_classGroup.notifyDataSetChanged();
                     }
@@ -1242,50 +1328,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 });
 
 
-
-/*
-                refChildGroup.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        parentItemArrayListClassName.clear();
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-
-                            Class_Group_Names class_group_names = dataSnapshot.getValue(Class_Group_Names.class);
-                            List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
-                            for (DataSnapshot subjectSnapShot : dataSnapshot.getChildren()) {
-                                Subject_Details_Model subject_details_model = new Subject_Details_Model();
-                                subject_details_model.setGroupPushId(groupPushId);
-                                subject_details_model.setGroupSubjectPushId(subjectSnapShot.getKey());
-                                subject_details_model.setSubjectTitle(subjectSnapShot.child("subjectTitle").getValue(String.class));
-                                subject_details_model.setGroupName(subjectSnapShot.child("groupName").getValue(String.class));
-                                subject_details_model.setSubjectCreationDate(subjectSnapShot.child("subjectCreationDate").getValue(String.class));
-                                List<Group_Students> groupStudentsList = new ArrayList<>();
-                                if (subjectSnapShot.child("groupStudentList").hasChildren()) {
-                                    for (DataSnapshot groupSnap : subjectSnapShot.child("groupStudentList").getChildren()) {
-
-                                        Group_Students group_students = groupSnap.getValue(Group_Students.class);
-                                        Log.d(TAG, "STUDENT: " + group_students.getUserName());
-                                        groupStudentsList.add(group_students);
-                                    }
-                                    subject_details_model.setGroupStudentList(groupStudentsList);
-                                    Log.d(TAG, "LIST SIZE: " + groupStudentsList.size());
-                                }
-                                subjectDetailsModelList.add(subject_details_model);
-                            }
-                            class_group_names.setSubjectDetailsModelList(subjectDetailsModelList);
-
-
-                            parentItemArrayListClassName.add(class_group_names);
-                        }
-                        adapter_classGroup.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-*/
                 addNewClassButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -2586,9 +2628,18 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         alert.show();
 
     }
-
+/*
     @Override
-    public void onAddSubjectClickListener(String groupName) {
+    public void onClassClickListener(int position) {
+        classPosition = String.valueOf(position);
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("")
+    }
+*/
+    @Override
+    public void onAddSubjectClickListener(String groupName,int position) {
+
+        Log.d("SNAAPYKey", "onDataChange: " +position);
 
         View customAlertDialog = LayoutInflater.from(Server_Activity.this).inflate(R.layout.dialog_add_new_subject_topic, null, false);
 
@@ -2613,6 +2664,167 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             public void onClick(View view) {
                 if (!et_TopicName.getText().toString().isEmpty()) {
 
+                    DatabaseReference getServerTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+                    getServerTemp.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Log.d("SerT", "Temp Server name: " + (snapshot.child("serverName").getValue()));
+                            Log.d("SerT", "Temp Group Push Id: " + (snapshot.child("tpGroupPushId").getValue()));
+
+                            String groupPushId = snapshot.child("tpGroupPushId").getValue().toString();
+
+                            DatabaseReference testDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
+
+                            testDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+//                        Log.d("SNAAP", "onDataChange: "+snapshot.getChildrenCount());
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+//                            Log.d("SNAAP", "onDataChange: " + dataSnapshot.child("classSubjectData").child("1").child("subjectName").getValue());
+//                            Log.d("SNAAPY", "onDataChange: " + dataSnapshot.getKey());
+
+                                        Class_Group_Names class_group_names = new Class_Group_Names();
+                                        class_group_names.setClassName(dataSnapshot.child("className").getValue(String.class));
+
+//                                        Log.d("SNAAPYKey", "onDataChange: " + );
+
+                                        testDatabaseReference.child(String.valueOf(position)).child("classSubjectData").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                testDatabaseReference.child(String.valueOf(position)).child("classSubjectData").child(String.valueOf(snapshot.getChildrenCount())).child("subjectName").setValue(et_TopicName.getText().toString());
+
+
+                                                GenericTypeIndicator<ArrayList<Subject_Details_Model>> genericTypeIndicator =
+                                                        new GenericTypeIndicator<ArrayList<Subject_Details_Model>>() {
+                                                        };
+
+//                                                testDatabaseReference.child(String.valueOf(dataSnapshot.getKey())).child("classSubjectData").setValue(class_group_names);
+
+                                                if (snapshot.hasChild("classSubjectData")) {
+                                                    childItemArrayListClassName = snapshot.child("classSubjectData").getValue(genericTypeIndicator);
+                                                }
+
+
+                                                Subject_Details_Model subject_details_model = new Subject_Details_Model();
+                                                subject_details_model.setSubjectName(et_TopicName.getText().toString());
+
+
+                                                childItemArrayListClassName.add(subject_details_model);
+
+                                                class_group_names.setChildItemList(childItemArrayListClassName);
+
+                                                parentItemArrayListClassName.add(class_group_names);
+
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
+                                    }
+                                }
+
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+
+/*
+                            DatabaseReference testDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
+                            testDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    Log.d(TAG, "onDataChange: "+snapshot.getKey());
+                                    for (DataSnapshot snapshot1: snapshot.getChildren()){
+                                        Log.d(TAG, "onDataChange: Children: "+snapshot1.child(""));
+                                    }
+//                                    testDatabaseReference.child(String.valueOf(snapshot.getChildrenCount())).child("className").setValue(et_TopicName + "Testttt");
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+*/
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                    dialog.dismiss();
+/*
+                    DatabaseReference testDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs");
+                    testDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            parentItemArrayListClassName.clear();
+                            childItemArrayListClassName.clear();
+                            Log.d(TAG, "onDataChange: " + snapshot.getKey() + " VALUE" + snapshot.getValue());
+                            for (DataSnapshot snapshot2 : snapshot.getChildren()) {
+
+                                Log.d(TAG, "onDataChange:2 " + snapshot2.getKey() + " VALUE" + snapshot2.getValue());
+                                for (DataSnapshot snapshot3 : snapshot2.getChildren()) {
+                                    if (groupName == snapshot3.child("className").getValue(String.class)) {
+                                        Log.d(TAG, "onDataChange:3 " + snapshot3.getKey() + " VALUE" + snapshot3.getValue());
+
+                                        Class_Group_Names class_group_names = new Class_Group_Names();
+                                        class_group_names.setClassName(snapshot2.child("className").getValue(String.class));
+
+                                        GenericTypeIndicator<ArrayList<Subject_Details_Model>> genericTypeIndicator =
+                                                new GenericTypeIndicator<ArrayList<Subject_Details_Model>>() {
+                                                };
+                                        testDatabaseReference.child(snapshot2.getKey()).child(snapshot3.getKey()).child("classSubjectData").setValue(class_group_names);
+
+
+                                        if (snapshot2.hasChild("classSubjectData")) {
+                                            childItemArrayListClassName = snapshot2.child("classSubjectData").getValue(genericTypeIndicator);
+                                        }
+
+
+                                        Subject_Details_Model subject_details_model = new Subject_Details_Model();
+                                        subject_details_model.setSubjectName(et_TopicName.getText().toString());
+
+
+                                        childItemArrayListClassName.add(subject_details_model);
+
+                                        class_group_names.setChildItemList(childItemArrayListClassName);
+
+                                        parentItemArrayListClassName.add(class_group_names);
+                                    }
+//
+
+                                }
+
+                            }
+
+                            adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
+                            adapter_classGroup.notifyDataSetChanged();
+
+//                            testDatabaseReference.child(push).child(String.valueOf(snapshot.getChildrenCount())).child("className").setValue(et_TopicName+"Testttt");
+//                            Subject_Details_Model subject_details_model = new Subject_Details_Model();
+//                            subject_details_model.setSubjectName(et_TopicName.getText().toString());
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+*/
+                    /*
                     Subject_Details_Model subject_details_model = new Subject_Details_Model();
                     subject_details_model.setSubjectTitle(et_TopicName.getText().toString());
                     subject_details_model.setGroupName(groupName);
@@ -2627,6 +2839,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                     refChildGroup.child(groupName).child(subject_details_model.getSubjectTitle()).setValue(subject_details_model);
 //                    readChildData(groupName, subject_details_model.getSubjectTitle());
                     dialog.dismiss();
+                    */
+
                 }
             }
         });
