@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -56,7 +59,6 @@ public class ProfileSetting_Activity extends AppCompatActivity {
 
 
     DatabaseReference root;
-    StorageReference reference;
 
 
     @Override
@@ -71,7 +73,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
 
         root=FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
 //        DatabaseReference root=FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
-        reference=FirebaseStorage.getInstance().getReference().child(userID);
+        storageReference=FirebaseStorage.getInstance().getReference().child(userID);
 
         tv_ShowUserName=findViewById(R.id.tv_ShowUserName);
         tv_Bio=findViewById(R.id.tv_Bio);
@@ -96,22 +98,24 @@ public class ProfileSetting_Activity extends AppCompatActivity {
 
         storageReference= FirebaseStorage.getInstance().getReference();
 
+        StorageReference profileRef = storageReference.child("users profile pic/"+userID+"/profile.jpg");
 
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(prof_pic);
+            }
+        });
+
+
+        // Change profile pic
         tv_ChangeProfileImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //open gallery
+                Intent openGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(openGalleryIntent,1000);
 
-                Intent intent=new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(intent,100);
-
-//                Intent openGalleryIntent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                if (openGalleryIntent.resolveActivity(getPackageManager())!=null){
-
-//                    startActivityForResult(openGalleryIntent,TAKE_IMAGE_CODE);
-//                }
-//                startActivityForResult(openGalleryIntent,1000);
             }
         });
 
@@ -364,84 +368,45 @@ public class ProfileSetting_Activity extends AppCompatActivity {
 
     }
 
+
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, @androidx.annotation.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1000){
+            if(resultCode == Activity.RESULT_OK){
+                Uri imageUri = data.getData();
 
-        if (requestCode==100 && data!=null && data.getData()!=null){
-             imageUrl = data.getData();
-//             prof_pic.setImageURI(imageUrl);
-
-             uploadImagetoFirebaseStorage(imageUrl);
-
+                uploadImageToFirebaseStorage(imageUri);
 
 
+            }
         }
-
-        //            refShowUserPrivateGroup.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                    if (snapshot.getChildrenCount()>0){
-//                        notifyPB.show();
-//                    }
-//                }
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//                }
-//            });
-
-//        if (requestCode==TAKE_IMAGE_CODE){
-//            if (requestCode== Activity.RESULT_OK){
-////                Bitmap bitmap= (Bitmap) data.getExtras().get("data");
-////                prof_pic.setImageBitmap(bitmap);
-//
-//                Uri galleryImageUri=data.getData();
-//                prof_pic.setImageURI(galleryImageUri);
-//
-////                uploadImagetoFirebaseStorage(galleryImageUri);
-//
-//            }
-//
-//        }
 
     }
 
-    private void uploadImagetoFirebaseStorage(Uri ImageUri) {
+    private void uploadImageToFirebaseStorage(Uri imageUri) {
+        // upload Image To FirebaseStorage
 
-
-        StorageReference fileref=reference.child("profilePic"+"."+getFileExtention(ImageUri));
-        fileref.putFile(ImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        final StorageReference fileRef = storageReference.child("users profile pic/"+userID+"/profile.jpg");
+        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Class_Group class_group=new Class_Group(ImageUri.toString());
-//                String classId= root.push().getKey();
-                root.child("profilePic").setValue(ImageUri.toString());
-                Toast.makeText(ProfileSetting_Activity.this, "Upload successfully", Toast.LENGTH_SHORT).show();
-
-            }
-        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-
+               fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                   @Override
+                   public void onSuccess(Uri uri) {
+                       Picasso.get().load(uri).into(prof_pic);
+                   }
+               });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(ProfileSetting_Activity.this, "Uploading failed to server", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfileSetting_Activity.this, "Failed", Toast.LENGTH_SHORT).show();
             }
         });
-//        StorageReference imageRef=storageReference.child(userID).child("ProfilePic.jpg");
-//        imageRef.putFile(galleryImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-//            @Override
-//            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Toast.makeText(PFSActivity.this, "Image Successfully updated", Toast.LENGTH_SHORT).show();
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(PFSActivity.this, "Image Upload Failure", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
+
+
 
     }
 
