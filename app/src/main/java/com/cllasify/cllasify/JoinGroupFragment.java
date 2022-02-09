@@ -285,7 +285,7 @@ public class JoinGroupFragment extends Fragment {
 
     private void showBtmDialogClass(String adminGroupID,String groupName,String groupPushId) {
         Adaptor_ShowGrpClass showGrpClassList;
-        List<Class_Group> listGrpClassList;
+        List<Class_Group_Names> listGrpClassList;
         DatabaseReference refGroupClassList;
 
         BottomSheetDialog bottomSheetDialoglogin=new BottomSheetDialog(getContext());
@@ -325,7 +325,7 @@ public class JoinGroupFragment extends Fragment {
 ////                arrayList.add(value);fatten
 ////                arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,arrayList);
 ////                listView.setAdapter(arrayAdapter);
-                Class_Group class_userDashBoard = snapshot.getValue(Class_Group.class);
+                Class_Group_Names class_userDashBoard = snapshot.getValue(Class_Group_Names.class);
                 listGrpClassList.add(class_userDashBoard);
 
                 showGrpClassList.notifyDataSetChanged();

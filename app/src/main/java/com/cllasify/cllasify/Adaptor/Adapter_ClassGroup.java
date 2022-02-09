@@ -21,6 +21,7 @@ import com.cllasify.cllasify.Utility.SharePref;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.ViewHolder> {
@@ -29,11 +30,16 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
 
     Context context;
     List<Class_Group_Names> parentItemArrayListClassName;
+    List <Subject_Details_Model> testingNo;
     onAddSubjectClickListener onAddSubjectClickListener;
 
     public Adapter_ClassGroup(Context context, onAddSubjectClickListener onAddSubjectClickListener) {
         this.context = context;
         this.onAddSubjectClickListener = onAddSubjectClickListener;
+    }
+
+    public void setOnItemClickListener(onAddSubjectClickListener listener){
+        onAddSubjectClickListener =listener;
     }
 
 
@@ -61,6 +67,19 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
                 onAddSubjectClickListener.onAddSubjectClickListener(parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(),holder.getAdapterPosition());
             }
         });
+
+        holder.classGroupName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.subjectList.setVisibility(View.VISIBLE);
+                Toast.makeText(context, "Clicked on Class", Toast.LENGTH_SHORT).show();
+                Log.d("POSS", "Class position : "+holder.getAdapterPosition());
+                onAddSubjectClickListener.onClassClickListener(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName());
+            }
+        });
+
+
+
 /*
         holder.classGroupName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,11 +108,23 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
             Adapter_TopicList adapter_topicList = new Adapter_TopicList(context.getApplicationContext());
             holder.subjectList.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
             holder.subjectList.setAdapter(adapter_topicList);
+//            Log.d("TOP", "onBindViewHolder: "+parentItemArrayListClassName.get(position).getChildItemList().get(position).getSubjectName());
             adapter_topicList.setSubjectDetailsModelList(parentItemArrayListClassName.get(position).getChildItemList());
             adapter_topicList.notifyDataSetChanged();
         }
+        else {
+            testingNo = new ArrayList<>();
+            Adapter_TopicList adapter_topicList = new Adapter_TopicList(context.getApplicationContext());
+            holder.subjectList.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
+            holder.subjectList.setAdapter(adapter_topicList);
+            adapter_topicList.setSubjectDetailsModelList(testingNo);
+            adapter_topicList.notifyDataSetChanged();
+            Toast.makeText(context, "No sub classes", Toast.LENGTH_SHORT).show();
+        }
 
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -116,8 +147,7 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
 
     public interface onAddSubjectClickListener{
         void onAddSubjectClickListener(String groupName,int position);
-
-//        void onClassClickListener(int position);
+        void onClassClickListener(int position,String classGroupName);
     }
 }
 

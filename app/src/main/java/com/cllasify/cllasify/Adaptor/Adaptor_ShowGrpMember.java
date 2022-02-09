@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Class.Class_Group;
+import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.Group_Students;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,7 +36,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpMember.MyViewHolder> {
 
     private Context context;
-    private List<Group_Students> mDatalistNew;
+    private List<Class_Student_Details> mDatalistNew;
     ProgressDialog notifyPB;
     DatabaseReference refUserFollowing;
     boolean subsClick=false;
@@ -53,7 +54,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
         mListener=listener;
     }
 
-    public Adaptor_ShowGrpMember(Context context, List<Group_Students> mDatalistNew) {
+    public Adaptor_ShowGrpMember(Context context, List<Class_Student_Details> mDatalistNew) {
         this.context = context;
         this.mDatalistNew = mDatalistNew;
     }
@@ -75,7 +76,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         assert currentUser != null;
         String currUserID=currentUser.getUid();
-        Group_Students Answers=mDatalistNew.get(position);
+        Class_Student_Details Answers=mDatalistNew.get(position);
 
         String userName=Answers.getUserName();
         String userID=Answers.getUserId();
@@ -237,7 +238,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
                     Toast.makeText(context.getApplicationContext(), "Clicked Friend", Toast.LENGTH_SHORT).show();
                     if (mListener != null) {
                         int position = getAdapterPosition();
-                        Group_Students user = mDatalistNew.get(getAdapterPosition());
+                        Class_Student_Details user = mDatalistNew.get(getAdapterPosition());
                         String memberUserId=user.userId;
                         String memberUserName=user.userName;
 

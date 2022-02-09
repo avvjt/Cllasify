@@ -36,6 +36,7 @@ import com.cllasify.cllasify.Adaptor.Adaptor_SearchGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpClass;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
 import com.cllasify.cllasify.Class.Class_Group;
+import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.MySingleton;
 import com.cllasify.cllasify.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -403,7 +404,7 @@ public class Discover_Activity extends AppCompatActivity {
 
     private void showBottmDialogClass(String adminGroupID,String groupName,String groupPushId) {
         Adaptor_ShowGrpClass showGrpClassList;
-        List<Class_Group> listGrpClassList;
+        List<Class_Group_Names> listGrpClassList;
         DatabaseReference refGroupClassList;
 
         BottomSheetDialog bottomSheetDialoglogin=new BottomSheetDialog(Discover_Activity.this);
@@ -443,7 +444,7 @@ public class Discover_Activity extends AppCompatActivity {
 ////                arrayList.add(value);fatten
 ////                arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,arrayList);
 ////                listView.setAdapter(arrayAdapter);
-                Class_Group class_userDashBoard = snapshot.getValue(Class_Group.class);
+                Class_Group_Names class_userDashBoard = snapshot.getValue(Class_Group_Names.class);
                 listGrpClassList.add(class_userDashBoard);
 
                 showGrpClassList.notifyDataSetChanged();

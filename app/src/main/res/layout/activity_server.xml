@@ -512,31 +512,33 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/endPanelLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:id="@+id/endPanelLinearLayout">
+                android:orientation="vertical">
+
                 <Button
+                    android:id="@+id/endPanelAllFriendsButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/endPanelAllFriendsButton"
-                    android:text="All Friends"/>
+                    android:text="All Friends" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/endPanelAllFriendsRecyclerView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/endPanelAllFriendsRecyclerView"/>
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/tv_GroupMember"
-                    android:text="@string/group_members"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_width="match_parent"/>
+                    android:text="@string/group_members" />
+
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_GrpMemberList"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="84dp"
-                    android:id="@+id/rv_GrpMemberList"/>
+                    android:layout_marginBottom="84dp" />
 
 
                 <RelativeLayout
@@ -544,24 +546,25 @@
                     android:layout_height="wrap_content">
 
                     <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:id="@+id/btn_lteachattend"
-                        android:visibility="gone"
-                        android:text="@string/attendance"/>
-                    <Button
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/btn_lteachexam"
-                        android:visibility="gone"
-                        android:text="Exam"/>
-                    <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/btn_lteachresult"
-                        android:visibility="gone"
-                        android:text="Result"/>
+                        android:text="@string/attendance"
+                        android:visibility="gone" />
 
+                    <Button
+                        android:id="@+id/btn_lteachexam"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Exam"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:id="@+id/btn_lteachresult"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Result"
+                        android:visibility="gone" />
 
 
                 </RelativeLayout>

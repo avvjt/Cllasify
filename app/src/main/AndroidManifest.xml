@@ -36,7 +36,9 @@
         <activity android:name=".Home.Notification_Activity" />
         <activity android:name=".Home.Profile_Activity" />
         <activity android:name=".Home.Discover_Activity" />
-        <activity android:name=".Home.Server_Activity" />
+        <activity android:name=".Home.Server_Activity" >
+
+        </activity>
         <activity android:name=".Profile.ProfileSetting_Activity" />
         <activity
             android:name=".Explore"

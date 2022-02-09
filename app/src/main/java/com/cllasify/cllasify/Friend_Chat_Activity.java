@@ -33,14 +33,17 @@ import java.util.List;
 public class Friend_Chat_Activity extends AppCompatActivity {
     private static final String TAG = Friend_Chat_Activity.class.getSimpleName();
 
+    FirebaseDatabase firebaseDatabase;
+    ArrayList<Class_Single_Friend> messageList;
     Adaptor_Friend_Chat adaptor_friend_chat;
+
+
+
     LinearLayoutManager linearLayoutManager;
     RecyclerView recyclerView;
-    ArrayList<Class_Single_Friend> messageList;
     Context activity = this;
 
     String senderRoom,receiverRoom;
-    FirebaseDatabase firebaseDatabase;
     String senderUid,receiverUid;
     ImageButton ib_FrndP_csubmit;
 
@@ -51,21 +54,28 @@ public class Friend_Chat_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_chat);
 
+
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        messageList = new ArrayList<>();
+        adaptor_friend_chat = new Adaptor_Friend_Chat(this, messageList, senderRoom, receiverRoom);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adaptor_friend_chat);
+
+
+
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         TextView friendNameTv = findViewById(R.id.tv_friend_name);
         String friendName = getIntent().getStringExtra("name");
-        messageList = new ArrayList<>();
         Log.d(TAG, "onCreate: friend name ->" + friendName);
         friendNameTv.setText(friendName);
         recyclerView = findViewById(R.id.recyclerView);
-        linearLayoutManager = new LinearLayoutManager(activity);
         ib_FrndP_csubmit = findViewById(R.id.ib_FrndP_csubmit);
         messageTxtFriend = findViewById(R.id.et_FrndP_text);
 
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adaptor_friend_chat);
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
         senderUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         receiverUid = getIntent().getStringExtra("receiverUid");
         Log.d(TAG, "onCreate: receiverUserId: " + receiverUid);
@@ -75,14 +85,8 @@ public class Friend_Chat_Activity extends AppCompatActivity {
         senderRoom = senderUid + receiverUid;
         receiverRoom = receiverUid + senderUid;
 
-        adaptor_friend_chat = new Adaptor_Friend_Chat(this, messageList, senderRoom, receiverRoom);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(adaptor_friend_chat);
 
-        firebaseDatabase.getReference().child("chats")
-                .child(senderRoom)
-                .child("messages")
-                .addValueEventListener(new ValueEventListener() {
+        firebaseDatabase.getReference().child("chats").child(senderRoom).child("messages").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         messageList.clear();

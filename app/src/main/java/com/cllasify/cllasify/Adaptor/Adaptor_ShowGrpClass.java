@@ -4,35 +4,39 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Class.Class_Group;
+import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
 public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpClass.MyViewHolder> {
 
     private Context context;
-    private List<Class_Group> mDatalistNew;
+    private List<Class_Group_Names> mDatalistNew;
     ProgressDialog notifyPB;
     DatabaseReference refUserFollowing;
     boolean subsClick=false;
     private OnItemClickListener mListener;
+
+    FirebaseAuth firebaseAuth;
+    FirebaseUser currentUser;
+    String currUserID;
 
     public interface  OnItemClickListener{
         void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId);
@@ -45,7 +49,7 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
         mListener=listener;
     }
 
-    public Adaptor_ShowGrpClass(Context context, List<Class_Group> mDatalistNew) {
+    public Adaptor_ShowGrpClass(Context context, List<Class_Group_Names> mDatalistNew) {
         this.context = context;
         this.mDatalistNew = mDatalistNew;
     }
@@ -65,9 +69,9 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         assert currentUser != null;
 //        String currUserID=currentUser.getUid();
-        Class_Group Answers=mDatalistNew.get(position);
+        Class_Group_Names Answers = mDatalistNew.get(position);
 
-        String groupClassName=Answers.getGroupName();
+        String groupClassName = Answers.getClassName();
         Log.d("Grouupt", "GroupName: "+groupClassName);
 //        String userID=Answers.getUserId();
 
@@ -127,16 +131,17 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
 //            ib_SubMenu =itemView.findViewById(R.id.ib_SubMenu);
 
 
-            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+            firebaseAuth = FirebaseAuth.getInstance();
+            currentUser = firebaseAuth.getCurrentUser();
             assert currentUser != null;
-            String currUserID=currentUser.getUid();
+            currUserID=currentUser.getUid();
 
             btn_ClassAdmission.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (mListener != null) {
                         int position = getAdapterPosition();
+                        /*
                         Class_Group user = mDatalistNew.get(getAdapterPosition());
                         String adminGroupID=user.userId;
                         String adminEmailID=user.userEmailId;
@@ -148,6 +153,7 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
                             //mListener.dislikeAns();
                         }
                         }
+                         */
                     }
                 }
             });
@@ -157,6 +163,44 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
                 public void onClick(View view) {
                     if (mListener != null) {
                         int position = getAdapterPosition();
+                        Class_Group_Names classGroupNames = mDatalistNew.get(position);
+                        String className = classGroupNames.getClassName();
+                        String groupPushId = classGroupNames.getGroupPushId();
+
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group")
+                                .child(groupPushId);
+
+                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String adminGroupID = snapshot.child("userId").getValue().toString();
+                                String adminUserName = snapshot.child("userName").getValue().toString();
+                                String groupName = snapshot.child("groupName").getValue().toString();
+
+                                Log.d("JOIN", "adminGroupID: " + adminGroupID + "\nsubGroupName: " + className +
+                                        "\nadminUserName: " + adminUserName + "\ngroupName: " + groupName + "\ngroupPushId: " + groupPushId+"\nClass position: "+position);
+
+
+                                String userID = currentUser.getUid();
+
+                                DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID)
+                                        .child("classPos");
+                                databaseReferenceTemp.setValue(position);
+
+                                //Push Id lochaaa
+                                mListener.JoinGroupClass(adminGroupID, adminUserName, groupName, groupPushId, className, "pushId");
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
+
+                        /*
                         Class_Group user = mDatalistNew.get(getAdapterPosition());
                         String adminGroupID=user.userId;
                         String subGroupName=user.userEmailId;
@@ -167,10 +211,15 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
 
                         if (!currUserID.equals(adminGroupID)) {
                             if (position != RecyclerView.NO_POSITION) {
+
+                                Log.d("JOIN", "adminGroupID: "+adminGroupID+"\nsubGroupName: "+subGroupName+
+                                        "\nadminUserName: "+adminUserName+"\npushId: "+pushId+"\ngroupName: "+groupName+"\ngroupPushId: "+groupPushId);
                                 mListener.JoinGroupClass(adminGroupID,adminUserName, groupName,groupPushId,subGroupName, pushId);
                                 //mListener.dislikeAns();
                             }
                         }
+                        */
+
                     }
                 }
             });

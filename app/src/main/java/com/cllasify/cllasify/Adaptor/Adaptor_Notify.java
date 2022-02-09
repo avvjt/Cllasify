@@ -115,7 +115,7 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                                     if (GroupName.isEmpty()) {
                                         holder.tv_Groupinvite.setVisibility(View.GONE);
                                     } else {
-                                        holder.tv_Groupinvite.setText("User " + userName + " wants to join Sub-class : " + GroupName + " of server " + servvName);
+                                        holder.tv_Groupinvite.setText("User " + userName + " wants to join Sub-class : " + subServer + " of server " + GroupName);
 
                                     }
                                     if (GroupName.isEmpty()) {
@@ -323,6 +323,10 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                         String classPushid = user.subGroupName;
                         String groupPushId = user.groupPositionId;
                         String notifyReq = user.notifyCategory;
+
+                        Log.d("APPROVE", "onClick: "+"reqUserID: "+reqUserID+"\ncurrUserId: "+currUserId+
+                                "\ngroupName: "+groupName+"\nuserName: "+userName+"\nnotPushId: "+notPushId+"\nclassPushid: "+classPushid+
+                                "\ngroupPushId: "+groupPushId+"\nnotifyReq: "+notifyReq);
 
                         if (position != RecyclerView.NO_POSITION) {
 //                            DatabaseReference refSubsGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups").child(groupName);

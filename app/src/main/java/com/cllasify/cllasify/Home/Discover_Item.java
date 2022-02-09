@@ -11,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.cllasify.cllasify.Adaptor.Adapter_Discover_Item;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpClass;
 import com.cllasify.cllasify.Class.Class_Group;
+import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,7 +46,7 @@ public class Discover_Item extends AppCompatActivity {
     */
 
     Adaptor_ShowGrpClass showGrpClassList;
-    List<Class_Group> listGrpClassList;
+    List<Class_Group_Names> listGrpClassList;
     DatabaseReference refGroupClassList;
     Calendar calenderCC=Calendar.getInstance();
     SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
@@ -80,7 +82,7 @@ public class Discover_Item extends AppCompatActivity {
         showGrpClassList = new Adaptor_ShowGrpClass(Discover_Item.this, listGrpClassList);
         rv_ShowClass.setAdapter(showGrpClassList);
 
-        refGroupClassList = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child("All_Sub_Group").child(groupPushId);
+        refGroupClassList = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child("All_GRPs").child(groupPushId);
         listGrpClassList.clear();
 
         showGrpClassList.setOnItemClickListener(new Adaptor_ShowGrpClass.OnItemClickListener() {
@@ -99,7 +101,8 @@ public class Discover_Item extends AppCompatActivity {
 ////                arrayList.add(value);fatten
 ////                arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,arrayList);
 ////                listView.setAdapter(arrayAdapter);
-                Class_Group class_userDashBoard = snapshot.getValue(Class_Group.class);
+                Class_Group_Names class_userDashBoard = snapshot.getValue(Class_Group_Names.class);
+                Log.d("CLLGRP", "onChildAdded: "+snapshot.getValue());
                 listGrpClassList.add(class_userDashBoard);
 
                 showGrpClassList.notifyDataSetChanged();
@@ -157,6 +160,9 @@ public class Discover_Item extends AppCompatActivity {
 
 
     private void sentGroupJoinInvitation(String adminGroupID,String adminUserName, String groupName, String groupPushId,String subGroupName) {
+
+        Log.d("JOINTT", "adminGroupID: "+adminGroupID+"\nsubGroupName: "+subGroupName+
+                "\nadminUserName: "+adminUserName+"\ngroupName: "+groupName+"\ngroupPushId: "+groupPushId);
 
         AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(Discover_Item.this);
         alertdialogbuilder.setTitle("Please confirm !!!")

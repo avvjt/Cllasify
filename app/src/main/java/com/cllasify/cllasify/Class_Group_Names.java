@@ -9,17 +9,25 @@ import java.util.List;
 public class Class_Group_Names {
 
 
-    private String className;
+    private String className,groupPushId;
     private List<Subject_Details_Model> childItemList;
 
 
     public Class_Group_Names(){}
 
-    public Class_Group_Names(String className, List<Subject_Details_Model> childItemList) {
+    public Class_Group_Names(String className, String groupPushId, List<Subject_Details_Model> childItemList) {
         this.className = className;
+        this.groupPushId = groupPushId;
         this.childItemList = childItemList;
     }
 
+    public String getGroupPushId() {
+        return groupPushId;
+    }
+
+    public void setGroupPushId(String groupPushId) {
+        this.groupPushId = groupPushId;
+    }
 
     public String getClassName() {
         return className;
