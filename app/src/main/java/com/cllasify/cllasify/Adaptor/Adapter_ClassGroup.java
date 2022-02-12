@@ -71,13 +71,31 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
         holder.classGroupName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.subjectList.setVisibility(View.VISIBLE);
+
                 Toast.makeText(context, "Clicked on Class", Toast.LENGTH_SHORT).show();
                 Log.d("POSS", "Class position : "+holder.getAdapterPosition());
                 onAddSubjectClickListener.onClassClickListener(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName());
             }
         });
 
+        holder.dropDownBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                holder.subjectList.setVisibility(View.VISIBLE);
+                holder.dropUpBtn.setVisibility(View.VISIBLE);
+                holder.dropDownBtn.setVisibility(View.GONE);
+            }
+        });
+
+
+        holder.dropUpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.subjectList.setVisibility(View.GONE);
+                holder.dropUpBtn.setVisibility(View.GONE);
+                holder.dropDownBtn.setVisibility(View.VISIBLE);
+            }
+        });
 
 
 /*
@@ -133,6 +151,7 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView classGroupName;
+        ImageButton dropDownBtn,dropUpBtn;
         ImageButton addTopicButton;
         RecyclerView subjectList;
 
@@ -141,6 +160,8 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
             classGroupName = itemView.findViewById(R.id.tv_classGroupTitle);
             addTopicButton = itemView.findViewById(R.id.addNewTopicButton);
             subjectList = itemView.findViewById(R.id.subjectList);
+            dropDownBtn = itemView.findViewById(R.id.dropDownBtn);
+            dropUpBtn = itemView.findViewById(R.id.dropUpBtn);
 
         }
     }

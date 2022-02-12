@@ -184,9 +184,6 @@
         </LinearLayout>
 
 
-
-
-
         <RelativeLayout
             android:id="@+id/center_panel"
             style="@style/Panel"
@@ -524,6 +521,7 @@
                     android:text="All Friends" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:visibility="gone"
                     android:id="@+id/endPanelAllFriendsRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

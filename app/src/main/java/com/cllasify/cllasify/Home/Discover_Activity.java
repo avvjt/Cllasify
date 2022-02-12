@@ -434,6 +434,13 @@ public class Discover_Activity extends AppCompatActivity {
                 sentGroupJoinInvitation(adminGroupID,adminUserName,groupName,groupPushId,subGroupName);
 
             }
+
+            @Override
+            public void admissionClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String adminEmailId) {
+
+            }
+
+
         });
 
         refGroupClassList.addChildEventListener(new ChildEventListener() {

@@ -38,8 +38,10 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
     FirebaseUser currentUser;
     String currUserID;
 
-    public interface  OnItemClickListener{
+    public interface OnItemClickListener {
         void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId);
+
+        void admissionClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName,String adminEmailId);
 
 //        void AddFrndDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId);
 //        void FollowFriendDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId);
@@ -112,6 +114,7 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
         return mDatalistNew.size();
     }
 
+
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         Class_Group class_Group;
@@ -141,20 +144,83 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
                 public void onClick(View view) {
                     if (mListener != null) {
                         int position = getAdapterPosition();
+                        Class_Group_Names classGroupNames = mDatalistNew.get(position);
+                        String className = classGroupNames.getClassName();
+                        String groupPushId = classGroupNames.getGroupPushId();
+
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group")
+                                .child(groupPushId);
+
+                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String adminUserId = snapshot.child("userId").getValue().toString();
+                                String adminUserName = snapshot.child("userName").getValue().toString();
+                                String groupName = snapshot.child("groupName").getValue().toString();
+
+                                DatabaseReference addmissionDR = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration")
+                                        .child(adminUserId);
+
+                                addmissionDR.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot01) {
+                                        //userEmailId
+                                        String adminEmailId = snapshot01.child("userEmailId").getValue().toString();
+                                        Log.d("ADMISSION", "adminUserId: " + adminUserId + "\nuserEmailId: " + adminEmailId + "\nsubGroupName: " + className +
+                                                "\nadminUserName: " + adminUserName + "\ngroupName: " + groupName + "\ngroupPushId: " + groupPushId + "\nClass position: " + position);
+
+
+                                        String userID = currentUser.getUid();
+
+                                        DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID)
+                                                .child("classPos");
+                                        databaseReferenceTemp.setValue(position);
+
+                                        //Push Id lochaaa
+                                        mListener.admissionClass(adminUserId, adminUserName, groupName, groupPushId, className,adminEmailId);
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
+
                         /*
                         Class_Group user = mDatalistNew.get(getAdapterPosition());
                         String adminGroupID=user.userId;
-                        String adminEmailID=user.userEmailId;
+                        String subGroupName=user.userEmailId;
                         String adminUserName=user.userName;
                         String pushId=user.position;
+                        String groupName=user.groupName;
+                        String groupPushId=user.groupCategory;
+
                         if (!currUserID.equals(adminGroupID)) {
-                        if (position != RecyclerView.NO_POSITION) {
-//                            mListener.AddFrndDialog(adminGroupID, adminEmailID, adminUserName, pushId);
-                            //mListener.dislikeAns();
+                            if (position != RecyclerView.NO_POSITION) {
+
+                                Log.d("JOIN", "adminGroupID: "+adminGroupID+"\nsubGroupName: "+subGroupName+
+                                        "\nadminUserName: "+adminUserName+"\npushId: "+pushId+"\ngroupName: "+groupName+"\ngroupPushId: "+groupPushId);
+                                mListener.JoinGroupClass(adminGroupID,adminUserName, groupName,groupPushId,subGroupName, pushId);
+                                //mListener.dislikeAns();
+                            }
                         }
-                        }
-                         */
+                        */
+
                     }
+
                 }
             });
 

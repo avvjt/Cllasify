@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import com.cllasify.cllasify.Adaptor.Adapter_All_Friends;
 import com.cllasify.cllasify.Adaptor.Adapter_ClassGroup;
 import com.cllasify.cllasify.Adaptor.Adapter_TopicList;
 import com.cllasify.cllasify.Adaptor.Adaptor_Friends;
@@ -96,7 +97,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     TabLayout tabLayout, tabl_ChatView;
     ViewPager viewPager, view_Pager_ChatView;
     BottomNavigationView bottomNavigationView;
-
+    TextView tv_GroupMember;
     RecyclerView rv_UserPublicGroupTitle, rv_OtherPublicGroupTitle, rv_GrpMemberList, recyclerViewClassList, topicNamesRecyclerView, endPanelAllFriendsRecyclerView;
     RelativeLayout rl_ChatView;
     FirebaseDatabase refFriendList;
@@ -117,11 +118,13 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             list_ChatDashboard, list_DoubtDashboard, list_Friend, list_ChatListDashboard, list_NewChatDashboard;
 
     List<Class_Student_Details> listGrpMemberList;
+    List<String> allFriendsList;
 
     Adaptor_QueryGroup showGroupadaptor, showUserPrivateGroupadaptor, showUserPublicGroupadaptor;
     Adaptor_ShowGrpMember showGrpMemberList;
     Adaptor_QueryGroup showOtherUserPublicGroupAdaptor;
     Adaptor_Friends show_FriendAdaptor, showChatListDashadaptor;
+    Adapter_All_Friends adapter_all_friends;
     Adaptor_ShowGroup showChatDashadaptor;
     Adaptor_ShowDoubt showDoubtDashAdaptor;
     FloatingActionButton fab_addDoubtQ;
@@ -156,7 +159,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
     RecyclerView rvFriendsList;
     Adaptor_FriendsList adaptor_friendsList;
-    List<Class_Group> friendsListClasses;
+    List<FriendsListClass> friendsListClasses;
     TextView recChats;
 
 
@@ -212,6 +215,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         Rv_DoubtChat = findViewById(R.id.Rv_DoubtChat);
         doubtFragment = new DoubtFragment();
 
+        tv_GroupMember = findViewById(R.id.tv_GroupMember);
+
         endPanelAllFriendsRecyclerView = findViewById(R.id.endPanelAllFriendsRecyclerView);
 
         rl_ChatView = findViewById(R.id.rl_ChatView);
@@ -257,7 +262,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
          */
         endPanelAllFriendsButton = findViewById(R.id.endPanelAllFriendsButton);
         endPanelLinearLayout = findViewById(R.id.endPanelLinearLayout);
-        endPanelAllFriendsRecyclerView = findViewById(R.id.endPanelAllFriendsRecyclerView);
 
 
         /*
@@ -310,9 +314,10 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         listGrpMemberList = new ArrayList<>();
         rv_GrpMemberList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
+        allFriendsList = new ArrayList<>();
+
 
         endPanelAllFriendsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        endPanelAllFriendsRecyclerView.setAdapter(show_FriendAdaptor);
 
 
         //Setting up layout manager
@@ -331,6 +336,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
         showGrpMemberList = new Adaptor_ShowGrpMember(Server_Activity.this, listGrpMemberList);
 
+        adapter_all_friends = new Adapter_All_Friends(this, allFriendsList);
+        endPanelAllFriendsRecyclerView.setAdapter(adapter_all_friends);
 
         show_FriendAdaptor = new Adaptor_Friends(this, list_Friend);
         showChatListDashadaptor = new Adaptor_Friends(this, list_ChatListDashboard);
@@ -341,6 +348,9 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
 
         ib_csubmit = findViewById(R.id.ib_csubmit);
+
+
+        adaptor_friendsList = new Adaptor_FriendsList(getApplicationContext(), friendsListClasses);
 
 
         //Class-Group
@@ -764,6 +774,9 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         });
 
 
+
+
+
 //        refGrpMemberList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("User_Subscribed_Groups");
 
 
@@ -930,27 +943,51 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 }
             });
 
+            chatListDashboard();
+
             ImageViewRecentChat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+
 //                    groupSection.setVisibility(View.VISIBLE);
 //                    textViewGroupName.setVisibility(View.VISIBLE);
 //                    topicNamesRecyclerView.setVisibility(View.GONE);
 //                    recyclerViewGroupNameList.setVisibility(View.VISIBLE);
 //                    textViewGroupName.setText("Recent Chats");
 //                    addNewClassButton.setVisibility(View.GONE);
+                    ll_AddJoinGrp.setVisibility(View.GONE);
+                    tv_GroupMember.setVisibility(View.GONE);
+                    rv_GrpMemberList.setVisibility(View.GONE);
                     imageViewAddPanelAddGroup.setVisibility(View.GONE);
+                    endPanelAllFriendsRecyclerView.setVisibility(View.VISIBLE);
                     recChats.setText("Recent Chats");
                     groupSection.setVisibility(View.GONE);
                     friendSection.setVisibility(View.VISIBLE);
 
-
 //                    rvFriendsList.setVisibility(View.VISIBLE);
 
-                    adaptor_friendsList = new Adaptor_FriendsList(getApplicationContext(), friendsListClasses);
                     rvFriendsList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                     rvFriendsList.setAdapter(adaptor_friendsList);
-                    chatListDashboard();
+
+                    adaptor_friendsList.setFriendListClick(new Adaptor_FriendsList.OnItemClickListener() {
+                        @Override
+                        public void onFriendClick(String friendName, String friendUserId) {
+
+                            overlappingPanels.closePanels();
+
+                            ll_AddJoinGrp.setVisibility(View.GONE);
+
+                            Fragment fragment = new Friend_Chat_Activity();
+                            getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.center_panel, fragment).addToBackStack(fragment.getClass().getSimpleName()).commit();
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString("name", friendName);
+                            bundle.putString("receiverUid", friendUserId);
+                            fragment.setArguments(bundle);
+                        }
+                    });
 
                 }
             });
@@ -1683,20 +1720,16 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
     //personal dom chat dashboard
     private void chatListDashboard() {
-
-        //FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(userID).child(frndUserId).child("Chat_Message");
-
-        refFriendList.getReference().child("Users").child("Friends").child(userID).addValueEventListener(new ValueEventListener() {
+        FirebaseDatabase.getInstance().getReference().child("chats").child("RecentChats").child(userID).child("recentChatUser").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 friendsListClasses.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    FriendsListClass friendsListClass = dataSnapshot.getValue(FriendsListClass.class);
+                    friendsListClasses.add(friendsListClass);
+                    adaptor_friendsList.notifyDataSetChanged();
 
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    Class_Group friendsList = postSnapshot.getValue(Class_Group.class);
-                    friendsListClasses.add(friendsList);
-                    Toast.makeText(getApplicationContext(), "........" + friendsList.getUserName(), Toast.LENGTH_SHORT).show();
                 }
-                adaptor_friendsList.notifyDataSetChanged();
             }
 
             @Override
@@ -1704,6 +1737,28 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
             }
         });
+
+
+        refFriendList.getReference().child("Users").child("Friends").child(userID).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                allFriendsList.clear();
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+//                    Log.d("TAG", "onDataChange: FRNDS: "+postSnapshot.getKey());
+                    String friendsList = postSnapshot.getKey();
+                    allFriendsList.add(friendsList);
+//                    Toast.makeText(getApplicationContext(), "........" + friendsList.getUserName(), Toast.LENGTH_SHORT).show();
+                }
+                adapter_all_friends.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 /*
         List<Class_Group> friends = new ArrayList<Class_Group>();
         refFriendList.addValueEventListener(new ValueEventListener() {
@@ -2194,10 +2249,24 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         btn_messageFrnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), Friend_Chat_Activity.class);
-                intent.putExtra("name", memberUserName);
-                intent.putExtra("receiverUid", memberUserId);
-                startActivity(intent);
+
+                btmSheetUserProfile.dismiss();
+
+                ll_AddJoinGrp.setVisibility(View.GONE);
+                overlappingPanels.closePanels();
+                Fragment fragment = new Friend_Chat_Activity();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.center_panel, fragment).addToBackStack(fragment.getClass().getSimpleName()).commit();
+
+//                Intent intent = new Intent(getApplicationContext(), Friend_Chat_Activity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("name", memberUserName);
+                bundle.putString("receiverUid", memberUserId);
+                fragment.setArguments(bundle);
+
+//                intent.putExtra("name", memberUserName);
+//                intent.putExtra("receiverUid", memberUserId);
+//                startActivity(intent);
             }
         });
 
@@ -2294,6 +2363,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             @Override
             public void onClick(View view) {
                 sentInvitation(memberUserId, memberUserName, "AddFrnd");
+                Log.d("FRIEND", "friend's name: " + memberUserName + "\n friend's userId: " + memberUserId);
 
             }
         });
@@ -3022,6 +3092,9 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
 
     }
+
+
+
 
 
 //    private void readChildData(String groupName, String subjectTitle) {

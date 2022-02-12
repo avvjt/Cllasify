@@ -205,7 +205,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
             }
         });
 
-
+/*
         tv_notiConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -221,6 +221,8 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
             }
         });
+
+        */
 //        tv_SignOut.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

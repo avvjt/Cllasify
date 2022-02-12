@@ -245,6 +245,8 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
                         if (!currUserID.equals(memberUserId)) {
                             if (position != RecyclerView.NO_POSITION) {
 //                                String adminUserName=user.userName;
+
+
                                 mListener.MemberProfile(memberUserId,memberUserName);
                                 //mListener.dislikeAns();
                             }

@@ -97,9 +97,6 @@ public class Profile_Activity extends AppCompatActivity {
         toFriendsFrag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Fragment fragment = new FriendsFragment();
-//                FragmentManager fragmentManager = getSupportFragmentManager();
-//                fragmentManager.beginTransaction().replace(R.id.friendsTest, fragment).commit();
 
                 Intent intent = new Intent(Profile_Activity.this, Friend_Chat_Activity.class);
                 intent.putExtra("name", "Sket Ers");

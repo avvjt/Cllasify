@@ -21,21 +21,21 @@ import java.util.List;
 public class Adaptor_FriendsList extends RecyclerView.Adapter<Adaptor_FriendsList.MyViewHolder> {
 
     private Context context;
-    private List<Class_Group> friendsListClassesList;
+    private List<FriendsListClass> friendsListClassesList;
     ProgressDialog notifyPB;
     private OnItemClickListener mListener;
     int selected_position = 0;
 
 
     public interface OnItemClickListener {
-
+        void onFriendClick(String friendName,String friendUserId);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setFriendListClick(OnItemClickListener listener) {
         mListener = listener;
     }
 
-    public Adaptor_FriendsList(Context context, List<Class_Group> friendsListClassesList) {
+    public Adaptor_FriendsList(Context context, List<FriendsListClass> friendsListClassesList) {
         this.context = context;
         this. friendsListClassesList =  friendsListClassesList;
     }
@@ -53,12 +53,21 @@ public class Adaptor_FriendsList extends RecyclerView.Adapter<Adaptor_FriendsLis
 
         Toast.makeText(context, "pppppppp", Toast.LENGTH_SHORT).show();
 
-        Class_Group friend = friendsListClassesList.get(position);
-        holder.userName.setText(friend.getUserName());
+        FriendsListClass friend = friendsListClassesList.get(position);
 
-        Toast.makeText(context, ""+friend.getUserName(), Toast.LENGTH_SHORT).show();
+        String friendName = friend.getName();
+        String friendUserId = friend.getUserId();
 
-        Log.d("TAGGYP", "chatListDashboard: \n" + friend.getUserId());
+        holder.userName.setText(friendName);
+
+        Log.d("TAGGYP", "FriendName: " + friendName+"\nFriendUserId: "+friendUserId);
+
+        holder.userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onFriendClick(friendName,friendUserId);
+            }
+        });
 
     }
 
@@ -74,6 +83,9 @@ public class Adaptor_FriendsList extends RecyclerView.Adapter<Adaptor_FriendsLis
         public MyViewHolder(View itemView) {
             super(itemView);
             userName = itemView.findViewById(R.id.tv_name);
+
+
+
         }
     }
 }

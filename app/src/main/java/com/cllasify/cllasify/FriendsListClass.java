@@ -5,6 +5,9 @@ public class FriendsListClass {
     String UserId;
     String name;
 
+    public FriendsListClass() {
+    }
+
     public FriendsListClass(String userId, String name) {
         UserId = userId;
         this.name = name;

@@ -1,5 +1,19 @@
 package com.cllasify.cllasify.Home;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -7,22 +21,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.cllasify.cllasify.Adaptor.Adapter_Discover_Item;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpClass;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.R;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -82,15 +85,22 @@ public class Discover_Item extends AppCompatActivity {
         showGrpClassList = new Adaptor_ShowGrpClass(Discover_Item.this, listGrpClassList);
         rv_ShowClass.setAdapter(showGrpClassList);
 
-        refGroupClassList = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child("All_GRPs").child(groupPushId);
+        refGroupClassList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
         listGrpClassList.clear();
 
         showGrpClassList.setOnItemClickListener(new Adaptor_ShowGrpClass.OnItemClickListener() {
             @Override
             public void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId) {
-                sentGroupJoinInvitation(adminGroupID,adminUserName,groupName,groupPushId,subGroupName);
+                sentGroupJoinInvitation(adminGroupID, adminUserName, groupName, groupPushId, subGroupName);
 
             }
+
+            @Override
+            public void admissionClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String adminEmailId) {
+                sentAdmissionRequest(adminGroupID, adminUserName, groupName, groupPushId, subGroupName, adminEmailId);
+            }
+
+
         });
 
         refGroupClassList.addChildEventListener(new ChildEventListener() {
@@ -153,16 +163,86 @@ public class Discover_Item extends AppCompatActivity {
         });
 
 
+    }
+
+    private void sentAdmissionRequest(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String adminEmailId) {
+
+        BottomSheetDialog bottomSheetDialogLogin = new BottomSheetDialog(this);
+        bottomSheetDialogLogin.setCancelable(false);
+        bottomSheetDialogLogin.setContentView(R.layout.btmdialog_admission);
+        ImageButton btn_Cancel = bottomSheetDialogLogin.findViewById(R.id.btn_Cancel);
+        Button btn_Submit = bottomSheetDialogLogin.findViewById(R.id.btn_Submit);
+
+        TextView teacherName,classNumber;
+        teacherName = bottomSheetDialogLogin.findViewById(R.id.teacherName);
+        classNumber = bottomSheetDialogLogin.findViewById(R.id.classNumber);
+
+        teacherName.setText("Teacher's name: "+adminUserName);
+        classNumber.setText("Class number: "+subGroupName);
+
+        EditText et_name, et_phoneNumber, et_address;
+        et_name = bottomSheetDialogLogin.findViewById(R.id.et_name);
+        et_phoneNumber = bottomSheetDialogLogin.findViewById(R.id.et_phoneNumber);
+        et_address = bottomSheetDialogLogin.findViewById(R.id.et_address);
+
+        btn_Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialogLogin.dismiss();
+            }
+        });
+
+        btn_Submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (et_name.getText().toString().isEmpty()) {
+                    Toast.makeText(Discover_Item.this, "Enter name", Toast.LENGTH_SHORT).show();
+                    et_name.setError("Enter name");
+                }
+                if (et_phoneNumber.getText().toString().isEmpty()) {
+                    Toast.makeText(Discover_Item.this, "Enter phoneNumber", Toast.LENGTH_SHORT).show();
+                    et_phoneNumber.setError("Enter phoneNumber");
+                }
+                if (et_address.getText().toString().isEmpty()) {
+                    Toast.makeText(Discover_Item.this, "Enter address", Toast.LENGTH_SHORT).show();
+                    et_address.setError("Enter address");
+                } else {
+
+                    String name = "Name : " + et_name.getText().toString().trim();
+                    String phoneNumber = "Phone Number : " + et_phoneNumber.getText().toString().trim();
+                    String address = "Address : " + et_address.getText().toString().trim();
+
+                    String together = name + "\n" + phoneNumber + "\n" + address;
+
+                    String subject = "Admission request from " + name + " to " + adminUserName;
+                    String gmailPackage = "com.google.android.gm";
+
+                    Intent email = new Intent(Intent.ACTION_SEND);
+                    email.setPackage(gmailPackage);
+                    email.putExtra(Intent.EXTRA_EMAIL, new String[]{adminEmailId});
+                    email.putExtra(Intent.EXTRA_SUBJECT, subject);
+                    email.putExtra(Intent.EXTRA_TEXT, together);
+                    email.setType("message/rfc822");
+                    startActivity(Intent.createChooser(email, "Choose an Email client :"));
 
 
+                    bottomSheetDialogLogin.dismiss();
+                }
+            }
+
+        });
+
+        bottomSheetDialogLogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        bottomSheetDialogLogin.show();
 
     }
 
 
-    private void sentGroupJoinInvitation(String adminGroupID,String adminUserName, String groupName, String groupPushId,String subGroupName) {
+    private void sentGroupJoinInvitation(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName) {
 
-        Log.d("JOINTT", "adminGroupID: "+adminGroupID+"\nsubGroupName: "+subGroupName+
-                "\nadminUserName: "+adminUserName+"\ngroupName: "+groupName+"\ngroupPushId: "+groupPushId);
+        Log.d("JOINTT", "adminGroupID: " + adminGroupID + "\nsubGroupName: " + subGroupName +
+                "\nadminUserName: " + adminUserName + "\ngroupName: " + groupName + "\ngroupPushId: " + groupPushId);
 
         AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(Discover_Item.this);
         alertdialogbuilder.setTitle("Please confirm !!!")
