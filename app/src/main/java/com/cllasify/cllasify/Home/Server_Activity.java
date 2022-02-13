@@ -773,6 +773,19 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
         });
 
+        btn_lteachattend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(Server_Activity.this, Attendance_Activity.class);
+                intent.putExtra("groupPushId", groupPushId);
+                intent.putExtra("subGroupPushId", subGroupPushId);
+                intent.putExtra("classPushId", groupClassSubject);
+                startActivity(intent);
+            }
+        });
+
+
 
 
 

@@ -1,13 +1,5 @@
 package com.cllasify.cllasify.Server;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.graphics.Bitmap;
@@ -23,17 +15,22 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_Attendance;
 import com.cllasify.cllasify.Adaptor.Adaptor_JoinGroupReq;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
 import com.cllasify.cllasify.Class.Class_Group;
-import com.cllasify.cllasify.Fragment.HomeFragment;
+import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,7 +39,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -85,16 +81,17 @@ public class Attendance_Activity extends AppCompatActivity {
 //    String currUserId,groupPushId,subGroupPushId,classPushId;
 
 
-    String remarks=null;
-    List<Class_Group> listGrpMemberList,mDatalistNew,list_showAttend;
+    String remarks = null;
+    List<Class_Student_Details> listGrpMemberList, mDatalistNew;
+    List<Class_Group> list_showAttend;
 
-    DatabaseReference refGrpMemberList,refAttendance;
+    DatabaseReference refGrpMemberList, refAttendance;
     RecyclerView rv_GrpMemberList;
     Adaptor_ShowGrpMember showGrpMemberList;
     Adaptor_Attendance showAttendanceStatus;
     Class_Group userAddGroupClass;
-    Button btn_ShowAttendStatus,btn_CheckAttendHistory;
-    ArrayList<HashMap<String, String>> arrayList=new ArrayList<HashMap<String, String>>();
+    Button btn_ShowAttendStatus, btn_CheckAttendHistory;
+    ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String, String>>();
 
     Adaptor_JoinGroupReq showSubChild_Adaptor;
     //    List<Class_Group> list_SubChild;
@@ -102,7 +99,7 @@ public class Attendance_Activity extends AppCompatActivity {
     ListAdapter adapter;
 
     Paint p = new Paint();
-    TextView tv_groupName,tv_subGroupName;
+    TextView tv_groupName, tv_subGroupName;
 
 
     Calendar calenderCC = Calendar.getInstance();
@@ -491,6 +488,7 @@ public class Attendance_Activity extends AppCompatActivity {
             }
 
         };
+
         btn_CheckAttendHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -500,6 +498,7 @@ public class Attendance_Activity extends AppCompatActivity {
 
             }
         });
+
         btn_ShowAttendStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -676,7 +675,7 @@ public class Attendance_Activity extends AppCompatActivity {
         initSwipe(groupPushId,subGroupPushId);
         rv_GrpMemberList.setLayoutManager(new LinearLayoutManager(this));
         listGrpMemberList = new ArrayList<>();
-//        showGrpMemberList = new Adaptor_ShowGrpMember(this, listGrpMemberList);
+        showGrpMemberList = new Adaptor_ShowGrpMember(this, listGrpMemberList);
         rv_GrpMemberList.setAdapter(showGrpMemberList);
         refGrpMemberList = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Universal_Group" ).child(groupPushId).child("User_Subscribed_Groups");
 
@@ -690,7 +689,7 @@ public class Attendance_Activity extends AppCompatActivity {
 ////                arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,arrayList);
 ////                listView.setAdapter(arrayAdapter);
 
-                Class_Group class_userDashBoard = snapshot.getValue(Class_Group.class);
+                Class_Student_Details class_userDashBoard = snapshot.getValue(Class_Student_Details.class);
                 listGrpMemberList.add(class_userDashBoard);
                 showGrpMemberList.notifyDataSetChanged();
 
@@ -730,24 +729,24 @@ public class Attendance_Activity extends AppCompatActivity {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 int position = viewHolder.getAdapterPosition();
-                Class_Group Answers=listGrpMemberList.get(position);
-                String userName=Answers.getUserName();
-                String userID=Answers.getUserId();
-                String push=Answers.getPosition();
-                String groupName=Answers.getGroupName();
+                Class_Student_Details Answers = listGrpMemberList.get(position);
+                String userName = Answers.getUserName();
+                String userID = Answers.getUserId();
+                String push = String.valueOf(0);
+                String groupName = "TXP group";
 
                 refAttendance = FirebaseDatabase.getInstance().getReference().child("Groups").child("Attendance").child(groupPushId).child(subGroupPushId).child(classPushId).child(formattedDate);
 //                userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, currUserId,groupName, position);
 //                refAttendance.child(push).setValue(userAddGroupClass);
 
-                if (direction == ItemTouchHelper.LEFT){
+                if (direction == ItemTouchHelper.LEFT) {
 //                    adapter.removeItem(position);
-                    swipeLeft(userName, userID,  currUserId,"Absent",subGroupPushId,push,groupName, groupPushId);
+                    swipeLeft(userName, userID, currUserId, "Absent", subGroupPushId, push, groupName, groupPushId);
 
                 } else {
-                    userAddGroupClass = new Class_Group(dateTimeCC, userName, userID,  currUserId,"Present",subGroupPushId,push,groupName, groupPushId);
+                    userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, currUserId, "Present", subGroupPushId, push, groupName, groupPushId);
                     refAttendance.child(userID).setValue(userAddGroupClass);
-                    Toast.makeText(Attendance_Activity.this, "Present"+userName, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Attendance_Activity.this, "Present" + userName, Toast.LENGTH_SHORT).show();
 
 //                    removeView();
 //                    edit_position = position;

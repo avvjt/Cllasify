@@ -547,8 +547,7 @@
                         android:id="@+id/btn_lteachattend"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/attendance"
-                        android:visibility="gone" />
+                        android:text="@string/attendance"/>
 
                     <Button
                         android:id="@+id/btn_lteachexam"
