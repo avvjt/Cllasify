@@ -112,8 +112,10 @@ public class Discover_Item extends AppCompatActivity {
 ////                arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,arrayList);
 ////                listView.setAdapter(arrayAdapter);
                 Class_Group_Names class_userDashBoard = snapshot.getValue(Class_Group_Names.class);
-                Log.d("CLLGRP", "onChildAdded: "+snapshot.getValue());
+                Log.d("CLLGRP", "onChildAdded: " + snapshot.child("classUniPushId"));
+                class_userDashBoard.setUniPushClassId(String.valueOf(snapshot.child("classUniPushId").getValue()));
                 listGrpClassList.add(class_userDashBoard);
+
 
                 showGrpClassList.notifyDataSetChanged();
             }

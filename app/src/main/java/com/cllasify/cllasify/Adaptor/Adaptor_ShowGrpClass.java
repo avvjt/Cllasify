@@ -249,9 +249,10 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
 
                                 String userID = currentUser.getUid();
 
-                                DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID)
-                                        .child("classPos");
-                                databaseReferenceTemp.setValue(position);
+                                DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+                                databaseReferenceTemp.child("classPos").setValue(position);
+
+                                databaseReferenceTemp.child("uniPushClassId").setValue(classGroupNames.getUniPushClassId());
 
                                 //Push Id lochaaa
                                 mListener.JoinGroupClass(adminGroupID, adminUserName, groupName, groupPushId, className, "pushId");

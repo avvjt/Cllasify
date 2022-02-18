@@ -35,7 +35,6 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.cllasify.cllasify.Adaptor.Adapter_All_Friends;
 import com.cllasify.cllasify.Adaptor.Adapter_ClassGroup;
-import com.cllasify.cllasify.Adaptor.Adapter_TopicList;
 import com.cllasify.cllasify.Adaptor.Adaptor_Friends;
 import com.cllasify.cllasify.Adaptor.Adaptor_FriendsList;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup;
@@ -151,7 +150,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             tv_FrndP_Title;
 
     ImageButton ib_cattach, ib_csubmit;
-    ImageButton ImageViewRecentChat, ib_FrndP_csubmit;
+    ImageButton ImageViewRecentChat, ib_FrndP_csubmit, ib_servSettings;
     Button btn_caddgroup, btn_cjoingroup, addNewClassButton;
     Button btn_lteachresult, btn_lteachattend, btn_lteachexam;
     Button endPanelAllFriendsButton;
@@ -187,27 +186,20 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     List<Subject_Details_Model> childItemArrayListClassName;
 
 
-    //1389
     //Chat_Activity
     private static final String TAG = "ChatActivity";
     ValueEventListener seenListener, readLiveMessageListener;
     private DatabaseReference reference;
-    private String user_name, userId;
     private ArrayList<Class_Group> chats;
     private MessageAdapter messageAdapter;
     private boolean onScreen;
-
-
-    String classPosition = null;
-
-
-    //Topic - Subjects;
-    Adapter_TopicList adapter_topicList;
 
     /*
         Initialisalisation
          */
     void init() {
+
+
         bottomNavigationView = this.findViewById(R.id.bottom_nav);
         rv_UserPublicGroupTitle = findViewById(R.id.rv_UserPublicGroupTitle);
         rv_OtherPublicGroupTitle = findViewById(R.id.rv_OtherPublicGroupTitle);
@@ -255,6 +247,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         friendsListClasses = new ArrayList<>();
 
         friendSection = findViewById(R.id.friendsSection);
+        ib_servSettings = findViewById(R.id.ib_servSettings);
 
 
         /*
@@ -387,6 +380,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         final String[] subjectName = new String[1];
         final String[] groupPushId = new String[1];
         final String[] classPosition = new String[1];
+        final String[] uniPushClassId = new String[1];
 
 
         DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
@@ -404,8 +398,11 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                         className[0] = snapshot.child("clickedClassName").getValue().toString().trim();
                         subjectName[0] = snapshot.child("clickedSubjectName").getValue().toString().trim();
                         groupPushId[0] = snapshot.child("clickedGroupPushId").getValue().toString().trim();
+                        uniPushClassId[0] = snapshot.child("uniPushClassId").getValue().toString().trim();
 
-                        setReference(groupPushId[0], className[0], subjectName[0], classPosition[0]);
+                        setReference(groupPushId[0], className[0], subjectName[0], classPosition[0], uniPushClassId[0]);
+
+
                         Log.d("SCSG", "init: serverName: " + serverName[0] + "\nclassName: " + className[0] + "\nsubjectName: " + subjectName[0] + "\ngroupPushId: " + groupPushId[0]);
 
                     }
@@ -415,6 +412,16 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+
+        ib_servSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Server_Activity.this, Server_Settings.class);
+                intent.putExtra("currUserId", userID);
+                startActivity(intent);
             }
         });
 
@@ -589,13 +596,17 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                         testDatabaseReference.child(groupPushId).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                testDatabaseReference.child(groupPushId).child(String.valueOf(snapshot.getChildrenCount())).child("className").setValue(sbChildGroupName);
-                                testDatabaseReference.child(groupPushId).child(String.valueOf(snapshot.getChildrenCount())).child("groupPushId").setValue(groupPushId);
-                                testDatabaseReference.child(groupPushId).child(String.valueOf(snapshot.getChildrenCount())).child("classStudentList").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                                String[] push01 = String.valueOf(testDatabaseReference.child(groupPushId).push()).split("/");
+
+                                testDatabaseReference.child(groupPushId).child(push01[6]).child("className").setValue(sbChildGroupName);
+                                testDatabaseReference.child(groupPushId).child(push01[6]).child("classUniPushId").setValue(push01[6]);
+                                testDatabaseReference.child(groupPushId).child(push01[6]).child("groupPushId").setValue(groupPushId);
+                                testDatabaseReference.child(groupPushId).child(push01[6]).child("classStudentList").addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot01) {
                                         Class_Student_Details class_student_details = new Class_Student_Details(true, userID, userName);
-                                        testDatabaseReference.child(groupPushId).child(String.valueOf(snapshot.getChildrenCount())).child("classStudentList")
+                                        testDatabaseReference.child(groupPushId).child(push01[6]).child("classStudentList")
                                                 .child(String.valueOf(snapshot01.getChildrenCount())).setValue(class_student_details);
                                     }
 
@@ -604,6 +615,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
                                     }
                                 });
+
                             }
 
                             @Override
@@ -652,7 +664,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 */
     }
 
-    private void setReference(String groupPushId, String subGroupPushId, String groupClassSubject, String classPosition) {
+    private void setReference(String groupPushId, String subGroupPushId, String groupClassSubject, String classPosition, String classUniPushId) {
 
         reference = FirebaseDatabase.getInstance().getReference().child("Groups").child("Chat_Message").child(groupPushId).child(subGroupPushId).child(groupClassSubject);
 
@@ -721,13 +733,11 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         allDoubtReference.addChildEventListener(doubtchildEventListener);
 
 
-        refGrpMemberList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classPosition).child("classStudentList");
+        refGrpMemberList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPushId).child("classStudentList");
 
         refGrpMemberList.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Class_Group class_userDashBoard = snapshot.getValue(Class_Group.class);
-
                 Class_Student_Details class_student_details = snapshot.getValue(Class_Student_Details.class);
                 listGrpMemberList.add(class_student_details);
 
@@ -1373,6 +1383,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     /*
     Public group part
      */
+
     public void showUserPublicGroupRV() {
 
         showUserPublicGroupadaptor.setOnItemClickListener(new Adaptor_QueryGroup.OnItemClickListener() {
@@ -1386,6 +1397,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
                 Log.d(TAG, "showChildGroupAdaptor: Clicked");
 
+                ib_servSettings.setVisibility(View.VISIBLE);
 
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
                 databaseReference.addValueEventListener(new ValueEventListener() {
@@ -1399,6 +1411,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                             Class_Group_Names class_group_names = new Class_Group_Names();
                             class_group_names.setGroupPushId(groupPushId);
                             class_group_names.setClassName(dataSnapshot.child("className").getValue(String.class));
+                            class_group_names.setUniPushClassId(dataSnapshot.child("classUniPushId").getValue(String.class));
 
                             Log.d("JOIN", "onClick: " + groupPushId);
 
@@ -1407,44 +1420,16 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                     };
 
                             class_group_names.setChildItemList(dataSnapshot.child("classSubjectData").getValue(genericTypeIndicator));
+
+                            GenericTypeIndicator<ArrayList<Class_Student_Details>> genericTypeIndicatorStudent =
+                                    new GenericTypeIndicator<ArrayList<Class_Student_Details>>() {
+                                    };
+
+                            class_group_names.setClass_student_detailsList(snapshot.child("classStudentList").getValue(genericTypeIndicatorStudent));
+
+
                             parentItemArrayListClassName.add(class_group_names);
-//                            parentItemArrayListClassName.clear();
-
-//                            for (DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-//                                Log.d(TAG, "showChildGroupAdaptor: ClickedDS 1"+dataSnapshot1.getValue().toString());
-/*
-                                Class_Group_Names class_group_names = new Class_Group_Names();
-                                class_group_names.setClassName(dataSnapshot1.child("className").getValue(String.class));
-
-                                GenericTypeIndicator<ArrayList<Subject_Details_Model>> genericTypeIndicator =
-                                        new GenericTypeIndicator<ArrayList<Subject_Details_Model>>() {
-                                        };
-
-                                class_group_names.setChildItemList(dataSnapshot1.child("classSubjectData").getValue(genericTypeIndicator));
-                                parentItemArrayListClassName.add(class_group_names);
-*/
-//                            }
                         }
-
-
-                        /*
-                        parentItemArrayListClassName.clear();
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            for (DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()) {
-                                Class_Group_Names class_group_names = new Class_Group_Names();
-                                class_group_names.setClassName(dataSnapshot2.child("className").getValue(String.class));
-
-                                GenericTypeIndicator<ArrayList<Subject_Details_Model>> genericTypeIndicator =
-                                        new GenericTypeIndicator<ArrayList<Subject_Details_Model>>() {
-                                        };
-
-                                class_group_names.setChildItemList(dataSnapshot2.child("classSubjectData").getValue(genericTypeIndicator));
-                                parentItemArrayListClassName.add(class_group_names);
-                            }
-
-
-                        }
-                        */
                         adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
                         adapter_classGroup.notifyDataSetChanged();
                     }
@@ -1577,6 +1562,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
     }
 
+
     /*
     Other group part
      */
@@ -1592,6 +1578,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
 
+
                 DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID).child("classPos");
 
                 databaseReferenceTemp.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -1599,6 +1586,38 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                         String classPos = String.valueOf(snapshot.getValue());
+
+
+                        refGrpMemberList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classPos).child("classStudentList");
+
+                        refGrpMemberList.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                Class_Student_Details class_student_details = snapshot.getValue(Class_Student_Details.class);
+                                listGrpMemberList.add(class_student_details);
+
+                                rv_GrpMemberList.setAdapter(showGrpMemberList);
+                                showGrpMemberList.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                            }
+
+                            @Override
+                            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                            }
+
+                            @Override
+                            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+                        listGrpMemberList.clear();
+
 
                         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classPos);
                         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -1610,6 +1629,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                 Class_Group_Names class_group_names = new Class_Group_Names();
                                 class_group_names.setGroupPushId(groupPushId);
                                 class_group_names.setClassName(snapshot.child("className").getValue(String.class));
+                                class_group_names.setUniPushClassId(snapshot.child("classUniPushId").getValue(String.class));
 
                                 Log.d("JOIN", "onClick: " + groupPushId);
 
@@ -1618,6 +1638,15 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                         };
 
                                 class_group_names.setChildItemList(snapshot.child("classSubjectData").getValue(genericTypeIndicator));
+
+
+                                GenericTypeIndicator<ArrayList<Class_Student_Details>> genericTypeIndicatorStudent =
+                                        new GenericTypeIndicator<ArrayList<Class_Student_Details>>() {
+                                        };
+
+                                class_group_names.setClass_student_detailsList(snapshot.child("classStudentList").getValue(genericTypeIndicatorStudent));
+
+
                                 parentItemArrayListClassName.add(class_group_names);
 
                                 adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
@@ -2881,11 +2910,12 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     }
 
     @Override
-    public void onClassClickListener(int position, String classGroupName) {
+    public void onClassClickListener(int position, String classGroupName, String uniPushClassId) {
 
         DatabaseReference posTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
         posTemp.child("classPosition").setValue(position);
         posTemp.child("clickedClassName").setValue(classGroupName);
+        posTemp.child("uniPushClassId").setValue(uniPushClassId);
 
 
 //        classPosition = String.valueOf(position);
@@ -2893,9 +2923,9 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     }
 
     @Override
-    public void onAddSubjectClickListener(String groupName,int position) {
+    public void onAddSubjectClickListener(String groupName, String uniPushClassId) {
 
-        Log.d("SNAAPYKey", "onDataChange: " +position);
+        Log.d("SNAAPYKey", "onDataChange: " + uniPushClassId);
 
         View customAlertDialog = LayoutInflater.from(Server_Activity.this).inflate(R.layout.dialog_add_new_subject_topic, null, false);
 
@@ -2942,17 +2972,19 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 //                            Log.d("SNAAP", "onDataChange: " + dataSnapshot.child("classSubjectData").child("1").child("subjectName").getValue());
 //                            Log.d("SNAAPY", "onDataChange: " + dataSnapshot.getKey());
-
+                                        Log.d(TAG, "showChildGroupAdaptor: ClickedDDS" + dataSnapshot.getKey());
+                                        Log.d(TAG, "showChildGroupAdaptor: ClickedDS" + dataSnapshot.child("className").getValue().toString());
                                         Class_Group_Names class_group_names = new Class_Group_Names();
                                         class_group_names.setGroupPushId(groupPushId);
                                         class_group_names.setClassName(dataSnapshot.child("className").getValue(String.class));
+                                        class_group_names.setUniPushClassId(dataSnapshot.child("classUniPushId").getValue(String.class));
 
 //                                        Log.d("SNAAPYKey", "onDataChange: " + );
 
-                                        testDatabaseReference.child(String.valueOf(position)).child("classSubjectData").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        testDatabaseReference.child(uniPushClassId).child("classSubjectData").addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                testDatabaseReference.child(String.valueOf(position)).child("classSubjectData").child(String.valueOf(snapshot.getChildrenCount())).child("subjectName").setValue(et_TopicName.getText().toString());
+                                                testDatabaseReference.child(uniPushClassId).child("classSubjectData").child("al;kjsfdn").child("subjectName").setValue(et_TopicName.getText().toString());
 
 
                                                 GenericTypeIndicator<ArrayList<Subject_Details_Model>> genericTypeIndicator =
@@ -2973,6 +3005,13 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                                 childItemArrayListClassName.add(subject_details_model);
 
                                                 class_group_names.setChildItemList(childItemArrayListClassName);
+
+                                                GenericTypeIndicator<ArrayList<Class_Student_Details>> genericTypeIndicatorStudent =
+                                                        new GenericTypeIndicator<ArrayList<Class_Student_Details>>() {
+                                                        };
+
+                                                class_group_names.setClass_student_detailsList(snapshot.child("classStudentList").getValue(genericTypeIndicatorStudent));
+
 
                                                 parentItemArrayListClassName.add(class_group_names);
 

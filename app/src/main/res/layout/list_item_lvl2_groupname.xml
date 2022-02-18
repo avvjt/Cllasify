@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,72 +8,71 @@
     android:id="@+id/ll_ShowGroup"
     android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
+    <RelativeLayout
         android:id="@+id/ll_Group"
-        android:layout_margin="2dp"
-        android:orientation="horizontal">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_toStartOf="@+id/addNewTopicButton">
+
         <TextView
+            android:id="@+id/tv_classGroupTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:padding="4dp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/open_sans_bold"
-            android:text="Group Name"
-            android:textSize="14sp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
             android:layout_weight="2"
             android:drawablePadding="4dp"
-            android:id="@+id/tv_classGroupTitle"
-            app:drawableLeftCompat="@drawable/ic_hashtag_public"
-            app:drawableTint="@color/purple"
+            android:fontFamily="@font/open_sans_bold"
+            android:letterSpacing="0.02"
+            android:padding="4dp"
+            android:text="Group Name"
             android:textAllCaps="true"
-            android:letterSpacing="0.02" />
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp">
-
-            <ImageButton
-                android:id="@+id/dropDownBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:src="@drawable/drop_down" />
-
-            <ImageButton
-                android:id="@+id/dropUpBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:background="@color/transparent"
-                android:src="@drawable/drop_up" />
-
-        </RelativeLayout>
-
-
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:drawableRight="@drawable/drop_down"
+            app:drawableLeftCompat="@drawable/ic_hashtag_public"
+            app:drawableTint="@color/purple" />
 
         <ImageButton
+            android:id="@+id/dropUpBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/addNewTopicButton"
-            android:layout_margin="5dp"
+            android:layout_margin="4dp"
+            android:visibility="gone"
             android:background="@color/transparent"
-            android:src="@drawable/ic_add"
-            app:tint="@color/black" />
-    </LinearLayout>
+            android:padding="4dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/drop_up" />
+
+    </RelativeLayout>
+
+
+    <ImageButton
+        android:id="@+id/addNewTopicButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:background="@color/transparent"
+        android:src="@drawable/ic_add"
+        app:tint="@color/black" />
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/subjectList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:visibility="gone"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_Group"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="2dp"/>
+        android:layout_marginTop="5dp" />
 
 
-</LinearLayout>
+</RelativeLayout>

@@ -61,31 +61,28 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
 
         Log.d(TAG, "onBindViewHolder: Adapter Class: "+parentItemArrayListClassName.get(position).getClassName());
 
+        Class_Group_Names class_group_names = parentItemArrayListClassName.get(holder.getAdapterPosition());
+
         holder.addTopicButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onAddSubjectClickListener.onAddSubjectClickListener(parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(),holder.getAdapterPosition());
+                onAddSubjectClickListener.onAddSubjectClickListener(parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(),class_group_names.getUniPushClassId());
             }
         });
 
         holder.classGroupName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Toast.makeText(context, "Clicked on Class", Toast.LENGTH_SHORT).show();
-                Log.d("POSS", "Class position : "+holder.getAdapterPosition());
-                onAddSubjectClickListener.onClassClickListener(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName());
-            }
-        });
-
-        holder.dropDownBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 holder.subjectList.setVisibility(View.VISIBLE);
                 holder.dropUpBtn.setVisibility(View.VISIBLE);
-                holder.dropDownBtn.setVisibility(View.GONE);
+                holder.classGroupName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.drop_up, 0);
+                Toast.makeText(context, "Clicked on Class", Toast.LENGTH_SHORT).show();
+                Log.d("POSS", "Class position : "+class_group_names.getClassName());
+                onAddSubjectClickListener.onClassClickListener(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(),class_group_names.getUniPushClassId());
             }
         });
+
+
 
 
         holder.dropUpBtn.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +90,7 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
             public void onClick(View v) {
                 holder.subjectList.setVisibility(View.GONE);
                 holder.dropUpBtn.setVisibility(View.GONE);
-                holder.dropDownBtn.setVisibility(View.VISIBLE);
+                holder.classGroupName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.drop_down, 0);
             }
         });
 
@@ -151,7 +148,7 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView classGroupName;
-        ImageButton dropDownBtn,dropUpBtn;
+        ImageButton dropUpBtn;
         ImageButton addTopicButton;
         RecyclerView subjectList;
 
@@ -160,15 +157,14 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
             classGroupName = itemView.findViewById(R.id.tv_classGroupTitle);
             addTopicButton = itemView.findViewById(R.id.addNewTopicButton);
             subjectList = itemView.findViewById(R.id.subjectList);
-            dropDownBtn = itemView.findViewById(R.id.dropDownBtn);
             dropUpBtn = itemView.findViewById(R.id.dropUpBtn);
 
         }
     }
 
     public interface onAddSubjectClickListener{
-        void onAddSubjectClickListener(String groupName,int position);
-        void onClassClickListener(int position,String classGroupName);
+        void onAddSubjectClickListener(String groupName,String uniPushClassId);
+        void onClassClickListener(int position,String classGroupName,String uniPushClassId);
     }
 }
 

@@ -13,16 +13,18 @@
         android:layout_alignParentTop="true"
         android:id="@+id/tv_titleAttendance"
         android:text="Attendance Portal" />
+
     <TextView
+        android:id="@+id/tv_groupName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_titleAttendance"
-        android:id="@+id/tv_groupName"/>
+        android:layout_below="@+id/tv_titleAttendance" />
+
     <TextView
+        android:id="@+id/tv_subGroupName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_groupName"
-        android:id="@+id/tv_subGroupName"/>
+        android:layout_below="@+id/tv_groupName" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

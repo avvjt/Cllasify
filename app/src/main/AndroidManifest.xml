@@ -26,6 +26,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
         <activity
+            android:name=".Home.Server_Settings"
+            android:exported="false" />
+        <activity
             android:name=".Friend_Chat_Activity"
             android:exported="false" />
         <activity
@@ -36,9 +39,7 @@
         <activity android:name=".Home.Notification_Activity" />
         <activity android:name=".Home.Profile_Activity" />
         <activity android:name=".Home.Discover_Activity" />
-        <activity android:name=".Home.Server_Activity" >
-
-        </activity>
+        <activity android:name=".Home.Server_Activity"></activity>
         <activity android:name=".Profile.ProfileSetting_Activity" />
         <activity
             android:name=".Explore"
@@ -63,7 +64,7 @@
         <activity android:name=".Feed.Landing_Feed_Answer" />
         <activity android:name=".Feed.Landing_Feed" />
         <activity android:name=".Dashboard" />
-        <activity android:name=".NestedRecyclerview.TestFirebaseActivity"/>
+        <activity android:name=".NestedRecyclerview.TestFirebaseActivity" />
         <activity
             android:name=".Register.getStarted"
             android:theme="@style/SplashScreen">

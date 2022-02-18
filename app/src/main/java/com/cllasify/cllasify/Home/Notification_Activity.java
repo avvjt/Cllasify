@@ -206,7 +206,7 @@ public class Notification_Activity extends AppCompatActivity {
                     refAllGRPs.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(reqUserID).child("classPos");
+                            DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(reqUserID).child("uniPushClassId");
                             databaseReferenceTemp.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -291,6 +291,7 @@ public class Notification_Activity extends AppCompatActivity {
 
 
                 }else if (notifyCategory.equals("Friend_Request")){
+
                     DatabaseReference refSubs_Frnd_Group = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(reqUserID);
                     DatabaseReference refAdmin_Frnd_Group = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(currUserId);
                     userSubsGroupClass = new Class_Group(dateTimeCC,userName, reqUserID, currUserId, groupName,notPushId,"true","On");

@@ -87,6 +87,33 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
         currentUser = firebaseAuth.getCurrentUser();
         userID = currentUser.getUid();
 
+        if (NotifyCategory.equals("Friend_Request")) {
+
+            if (inviteStatus.equals("Approve")) {
+                holder.tv_Groupinvite.setText("User " + userName + " request for Add you as a friend has been approved");
+                holder.ll_groupdetails.setVisibility(View.GONE);
+                holder.tv_Groupinvite.setBackgroundColor(Color.GREEN);
+            } else if (inviteStatus.equals("Reject")) {
+                holder.tv_Groupinvite.setBackgroundColor(Color.RED);
+                holder.ll_groupdetails.setVisibility(View.GONE);
+                holder.tv_Groupinvite.setText("User " + userName + " request for Add you as a friend has been rejected");
+            } else {
+
+                holder.ll_groupdetails.setVisibility(View.VISIBLE);
+                if (GroupName.isEmpty()) {
+                    holder.tv_Groupinvite.setVisibility(View.GONE);
+                } else {
+                    holder.tv_Groupinvite.setText("User " + userName + " wants to add you as a Friend");
+                }
+                if (GroupName.isEmpty()) {
+                    holder.tv_ReqDate.setVisibility(View.GONE);
+                } else {
+                    holder.tv_ReqDate.setText("Requested on : " + reqDate);
+                }
+            }
+        }
+
+
         DatabaseReference servName = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
         servName.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -98,6 +125,7 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                             FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
                             assert mUser != null;
                             String userId = mUser.getUid();
+                            Log.d("NOTI00", "onBindViewHolder: yessssssss!!!!!" + NotifyCategory);
 
                             if (NotifyCategory.equals("Group_JoiningReq")) {
 
@@ -124,31 +152,10 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                                         holder.tv_ReqDate.setText("Requested on : " + reqDate);
                                     }
                                 }
-                            } else if (NotifyCategory.equals("Friend_Request")) {
+                            }
 
-                                if (inviteStatus.equals("Approve")) {
-                                    holder.tv_Groupinvite.setText("User " + userName + " request for Add you as a friend has been approved");
-                                    holder.ll_groupdetails.setVisibility(View.GONE);
-                                    holder.tv_Groupinvite.setBackgroundColor(Color.GREEN);
-                                } else if (inviteStatus.equals("Reject")) {
-                                    holder.tv_Groupinvite.setBackgroundColor(Color.RED);
-                                    holder.ll_groupdetails.setVisibility(View.GONE);
-                                    holder.tv_Groupinvite.setText("User " + userName + " request for Add you as a friend has been rejected");
-                                } else {
 
-                                    holder.ll_groupdetails.setVisibility(View.VISIBLE);
-                                    if (GroupName.isEmpty()) {
-                                        holder.tv_Groupinvite.setVisibility(View.GONE);
-                                    } else {
-                                        holder.tv_Groupinvite.setText("User " + userName + " wants to add you as a Friend");
-                                    }
-                                    if (GroupName.isEmpty()) {
-                                        holder.tv_ReqDate.setVisibility(View.GONE);
-                                    } else {
-                                        holder.tv_ReqDate.setText("Requested on : " + reqDate);
-                                    }
-                                }
-                            } else if (NotifyCategory.equals("Follow_Request")) {
+                            else if (NotifyCategory.equals("Follow_Request")) {
 
                                 if (inviteStatus.equals("Approve")) {
                                     holder.tv_Groupinvite.setText("User " + userName + " request to Follow you has been approved");

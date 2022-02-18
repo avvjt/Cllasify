@@ -36,6 +36,11 @@
                 style="@style/PanelHeader"
                 android:text="@string/start_panel_name" />
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,6 +55,27 @@
                     android:src="@drawable/ic_baseline_message_24" />
 
             </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="200dp"
+                android:layout_marginTop="10dp"
+                app:cardCornerRadius="50dp">
+
+                <ImageButton
+                    android:id="@+id/ib_servSettings"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:visibility="gone"
+                    android:background="@color/white"
+                    android:src="@drawable/ic_edit" />
+
+            </androidx.cardview.widget.CardView>
+
+            </RelativeLayout>
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -521,7 +547,6 @@
                     android:text="All Friends" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:visibility="gone"
                     android:id="@+id/endPanelAllFriendsRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -568,8 +593,6 @@
 
             </LinearLayout>
         </RelativeLayout>
-
-
 
     </com.discord.panels.OverlappingPanelsLayout>
 

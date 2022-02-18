@@ -2,7 +2,6 @@ package com.cllasify.cllasify.Adaptor;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,25 +15,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Student_Details;
-import com.cllasify.cllasify.Group_Students;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpMember.MyViewHolder> {
+public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_ShowGrpMember_Serv.MyViewHolder> {
 
     private Context context;
     private List<Class_Student_Details> mDatalistNew;
@@ -69,7 +62,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
         mListener=listener;
     }
 
-    public Adaptor_ShowGrpMember(Context context, List<Class_Student_Details> mDatalistNew) {
+    public Adaptor_ShowGrpMember_Serv(Context context, List<Class_Student_Details> mDatalistNew) {
         this.context = context;
         this.mDatalistNew = mDatalistNew;
     }
@@ -77,7 +70,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View rootview = LayoutInflater.from(context).inflate(R.layout.list_item_group_member, parent, false);
+        View rootview = LayoutInflater.from(context).inflate(R.layout.list_item_group_member_serv, parent, false);
         return new  MyViewHolder(rootview);
     }
 
@@ -177,7 +170,6 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tv_GroupTitle;
-        LinearLayout ll_Group;
 
         Class_Group class_Group;
         Boolean clicked;
@@ -197,7 +189,6 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
             ib_followFrnd =itemView.findViewById(R.id.ib_followFrnd);
             ib_AddFrnd =itemView.findViewById(R.id.ib_AddFrnd);
             ib_SubMenu =itemView.findViewById(R.id.ib_SubMenu);
-            ll_Group =itemView.findViewById(R.id.ll_Group);
 
             civ_UserProfilePic =itemView.findViewById(R.id.civ_UserProfilePic);
 
@@ -247,6 +238,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
                 }
             });
             */
+            /*
             ll_Group.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -269,7 +261,6 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
                     }
                 }
             });
-
             ib_SubMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -298,6 +289,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
                     });
                 }
             });
+*/
 
         }
 
