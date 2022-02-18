@@ -2984,7 +2984,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                         testDatabaseReference.child(uniPushClassId).child("classSubjectData").addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                testDatabaseReference.child(uniPushClassId).child("classSubjectData").child("al;kjsfdn").child("subjectName").setValue(et_TopicName.getText().toString());
+                                                testDatabaseReference.child(uniPushClassId).child("classSubjectData").child(String.valueOf(snapshot.getChildrenCount())).child("subjectName").setValue(et_TopicName.getText().toString());
 
 
                                                 GenericTypeIndicator<ArrayList<Subject_Details_Model>> genericTypeIndicator =
