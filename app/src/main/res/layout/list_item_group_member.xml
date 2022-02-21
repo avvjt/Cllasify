@@ -142,28 +142,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:orientation="horizontal">
-        <ImageButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:layout_margin="4dp"
-            android:id="@+id/ib_present"
-            android:src="@drawable/ic_subscriptions_24"/>
-        <ImageButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:layout_margin="4dp"
-            android:id="@+id/ib_absent"
-            android:src="@drawable/ic_friends"/>
-
-    </LinearLayout>
-
 
 
 

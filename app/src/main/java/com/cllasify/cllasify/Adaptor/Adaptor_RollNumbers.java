@@ -2,7 +2,6 @@ package com.cllasify.cllasify.Adaptor;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,25 +15,19 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Student_Details;
-import com.cllasify.cllasify.Group_Students;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpMember.MyViewHolder> {
+public class Adaptor_RollNumbers extends RecyclerView.Adapter<Adaptor_RollNumbers.MyViewHolder> {
 
     private Context context;
     private List<Class_Student_Details> mDatalistNew;
@@ -69,7 +62,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
         mListener=listener;
     }
 
-    public Adaptor_ShowGrpMember(Context context, List<Class_Student_Details> mDatalistNew) {
+    public Adaptor_RollNumbers(Context context, List<Class_Student_Details> mDatalistNew) {
         this.context = context;
         this.mDatalistNew = mDatalistNew;
     }
@@ -125,7 +118,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
             }
         });
 */
-            holder.tv_GroupTitle.setText(userName);
+            holder.tv_GroupTitle.setText(String.valueOf(position));
             refUserFollowing = FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(currUserID);
 //
 //        holder.ib_followFrnd.setOnClickListener(new View.OnClickListener() {
@@ -192,12 +185,12 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
         Boolean clicked;
         DatabaseReference refLike;
 
+
         ImageButton ib_followFrnd,ib_AddFrnd,ib_SubMenu;
         CircleImageView civ_UserProfilePic;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-
 
             tv_GroupTitle =itemView.findViewById(R.id.tv_classGroupTitle);
             ib_followFrnd =itemView.findViewById(R.id.ib_followFrnd);

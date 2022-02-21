@@ -120,7 +120,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nick Name"
+                    android:text="Username"
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:layout_gravity="center"
@@ -304,75 +304,12 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:id="@+id/ll_Phone"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/phone"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:fontFamily="@font/open_sans_regular"/>
-
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Phone"
-                    android:id="@+id/tv_Phone"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
-                    android:gravity="end"
-                    android:layout_marginEnd="20dp"
-                    android:layout_gravity="center"
-                    app:drawableEndCompat="@drawable/ic_right_arrow"
-                    android:drawablePadding="5dp"
-                    android:fontFamily="@font/open_sans_regular"/>
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="276dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_right_arrow"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/change_password"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:fontFamily="@font/open_sans_regular"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="170dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_right_arrow"/>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:layout_margin="20dp">
 
                 <TextView
@@ -385,23 +322,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:visibility="gone"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/disable_acc"
-                    android:textSize="20sp"
-                    android:textColor="@color/black"
-                    android:layout_marginStart="20dp"
-                    android:fontFamily="@font/open_sans_bold"
-                    android:layout_gravity="center"/>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

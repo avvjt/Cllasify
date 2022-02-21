@@ -174,7 +174,6 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
         Class_Group class_Group;
         Boolean clicked;
         DatabaseReference refLike;
-        ImageButton ib_present,ib_absent;
 
         ImageButton ib_followFrnd,ib_AddFrnd,ib_SubMenu;
         CircleImageView civ_UserProfilePic;
@@ -182,8 +181,6 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            ib_present = itemView.findViewById(R.id.ib_present);
-            ib_absent = itemView.findViewById(R.id.ib_absent);
 
             tv_GroupTitle =itemView.findViewById(R.id.tv_classGroupTitle);
             ib_followFrnd =itemView.findViewById(R.id.ib_followFrnd);

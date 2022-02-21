@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:id="@+id/schPreview"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
@@ -22,7 +22,17 @@
                 android:scaleType="center"
                 android:src="@drawable/default_school_logo" />
 
+
+
         </androidx.cardview.widget.CardView>
+
+        <Button
+            android:id="@+id/rollNumb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Roll no."
+            android:layout_centerInParent="true"
+            android:layout_alignParentEnd="true"/>
 
     </RelativeLayout>
 

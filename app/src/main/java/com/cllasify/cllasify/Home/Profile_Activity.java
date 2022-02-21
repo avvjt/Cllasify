@@ -50,19 +50,17 @@ public class Profile_Activity extends AppCompatActivity {
     Boolean showSpinner = false, showUserName = false, showInstitute = false, showUserBio = false, showSpinnerCategory = false;
 
 
-    TextView tv_UserName, tv_Name, tv_addBio, tv_UserBio, tv_addInstitute, tv_UserInstitute, tv_addUserName, tv_UserUserName, tv_addLocation, tv_UserLocation, tv_addCategory, tv_UserCategory, tv_CountFollowing, tv_CountFollowers;
+    TextView tv_Name, tv_addBio, tv_UserBio, tv_addInstitute, tv_UserInstitute, tv_addUserName, tv_UserUserName, tv_addLocation, tv_UserLocation, tv_CountFollowing, tv_CountFollowers;
 
     DatabaseReference refUserStatus, refUserFollowers, refUserFollowing;
 
     LinearLayout ll_AddBio,
             ll_AddInstitute,
-            ll_AddUserName,
-            ll_AddCategory;
+            ll_AddUserName;
 
     Button btn_AddBio, btn_AddBioCancel,
             btn_AddInstitute, btn_AddInstituteCancel,
-            btn_AddUserName, btn_AddUserNameCancel,
-            toTestTree,toFriendsFrag;
+            btn_AddUserName, btn_AddUserNameCancel;
 
     ImageButton ib_ShareApp, ib_Settings;
 
@@ -81,30 +79,6 @@ public class Profile_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
 
-        toTestTree = findViewById(R.id.toTestTree);
-
-        toTestTree.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Profile_Activity.this, TestFirebaseActivity.class);
-                startActivity(intent);
-
-            }
-        });
-
-        toFriendsFrag = findViewById(R.id.toFriendsFrag);
-
-        toFriendsFrag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(Profile_Activity.this, Friend_Chat_Activity.class);
-                intent.putExtra("name", "Sket Ers");
-                intent.putExtra("receiverUid","wNiVeMP6WyRLsPtetpeMxbQhIFJ2");
-                startActivity(intent);
-
-            }
-        });
 
         AdManagerAdRequest adRequest = new AdManagerAdRequest.Builder().build();
         //Add the adUnitId -> ca-app-pub-3940256099942544/1033173712
@@ -153,7 +127,6 @@ public class Profile_Activity extends AppCompatActivity {
             userPhoto = currentUser.getPhotoUrl();
 
 
-            tv_UserName = findViewById(R.id.tv_UserName);
             tv_Name = findViewById(R.id.tv_Name);
             prof_pic = findViewById(R.id.prof_pic);
 
@@ -188,9 +161,6 @@ public class Profile_Activity extends AppCompatActivity {
             ll_UserName = findViewById(R.id.ll_UserName);
 
 
-            tv_UserCategory = findViewById(R.id.tv_userCategory);
-            tv_addCategory = findViewById(R.id.tv_addCategory);
-            ll_AddCategory = findViewById(R.id.ll_AddCategory);
 
             tv_CountFollowers = findViewById(R.id.tv_CountFollowers);
             tv_CountFollowing = findViewById(R.id.tv_CountFollowing);
@@ -435,19 +405,6 @@ public class Profile_Activity extends AppCompatActivity {
 
                     }
 
-                    if (snapshot.child("Category").exists()) {
-                        tv_addCategory.setVisibility(View.GONE);
-//                            spinnerCategory.setVisibility(View.GONE);
-
-                        String Category = snapshot.child("Category").getValue().toString();
-                        tv_UserCategory.setVisibility(View.VISIBLE);
-                        tv_UserCategory.setText(Category);
-                        notifyPB.dismiss();
-                    } else {
-                        tv_addCategory.setVisibility(View.VISIBLE);
-
-                    }
-//                        notifyPB.show();
                 }
             }
 

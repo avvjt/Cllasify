@@ -1,11 +1,18 @@
 package com.cllasify.cllasify.Profile;
 
+import android.app.Dialog;
+import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -15,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
@@ -25,6 +33,7 @@ import com.cllasify.cllasify.Register.getStarted;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,8 +48,8 @@ import java.util.HashMap;
 public class AccountSetting_Activity extends AppCompatActivity {
 
 
-    Button btn_Back, btn_Premium ,btn_Submit,btn_Cancel,btn_ProfileSetting;
-    TextView tv_SignOut,tv_setTheme,tv_setStatus, tv_ProfileSetting,tv_User_Name;
+    Button btn_Back,btn_Submit,btn_Cancel,btn_ProfileSetting,btnDefault,btnDark,btnLight;
+    TextView tv_SignOut,tv_setTheme,tv_ProfileSetting,tv_User_Name , tv_rateUs;
     SwitchCompat allNotifySwitch;
 //    Spinner spinnerUserStatus;
 //    String[] userStatus = {
@@ -55,8 +64,9 @@ public class AccountSetting_Activity extends AppCompatActivity {
     FirebaseUser currentUser;
     String userID,userName,userEmail;
     DatabaseReference refUserStatus;
+    AlertDialog.Builder builder;
 
-    RadioGroup rg_Status,rg_Theme;
+    RadioGroup rg_Theme;
 
     TextView tv_notiConfig,tv_Feedback;
     LinearLayout ll_showFeedback;
@@ -69,26 +79,28 @@ public class AccountSetting_Activity extends AppCompatActivity {
         setContentView(R.layout.account_setting_activity);
 
         btn_Back=findViewById(R.id.btn_Back);
-        btn_Premium=findViewById(R.id.btn_Premium);
         tv_SignOut =findViewById(R.id.tv_SignOut);
         et_Feedback =findViewById(R.id.et_Feedback);
         tv_User_Name =findViewById(R.id.tv_User_Name);
+        tv_rateUs = findViewById(R.id.tv_rateUs);
 
 //        spinnerUserStatus=view.findViewById(R.id.spinnerUserStatus);
 //        allNotifySwitch=view.findViewById(R.id.allNotifySwitch);
         tv_notiConfig=findViewById(R.id.tv_notiConfig);
-        tv_setStatus=findViewById(R.id.tv_setStatus);
         tv_setTheme=findViewById(R.id.tv_setTheme);
         tv_Feedback=findViewById(R.id.tv_Feedback);
         tv_ProfileSetting =findViewById(R.id.tv_ProfileSetting);
         btn_ProfileSetting =findViewById(R.id.btn_ProfileSetting);
         tv_notiConfig =findViewById(R.id.tv_notiConfig);
+        builder  = new AlertDialog.Builder(this);
 
         btn_Submit=findViewById(R.id.btn_Submit);
         btn_Cancel=findViewById(R.id.btn_Cancel);
 
-        rg_Status=findViewById(R.id.rg_Status);
         rg_Theme=findViewById(R.id.rg_Theme);
+        btnDefault=findViewById(R.id.btnDefault);
+        btnDark=findViewById(R.id.btnDark);
+        btnLight=findViewById(R.id.light);
 
         ll_showFeedback=findViewById(R.id.ll_showFeedback);
 
@@ -99,45 +111,28 @@ public class AccountSetting_Activity extends AppCompatActivity {
 //        userPhoto = currentUser.getPhotoUrl();
         tv_User_Name.setText(userName);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs",MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        final boolean isDarkModeOn = sharedPreferences.getBoolean("isDarkModeOn",false);
-        if (isDarkModeOn){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            rg_Theme.check(R.id.btnDark);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            rg_Theme.check(R.id.btnLight);
-        }
 
-        rg_Theme.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+
+        //RateUs in playStore
+        tv_rateUs.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
-                    case R.id.btnDefault:
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                        rg_Theme.check(R.id.btnDefault);
-                        Toast.makeText(AccountSetting_Activity.this, "System Default Mode Selected", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.btnDark:
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        rg_Theme.check(R.id.btnDark);
-                        editor.putBoolean("isDarkModeOn",true);
-                        editor.apply();
-                        Toast.makeText(AccountSetting_Activity.this, "Dark Mode selected", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.btnLight:
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        rg_Theme.check(R.id.btnLight);
-                        editor.putBoolean("isDarkModeOn",false);
-                        editor.apply();
-                        Toast.makeText(AccountSetting_Activity.this, "Light Mode selected", Toast.LENGTH_SHORT).show();
-                        break;
+            public void onClick(View view) {
+                try {
+                    //when playStore is available
+                    Uri uri = Uri.parse("market://details?id=" + getPackageName());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    //when playStore is Unavailable
+                    Uri uri = Uri.parse("http://play.google.com/store/apps/details?id=" + getPackageName());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
                 }
-
             }
         });
-
 
 
         btn_Back.setOnClickListener(new View.OnClickListener() {
@@ -173,10 +168,6 @@ public class AccountSetting_Activity extends AppCompatActivity {
         btn_ProfileSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.replace(R.id.fragment_container, new ProfileSettingFragment());
-//                //transaction.addToBackStack(null);
-//                transaction.commit();
                 Intent i = new Intent(AccountSetting_Activity.this, ProfileSetting_Activity.class);
                 startActivity(i);
                 (AccountSetting_Activity.this).overridePendingTransition(0, 0);
@@ -194,71 +185,11 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
 
 
-        btn_Premium.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.replace(R.id.fragment_container, new HomeFragment());
-//                //transaction.addToBackStack(null);
-//                transaction.commit();
-                Toast.makeText(AccountSetting_Activity.this, "In Progress", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-/*
-        tv_notiConfig.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.replace(R.id.fragment_container, new HomeFragment());
-//                transaction.addToBackStack(null);
-//                transaction.commit();
-                //transaction.addToBackStack(null);
-
-                Intent i = new Intent(AccountSetting_Activity.this, Notification_Activity.class);
-                startActivity(i);
-                (AccountSetting_Activity.this).overridePendingTransition(0, 0);
-
-            }
-        });
-
-        */
-//        tv_SignOut.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                //                transaction.replace(R.id.fragment_container, new HomeFragment());
-//                //                //transaction.addToBackStack(null);
-//                //                transaction.commit();
-////                Toast.makeText(getContext(), "In Progress", Toast.LENGTH_SHORT).show();
-//
-//
-//            }
-//        });
-
-        tv_setStatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!showStatus){
-                    rg_Status.setVisibility(View.VISIBLE);
-                    showStatus=true;
-                }else{
-                    rg_Status.setVisibility(View.GONE);
-                    showStatus=false;
-                }
-            }
-        });
 
         tv_setTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!showTheme){
-                    rg_Theme.setVisibility(View.VISIBLE);
-                    showTheme=true;
-                }else{
-                    rg_Theme.setVisibility(View.GONE);
-                    showTheme=false;
-                }
+                showBtmTheme();
 
             }
         });
@@ -297,38 +228,6 @@ public class AccountSetting_Activity extends AppCompatActivity {
 //                email.setType("message/rfc822");
 //                startActivity(Intent.createChooser(email, "Choose an Email client :"));
 
-            }
-        });
-
-        RadioButton rb_Online=findViewById(R.id.rb_Online);
-        RadioButton rb_Busy=findViewById(R.id.rb_Busy);
-        RadioButton rb_Offline=findViewById(R.id.rb_Offline);
-
-        rb_Online.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
-                refUserStatus.child("Status").setValue("Online");
-
-                Toast.makeText(AccountSetting_Activity.this, "Online selected", Toast.LENGTH_SHORT).show();
-            }
-        });
-        rb_Busy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
-                refUserStatus.child("Status").setValue("Busy");
-
-                Toast.makeText(AccountSetting_Activity.this, "Busy selected", Toast.LENGTH_SHORT).show();
-            }
-        });
-        rb_Offline.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
-                refUserStatus.child("Status").setValue("Offline");
-
-                Toast.makeText(AccountSetting_Activity.this, "Offline selected", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -385,36 +284,103 @@ public class AccountSetting_Activity extends AppCompatActivity {
         tv_SignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                HashMap<String,Object> map= new HashMap<>();
-                map.put("token","");
 
-                FirebaseDatabase.getInstance().getReference()
-                        .child("Admin").child("Login Status").child(userID).updateChildren(map)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                 builder.setTitle("Sign out")
+                        .setMessage("Do you want to logout?")
+                        .setCancelable(true)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-//                        SessionManagement sessionManagement = new SessionManagement(user_Settings.this);
-//                        //sessionManagement.removeSession();
-//                        sessionManagement.removeSSession();
-                                FirebaseAuth.getInstance().signOut();
+                            public void onClick(DialogInterface dialogInterface, int i) {
 
-//                                Intent intent=new Intent(AccountSetting_Activity.this, getStarted.class);
-////                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                startActivity(intent);
-//                                finish();
-                                Intent i = new Intent(AccountSetting_Activity.this, getStarted.class);
-                                startActivity(i);
-                                (AccountSetting_Activity.this).overridePendingTransition(0, 0);
+                                HashMap<String,Object> map= new HashMap<>();
+                                map.put("token","");
 
-                                Toast.makeText(AccountSetting_Activity.this, "You are Logged Out", Toast.LENGTH_LONG).show();
+                                FirebaseDatabase.getInstance().getReference()
+                                        .child("Admin").child("Login Status").child(userID).updateChildren(map)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                FirebaseAuth.getInstance().signOut();
+                                                Intent i = new Intent(AccountSetting_Activity.this, getStarted.class);
+                                                startActivity(i);
+                                                (AccountSetting_Activity.this).overridePendingTransition(0, 0);
 
+                                                Toast.makeText(AccountSetting_Activity.this, "You are Logged Out", Toast.LENGTH_LONG).show();
+
+                                            }
+                                        });
                             }
-                        });
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        })
+                        .show();
+
+
 
             }
         });
 
-//        return view;
+
+    }
+
+    private void showBtmTheme() {
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.bottomsheet_theme);
+
+         rg_Theme = dialog.findViewById(R.id.rg_Theme);
+         btnDefault = dialog.findViewById(R.id.btnDefault);
+         btnDark = dialog.findViewById(R.id.btnDark);
+         btnLight = dialog.findViewById(R.id.btnLight);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs",MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        final boolean isDarkModeOn = sharedPreferences.getBoolean("isDarkModeOn",false);
+        if (isDarkModeOn){
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            rg_Theme.check(R.id.btnDark);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            rg_Theme.check(R.id.btnLight);
+        }
+
+        rg_Theme.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.btnDefault:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                        rg_Theme.check(R.id.btnDefault);
+                        Toast.makeText(AccountSetting_Activity.this, "System Default Mode Selected", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.btnDark:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        rg_Theme.check(R.id.btnDark);
+                        editor.putBoolean("isDarkModeOn",true);
+                        editor.apply();
+                        Toast.makeText(AccountSetting_Activity.this, "Dark Mode selected", Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.btnLight:
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        rg_Theme.check(R.id.btnLight);
+                        editor.putBoolean("isDarkModeOn",false);
+                        editor.apply();
+                        Toast.makeText(AccountSetting_Activity.this, "Light Mode selected", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+
+            }
+        });
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
 
     }
 

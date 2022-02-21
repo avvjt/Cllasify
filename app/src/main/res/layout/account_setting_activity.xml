@@ -50,26 +50,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/free_acc"
-                android:textStyle="bold"
-                android:textColor="@color/page_black"
-                android:gravity="center"
-                android:textSize="22sp"
-                android:layout_marginTop="8dp"/>
-
-            <Button
-                android:layout_width="200dp"
-                android:layout_height="45dp"
-                android:background="@drawable/button_gradient_small"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
-                android:id="@+id/btn_Premium"
-                android:text="@string/go_premium"
-                android:layout_marginTop="20dp"
-                android:textSize="16sp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -175,95 +155,6 @@
                         android:textColor="@color/page_black"
                         android:textSize="18sp"/>
 
-                    <RadioGroup
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="4dp"
-                        android:textColor="@color/colorPrimary"
-                        android:visibility="gone"
-                        android:id="@+id/rg_Theme"
-                        android:orientation="vertical">
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:id="@+id/btnDefault"
-                            android:layout_height="wrap_content"
-                            android:shadowColor="@color/colorPrimary"
-                            android:buttonTint="@color/colorPrimary"
-                            style="@style/TextAppearance.AppCompat.Subhead"
-                            android:text="@string/system_default"/>
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:id="@+id/btnDark"
-                            android:shadowColor="@color/colorPrimary"
-                            android:buttonTint="@color/colorPrimary"
-                            android:layout_height="wrap_content"
-                            style="@style/TextAppearance.AppCompat.Subhead"
-                            android:text="@string/dark"/>
-                        <RadioButton
-                            android:layout_width="match_parent"
-                            android:id="@+id/btnLight"
-                            android:shadowColor="@color/colorPrimary"
-                            android:buttonTint="@color/colorPrimary"
-                            android:layout_height="wrap_content"
-                            style="@style/TextAppearance.AppCompat.Subhead"
-                            android:text="@string/light"/>
-                    </RadioGroup>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:layout_marginTop="20dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/set_status"
-                            android:id="@+id/tv_setStatus"
-                            android:textStyle="bold"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginEnd="20dp"
-                            android:textColor="@color/page_black"
-                            android:textSize="18sp"/>
-                        <RadioGroup
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="4dp"
-                            android:visibility="gone"
-                            android:textColor="@color/colorPrimary"
-                            android:id="@+id/rg_Status"
-                            android:orientation="vertical">
-                            <RadioButton
-                                android:layout_width="match_parent"
-                                android:id="@+id/rb_Online"
-                                android:layout_height="wrap_content"
-                                android:shadowColor="@color/colorPrimary"
-                                android:buttonTint="@color/colorPrimary"
-                                style="@style/TextAppearance.AppCompat.Subhead"
-                                android:text="Online"/>
-                            <RadioButton
-                                android:layout_width="match_parent"
-                                android:id="@+id/rb_Busy"
-                                android:shadowColor="@color/colorPrimary"
-                                android:buttonTint="@color/colorPrimary"
-                                android:layout_height="wrap_content"
-                                style="@style/TextAppearance.AppCompat.Subhead"
-                                android:text="Busy"/>
-                            <RadioButton
-                                android:layout_width="match_parent"
-                                android:id="@+id/rb_Offline"
-                                android:shadowColor="@color/colorPrimary"
-                                android:buttonTint="@color/colorPrimary"
-                                android:layout_height="wrap_content"
-                                style="@style/TextAppearance.AppCompat.Subhead"
-                                android:text="Offline"/>
-
-                        </RadioGroup>
-
-
-                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -343,8 +234,9 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:text="@string/open_source"
+                            android:visibility="visible"
+                            android:text="Rate us"
+                            android:id="@+id/tv_rateUs"
                             android:layout_marginTop="20dp"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"

@@ -1,7 +1,10 @@
 package com.cllasify.cllasify.Home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,17 +40,29 @@ public class Server_Settings extends AppCompatActivity {
     Adaptor_Server_Setting_Items showGrpClassList;
     List<Class_Group_Names> listGrpClassList;
 
+    Button rollNumb;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server_settings);
 
+        rollNumb = findViewById(R.id.rollNumb);
 
         rv_ShowClass = findViewById(R.id.rv_ShowClass);
         listGrpClassList = new ArrayList<>();
         rv_ShowClass.setLayoutManager(new LinearLayoutManager(Server_Settings.this));
         showGrpClassList = new Adaptor_Server_Setting_Items(Server_Settings.this, listGrpClassList);
+
+
+        rollNumb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Server_Settings.this,Edit_RollNumber.class);
+                startActivity(intent);
+            }
+        });
 
 
         if (getIntent().hasExtra("currUserId")) {

@@ -27,11 +27,14 @@
         android:layout_below="@+id/tv_groupName" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_GrpMemberAttendance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
         android:layout_below="@+id/tv_subGroupName"
-        android:id="@+id/rv_GrpMemberAttendance"/>
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp" />
 
     <Button
         android:layout_width="match_parent"

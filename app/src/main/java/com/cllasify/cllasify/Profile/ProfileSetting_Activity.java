@@ -1,7 +1,6 @@
 package com.cllasify.cllasify.Profile;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,7 +32,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
@@ -48,7 +45,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
     DatabaseReference refUserStatus;
     FirebaseUser currentUser;
     String userID,userName,userEmail;
-    TextView tv_UserName,tv_Name,tv_Email,tv_Institution,tv_Phone,tv_Location,tv_Bio,tv_ShowUserName,tv_ChangeProfileImage;
+    TextView tv_UserName,tv_Name,tv_Email,tv_Institution,tv_Location,tv_Bio,tv_ShowUserName,tv_ChangeProfileImage;
 
     Button btn_Cancel;
 
@@ -64,7 +61,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_p_f_s);
+        setContentView(R.layout.activity_profile_setting);
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         userID = currentUser.getUid();
         userName = currentUser.getDisplayName();
@@ -81,7 +78,6 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         tv_Name=findViewById(R.id.tv_Name);
         tv_Location=findViewById(R.id.tv_Location);
         tv_Institution=findViewById(R.id.tv_Institution);
-        tv_Phone=findViewById(R.id.tv_Phone);
         tv_Email=findViewById(R.id.tv_Email);
         tv_ChangeProfileImage=findViewById(R.id.tv_ChangeProfileImage);
         prof_pic=findViewById(R.id.prof_pic);
@@ -139,8 +135,8 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         ll_UserName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String userName=tv_UserName.getText().toString();
-                editSetting("NickName",userName);
+                String username=tv_UserName.getText().toString();
+                editSetting("UserName",username);
             }
         });
         ll_Name.setOnClickListener(new View.OnClickListener() {
@@ -174,13 +170,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                 editSetting("Email",Email);
             }
         });
-        ll_PhoneNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String Phone=tv_Phone.getText().toString();
-                editSetting("Phone",Phone);
-            }
-        });
+
         ll_Bio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -197,6 +187,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
 
     private void showProfile() {
         refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+
         refUserStatus.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -214,23 +205,17 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                     }else{
                         tv_Institution.setText("Institution");
                     }
-                    if (snapshot.child("NickName").exists()){
-                        String NickName=snapshot.child("NickName").getValue().toString();
-                        tv_UserName.setText(NickName);
+                    if (snapshot.child("UserName").exists()){
+                        String username=snapshot.child("UserName").getValue().toString();
+                        tv_UserName.setText(username);
                     }else{
-                        tv_UserName.setText("Nickname");
+                        tv_UserName.setText("UserName");
                     }
                     if (snapshot.child("Name").exists()){
                         String Name=snapshot.child("Name").getValue().toString();
                         tv_Name.setText(Name);
                     }else{
                         tv_Name.setText("Name");
-                    }
-                    if (snapshot.child("Phone").exists()){
-                        String Phone=snapshot.child("Phone").getValue().toString();
-                        tv_Phone.setText(Phone);
-                    }else{
-                        tv_Phone.setText("Phone");
                     }
                     if (snapshot.child("Location").exists()){
                         String Location=snapshot.child("Location").getValue().toString();
@@ -323,9 +308,9 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         btn_Submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (title.equals("NickName")){
+                if (title.equals("UserName")){
                     String username=et_NewDetails.getText().toString().trim();
-                    refUserStatus.child("NickName").setValue(username);
+                    refUserStatus.child("UserName").setValue(username);
 
                 }else if(title.equals("Name")){
                     String name=et_NewDetails.getText().toString().trim();
