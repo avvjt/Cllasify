@@ -1,6 +1,7 @@
 package com.cllasify.cllasify.Profile;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -32,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
@@ -41,7 +44,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileSetting_Activity extends AppCompatActivity {
 
 
-    LinearLayout ll_UserName,ll_Name,ll_PhoneNo,ll_Instituion,ll_Email,ll_Location,ll_Bio;
+    LinearLayout ll_UserName,ll_Name,ll_Instituion,ll_Email,ll_Location,ll_Bio;
     DatabaseReference refUserStatus;
     FirebaseUser currentUser;
     String userID,userName,userEmail;
@@ -88,7 +91,6 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         ll_Name=findViewById(R.id.ll_Name);
         ll_Location=findViewById(R.id.ll_Location);
         ll_Instituion=findViewById(R.id.ll_Institution);
-        ll_PhoneNo=findViewById(R.id.ll_Phone);
         ll_Email=findViewById(R.id.ll_Email);
         ll_Bio=findViewById(R.id.ll_Bio);
 
@@ -135,8 +137,8 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         ll_UserName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username=tv_UserName.getText().toString();
-                editSetting("UserName",username);
+                String userName=tv_UserName.getText().toString();
+                editSetting("NickName",userName);
             }
         });
         ll_Name.setOnClickListener(new View.OnClickListener() {
@@ -170,7 +172,6 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                 editSetting("Email",Email);
             }
         });
-
         ll_Bio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -187,7 +188,6 @@ public class ProfileSetting_Activity extends AppCompatActivity {
 
     private void showProfile() {
         refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
-
         refUserStatus.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -205,11 +205,11 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                     }else{
                         tv_Institution.setText("Institution");
                     }
-                    if (snapshot.child("UserName").exists()){
-                        String username=snapshot.child("UserName").getValue().toString();
-                        tv_UserName.setText(username);
+                    if (snapshot.child("NickName").exists()){
+                        String NickName=snapshot.child("NickName").getValue().toString();
+                        tv_UserName.setText(NickName);
                     }else{
-                        tv_UserName.setText("UserName");
+                        tv_UserName.setText("Nickname");
                     }
                     if (snapshot.child("Name").exists()){
                         String Name=snapshot.child("Name").getValue().toString();
@@ -308,9 +308,9 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         btn_Submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (title.equals("UserName")){
+                if (title.equals("NickName")){
                     String username=et_NewDetails.getText().toString().trim();
-                    refUserStatus.child("UserName").setValue(username);
+                    refUserStatus.child("NickName").setValue(username);
 
                 }else if(title.equals("Name")){
                     String name=et_NewDetails.getText().toString().trim();
@@ -376,12 +376,12 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-               fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                   @Override
-                   public void onSuccess(Uri uri) {
-                       Picasso.get().load(uri).into(prof_pic);
-                   }
-               });
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).into(prof_pic);
+                    }
+                });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -403,7 +403,6 @@ public class ProfileSetting_Activity extends AppCompatActivity {
     }
 
 }
-
 
 
 
