@@ -1,6 +1,5 @@
 # Cllasify
 ## Only: 
-### 1. Attendance
-### 2. Server Setting 
-### 3. UI part left
+### 1. Server Setting 
+### 2. UI part left
 #### Except these all done.... 
