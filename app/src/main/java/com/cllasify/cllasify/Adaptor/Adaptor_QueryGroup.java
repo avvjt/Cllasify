@@ -135,7 +135,7 @@ public class Adaptor_QueryGroup extends RecyclerView.Adapter<Adaptor_QueryGroup.
 
                             DatabaseReference changeCOor = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
                             changeCOor.child("clickedGroupPushId").setValue(groupPushId);
-
+                            changeCOor.child("clickedGroupName").setValue(groupName);
 
                             btn_GroupTitle.setBackgroundColor(context.getColor(R.color.colorPrimary));
 

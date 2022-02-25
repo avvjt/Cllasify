@@ -37,14 +37,14 @@
             android:textStyle="bold" />
 
         <ImageButton
-            android:id="@+id/deleteClass"
+            android:id="@+id/spinner1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_marginEnd="15dp"
-            android:background="@color/transparent"
-            android:src="@drawable/ic_delete" />
+            android:layout_marginEnd="25dp"
+            android:background="@drawable/more"
+            android:spinnerMode="dropdown" />
 
     </RelativeLayout>
 

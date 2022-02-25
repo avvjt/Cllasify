@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_Attendance;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
+import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMemberRollNumberList;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.R;
@@ -56,7 +57,7 @@ public class Attendance_Activity extends AppCompatActivity {
 
     DatabaseReference refGrpMemberList, refAttendance;
     RecyclerView rv_GrpMemberList;
-    Adaptor_ShowGrpMember showGrpMemberList;
+    Adaptor_ShowGrpMemberRollNumberList showGrpMemberList;
     Adaptor_Attendance showAttendanceStatus;
     Class_Group userAddGroupClass;
     Button btn_ShowAttendStatus, btn_CheckAttendHistory;
@@ -216,7 +217,7 @@ public class Attendance_Activity extends AppCompatActivity {
 //        enableSwipeToDeleteAndUndo();
         rv_GrpMemberList.setLayoutManager(new LinearLayoutManager(this));
         listGrpMemberList = new ArrayList<>();
-        showGrpMemberList = new Adaptor_ShowGrpMember(this, listGrpMemberList);
+        showGrpMemberList = new Adaptor_ShowGrpMemberRollNumberList(this, listGrpMemberList);
         rv_GrpMemberList.setAdapter(showGrpMemberList);
 
         final String[] classPosition = new String[1];

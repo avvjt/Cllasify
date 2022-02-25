@@ -2,6 +2,7 @@ package com.cllasify.cllasify.Adaptor;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,9 +89,9 @@ public class Adaptor_ShowDoubt extends RecyclerView.Adapter<Adaptor_ShowDoubt.My
             holder.tv_Doubt.setText(doubt);
         }
 
-        int[] androidColors = context.getResources().getIntArray(R.array.androidcolors);
-        int randomAndroidColor = androidColors[new Random().nextInt(androidColors.length)];
-        holder.ll_Doubt.setBackgroundColor(randomAndroidColor);
+//        int[] androidColors = context.getResources().getIntArray(R.array.androidcolors);
+//        int randomAndroidColor = androidColors[new Random().nextInt(androidColors.length)];
+        holder.ll_Doubt.setBackgroundColor(Color.YELLOW);
 
 
     }
@@ -125,6 +126,9 @@ public class Adaptor_ShowDoubt extends RecyclerView.Adapter<Adaptor_ShowDoubt.My
                 public void onClick(View v) {
                     if(mListener!=null){
                         int position=getAdapterPosition();
+
+                        Log.d("DOUUBT", "onClick: "+position);
+                        
                         if (position!=RecyclerView.NO_POSITION){
                             Class_Group user = mDatalistNew.get(getAdapterPosition());
                             String doubtQuestion = user.getGroupPositionId();

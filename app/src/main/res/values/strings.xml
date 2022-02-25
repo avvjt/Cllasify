@@ -4,6 +4,13 @@
     <string name="done">Welcome</string>
 
 
+    <string-array name="classMore">
+        <item>Rename class</item>
+        <item>Delete class</item>
+        <item>Edit RollNumbers</item>
+    </string-array>
+
+
     <string name="home">Home</string>
     <string name="friends">Friends</string>
     <string name="feed">Feed</string>

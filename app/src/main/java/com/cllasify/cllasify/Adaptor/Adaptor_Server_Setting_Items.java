@@ -1,25 +1,41 @@
 package com.cllasify.cllasify.Adaptor;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.Class_Student_Details;
+import com.cllasify.cllasify.Home.Edit_RollNumber;
+import com.cllasify.cllasify.Home.Server_Settings;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +61,8 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
 
     public interface OnItemClickListener {
         void onClassDeleteBtn(String classPosition);
+
+        void onClassRenameBtn(String className, String groupPushId, String uniClassPushId);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -96,6 +114,57 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
 
         if (mDatalistNew.get(position).getChildItemList() != null) {
             Adapter_TopicList_Serv adapter_topicList = new Adapter_TopicList_Serv(context.getApplicationContext());
+
+            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs");
+
+            adapter_topicList.setOnItemClickListener(new Adapter_TopicList_Serv.OnItemClickListener() {
+                @Override
+                public void renameSubject(String groupPushId, String classUniPushId, String classPosition, String subjectName) {
+
+
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context.getApplicationContext())) {
+
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + context.getPackageName()));
+                        context.startActivity(intent);
+                    }
+                    else{
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+                            final Dialog dialogBox = new Dialog(context.getApplicationContext());
+                            dialogBox.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            dialogBox.setCancelable(false);
+                            dialogBox.setContentView(R.layout.dialog_rename_subject);
+                            dialogBox.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
+                            dialogBox.show();
+
+
+                            EditText et_SubjectName = dialogBox.findViewById(R.id.et_SubjectName);
+                            Button btn_nextAddTopic = dialogBox.findViewById(R.id.btn_nextAddTopic);
+                            et_SubjectName.setText(subjectName);
+
+                            btn_nextAddTopic.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    final String subjectName = et_SubjectName.getText().toString().trim();
+
+                                    databaseReference.child(groupPushId).child(classUniPushId).child("classSubjectData").child(classPosition).child("subjectName").setValue(subjectName);
+
+
+                                    dialogBox.dismiss();
+
+                                }
+                            });
+
+                        }
+
+                    }
+
+
+
+                }
+            });
+
+
             rv_ShowSubject.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
             rv_ShowSubject.setAdapter(adapter_topicList);
             adapter_topicList.setSubjectDetailsModelList(mDatalistNew.get(position).getChildItemList());
@@ -236,37 +305,70 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_ClassTitle;
-        ImageButton deleteClassBtn;
         RecyclerView studentList;
+        ImageButton spinnerMore;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             tv_ClassTitle = itemView.findViewById(R.id.tv_ClassTitle);
-            deleteClassBtn = itemView.findViewById(R.id.deleteClass);
             studentList = itemView.findViewById(R.id.studentList);
+            spinnerMore = itemView.findViewById(R.id.spinner1);
 
+            final PopupMenu dropDownMenu = new PopupMenu(context, spinnerMore);
 
-            deleteClassBtn.setOnClickListener(new View.OnClickListener() {
+            final Menu menu = dropDownMenu.getMenu();
+
+            dropDownMenu.getMenuInflater().inflate(R.menu.class_more, menu);
+
+            dropDownMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                 @Override
-                public void onClick(View view) {
+                public boolean onMenuItemClick(MenuItem item) {
+                    switch (item.toString()) {
+                        case "Delete Class":
+                            if (mListener != null) {
+                                int position = getAdapterPosition();
+                                Class_Group_Names class_group_namesList = mDatalistNew.get(position);
+                                Log.d("UNIP", "onChildAdded: " + class_group_namesList.getUniPushClassId());
 
-                    if (mListener != null) {
-                        int position = getAdapterPosition();
-//                        notifyItemRangeChanged(position, mDatalistNew.size());
+                                mListener.onClassDeleteBtn(class_group_namesList.getUniPushClassId());
+                                mDatalistNew.remove(position);
+                                notifyItemRemoved(position);
+                            }
 
-                        Class_Group_Names class_group_namesList = mDatalistNew.get(position);
-                        Log.d("UNIP", "onChildAdded: " + class_group_namesList.getUniPushClassId());
+                            Log.d("GRPT", "onClick: " + getAdapterPosition());
+                            break;
 
-                        mListener.onClassDeleteBtn(class_group_namesList.getUniPushClassId());
-                        mDatalistNew.remove(position);
-                        notifyItemRemoved(position);
+                        case "Edit Class":
+
+                            if (mListener != null) {
+                                int position = getAdapterPosition();
+                                Class_Group_Names class_group_namesList = mDatalistNew.get(position);
+                                mListener.onClassRenameBtn(class_group_namesList.getClassName(), class_group_namesList.getGroupPushId(), class_group_namesList.getUniPushClassId());
+                            }
+                            break;
+
+                        case "Edit RollNumbers":
+                            int position = getAdapterPosition();
+                            Class_Group_Names class_group_namesList = mDatalistNew.get(position);
+                            String uniClassPush = class_group_namesList.getUniPushClassId();
+                            String groupPushId = class_group_namesList.getGroupPushId();
+                            Intent intent = new Intent(context.getApplicationContext(), Edit_RollNumber.class);
+                            intent.putExtra("uniClassPush",uniClassPush);
+                            intent.putExtra("groupPushId",groupPushId);
+                            context.startActivity(intent);
+                            break;
                     }
-
-                    Log.d("GRPT", "onClick: " + getAdapterPosition());
+                    return false;
                 }
             });
 
+            spinnerMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dropDownMenu.show();
+                }
+            });
 
         }
 

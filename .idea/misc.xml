@@ -114,26 +114,52 @@
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Classify-demoo/app/src/main/res/layout/user_question_activity.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Classify-demoo/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Classify-demoo/app/src/main/res/menu/groupmemberdetails.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/drawable/dialog_bg.xml" value="0.1325" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/drawable/drop_up.xml" value="0.1325" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/drawable/ic_edit.xml" value="0.1965" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/drawable/ic_menu_home.xml" value="0.1325" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/drawable/ic_whatshot.xml" value="0.1325" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/drawable/item_more.xml" value="0.1325" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/drawable/server_settings.xml" value="0.1965" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/activity_discover.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/activity_discover_item.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/activity_explore.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/activity_friend_chat.xml" value="0.25" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/activity_main.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/activity_notification2.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/activity_server.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/activity_server_setting_specifics.xml" value="0.33" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/activity_server_settings.xml" value="0.33" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/btmdialog_adddoubt.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/btmdialog_addgroup.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/btmdialog_serverview.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/dialog_add_class_group.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/dialog_add_new_subject_topic.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/dialog_joingroup.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/dialog_rename_class.xml" value="0.25" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/dialog_rename_subject.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/doubt_fragment.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/dropdown_menu_popup_item.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/each_child_item.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/each_parent_item.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/list_group_class.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/list_group_class_serv.xml" value="0.33" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/list_group_searchview.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/list_item_childgroup.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/list_item_doubt.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/list_item_group_member.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/list_item_group_member_roll_numbers.xml" value="0.33" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/list_item_group_member_serv.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/list_item_groupname.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/list_item_lvl2_groupname.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/list_item_queryques.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/list_notify.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/subject_list_item.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/layout/subject_list_item_serv.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/menu/class_more.xml" value="0.2" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/menu/groupmemberdetails.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/Cllasify-master/app/src/main/res/menu/profile_manu.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/app/src/main/res/drawable/drop_down.xml" value="0.1985" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/app/src/main/res/drawable/drop_up.xml" value="0.1985" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/app/src/main/res/drawable/ic_add.xml" value="0.1985" />
@@ -180,6 +206,7 @@
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_get_started.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/btmdialog_login.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/profile_activity.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_spinner_dropdown_item.xml" value="0.2234375" />
         <entry key="..\:/android studio/project/Cllasify/app/src/main/res/drawable/button_small.xml" value="0.13796296296296295" />
         <entry key="..\:/android studio/project/Cllasify/app/src/main/res/drawable/chat_input_background.xml" value="0.15462962962962962" />
         <entry key="..\:/android studio/project/Cllasify/app/src/main/res/drawable/explore_category.xml" value="0.2037037037037037" />

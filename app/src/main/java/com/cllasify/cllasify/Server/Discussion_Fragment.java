@@ -116,7 +116,7 @@ public class Discussion_Fragment extends Fragment {
                 fragment.setArguments(bundle);
                 FragmentTransaction fragmentTransaction=getFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.fragment_container,fragment);
-                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.addToBackStack(DoubtFragment.class.getSimpleName());
                 fragmentTransaction.commit();
 
             }

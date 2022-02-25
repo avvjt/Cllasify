@@ -51,9 +51,10 @@ public class Discover_Item extends AppCompatActivity {
     Adaptor_ShowGrpClass showGrpClassList;
     List<Class_Group_Names> listGrpClassList;
     DatabaseReference refGroupClassList;
-    Calendar calenderCC=Calendar.getInstance();
-    SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
-    String dateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
+    Calendar calenderCC = Calendar.getInstance();
+    SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+    String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
+    TextView schBio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +72,29 @@ public class Discover_Item extends AppCompatActivity {
 
 //        ImageView iv_ServerDP= findViewById(R.id.iv_ServerDP);
 //        TextView tv_ServerBio= findViewById(R.id.tv_ServerBio);
-        Button btn_Share= findViewById(R.id.btn_Share);
-        TextView tv_ServerName= findViewById(R.id.tv_ServerName);
-        RecyclerView rv_ShowClass= findViewById(R.id.rv_ShowClass);
+        Button btn_Share = findViewById(R.id.btn_Share);
+        TextView tv_ServerName = findViewById(R.id.tv_ServerName);
+        RecyclerView rv_ShowClass = findViewById(R.id.rv_ShowClass);
+
+        schBio = findViewById(R.id.schoolBio);
+
 
         String groupName = getIntent().getStringExtra("groupName");
         String groupPushId = getIntent().getStringExtra("groupPushId");
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String serverBio = snapshot.child(groupPushId).child("ServerBio").getValue(String.class);
+                schBio.setText(serverBio);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         tv_ServerName.setText(groupName);
         rv_ShowClass.setLayoutManager(new LinearLayoutManager(Discover_Item.this));
@@ -175,12 +193,12 @@ public class Discover_Item extends AppCompatActivity {
         ImageButton btn_Cancel = bottomSheetDialogLogin.findViewById(R.id.btn_Cancel);
         Button btn_Submit = bottomSheetDialogLogin.findViewById(R.id.btn_Submit);
 
-        TextView teacherName,classNumber;
+        TextView teacherName, classNumber;
         teacherName = bottomSheetDialogLogin.findViewById(R.id.teacherName);
         classNumber = bottomSheetDialogLogin.findViewById(R.id.classNumber);
 
-        teacherName.setText("Teacher's name: "+adminUserName);
-        classNumber.setText("Class number: "+subGroupName);
+        teacherName.setText("Teacher's name: " + adminUserName);
+        classNumber.setText("Class number: " + subGroupName);
 
         EditText et_name, et_phoneNumber, et_address;
         et_name = bottomSheetDialogLogin.findViewById(R.id.et_name);
@@ -259,19 +277,20 @@ public class Discover_Item extends AppCompatActivity {
                                 final String userName = currentUser.getDisplayName();
                                 final String userEmail = currentUser.getEmail();
                                 final Uri userPhoto = currentUser.getPhotoUrl();
-                                DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child( "Notification" ).child("Received_Req").child(adminGroupID);
-                                DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child( "Notification" ).child("Submit_Req").child(userID);
+                                DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(adminGroupID);
+                                DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(userID);
 
                                 refjoiningReq.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        long noofQuesinCategory=snapshot.getChildrenCount()+1;
-                                        String pushLong="Joining Reqno_"+noofQuesinCategory;
+                                        long noofQuesinCategory = snapshot.getChildrenCount() + 1;
+                                        String pushLong = "Joining Reqno_" + noofQuesinCategory;
 
-                                        Class_Group  userAddComment= new Class_Group(dateTimeCC, userName, "req_sent",userID,adminGroupID, userEmail, pushLong, groupName,groupPushId,subGroupName,"Group_JoiningReq");
+                                        Class_Group userAddComment = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq");
                                         refjoiningReq.child(pushLong).setValue(userAddComment);
                                         refacceptingReq.child(pushLong).setValue(userAddComment);
                                     }
+
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
                                     }

@@ -54,6 +54,7 @@ public class Adapter_TopicList extends RecyclerView.Adapter<Adapter_TopicList.Vi
                 DatabaseReference posTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
                 posTemp.child("subjectPosition").setValue(holder.getAdapterPosition());
                 posTemp.child("clickedSubjectName").setValue(subjectDetailsModelList.get(holder.getAdapterPosition()).getSubjectName());
+                posTemp.child("subjectUniPushId").setValue(subjectDetailsModelList.get(holder.getAdapterPosition()).getSubjectUniPushId());
 
                 Intent intent = new Intent(context.getApplicationContext(),Server_Activity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

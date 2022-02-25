@@ -8,8 +8,7 @@ import java.util.List;
 
 public class Class_Group_Names {
 
-
-    private String className,groupPushId;
+    private String className,groupPushId,classBio;
     private List<Subject_Details_Model> childItemList;
     private String uniPushClassId;
     private List<Class_Student_Details> class_student_detailsList;
@@ -17,9 +16,10 @@ public class Class_Group_Names {
     public Class_Group_Names(){}
 
 
-    public Class_Group_Names(String className, String groupPushId, List<Subject_Details_Model> childItemList, String uniPushClassId, List<Class_Student_Details> class_student_detailsList) {
+    public Class_Group_Names(String className, String groupPushId, String classBio, List<Subject_Details_Model> childItemList, String uniPushClassId, List<Class_Student_Details> class_student_detailsList) {
         this.className = className;
         this.groupPushId = groupPushId;
+        this.classBio = classBio;
         this.childItemList = childItemList;
         this.uniPushClassId = uniPushClassId;
         this.class_student_detailsList = class_student_detailsList;
@@ -63,6 +63,14 @@ public class Class_Group_Names {
 
     public void setChildItemList(List<Subject_Details_Model> childItemList) {
         this.childItemList = childItemList;
+    }
+
+    public String getClassBio() {
+        return classBio;
+    }
+
+    public void setClassBio(String classBio) {
+        this.classBio = classBio;
     }
 
     /*

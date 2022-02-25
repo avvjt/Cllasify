@@ -12,25 +12,44 @@
 
         <androidx.cardview.widget.CardView
             android:id="@id/schoolLogo"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardCornerRadius="5dp">
+            android:layout_margin="5dp"
+            app:cardCornerRadius="10dp">
 
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
-                android:scaleType="center"
+                android:scaleType="centerCrop"
                 android:src="@drawable/default_school_logo" />
 
 
 
         </androidx.cardview.widget.CardView>
 
-        <Button
-            android:id="@+id/rollNumb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:id="@+id/serverDelete"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:scaleType="centerCrop"
             android:text="Roll no."
+            android:elevation="2dp"
+            android:layout_toStartOf="@id/serverSettingProfile"
+            android:layout_marginEnd="15dp"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_delete"
+            android:layout_centerInParent="true"/>
+
+        <ImageButton
+            android:id="@+id/serverSettingProfile"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:scaleType="centerCrop"
+            android:text="Roll no."
+            android:elevation="2dp"
+            android:background="@color/transparent"
+            android:src="@drawable/server_settings"
+            android:layout_marginEnd="25dp"
             android:layout_centerInParent="true"
             android:layout_alignParentEnd="true"/>
 
@@ -42,10 +61,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/schPreview"
         android:layout_marginTop="10dp"
+        android:drawablePadding="15dp"
         android:text="Sample School"
         android:textColor="@color/black"
-        android:drawablePadding="15dp"
-        android:drawableEnd="@drawable/ic_edit"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -55,10 +73,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tv_ServerName"
         android:layout_marginTop="10dp"
-        android:maxLines="5"
-        android:ellipsize="end"
         android:drawablePadding="15dp"
-        android:drawableEnd="@drawable/ic_edit"
+        android:ellipsize="end"
+        android:maxLines="5"
         android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
         android:textSize="15dp" />
 
