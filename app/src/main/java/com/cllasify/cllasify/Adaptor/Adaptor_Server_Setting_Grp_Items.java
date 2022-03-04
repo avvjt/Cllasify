@@ -163,14 +163,12 @@ public class Adaptor_Server_Setting_Grp_Items extends RecyclerView.Adapter<Adapt
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_ClassTitle;
-        ImageButton deleteClassBtn;
         RecyclerView studentList;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             tv_ClassTitle = itemView.findViewById(R.id.tv_ClassTitle);
-            deleteClassBtn = itemView.findViewById(R.id.deleteClass);
             studentList = itemView.findViewById(R.id.studentList);
 
 

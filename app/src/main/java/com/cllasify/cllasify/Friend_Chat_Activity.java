@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cllasify.cllasify.Adaptor.Adaptor_Friend_Chat;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -84,6 +85,13 @@ public class Friend_Chat_Activity extends Fragment {
         senderRoom = senderUid + receiverUid;
         receiverRoom = receiverUid + senderUid;
 
+        //my
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        assert currentUser != null;
+        String userID = currentUser.getUid();
+        String userName = currentUser.getDisplayName();
+
 
         DatabaseReference firebaseDatabaseSaveRecChat = FirebaseDatabase.getInstance().getReference().child("chats").child("RecentChats").child(senderUid).child("recentChatUser");
 
@@ -93,7 +101,7 @@ public class Friend_Chat_Activity extends Fragment {
 
                 if (snapshot.getChildrenCount() == 0) {
                     FriendsListClass friendsListClass = new FriendsListClass(receiverUid, friendName);
-                    firebaseDatabaseSaveRecChat.child(String.valueOf(snapshot.getChildrenCount())).setValue(friendsListClass);
+                    firebaseDatabaseSaveRecChat.child(receiverUid).setValue(friendsListClass);
                 } else {
 
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -110,7 +118,7 @@ public class Friend_Chat_Activity extends Fragment {
                     }
                     if (!found) {
                         FriendsListClass friendsListClass = new FriendsListClass(receiverUid, friendName);
-                        firebaseDatabaseSaveRecChat.child(String.valueOf(snapshot.getChildrenCount())).setValue(friendsListClass);
+                        firebaseDatabaseSaveRecChat.child(receiverUid).setValue(friendsListClass);
                     }
                 }
 
@@ -122,6 +130,23 @@ public class Friend_Chat_Activity extends Fragment {
             }
         });
 
+
+        DatabaseReference firebaseDatabaseSaveRecChatForFriend = FirebaseDatabase.getInstance().getReference().child("chats").child("RecentChats").child(receiverUid).child("recentChatUser");
+
+        firebaseDatabaseSaveRecChatForFriend.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                FriendsListClass friendsListClass = new FriendsListClass(senderUid, userName);
+                firebaseDatabaseSaveRecChatForFriend.child(senderUid).setValue(friendsListClass);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         firebaseDatabase = FirebaseDatabase.getInstance();
 

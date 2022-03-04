@@ -16,7 +16,6 @@ import com.cllasify.cllasify.Constant;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.SharePref;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -34,14 +33,16 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
     List<Subject_Details_Model> subjectDetailsModelList;
     private OnItemClickListener mListener;
 
-    public interface  OnItemClickListener{
+    public interface OnItemClickListener {
 
-        void renameSubject(String groupPushId,String classUniPushId,String classPosition,String subjectName);
+        void renameSubject(String groupPushId, String classUniPushId, String classPosition, String subjectName);
+
+        void deleteSubject(String groupPushId, String classPos, String subjectUniPush);
 
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
-        mListener=listener;
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
     }
 
     public Adapter_TopicList_Serv(Context context) {
@@ -72,53 +73,94 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView subjectTopic;
+        ImageButton renameSubject, deleteSubject;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             subjectTopic = itemView.findViewById(R.id.tv_subjectTopic);
+            renameSubject = itemView.findViewById(R.id.renameSubject);
+            deleteSubject = itemView.findViewById(R.id.deleteSubject);
 
-            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-            assert currentUser != null;
-            String userID = currentUser.getUid();
 
-            subjectTopic.setOnClickListener(new View.OnClickListener() {
+            deleteSubject.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    Toast.makeText(context, "Clicked on Subject", Toast.LENGTH_SHORT).show();
-                    String userID = SharePref.getDataFromPref(Constant.USER_ID);
-                    DatabaseReference posTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
-                    posTemp.child("subjectPosition").setValue(getAdapterPosition());
-                    posTemp.child("clickedSubjectName").setValue(subjectDetailsModelList.get(getAdapterPosition()).getSubjectName());
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        Toast.makeText(context, "Clicked on Subject", Toast.LENGTH_SHORT).show();
+                        String userID = SharePref.getDataFromPref(Constant.USER_ID);
+                        DatabaseReference posTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+                        posTemp.child("subjectPosition").setValue(getAdapterPosition());
+                        posTemp.child("clickedSubjectName").setValue(subjectDetailsModelList.get(getAdapterPosition()).getSubjectName());
 
-                    posTemp.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(mListener != null){
-                                int subPos = getAdapterPosition();
-                                Subject_Details_Model subject_details_model = subjectDetailsModelList.get(subPos);
-                                String groupPushId = String.valueOf(snapshot.child("clickedGroupPushId").getValue());
-                                String classUniPushId = String.valueOf(snapshot.child("uniPushClassId").getValue());
-                                String subjectPosition = String.valueOf(subPos);
-                                String subjectName = subject_details_model.getSubjectName();
-                                mListener.renameSubject(groupPushId,classUniPushId,subjectPosition,subjectName);
+                        posTemp.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (mListener != null) {
+                                    int subPos = getAdapterPosition();
+                                    Subject_Details_Model subject_details_model = subjectDetailsModelList.get(subPos);
+                                    String groupPushId = String.valueOf(snapshot.child("clickedGroupPushId").getValue());
+                                    String classUniPushId = String.valueOf(snapshot.child("uniPushClassId").getValue());
+                                    String subjectUniPush = subject_details_model.getSubjectUniPushId();
+                                    String subjectName = subject_details_model.getSubjectName();
+
+                                    mListener.deleteSubject(groupPushId, classUniPushId, subjectUniPush);
+                                    subjectDetailsModelList.remove(subPos);
+                                    notifyItemRemoved(subPos);
+
+                                }
                             }
-                        }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
+                            }
+                        });
 
-
-
-
-                    Toast.makeText(context, "Clicked on Delete Subject: "+subjectDetailsModelList.get(getAdapterPosition()).getSubjectName(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Clicked on Delete Subject: " + subjectDetailsModelList.get(getAdapterPosition()).getSubjectName(), Toast.LENGTH_SHORT).show();
+                    }
 
                 }
             });
 
+
+//            Log.d("GRPT", "onClick: " + getAdapterPosition());
+            renameSubject.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        Toast.makeText(context, "Clicked on Subject", Toast.LENGTH_SHORT).show();
+                        String userID = SharePref.getDataFromPref(Constant.USER_ID);
+                        DatabaseReference posTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+                        posTemp.child("subjectPosition").setValue(getAdapterPosition());
+                        posTemp.child("clickedSubjectName").setValue(subjectDetailsModelList.get(getAdapterPosition()).getSubjectName());
+
+                        posTemp.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (mListener != null) {
+                                    int subPos = getAdapterPosition();
+                                    Subject_Details_Model subject_details_model = subjectDetailsModelList.get(subPos);
+                                    String groupPushId = String.valueOf(snapshot.child("clickedGroupPushId").getValue());
+                                    String classUniPushId = String.valueOf(snapshot.child("uniPushClassId").getValue());
+                                    String subjectUniPush = subject_details_model.getSubjectUniPushId();
+                                    String subjectName = subject_details_model.getSubjectName();
+                                    mListener.renameSubject(groupPushId, classUniPushId, subjectUniPush, subjectName);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                        Toast.makeText(context, "Clicked on Delete Subject: " + subjectDetailsModelList.get(getAdapterPosition()).getSubjectName(), Toast.LENGTH_SHORT).show();
+
+
+                    }
+
+                }
+            });
         }
     }
 }

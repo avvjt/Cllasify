@@ -172,6 +172,9 @@ public class Notification_Activity extends AppCompatActivity {
                     refrejuserNotify.child("grpJoiningStatus").setValue("Reject");
                     refrejadminNotify.child("grpJoiningStatus").setValue("Reject");
 
+                    DatabaseReference checkFRNDReq = FirebaseDatabase.getInstance().getReference().child("Users").child("checkUserFriendReq").child(reqUserID).child(currUserId);
+                    checkFRNDReq.child("reqStatus").setValue("Rejected");
+
                     Toast.makeText(Notification_Activity.this, "Friend request from "+userName+"has been Rejected", Toast.LENGTH_SHORT).show();
 
                 }
@@ -193,7 +196,7 @@ public class Notification_Activity extends AppCompatActivity {
             }
 
             @Override
-            public void acceptNotify(String reqUserID, String currUserId, String groupName, String userName, String classPushId, String groupPushId, String notifyCategory, String notPushId) {
+            public void acceptNotify(String reqUserID, String currUserId, String groupName, String userName, String classPushId, String groupPushId, String notifyCategory, String notPushId,String classUni) {
 //                        DatabaseReference refSubsGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups").child(groupPushId);
 //                        DatabaseReference refSubs_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("User_Subscribed_Groups");
 //                        refSubsGroup.child(reqUserID).setValue(true);
@@ -206,27 +209,13 @@ public class Notification_Activity extends AppCompatActivity {
                     refAllGRPs.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(reqUserID).child("uniPushClassId");
-                            databaseReferenceTemp.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+                            refAllGRPs.child(classUni).child("classStudentList").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    String classPosition = String.valueOf(snapshot.getValue());
-                                    Log.d("GRPTT", "onDataChange: snap: " + classPosition);
-
-                                    refAllGRPs.child(classPosition).child("classStudentList").addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            Class_Student_Details class_student_details = new Class_Student_Details(false, reqUserID, userName);
-                                            refAllGRPs.child(classPosition).child("classStudentList").child(String.valueOf(snapshot.getChildrenCount())).setValue(class_student_details);
-                                        }
-
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                        }
-                                    });
-
-
+                                    Class_Student_Details class_student_details = new Class_Student_Details(false, reqUserID, userName);
+                                    refAllGRPs.child(classUni).child("classStudentList").child(reqUserID).setValue(class_student_details);
                                 }
 
                                 @Override
@@ -234,6 +223,8 @@ public class Notification_Activity extends AppCompatActivity {
 
                                 }
                             });
+
+
 
 
 
@@ -303,6 +294,12 @@ public class Notification_Activity extends AppCompatActivity {
                     DatabaseReference refAccAdminNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(reqUserID).child(notPushId);
                     refAccUserNotify.child("grpJoiningStatus").setValue("Approve");
                     refAccAdminNotify.child("grpJoiningStatus").setValue("Approve");
+
+
+
+                    DatabaseReference checkFRNDReq = FirebaseDatabase.getInstance().getReference().child("Users").child("checkUserFriendReq").child(reqUserID).child(currUserId);
+                    checkFRNDReq.child("reqStatus").setValue("Accepted");
+
                     Toast.makeText(Notification_Activity.this, "Friend request from "+userName+"has been Approved", Toast.LENGTH_SHORT).show();
 
                 }else if (notifyCategory.equals("Follow_Request")){

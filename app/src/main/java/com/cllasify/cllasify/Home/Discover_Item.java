@@ -106,10 +106,13 @@ public class Discover_Item extends AppCompatActivity {
         refGroupClassList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
         listGrpClassList.clear();
 
+
+
         showGrpClassList.setOnItemClickListener(new Adaptor_ShowGrpClass.OnItemClickListener() {
+
             @Override
-            public void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId) {
-                sentGroupJoinInvitation(adminGroupID, adminUserName, groupName, groupPushId, subGroupName);
+            public void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId, String classPushId, String classReqPosition) {
+                sentGroupJoinInvitation(adminGroupID, adminUserName, groupName, groupPushId, subGroupName, classPushId, classReqPosition);
 
             }
 
@@ -129,6 +132,7 @@ public class Discover_Item extends AppCompatActivity {
 ////                arrayList.add(value);fatten
 ////                arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,arrayList);
 ////                listView.setAdapter(arrayAdapter);
+
                 Class_Group_Names class_userDashBoard = snapshot.getValue(Class_Group_Names.class);
                 Log.d("CLLGRP", "onChildAdded: " + snapshot.child("classUniPushId"));
                 class_userDashBoard.setUniPushClassId(String.valueOf(snapshot.child("classUniPushId").getValue()));
@@ -136,6 +140,7 @@ public class Discover_Item extends AppCompatActivity {
 
 
                 showGrpClassList.notifyDataSetChanged();
+
             }
 
             @Override
@@ -259,7 +264,7 @@ public class Discover_Item extends AppCompatActivity {
     }
 
 
-    private void sentGroupJoinInvitation(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName) {
+    private void sentGroupJoinInvitation(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String classPushId, String classReqPosition) {
 
         Log.d("JOINTT", "adminGroupID: " + adminGroupID + "\nsubGroupName: " + subGroupName +
                 "\nadminUserName: " + adminUserName + "\ngroupName: " + groupName + "\ngroupPushId: " + groupPushId);
@@ -284,11 +289,16 @@ public class Discover_Item extends AppCompatActivity {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         long noofQuesinCategory = snapshot.getChildrenCount() + 1;
-                                        String pushLong = "Joining Reqno_" + noofQuesinCategory;
+                                        String pushLong = "Joining B Reqno_" + noofQuesinCategory;
 
-                                        Class_Group userAddComment = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq");
+                                        Class_Group userAddComment = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq", classPushId);
                                         refjoiningReq.child(pushLong).setValue(userAddComment);
                                         refacceptingReq.child(pushLong).setValue(userAddComment);
+
+
+                                        showGrpClassList.notifyDataSetChanged();
+
+
                                     }
 
                                     @Override

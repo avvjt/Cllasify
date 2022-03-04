@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".Home.Profile_Activity">
 
+    <TextView
+        android:id="@+id/bio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
     <RelativeLayout
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
@@ -100,32 +106,20 @@
             </LinearLayout>
 
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                android:layout_margin="15dp"
+                android:id="@+id/ll_bio"
+                android:orientation="horizontal">
 
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/ll_bio"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@drawable/ic_friends"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tv_UserBio"/>
-                </LinearLayout>
-
+                    android:id="@+id/tv_UserBio"/>
             </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -133,6 +127,7 @@
                 android:orientation="horizontal"
                 android:id="@+id/ll_Institution"
                 android:layout_marginStart="20dp"
+                android:visibility="gone"
                 android:layout_marginTop="10dp">
 
                 <ImageView
@@ -151,6 +146,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/ll_location"
+                android:visibility="gone"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:orientation="horizontal">
@@ -170,21 +166,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_margin="15dp">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_friends" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_CountFollowers"
                     android:textStyle="bold"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
                     android:textColor="@color/page_black"
                     android:textSize="16sp"
-                    android:layout_marginStart="20dp"/>
+                    android:text="0 friends" />
 
                 <View
                     android:layout_width="5dp"
                     android:layout_height="5dp"
                     android:background="@color/page_black"
                     android:layout_gravity="center"
+                    android:visibility="gone"
                     android:layout_marginStart="10dp" />
 
                 <TextView
@@ -193,6 +198,7 @@
                     android:id="@+id/tv_CountFollowing"
                     android:textColor="@color/page_black"
                     android:textSize="16sp"
+                    android:visibility="gone"
                     android:layout_marginStart="5dp"/>
 
             </LinearLayout>

@@ -31,7 +31,7 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
     private List<Class_Group_Names> mDatalistNew;
     ProgressDialog notifyPB;
     DatabaseReference refUserFollowing;
-    boolean subsClick=false;
+    boolean subsClick = false;
     private OnItemClickListener mListener;
 
     FirebaseAuth firebaseAuth;
@@ -39,16 +39,17 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
     String currUserID;
 
     public interface OnItemClickListener {
-        void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId);
+        void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId, String classPushId, String classReqPosition);
 
-        void admissionClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName,String adminEmailId);
+        void admissionClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String adminEmailId);
 
 //        void AddFrndDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId);
 //        void FollowFriendDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId);
 
     }
-    public void setOnItemClickListener(OnItemClickListener listener){
-        mListener=listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
     }
 
     public Adaptor_ShowGrpClass(Context context, List<Class_Group_Names> mDatalistNew) {
@@ -60,7 +61,7 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View rootview = LayoutInflater.from(context).inflate(R.layout.list_group_class, parent, false);
-        return new  MyViewHolder(rootview);
+        return new MyViewHolder(rootview);
     }
 
 
@@ -74,7 +75,7 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
         Class_Group_Names Answers = mDatalistNew.get(position);
 
         String groupClassName = Answers.getClassName();
-        Log.d("Grouupt", "GroupName: "+groupClassName);
+        Log.d("Grouupt", "GroupName: " + groupClassName);
 //        String userID=Answers.getUserId();
 
         holder.tv_ClassTitle.setText(groupClassName);
@@ -122,22 +123,22 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
         DatabaseReference refLike;
 
         TextView tv_ClassTitle;
-        Button btn_ClassAdmission,btn_ClassJoin;
+        Button btn_ClassAdmission, btn_ClassJoin;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-            tv_ClassTitle =itemView.findViewById(R.id.tv_ClassTitle);
-            btn_ClassAdmission =itemView.findViewById(R.id.btn_ClassAdmission);
-            btn_ClassJoin =itemView.findViewById(R.id.btn_ClassJoin);
+            tv_ClassTitle = itemView.findViewById(R.id.tv_ClassTitle);
+            btn_ClassAdmission = itemView.findViewById(R.id.btn_ClassAdmission);
+            btn_ClassJoin = itemView.findViewById(R.id.btn_ClassJoin);
 //            ib_SubMenu =itemView.findViewById(R.id.ib_SubMenu);
 
 
             firebaseAuth = FirebaseAuth.getInstance();
             currentUser = firebaseAuth.getCurrentUser();
             assert currentUser != null;
-            currUserID=currentUser.getUid();
+            currUserID = currentUser.getUid();
 
             btn_ClassAdmission.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -177,7 +178,7 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
                                         databaseReferenceTemp.setValue(position);
 
                                         //Push Id lochaaa
-                                        mListener.admissionClass(adminUserId, adminUserName, groupName, groupPushId, className,adminEmailId);
+                                        mListener.admissionClass(adminUserId, adminUserName, groupName, groupPushId, className, adminEmailId);
 
                                     }
 
@@ -186,7 +187,6 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
 
                                     }
                                 });
-
 
 
                             }
@@ -227,36 +227,62 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
             btn_ClassJoin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                    assert currentUser != null;
+                    String userID = currentUser.getUid();
+
                     if (mListener != null) {
                         int position = getAdapterPosition();
                         Class_Group_Names classGroupNames = mDatalistNew.get(position);
                         String className = classGroupNames.getClassName();
-                        String groupPushId = classGroupNames.getGroupPushId();
 
-                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group")
-                                .child(groupPushId);
 
-                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        DatabaseReference databaseReferenceGetPush = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+                        databaseReferenceGetPush.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                String adminGroupID = snapshot.child("userId").getValue().toString();
-                                String adminUserName = snapshot.child("userName").getValue().toString();
-                                String groupName = snapshot.child("groupName").getValue().toString();
-
-                                Log.d("JOIN", "adminGroupID: " + adminGroupID + "\nsubGroupName: " + className +
-                                        "\nadminUserName: " + adminUserName + "\ngroupName: " + groupName + "\ngroupPushId: " + groupPushId+"\nClass position: "+position);
+                                String groupPushId = snapshot.child("clickedJoinSearchGroup").getValue().toString();
 
 
-                                String userID = currentUser.getUid();
+                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group")
+                                        .child(groupPushId);
 
-                                DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
-                                databaseReferenceTemp.child("classPos").setValue(position);
+                                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        String adminGroupID = snapshot.child("userId").getValue().toString();
+                                        String adminUserName = snapshot.child("userName").getValue().toString();
+                                        String groupName = snapshot.child("groupName").getValue().toString();
 
-                                databaseReferenceTemp.child("uniPushClassId").setValue(classGroupNames.getUniPushClassId());
+                                        Log.d("JOIN", "adminGroupID: " + adminGroupID + "\nsubGroupName: " + className +
+                                                "\nadminUserName: " + adminUserName + "\ngroupName: " + groupName + "\ngroupPushId: " + groupPushId + "\nClass position: " + position);
 
-                                //Push Id lochaaa
-                                mListener.JoinGroupClass(adminGroupID, adminUserName, groupName, groupPushId, className, "pushId");
 
+                                        String userID = currentUser.getUid();
+
+//                                DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+//                                databaseReferenceTemp.child("classPos").setValue(position);
+//
+//                                databaseReferenceTemp.child("uniPushClassId").setValue(classGroupNames.getUniPushClassId());
+                                        String classReqPosition = String.valueOf(position);
+                                        String classUniPush = classGroupNames.getUniPushClassId();
+                                        //Push Id lochaaa
+                                        if (!(classUniPush.equals("null"))) {
+                                            Log.d("GRPPush", "Class Uni Group Push Id is: "+classUniPush);
+                                            mListener.JoinGroupClass(adminGroupID, adminUserName, groupName, groupPushId, className, "pushId", classUniPush, classReqPosition);
+                                        } else {
+                                            Log.d("GRPPush", "Class Uni Group Push Id is: null");
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
                             }
 
                             @Override
@@ -266,62 +292,12 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
                         });
 
 
-
-                        /*
-                        Class_Group user = mDatalistNew.get(getAdapterPosition());
-                        String adminGroupID=user.userId;
-                        String subGroupName=user.userEmailId;
-                        String adminUserName=user.userName;
-                        String pushId=user.position;
-                        String groupName=user.groupName;
-                        String groupPushId=user.groupCategory;
-
-                        if (!currUserID.equals(adminGroupID)) {
-                            if (position != RecyclerView.NO_POSITION) {
-
-                                Log.d("JOIN", "adminGroupID: "+adminGroupID+"\nsubGroupName: "+subGroupName+
-                                        "\nadminUserName: "+adminUserName+"\npushId: "+pushId+"\ngroupName: "+groupName+"\ngroupPushId: "+groupPushId);
-                                mListener.JoinGroupClass(adminGroupID,adminUserName, groupName,groupPushId,subGroupName, pushId);
-                                //mListener.dislikeAns();
-                            }
-                        }
-                        */
-
                     }
                 }
             });
 
-//            ib_SubMenu.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    PopupMenu popupMenu=new PopupMenu(context,view);
-//                    popupMenu.inflate(R.menu.groupmemberdetails);
-//                    popupMenu.show();
-//                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-//                        @Override
-//                        public boolean onMenuItemClick(MenuItem menuItem) {
-//                            switch(menuItem.getItemId()){
-//                                case R.id.btn_FeesStatus:
-//
-//                                    break;
-//                                case R.id.btn_SuspendStatus:
-//
-//                                    break;
-//                                default:
-//                                    return false;
-//
-//
-//                            }
-//
-//
-//                            return false;
-//                        }
-//                    });
-//                }
-//            });
 
         }
-
 
 
     }

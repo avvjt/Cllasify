@@ -3,6 +3,7 @@ package com.cllasify.cllasify.Home;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -134,18 +135,44 @@ public class Server_Settings extends AppCompatActivity {
                         class_userDashBoard.setUniPushClassId(String.valueOf(snapshot.child("classUniPushId").getValue()));
                         class_userDashBoard.setGroupPushId(String.valueOf(snapshot.child("groupPushId").getValue()));
 
-                        GenericTypeIndicator<ArrayList<Subject_Details_Model>> genericTypeIndicator =
-                                new GenericTypeIndicator<ArrayList<Subject_Details_Model>>() {
-                                };
+                        List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
 
-                        class_userDashBoard.setChildItemList(snapshot.child("classSubjectData").getValue(genericTypeIndicator));
+                        for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
+                            Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                            Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
+                            Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
+                            subjectDetailsModelList.add(object);
+
+                        }
+
+                        class_userDashBoard.setChildItemList(subjectDetailsModelList);
 
 
-                        GenericTypeIndicator<ArrayList<Class_Student_Details>> genericTypeIndicatorStudent =
-                                new GenericTypeIndicator<ArrayList<Class_Student_Details>>() {
-                                };
 
-                        class_userDashBoard.setClass_student_detailsList(snapshot.child("classStudentList").getValue(genericTypeIndicatorStudent));
+                        List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
+
+                        for (DataSnapshot dataSnapshot1 : snapshot.child("classStudentList").getChildren()) {
+                            Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                            Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
+                            Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
+                            class_student_detailsList.add(class_student_details);
+
+                        }
+
+                        class_userDashBoard.setClass_student_detailsList(class_student_detailsList);
+
+//                        GenericTypeIndicator<ArrayList<Subject_Details_Model>> genericTypeIndicator =
+//                                new GenericTypeIndicator<ArrayList<Subject_Details_Model>>() {
+//                                };
+//
+//                        class_userDashBoard.setChildItemList(snapshot.child("classSubjectData").getValue(genericTypeIndicator));
+
+//
+//                        GenericTypeIndicator<ArrayList<Class_Student_Details>> genericTypeIndicatorStudent =
+//                                new GenericTypeIndicator<ArrayList<Class_Student_Details>>() {
+//                                };
+//
+//                        class_userDashBoard.setClass_student_detailsList(snapshot.child("classStudentList").getValue(genericTypeIndicatorStudent));
 
                         listGrpClassList.add(class_userDashBoard);
 
@@ -229,20 +256,9 @@ public class Server_Settings extends AppCompatActivity {
         databaseReferenceServDel.child("User_All_Group").child(userID).child(groupPushId).removeValue();
         databaseReferenceServDel.child("User_Public_Group").child(userID).child(groupPushId).removeValue();
 
-        Intent intent = new Intent(Server_Settings.this, Server_Activity.class);
-        startActivity(intent);
+        finish();
 
 
-    }
-
-    private void delServer() {
-        FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
-                .child("Uni_Group_No_2_NEWW").removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
-
-            }
-        });
     }
 
     private void delClass(String groupPushId, String classPos) {
@@ -253,26 +269,37 @@ public class Server_Settings extends AppCompatActivity {
                 showGrpClassList.notifyDataSetChanged();
             }
         });
-    }
 
-    private void delSubject(String groupPushId, String classPos, int subjectPosition) {
-        FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
-                .child(groupPushId).child(classPos).child("classSubjectData").child(String.valueOf(subjectPosition)).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+        DatabaseReference databaseReferenceClassDel = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class").child(groupPushId);
+        databaseReferenceClassDel.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onSuccess(Void unused) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                    String classUniJoinedPushId = dataSnapshot.child("classUniPushId").getValue().toString();
+
+                    Log.d("DELCHK", "classPos: " + classPos + "\n classUniJoinedPushId: " + classUniJoinedPushId);
+
+                    if (classPos.equals(classUniJoinedPushId)) {
+
+                        databaseReferenceClassDel.child(dataSnapshot.getKey()).child("classUniPushId").setValue(null);
+
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+
     }
 
-    private void delStudent() {
-        FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
-                .child("Uni_Group_No_2_NEWW").child("1").child("classStudentList").child("1").removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
 
-            }
-        });
-    }
+
+
 
 }

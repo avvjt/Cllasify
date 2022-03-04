@@ -32,6 +32,7 @@ import com.cllasify.cllasify.Home.Edit_RollNumber;
 import com.cllasify.cllasify.Home.Server_Settings;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Subject_Details_Model;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -162,6 +163,11 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
 
 
                 }
+
+                @Override
+                public void deleteSubject(String groupPushId, String classPos, String subjectUniPush) {
+                    delSubject(groupPushId,classPos,subjectUniPush);
+                }
             });
 
 
@@ -182,6 +188,14 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
 
         if (mDatalistNew.get(position).getClass_student_detailsList() != null) {
             Adaptor_ShowGrpMember_Serv showGrpMemberList = new Adaptor_ShowGrpMember_Serv(context.getApplicationContext(), mDatalistNew.get(position).getClass_student_detailsList());
+
+            showGrpMemberList.setOnItemClickListener(new Adaptor_ShowGrpMember_Serv.OnItemClickListener() {
+                @Override
+                public void removeStudent(String groupPushId, String classUniPushId, String studentUserId) {
+                    delStudent(groupPushId,classUniPushId,studentUserId);
+                }
+            });
+
             rv_ShowClass.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
             rv_ShowClass.setAdapter(showGrpMemberList);
 //            Log.d("TOP", "onBindViewHolder: "+mDatalistNew.get(position).getChildItemList().get(position).getSubjectName());
@@ -299,6 +313,36 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
     @Override
     public int getItemCount() {
         return mDatalistNew.size();
+    }
+
+
+    private void delSubject(String groupPushId, String classPos, String subjectUniPush) {
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
+                .child(groupPushId).child(classPos).child("classSubjectData").child(subjectUniPush).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+
+            }
+        });
+    }
+
+    private void delStudent(String groupPushId,String classUniPushId,String studentUserId) {
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
+                .child(groupPushId).child(classUniPushId).child("classStudentList").child(studentUserId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+
+            }
+        });
+
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class")
+                .child(groupPushId).child(studentUserId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+
+            }
+        });
+
     }
 
 

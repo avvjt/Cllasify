@@ -310,9 +310,11 @@ public class JoinGroupFragment extends Fragment {
         listGrpClassList.clear();
 
         showGrpClassList.setOnItemClickListener(new Adaptor_ShowGrpClass.OnItemClickListener() {
+
+
             @Override
-            public void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId) {
-                    sentGroupJoinInvitation(adminGroupID,adminUserName,groupName,groupPushId,subGroupName);
+            public void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId, String classPushId, String classReqPosition) {
+                sentGroupJoinInvitation(adminGroupID,adminUserName,groupName,groupPushId,subGroupName);
 
             }
 

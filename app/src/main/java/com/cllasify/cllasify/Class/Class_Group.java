@@ -50,6 +50,8 @@ public class Class_Group {
 
     private String imageUrl;
 
+    public String classUniPushId;
+
 
     public Class_Group(String dateTime, String userName, String userId, String groupName) {
         this.dateTime = dateTime;
@@ -166,6 +168,21 @@ public class Class_Group {
         this.groupName = groupName;
         this.groupPositionId = groupPositionId;
         this.notifyCategory = notifyCategory;
+    }
+
+    public Class_Group(String dateTime, String userName, String grpJoiningStatus, String userId, String adminUserId, String userEmailId, String position, String groupName, String groupPositionId, String subGroupName, String notifyCategory,String classUniPushId) {
+        this.dateTime = dateTime;
+        this.userName = userName;
+        this.grpJoiningStatus = grpJoiningStatus;
+        this.userId = userId;
+        this.adminUserId = adminUserId;
+        this.userEmailId = userEmailId;
+        this.position = position;
+        this.groupName = groupName;
+        this.groupPositionId = groupPositionId;
+        this.subGroupName = subGroupName;
+        this.notifyCategory = notifyCategory;
+        this.classUniPushId = classUniPushId;
     }
 
     public Class_Group(String dateTime, String userName, String grpJoiningStatus, String userId, String adminUserId, String userEmailId, String position, String groupName, String groupPositionId, String subGroupName, String notifyCategory) {

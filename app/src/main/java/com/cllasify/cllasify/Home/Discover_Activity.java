@@ -72,6 +72,9 @@ public class Discover_Activity extends AppCompatActivity {
     String dateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
     SearchView esv_groupSearchView;
 
+    DatabaseReference refGroupClassList;
+
+
     EditText edtTitle;
     EditText edtMessage;
     final private String FCM_API = "https://fcm.googleapis.com/fcm/send";
@@ -199,6 +202,8 @@ public class Discover_Activity extends AppCompatActivity {
 
             }
         });
+
+
 
         showAllGroupSearch("All_Universal_Group");
 
@@ -429,8 +434,9 @@ public class Discover_Activity extends AppCompatActivity {
         listGrpClassList.clear();
 
         showGrpClassList.setOnItemClickListener(new Adaptor_ShowGrpClass.OnItemClickListener() {
+
             @Override
-            public void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId) {
+            public void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId, String classPushId, String classReqPosition) {
                 sentGroupJoinInvitation(adminGroupID,adminUserName,groupName,groupPushId,subGroupName);
 
             }

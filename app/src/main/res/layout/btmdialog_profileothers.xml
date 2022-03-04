@@ -354,14 +354,14 @@
         </LinearLayout>
 
 
-
         <LinearLayout
             android:id="@+id/unfollowAndMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/reqFriend"
+            android:visibility="gone"
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
-            android:layout_below="@+id/reqFriend"
             android:orientation="horizontal">
 
             <Button

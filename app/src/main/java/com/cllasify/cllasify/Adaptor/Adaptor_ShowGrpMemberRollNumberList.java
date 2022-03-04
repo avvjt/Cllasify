@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
@@ -79,24 +80,32 @@ public class Adaptor_ShowGrpMemberRollNumberList extends RecyclerView.Adapter<Ad
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
         if(position == 0){
-            Toast.makeText(context.getApplicationContext(),"Testing Students"+position,Toast.LENGTH_SHORT).show();
-            holder.ll_Group.setVisibility(View.GONE);
+            holder.btn_showStudentList.setVisibility(View.VISIBLE);
+            holder.btn_showStudentList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mDatalistNew.remove(0);
+                    notifyItemRemoved(0);
+                }
+            });
+
         }
-        else {
-            Toast.makeText(context, "Friend List", Toast.LENGTH_SHORT).show();
 
 
-            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-            assert currentUser != null;
-            String currUserID = currentUser.getUid();
-            Class_Student_Details Answers = mDatalistNew.get(position);
-
-            String userName = Answers.getUserName();
-            String userID = Answers.getUserId();
+        Toast.makeText(context, "Friend List", Toast.LENGTH_SHORT).show();
 
 
-            holder.rollNumber.setText(String.valueOf(position));
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        assert currentUser != null;
+        String currUserID = currentUser.getUid();
+        Class_Student_Details Answers = mDatalistNew.get(position);
+
+        String userName = Answers.getUserName();
+        String userID = Answers.getUserId();
+
+
+        holder.rollNumber.setText(String.valueOf(position));
 
 /*
         holder.ib_present.setOnClickListener(new View.OnClickListener() {
@@ -119,8 +128,8 @@ public class Adaptor_ShowGrpMemberRollNumberList extends RecyclerView.Adapter<Ad
             }
         });
 */
-            holder.tv_GroupTitle.setText(userName);
-            refUserFollowing = FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(currUserID);
+        holder.tv_GroupTitle.setText(userName);
+        refUserFollowing = FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(currUserID);
 //
 //        holder.ib_followFrnd.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -169,9 +178,9 @@ public class Adaptor_ShowGrpMemberRollNumberList extends RecyclerView.Adapter<Ad
             }
         });
 */
-        }
-
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -179,26 +188,28 @@ public class Adaptor_ShowGrpMemberRollNumberList extends RecyclerView.Adapter<Ad
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_GroupTitle,rollNumber;
+        TextView tv_GroupTitle, rollNumber;
         LinearLayout ll_Group;
 
         Class_Group class_Group;
         Boolean clicked;
         DatabaseReference refLike;
 
-        ImageButton ib_followFrnd,ib_AddFrnd,ib_SubMenu;
+        ImageButton ib_followFrnd, ib_AddFrnd, ib_SubMenu;
         CircleImageView civ_UserProfilePic;
+        Button btn_showStudentList;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
 
-            tv_GroupTitle =itemView.findViewById(R.id.tv_classGroupTitle);
-            ib_followFrnd =itemView.findViewById(R.id.ib_followFrnd);
-            ib_AddFrnd =itemView.findViewById(R.id.ib_AddFrnd);
-            ib_SubMenu =itemView.findViewById(R.id.ib_SubMenu);
-            ll_Group =itemView.findViewById(R.id.ll_Group);
+            tv_GroupTitle = itemView.findViewById(R.id.tv_classGroupTitle);
+            ib_followFrnd = itemView.findViewById(R.id.ib_followFrnd);
+            ib_AddFrnd = itemView.findViewById(R.id.ib_AddFrnd);
+            ib_SubMenu = itemView.findViewById(R.id.ib_SubMenu);
+            ll_Group = itemView.findViewById(R.id.ll_Group);
             rollNumber = itemView.findViewById(R.id.rollNumber);
+            btn_showStudentList = itemView.findViewById(R.id.btn_showStudentList);
 
             civ_UserProfilePic =itemView.findViewById(R.id.civ_UserProfilePic);
 
@@ -207,6 +218,9 @@ public class Adaptor_ShowGrpMemberRollNumberList extends RecyclerView.Adapter<Ad
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
             assert currentUser != null;
             String currUserID=currentUser.getUid();
+
+
+
 /*
             ib_AddFrnd.setOnClickListener(new View.OnClickListener() {
                 @Override

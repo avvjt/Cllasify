@@ -39,34 +39,23 @@ import com.google.firebase.database.ValueEventListener;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Profile_Activity extends AppCompatActivity {
 
-    ChipNavigationBar chipNavigationBar;
     CircleImageView prof_pic;
     BottomNavigationView bottom_nav;
     LinearLayout ll_bio, ll_Institution, ll_location, ll_UserName;
-    Boolean showSpinner = false, showUserName = false, showInstitute = false, showUserBio = false, showSpinnerCategory = false;
 
 
-    TextView tv_Name, tv_addBio, tv_UserBio, tv_addInstitute, tv_UserInstitute, tv_addUserName, tv_UserUserName, tv_addLocation, tv_UserLocation, tv_CountFollowing, tv_CountFollowers;
+    TextView tv_Name, tv_UserBio, tv_UserInstitute, tv_UserUserName, tv_UserLocation, tv_CountFollowing, tv_CountFollowers;
 
     DatabaseReference refUserStatus, refUserFollowers, refUserFollowing;
 
-    LinearLayout ll_AddBio,
-            ll_AddInstitute,
-            ll_AddUserName;
-
-    Button btn_AddBio, btn_AddBioCancel,
-            btn_AddInstitute, btn_AddInstituteCancel,
-            btn_AddUserName, btn_AddUserNameCancel;
-
     ImageButton ib_ShareApp, ib_Settings;
 
-    EditText et_AddBio,
-            et_AddInstitute,
-            et_AddUserName;
 
     FirebaseUser currentUser;
     String userID, userName, userEmail;
@@ -78,6 +67,7 @@ public class Profile_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
+
 
 
         AdManagerAdRequest adRequest = new AdManagerAdRequest.Builder().build();
@@ -216,134 +206,6 @@ public class Profile_Activity extends AppCompatActivity {
 
     }
 
-
-    private void addInstitution() {
-
-        tv_addInstitute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!showInstitute) {
-                    ll_AddInstitute.setVisibility(View.VISIBLE);
-                    showInstitute = true;
-                } else {
-                    ll_AddInstitute.setVisibility(View.GONE);
-                    showInstitute = false;
-                }
-            }
-        });
-        btn_AddInstituteCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ll_AddInstitute.setVisibility(View.GONE);
-                tv_UserInstitute.setVisibility(View.GONE);
-            }
-        });
-
-        btn_AddInstitute.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String user_Institute = et_AddInstitute.getText().toString();
-                if (!user_Institute.equals("")) {
-                    ll_AddInstitute.setVisibility(View.GONE);
-                    refUserStatus.child("Institute").setValue(user_Institute);
-                    tv_UserInstitute.setVisibility(View.VISIBLE);
-                    tv_UserInstitute.setText(user_Institute);
-                } else {
-                    et_AddInstitute.setError("Enter Institute");
-                    tv_UserInstitute.setVisibility(View.GONE);
-
-
-                }
-
-            }
-        });
-
-    }
-
-    private void addUserName() {
-
-        tv_addUserName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!showUserName) {
-                    ll_AddUserName.setVisibility(View.VISIBLE);
-                    showUserName = true;
-                } else {
-                    ll_AddUserName.setVisibility(View.GONE);
-                    showUserName = false;
-                }
-            }
-        });
-        btn_AddUserNameCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ll_AddUserName.setVisibility(View.GONE);
-                tv_UserUserName.setVisibility(View.GONE);
-            }
-        });
-
-        btn_AddUserName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String user_UserName = et_AddUserName.getText().toString();
-                if (!user_UserName.equals("")) {
-                    ll_AddUserName.setVisibility(View.GONE);
-                    refUserStatus.child("UserName").setValue(user_UserName);
-                    tv_UserUserName.setVisibility(View.VISIBLE);
-                    tv_UserUserName.setText(user_UserName);
-
-                } else {
-                    et_AddUserName.setError("Enter Institute");
-
-                }
-
-            }
-        });
-
-
-    }
-
-    private void addBio() {
-
-        tv_addBio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!showUserBio) {
-                    ll_AddBio.setVisibility(View.VISIBLE);
-                    showUserBio = true;
-                } else {
-                    ll_AddBio.setVisibility(View.GONE);
-                    showUserBio = false;
-                }
-            }
-        });
-        btn_AddBioCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ll_AddBio.setVisibility(View.GONE);
-                tv_UserBio.setVisibility(View.GONE);
-
-            }
-        });
-
-        btn_AddBio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String user_Bio = et_AddBio.getText().toString();
-                if (!user_Bio.equals("")) {
-                    ll_AddBio.setVisibility(View.GONE);
-                    refUserStatus.child("Bio").setValue(user_Bio);
-                } else {
-                    et_AddBio.setError("Enter Bio");
-
-                }
-
-            }
-        });
-
-
-    }
-
     private void showProfile() {
         refUserStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
         refUserStatus.addValueEventListener(new ValueEventListener() {
@@ -352,7 +214,10 @@ public class Profile_Activity extends AppCompatActivity {
                 if (snapshot.getChildrenCount() > 0) {
                     if (snapshot.child("Bio").exists()) {
 //                            tv_addBio.setVisibility(View.GONE);
+                        TextView bioTV = findViewById(R.id.bio);
                         String bio = snapshot.child("Bio").getValue().toString();
+                        bioTV.setText(bio);
+                        Log.d("TAG", "onDataChange: "+bio);
 //                            tv_UserBio.setVisibility(View.VISIBLE);
                         ll_bio.setVisibility(View.VISIBLE);
                         tv_UserBio.setText(bio);
@@ -413,17 +278,21 @@ public class Profile_Activity extends AppCompatActivity {
             }
         });
 
-        refUserFollowers = FirebaseDatabase.getInstance().getReference().child("Users").child("Followers").child(userID);
+        refUserFollowers = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(userID);
         refUserFollowers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildrenCount() > 0) {
                     long count = snapshot.getChildrenCount();
-                    tv_CountFollowers.setText((int) count + " Followers");
+                    if(count < 2) {
+                        tv_CountFollowers.setText((int) count + " Friend");
+                    }
+                    else{
+                        tv_CountFollowers.setText((int) count + " Friends");
+                    }
                     notifyPB.dismiss();
-//                        notifyPB.show();
                 } else {
-                    tv_CountFollowers.setText("No Followers");
+                    tv_CountFollowers.setText("0 Friends");
 
                 }
             }
@@ -432,7 +301,7 @@ public class Profile_Activity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
+/*
         refUserFollowing = FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(userID);
         refUserFollowing.addValueEventListener(new ValueEventListener() {
             @Override
@@ -442,7 +311,7 @@ public class Profile_Activity extends AppCompatActivity {
                     tv_CountFollowing.setText((int) count + " Following");
                     notifyPB.dismiss();
                 } else {
-                    tv_CountFollowing.setText("No Following");
+                    tv_CountFollowing.setText("0 Following");
                 }
             }
 
@@ -450,89 +319,39 @@ public class Profile_Activity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-
+*/
 
     }
 
     private void bottomMenu() {
-//        chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(int i) {
-//                Fragment fragment = null;
-//                switch (i) {
-//                    case R.id.bottom_nav_home:
-//                        fragment = new HomeFragment();
-//                        tag="home";
-//                        break;
-//                    case R.id.bottom_nav_feed:
-////                        fragment = new FeedFragment();
-//                        fragment = new FeedFragment();
-//                        tag="feed";
-//                        break;
-//                    case R.id.bottom_nav_notification:
-//                        fragment = new NotificationFragment();
-//                        tag="notify";
-//                        break;
-//                    case R.id.bottom_nav_profile:
-//                        fragment = new ProfileFragment();
-//                        tag="profile";
-//                        break;
-//                }
-//                FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.fragment_container,fragment,tag);
-//                transaction.addToBackStack(tag);
-//                transaction.commit();
-//
-//            }
-//        });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment fragment = null;
 
                 switch (item.getItemId()) {
                     case R.id.bottom_nav_home:
-//                        fragment = new HomeFragment();
-//                        tag = "home";
                         startActivity(new Intent(Profile_Activity.this, Server_Activity.class));
                         Profile_Activity.this.overridePendingTransition(0, 0);
 
                         break;
                     case R.id.bottom_nav_discover:
-//                          fragment = new FeedFragment();
-//                        fragment = new JoinGroupFragment();
-//                        tag = "joingroup";
                         startActivity(new Intent(Profile_Activity.this, Discover_Activity.class));
                         Profile_Activity.this.overridePendingTransition(0, 0);
 
                         break;
                     case R.id.bottom_nav_notification:
-//                        fragment = new User_Notification_Frag();
-//                        tag = "notify";
                         startActivity(new Intent(Profile_Activity.this, Notification_Activity.class));
                         Profile_Activity.this.overridePendingTransition(0, 0);
 
                         break;
                     case R.id.bottom_nav_profile:
-//                        fragment = new ProfileFragment();
-//                        tag = "profile";
                         startActivity(new Intent(Profile_Activity.this, Profile_Activity.class));
                         Profile_Activity.this.overridePendingTransition(0, 0);
 
                         break;
-//                    case R.id.action_Share:
-//                        Toast.makeText(landing_Page.this, "Refer and Earn", Toast.LENGTH_LONG).show();
-//                        generateLink();
-//                        break;
                 }
-//                FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.fragment_container,fragment,tag);
-//                transaction.addToBackStack(tag);
-//                transaction.commit();
-
-
                 return true;
             }
         });
