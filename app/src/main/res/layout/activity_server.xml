@@ -15,10 +15,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true">
 
-
-
-
-
         <!-- Start Panel       -->
         <RelativeLayout
             android:id="@+id/start_panel"
@@ -36,183 +32,183 @@
                 android:layout_height="match_parent">
 
 
-            <TextView
-                android:id="@+id/headerNameWelcome"
-                style="@style/PanelHeader"
-                android:text="@string/start_panel_name" />
+                <TextView
+                    android:id="@+id/headerNameWelcome"
+                    style="@style/PanelHeader"
+                    android:text="@string/start_panel_name" />
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                app:cardCornerRadius="50dp">
-
-                <ImageButton
-                    android:id="@+id/ib_FrndsList"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:background="@color/white"
-                    android:src="@drawable/ic_baseline_message_24" />
-
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="200dp"
-                android:layout_marginTop="10dp"
-                app:cardCornerRadius="50dp">
-
-                <ImageButton
-                    android:id="@+id/ib_servSettings"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:visibility="gone"
-                    android:background="@color/white"
-                    android:src="@drawable/ic_edit" />
-
-            </androidx.cardview.widget.CardView>
-
-            </RelativeLayout>
-
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="530dp"
-                android:layout_margin="10dp"
-                android:orientation="horizontal">
-
-
-                <LinearLayout
-                    android:layout_width="80dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="3"
-                    android:background="@color/white"
-                    android:orientation="vertical">
-
-                    <!--Public server-->
-                    <TextView
-                        android:id="@+id/tv_UserPublicTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="8dp"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_UserPublicGroupTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp" />
-
-                    <!--Others server-->
-                    <TextView
-                        android:id="@+id/tv_OtherTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold"
-                        android:layout_margin="8dp"
-                        android:visibility="gone" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_OtherPublicGroupTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp" />
 
                     <androidx.cardview.widget.CardView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
                         app:cardCornerRadius="50dp">
 
-                        <ImageView
-                            android:id="@+id/addNewTopicButton"
+                        <ImageButton
+                            android:id="@+id/ib_FrndsList"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
-                            android:src="@drawable/ic_add" />
+                            android:background="@color/white"
+                            android:src="@drawable/ic_baseline_message_24" />
 
                     </androidx.cardview.widget.CardView>
 
-                </LinearLayout>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="200dp"
+                        android:layout_marginTop="10dp"
+                        app:cardCornerRadius="50dp">
+
+                        <ImageButton
+                            android:id="@+id/ib_servSettings"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:visibility="gone"
+                            android:background="@color/white"
+                            android:src="@drawable/ic_edit" />
+
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
 
 
-                <!-- Friends Section -->
                 <LinearLayout
-                    android:id="@+id/friendsSection"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:visibility="gone"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/FriendName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:textStyle="bold"/>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerViewFriendsNameList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:elevation="5dp"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="530dp"
+                    android:layout_margin="10dp"
+                    android:orientation="horizontal">
 
 
-                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="80dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:background="@color/white"
+                        android:orientation="vertical">
 
-                <!-- Group Section-->
-                <LinearLayout
-                    android:id="@+id/groupSection"
-                    android:layout_width="200dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/groupName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <Button
-                        android:id="@+id/addNewClassButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Add New Class" />
-
-                    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                        android:id="@+id/swipeUpRefreshLayoutInClass"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        <!--Public server-->
+                        <TextView
+                            android:id="@+id/tv_UserPublicTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/recyclerViewClassList"
+                            android:id="@+id/rv_UserPublicGroupTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp" />
+
+                        <!--Others server-->
+                        <TextView
+                            android:id="@+id/tv_OtherTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:layout_margin="8dp"
+                            android:visibility="gone" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_OtherPublicGroupTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp" />
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="50dp">
+
+                            <ImageView
+                                android:id="@+id/addNewTopicButton"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:src="@drawable/ic_add" />
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+
+                    <!-- Friends Section -->
+                    <LinearLayout
+                        android:id="@+id/friendsSection"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:visibility="gone"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/FriendName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/recyclerViewFriendsNameList"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:elevation="5dp"/>
+
+
+                    </LinearLayout>
+
+                    <!-- Group Section-->
+                    <LinearLayout
+                        android:id="@+id/groupSection"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/groupName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <Button
+                            android:id="@+id/addNewClassButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Add New Class" />
+
+                        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                            android:id="@+id/swipeUpRefreshLayoutInClass"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/recyclerViewClassList"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"/>
+                        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+                        <TextView
+                            android:id="@+id/classNameTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Please click on (+) sign in front of Class name to add Topic"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/topicNamesRecyclerView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"/>
-                    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-                    <TextView
-                        android:id="@+id/classNameTextView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Please click on (+) sign in front of Class name to add Topic"/>
+                    </LinearLayout>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/topicNamesRecyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+
 
                 </LinearLayout>
-
-
-
-            </LinearLayout>
             </LinearLayout>
 
 
@@ -382,85 +378,18 @@
                 android:layout_height="match_parent"
                 android:id="@+id/ll_ChatDoubtDashboard"
                 android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/ll_TabChatDoubt"
-                    android:visibility="visible"
-                    android:orientation="horizontal">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Chat"
-                            android:textSize="18sp"
-                            android:gravity="center"
-                            android:layout_margin="4dp"
-                            android:padding="4dp"
-                            android:id="@+id/tv_ChatDashboard"/>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_marginStart="32dp"
-                            android:layout_marginEnd="32dp"
-                            android:background="@color/purple"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Doubt"
-                            android:layout_margin="4dp"
-                            android:padding="4dp"
-                            android:gravity="center"
-                            android:textSize="18sp"
-                            android:id="@+id/tv_DoubtDashboard"/>
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2dp"
-                            android:layout_marginStart="32dp"
-                            android:layout_marginEnd="32dp"
-                            android:background="@color/purple"/>
-                    </LinearLayout>
-                </LinearLayout>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_marginTop="2dp"
-                    android:background="@color/purple"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/rl_ChatDashboard"
-                    android:visibility="gone"
-                    android:layout_below="@id/ll_TabChatDoubt"
                     android:orientation="vertical">
-                    <androidx.appcompat.widget.SearchView
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_ChatDashboard"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:queryHint="Search Groups"
-                        android:id="@+id/sv_ChatSearch"/>
-                    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/srl_ChatDashbaord"
-                        android:layout_below="@+id/sv_ChatSearch"
-                        android:layout_above="@id/ll_bottom_send">
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:id="@+id/rv_ChatDashboard"/>
-                    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                        android:layout_above="@+id/ll_bottom_send"
+                        android:layout_height="match_parent" />
 
                     <!--Chat box sending message layout-->
                     <LinearLayout
@@ -469,12 +398,6 @@
                         android:layout_alignParentBottom="true"
                         android:id="@+id/ll_bottom_send"
                         android:orientation="horizontal">
-                        <ImageButton
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_weight="3"
-                            android:layout_gravity="center"
-                            android:id="@+id/ib_cattach"/>
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -509,54 +432,8 @@
                     </LinearLayout>
                 </RelativeLayout>
 
-
-                <!--Doubt session-->
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/rl_DoubtDashboard"
-                    android:visibility="visible"
-                    android:layout_below="@id/ll_TabChatDoubt"
-                    android:orientation="vertical">
-                    <androidx.appcompat.widget.SearchView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:queryHint="Search Groups"
-                        android:id="@+id/Rv_DoubtChat"/>
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_below="@+id/Rv_DoubtChat"
-                        android:id="@+id/rv_DoubtDashboard" />
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/parentDoubtDashboard">
-
-                        <androidx.coordinatorlayout.widget.CoordinatorLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                                android:id="@+id/fab_addDoubtQ"
-                                style="@style/MyMaterialTheme"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="bottom|end"
-                                android:layout_marginEnd="16dp"
-                                android:layout_marginBottom="80dp"
-                                android:contentDescription="TODO"
-                                android:src="@drawable/ic_add"
-                                app:fabSize="normal"
-                                app:useCompatPadding="true" />
-
-                        </androidx.coordinatorlayout.widget.CoordinatorLayout>
-                    </RelativeLayout>
-
-                </RelativeLayout>
             </LinearLayout>
         </RelativeLayout>
-
 
         <RelativeLayout
             android:id="@+id/end_panel"

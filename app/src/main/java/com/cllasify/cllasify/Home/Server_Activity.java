@@ -224,15 +224,15 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
 
         rv_ChatDashboard = findViewById(R.id.rv_ChatDashboard);
-        rv_DoubtDashboard = findViewById(R.id.rv_DoubtDashboard);
-        parentDoubtDashboard = findViewById(R.id.parentDoubtDashboard);
-
-        rl_ChatDashboard = findViewById(R.id.rl_ChatDashboard);
-        rl_DoubtDashboard = findViewById(R.id.rl_DoubtDashboard);
-
-
-        tv_ChatDashboard = findViewById(R.id.tv_ChatDashboard);
-        tv_DoubtDashboard = findViewById(R.id.tv_DoubtDashboard);
+//        rv_DoubtDashboard = findViewById(R.id.rv_DoubtDashboard);
+//        parentDoubtDashboard = findViewById(R.id.parentDoubtDashboard);
+//
+//        rl_ChatDashboard = findViewById(R.id.rl_ChatDashboard);
+//        rl_DoubtDashboard = findViewById(R.id.rl_DoubtDashboard);
+//
+//
+//        tv_ChatDashboard = findViewById(R.id.tv_ChatDashboard);
+//        tv_DoubtDashboard = findViewById(R.id.tv_DoubtDashboard);
         ll_ChatDoubtDashboard = findViewById(R.id.ll_ChatDoubtDashboard);
 
         tv_FrndP_Title = findViewById(R.id.tv_FrndP_Title);
@@ -274,7 +274,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         classNameTextView = findViewById(R.id.classNameTextView);
         topicNamesRecyclerView = findViewById(R.id.topicNamesRecyclerView);
 
-        ll_TabChatDoubt = findViewById(R.id.ll_TabChatDoubt);
+//        ll_TabChatDoubt = findViewById(R.id.ll_TabChatDoubt);
 
         overlappingPanels = findViewById(R.id.overlapping_panels);
         tv_cpaneltitle = findViewById(R.id.tv_cpaneltitle);
@@ -286,7 +286,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
         //start panel initialisation
         imageViewAddPanelAddGroup = findViewById(R.id.addNewTopicButton);
-        srl_ChatDashbaord = findViewById(R.id.srl_ChatDashbaord);
+//        srl_ChatDashbaord = findViewById(R.id.srl_ChatDashbaord);
         fab_addDoubtQ = findViewById(R.id.fab_addDoubtQ);
 
         list_GroupTitle = new ArrayList<>();
@@ -468,11 +468,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("groupClassSubjectPushId").setValue(groupSubjectPush);
                 putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("doubtQuestionPushId").setValue(doubtQuestionPush);
 
-
-//                doubtFragment.setArguments(bundle);
-                Rv_DoubtChat.setVisibility(View.GONE);
-                rv_DoubtDashboard.setVisibility(View.GONE);
-                parentDoubtDashboard.setVisibility(View.GONE);
                 if (flag == false) {
 //                    FragmentTransaction transaction =  getParentFragmentManager().beginTransaction();
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -520,44 +515,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 }
             }
         });
-
-
-        //Doubt Section
-        showDoubtDashAdaptor = new Adaptor_ShowDoubt(this, list_DoubtDashboard);
-        rv_DoubtDashboard.setLayoutManager(new LinearLayoutManager(this));
-        showChatDashadaptor.scrollDownl();
-        rv_DoubtDashboard.setAdapter(showDoubtDashAdaptor);
-
-        showDoubtDashAdaptor.setOnItemClickListener(new Adaptor_ShowDoubt.OnItemClickListener() {
-            @Override
-            public void showDoubtChat(String doubtQuestion, String groupPush, String groupClassPush, String groupSubjectPush, String doubtQuestionPush) {
-
-                Toast.makeText(getApplicationContext(), "Test doubt", Toast.LENGTH_SHORT).show();
-//                Bundle bundle = new Bundle();
-//                bundle.putString("groupPushId", groupPush);
-//                bundle.putString("groupClassPushId", groupClassPush);
-//                bundle.putString("groupClassSubjectPushId", groupSubjectPush);
-//                bundle.putString("doubtQuestionPushId", doubtQuestionPush);
-
-                DatabaseReference putTempDoubt = FirebaseDatabase.getInstance().getReference().child("Groups");
-                putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("groupPushId").setValue(groupPush);
-                putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("groupClassPushId").setValue(groupClassPush);
-                putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("groupClassSubjectPushId").setValue(groupSubjectPush);
-                putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("doubtQuestionPushId").setValue(doubtQuestionPush);
-
-
-//                doubtFragment.setArguments(bundle);
-                Rv_DoubtChat.setVisibility(View.GONE);
-                rv_DoubtDashboard.setVisibility(View.GONE);
-                parentDoubtDashboard.setVisibility(View.GONE);
-                if (fragmentManager.findFragmentByTag("zero") != null) {
-                    getSupportFragmentManager().beginTransaction().show(doubtFragment).commit();
-                } else {
-                    getSupportFragmentManager().beginTransaction().add(R.id.rl_DoubtDashboard, doubtFragment, "zero").addToBackStack(DoubtFragment.class.getSimpleName()).commit();
-                }
-            }
-        });
-
 
 /*
 //Uni_Group_No_1_T group -> T class -> B topic ->
@@ -645,6 +602,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot01) {
                                         Class_Student_Details class_student_details = new Class_Student_Details(true, userID, userName);
+                                        testDatabaseReference.child(groupPushId).child(push01[6]).child("classStudentList")
+                                                .child(userID).setValue(class_student_details);
                                         setAdmins.child(groupPushId).child("classAdminList")
                                                 .child(userID).setValue(class_student_details);
                                     }
@@ -1066,46 +1025,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 }
             });
 
-            //fragment for doubt chat
-
-            tv_ChatDashboard.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    rl_ChatDashboard.setVisibility(View.VISIBLE);
-                    rl_DoubtDashboard.setVisibility(View.GONE);
-                }
-            });
-            tv_DoubtDashboard.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    rl_DoubtDashboard.setVisibility(View.VISIBLE);
-                    rl_ChatDashboard.setVisibility(View.GONE);
-
-                    Rv_DoubtChat.setVisibility(View.VISIBLE);
-                    rv_DoubtDashboard.setVisibility(View.VISIBLE);
-                    parentDoubtDashboard.setVisibility(View.VISIBLE);
-                    if (fragmentManager.findFragmentByTag("zero") != null) {
-                        getSupportFragmentManager().beginTransaction().hide(doubtFragment).commit();
-                    }
-
-
-                }
-            });
-
-
-            srl_ChatDashbaord.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-                @Override
-                public void onRefresh() {
-                    // cancel the Visual indication of a refresh
-                    srl_ChatDashbaord.setRefreshing(false);
-//                    list_ChatDashboard.clear();
-//                    rv_ChatDashboard.removeAllViews();
-                    showChatDashadaptor.notifyDataSetChanged();
-                    showChatDashadaptor.scrollDownl();
-
-
-                }
-            });
 
             //??
             tabl_ChatView.setupWithViewPager(view_Pager_ChatView);
