@@ -34,7 +34,7 @@ public class Adaptor_ShowGrpMemberRollNumberList extends RecyclerView.Adapter<Ad
     private List<Class_Student_Details> mDatalistNew;
     ProgressDialog notifyPB;
     DatabaseReference refUserFollowing;
-    boolean subsClick=false;
+    boolean subsClick=true;
     private OnItemClickListener mListener;
 
     public void removeItem(int position) {
@@ -78,18 +78,6 @@ public class Adaptor_ShowGrpMemberRollNumberList extends RecyclerView.Adapter<Ad
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
-
-        if(position == 0){
-            holder.btn_showStudentList.setVisibility(View.VISIBLE);
-            holder.btn_showStudentList.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mDatalistNew.remove(0);
-                    notifyItemRemoved(0);
-                }
-            });
-
-        }
 
 
         Toast.makeText(context, "Friend List", Toast.LENGTH_SHORT).show();

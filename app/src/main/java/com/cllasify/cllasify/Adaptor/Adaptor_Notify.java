@@ -126,7 +126,32 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                         assert mUser != null;
                         String userId = mUser.getUid();
                         Log.d("NOTI00", "onBindViewHolder: yessssssss!!!!!" + NotifyCategory);
+                        if (NotifyCategory.equals("Group_JoiningReq_Teacher")) {
 
+                            if (inviteStatus.equals("Approve")) {
+                                holder.tv_Groupinvite.setText("User " + userName + " request to join Sub-class : " + subServer + " of server " + GroupName + " has been approved");
+                                holder.ll_groupdetails.setVisibility(View.GONE);
+                                holder.tv_Groupinvite.setBackgroundColor(Color.GREEN);
+                            } else if (inviteStatus.equals("Reject")) {
+                                holder.tv_Groupinvite.setBackgroundColor(Color.RED);
+                                holder.ll_groupdetails.setVisibility(View.GONE);
+                                holder.tv_Groupinvite.setText("User " + userName + " request to join Sub-class : " + subServer + " of server " + GroupName + " has been rejected");
+                            } else {
+
+                                holder.ll_groupdetails.setVisibility(View.VISIBLE);
+                                if (GroupName.isEmpty()) {
+                                    holder.tv_Groupinvite.setVisibility(View.GONE);
+                                } else {
+                                    holder.tv_Groupinvite.setText("User " + userName + " wants to join Sub-class : " + subServer + " of server " + GroupName);
+
+                                }
+                                if (GroupName.isEmpty()) {
+                                    holder.tv_ReqDate.setVisibility(View.GONE);
+                                } else {
+                                    holder.tv_ReqDate.setText("Requested on : " + reqDate);
+                                }
+                            }
+                        }
                         if (NotifyCategory.equals("Group_JoiningReq")) {
 
                             if (inviteStatus.equals("Approve")) {

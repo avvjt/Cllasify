@@ -27,6 +27,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
         <activity
+            android:name=".Home.Students_Subjects"
+            android:exported="false" />
+        <activity
             android:name=".Server_Setting_Specifics"
             android:exported="false" />
         <activity

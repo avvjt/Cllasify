@@ -2,7 +2,9 @@ package com.cllasify.cllasify.Adaptor;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Class_Student_Details;
@@ -119,21 +122,35 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tv_GroupTitle;
-        ImageButton makeAdmin, removeAdmin, removeStudent;
+        ImageButton studentMore;
+
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             tv_GroupTitle = itemView.findViewById(R.id.tv_classGroupTitle);
-            makeAdmin = itemView.findViewById(R.id.make_admin);
-            removeAdmin = itemView.findViewById(R.id.remove_admin);
-            removeStudent = itemView.findViewById(R.id.remove_student);
+            studentMore = itemView.findViewById(R.id.studentMore);
 
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
             assert currentUser != null;
             String currUserID = currentUser.getUid();
 
+            final PopupMenu dropDownMenu = new PopupMenu(context, studentMore);
+
+            final Menu menu = dropDownMenu.getMenu();
+
+            dropDownMenu.getMenuInflater().inflate(R.menu.subject_more, menu);
+
+
+            studentMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dropDownMenu.show();
+                }
+            });
+
+/*
             makeAdmin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -256,7 +273,7 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
 
                 }
             });
-
+*/
 
             /*
 //            onFriendClick

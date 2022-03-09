@@ -115,7 +115,7 @@ public class Adaptor_ShowDoubt extends RecyclerView.Adapter<Adaptor_ShowDoubt.My
             super(itemView);
 
             doubt_item = itemView.findViewById(R.id.doubt_item);
-            tv_Topic =itemView.findViewById(R.id.tv_Topic);
+            tv_Topic =itemView.findViewById(R.id.tv_MyMessage);
             tv_Username =itemView.findViewById(R.id.tv_Username);
             tv_Doubt =itemView.findViewById(R.id.tv_Doubt);
             tv_DateTime =itemView.findViewById(R.id.tv_DateTime);

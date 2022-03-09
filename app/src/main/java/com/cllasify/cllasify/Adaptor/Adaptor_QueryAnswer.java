@@ -111,22 +111,22 @@ public class Adaptor_QueryAnswer extends RecyclerView.Adapter<Adaptor_QueryAnswe
 
         holder.examQues_tv.setText("Answer: \t"+userAnswers);
         holder.tv_UserName.setText(answerUserName + " Answered on: " + date);
-        DatabaseReference refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(databaseUserId);
-        refUserStatus.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount()>0){
-// Test
-                    if (snapshot.child("profilePic").exists()){
-                        String profilePic=snapshot.child("profilePic").getValue().toString();
-                        Glide.with(context).load(profilePic).into(holder.ib_AnsUserProfile);
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+//        DatabaseReference refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(databaseUserId);
+//        refUserStatus.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                if (snapshot.getChildrenCount()>0){
+//// Test
+//                    if (snapshot.child("profilePic").exists()){
+//                        String profilePic=snapshot.child("profilePic").getValue().toString();
+//                        Glide.with(context).load(profilePic).into(holder.ib_AnsUserProfile);
+//                    }
+//                }
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//            }
+//        });
         //        holder.ib_AnsUserProfile.
 
 

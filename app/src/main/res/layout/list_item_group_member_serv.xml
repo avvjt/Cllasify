@@ -54,35 +54,13 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/make_admin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginEnd="15dp"
-        android:layout_toStartOf="@+id/remove_admin"
-        android:background="@color/transparent"
-        android:src="@drawable/make_admin" />
-
-    <ImageButton
-        android:id="@+id/remove_admin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginEnd="15dp"
-        android:layout_toStartOf="@+id/remove_student"
-        android:background="@color/transparent"
-        android:src="@drawable/remove_admin" />
-
-
-    <ImageButton
-        android:id="@+id/remove_student"
+        android:id="@+id/studentMore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
-        android:layout_marginEnd="15dp"
-        android:background="@color/transparent"
-        android:src="@drawable/ic_delete" />
+        android:background="@drawable/more"
+        android:spinnerMode="dropdown" />
 
 
     </RelativeLayout>

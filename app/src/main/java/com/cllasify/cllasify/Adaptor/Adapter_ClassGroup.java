@@ -18,6 +18,8 @@ import com.cllasify.cllasify.Constant;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.SharePref;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -56,6 +58,9 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
 
     @Override
     public void onBindViewHolder(@NonNull Adapter_ClassGroup.ViewHolder holder, int position) {
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = currentUser.getUid();
 
         holder.classGroupName.setText(parentItemArrayListClassName.get(position).getClassName());
 
@@ -123,6 +128,21 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
             Adapter_TopicList adapter_topicList = new Adapter_TopicList(context.getApplicationContext());
             holder.subjectList.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
             holder.subjectList.setAdapter(adapter_topicList);
+
+            adapter_topicList.setOnSubjectClickListener(new Adapter_TopicList.onSubjectClickListener() {
+                @Override
+                public void onSubjectClick() {
+                    onAddSubjectClickListener.onSubClick(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(),class_group_names.getUniPushClassId());
+
+                    DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+                    refSaveCurrentData.child("classPosition").setValue(holder.getAdapterPosition());
+                    refSaveCurrentData.child("clickedClassName").setValue(parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName());
+                    refSaveCurrentData.child("uniPushClassId").setValue(class_group_names.getUniPushClassId());
+
+
+                    Toast.makeText(context, "CLICKKKKKEDDDD on TESTTTT SUBBBJJEECCTT", Toast.LENGTH_SHORT).show();
+                }
+            });
 //            Log.d("TOP", "onBindViewHolder: "+parentItemArrayListClassName.get(position).getChildItemList().get(position).getSubjectName());
             adapter_topicList.setSubjectDetailsModelList(parentItemArrayListClassName.get(position).getChildItemList());
             adapter_topicList.notifyDataSetChanged();
@@ -165,6 +185,7 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
     public interface onAddSubjectClickListener{
         void onAddSubjectClickListener(String groupName,String uniPushClassId);
         void onClassClickListener(int position,String classGroupName,String uniPushClassId);
+        void onSubClick(int classPosition,String clickedClassName,String uniClassPushId);
     }
 }
 

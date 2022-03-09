@@ -55,6 +55,7 @@ public class Discover_Item extends AppCompatActivity {
     SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
     String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
     TextView schBio;
+    Button join_as_teacher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,7 @@ public class Discover_Item extends AppCompatActivity {
         Button btn_Share = findViewById(R.id.btn_Share);
         TextView tv_ServerName = findViewById(R.id.tv_ServerName);
         RecyclerView rv_ShowClass = findViewById(R.id.rv_ShowClass);
+        join_as_teacher = findViewById(R.id.join_as_teacher);
 
         schBio = findViewById(R.id.schoolBio);
 
@@ -108,11 +110,13 @@ public class Discover_Item extends AppCompatActivity {
 
 
 
+
+
         showGrpClassList.setOnItemClickListener(new Adaptor_ShowGrpClass.OnItemClickListener() {
 
             @Override
             public void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId, String classPushId, String classReqPosition) {
-                sentGroupJoinInvitation(adminGroupID, adminUserName, groupName, groupPushId, subGroupName, classPushId, classReqPosition);
+                sentGroupJoinInvitation(adminGroupID, adminUserName, groupName, groupPushId, subGroupName, classPushId, "StudentJoin");
 
             }
 
@@ -164,7 +168,57 @@ public class Discover_Item extends AppCompatActivity {
             }
         });
 
+        join_as_teacher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                assert currentUser != null;
+                String userID = currentUser.getUid();
+
+                DatabaseReference databaseReferenceGetPush = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+                databaseReferenceGetPush.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String groupPushId = snapshot.child("clickedJoinSearchGroup").getValue().toString();
+
+
+                        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group")
+                                .child(groupPushId);
+
+                        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String adminGroupID = snapshot.child("userId").getValue().toString();
+                                String adminUserName = snapshot.child("userName").getValue().toString();
+                                String groupName = snapshot.child("groupName").getValue().toString();
+
+                                Log.d("JOIN", "adminGroupID: " + adminGroupID + "\nsubGroupName: "+
+                                        "\nadminUserName: " + adminUserName + "\ngroupName: " + groupName + "\ngroupPushId: " + groupPushId);
+
+                                sentGroupJoinInvitation(adminGroupID,adminUserName,groupName,groupPushId,"className","classPushId","TeacherJoin");
+
+                                String userID = currentUser.getUid();
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+        });
 //        btn_Cancel.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
@@ -264,7 +318,7 @@ public class Discover_Item extends AppCompatActivity {
     }
 
 
-    private void sentGroupJoinInvitation(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String classPushId, String classReqPosition) {
+    private void sentGroupJoinInvitation(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String classPushId, String JoinStatus) {
 
         Log.d("JOINTT", "adminGroupID: " + adminGroupID + "\nsubGroupName: " + subGroupName +
                 "\nadminUserName: " + adminUserName + "\ngroupName: " + groupName + "\ngroupPushId: " + groupPushId);
@@ -291,9 +345,16 @@ public class Discover_Item extends AppCompatActivity {
                                         long noofQuesinCategory = snapshot.getChildrenCount() + 1;
                                         String pushLong = "Joining B Reqno_" + noofQuesinCategory;
 
-                                        Class_Group userAddComment = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq", classPushId);
-                                        refjoiningReq.child(pushLong).setValue(userAddComment);
-                                        refacceptingReq.child(pushLong).setValue(userAddComment);
+                                        if(JoinStatus.equals("StudentJoin")) {
+                                            Class_Group userAddComment = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq", classPushId);
+                                            refjoiningReq.child(pushLong).setValue(userAddComment);
+                                            refacceptingReq.child(pushLong).setValue(userAddComment);
+                                        }else{
+                                            Class_Group userAddComment = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq_Teacher", classPushId);
+                                            refjoiningReq.child(pushLong).setValue(userAddComment);
+                                            refacceptingReq.child(pushLong).setValue(userAddComment);
+                                        }
+
 
 
                                         showGrpClassList.notifyDataSetChanged();

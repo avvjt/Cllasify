@@ -29,10 +29,18 @@ public class Adapter_TopicList extends RecyclerView.Adapter<Adapter_TopicList.Vi
 
     Context context;
     List<Subject_Details_Model> subjectDetailsModelList;
+    onSubjectClickListener onSubjectClickListener;
 
+    public void setOnSubjectClickListener(Adapter_TopicList.onSubjectClickListener onSubjectClickListener) {
+        this.onSubjectClickListener = onSubjectClickListener;
+    }
 
     public Adapter_TopicList(Context context) {
         this.context = context;
+    }
+
+    public interface onSubjectClickListener{
+        void onSubjectClick();
     }
 
     @NonNull
@@ -56,10 +64,12 @@ public class Adapter_TopicList extends RecyclerView.Adapter<Adapter_TopicList.Vi
                 posTemp.child("clickedSubjectName").setValue(subjectDetailsModelList.get(holder.getAdapterPosition()).getSubjectName());
                 posTemp.child("subjectUniPushId").setValue(subjectDetailsModelList.get(holder.getAdapterPosition()).getSubjectUniPushId());
 
-                Intent intent = new Intent(context.getApplicationContext(),Server_Activity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("closePanels","close");
-                context.startActivity(intent);
+                onSubjectClickListener.onSubjectClick();
+
+//                Intent intent = new Intent(context.getApplicationContext(),Server_Activity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                intent.putExtra("closePanels","close");
+//                context.startActivity(intent);
 
                     /*
                     DatabaseReference saveTempClassName = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);

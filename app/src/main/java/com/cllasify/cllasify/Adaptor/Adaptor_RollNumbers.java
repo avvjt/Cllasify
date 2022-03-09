@@ -77,14 +77,14 @@ public class Adaptor_RollNumbers extends RecyclerView.Adapter<Adaptor_RollNumber
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
-
+/*
         if(position == 0){
             Toast.makeText(context.getApplicationContext(),"Testing Students"+position,Toast.LENGTH_SHORT).show();
             holder.ll_Group.setVisibility(View.GONE);
         }
         else {
             Toast.makeText(context, "Friend List", Toast.LENGTH_SHORT).show();
-
+*/
 
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -168,7 +168,7 @@ public class Adaptor_RollNumbers extends RecyclerView.Adapter<Adaptor_RollNumber
             }
         });
 */
-        }
+//        }
 
     }
 

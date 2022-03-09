@@ -3,6 +3,7 @@ package com.cllasify.cllasify.Adaptor;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -10,9 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.Constant;
+import com.cllasify.cllasify.Home.Students_Subjects;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.SharePref;
@@ -31,6 +35,7 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
 
     Context context;
     List<Subject_Details_Model> subjectDetailsModelList;
+    List<Class_Group_Names> class_group_namesList;
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
@@ -39,6 +44,10 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
 
         void deleteSubject(String groupPushId, String classPos, String subjectUniPush);
 
+    }
+
+    public void setClass_group_namesList(List<Class_Group_Names> class_group_namesList) {
+        this.class_group_namesList = class_group_namesList;
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -73,15 +82,28 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView subjectTopic;
-        ImageButton renameSubject, deleteSubject;
+        ImageButton subjectMore;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             subjectTopic = itemView.findViewById(R.id.tv_subjectTopic);
-            renameSubject = itemView.findViewById(R.id.renameSubject);
-            deleteSubject = itemView.findViewById(R.id.deleteSubject);
+            subjectMore = itemView.findViewById(R.id.subjectMore);
+
+            final PopupMenu dropDownMenu = new PopupMenu(context, subjectMore);
+
+            final Menu menu = dropDownMenu.getMenu();
+
+            dropDownMenu.getMenuInflater().inflate(R.menu.subject_more, menu);
 
 
+            subjectMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dropDownMenu.show();
+                }
+            });
+
+/*
             deleteSubject.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -99,9 +121,11 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
                                     int subPos = getAdapterPosition();
                                     Subject_Details_Model subject_details_model = subjectDetailsModelList.get(subPos);
                                     String groupPushId = String.valueOf(snapshot.child("clickedGroupPushId").getValue());
-                                    String classUniPushId = String.valueOf(snapshot.child("uniPushClassId").getValue());
+                                    String classUniPushId = String.valueOf(snapshot.child("clickedStudentUniPushClassId").getValue());
                                     String subjectUniPush = subject_details_model.getSubjectUniPushId();
                                     String subjectName = subject_details_model.getSubjectName();
+
+
 
                                     mListener.deleteSubject(groupPushId, classUniPushId, subjectUniPush);
                                     subjectDetailsModelList.remove(subPos);
@@ -161,6 +185,8 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
 
                 }
             });
+
+ */
         }
     }
 }

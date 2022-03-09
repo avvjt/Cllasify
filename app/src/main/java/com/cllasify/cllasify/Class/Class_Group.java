@@ -4,6 +4,10 @@ import android.net.Uri;
 
 public class Class_Group {
 
+    public String doubtUniPushId;
+    public String subGroupPushId;
+    public int msgPosition;
+    public String msgCategory;
     public String dateTime;
     public String userName;
     public String quesUserName;
@@ -60,6 +64,46 @@ public class Class_Group {
         this.groupName = groupName;
     }
 
+    public String getDoubtUniPushId() {
+        return doubtUniPushId;
+    }
+
+    public void setDoubtUniPushId(String doubtUniPushId) {
+        this.doubtUniPushId = doubtUniPushId;
+    }
+
+    public String getSubGroupPushId() {
+        return subGroupPushId;
+    }
+
+    public void setSubGroupPushId(String subGroupPushId) {
+        this.subGroupPushId = subGroupPushId;
+    }
+
+    public int getMsgPosition() {
+        return msgPosition;
+    }
+
+    public void setMsgPosition(int msgPosition) {
+        this.msgPosition = msgPosition;
+    }
+
+    public String getMsgCategory() {
+        return msgCategory;
+    }
+
+    public void setMsgCategory(String msgCategory) {
+        this.msgCategory = msgCategory;
+    }
+
+    public String getClassUniPushId() {
+        return classUniPushId;
+    }
+
+    public void setClassUniPushId(String classUniPushId) {
+        this.classUniPushId = classUniPushId;
+    }
+
     public Class_Group(String userName, String userId) {
         this.userName = userName;
         this.userId = userId;
@@ -77,13 +121,17 @@ public class Class_Group {
         this.userPhone = userPhone;
     }
 
-    public Class_Group(String dateTime, String userId, String position, String groupName, String subGroupName, String groupSubGroupComb) {
+    public Class_Group(String dateTime, String userId, String position, String groupName, String subGroupName, String groupSubGroupComb, String msgCategory, String subGroupPushId, String doubtUniPushId, int msgPosition) {
         this.dateTime = dateTime;
         this.userId = userId;
         this.position = position;
         this.groupName = groupName;
         this.subGroupName = subGroupName;
         this.groupSubGroupComb = groupSubGroupComb;
+        this.msgCategory = msgCategory;
+        this.msgPosition = msgPosition;
+        this.subGroupPushId = subGroupPushId;
+        this.doubtUniPushId = doubtUniPushId;
     }
 
     public Class_Group(String dateTime, String userName, String userId, String position, String groupName, String groupCategory, long groupno) {

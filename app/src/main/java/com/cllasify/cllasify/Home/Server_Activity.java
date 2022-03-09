@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,11 +24,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -88,6 +91,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 
 public class Server_Activity extends AppCompatActivity implements Adapter_ClassGroup.onAddSubjectClickListener {
@@ -149,7 +153,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             left_pannel_upperTextView, classNameTextView,
             tv_FrndP_Title;
 
-    ImageButton ib_cattach, ib_csubmit;
+    ImageButton ib_cattach, ib_csubmit, ib_doubtSubmit;
     ImageButton ImageViewRecentChat, ib_FrndP_csubmit, ib_servSettings;
     Button btn_caddgroup, btn_cjoingroup, addNewClassButton;
     Button btn_lteachresult, btn_lteachattend, btn_lteachexam;
@@ -188,11 +192,13 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
     //Chat_Activity
     private static final String TAG = "ChatActivity";
-    ValueEventListener seenListener, readLiveMessageListener;
+    ValueEventListener seenListener, readLiveMessageListener, readLiveDoubtListener;
     private DatabaseReference reference;
-    private ArrayList<Class_Group> chats;
+    private DatabaseReference allDoubtReference;
+    private ArrayList<Class_Group> chats, doubts;
     private MessageAdapter messageAdapter;
     private boolean onScreen;
+    boolean flag = false;
 
     /*
         Initialisalisation
@@ -341,6 +347,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
 
         ib_csubmit = findViewById(R.id.ib_csubmit);
+        ib_doubtSubmit = findViewById(R.id.ib_doubtSubmit);
 
 
         adaptor_friendsList = new Adaptor_FriendsList(getApplicationContext(), friendsListClasses);
@@ -395,9 +402,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                         if (snapshot.child("serverName").exists()) {
                             serverName[0] = snapshot.child("serverName").getValue().toString().trim();
                         }
-                        if (snapshot.child("subjectUniPushId").exists()) {
-                            subjectUniPushId[0] = snapshot.child("subjectUniPushId").getValue().toString().trim();
-                        }
+                        subjectUniPushId[0] = snapshot.child("subjectUniPushId").getValue().toString().trim();
                         classPosition[0] = snapshot.child("classPosition").getValue().toString().trim();
                         className[0] = snapshot.child("clickedClassName").getValue().toString().trim();
                         subjectName[0] = snapshot.child("clickedSubjectName").getValue().toString().trim();
@@ -407,7 +412,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                         setReference(groupPushId[0], className[0], subjectName[0], classPosition[0], uniPushClassId[0], subjectUniPushId[0]);
 
 
-                        Log.d("SCSG", "init: serverName: " + serverName[0] + "\nclassName: " + className[0] + "\nsubjectName: " + subjectName[0] + "\ngroupPushId: " + groupPushId[0]);
+                        Log.d("SCSG", "init: serverName: " + serverName[0] + "\nsubjectUniPush: " + subjectUniPushId[0] + "\nclassName: " + className[0] + "\nsubjectName: " + subjectName[0] + "\ngroupPushId: " + groupPushId[0]);
 
                     }
                 }
@@ -438,11 +443,47 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         //Chat_Activity
         onScreen = false;
         chats = new ArrayList<>();
+        doubts = new ArrayList<>();
         messageAdapter = new MessageAdapter(getApplicationContext());
         LinearLayoutManager linearLayout = new LinearLayoutManager(getApplicationContext());
         linearLayout.setStackFromEnd(true);
         rv_ChatDashboard.setLayoutManager(linearLayout);
         rv_ChatDashboard.setAdapter(messageAdapter);
+
+
+        messageAdapter.setOnDoubtClickListener(new MessageAdapter.onDoubtClickListener() {
+            @Override
+            public void onDoubtClick(String doubtQuestion, String groupPush, String groupClassPush, String groupSubjectPush, String doubtQuestionPush) {
+
+                Toast.makeText(getApplicationContext(), "Test doubt", Toast.LENGTH_SHORT).show();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("groupPushId", groupPush);
+//                bundle.putString("groupClassPushId", groupClassPush);
+//                bundle.putString("groupClassSubjectPushId", groupSubjectPush);
+//                bundle.putString("doubtQuestionPushId", doubtQuestionPush);
+
+                DatabaseReference putTempDoubt = FirebaseDatabase.getInstance().getReference().child("Groups");
+                putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("groupPushId").setValue(groupPush);
+                putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("groupClassPushId").setValue(groupClassPush);
+                putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("groupClassSubjectPushId").setValue(groupSubjectPush);
+                putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("doubtQuestionPushId").setValue(doubtQuestionPush);
+
+
+//                doubtFragment.setArguments(bundle);
+                Rv_DoubtChat.setVisibility(View.GONE);
+                rv_DoubtDashboard.setVisibility(View.GONE);
+                parentDoubtDashboard.setVisibility(View.GONE);
+                if (flag == false) {
+//                    FragmentTransaction transaction =  getParentFragmentManager().beginTransaction();
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    getFragmentManager().getBackStackEntryCount();
+//                    transaction.setCustomAnimations(R.anim.transition_anim0, R.anim.transition_anim1);
+                    transaction.replace(R.id.rl_ChatDashboard, doubtFragment, "FirstFragment");
+                    transaction.commit();
+                    flag = true;
+                }
+            }
+        });
 
 //        setReference("Uni_Group_No_1_T group", "T class", "T topic");
 
@@ -462,12 +503,12 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             long noofGroupinCategory = snapshot.getChildrenCount() + 1;
-//                            String push = "mszno_" + noofGroupinCategory + "_" + subGroupName[0];
+                            String push = "mszno_" + noofGroupinCategory + "_" + snapshot.getChildrenCount();
 
                             Calendar calenderCC = Calendar.getInstance();
                             SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
                             String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId[0], classPosition[0], subGroupMsg);
+                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId[0], classPosition[0], subGroupMsg, "chat", subjectUniPushId[0], push, 0);
                             reference.push().setValue(userAddGroupClass);
                         }
 
@@ -475,27 +516,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                         public void onCancelled(@NonNull DatabaseError error) {
                         }
                     });
-/*
-                    DatabaseReference referenceUser = FirebaseDatabase.getInstance().getReference().
-                            child("Groups").child("Show_Group").child("User_Show_Group").child(userID).child(subGroupPushId[0]);
-                    referenceUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            long noofGroupinCategory = snapshot.getChildrenCount() + 1;
-                            String push = "mszno_" + noofGroupinCategory + "_" + subGroupPushId[0];
-
-                            Calendar calenderCC = Calendar.getInstance();
-                            SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
-                            String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, subGroupPushId[0], groupPushId[0], noofGroupinCategory);
-                            referenceUser.child(push).setValue(userAddGroupClass);
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
-                    });
-*/
 
                 }
             }
@@ -597,6 +617,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 DatabaseReference getServerTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
                 getServerTemp.child("className").setValue(sbChildGroupName);
 
+                DatabaseReference setAdmins = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins");
+
                 getServerTemp.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -623,7 +645,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot01) {
                                         Class_Student_Details class_student_details = new Class_Student_Details(true, userID, userName);
-                                        testDatabaseReference.child(groupPushId).child(push01[6]).child("classStudentList")
+                                        setAdmins.child(groupPushId).child("classAdminList")
                                                 .child(userID).setValue(class_student_details);
                                     }
 
@@ -692,6 +714,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                     chats.clear();
                     Log.d(TAG, "onDataChange: " + snapshot.getChildrenCount());
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                        Log.d("DOUBTCHK", "onDataChange: " + postSnapshot.getValue());
+
                         Class_Group class_userDashBoard = postSnapshot.getValue(Class_Group.class);
                         chats.add(class_userDashBoard);
                     }
@@ -709,25 +733,44 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             reference.addValueEventListener(readLiveMessageListener);
         }
 
-
-        showDoubt(groupPushId, classUniPushId, subjectUniPushId);
-
-
-        DatabaseReference allDoubtReference = FirebaseDatabase.getInstance().getReference().
+        allDoubtReference = FirebaseDatabase.getInstance().getReference().
                 child("Groups").child("Doubt").child(groupPushId).child(classUniPushId).child(subjectUniPushId).child("All_Doubt");
 
-        list_DoubtDashboard.clear();
+        if (allDoubtReference != null) {
+            readLiveDoubtListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    doubts.clear();
+                    if (snapshot.getChildrenCount() > 0) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
+                            doubts.add(class_userDashBoard);
+
+                            Log.d("SETDOUBT", "onClick: " + dataSnapshot.getValue());
+
+                            messageAdapter.setDoubt(doubts);
+                            messageAdapter.notifyDataSetChanged();
+                            rv_ChatDashboard.smoothScrollToPosition(rv_ChatDashboard.getAdapter().getItemCount());
+                        }
+                    } else {
+                        Toast.makeText(Server_Activity.this, "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            };
+            allDoubtReference.addValueEventListener(readLiveDoubtListener);
+
+        }
+
 
         ChildEventListener doubtchildEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.getChildrenCount() > 0) {
-                    Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
-                    list_DoubtDashboard.add(class_userDashBoard);
-                    showDoubtDashAdaptor.notifyDataSetChanged();
-                } else {
-                    Toast.makeText(Server_Activity.this, "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
-                }
+
             }
 
             @Override
@@ -747,7 +790,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             }
         };
 
-        allDoubtReference.addChildEventListener(doubtchildEventListener);
 
 
         refGrpMemberList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPushId).child("classStudentList");
@@ -818,67 +860,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 startActivity(intent);
             }
         });
-
-
-//        refGrpMemberList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("User_Subscribed_Groups");
-
-
-/*
-        ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.DOWN | ItemTouchHelper.UP, 0) {
-            @Override
-            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
-                int fromPosition = viewHolder.getAdapterPosition();
-                int toPosition = target.getAdapterPosition();
-
-                Toast.makeText(Server_Activity.this, "From" + fromPosition + "gggto" + toPosition, Toast.LENGTH_SHORT).show();
-                Collections.swap(listGrpMemberList, fromPosition, toPosition);
-                recyclerView.getAdapter().notifyItemMoved(fromPosition, toPosition);
-
-                return false;
-            }
-
-            @Override
-            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-
-            }
-        };
-
-
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
-        itemTouchHelper.attachToRecyclerView(rv_GrpMemberList);
-*/
-
     }
 
-    /*
-        private void readMessage(String OrderId) {
-            readLiveMessageListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    chats.clear();
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        if (dataSnapshot.getKey().equals(OrderId)) {
-                            for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                Chat chat = child.getValue(Chat.class);
-                                chats.add(chat);
-                            }
-                        }
-                    }
-                    messageAdapter.setList(chats);
-                    messageAdapter.notifyDataSetChanged();
-                    chatBinding.shimmerFrame.stopShimmer();
-                    chatBinding.shimmerFrame.setVisibility(View.GONE);
-                    chatBinding.conversationList.smoothScrollToPosition(chatBinding.conversationList.getAdapter().getItemCount());
-                    chatBinding.conversationList.setVisibility(View.VISIBLE);
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            };
-        }
-    */
 
 
     @Override
@@ -886,14 +869,19 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         super.onResume();
         if (onScreen) {
             reference.addValueEventListener(readLiveMessageListener);
+            allDoubtReference.addValueEventListener(readLiveDoubtListener);
+
+
             onScreen = false;
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server);
+
         SharePref sharePref = new SharePref(this);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
@@ -904,12 +892,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             userID = currentUser.getUid();
 
             init();
-
-            if (getIntent().hasExtra("closePanels")) {
-                Log.d("CP", "onCreate: " + getIntent().getStringExtra("closePanels"));
-//                overlappingPanels.closePanels();
-            }
-
 
             bottomNavigationView.setSelectedItemId(R.id.bottom_nav_home);
             SharePref.setDataPref(Constant.USER_ID, userID);
@@ -1217,6 +1199,9 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                             userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, groupPushId, subGroupPushId, groupClassSubjects, addTopic, addDoubt);
 
                             allDoubtReference.child(push).setValue(userAddGroupClass);
+
+                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, subGroupPushId, addDoubt, "doubt", groupClassSubjects, push, 0);
+                            reference.push().setValue(userAddGroupClass);
                             Toast.makeText(Server_Activity.this, "Doubt Successfully Added", Toast.LENGTH_SHORT).show();
                         }
 
@@ -1668,52 +1653,59 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                 });
                                 listGrpMemberList.clear();
 
+                                DatabaseReference databaseReferenceStudent = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPush);
 
-                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPush);
-                                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                databaseReferenceStudent.child("classStudentList").child(userID).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        parentItemArrayListClassName.clear();
-                                        Log.d("OTH", "class Name: " + snapshot.child("className").getValue());
 
-                                        Class_Group_Names class_group_names = new Class_Group_Names();
-                                        class_group_names.setGroupPushId(groupPushId);
-                                        class_group_names.setClassName(snapshot.child("className").getValue(String.class));
-                                        class_group_names.setClassBio(snapshot.child("classBio").getValue(String.class));
-                                        class_group_names.setUniPushClassId(snapshot.child("classUniPushId").getValue(String.class));
+                                        Log.d("CHKADMIN", "onDataChange: "+snapshot.getValue());
 
-                                        Log.d("JOIN", "onClick: " + groupPushId);
+                                        if(Objects.equals(snapshot.getValue(), false)){
+                                            databaseReferenceStudent.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    parentItemArrayListClassName.clear();
+                                                    Log.d("OTH", "class Name: " + snapshot.child("className").getValue());
 
-                                        List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
+                                                    Class_Group_Names class_group_names = new Class_Group_Names();
+                                                    class_group_names.setGroupPushId(groupPushId);
+                                                    class_group_names.setClassName(snapshot.child("className").getValue(String.class));
+                                                    class_group_names.setClassBio(snapshot.child("classBio").getValue(String.class));
+                                                    class_group_names.setUniPushClassId(snapshot.child("classUniPushId").getValue(String.class));
 
-                                        for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
-                                            Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
-                                            Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
-                                            Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
-                                            subjectDetailsModelList.add(object);
+                                                    Log.d("JOIN", "onClick: " + groupPushId);
 
-                                        }
+                                                    List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
 
-                                        class_group_names.setChildItemList(subjectDetailsModelList);
+                                                    for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
+                                                        Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                                        Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
+                                                        Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
+                                                        subjectDetailsModelList.add(object);
 
+                                                    }
 
-                                        List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
-
-                                        for (DataSnapshot dataSnapshot1 : snapshot.child("classStudentList").getChildren()) {
-                                            Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
-                                            Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
-                                            Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
-                                            class_student_detailsList.add(class_student_details);
-
-                                        }
-
-                                        class_group_names.setClass_student_detailsList(class_student_detailsList);
+                                                    class_group_names.setChildItemList(subjectDetailsModelList);
 
 
-                                        parentItemArrayListClassName.add(class_group_names);
+                                                    List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
 
-                                        adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
-                                        adapter_classGroup.notifyDataSetChanged();
+                                                    for (DataSnapshot dataSnapshot1 : snapshot.child("classStudentList").getChildren()) {
+                                                        Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                                        Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
+                                                        Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
+                                                        class_student_detailsList.add(class_student_details);
+
+                                                    }
+
+                                                    class_group_names.setClass_student_detailsList(class_student_detailsList);
+
+
+                                                    parentItemArrayListClassName.add(class_group_names);
+
+                                                    adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
+                                                    adapter_classGroup.notifyDataSetChanged();
 //                                        Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
 //
 //                                        Log.i("SBO1", dataSnapshot.getRef().toString());
@@ -1721,6 +1713,85 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 //                                        showOtherUserPublicGroupAdaptor.notifyDataSetChanged();
 //                                        notifyPB.dismiss();
 //                                        tv_OtherTitle.setText("Other Server");
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+
+                                        }else{
+                                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
+                                            databaseReference.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    Log.d(TAG, "showChildGroupAdaptor: Clicked" + snapshot.getKey());
+                                                    parentItemArrayListClassName.clear();
+                                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                                        Log.d(TAG, "showChildGroupAdaptor: ClickedDS" + dataSnapshot.child("className").getValue().toString());
+
+                                                        if (dataSnapshot.getChildrenCount() > 0) {
+                                                            ib_servSettings.setVisibility(View.VISIBLE);
+                                                        }
+
+                                                        Class_Group_Names class_group_names = new Class_Group_Names();
+                                                        class_group_names.setGroupPushId(groupPushId);
+                                                        class_group_names.setClassName(dataSnapshot.child("className").getValue(String.class));
+                                                        class_group_names.setClassBio(dataSnapshot.child("classBio").getValue(String.class));
+                                                        class_group_names.setUniPushClassId(dataSnapshot.child("classUniPushId").getValue(String.class));
+
+                                                        Log.d("JOIN", "onClick: " + groupPushId);
+
+//                            GenericTypeIndicator<ArrayList<Subject_Details_Model>> genericTypeIndicator =
+//                                    new GenericTypeIndicator<ArrayList<Subject_Details_Model>>() {
+//                                    };
+//
+//                            class_group_names.setChildItemList(dataSnapshot.child("classSubjectData").getValue(genericTypeIndicator));
+
+                                                        List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
+
+                                                        for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classSubjectData").getChildren()) {
+                                                            Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                                            Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
+                                                            Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
+                                                            subjectDetailsModelList.add(object);
+
+                                                        }
+
+                                                        class_group_names.setChildItemList(subjectDetailsModelList);
+
+
+                                                        List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
+
+                                                        for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classStudentList").getChildren()) {
+                                                            Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                                            Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
+                                                            Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
+                                                            class_student_detailsList.add(class_student_details);
+
+                                                        }
+
+                                                        class_group_names.setClass_student_detailsList(class_student_detailsList);
+
+
+                                                        parentItemArrayListClassName.add(class_group_names);
+                                                    }
+                                                    adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
+                                                    adapter_classGroup.notifyDataSetChanged();
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+                                        }
+
+
+
+
+
                                     }
 
                                     @Override
@@ -1728,6 +1799,10 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
                                     }
                                 });
+
+
+
+
                             }
 
                             @Override
@@ -1977,7 +2052,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
 
     private void showDoubt(String groupPushId, String subGroupPushId, String groupClassSubjects) {
-        fab_addDoubtQ.setOnClickListener(new View.OnClickListener() {
+        ib_doubtSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showAddDoubtBtmDialog(groupPushId, subGroupPushId, groupClassSubjects);
@@ -2871,8 +2946,17 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
      */
     @Override
     public void onBackPressed() {
-        exitApp();
 
+        if (flag == true) {
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            manager.getBackStackEntryCount();
+            transaction.remove(doubtFragment);
+            transaction.commit();
+            flag = false;
+        } else {
+            exitApp();
+        }
     }
 
 
@@ -2920,6 +3004,55 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
 //        classPosition = String.valueOf(position);
 //        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("")
+    }
+
+    @Override
+    public void onSubClick(int classUniPosition, String clickedClassName, String uniClassPushId) {
+
+        final String[] serverName = new String[1];
+        final String[] className = new String[1];
+        final String[] subjectName = new String[1];
+        final String[] groupPushId = new String[1];
+        final String[] classPosition = new String[1];
+        final String[] uniPushClassId = new String[1];
+        final String[] subjectUniPushId = new String[1];
+
+        DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+        refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildrenCount() > 0) {
+                    if (snapshot.child("clickedClassName").exists() && snapshot.child("clickedSubjectName").exists() && snapshot.child("clickedGroupPushId").exists()) {
+                        Log.d(TAG, "onDataChange: Clicked");
+                        if (snapshot.child("serverName").exists()) {
+                            serverName[0] = snapshot.child("serverName").getValue().toString().trim();
+                        }
+                        subjectUniPushId[0] = snapshot.child("subjectUniPushId").getValue().toString().trim();
+                        classPosition[0] = snapshot.child("classPosition").getValue().toString().trim();
+                        className[0] = snapshot.child("clickedClassName").getValue().toString().trim();
+                        subjectName[0] = snapshot.child("clickedSubjectName").getValue().toString().trim();
+                        groupPushId[0] = snapshot.child("clickedGroupPushId").getValue().toString().trim();
+                        uniPushClassId[0] = snapshot.child("uniPushClassId").getValue().toString().trim();
+
+                        setReference(groupPushId[0], clickedClassName, subjectName[0], String.valueOf(classUniPosition), uniClassPushId, subjectUniPushId[0]);
+
+                        showDoubt(groupPushId[0], uniClassPushId, subjectUniPushId[0]);
+
+
+                        Log.d("SCSG", "init: serverName: " + serverName[0] + "\nsubjectUniPush: " + subjectUniPushId[0] + "\nclassName: " + className[0] + "\nsubjectName: " + subjectName[0] + "\ngroupPushId: " + groupPushId[0]);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        Toast.makeText(getApplicationContext(), "CLICKKKKKEDDDD on SUBBBJJEECCTT", Toast.LENGTH_SHORT).show();
+        overlappingPanels.closePanels();
     }
 
     @Override

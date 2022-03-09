@@ -1,5 +1,6 @@
 package com.cllasify.cllasify.Adaptor;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
@@ -18,6 +19,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,10 +30,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.Class_Student_Details;
+import com.cllasify.cllasify.Constant;
 import com.cllasify.cllasify.Home.Edit_RollNumber;
 import com.cllasify.cllasify.Home.Server_Settings;
+import com.cllasify.cllasify.Home.Students_Subjects;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Subject_Details_Model;
+import com.cllasify.cllasify.Utility.SharePref;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -84,7 +89,7 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
 
 
     @Override
-    public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -100,7 +105,23 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
 
         holder.tv_ClassTitle.setText(groupClassName);
 
+        holder.ll_classGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String userID = SharePref.getDataFromPref(Constant.USER_ID);
+                DatabaseReference posTempSaveUniClass = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+                Log.d("CLGR", "onDataChange: "+mDatalistNew.get(position).getUniPushClassId());
+                posTempSaveUniClass.child("clickedStudentUniPushClassId").setValue(mDatalistNew.get(position).getUniPushClassId());
 
+                Intent intent = new Intent(context.getApplicationContext(), Students_Subjects.class);
+                intent.putExtra("uniGroupPushId",mDatalistNew.get(position).getGroupPushId());
+                intent.putExtra("uniClassPushId",mDatalistNew.get(position).getUniPushClassId());
+                context.startActivity(intent);
+
+            }
+        });
+
+/*
         rv_ShowClass = holder.itemView.findViewById(R.id.studentList);
         listGrpMemberList = new ArrayList<>();
         rv_ShowClass.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
@@ -112,6 +133,8 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
         rv_ShowSubject.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
         adapter_topicList = new Adapter_TopicList(context.getApplicationContext());
         adapter_topicList.setSubjectDetailsModelList(subjectDetailsModelList);
+
+
 
         if (mDatalistNew.get(position).getChildItemList() != null) {
             Adapter_TopicList_Serv adapter_topicList = new Adapter_TopicList_Serv(context.getApplicationContext());
@@ -167,6 +190,8 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
                 @Override
                 public void deleteSubject(String groupPushId, String classPos, String subjectUniPush) {
                     delSubject(groupPushId,classPos,subjectUniPush);
+
+
                 }
             });
 
@@ -208,7 +233,7 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
             showGrpMemberList.notifyDataSetChanged();
             Toast.makeText(context, "No sub classes", Toast.LENGTH_SHORT).show();
         }
-
+*/
 /*
         DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(currUserID);
 
@@ -351,6 +376,7 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
         TextView tv_ClassTitle;
         RecyclerView studentList;
         ImageButton spinnerMore;
+        RelativeLayout ll_classGroup;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -358,6 +384,9 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
             tv_ClassTitle = itemView.findViewById(R.id.tv_ClassTitle);
             studentList = itemView.findViewById(R.id.studentList);
             spinnerMore = itemView.findViewById(R.id.spinner1);
+            ll_classGroup = itemView.findViewById(R.id.ll_Group);
+
+            Log.d("CONT", "ViewHolder: "+context);
 
             final PopupMenu dropDownMenu = new PopupMenu(context, spinnerMore);
 

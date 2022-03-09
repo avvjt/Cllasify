@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -107,6 +106,7 @@ public class DoubtFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.doubt_fragment, container, false);
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -232,42 +232,23 @@ public class DoubtFragment extends Fragment {
                         child("Groups").child("Doubt").child(groupPushId).child(groupClassPushId).child(groupClassSubjectPushId).
                         child("All_Doubt").child(doubtQuestionPushId).child("Answer");
 
-                ChildEventListener doubtchildEventListener = new ChildEventListener() {
+                reference.addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                        if (dataSnapshot.getChildrenCount() > 0) {
-//                    Toast.makeText(requireContext(), "dataSnapshot"+dataSnapshot, Toast.LENGTH_SHORT).show();
-                            Class_Answer class_userDashBoard = dataSnapshot.getValue(Class_Answer.class);
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        list_DoubtAnswer.clear();
+                        for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                            Log.d("DOUBTANS", "onChildAdded: " + dataSnapshot1.getValue());
+                            Class_Answer class_userDashBoard = dataSnapshot1.getValue(Class_Answer.class);
                             list_DoubtAnswer.add(class_userDashBoard);
                             answerAdaptor.notifyDataSetChanged();
-
-//                    notifyPB.dismiss();
-                        } else {
-                            Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
-//                    notifyPB.dismiss();
                         }
-
                     }
 
                     @Override
-                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    }
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                     }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                };
-                //refAdmin.addChildEventListener(childEventListener);
-                reference.addChildEventListener(doubtchildEventListener);
+                });
 
 
             }
@@ -281,6 +262,5 @@ public class DoubtFragment extends Fragment {
 
         return view;
     }
-
 
 }
