@@ -378,11 +378,11 @@ public class Notification_Activity extends AppCompatActivity {
                 }else if (notifyCategory.equals("Friend_Request")){
 
                     DatabaseReference refSubs_Frnd_Group = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(reqUserID);
-                    DatabaseReference refAdmin_Frnd_Group = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(currUserId);
+//                    DatabaseReference refAdmin_Frnd_Group = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(currUserId);
                     userSubsGroupClass = new Class_Group(dateTimeCC,userName, reqUserID, currUserId, groupName,notPushId,"true","On");
 
                     refSubs_Frnd_Group.child(currUserId).setValue(userSubsGroupClass);
-                    refAdmin_Frnd_Group.child(reqUserID).setValue(userSubsGroupClass);
+//                    refAdmin_Frnd_Group.child(reqUserID).setValue(userSubsGroupClass);
 
                     DatabaseReference refAccUserNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(currUserId).child(notPushId);
                     DatabaseReference refAccAdminNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(reqUserID).child(notPushId);

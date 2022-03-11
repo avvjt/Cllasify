@@ -26,8 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_Attendance;
-import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
-import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMemberRollNumberList;
+import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMemberAttendanceRollNumberList;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.R;
@@ -57,7 +56,7 @@ public class Attendance_Activity extends AppCompatActivity {
 
     DatabaseReference refGrpMemberList, refAttendance;
     RecyclerView rv_GrpMemberList;
-    Adaptor_ShowGrpMemberRollNumberList showGrpMemberList;
+    Adaptor_ShowGrpMemberAttendanceRollNumberList showGrpMemberList;
     Adaptor_Attendance showAttendanceStatus;
     Class_Group userAddGroupClass;
     Button btn_ShowAttendStatus, btn_CheckAttendHistory;
@@ -217,7 +216,7 @@ public class Attendance_Activity extends AppCompatActivity {
 //        enableSwipeToDeleteAndUndo();
         rv_GrpMemberList.setLayoutManager(new LinearLayoutManager(this));
         listGrpMemberList = new ArrayList<>();
-        showGrpMemberList = new Adaptor_ShowGrpMemberRollNumberList(this, listGrpMemberList);
+        showGrpMemberList = new Adaptor_ShowGrpMemberAttendanceRollNumberList(this, listGrpMemberList);
         rv_GrpMemberList.setAdapter(showGrpMemberList);
 
         final String[] classPosition = new String[1];
@@ -234,7 +233,7 @@ public class Attendance_Activity extends AppCompatActivity {
 
                         refGrpMemberList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classPosition[0]).child("classStudentList");
 
-                        refGrpMemberList.addChildEventListener(new ChildEventListener() {
+                        refGrpMemberList.orderByChild("rollNumber").addChildEventListener(new ChildEventListener() {
                             @Override
                             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                                 Class_Student_Details class_student_details = snapshot.getValue(Class_Student_Details.class);

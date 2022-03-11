@@ -1,6 +1,7 @@
 package com.cllasify.cllasify.Home;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -13,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_RollNumbers;
-import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
-import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMemberRollNumberList;
+import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMemberAttendanceRollNumberList;
+import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMemberEditRollNumberList;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.R;
@@ -30,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Edit_RollNumber extends AppCompatActivity {
 
@@ -38,7 +40,7 @@ public class Edit_RollNumber extends AppCompatActivity {
 
     DatabaseReference refGrpMemberList, refAttendance;
     RecyclerView rv_GrpMemberList, rv_SiderollNumberList;
-    Adaptor_ShowGrpMemberRollNumberList showGrpMemberList;
+    Adaptor_ShowGrpMemberEditRollNumberList showGrpMemberList;
     Adaptor_RollNumbers showGrpRoll;
 
     FirebaseAuth firebaseAuth;
@@ -46,7 +48,7 @@ public class Edit_RollNumber extends AppCompatActivity {
     String currUserId;
 
     String groupPushId, uniClassPush;
-    Button btn_showStudentList;
+    Button done;
 
 
     @Override
@@ -59,9 +61,9 @@ public class Edit_RollNumber extends AppCompatActivity {
         assert currentUser != null;
         currUserId = currentUser.getUid();
 
-        btn_showStudentList = findViewById(R.id.btn_showStudentList);
+        done = findViewById(R.id.btn_done);
 
-        if (getIntent().hasExtra("uniClassPush") && getIntent().hasExtra("uniClassPush")) {
+        if (getIntent().hasExtra("groupPushId") && getIntent().hasExtra("uniClassPush")) {
             groupPushId = getIntent().getStringExtra("groupPushId");
             uniClassPush = getIntent().getStringExtra("uniClassPush");
         }
@@ -76,8 +78,9 @@ public class Edit_RollNumber extends AppCompatActivity {
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 int fromPosition = viewHolder.getAdapterPosition();
                 int toPosition = target.getAdapterPosition();
-
                 Toast.makeText(Edit_RollNumber.this, "From" + fromPosition + "gggto" + toPosition, Toast.LENGTH_SHORT).show();
+                Log.d("POSS", "from position: "+listGrpMemberList.get(fromPosition).getUserId());
+                Log.d("POSS", "to Position: "+toPosition);
                 Collections.swap(listGrpMemberList, fromPosition, toPosition);
                 showGrpMemberList.notifyItemMoved(fromPosition, toPosition);
 
@@ -89,20 +92,24 @@ public class Edit_RollNumber extends AppCompatActivity {
 
             }
         };
+        DatabaseReference databaseReferenceSaveRoll = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId)
+                .child(uniClassPush).child("classStudentList");
+
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0;i < listGrpMemberList.size();i++){
+                    Log.d("POSS", "Members position: "+i+" = "+listGrpMemberList.get(i).getUserName());
+                    databaseReferenceSaveRoll.child(listGrpMemberList.get(i).getUserId()).child("rollNumber").setValue(i);
+                }
+                finish();
+            }
+        });
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
         itemTouchHelper.attachToRecyclerView(rv_GrpMemberList);
 
         show_GrpRollList(groupPushId, uniClassPush);
-
-        btn_showStudentList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                btn_showStudentList.setVisibility(View.GONE);
-                showGrpRoll.removeItem(0);
-                showGrpMemberList.removeItem(0);
-            }
-        });
 
 
     }
@@ -110,7 +117,7 @@ public class Edit_RollNumber extends AppCompatActivity {
     private void show_GrpMemberList(String groupPushId, String subGroupPushId) {
         rv_GrpMemberList.setLayoutManager(new LinearLayoutManager(this));
         listGrpMemberList = new ArrayList<>();
-        showGrpMemberList = new Adaptor_ShowGrpMemberRollNumberList(this, listGrpMemberList);
+        showGrpMemberList = new Adaptor_ShowGrpMemberEditRollNumberList(this, listGrpMemberList);
 
 
         rv_GrpMemberList.setAdapter(showGrpMemberList);
@@ -170,8 +177,6 @@ public class Edit_RollNumber extends AppCompatActivity {
         rv_SiderollNumberList.setLayoutManager(new LinearLayoutManager(this));
         listGrpRoll = new ArrayList<>();
         showGrpRoll = new Adaptor_RollNumbers(this, listGrpRoll);
-
-        rv_SiderollNumberList.setAdapter(showGrpRoll);
 
 
         DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(currUserId);

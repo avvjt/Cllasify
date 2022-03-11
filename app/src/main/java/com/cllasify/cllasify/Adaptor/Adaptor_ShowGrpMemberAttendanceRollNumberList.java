@@ -28,7 +28,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Adaptor_ShowGrpMemberRollNumberList extends RecyclerView.Adapter<Adaptor_ShowGrpMemberRollNumberList.MyViewHolder> {
+public class Adaptor_ShowGrpMemberAttendanceRollNumberList extends RecyclerView.Adapter<Adaptor_ShowGrpMemberAttendanceRollNumberList.MyViewHolder> {
 
     private Context context;
     private List<Class_Student_Details> mDatalistNew;
@@ -63,7 +63,7 @@ public class Adaptor_ShowGrpMemberRollNumberList extends RecyclerView.Adapter<Ad
         mListener=listener;
     }
 
-    public Adaptor_ShowGrpMemberRollNumberList(Context context, List<Class_Student_Details> mDatalistNew) {
+    public Adaptor_ShowGrpMemberAttendanceRollNumberList(Context context, List<Class_Student_Details> mDatalistNew) {
         this.context = context;
         this.mDatalistNew = mDatalistNew;
     }
@@ -93,7 +93,7 @@ public class Adaptor_ShowGrpMemberRollNumberList extends RecyclerView.Adapter<Ad
         String userID = Answers.getUserId();
 
 
-        holder.rollNumber.setText(String.valueOf(position));
+        holder.rollNumber.setText(String.valueOf(position+1));
 
 /*
         holder.ib_present.setOnClickListener(new View.OnClickListener() {
@@ -185,8 +185,6 @@ public class Adaptor_ShowGrpMemberRollNumberList extends RecyclerView.Adapter<Ad
 
         ImageButton ib_followFrnd, ib_AddFrnd, ib_SubMenu;
         CircleImageView civ_UserProfilePic;
-        Button btn_showStudentList;
-
         public MyViewHolder(View itemView) {
             super(itemView);
 
@@ -197,7 +195,6 @@ public class Adaptor_ShowGrpMemberRollNumberList extends RecyclerView.Adapter<Ad
             ib_SubMenu = itemView.findViewById(R.id.ib_SubMenu);
             ll_Group = itemView.findViewById(R.id.ll_Group);
             rollNumber = itemView.findViewById(R.id.rollNumber);
-            btn_showStudentList = itemView.findViewById(R.id.btn_showStudentList);
 
             civ_UserProfilePic =itemView.findViewById(R.id.civ_UserProfilePic);
 

@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -101,7 +100,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     ViewPager viewPager, view_Pager_ChatView;
     BottomNavigationView bottomNavigationView;
     TextView tv_GroupMember;
-    RecyclerView rv_UserPublicGroupTitle, rv_OtherPublicGroupTitle, rv_GrpMemberList, recyclerViewClassList, topicNamesRecyclerView, endPanelAllFriendsRecyclerView;
+    RecyclerView rv_UserPublicGroupTitle, rv_OtherPublicGroupTitle, rv_GrpMemberList, rv_GrpTeacherList, recyclerViewClassList, topicNamesRecyclerView, endPanelAllFriendsRecyclerView;
     RelativeLayout rl_ChatView;
     FirebaseDatabase refFriendList;
     DatabaseReference refChatDashboard, refDoubtDashboard;
@@ -111,20 +110,22 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             refSearchShowGroup, refShowUserPublicGroup, refShowUserPrivateGroup, refShowUserAllGroup,
             refteachStud,
             refChildGroup, refChildGroupSubsList,
-            refGroupSubsList, refGrpMemberList, refClassStudentList;
+            refGroupSubsList, refGrpMemberList, refClassTeacherList;
 
     DatabaseReference checkFriends;
+    ImageButton btn_joinNotification;
+    LinearLayout onlyAdminLayout;
 
     List<Group_Students> group_studentsListDetails;
     List<Class_Group> list_GroupTitle, list_UserPrivateGroupTitle, list_UserPublicGroupTitle, list_OtherUserPublicGroupTitle,
             list_SubChild,
             list_ChatDashboard, list_DoubtDashboard, list_Friend, list_ChatListDashboard, list_NewChatDashboard;
 
-    List<Class_Student_Details> listGrpMemberList;
+    List<Class_Student_Details> listGrpMemberList, listGrpTeacherList;
     List<String> allFriendsList;
 
     Adaptor_QueryGroup showGroupadaptor, showUserPrivateGroupadaptor, showUserPublicGroupadaptor;
-    Adaptor_ShowGrpMember showGrpMemberList;
+    Adaptor_ShowGrpMember showGrpMemberList, showGrpTeacherList;
     Adaptor_QueryGroup showOtherUserPublicGroupAdaptor;
     Adaptor_Friends show_FriendAdaptor, showChatListDashadaptor;
     Adapter_All_Friends adapter_all_friends;
@@ -156,7 +157,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     ImageButton ib_cattach, ib_csubmit, ib_doubtSubmit;
     ImageButton ImageViewRecentChat, ib_FrndP_csubmit, ib_servSettings;
     Button btn_caddgroup, btn_cjoingroup, addNewClassButton;
-    Button btn_lteachresult, btn_lteachattend, btn_lteachexam;
+    Button btn_lteachresult, btn_lteachexam;
+    ImageButton btn_lteachattend;
     Button endPanelAllFriendsButton;
     LinearLayout groupSection, ll_AddJoinGrp;
 
@@ -205,6 +207,9 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
          */
     void init() {
 
+
+        onlyAdminLayout = findViewById(R.id.onlyAdminLayout);
+        btn_joinNotification = findViewById(R.id.btn_joinNotification);
 
         bottomNavigationView = this.findViewById(R.id.bottom_nav);
         rv_UserPublicGroupTitle = findViewById(R.id.rv_UserPublicGroupTitle);
@@ -313,6 +318,10 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         listGrpMemberList = new ArrayList<>();
         rv_GrpMemberList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
+        rv_GrpTeacherList = findViewById(R.id.adminList);
+        listGrpTeacherList = new ArrayList<>();
+        rv_GrpTeacherList.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+
         allFriendsList = new ArrayList<>();
 
 
@@ -334,6 +343,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         showOtherUserPublicGroupAdaptor = new Adaptor_QueryGroup(this, list_OtherUserPublicGroupTitle);
 
         showGrpMemberList = new Adaptor_ShowGrpMember(Server_Activity.this, listGrpMemberList);
+        showGrpTeacherList = new Adaptor_ShowGrpMember(Server_Activity.this, listGrpTeacherList);
 
         adapter_all_friends = new Adapter_All_Friends(this, allFriendsList);
         endPanelAllFriendsRecyclerView.setAdapter(adapter_all_friends);
@@ -602,8 +612,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot01) {
                                         Class_Student_Details class_student_details = new Class_Student_Details(true, userID, userName);
-                                        testDatabaseReference.child(groupPushId).child(push01[6]).child("classStudentList")
-                                                .child(userID).setValue(class_student_details);
                                         setAdmins.child(groupPushId).child("classAdminList")
                                                 .child(userID).setValue(class_student_details);
                                     }
@@ -663,6 +671,45 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     }
 
     private void setReference(String groupPushId, String subGroupPushId, String groupClassSubject, String classPosition, String classUniPushId, String subjectUniPushId) {
+
+
+        DatabaseReference checkAdmin = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList");
+        checkAdmin.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Log.d("ADMINCHK", "onDataChange: " + snapshot.getValue());
+                if (snapshot.getKey().equals(userID)) {
+                    Log.d("MEADMINYES", "onDataChange: " + snapshot.getKey());
+                    onlyAdminLayout.setVisibility(View.VISIBLE);
+                } else {
+                    onlyAdminLayout.setVisibility(View.GONE);
+                }
+
+                Log.d("MEADMIN", "onDataChange: " + snapshot.getKey());
+            }
+
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         reference = FirebaseDatabase.getInstance().getReference().child("Groups").child("Chat_Message").child(groupPushId).child(classUniPushId).child(subjectUniPushId);
 
@@ -750,9 +797,65 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         };
 
 
+        refClassTeacherList = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList");
+        listGrpTeacherList.clear();
+        refClassTeacherList.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Class_Student_Details class_teacher_details = snapshot.getValue(Class_Student_Details.class);
+                listGrpTeacherList.add(class_teacher_details);
+
+
+                rv_GrpTeacherList.setAdapter(showGrpTeacherList);
+                showGrpTeacherList.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        Log.d(TAG, "onSUBS: " + classUniPushId);
+
+        DatabaseReference refGrpMembers = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPushId);
+        refGrpMembers.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild("classStudentList")) {
+                    Log.d("STUCHK", "onSUBS: yes");
+                    rv_GrpMemberList.setVisibility(View.VISIBLE);
+                } else {
+                    Log.d("STUCHK", "onSUBS: nooo");
+                    rv_GrpMemberList.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         refGrpMemberList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPushId).child("classStudentList");
 
+        listGrpMemberList.clear();
         refGrpMemberList.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -761,6 +864,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
                 rv_GrpMemberList.setAdapter(showGrpMemberList);
                 showGrpMemberList.notifyDataSetChanged();
+
             }
 
             @Override
@@ -779,7 +883,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-        listGrpMemberList.clear();
 
         adapter_all_friends.setOnItemClickListener(new Adapter_All_Friends.OnItemClickListener() {
             @Override
@@ -819,7 +922,20 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 startActivity(intent);
             }
         });
+
+        btn_joinNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Server_Activity.this, GRPJoinReqs.class);
+                intent.putExtra("groupPushId", groupPushId);
+                intent.putExtra("subGroupPushId", classUniPushId);
+                intent.putExtra("classPushId", subjectUniPushId);
+                startActivity(intent);
+            }
+        });
+
     }
+
 
 
 
@@ -1542,7 +1658,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
                                 String classUniPush = String.valueOf(snapshot.getValue());
 
-                                refGrpMemberList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPush).child("classStudentList");
+                                refGrpMemberList = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList");
 
                                 refGrpMemberList.addChildEventListener(new ChildEventListener() {
                                     @Override

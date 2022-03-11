@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="6dp"
-    android:paddingStart="20dp"
     android:gravity="center_vertical">
 
     <LinearLayout
@@ -54,13 +53,13 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/studentMore"
+        android:id="@+id/memberDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
         android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
-        android:background="@drawable/more"
-        android:spinnerMode="dropdown" />
+        android:background="@drawable/ic_delete" />
 
 
     </RelativeLayout>

@@ -21,6 +21,7 @@ import com.cllasify.cllasify.Constant;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.SharePref;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,11 +34,18 @@ import java.util.List;
 public class Students_Subjects extends AppCompatActivity {
 
     String currUserID;
-    RecyclerView rv_ShowClass, rv_ShowSubject;
+    RecyclerView rv_ShowClass, rv_ShowSubject, rv_showTeachers;
 
-    Adaptor_ShowGrpMember showGrpMemberList;
-    Adapter_TopicList adapter_topicList;
+    //Students
+    Adaptor_ShowGrpMember_Serv showGrpMemberList;
     List<Class_Student_Details> listGrpMemberList;
+
+    //Teachers
+    Adaptor_ShowGrpMember_Serv adaptor_showGrpAdmin;
+    List<Class_Student_Details> class_admin_detailsList;
+
+    //Subjects
+    Adapter_TopicList_Serv adapter_topicList;
     List<Subject_Details_Model> subjectDetailsModelList;
 
     @Override
@@ -47,17 +55,30 @@ public class Students_Subjects extends AppCompatActivity {
 
         currUserID = SharePref.getDataFromPref(Constant.USER_ID);
 
+        //Set Students
         rv_ShowClass = findViewById(R.id.studentList);
         listGrpMemberList = new ArrayList<>();
-        rv_ShowClass.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        showGrpMemberList = new Adaptor_ShowGrpMember(getApplicationContext(), listGrpMemberList);
+        showGrpMemberList = new Adaptor_ShowGrpMember_Serv(Students_Subjects.this);
+        showGrpMemberList.setOnItemClickListener(new Adaptor_ShowGrpMember_Serv.OnItemClickListener() {
+            @Override
+            public void removeStudent(String groupPushId, String classUniPushId, String studentUserId) {
+                delStudent(groupPushId,classUniPushId,studentUserId);
+            }
+        });
+        rv_ShowClass.setLayoutManager(new LinearLayoutManager(Students_Subjects.this));
 
 
+        //Set Subjects
         rv_ShowSubject = findViewById(R.id.subjectList);
         subjectDetailsModelList = new ArrayList<>();
-        rv_ShowSubject.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        adapter_topicList = new Adapter_TopicList(getApplicationContext());
-        adapter_topicList.setSubjectDetailsModelList(subjectDetailsModelList);
+        adapter_topicList = new Adapter_TopicList_Serv(Students_Subjects.this);
+        rv_ShowSubject.setLayoutManager(new LinearLayoutManager(Students_Subjects.this));
+
+        //Set Teachers
+        rv_showTeachers = findViewById(R.id.adminList);
+        class_admin_detailsList = new ArrayList<>();
+        adaptor_showGrpAdmin = new Adaptor_ShowGrpMember_Serv(Students_Subjects.this);
+        rv_showTeachers.setLayoutManager(new LinearLayoutManager(Students_Subjects.this));
 
         if(getIntent().hasExtra("uniGroupPushId")&&getIntent().hasExtra("uniClassPushId")) {
 
@@ -69,10 +90,6 @@ public class Students_Subjects extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-
-
-                    List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
-
                     for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
                         Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
                         Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
@@ -81,32 +98,23 @@ public class Students_Subjects extends AppCompatActivity {
 
                     }
 
-
-                    Adapter_TopicList_Serv adapter_topicList = new Adapter_TopicList_Serv(Students_Subjects.this);
-                    rv_ShowSubject.setLayoutManager(new LinearLayoutManager(Students_Subjects.this));
                     adapter_topicList.setSubjectDetailsModelList(subjectDetailsModelList);
                     rv_ShowSubject.setAdapter(adapter_topicList);
                     adapter_topicList.notifyDataSetChanged();
 
 
 
-
-
-                    List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
-
                     for (DataSnapshot dataSnapshot1 : snapshot.child("classStudentList").getChildren()) {
-                        Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                        Log.d("CHKINGSTUD", "onClick: " + dataSnapshot1.getValue());
                         Class_Student_Details object = dataSnapshot1.getValue(Class_Student_Details.class);
-                        Log.d("CHKSUB", "onDataChange: " + object.getUserId());
-                        class_student_detailsList.add(object);
+                        Log.d("CHKINGSTUD", "onDataChange: " + object.getUserId());
+                        listGrpMemberList.add(object);
 
                     }
 
 
-                    Adaptor_ShowGrpMember_Serv adaptor_showGrpMember_serv = new Adaptor_ShowGrpMember_Serv(Students_Subjects.this,class_student_detailsList);
-                    rv_ShowClass.setLayoutManager(new LinearLayoutManager(Students_Subjects.this));
-                    rv_ShowClass.setAdapter(adaptor_showGrpMember_serv);
-//            Log.d("TOP", "onBindViewHolder: "+mDatalistNew.get(position).getChildItemList().get(position).getSubjectName());
+                    showGrpMemberList.setClassStudents(listGrpMemberList);
+                    rv_ShowClass.setAdapter(showGrpMemberList);
                     showGrpMemberList.notifyDataSetChanged();
 
                 }
@@ -117,10 +125,47 @@ public class Students_Subjects extends AppCompatActivity {
                 }
             });
 
+
+            DatabaseReference databaseReferenceGetTeachers = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(uniGrpPushId);
+            databaseReferenceGetTeachers.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    for (DataSnapshot dataSnapshot1 : snapshot.child("classAdminList").getChildren()) {
+                        Log.d("CHKINGTECH", "onClick: " + dataSnapshot1.getValue());
+                        Class_Student_Details object = dataSnapshot1.getValue(Class_Student_Details.class);
+                        Log.d("CHKSUB", "onDataChange: " + object.getUserId());
+                        class_admin_detailsList.add(object);
+
+                    }
+
+                    adaptor_showGrpAdmin.setClassStudents(class_admin_detailsList);
+                    rv_showTeachers.setAdapter(adaptor_showGrpAdmin);
+                    adaptor_showGrpAdmin.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
         }
 
 
 
 
+    }
+
+
+    private void delStudent(String groupPushId,String classUniPushId,String studentUserId) {
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
+                .child(groupPushId).child(classUniPushId).child("classStudentList").child(studentUserId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+
+            }
+        });
     }
 }

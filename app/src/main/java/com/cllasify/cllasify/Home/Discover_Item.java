@@ -339,17 +339,20 @@ public class Discover_Item extends AppCompatActivity {
                                 DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(adminGroupID);
                                 DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(userID);
 
-                                refjoiningReq.addListenerForSingleValueEvent(new ValueEventListener() {
+                                DatabaseReference grpJoiningReqs = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classPushId).child("groupJoiningReqs");
+
+                                grpJoiningReqs.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         long noofQuesinCategory = snapshot.getChildrenCount() + 1;
                                         String pushLong = "Joining B Reqno_" + noofQuesinCategory;
 
-                                        if(JoinStatus.equals("StudentJoin")) {
+                                        if (JoinStatus.equals("StudentJoin")) {
                                             Class_Group userAddComment = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq", classPushId);
-                                            refjoiningReq.child(pushLong).setValue(userAddComment);
+                                            grpJoiningReqs.child(pushLong).setValue(userAddComment);
+                                            //                                            refjoiningReq.child(pushLong).setValue(userAddComment);
                                             refacceptingReq.child(pushLong).setValue(userAddComment);
-                                        }else{
+                                        }else {
                                             Class_Group userAddComment = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq_Teacher", classPushId);
                                             refjoiningReq.child(pushLong).setValue(userAddComment);
                                             refacceptingReq.child(pushLong).setValue(userAddComment);

@@ -2,9 +2,9 @@ package com.cllasify.cllasify.Adaptor;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
@@ -12,13 +12,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.PopupMenu;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.Constant;
 import com.cllasify.cllasify.R;
-import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.SharePref;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -53,18 +52,21 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
         return mDatalistNew;
     }
 
+    public void setClassStudents(List<Class_Student_Details> mDatalistNew) {
+        this.mDatalistNew = mDatalistNew;
+    }
+
     public interface OnItemClickListener {
 
-        void removeStudent(String groupPushId,String classUniPushId,String studentUserId);
+        void removeStudent(String groupPushId, String classUniPushId, String studentUserId);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
 
-    public Adaptor_ShowGrpMember_Serv(Context context, List<Class_Student_Details> mDatalistNew) {
+    public Adaptor_ShowGrpMember_Serv(Context context) {
         this.context = context;
-        this.mDatalistNew = mDatalistNew;
     }
 
     @NonNull
@@ -122,39 +124,47 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tv_GroupTitle;
-        ImageButton studentMore;
+        ImageButton memberDelete;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             tv_GroupTitle = itemView.findViewById(R.id.tv_classGroupTitle);
-            studentMore = itemView.findViewById(R.id.studentMore);
+            memberDelete = itemView.findViewById(R.id.memberDelete);
 
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
             assert currentUser != null;
             String currUserID = currentUser.getUid();
 
-            final PopupMenu dropDownMenu = new PopupMenu(context, studentMore);
 
-            final Menu menu = dropDownMenu.getMenu();
-
-            dropDownMenu.getMenuInflater().inflate(R.menu.subject_more, menu);
-
-
-            studentMore.setOnClickListener(new View.OnClickListener() {
+            memberDelete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    dropDownMenu.show();
-                }
-            });
 
-/*
-            makeAdmin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null) {
+
+                    int studPos = getAdapterPosition();
+                    Class_Student_Details class_student_details = mDatalistNew.get(studPos);
+                    Log.d("MEMBERMATCH", "onClick: " + class_student_details.getUserId() + "\tCurrentUserId: " + currUserID);
+
+                    if (class_student_details.getUserId().equals(currUserID)) {
+
+                        AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(context);
+                        alertdialogbuilder.setTitle("You are admin!!!")
+                                .setMessage("You cannot remove yourself from the School")
+                                .setCancelable(false)
+                                .setPositiveButton("OK",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                        AlertDialog alert = alertdialogbuilder.create();
+                        alert.show();
+
+                    } else {
 
 
                         String userID = SharePref.getDataFromPref(Constant.USER_ID);
@@ -167,93 +177,11 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
                                     int studPos = getAdapterPosition();
                                     Class_Student_Details class_student_details = mDatalistNew.get(studPos);
                                     String groupPushId = String.valueOf(snapshot.child("clickedGroupPushId").getValue());
-                                    String classUniPushId = String.valueOf(snapshot.child("uniPushClassId").getValue());
-                                    String studentUniPush = class_student_details.getUserId();
-
-                                    DatabaseReference editAdmin = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
-                                            .child(groupPushId).child(classUniPushId).child("classStudentList").child(studentUniPush);
-
-                                    editAdmin.child("admin").setValue(true);
-
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-
-
-                    }
-
-                }
-            });
-
-
-            removeAdmin.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null) {
-
-
-                        String userID = SharePref.getDataFromPref(Constant.USER_ID);
-                        DatabaseReference posTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
-
-                        posTemp.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (mListener != null) {
-                                    int studPos = getAdapterPosition();
-                                    Class_Student_Details class_student_details = mDatalistNew.get(studPos);
-                                    String groupPushId = String.valueOf(snapshot.child("clickedGroupPushId").getValue());
-                                    String classUniPushId = String.valueOf(snapshot.child("uniPushClassId").getValue());
-                                    String studentUniPush = class_student_details.getUserId();
-
-                                    DatabaseReference editAdmin = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
-                                            .child(groupPushId).child(classUniPushId).child("classStudentList").child(studentUniPush);
-
-                                    editAdmin.child("admin").setValue(false);
-
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-
-
-                    }
-
-                }
-            });
-
-
-            removeStudent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mListener != null) {
-
-
-                        String userID = SharePref.getDataFromPref(Constant.USER_ID);
-                        DatabaseReference posTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
-
-                        posTemp.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (mListener != null) {
-                                    int studPos = getAdapterPosition();
-                                    Class_Student_Details class_student_details = mDatalistNew.get(studPos);
-                                    String groupPushId = String.valueOf(snapshot.child("clickedGroupPushId").getValue());
-                                    String classUniPushId = String.valueOf(snapshot.child("uniPushClassId").getValue());
+                                    String classUniPushId = String.valueOf(snapshot.child("clickedStudentUniPushClassId").getValue());
                                     String studentUniPush = class_student_details.getUserId();
                                     String studentName = class_student_details.getUserName();
 
-                                    mListener.removeStudent(groupPushId,classUniPushId,studentUniPush);
+                                    mListener.removeStudent(groupPushId, classUniPushId, studentUniPush);
 
                                     mDatalistNew.remove(studPos);
                                     notifyItemRemoved(studPos);
@@ -268,12 +196,11 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
                         });
 
 
-
                     }
+
 
                 }
             });
-*/
 
             /*
 //            onFriendClick

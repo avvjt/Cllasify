@@ -119,8 +119,6 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildrenCount() > 0) {
-                    if (snapshot.child("serverName").exists()) {
-                        String servvName = snapshot.child("serverName").getValue().toString();
 
                         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
                         assert mUser != null;
@@ -203,7 +201,7 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                         }
 
 
-                    }
+
                 }
             }
 
@@ -366,7 +364,10 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                             saveUserGroupClassRef.setValue(classUni);
                             mListener.acceptNotify(reqUserID, currUserId, groupName, userName, classPushid, groupPushId, notifyReq, notPushId, classUni);
 
-                            tv_approve.setBackgroundColor(Color.GREEN);
+                            ll_groupdetails.setVisibility(View.GONE);
+                            tv_Groupinvite.setText("User " + userName + " request to join Sub-class : " + classPushid + " of server " + groupName + " has been approved");
+
+//                            tv_approve.setBackgroundColor(Color.GREEN);
                             tv_reject.setEnabled(false);
 
                         }

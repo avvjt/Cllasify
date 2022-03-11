@@ -27,6 +27,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
         <activity
+            android:name=".Home.GRPJoinReqs"
+            android:exported="false" />
+        <activity
             android:name=".Home.Students_Subjects"
             android:exported="false" />
         <activity
