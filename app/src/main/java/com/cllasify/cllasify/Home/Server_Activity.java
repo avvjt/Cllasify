@@ -670,7 +670,9 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
     private void setReference(String groupPushId, String subGroupPushId, String groupClassSubject, String classPosition, String classUniPushId, String subjectUniPushId, String serverName) {
 
-        final boolean[] isAdminLayout = {false};
+       if(subjectUniPushId!= null){
+           ll_bottom_send.setVisibility(View.VISIBLE);
+       }
 
         DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID).child("clickedGroupPushId");
 
@@ -3263,9 +3265,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                         setReference(groupPushId[0], clickedClassName, subjectName[0], String.valueOf(classUniPosition), uniClassPushId, subjectUniPushId[0], clickedGroupName[0]);
 
                         showDoubt(groupPushId[0], uniClassPushId, subjectUniPushId[0]);
-
-                        ll_bottom_send.setVisibility(View.VISIBLE);
-
 
                         Log.d("SCSG", "init: serverName: " + serverName[0] + "\nsubjectUniPush: " + subjectUniPushId[0] + "\nclassName: " + className[0] + "\nsubjectName: " + subjectName[0] + "\ngroupPushId: " + groupPushId[0]);
 
