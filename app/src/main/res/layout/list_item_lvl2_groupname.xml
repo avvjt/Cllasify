@@ -9,14 +9,20 @@
     android:layout_height="wrap_content">
 
     <RelativeLayout
+        android:id="@+id/ClassTopics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+    <RelativeLayout
         android:id="@+id/ll_Group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_toStartOf="@+id/addNewTopicButton">
+        android:layout_toStartOf="@id/drops"
+        android:layout_marginBottom="5dp">
 
         <TextView
             android:id="@+id/tv_classGroupTitle"
@@ -31,46 +37,69 @@
             android:fontFamily="@font/open_sans_bold"
             android:letterSpacing="0.02"
             android:padding="4dp"
-            android:text="Group Name"
             android:textAllCaps="true"
             android:textColor="@color/black"
             android:textSize="14sp"
-            android:drawableRight="@drawable/drop_down"
             app:drawableLeftCompat="@drawable/ic_hashtag_public"
             app:drawableTint="@color/purple" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/drops"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_toStartOf="@+id/addNewTopicButton">
+
+
+        <ImageButton
+            android:id="@+id/dropDownBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:visibility="gone"
+            android:layout_margin="4dp"
+            android:background="@color/transparent"
+            android:padding="4dp"
+            android:src="@drawable/drop_down" />
 
         <ImageButton
             android:id="@+id/dropUpBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:visibility="gone"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="4dp"
             android:background="@color/transparent"
             android:padding="4dp"
-            android:layout_alignParentEnd="true"
             android:src="@drawable/drop_up" />
-
     </RelativeLayout>
 
 
-    <ImageButton
-        android:id="@+id/addNewTopicButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="15dp"
-        android:background="@color/transparent"
-        android:src="@drawable/ic_add"
-        app:tint="@color/black" />
+        <ImageButton
+            android:id="@+id/addNewTopicButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="15dp"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_add"
+            app:tint="@color/black" />
 
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/subjectList"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ll_Group"
+        android:layout_below="@+id/ClassTopics"
         android:layout_marginStart="20dp"
         android:layout_marginTop="5dp" />
 

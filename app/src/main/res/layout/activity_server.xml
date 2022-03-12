@@ -28,43 +28,59 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:orientation="vertical"
-                android:paddingStart="16dp"
-                android:paddingEnd="0dp"
                 android:layout_height="match_parent">
 
 
-                <TextView
-                    android:id="@+id/headerNameWelcome"
-                    style="@style/PanelHeader"
-                    android:text="@string/start_panel_name" />
-
                 <RelativeLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
 
-                    <androidx.cardview.widget.CardView
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardFriendRec"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="50dp"
+                            app:cardElevation="0dp">
+
+                            <ImageButton
+                                android:id="@+id/ib_FrndsList"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:background="@color/grey"
+                                android:src="@drawable/ic_baseline_message_24" />
+
+                        </androidx.cardview.widget.CardView>
+
+                        <View
+                            android:layout_width="40dp"
+                            android:layout_height="2dp"
+                            android:layout_below="@+id/cardFriendRec"
+                            android:layout_centerInParent="true"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@color/black" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/groupName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
-                        app:cardCornerRadius="50dp">
-
-                        <ImageButton
-                            android:id="@+id/ib_FrndsList"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:background="@color/white"
-                            android:src="@drawable/ic_baseline_message_24" />
-
-                    </androidx.cardview.widget.CardView>
+                        android:layout_centerInParent="true"
+                        android:fontFamily="@font/open_sans_bold"
+                        android:text="Group Name"
+                        android:textSize="20dp" />
 
                 </RelativeLayout>
 
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="530dp"
-                    android:layout_margin="10dp"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
 
@@ -72,7 +88,6 @@
                         android:layout_width="80dp"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
-                        android:background="@color/white"
                         android:orientation="vertical">
 
                         <!--Public server-->
@@ -87,7 +102,7 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_UserPublicGroupTitle"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp" />
+                            android:layout_height="wrap_content" />
 
                         <!--Others server-->
                         <TextView
@@ -101,17 +116,21 @@
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_OtherPublicGroupTitle"
                             android:layout_width="match_parent"
-                            android:layout_height="200dp" />
+                            android:layout_height="wrap_content" />
 
                         <androidx.cardview.widget.CardView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            app:cardElevation="0dp"
                             app:cardCornerRadius="50dp">
 
                             <ImageView
                                 android:id="@+id/addNewTopicButton"
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
+                                android:background="@color/grey"
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:scaleType="center"
                                 android:src="@drawable/ic_add" />
 
                         </androidx.cardview.widget.CardView>
@@ -152,17 +171,11 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/groupName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
                         <Button
                             android:id="@+id/addNewClassButton"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:textAllCaps="false"
                             android:text="Add New Class" />
 
                         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -380,6 +393,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:id="@+id/ll_bottom_send"
+                        android:visibility="gone"
                         android:orientation="horizontal">
                         <EditText
                             android:layout_width="match_parent"
@@ -418,7 +432,6 @@
             </LinearLayout>
         </RelativeLayout>
 
-
         <RelativeLayout
             android:id="@+id/end_panel"
             style="@style/Panel"
@@ -449,38 +462,38 @@
                     android:orientation="horizontal">
 
 
-                        <ImageButton
-                            android:id="@+id/ib_servSettings"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_margin="10dp"
-                            android:padding="5dp"
-                            android:scaleType="fitCenter"
-                            android:background="@color/white"
-                            android:src="@drawable/ic_edit" />
+                    <ImageButton
+                        android:id="@+id/ib_servSettings"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_margin="10dp"
+                        android:padding="5dp"
+                        android:scaleType="fitCenter"
+                        android:background="@color/white"
+                        android:src="@drawable/ic_edit" />
 
 
 
-                        <ImageButton
-                            android:id="@+id/btn_lteachattend"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_margin="10dp"
-                            android:scaleType="fitCenter"
-                            android:background="@color/transparent"
-                            android:src="@drawable/ic_attendance"
-                            android:text="@string/attendance" />
+                    <ImageButton
+                        android:id="@+id/btn_lteachattend"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_margin="10dp"
+                        android:scaleType="fitCenter"
+                        android:background="@color/transparent"
+                        android:src="@drawable/ic_attendance"
+                        android:text="@string/attendance" />
 
 
-                        <ImageButton
-                            android:id="@+id/btn_joinNotification"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_margin="10dp"
-                            android:scaleType="fitCenter"
-                            android:background="@color/transparent"
-                            android:src="@drawable/ic_joined_noti"
-                            android:text="Joining Request" />
+                    <ImageButton
+                        android:id="@+id/btn_joinNotification"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_margin="10dp"
+                        android:scaleType="fitCenter"
+                        android:background="@color/transparent"
+                        android:src="@drawable/ic_joined_noti"
+                        android:text="Joining Request" />
 
                 </LinearLayout>
 

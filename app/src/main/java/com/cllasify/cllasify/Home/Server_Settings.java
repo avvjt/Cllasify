@@ -90,14 +90,9 @@ public class Server_Settings extends AppCompatActivity {
             });
         }
 
-        getTempData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(currUserId);
+                groupPushId = getIntent().getStringExtra("groupPushId");
+                serverName = getIntent().getStringExtra("serverName");
 
-        getTempData.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                groupPushId = String.valueOf(snapshot.child("clickedGroupPushId").getValue());
-                serverName = String.valueOf(snapshot.child("clickedGroupName").getValue());
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group");
                 databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -235,14 +230,6 @@ public class Server_Settings extends AppCompatActivity {
                     }
                 });
 
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
     }

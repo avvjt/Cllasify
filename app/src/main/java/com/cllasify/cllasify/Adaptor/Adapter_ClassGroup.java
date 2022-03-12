@@ -74,32 +74,41 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
                 onAddSubjectClickListener.onAddSubjectClickListener(parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(),class_group_names.getUniPushClassId());
             }
         });
+/*
+
+*/
+
+
+
+
+
 
         holder.classGroupName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                holder.subjectList.setVisibility(View.VISIBLE);
-                holder.dropUpBtn.setVisibility(View.VISIBLE);
-                holder.classGroupName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.drop_up, 0);
                 Toast.makeText(context, "Clicked on Class", Toast.LENGTH_SHORT).show();
                 Log.d("POSS", "Class position : "+class_group_names.getClassName());
                 onAddSubjectClickListener.onClassClickListener(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(),class_group_names.getUniPushClassId());
             }
         });
 
-
-
-
         holder.dropUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 holder.subjectList.setVisibility(View.GONE);
                 holder.dropUpBtn.setVisibility(View.GONE);
-                holder.classGroupName.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.drop_down, 0);
+                holder.dropDownBtn.setVisibility(View.VISIBLE);
             }
         });
 
-
+        holder.dropDownBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.subjectList.setVisibility(View.VISIBLE);
+                holder.dropDownBtn.setVisibility(View.GONE);
+                holder.dropUpBtn.setVisibility(View.VISIBLE);
+            }
+        });
 /*
         holder.classGroupName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,7 +177,7 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView classGroupName;
-        ImageButton dropUpBtn;
+        ImageButton dropUpBtn,dropDownBtn;
         ImageButton addTopicButton;
         RecyclerView subjectList;
 
@@ -178,7 +187,7 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
             addTopicButton = itemView.findViewById(R.id.addNewTopicButton);
             subjectList = itemView.findViewById(R.id.subjectList);
             dropUpBtn = itemView.findViewById(R.id.dropUpBtn);
-
+            dropDownBtn = itemView.findViewById(R.id.dropDownBtn);
         }
     }
 

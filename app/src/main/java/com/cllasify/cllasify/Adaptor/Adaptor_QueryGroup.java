@@ -1,11 +1,13 @@
 package com.cllasify.cllasify.Adaptor;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Adaptor_QueryGroup extends RecyclerView.Adapter<Adaptor_QueryGroup.MyViewHolder> {
 
@@ -72,19 +76,21 @@ public class Adaptor_QueryGroup extends RecyclerView.Adapter<Adaptor_QueryGroup.
 
         String firstchar=groupName.substring(0,1);
 
-        holder.btn_GroupTitle.setText(firstchar);
-
         DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
         refSaveCurrentData.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildrenCount()>0){
-                    if(snapshot.child("tGroupPushId").exists() ) {
-                        String GroupPushId = snapshot.child("tGroupPushId").getValue().toString().trim();
+                    if(snapshot.child("clickedGroupPushId").exists() ) {
+                        String GroupPushId = snapshot.child("clickedGroupPushId").getValue().toString().trim();
                         if (groupPushid.equals(GroupPushId)){
-                            holder.btn_GroupTitle.setBackgroundColor(context.getColor(R.color.colorPrimary));
+                            holder.btn_GroupTitle.setBorderColor(context.getColor(R.color.splash_end));
+                            holder.btn_GroupTitle.setBorderWidth(10);
+//                            holder.btn_GroupTitle.setBackgroundColor(context.getColor(R.color.colorPrimary));
                         }else{
-                            holder.btn_GroupTitle.setBackgroundColor(context.getColor(R.color.transparent));
+//                            holder.btn_GroupTitle.setBackgroundColor(context.getColor(R.color.transparent));
+                            holder.btn_GroupTitle.setBorderColor(context.getColor(R.color.transparent));
+                            holder.btn_GroupTitle.setBorderWidth(10);
                         }
 
                     }
@@ -105,7 +111,7 @@ public class Adaptor_QueryGroup extends RecyclerView.Adapter<Adaptor_QueryGroup.
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        Button btn_GroupTitle;
+        CircleImageView btn_GroupTitle;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -136,8 +142,6 @@ public class Adaptor_QueryGroup extends RecyclerView.Adapter<Adaptor_QueryGroup.
                             DatabaseReference changeCOor = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
                             changeCOor.child("clickedGroupPushId").setValue(groupPushId);
                             changeCOor.child("clickedGroupName").setValue(groupName);
-
-                            btn_GroupTitle.setBackgroundColor(context.getColor(R.color.colorPrimary));
 
 
                             mListener.showChildGroupAdaptor(position, groupName, groupPushId, groupUserID, groupCategory);
