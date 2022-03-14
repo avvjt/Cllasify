@@ -578,7 +578,6 @@ public class Discover_Activity extends AppCompatActivity {
         //refAdmin.addChildEventListener(childEventListener);
         refSearchShowGroup.addChildEventListener(childEventListener);
     }
-    //    }
     private void sentGroupJoinInvitation(String adminGroupID,String adminUserName, String groupName, String groupPushId,String subGroupName) {
 
         AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(Discover_Activity.this);

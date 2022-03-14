@@ -6,12 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Home.Profile_Activity">
 
-    <TextView
-        android:id="@+id/bio"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
-
     <RelativeLayout
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
@@ -28,6 +22,7 @@
             android:id="@+id/btn_ShareApp"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:visibility="gone"
             android:layout_alignEnd="@+id/btn_Settings"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="60dp"
@@ -41,7 +36,10 @@
             android:layout_height="30dp"
             android:layout_alignParentEnd="true"
             android:layout_gravity="center"
-            android:layout_margin="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             android:background="@color/transparent"
             android:src="@drawable/ic_settings" />
 
@@ -68,8 +66,7 @@
                     android:id="@+id/prof_pic"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
-                    android:layout_margin="8dp"
-                    android:src="@drawable/maharaji" />
+                    android:layout_margin="8dp"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -92,6 +89,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:id="@id/ll_UserName"
                         android:orientation="horizontal">
 
@@ -182,7 +180,7 @@
                     android:layout_marginStart="10dp"
                     android:textColor="@color/page_black"
                     android:textSize="16sp"
-                    android:text="0 friends" />
+                    android:text="0 Followers" />
 
                 <View
                     android:layout_width="5dp"

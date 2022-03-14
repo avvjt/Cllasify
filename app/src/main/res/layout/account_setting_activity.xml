@@ -115,6 +115,7 @@
                     android:text="@string/notification"
                     android:layout_margin="20dp"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     android:textColor="@color/page_black"
                     android:textSize="20sp"/>
 
@@ -126,6 +127,7 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_weight="1"
+                    android:visibility="gone"
                     android:layout_gravity="center"
                     android:textColor="@color/page_black"
                     android:textSize="18sp"/>
@@ -148,7 +150,6 @@
                         android:layout_height="wrap_content"
                         android:text="Set Theme"
                         android:id="@+id/tv_setTheme"
-                        android:textStyle="bold"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginBottom="4dp"

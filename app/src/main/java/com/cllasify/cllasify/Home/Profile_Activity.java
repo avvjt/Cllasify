@@ -120,25 +120,7 @@ public class Profile_Activity extends AppCompatActivity {
             tv_Name = findViewById(R.id.tv_Name);
             prof_pic = findViewById(R.id.prof_pic);
 
-            refUserStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
-            refUserStatus.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.getChildrenCount() > 0) {
-
-                        if (snapshot.child("profilePic").exists()) {
-                            String profilePic = snapshot.child("profilePic").getValue().toString();
-                            Glide.with(Profile_Activity.this).load(profilePic).into(prof_pic);
-                        } else {
-                            Picasso.get().load(userPhoto).into(prof_pic);
-                        }
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
+            Glide.with(Profile_Activity.this).load(userPhoto).into(prof_pic);
 
             tv_UserBio = findViewById(R.id.tv_UserBio);
             tv_UserInstitute = findViewById(R.id.tv_UserInstitute);
@@ -214,9 +196,7 @@ public class Profile_Activity extends AppCompatActivity {
                 if (snapshot.getChildrenCount() > 0) {
                     if (snapshot.child("Bio").exists()) {
 //                            tv_addBio.setVisibility(View.GONE);
-                        TextView bioTV = findViewById(R.id.bio);
                         String bio = snapshot.child("Bio").getValue().toString();
-                        bioTV.setText(bio);
                         Log.d("TAG", "onDataChange: "+bio);
 //                            tv_UserBio.setVisibility(View.VISIBLE);
                         ll_bio.setVisibility(View.VISIBLE);
@@ -285,14 +265,14 @@ public class Profile_Activity extends AppCompatActivity {
                 if (snapshot.getChildrenCount() > 0) {
                     long count = snapshot.getChildrenCount();
                     if(count < 2) {
-                        tv_CountFollowers.setText((int) count + " Friend");
+                        tv_CountFollowers.setText((int) count + " Followers");
                     }
                     else{
-                        tv_CountFollowers.setText((int) count + " Friends");
+                        tv_CountFollowers.setText((int) count + " Followers");
                     }
                     notifyPB.dismiss();
                 } else {
-                    tv_CountFollowers.setText("0 Friends");
+                    tv_CountFollowers.setText("0 Followers");
 
                 }
             }
