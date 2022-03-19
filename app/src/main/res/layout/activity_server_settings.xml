@@ -31,6 +31,7 @@
             android:id="@+id/serverDelete"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:visibility="gone"
             android:layout_centerInParent="true"
             android:layout_marginEnd="15dp"
             android:layout_toStartOf="@id/serverSettingProfile"
@@ -63,7 +64,7 @@
         android:layout_marginTop="10dp"
         android:drawablePadding="15dp"
         android:textColor="@color/black"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textStyle="bold" />
 
     <TextView
@@ -82,12 +83,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/schoolBio"
-        android:layout_margin="15dp"
+        android:visibility="gone"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/cust_rounded_corner"
         android:text="Show all classes"
         android:textAllCaps="false"
-        android:textSize="20dp"
         android:textColor="@color/white"
-        android:background="@drawable/cust_rounded_corner"/>
+        android:textSize="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_ShowClass"

@@ -1,20 +1,20 @@
 package com.cllasify.cllasify.Home;
 
+import android.app.AlertDialog;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.View;
-import android.widget.ImageButton;
-
-import com.cllasify.cllasify.Adaptor.Adapter_TopicList;
 import com.cllasify.cllasify.Adaptor.Adapter_TopicList_Serv;
-import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember_Serv;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.Constant;
@@ -34,7 +34,8 @@ import java.util.List;
 public class Students_Subjects extends AppCompatActivity {
 
     String currUserID;
-    RecyclerView rv_ShowClass, rv_ShowSubject, rv_showTeachers;
+    RecyclerView rv_showStudents, rv_ShowSubject, rv_showTeachers;
+    TextView tv_studentList,tv_adminList,tv_SubjectList;
 
     //Students
     Adaptor_ShowGrpMember_Serv showGrpMemberList;
@@ -55,41 +56,93 @@ public class Students_Subjects extends AppCompatActivity {
 
         currUserID = SharePref.getDataFromPref(Constant.USER_ID);
 
+        tv_studentList = findViewById(R.id.studentListText);
+        tv_adminList = findViewById(R.id.adminListText);
+        tv_SubjectList = findViewById(R.id.subjectListText);
+
+
         //Set Students
-        rv_ShowClass = findViewById(R.id.studentList);
+        rv_showStudents = findViewById(R.id.studentList);
         listGrpMemberList = new ArrayList<>();
         showGrpMemberList = new Adaptor_ShowGrpMember_Serv(Students_Subjects.this);
         showGrpMemberList.setOnItemClickListener(new Adaptor_ShowGrpMember_Serv.OnItemClickListener() {
             @Override
             public void removeStudent(String groupPushId, String classUniPushId, String studentUserId) {
-                delStudent(groupPushId,classUniPushId,studentUserId);
+                delStudent(groupPushId, classUniPushId, studentUserId);
+            }
+
+            @Override
+            public void removeTeacher(String groupPushId, String studentUserId) {
+
             }
         });
-        rv_ShowClass.setLayoutManager(new LinearLayoutManager(Students_Subjects.this));
+        rv_showStudents.setLayoutManager(new LinearLayoutManager(Students_Subjects.this));
 
 
         //Set Subjects
         rv_ShowSubject = findViewById(R.id.subjectList);
         subjectDetailsModelList = new ArrayList<>();
         adapter_topicList = new Adapter_TopicList_Serv(Students_Subjects.this);
+        adapter_topicList.setOnItemClickListener(new Adapter_TopicList_Serv.OnItemClickListener() {
+            @Override
+            public void renameSubject(String groupPushId, String classUniPushId, String classPosition, String subjectName) {
+                renameSub(groupPushId, classUniPushId, classPosition, subjectName);
+            }
+
+            @Override
+            public void deleteSubject(String groupPushId, String classPos, String subjectUniPush) {
+                delSubject(groupPushId,classPos,subjectUniPush);
+            }
+        });
         rv_ShowSubject.setLayoutManager(new LinearLayoutManager(Students_Subjects.this));
 
         //Set Teachers
         rv_showTeachers = findViewById(R.id.adminList);
         class_admin_detailsList = new ArrayList<>();
         adaptor_showGrpAdmin = new Adaptor_ShowGrpMember_Serv(Students_Subjects.this);
+        adaptor_showGrpAdmin.setOnItemClickListener(new Adaptor_ShowGrpMember_Serv.OnItemClickListener() {
+            @Override
+            public void removeStudent(String groupPushId, String classUniPushId, String studentUserId) {
+            }
+
+            @Override
+            public void removeTeacher(String groupPushId, String studentUserId) {
+                delTeacher(groupPushId, studentUserId);
+            }
+        });
         rv_showTeachers.setLayoutManager(new LinearLayoutManager(Students_Subjects.this));
 
-        if(getIntent().hasExtra("uniGroupPushId")&&getIntent().hasExtra("uniClassPushId")) {
+        if (getIntent().hasExtra("uniGroupPushId") && getIntent().hasExtra("uniClassPushId")) {
 
             String uniGrpPushId = getIntent().getStringExtra("uniGroupPushId");
             String uniClassPushId = getIntent().getStringExtra("uniClassPushId");
 
             DatabaseReference databaseReferenceGetStudent = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(uniGrpPushId).child(uniClassPushId);
-            databaseReferenceGetStudent.addListenerForSingleValueEvent(new ValueEventListener() {
+            databaseReferenceGetStudent.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                    if (snapshot.hasChild("classStudentList")) {
+                        Log.d("STUCHK", "onSUBS: yes");
+                        rv_showStudents.setVisibility(View.VISIBLE);
+                        tv_studentList.setVisibility(View.VISIBLE);
+                    } else {
+                        Log.d("STUCHK", "onSUBS: nooo");
+                        rv_showStudents.setVisibility(View.GONE);
+                        tv_studentList.setVisibility(View.GONE);
+                    }
+
+                    if (snapshot.hasChild("classSubjectData")) {
+                        Log.d("STUCHK", "onSUBS: yes");
+                        rv_ShowSubject.setVisibility(View.VISIBLE);
+                        tv_SubjectList.setVisibility(View.VISIBLE);
+                    } else {
+                        Log.d("STUCHK", "onSUBS: nooo");
+                        rv_ShowSubject.setVisibility(View.GONE);
+                        tv_SubjectList.setVisibility(View.GONE);
+                    }
+
+                    subjectDetailsModelList.clear();
                     for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
                         Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
                         Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
@@ -103,7 +156,7 @@ public class Students_Subjects extends AppCompatActivity {
                     adapter_topicList.notifyDataSetChanged();
 
 
-
+                    listGrpMemberList.clear();
                     for (DataSnapshot dataSnapshot1 : snapshot.child("classStudentList").getChildren()) {
                         Log.d("CHKINGSTUD", "onClick: " + dataSnapshot1.getValue());
                         Class_Student_Details object = dataSnapshot1.getValue(Class_Student_Details.class);
@@ -112,9 +165,8 @@ public class Students_Subjects extends AppCompatActivity {
 
                     }
 
-
                     showGrpMemberList.setClassStudents(listGrpMemberList);
-                    rv_ShowClass.setAdapter(showGrpMemberList);
+                    rv_showStudents.setAdapter(showGrpMemberList);
                     showGrpMemberList.notifyDataSetChanged();
 
                 }
@@ -154,12 +206,79 @@ public class Students_Subjects extends AppCompatActivity {
         }
 
 
+    }
+
+    private void delSubject(String groupPushId, String classPos, String subjectUniPush) {
+
+        DatabaseReference delSubjectRef = FirebaseDatabase.getInstance().getReference().child("Groups");
+
+        delSubjectRef.child("All_GRPs").child(groupPushId).child(classPos).child("classSubjectData").child(subjectUniPush).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+
+            }
+        });
+
+
+        delSubjectRef.child("Chat_Message").child(groupPushId).child(classPos).child(subjectUniPush).removeValue();
+        delSubjectRef.child("Doubt").child(groupPushId).child(classPos).child(subjectUniPush).removeValue();
+
+    }
+
+    private void renameSub(String groupPushId, String classUniPushId, String classPosition, String subjectName) {
+
+
+        View customAlertDialog = LayoutInflater.from(Students_Subjects.this).inflate(R.layout.dialog_rename_subject, null, false);
+        AlertDialog.Builder builder = new AlertDialog.Builder(Students_Subjects.this);
+        EditText et_SubjectName = customAlertDialog.findViewById(R.id.et_SubjectName);
+        Button btn_nextAddTopic = customAlertDialog.findViewById(R.id.btn_nextAddTopic);
+        builder.setView(customAlertDialog);
+        AlertDialog dialog = builder.show();
+        et_SubjectName.setText(subjectName);
+
+        btn_nextAddTopic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String subjectName = et_SubjectName.getText().toString().trim();
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs");
+
+                databaseReference.child(groupPushId).child(classUniPushId).child("classSubjectData").child(classPosition).child("subjectName").setValue(subjectName);
+
+                dialog.dismiss();
+
+            }
+        });
 
 
     }
 
+    private void delTeacher(String groupPushId, String teacherUserId) {
 
-    private void delStudent(String groupPushId,String classUniPushId,String studentUserId) {
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins")
+                .child(groupPushId).child("classAdminList").child(teacherUserId).removeValue();
+
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class")
+                .child(groupPushId).child(teacherUserId).removeValue();
+
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group")
+                .child(groupPushId).child("User_Subscribed_Groups").child(teacherUserId).removeValue();
+
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp")
+                .child(teacherUserId).child("clickedClassName").removeValue();
+
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp")
+                .child(teacherUserId).child("clickedGroupName").removeValue();
+
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp")
+                .child(teacherUserId).child("clickedGroupPushId").removeValue();
+
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp")
+                .child(teacherUserId).child("clickedSubjectName").removeValue();
+
+    }
+
+
+    private void delStudent(String groupPushId, String classUniPushId, String studentUserId) {
         FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
                 .child(groupPushId).child(classUniPushId).child("classStudentList").child(studentUserId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -167,5 +286,27 @@ public class Students_Subjects extends AppCompatActivity {
 
             }
         });
+
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class")
+                .child(groupPushId).child(studentUserId).removeValue();
+
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group")
+                .child(groupPushId).child("User_Subscribed_Groups").child(studentUserId).removeValue();
+
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp")
+                .child(studentUserId).child("clickedClassName").removeValue();
+
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp")
+                .child(studentUserId).child("clickedGroupName").removeValue();
+
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp")
+                .child(studentUserId).child("clickedGroupPushId").removeValue();
+
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp")
+                .child(studentUserId).child("clickedStudentUniPushClassId").removeValue();
+
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp")
+                .child(studentUserId).child("clickedSubjectName").removeValue();
+
     }
 }

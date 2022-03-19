@@ -36,6 +36,7 @@
                     android:layout_height="wrap_content">
 
                     <RelativeLayout
+                        android:id="@+id/cardRecChatIMG"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -71,6 +72,11 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
+                        android:layout_toEndOf="@+id/cardRecChatIMG"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
                         android:fontFamily="@font/open_sans_bold"
                         android:textSize="20dp" />
 
@@ -142,16 +148,8 @@
                         android:id="@+id/friendsSection"
                         android:layout_width="150dp"
                         android:layout_toEndOf="@+id/groupRVs"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content">
 
-                        <TextView
-                            android:id="@+id/FriendName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:textStyle="bold"/>
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerViewFriendsNameList"
@@ -178,27 +176,11 @@
                             android:textAllCaps="false"
                             android:text="Add New Class" />
 
-                        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                            android:id="@+id/swipeUpRefreshLayoutInClass"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <androidx.recyclerview.widget.RecyclerView
-                                android:id="@+id/recyclerViewClassList"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"/>
-                        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-                        <TextView
-                            android:id="@+id/classNameTextView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="Please click on (+) sign in front of Class name to add Topic"/>
 
                         <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/topicNamesRecyclerView"
+                            android:id="@+id/recyclerViewClassList"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"/>
+                            android:layout_height="wrap_content" />
 
                     </LinearLayout>
 
@@ -223,8 +205,6 @@
 
             </com.google.android.material.bottomnavigation.BottomNavigationView>
         </RelativeLayout>
-
-
 
         <RelativeLayout
             android:id="@+id/center_panel"
@@ -375,20 +355,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:id="@+id/ll_ChatDoubtDashboard"
+                android:layout_alignParentTop="true"
                 android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:id="@+id/rl_ChatDashboard"
                     android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/subjectName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_margin="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_ChatDashboard"
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_above="@+id/ll_bottom_send"
-                        android:layout_height="match_parent" />
-
+                        android:layout_below="@+id/subjectName" />
                     <!--Chat box sending message layout-->
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -448,12 +439,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <Button
-                    android:id="@+id/endPanelAllFriendsButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="All Friends" />
-
                 <LinearLayout
                     android:id="@+id/onlyAdminLayout"
                     android:layout_width="match_parent"
@@ -499,17 +484,24 @@
 
                 </LinearLayout>
 
+                <TextView
+                    android:id="@+id/FriendListText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Friends"
+                    android:visibility="gone" />
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/endPanelAllFriendsRecyclerView"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/adminListText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/studentList"
                     android:text="Teachers" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -522,7 +514,7 @@
                     android:id="@+id/tv_GroupMember"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/group_members" />
+                    android:text="Students" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_GrpMemberList"
@@ -555,6 +547,7 @@
 
             </LinearLayout>
         </RelativeLayout>
+
 
 
     </com.discord.panels.OverlappingPanelsLayout>

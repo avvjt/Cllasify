@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,12 +25,10 @@ import com.cllasify.cllasify.Subject_Details_Model;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -42,8 +39,8 @@ public class Server_Settings extends AppCompatActivity {
     DatabaseReference refGroupClassList, getTempData;
     String currUserId;
     RecyclerView rv_ShowClass;
-    String groupPushId, serverName, serverBio;
-    ImageButton serverSettingProfile, serverDelete;
+    String groupPushId, serverBio, serverName;
+    ImageButton serverSettingProfile;
 
     Adaptor_Server_Setting_Items showGrpClassList;
     List<Class_Group_Names> listGrpClassList;
@@ -52,6 +49,12 @@ public class Server_Settings extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private String userID;
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Server_Settings.this, Server_Activity.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +78,8 @@ public class Server_Settings extends AppCompatActivity {
         showGrpClassList = new Adaptor_Server_Setting_Items(Server_Settings.this, listGrpClassList);
 
         serverSettingProfile = findViewById(R.id.serverSettingProfile);
-        serverDelete = findViewById(R.id.serverDelete);
 
+        groupPushId = getIntent().getStringExtra("groupPushId");
 
         if (getIntent().hasExtra("currUserId")) {
             currUserId = getIntent().getStringExtra("currUserId");
@@ -85,76 +88,91 @@ public class Server_Settings extends AppCompatActivity {
                 public void onClick(View view) {
                     Intent intent = new Intent(Server_Settings.this, Server_Setting_Specifics.class);
                     intent.putExtra("currUserId", currUserId);
+                    intent.putExtra("groupPushId", groupPushId);
+
                     startActivity(intent);
                 }
             });
         }
 
-                groupPushId = getIntent().getStringExtra("groupPushId");
-                serverName = getIntent().getStringExtra("serverName");
 
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group");
-                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        serverBio = snapshot.child(groupPushId).child("ServerBio").getValue(String.class);
-                        schoolBio.setText(serverBio);
-                    }
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group");
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+        databaseReference.child(groupPushId).child("groupName").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    serverName = snapshot.getValue(String.class);
+                    tv_ServerName.setText(serverName);
 
-                    }
-                });
-                tv_ServerName.setText(serverName);
+                }
+            }
 
-                serverDelete.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        deleteSpecificServer(groupPushId, userID);
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                //GroupClassList..
-                refGroupClassList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
-                        .child(groupPushId);
+            }
+        });
+
+
+        databaseReference.child(groupPushId).child("ServerBio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    serverBio = snapshot.getValue(String.class);
+                    schoolBio.setText(serverBio);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        //GroupClassList..
+        refGroupClassList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
+                .child(groupPushId);
+
+        refGroupClassList.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 listGrpClassList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
-                refGroupClassList.addChildEventListener(new ChildEventListener() {
-                    @Override
-                    public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                        Class_Group_Names class_userDashBoard = new Class_Group_Names();
+                    Class_Group_Names class_userDashBoard = new Class_Group_Names();
 
+                    Log.d("REFCHK", "onDataChange: " + snapshot.getKey());
 
-                        class_userDashBoard.setClassName(String.valueOf(snapshot.child("className").getValue()));
-                        class_userDashBoard.setUniPushClassId(String.valueOf(snapshot.child("classUniPushId").getValue()));
-                        class_userDashBoard.setGroupPushId(String.valueOf(snapshot.child("groupPushId").getValue()));
+                    class_userDashBoard.setClassName(String.valueOf(snapshot.child("className").getValue()));
+                    class_userDashBoard.setUniPushClassId(String.valueOf(snapshot.child("classUniPushId").getValue()));
+                    class_userDashBoard.setGroupPushId(String.valueOf(snapshot.child("groupPushId").getValue()));
 
-                        List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
+                    List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
 
-                        for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
-                            Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
-                            Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
-                            Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
-                            subjectDetailsModelList.add(object);
+                    for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
+                        Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                        Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
+                        Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
+                        subjectDetailsModelList.add(object);
 
-                        }
+                    }
 
-                        class_userDashBoard.setChildItemList(subjectDetailsModelList);
-
+                    class_userDashBoard.setChildItemList(subjectDetailsModelList);
 
 
-                        List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
+                    List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
 
-                        for (DataSnapshot dataSnapshot1 : snapshot.child("classStudentList").getChildren()) {
-                            Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
-                            Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
-                            Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
-                            class_student_detailsList.add(class_student_details);
+                    for (DataSnapshot dataSnapshot1 : snapshot.child("classStudentList").getChildren()) {
+                        Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                        Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
+                        Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
+                        class_student_detailsList.add(class_student_details);
 
-                        }
+                    }
 
-                        class_userDashBoard.setClass_student_detailsList(class_student_detailsList);
+                    class_userDashBoard.setClass_student_detailsList(class_student_detailsList);
 
 //                        GenericTypeIndicator<ArrayList<Subject_Details_Model>> genericTypeIndicator =
 //                                new GenericTypeIndicator<ArrayList<Subject_Details_Model>>() {
@@ -169,84 +187,59 @@ public class Server_Settings extends AppCompatActivity {
 //
 //                        class_userDashBoard.setClass_student_detailsList(snapshot.child("classStudentList").getValue(genericTypeIndicatorStudent));
 
-                        listGrpClassList.add(class_userDashBoard);
+                    listGrpClassList.add(class_userDashBoard);
 
 
-                        showGrpClassList.setOnItemClickListener(new Adaptor_Server_Setting_Items.OnItemClickListener() {
-                            @Override
-                            public void onClassDeleteBtn(String classPosition) {
+                    showGrpClassList.setOnItemClickListener(new Adaptor_Server_Setting_Items.OnItemClickListener() {
+                        @Override
+                        public void onClassDeleteBtn(String classPosition) {
 
-                                delClass(groupPushId, classPosition);
+                            delClass(groupPushId, classPosition);
 
-                            }
+                        }
 
-                            @Override
-                            public void onClassRenameBtn(String className, String groupPushId, String uniClassPushId) {
+                        @Override
+                        public void onClassRenameBtn(String className, String groupPushId, String uniClassPushId) {
 
-                                View customAlertDialog = LayoutInflater.from(Server_Settings.this).inflate(R.layout.dialog_rename_class, null, false);
-                                AlertDialog.Builder builder = new AlertDialog.Builder(Server_Settings.this);
-                                EditText et_ClassName = customAlertDialog.findViewById(R.id.et_ClassName);
-                                Button btn_nextAddTopic = customAlertDialog.findViewById(R.id.btn_nextAddTopic);
-                                builder.setView(customAlertDialog);
-                                AlertDialog dialog = builder.show();
-                                et_ClassName.setText(className);
+                            View customAlertDialog = LayoutInflater.from(Server_Settings.this).inflate(R.layout.dialog_rename_class, null, false);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(Server_Settings.this);
+                            EditText et_ClassName = customAlertDialog.findViewById(R.id.et_ClassName);
+                            Button btn_nextAddTopic = customAlertDialog.findViewById(R.id.btn_nextAddTopic);
+                            builder.setView(customAlertDialog);
+                            AlertDialog dialog = builder.show();
+                            et_ClassName.setText(className);
 
-                                btn_nextAddTopic.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        final String className = et_ClassName.getText().toString().trim();
-                                        refGroupClassList.child(uniClassPushId).child("className").setValue(className);
-                                        dialog.dismiss();
+                            btn_nextAddTopic.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    final String className = et_ClassName.getText().toString().trim();
+                                    refGroupClassList.child(uniClassPushId).child("className").setValue(className);
+                                    dialog.dismiss();
 
-                                    }
-                                });
+                                }
+                            });
 
-                            }
+                        }
 
-                        });
+                    });
 
-                        rv_ShowClass.setAdapter(showGrpClassList);
-                        showGrpClassList.notifyDataSetChanged();
-                    }
+                    rv_ShowClass.setAdapter(showGrpClassList);
+                    showGrpClassList.notifyDataSetChanged();
+                }
 
-                    @Override
-                    public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-                    }
+            }
 
-                    @Override
-                    public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-
-                    @Override
-                    public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
+            }
+        });
 
 
     }
 
-    private void deleteSpecificServer(String groupPushId, String userID) {
 
-        DatabaseReference databaseReferenceServDel = FirebaseDatabase.getInstance().getReference().child("Groups");
-
-        databaseReferenceServDel.child("All_GRPs").child(groupPushId).removeValue();
-        databaseReferenceServDel.child("All_Universal_Group").child(groupPushId).removeValue();
-        databaseReferenceServDel.child("User_All_Group").child(userID).child(groupPushId).removeValue();
-        databaseReferenceServDel.child("User_Public_Group").child(userID).child(groupPushId).removeValue();
-
-        finish();
-
-
-    }
 
     private void delClass(String groupPushId, String classPos) {
         FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
@@ -256,6 +249,11 @@ public class Server_Settings extends AppCompatActivity {
                 showGrpClassList.notifyDataSetChanged();
             }
         });
+
+        DatabaseReference delSubjectRef = FirebaseDatabase.getInstance().getReference().child("Groups");
+
+        delSubjectRef.child("Chat_Message").child(groupPushId).child(classPos).removeValue();
+        delSubjectRef.child("Doubt").child(groupPushId).child(classPos).removeValue();
 
         DatabaseReference databaseReferenceClassDel = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class").child(groupPushId);
         databaseReferenceClassDel.addListenerForSingleValueEvent(new ValueEventListener() {

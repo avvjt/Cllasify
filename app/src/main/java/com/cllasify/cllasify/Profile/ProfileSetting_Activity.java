@@ -8,12 +8,15 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,9 +26,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.MyBottomSheetFragment;
 import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.TestLocation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -94,17 +100,6 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         ll_Email=findViewById(R.id.ll_Email);
         ll_Bio=findViewById(R.id.ll_Bio);
 
-        storageReference= FirebaseStorage.getInstance().getReference();
-
-        StorageReference profileRef = storageReference.child("users profile pic/"+userID+"/profile.jpg");
-
-        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(prof_pic);
-            }
-        });
-
 
         // Change profile pic
         tv_ChangeProfileImage.setOnClickListener(new View.OnClickListener() {
@@ -161,6 +156,8 @@ public class ProfileSetting_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String Location=tv_Location.getText().toString();
+//                TestLocation fragment = new TestLocation();
+//                fragment.show(getSupportFragmentManager(), "TAG");
                 editLocation("Location",Location);
 
             }
@@ -233,9 +230,13 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                     }
                     if (snapshot.child("profilePic").exists()){
                         String profilePic=snapshot.child("profilePic").getValue().toString();
-                        Glide.with(ProfileSetting_Activity.this).load(profilePic).into(prof_pic);
+                        if (!(ProfileSetting_Activity.this).isFinishing()) {
+                            Glide.with(ProfileSetting_Activity.this).load(profilePic).into(prof_pic);
+                        }
                     }else{
-                        Glide.with(ProfileSetting_Activity.this).load(R.drawable.maharaji).into(prof_pic);
+                        if (!(ProfileSetting_Activity.this).isFinishing()) {
+                            Glide.with(ProfileSetting_Activity.this).load(R.drawable.maharaji).into(prof_pic);
+                        }
                     }
                 }
             }
@@ -287,7 +288,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
 
         BottomSheetDialog bottomSheetDialoglogin = new BottomSheetDialog(ProfileSetting_Activity.this);
         bottomSheetDialoglogin.setCancelable(false);
-        bottomSheetDialoglogin.setContentView(R.layout.btmdialog_location);
+        bottomSheetDialoglogin.setContentView(R.layout.activity_test_location);
 
 
         final String[] pp = {"Bhandup", "Mumbai", "Visakhapatnam", "Coimbatore",
@@ -380,17 +381,20 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.custom_list_item, R.id.text_view_list_item, pp);
 
-        ImageButton btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_Cancel);
-        TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.tv_subTitle);
-        TextView tv_SettingTitle = bottomSheetDialoglogin.findViewById(R.id.tv_SettingTitle);
+        Button btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_cancel);
+//        TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.tv_subTitle);
+//        TextView tv_SettingTitle = bottomSheetDialoglogin.findViewById(R.id.tv_SettingTitle);
         AutoCompleteTextView et_NewDetails = bottomSheetDialoglogin.findViewById(R.id.actv);
-        Button btn_Submit = bottomSheetDialoglogin.findViewById(R.id.btn_Submit);
+        Button btn_Submit = bottomSheetDialoglogin.findViewById(R.id.btn_submit);
 
+        et_NewDetails.setHint(userData);
+
+        assert et_NewDetails != null;
         et_NewDetails.setAdapter(adapter);
 
 
-        tv_subTitle.setText("Enter new " + title);
-        tv_SettingTitle.setText("Please update " + userData);
+//        tv_subTitle.setText("Enter new " + title);
+//        tv_SettingTitle.setText("Please update " + userData);
 
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -416,6 +420,8 @@ public class ProfileSetting_Activity extends AppCompatActivity {
             }
         });
 
+        bottomSheetDialoglogin.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         bottomSheetDialoglogin.show();
 
@@ -428,16 +434,16 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         bottomSheetDialoglogin.setCancelable(false);
         bottomSheetDialoglogin.setContentView(R.layout.btmdialog_setting);
 
-        Button btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_Cancel);
-        TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.tv_subTitle);
-        TextView tv_SettingTitle = bottomSheetDialoglogin.findViewById(R.id.tv_SettingTitle);
+        Button btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_cancel);
+        TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.editTitle);
         EditText et_NewDetails=bottomSheetDialoglogin.findViewById(R.id.et_NewDetails);
-        Button btn_Submit=bottomSheetDialoglogin.findViewById(R.id.btn_Submit);
+        Button btn_Submit=bottomSheetDialoglogin.findViewById(R.id.btn_submit);
 
 
         tv_subTitle.setText("Enter new "+title);
+        et_NewDetails.setHint(userData);
         et_NewDetails.setText(userData);
-        tv_SettingTitle.setText("Please update "+userData);
+        btn_Submit.setText("Update "+title);
 
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -489,6 +495,8 @@ public class ProfileSetting_Activity extends AppCompatActivity {
             }
         });
 
+        bottomSheetDialoglogin.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         bottomSheetDialoglogin.show();
 
@@ -520,7 +528,12 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Picasso.get().load(uri).into(prof_pic);
+                        if (!(ProfileSetting_Activity.this).isFinishing()) {
+                            Log.d("PROFPIC", "onSuccess: "+uri);
+                            DatabaseReference refSaveProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+                            refSaveProfPic.child("profilePic").setValue(uri.toString());
+                            Glide.with(ProfileSetting_Activity.this).load(uri).into(prof_pic);
+                        }
                     }
                 });
             }

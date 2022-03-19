@@ -120,9 +120,11 @@
         android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/tv_OtherProfPic"
+            android:id="@+id/prof_pics_chat_doubt"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
             android:background="@android:color/transparent"
@@ -134,7 +136,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginStart="10dp"
-            android:layout_toEndOf="@id/tv_OtherProfPic"
+            android:layout_toEndOf="@id/prof_pics_chat_doubt"
             android:background="@drawable/received_message_background"
             android:padding="12dp"
             android:textColor="@color/black"

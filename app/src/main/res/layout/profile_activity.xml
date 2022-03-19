@@ -110,6 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:id="@+id/ll_bio"
+                android:visibility="gone"
                 android:orientation="horizontal">
 
                 <TextView

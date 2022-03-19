@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,6 +42,12 @@ public class GRPJoinReqs extends AppCompatActivity {
     Class_Group userSubsGroupClass;
 
     String currUserId,groupPushId,subGroupPushId,classPushId;
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(GRPJoinReqs.this,Server_Activity.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

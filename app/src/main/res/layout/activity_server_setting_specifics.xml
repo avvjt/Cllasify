@@ -7,33 +7,57 @@
     android:layout_margin="15dp"
     tools:context=".Server_Setting_Specifics">
 
-
-    <TextView
-        android:id="@+id/tv_servProfile"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:drawablePadding="15dp"
-        android:text="Edit Server Profile"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:id="@+id/tvAndDel"
+        android:layout_height="wrap_content">
 
-    <ImageButton
-        android:id="@+id/doneBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/done"
-        android:background="@color/transparent"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="10dp" />
 
+        <TextView
+            android:id="@+id/tv_servProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:text="Edit Server Profile"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_alignParentEnd="true">
+
+            <ImageButton
+                android:id="@+id/deleteBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="20dp"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_delete" />
+
+            <ImageButton
+                android:id="@+id/doneBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toEndOf="@id/deleteBtn"
+                android:background="@color/transparent"
+                android:src="@drawable/done" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/schPreview"
         android:layout_width="match_parent"
         android:layout_marginTop="25dp"
-        android:layout_below="@+id/tv_servProfile"
+        android:layout_below="@+id/tvAndDel"
         android:layout_height="wrap_content">
 
         <androidx.cardview.widget.CardView
@@ -72,7 +96,7 @@
 
     <EditText
         android:id="@+id/et_ServerName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edit_serverName"
         android:layout_marginTop="10dp"
@@ -91,7 +115,7 @@
 
     <EditText
         android:id="@+id/et_schoolBio"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edit_serverBio"
         android:layout_marginTop="10dp"

@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
+import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Home.Notification_Activity;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Register.getStarted;
@@ -44,6 +45,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AccountSetting_Activity extends AppCompatActivity {
 
@@ -63,7 +66,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
     Boolean showTheme=false,showStatus=false,showFeedback=false;
     FirebaseUser currentUser;
     String userID,userName,userEmail;
-    DatabaseReference refUserStatus;
+    DatabaseReference refUserStatus,refUserProfPic;
     AlertDialog.Builder builder;
 
     RadioGroup rg_Theme;
@@ -71,6 +74,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
     TextView tv_notiConfig,tv_Feedback;
     LinearLayout ll_showFeedback;
     EditText et_Feedback;
+    CircleImageView prof_pic;
 
 
     @Override
@@ -83,6 +87,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
         et_Feedback =findViewById(R.id.et_Feedback);
         tv_User_Name =findViewById(R.id.tv_User_Name);
         tv_rateUs = findViewById(R.id.tv_rateUs);
+        prof_pic = findViewById(R.id.prof_pic);
 
 //        spinnerUserStatus=view.findViewById(R.id.spinnerUserStatus);
 //        allNotifySwitch=view.findViewById(R.id.allNotifySwitch);
@@ -111,6 +116,32 @@ public class AccountSetting_Activity extends AppCompatActivity {
 //        userPhoto = currentUser.getPhotoUrl();
         tv_User_Name.setText(userName);
 
+
+
+
+
+        //Set Profile Pic
+        refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+        refUserProfPic.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("profilePic").exists()){
+                    String profilePic=snapshot.child("profilePic").getValue().toString();
+                    if (!(AccountSetting_Activity.this).isFinishing()) {
+                        Glide.with(AccountSetting_Activity.this).load(profilePic).into(prof_pic);
+                    }
+                }else{
+                    if (!(AccountSetting_Activity.this).isFinishing()) {
+                        Glide.with(AccountSetting_Activity.this).load(R.drawable.maharaji).into(prof_pic);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 

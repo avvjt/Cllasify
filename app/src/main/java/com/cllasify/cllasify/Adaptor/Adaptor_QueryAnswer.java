@@ -2,6 +2,7 @@ package com.cllasify.cllasify.Adaptor;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -108,6 +109,28 @@ public class Adaptor_QueryAnswer extends RecyclerView.Adapter<Adaptor_QueryAnswe
         Toast.makeText(context, "quespushid:: " + quespushid, Toast.LENGTH_SHORT).show();
         Toast.makeText(context, "anspushid:: " + anspushid, Toast.LENGTH_SHORT).show();
 
+        Log.d("DOUBTANS", "onBindViewHolder: "+Answers.userId);
+
+        String memberUserIds = Answers.userId;
+
+        DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(memberUserIds);
+        refUserProfPic.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("profilePic").exists()) {
+                    String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                    Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
+                    Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.ib_AnsUserProfile);
+                }else{
+                    Glide.with(context.getApplicationContext()).load(R.drawable.maharaji).into(holder.ib_AnsUserProfile);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         holder.examQues_tv.setText("Answer: \t"+userAnswers);
         holder.tv_UserName.setText(answerUserName + " Answered on: " + date);

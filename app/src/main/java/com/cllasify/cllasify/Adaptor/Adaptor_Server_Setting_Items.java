@@ -341,15 +341,7 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
     }
 
 
-    private void delSubject(String groupPushId, String classPos, String subjectUniPush) {
-        FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
-                .child(groupPushId).child(classPos).child("classSubjectData").child(subjectUniPush).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
 
-            }
-        });
-    }
 
     private void delStudent(String groupPushId,String classUniPushId,String studentUserId) {
         FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
@@ -418,6 +410,7 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
                                 int position = getAdapterPosition();
                                 Class_Group_Names class_group_namesList = mDatalistNew.get(position);
                                 mListener.onClassRenameBtn(class_group_namesList.getClassName(), class_group_namesList.getGroupPushId(), class_group_namesList.getUniPushClassId());
+                                notifyDataSetChanged();
                             }
                             break;
 

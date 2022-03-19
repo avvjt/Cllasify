@@ -22,6 +22,7 @@ import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Friend_Chat_Activity;
 import com.cllasify.cllasify.NestedRecyclerview.TestFirebaseActivity;
 import com.cllasify.cllasify.Profile.AccountSetting_Activity;
+import com.cllasify.cllasify.Profile.ProfileSetting_Activity;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Register.getStarted;
 import com.google.android.gms.ads.LoadAdError;
@@ -120,8 +121,6 @@ public class Profile_Activity extends AppCompatActivity {
             tv_Name = findViewById(R.id.tv_Name);
             prof_pic = findViewById(R.id.prof_pic);
 
-            Glide.with(Profile_Activity.this).load(userPhoto).into(prof_pic);
-
             tv_UserBio = findViewById(R.id.tv_UserBio);
             tv_UserInstitute = findViewById(R.id.tv_UserInstitute);
             tv_UserUserName = findViewById(R.id.tv_UserUserName);
@@ -195,59 +194,68 @@ public class Profile_Activity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildrenCount() > 0) {
                     if (snapshot.child("Bio").exists()) {
-//                            tv_addBio.setVisibility(View.GONE);
                         String bio = snapshot.child("Bio").getValue().toString();
-                        Log.d("TAG", "onDataChange: "+bio);
-//                            tv_UserBio.setVisibility(View.VISIBLE);
-                        ll_bio.setVisibility(View.VISIBLE);
-                        tv_UserBio.setText(bio);
+                        if(bio.isEmpty()){
+                            ll_bio.setVisibility(View.GONE);
+                        }else{
+                            ll_bio.setVisibility(View.VISIBLE);
+                            tv_UserBio.setText(bio);
+                        }
                         notifyPB.dismiss();
                     } else {
                         ll_bio.setVisibility(View.GONE);
-//                            tv_addBio.setVisibility(View.VISIBLE);
 
                     }
 
                     if (snapshot.child("Insitution").exists()) {
-//                            tv_addInstitute.setVisibility(View.GONE);
-                        String bio = snapshot.child("Insitution").getValue().toString();
-//                            tv_UserInstitute.setVisibility(View.VISIBLE);
-                        ll_Institution.setVisibility(View.VISIBLE);
-                        tv_UserInstitute.setText(bio);
-
+                        String insitution = snapshot.child("Insitution").getValue().toString();
+                        if(insitution.isEmpty()){
+                            ll_Institution.setVisibility(View.GONE);
+                        }else {
+                            ll_Institution.setVisibility(View.VISIBLE);
+                            tv_UserInstitute.setText(insitution);
+                        }
                         notifyPB.dismiss();
                     } else {
-//                            tv_addInstitute.setVisibility(View.VISIBLE);
                         ll_Institution.setVisibility(View.GONE);
 
                     }
 
 
                     if (snapshot.child("NickName").exists()) {
-//                            tv_addUserName.setVisibility(View.GONE);
                         String UserName = snapshot.child("NickName").getValue().toString();
                         tv_UserUserName.setVisibility(View.VISIBLE);
                         tv_UserUserName.setText(UserName);
                         ll_UserName.setVisibility(View.VISIBLE);
                         notifyPB.dismiss();
                     } else {
-//                            tv_addUserName.setVisibility(View.VISIBLE);
                         ll_UserName.setVisibility(View.GONE);
 
 
                     }
                     if (snapshot.child("Location").exists()) {
-//                            tv_addLocation.setVisibility(View.GONE);
-//                            spinnerLocation.setVisibility(View.GONE);
-                        ll_location.setVisibility(View.VISIBLE);
                         String Location = snapshot.child("Location").getValue().toString();
-//                            tv_UserLocation.setVisibility(View.VISIBLE);
-                        tv_UserLocation.setText(Location);
+                        if(Location.isEmpty()){
+                            ll_location.setVisibility(View.GONE);
+                        }
+                        else {
+                            ll_location.setVisibility(View.VISIBLE);
+                            tv_UserLocation.setText(Location);
+                        }
                         notifyPB.dismiss();
                     } else {
-//                            tv_addLocation.setVisibility(View.VISIBLE);
                         ll_location.setVisibility(View.GONE);
 
+                    }
+                    if (snapshot.child("profilePic").exists()){
+                        String profilePic=snapshot.child("profilePic").getValue().toString();
+                        if (!(Profile_Activity.this).isFinishing()) {
+                            Glide.with(Profile_Activity.this).load(profilePic).into(prof_pic);
+                        }
+                    }else{
+                        if (!(Profile_Activity.this).isFinishing()) {
+                            Glide.with(Profile_Activity.this).load(R.drawable.maharaji).into(prof_pic);
+                        }
                     }
 
                 }
@@ -265,7 +273,7 @@ public class Profile_Activity extends AppCompatActivity {
                 if (snapshot.getChildrenCount() > 0) {
                     long count = snapshot.getChildrenCount();
                     if(count < 2) {
-                        tv_CountFollowers.setText((int) count + " Followers");
+                        tv_CountFollowers.setText((int) count + " Follower");
                     }
                     else{
                         tv_CountFollowers.setText((int) count + " Followers");

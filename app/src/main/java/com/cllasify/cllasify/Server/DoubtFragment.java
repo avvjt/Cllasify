@@ -201,25 +201,7 @@ public class DoubtFragment extends Fragment {
                                 }
                             });
 
-                            DatabaseReference referenceUser = FirebaseDatabase.getInstance().getReference().
-                                    child("Groups").child("User_Answers").child(currUserId).child(groupPushId + "_" + groupClassPushId + "_" + groupClassSubjectPushId + "_" + doubtQuestionPushId);
-                            referenceUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    long noofGroupinCategory = snapshot.getChildrenCount() + 1;
-                                    String push = "ansno_" + noofGroupinCategory;
 
-                                    Calendar calenderCC = Calendar.getInstance();
-                                    SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
-                                    String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-                                    userAddAnsClass = new Class_Answer(dateTimeCC, currUserName, currUserId, currUserEmail, push, doubtQuestionPushId, subGroupMsg);
-                                    referenceUser.child(push).setValue(userAddAnsClass);
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                }
-                            });
                             et_DoubtAns.setText("");
 //                    et_DoubtAns.setfocus
                         }

@@ -11,13 +11,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Utility.SharePref;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHolder> {
 
@@ -74,9 +82,33 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
         if (chat != null) {
             holder.show_message.setText(chat.get(position).getGroupSubGroupComb());
+
+
+            Class_Group class_GroupDetails = chat.get(position);
+
+            String reqUserID = class_GroupDetails.position;
+            Log.d("DBTTT", "onClick: " + reqUserID);
+
+            DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(reqUserID);
+            refUserProfPic.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.child("profilePic").exists()) {
+                        String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                        Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
+                        Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.prof_pics_chat_doubt);
+                    }else{
+                        Glide.with(context.getApplicationContext()).load(R.drawable.maharaji).into(holder.prof_pics_chat_doubt);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
         }
-
-
     }
 
     @Override
@@ -98,13 +130,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView show_message;
         LinearLayout ll_Doubt;
+        CircleImageView prof_pics_chat_doubt;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             show_message = itemView.findViewById(R.id.tv_MyMessage);
 
             ll_Doubt = itemView.findViewById(R.id.ll_Doubt);
-
+            prof_pics_chat_doubt = itemView.findViewById(R.id.prof_pics_chat_doubt);
 
             ll_Doubt.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -119,7 +152,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                         if (doubt != null) {
                             if (position != RecyclerView.NO_POSITION) {
 
-                                Log.d("DBTTT", "onClick: " + position);
 
                                 Class_Group user = chat.get(position);
                                 String doubtQuestion = user.getGroupSubGroupComb();

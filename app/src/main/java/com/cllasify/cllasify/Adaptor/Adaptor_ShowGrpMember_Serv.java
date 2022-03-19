@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.Constant;
 import com.cllasify.cllasify.R;
@@ -28,6 +29,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_ShowGrpMember_Serv.MyViewHolder> {
 
@@ -59,6 +62,8 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
     public interface OnItemClickListener {
 
         void removeStudent(String groupPushId, String classUniPushId, String studentUserId);
+
+        void removeTeacher(String groupPushId, String studentUserId);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -90,6 +95,25 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
 
         String userName = Answers.getUserName();
         String userID = Answers.getUserId();
+
+        DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+        refUserProfPic.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("profilePic").exists()) {
+                    String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                    Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
+                    Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.civ_UserProfilePic);
+                }else{
+                    Glide.with(context.getApplicationContext()).load(R.drawable.maharaji).into(holder.civ_UserProfilePic);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         holder.tv_GroupTitle.setText(userName);
         refUserFollowing = FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(currUserID);
@@ -125,6 +149,7 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView tv_GroupTitle;
         ImageButton memberDelete;
+        CircleImageView civ_UserProfilePic;
 
 
         public MyViewHolder(View itemView) {
@@ -132,6 +157,7 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
 
             tv_GroupTitle = itemView.findViewById(R.id.tv_classGroupTitle);
             memberDelete = itemView.findViewById(R.id.memberDelete);
+            civ_UserProfilePic =itemView.findViewById(R.id.civ_UserProfilePic);
 
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -146,7 +172,7 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
 
                     int studPos = getAdapterPosition();
                     Class_Student_Details class_student_details = mDatalistNew.get(studPos);
-                    Log.d("MEMBERMATCH", "onClick: " + class_student_details.getUserId() + "\tCurrentUserId: " + currUserID);
+
 
                     if (class_student_details.getUserId().equals(currUserID)) {
 
@@ -165,8 +191,6 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
                         alert.show();
 
                     } else {
-
-
                         String userID = SharePref.getDataFromPref(Constant.USER_ID);
                         DatabaseReference posTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
 
@@ -180,6 +204,26 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
                                     String classUniPushId = String.valueOf(snapshot.child("clickedStudentUniPushClassId").getValue());
                                     String studentUniPush = class_student_details.getUserId();
                                     String studentName = class_student_details.getUserName();
+
+
+                                    DatabaseReference checkAdmin = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins")
+                                            .child(groupPushId).child("classAdminList").child(studentUniPush).child("userId");
+
+                                    checkAdmin.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.getValue() == studentUniPush) {
+                                                Log.d("STUTECH", "onDataChange: " + snapshot.getValue());
+                                                mListener.removeTeacher(groupPushId, studentUniPush);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
 
                                     mListener.removeStudent(groupPushId, classUniPushId, studentUniPush);
 

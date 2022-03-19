@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adaptor.Adaptor_Friend_Chat;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,6 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class Friend_Chat_Activity extends Fragment {
@@ -51,6 +54,7 @@ public class Friend_Chat_Activity extends Fragment {
     ImageButton ib_FrndP_csubmit;
 
     EditText messageTxtFriend;
+    CircleImageView friendImg;
 
     boolean found;
 
@@ -71,6 +75,7 @@ public class Friend_Chat_Activity extends Fragment {
         recyclerView = v.findViewById(R.id.recyclerView);
         ib_FrndP_csubmit = v.findViewById(R.id.ib_FrndP_csubmit);
         messageTxtFriend = v.findViewById(R.id.et_FrndP_text);
+        friendImg = v.findViewById(R.id.friendImg);
 
 
         messageList = new ArrayList<>();
@@ -84,6 +89,25 @@ public class Friend_Chat_Activity extends Fragment {
 
         senderRoom = senderUid + receiverUid;
         receiverRoom = receiverUid + senderUid;
+
+        DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(receiverUid);
+        refUserProfPic.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("profilePic").exists()) {
+                    String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                    Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
+                    Glide.with(Friend_Chat_Activity.this).load(profilePicUrl).into(friendImg);
+                }else{
+                    Glide.with(Friend_Chat_Activity.this).load(R.drawable.maharaji).into(friendImg);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         //my
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();

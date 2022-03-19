@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Student_Details;
-import com.cllasify.cllasify.Group_Students;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,7 +28,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -86,18 +84,35 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
 
-            Toast.makeText(context, "Friend List", Toast.LENGTH_SHORT).show();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        assert currentUser != null;
+        String currUserID = currentUser.getUid();
+        Class_Student_Details Answers = mDatalistNew.get(position);
 
+        String userName = Answers.getUserName();
+        String userID = Answers.getUserId();
 
-            FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-            FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-            assert currentUser != null;
-            String currUserID = currentUser.getUid();
-            Class_Student_Details Answers = mDatalistNew.get(position);
+        Log.d("MEMLIST", "onBindViewHolder: "+userID);
 
-            String userName = Answers.getUserName();
-            String userID = Answers.getUserId();
+        DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+        refUserProfPic.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("profilePic").exists()) {
+                    String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                    Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
+                    Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.civ_UserProfilePic);
+                }else{
+                    Glide.with(context.getApplicationContext()).load(R.drawable.maharaji).into(holder.civ_UserProfilePic);
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 /*

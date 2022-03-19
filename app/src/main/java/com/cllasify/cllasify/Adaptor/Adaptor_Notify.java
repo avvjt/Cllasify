@@ -12,7 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Class.Class_Group;
+import com.cllasify.cllasify.Profile.AccountSetting_Activity;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -23,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHolder> {
 
@@ -75,6 +79,26 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         Class_Group class_GroupDetails = mDatalistNew.get(position);
+
+        String reqUserID = class_GroupDetails.userId;
+        DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(reqUserID);
+        refUserProfPic.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("profilePic").exists()) {
+                    String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                    Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
+                    Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.profilePic);
+                }else{
+                    Glide.with(context.getApplicationContext()).load(R.drawable.maharaji).into(holder.profilePic);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         String GroupName = class_GroupDetails.getGroupName();
         String userName = class_GroupDetails.getUserName();
@@ -290,6 +314,7 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
 
     }
 
+
     @Override
     public int getItemCount() {
         return mDatalistNew.size();
@@ -299,6 +324,7 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
 
         TextView tv_Groupinvite, tv_approve, tv_reject, tv_ReqDate;
         LinearLayout ll_groupdetails;
+        CircleImageView profilePic;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -308,6 +334,7 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
             tv_reject = itemView.findViewById(R.id.tv_reject);
             tv_ReqDate = itemView.findViewById(R.id.tv_ReqDate);
             ll_groupdetails = itemView.findViewById(R.id.ll_groupdetails);
+            profilePic = itemView.findViewById(R.id.profilePicture);
 
 
             tv_reject.setOnClickListener(new View.OnClickListener() {

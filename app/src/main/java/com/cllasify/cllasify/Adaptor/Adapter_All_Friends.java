@@ -15,8 +15,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Class.Class_Group;
+import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,14 +41,15 @@ public class Adapter_All_Friends extends RecyclerView.Adapter<Adapter_All_Friend
         void MemberProfile(String memberUserId, String memberUserName);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mListener = listener;
-    }
-
     public Adapter_All_Friends(Context context, List<String> mDatalistNew) {
         this.context = context;
         this.mDatalistNew = mDatalistNew;
     }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
+
 
     @NonNull
     @Override
@@ -59,25 +64,38 @@ public class Adapter_All_Friends extends RecyclerView.Adapter<Adapter_All_Friend
 
         Toast.makeText(context, "Friend List", Toast.LENGTH_SHORT).show();
 
-//        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-//        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
-//        assert currentUser != null;
-//        String currUserID=currentUser.getUid();
-//        Class_Student_Details Answers=mDatalistNew.get(position);
-//
-//        String userName=Answers.getUserName();
-//        String userID=Answers.getUserId();
-//
-//        Log.d("TAG", "onDataChange: FRNDS: ");
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+        assert currentUser != null;
+        String currUserID=currentUser.getUid();
 
-        Log.d("TAG", "onDataChange: FRNDS: " + mDatalistNew.get(position));
+        Log.d("TAG", "onDataChange: FRNDS: "+mDatalistNew.get(position));
 
+        String requiredUserId = mDatalistNew.get(position);
 
-        DatabaseReference dr = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(String.valueOf(mDatalistNew.get(position)));
+        DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(requiredUserId);
+        refUserProfPic.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("profilePic").exists()) {
+                    String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                    Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
+                    Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.civ_UserProfilePic);
+                }else{
+                    Glide.with(context.getApplicationContext()).load(R.drawable.maharaji).into(holder.civ_UserProfilePic);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        DatabaseReference dr = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(mDatalistNew.get(position));
         dr.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("TAG", "onDataChange: FRNDS: " + snapshot.child("Name").getValue());
                 holder.tv_GroupTitle.setText(snapshot.child("Name").getValue().toString());
             }
 
@@ -86,6 +104,7 @@ public class Adapter_All_Friends extends RecyclerView.Adapter<Adapter_All_Friend
 
             }
         });
+
 
 /*
         DatabaseReference refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
@@ -139,7 +158,7 @@ public class Adapter_All_Friends extends RecyclerView.Adapter<Adapter_All_Friend
 
             civ_UserProfilePic = itemView.findViewById(R.id.civ_UserProfilePic);
 
-/*
+
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
             assert currentUser != null;
@@ -151,49 +170,35 @@ public class Adapter_All_Friends extends RecyclerView.Adapter<Adapter_All_Friend
                     Toast.makeText(context.getApplicationContext(), "Clicked Friend", Toast.LENGTH_SHORT).show();
                     if (mListener != null) {
                         int position = getAdapterPosition();
-                        Class_Student_Details user = mDatalistNew.get(getAdapterPosition());
-                        String memberUserId=user.userId;
-                        String memberUserName=user.userName;
 
-                        if (!currUserID.equals(memberUserId)) {
-                            if (position != RecyclerView.NO_POSITION) {
+                        DatabaseReference dr = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(mDatalistNew.get(position));
+                        dr.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                String memberUserId=snapshot.child("userId").getValue().toString();
+                                String memberUserName=snapshot.child("Name").getValue().toString();
+
+                                if (!currUserID.equals(memberUserId)) {
+                                    if (position != RecyclerView.NO_POSITION) {
 //                                String adminUserName=user.userName;
-                                mListener.MemberProfile(memberUserId,memberUserName);
-                                //mListener.dislikeAns();
+                                        mListener.MemberProfile(memberUserId,memberUserName);
+                                        //mListener.dislikeAns();
+                                    }
+                                }
                             }
-                        }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
                     }
                 }
             });
-*/
-            ib_SubMenu.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    PopupMenu popupMenu = new PopupMenu(context, view);
-                    popupMenu.inflate(R.menu.groupmemberdetails);
-                    popupMenu.show();
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem menuItem) {
-                            switch (menuItem.getItemId()) {
-                                case R.id.btn_FeesStatus:
 
-                                    break;
-                                case R.id.btn_SuspendStatus:
-
-                                    break;
-                                default:
-                                    return false;
-
-
-                            }
-
-
-                            return false;
-                        }
-                    });
-                }
-            });
 
         }
 

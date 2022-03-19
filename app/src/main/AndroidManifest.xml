@@ -27,6 +27,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
         <activity
+            android:name=".TestLocation"
+            android:exported="false" />
+        <activity
+            android:name=".MyBottomSheetFragment"
+            android:exported="false" />
+        <activity
             android:name=".Home.GRPJoinReqs"
             android:exported="false" />
         <activity

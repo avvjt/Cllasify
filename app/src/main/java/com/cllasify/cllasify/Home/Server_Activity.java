@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,7 +33,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.cllasify.cllasify.Adaptor.Adapter_All_Friends;
@@ -99,18 +99,18 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     TabLayout tabLayout, tabl_ChatView;
     ViewPager viewPager, view_Pager_ChatView;
     BottomNavigationView bottomNavigationView;
-    TextView tv_GroupMember;
-    RecyclerView rv_UserPublicGroupTitle, rv_OtherPublicGroupTitle, rv_GrpMemberList, rv_GrpTeacherList, recyclerViewClassList, topicNamesRecyclerView, endPanelAllFriendsRecyclerView;
+    TextView tv_GroupMember, adminListText, FriendListText;
+    RecyclerView rv_UserPublicGroupTitle, rv_OtherPublicGroupTitle, rv_GrpMemberList, rv_GrpTeacherList, recyclerViewClassList, endPanelAllFriendsRecyclerView;
     RelativeLayout rl_ChatView;
     FirebaseDatabase refFriendList;
     DatabaseReference refChatDashboard, refDoubtDashboard;
     DatabaseReference refuserPersonalGroup, refuserAllGroup, refGroupTopic,
             refuserPublicGroup, refAllGroup,
             refotheruserPublicGroup, refUserStatus,
-            refSearchShowGroup, refShowUserPublicGroup, refShowUserPrivateGroup, refShowUserAllGroup,
+            refSearchShowGroup, refShowUserPublicGroup, refShowUserPrivateGroup, refShowUserAllGroup, refShowUserJoinedGroup,
             refteachStud,
             refChildGroup, refChildGroupSubsList,
-            refGroupSubsList, refGrpMemberList, refClassTeacherList;
+            refGroupSubsList, refGrpMemberList, refClassTeacherList, refFriendLists;
 
     DatabaseReference checkFriends;
     ImageButton btn_joinNotification;
@@ -121,7 +121,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             list_SubChild,
             list_ChatDashboard, list_DoubtDashboard, list_Friend, list_ChatListDashboard, list_NewChatDashboard;
 
-    List<Class_Student_Details> listGrpMemberList, listGrpTeacherList;
+    List<Class_Student_Details> listGrpMemberList, listGrpTeacherList, listFriendList;
     List<String> allFriendsList;
 
     Adaptor_QueryGroup showGroupadaptor, showUserPrivateGroupadaptor, showUserPublicGroupadaptor;
@@ -151,20 +151,18 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     TextView tv_UserPublicTitle, tv_UserPrivateTitle, tv_OtherTitle,
             tv_cpaneltitle, tv_cpanelbody,
             textViewGroupName, classNameTextView,
-            tv_FrndP_Title;
+            tv_FrndP_Title, textViewSubjectName;
 
     ImageButton ib_cattach, ib_csubmit, ib_doubtSubmit;
     ImageButton ImageViewRecentChat, ib_FrndP_csubmit, ib_servSettings;
     Button btn_caddgroup, btn_cjoingroup, addNewClassButton;
     Button btn_lteachresult, btn_lteachexam;
     ImageButton btn_lteachattend;
-    Button endPanelAllFriendsButton;
     LinearLayout groupSection, ll_AddJoinGrp;
 
     RecyclerView rvFriendsList;
     Adaptor_FriendsList adaptor_friendsList;
     List<FriendsListClass> friendsListClasses;
-    TextView recChats;
 
 
     LinearLayout ll_bottom_send, ll_ChatDoubtDashboard,
@@ -177,9 +175,9 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
     public static RecyclerView rv_ChatDashboard, rv_DoubtDashboard;
 
-    SwipeRefreshLayout swipeUpRefreshLayoutInClass, srl_ChatDashbaord;
     FragmentManager fragmentManager;
     DoubtFragment doubtFragment;
+    Friend_Chat_Activity friendChatFragment;
 
     LinearLayout friendSection;
 
@@ -200,10 +198,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     private MessageAdapter messageAdapter;
     private boolean onScreen;
     boolean flag = false;
+    boolean flagFriend = false;
 
-    /*
-        Initialisalisation
-         */
     void init() {
 
 
@@ -218,6 +214,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         doubtFragment = new DoubtFragment();
 
         tv_GroupMember = findViewById(R.id.tv_GroupMember);
+        adminListText = findViewById(R.id.adminListText);
+        FriendListText = findViewById(R.id.FriendListText);
 
         endPanelAllFriendsRecyclerView = findViewById(R.id.endPanelAllFriendsRecyclerView);
 
@@ -251,7 +249,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         btn_lteachresult = findViewById(R.id.btn_lteachresult);
 
 
-        recChats = findViewById(R.id.FriendName);
         rvFriendsList = findViewById(R.id.recyclerViewFriendsNameList);
         refFriendList = FirebaseDatabase.getInstance();
         friendsListClasses = new ArrayList<>();
@@ -263,7 +260,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         /*
         End Panel Initialisation
          */
-        endPanelAllFriendsButton = findViewById(R.id.endPanelAllFriendsButton);
         endPanelLinearLayout = findViewById(R.id.endPanelLinearLayout);
 
 
@@ -272,11 +268,10 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
          */
         groupSection = findViewById(R.id.groupSection);
         textViewGroupName = findViewById(R.id.groupName);
+        textViewSubjectName = findViewById(R.id.subjectName);
         addNewClassButton = findViewById(R.id.addNewClassButton);
         recyclerViewClassList = findViewById(R.id.recyclerViewClassList);
-        swipeUpRefreshLayoutInClass = findViewById(R.id.swipeUpRefreshLayoutInClass);
         classNameTextView = findViewById(R.id.classNameTextView);
-        topicNamesRecyclerView = findViewById(R.id.topicNamesRecyclerView);
 
 //        ll_TabChatDoubt = findViewById(R.id.ll_TabChatDoubt);
 
@@ -324,13 +319,11 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
 
         endPanelAllFriendsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        listFriendList = new ArrayList<>();
 
         //Setting up layout manager
         rv_UserPublicGroupTitle.setLayoutManager(new LinearLayoutManager(this));
         rv_OtherPublicGroupTitle.setLayoutManager(new LinearLayoutManager(this));
-
-        topicNamesRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
         //setting up Adapter
@@ -342,6 +335,22 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
         showGrpMemberList = new Adaptor_ShowGrpMember(Server_Activity.this, listGrpMemberList);
         showGrpTeacherList = new Adaptor_ShowGrpMember(Server_Activity.this, listGrpTeacherList);
+        showGrpTeacherList.setOnItemClickListener(new Adaptor_ShowGrpMember.OnItemClickListener() {
+            @Override
+            public void AddFrndDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId) {
+
+            }
+
+            @Override
+            public void FollowFriendDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId) {
+
+            }
+
+            @Override
+            public void MemberProfile(String memberUserId, String memberUserName) {
+                showBtmDialogUserProfile(memberUserId, memberUserName);
+            }
+        });
 
         adapter_all_friends = new Adapter_All_Friends(this, allFriendsList);
         endPanelAllFriendsRecyclerView.setAdapter(adapter_all_friends);
@@ -350,8 +359,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         showChatListDashadaptor = new Adaptor_Friends(this, list_ChatListDashboard);
         rv_UserPublicGroupTitle.setAdapter(showUserPublicGroupadaptor);
         rv_OtherPublicGroupTitle.setAdapter(showOtherUserPublicGroupAdaptor);
-
-        topicNamesRecyclerView.setAdapter(showChatListDashadaptor);
 
 
         ib_csubmit = findViewById(R.id.ib_csubmit);
@@ -560,9 +567,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
 
     private void saveClassGroup(String groupPushId, String sbChildGroupName) {
-//        Class_Group_Names subGroup_Class = new Class_Group_Names(dateTimeCC, userName, SharePref.getDataFromPref(Constant.USER_ID), sbChildGroupName);
-//        subGroup_Class.setAdmin(true);
-
 
         DatabaseReference testDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs");
 
@@ -852,7 +856,39 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             }
         });
 
-        textViewGroupName.setText(serverName.trim());
+
+        if(subjectUniPushId != null) {
+            DatabaseReference refGetSubjectN = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId)
+                    .child(classUniPushId).child("classSubjectData").child(subjectUniPushId);
+            refGetSubjectN.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        textViewSubjectName.setText(snapshot.child("subjectName").getValue().toString());
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
+
+        DatabaseReference refGetGRPName = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId);
+        refGetGRPName.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                textViewGroupName.setText(snapshot.child("groupName").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
         DatabaseReference checkAdminMe = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList").child(userID).child("admin");
         checkAdminMe.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -1028,9 +1064,11 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 if (snapshot.hasChild("classStudentList")) {
                     Log.d("STUCHK", "onSUBS: yes");
                     rv_GrpMemberList.setVisibility(View.VISIBLE);
+                    tv_GroupMember.setVisibility(View.VISIBLE);
                 } else {
                     Log.d("STUCHK", "onSUBS: nooo");
                     rv_GrpMemberList.setVisibility(View.GONE);
+                    tv_GroupMember.setVisibility(View.GONE);
                 }
             }
 
@@ -1043,39 +1081,29 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
         refGrpMemberList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPushId).child("classStudentList");
 
-        listGrpMemberList.clear();
-        refGrpMemberList.addChildEventListener(new ChildEventListener() {
+        refGrpMemberList.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Class_Student_Details class_student_details = snapshot.getValue(Class_Student_Details.class);
-                listGrpMemberList.add(class_student_details);
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                listGrpMemberList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Class_Student_Details class_student_details = snapshot.getValue(Class_Student_Details.class);
+                    listGrpMemberList.add(class_student_details);
 
-                rv_GrpMemberList.setAdapter(showGrpMemberList);
-                showGrpMemberList.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                    rv_GrpMemberList.setAdapter(showGrpMemberList);
+                    showGrpMemberList.notifyDataSetChanged();
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
         adapter_all_friends.setOnItemClickListener(new Adapter_All_Friends.OnItemClickListener() {
             @Override
             public void MemberProfile(String memberUserId, String memberUserName) {
-
+                showBtmDialogUserProfile(memberUserId, memberUserName);
             }
         });
 
@@ -1198,7 +1226,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             refShowUserPrivateGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID);
             refShowUserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID);
             refShowUserAllGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_All_Group").child(userID);
-
+            refShowUserJoinedGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class");
 
             refteachStud = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID);
             refGroupSubsList = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups");
@@ -1237,18 +1265,25 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
 //                    groupSection.setVisibility(View.VISIBLE);
 //                    textViewGroupName.setVisibility(View.VISIBLE);
-//                    topicNamesRecyclerView.setVisibility(View.GONE);
 //                    recyclerViewGroupNameList.setVisibility(View.VISIBLE);
 //                    textViewGroupName.setText("Recent Chats");
 //                    addNewClassButton.setVisibility(View.GONE);
-                    ll_AddJoinGrp.setVisibility(View.GONE);
+
+//                    ll_AddJoinGrp.setVisibility(View.GONE);
+
                     tv_GroupMember.setVisibility(View.GONE);
+                    adminListText.setVisibility(View.GONE);
+                    FriendListText.setVisibility(View.VISIBLE);
+                    rv_GrpTeacherList.setVisibility(View.GONE);
                     rv_GrpMemberList.setVisibility(View.GONE);
+                    friendSection.setVisibility(View.VISIBLE);
+                    onlyAdminLayout.setVisibility(View.GONE);
+
                     imageViewAddPanelAddGroup.setVisibility(View.GONE);
                     endPanelAllFriendsRecyclerView.setVisibility(View.VISIBLE);
-                    recChats.setText("Recent Chats");
+                    textViewGroupName.setText("Recent Chats");
+
                     groupSection.setVisibility(View.GONE);
-                    friendSection.setVisibility(View.VISIBLE);
 
 //                    rvFriendsList.setVisibility(View.VISIBLE);
 
@@ -1261,34 +1296,58 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
                             overlappingPanels.closePanels();
 
-                            ll_AddJoinGrp.setVisibility(View.GONE);
+//                            ll_AddJoinGrp.setVisibility(View.GONE);
+                            if (flagFriend == false) {
 
-                            Fragment fragment = new Friend_Chat_Activity();
-                            getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.center_panel, fragment).addToBackStack(fragment.getClass().getSimpleName()).commit();
+                                friendChatFragment = new Friend_Chat_Activity();
+                                getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.center_panel, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
 
-                            Bundle bundle = new Bundle();
-                            bundle.putString("name", friendName);
-                            bundle.putString("receiverUid", friendUserId);
-                            fragment.setArguments(bundle);
+                                Bundle bundle = new Bundle();
+                                bundle.putString("name", friendName);
+                                bundle.putString("receiverUid", friendUserId);
+                                friendChatFragment.setArguments(bundle);
+                                flagFriend = true;
+                            }
                         }
                     });
 
                 }
             });
 
+            refShowUserJoinedGroup.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            Log.d("JOINEDGRP", "onDataChange: " + dataSnapshot1.getKey());
+                            String chkUserID = dataSnapshot1.getKey();
+                            if (chkUserID.equals(userID)) {
+//                                ll_AddJoinGrp.setVisibility(View.GONE);
+                                overlappingPanels.openStartPanel();
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
             refShowUserAllGroup.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getChildrenCount() > 0) {
                         notifyPB.dismiss();
-                        ll_AddJoinGrp.setVisibility(View.GONE);
+//                        ll_AddJoinGrp.setVisibility(View.GONE);
                         overlappingPanels.openStartPanel();
 
-                    } else {
+                    }
+                    if (snapshot.getChildrenCount() < 0) {
                         Toast.makeText(Server_Activity.this, "Please create Group using left swipe", Toast.LENGTH_SHORT).show();
-                        ll_AddJoinGrp.setVisibility(View.VISIBLE);
+//                        ll_AddJoinGrp.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -1318,6 +1377,14 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
             tabl_ChatView = findViewById(R.id.tabl_ChatView);
             view_Pager_ChatView = findViewById(R.id.view_Pager_ChatView);
+
+            btn_cjoingroup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Server_Activity.this, Discover_Activity.class);
+                    startActivity(intent);
+                }
+            });
 
             btn_caddgroup.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1353,14 +1420,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 Right Panel
              */
 
-
-            endPanelAllFriendsButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    updateFriendList();
-                }
-            });
 
 
             showOtherUserGroupRV();
@@ -1461,6 +1520,9 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
             }
         });
+
+        bottomSheetDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
 
         bottomSheetDialog.show();
 
@@ -1613,13 +1675,38 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
         showUserPublicGroupadaptor.setOnItemClickListener(new Adaptor_QueryGroup.OnItemClickListener() {
 
-
             @Override
             public void addChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID) {
             }
 
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
+
+                Log.d("CHKFLAG", "showChildGroupAdaptor: " + flagFriend);
+
+                if (flagFriend == true) {
+                    FragmentManager manager = getSupportFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    manager.getBackStackEntryCount();
+                    transaction.remove(friendChatFragment);
+                    transaction.commit();
+                    flagFriend = false;
+                }
+
+
+                tv_GroupMember.setVisibility(View.VISIBLE);
+                adminListText.setVisibility(View.VISIBLE);
+                rv_GrpTeacherList.setVisibility(View.VISIBLE);
+                rv_GrpMemberList.setVisibility(View.VISIBLE);
+                friendSection.setVisibility(View.GONE);
+                FriendListText.setVisibility(View.GONE);
+                onlyAdminLayout.setVisibility(View.VISIBLE);
+
+//                ll_AddJoinGrp.setVisibility(View.VISIBLE);
+                imageViewAddPanelAddGroup.setVisibility(View.VISIBLE);
+                endPanelAllFriendsRecyclerView.setVisibility(View.GONE);
+                groupSection.setVisibility(View.VISIBLE);
+
                 Log.d(TAG, "showChildGroupAdaptor: Clicked");
 
                 textViewGroupName.setText(groupName.trim());
@@ -1690,7 +1777,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                     }
                 });
 
-
                 addNewClassButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -1742,8 +1828,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
 
                 });
-//                showchildGroupRV(position, groupName, groupPushId, groupUserID, groupCategory);
-
 
             }
 
@@ -1827,6 +1911,30 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
+
+
+                if (flagFriend == true) {
+                    FragmentManager manager = getSupportFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    manager.getBackStackEntryCount();
+                    transaction.remove(friendChatFragment);
+                    transaction.commit();
+                    flagFriend = false;
+                }
+
+                tv_GroupMember.setVisibility(View.VISIBLE);
+                adminListText.setVisibility(View.VISIBLE);
+                rv_GrpTeacherList.setVisibility(View.VISIBLE);
+                rv_GrpMemberList.setVisibility(View.VISIBLE);
+                friendSection.setVisibility(View.GONE);
+                FriendListText.setVisibility(View.GONE);
+                onlyAdminLayout.setVisibility(View.VISIBLE);
+
+//                ll_AddJoinGrp.setVisibility(View.VISIBLE);
+                imageViewAddPanelAddGroup.setVisibility(View.VISIBLE);
+                endPanelAllFriendsRecyclerView.setVisibility(View.GONE);
+                groupSection.setVisibility(View.VISIBLE);
+
                 textViewGroupName.setText(groupName.trim());
 
 
@@ -2140,13 +2248,11 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             }
         });
 
-
         refFriendList.getReference().child("Users").child("Friends").child(userID).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 allFriendsList.clear();
                 for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-//                    Log.d("TAG", "onDataChange: FRNDS: "+postSnapshot.getKey());
                     String friendsList = postSnapshot.getKey();
                     allFriendsList.add(friendsList);
 //                    Toast.makeText(getApplicationContext(), "........" + friendsList.getUserName(), Toast.LENGTH_SHORT).show();
@@ -2450,10 +2556,12 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                         btn_FollowFrnd.setEnabled(false);
                     }
 
-                    if(snapshot.getValue().equals("Rejected")){
+                    if (snapshot.getValue().equals("Rejected")) {
                         btn_FollowFrnd.setVisibility(View.VISIBLE);
                     }
 
+                } else {
+                    btn_FollowFrnd.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -2469,17 +2577,20 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
                 btmSheetUserProfile.dismiss();
 
-                ll_AddJoinGrp.setVisibility(View.GONE);
+//                ll_AddJoinGrp.setVisibility(View.GONE);
                 overlappingPanels.closePanels();
-                Fragment fragment = new Friend_Chat_Activity();
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.center_panel, fragment).addToBackStack(fragment.getClass().getSimpleName()).commit();
+                if (flagFriend == false) {
 
-//                Intent intent = new Intent(getApplicationContext(), Friend_Chat_Activity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("name", memberUserName);
-                bundle.putString("receiverUid", memberUserId);
-                fragment.setArguments(bundle);
+                    friendChatFragment = new Friend_Chat_Activity();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.center_panel, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("name", memberUserName);
+                    bundle.putString("receiverUid", memberUserId);
+                    friendChatFragment.setArguments(bundle);
+                    flagFriend = true;
+                }
 
 //                intent.putExtra("name", memberUserName);
 //                intent.putExtra("receiverUid", memberUserId);
@@ -3178,7 +3289,11 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             transaction.commit();
             flag = false;
         } else {
-            exitApp();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                Server_Activity.this.finishAffinity();
+            } else {
+                Server_Activity.this.finish();
+            }
         }
     }
 
@@ -3186,35 +3301,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     /*
     Alert box show when user want to exit the app
      */
-    private void exitApp() {
-        AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(Server_Activity.this);
-        alertdialogbuilder.setTitle("Please confirm !!!")
-                .setMessage("Are you want to close this application?")
-                .setCancelable(true)
-                .setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                    Server_Activity.this.finishAffinity();
-                                    System.exit(0);
-                                } else {
-                                    Server_Activity.this.finish();
-                                    System.exit(0);
-                                }
-                            }
-                        })
-                .setNegativeButton("No",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
-        AlertDialog alert = alertdialogbuilder.create();
-        alert.show();
-
-    }
 
     @Override
     public void onClassClickListener(int position, String classGroupName, String uniPushClassId) {
