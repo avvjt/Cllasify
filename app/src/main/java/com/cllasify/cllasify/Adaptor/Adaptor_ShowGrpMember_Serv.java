@@ -100,6 +100,10 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
         refUserProfPic.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                holder.tv_GroupTitle.setText(snapshot.child("Name").getValue().toString());
+                if (snapshot.child("uniqueUserName").exists()) {
+                    holder.tv_userName.setText(snapshot.child("uniqueUserName").getValue().toString());
+                }
                 if (snapshot.child("profilePic").exists()) {
                     String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                     Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
@@ -115,7 +119,6 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
             }
         });
 
-        holder.tv_GroupTitle.setText(userName);
         refUserFollowing = FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(currUserID);
 /*
         DatabaseReference refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
@@ -147,7 +150,7 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_GroupTitle;
+        TextView tv_GroupTitle,tv_userName;
         ImageButton memberDelete;
         CircleImageView civ_UserProfilePic;
 
@@ -155,6 +158,7 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
         public MyViewHolder(View itemView) {
             super(itemView);
 
+            tv_userName = itemView.findViewById(R.id.tv_unique_userName);
             tv_GroupTitle = itemView.findViewById(R.id.tv_classGroupTitle);
             memberDelete = itemView.findViewById(R.id.memberDelete);
             civ_UserProfilePic =itemView.findViewById(R.id.civ_UserProfilePic);

@@ -8,20 +8,22 @@
     android:id="@+id/ll_ShowGroup"
     android:layout_height="wrap_content">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/ClassTopics"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
 
 
     <RelativeLayout
         android:id="@+id/ll_Group"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
-        android:layout_toStartOf="@id/drops"
         android:layout_marginBottom="5dp">
 
         <TextView
@@ -46,12 +48,12 @@
 
     </RelativeLayout>
 
+
     <RelativeLayout
         android:id="@+id/drops"
         android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_toStartOf="@+id/addNewTopicButton">
+        android:layout_marginTop="5dp"
+        android:layout_height="wrap_content">
 
 
         <ImageButton
@@ -88,12 +90,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_marginEnd="15dp"
+            android:layout_margin="12dp"
             android:background="@color/transparent"
             android:src="@drawable/ic_add"
             app:tint="@color/black" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/subjectList"

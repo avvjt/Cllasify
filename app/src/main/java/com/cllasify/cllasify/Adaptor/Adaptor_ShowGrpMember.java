@@ -95,10 +95,16 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
 
         Log.d("MEMLIST", "onBindViewHolder: "+userID);
 
+
+
         DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
         refUserProfPic.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                holder.tv_GroupTitle.setText(snapshot.child("Name").getValue().toString());
+                if (snapshot.child("uniqueUserName").exists()) {
+                    holder.tv_unique_userName.setText(snapshot.child("uniqueUserName").getValue().toString());
+                }
                 if (snapshot.child("profilePic").exists()) {
                     String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                     Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
@@ -136,7 +142,6 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
             }
         });
 */
-            holder.tv_GroupTitle.setText(userName);
             refUserFollowing = FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(currUserID);
 //
 //        holder.ib_followFrnd.setOnClickListener(new View.OnClickListener() {
@@ -196,7 +201,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_GroupTitle;
+        TextView tv_GroupTitle,tv_unique_userName;
         LinearLayout ll_Group;
 
         Class_Group class_Group;
@@ -209,7 +214,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
         public MyViewHolder(View itemView) {
             super(itemView);
 
-
+            tv_unique_userName = itemView.findViewById(R.id.tv_unique_userName);
             tv_GroupTitle =itemView.findViewById(R.id.tv_classGroupTitle);
             ib_followFrnd =itemView.findViewById(R.id.ib_followFrnd);
             ib_AddFrnd =itemView.findViewById(R.id.ib_AddFrnd);

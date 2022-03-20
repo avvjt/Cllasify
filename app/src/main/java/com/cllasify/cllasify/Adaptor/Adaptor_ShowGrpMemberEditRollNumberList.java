@@ -103,6 +103,10 @@ public class Adaptor_ShowGrpMemberEditRollNumberList extends RecyclerView.Adapte
         refUserProfPic.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("uniqueUserName").exists()) {
+                    holder.tv_userName.setText(snapshot.child("uniqueUserName").getValue().toString());
+                }
+                holder.tv_GroupTitle.setText(snapshot.child("Name").getValue().toString());
                 if (snapshot.child("profilePic").exists()) {
                     String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                     Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
@@ -139,7 +143,6 @@ public class Adaptor_ShowGrpMemberEditRollNumberList extends RecyclerView.Adapte
             }
         });
 */
-        holder.tv_GroupTitle.setText(userName);
         refUserFollowing = FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(currUserID);
 //
 //        holder.ib_followFrnd.setOnClickListener(new View.OnClickListener() {
@@ -199,7 +202,7 @@ public class Adaptor_ShowGrpMemberEditRollNumberList extends RecyclerView.Adapte
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_GroupTitle;
+        TextView tv_GroupTitle, tv_userName;
         LinearLayout ll_Group;
 
         Class_Group class_Group;
@@ -212,7 +215,7 @@ public class Adaptor_ShowGrpMemberEditRollNumberList extends RecyclerView.Adapte
         public MyViewHolder(View itemView) {
             super(itemView);
 
-
+            tv_userName = itemView.findViewById(R.id.tv_unique_userName);
             tv_GroupTitle = itemView.findViewById(R.id.tv_classGroupTitle);
             ib_followFrnd = itemView.findViewById(R.id.ib_followFrnd);
             ib_AddFrnd = itemView.findViewById(R.id.ib_AddFrnd);

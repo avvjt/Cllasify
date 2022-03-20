@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adaptor.Adaptor_Server_Setting_Items;
 import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.Class_Student_Details;
@@ -50,6 +52,8 @@ public class Server_Settings extends AppCompatActivity {
     private FirebaseUser currentUser;
     private String userID;
 
+    ImageView schoolLogoImg;
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(Server_Settings.this, Server_Activity.class);
@@ -70,6 +74,8 @@ public class Server_Settings extends AppCompatActivity {
         }
 
 
+        schoolLogoImg = findViewById(R.id.schoolLogoImg);
+
         rv_ShowClass = findViewById(R.id.rv_ShowClass);
         tv_ServerName = findViewById(R.id.tv_ServerName);
         schoolBio = findViewById(R.id.schoolBio);
@@ -80,6 +86,25 @@ public class Server_Settings extends AppCompatActivity {
         serverSettingProfile = findViewById(R.id.serverSettingProfile);
 
         groupPushId = getIntent().getStringExtra("groupPushId");
+
+
+        DatabaseReference refSaveServerProfPic = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("serverProfilePic");
+        refSaveServerProfPic.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    if (!(Server_Settings.this).isFinishing()) {
+                        Log.d("SERVIMG", "onDataChange: "+snapshot.getValue());
+                        Glide.with(Server_Settings.this).load(snapshot.getValue()).into(schoolLogoImg);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         if (getIntent().hasExtra("currUserId")) {
             currUserId = getIntent().getStringExtra("currUserId");

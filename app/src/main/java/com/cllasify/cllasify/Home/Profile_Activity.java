@@ -176,7 +176,21 @@ public class Profile_Activity extends AppCompatActivity {
                 }
             });
 
-            tv_Name.setText(userName);
+            DatabaseReference refUserName = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+
+            refUserName.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.child("Name").exists()){
+                        tv_Name.setText(snapshot.child("Name").getValue().toString());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
             showProfile();
             bottomMenu();
@@ -222,14 +236,13 @@ public class Profile_Activity extends AppCompatActivity {
                     }
 
 
-                    if (snapshot.child("NickName").exists()) {
-                        String UserName = snapshot.child("NickName").getValue().toString();
+                    if (snapshot.child("uniqueUserName").exists()) {
+                        String UserName = snapshot.child("uniqueUserName").getValue().toString();
                         tv_UserUserName.setVisibility(View.VISIBLE);
                         tv_UserUserName.setText(UserName);
-                        ll_UserName.setVisibility(View.VISIBLE);
                         notifyPB.dismiss();
                     } else {
-                        ll_UserName.setVisibility(View.GONE);
+                        tv_UserUserName.setVisibility(View.GONE);
 
 
                     }

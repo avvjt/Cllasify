@@ -16,8 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,12 +24,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.cllasify.cllasify.MyBottomSheetFragment;
 import com.cllasify.cllasify.R;
-import com.cllasify.cllasify.TestLocation;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,11 +34,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -126,14 +121,29 @@ public class ProfileSetting_Activity extends AppCompatActivity {
             }
         });
 
-        tv_ShowUserName.setText(userName);
+        DatabaseReference refUserName = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+
+        refUserName.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("Name").exists()) {
+                    tv_ShowUserName.setText(snapshot.child("Name").getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 //        tv_ShowUserName.setText(userEmail);
 
         ll_UserName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String userName=tv_UserName.getText().toString();
-                editSetting("NickName",userName);
+                String userName = tv_UserName.getText().toString();
+                editSetting("NickName", userName);
             }
         });
         ll_Name.setOnClickListener(new View.OnClickListener() {
@@ -204,8 +214,8 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                     }else{
                         tv_Institution.setText("Add");
                     }
-                    if (snapshot.child("NickName").exists()){
-                        String NickName=snapshot.child("NickName").getValue().toString();
+                    if (snapshot.child("uniqueUserName").exists()){
+                        String NickName=snapshot.child("uniqueUserName").getValue().toString();
                         tv_UserName.setText(NickName);
                     }else{
                         tv_UserName.setText("Add");
@@ -442,7 +452,6 @@ public class ProfileSetting_Activity extends AppCompatActivity {
 
         tv_subTitle.setText("Enter new "+title);
         et_NewDetails.setHint(userData);
-        et_NewDetails.setText(userData);
         btn_Submit.setText("Update "+title);
 
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
@@ -455,37 +464,58 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         btn_Submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (title.equals("NickName")){
-                    String username=et_NewDetails.getText().toString().trim();
-                    refUserStatus.child("NickName").setValue(username);
+                if (title.equals("NickName")) {
+                    String username = et_NewDetails.getText().toString().trim();
+                    Query uniqueUserName = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").orderByChild("uniqueUserName").equalTo(username);
+                    uniqueUserName.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.getChildrenCount() > 0) {
+                                et_NewDetails.setError("Please choose a different userName");
+                            } else {
+                                refUserStatus.child("uniqueUserName").setValue(username);
+                                bottomSheetDialoglogin.dismiss();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
 
                 }else if(title.equals("Name")){
                     String name=et_NewDetails.getText().toString().trim();
                     refUserStatus.child("Name").setValue(name);
+                    bottomSheetDialoglogin.dismiss();
 
                 }else if(title.equals("Insitution")){
                     String institution=et_NewDetails.getText().toString().trim();
                     refUserStatus.child("Insitution").setValue(institution);
+                    bottomSheetDialoglogin.dismiss();
 
                 }else if(title.equals("Bio")){
                     String bio=et_NewDetails.getText().toString().trim();
                     refUserStatus.child("Bio").setValue(bio);
+                    bottomSheetDialoglogin.dismiss();
 
                 }else if(title.equals("Phone")){
                     String phone=et_NewDetails.getText().toString().trim();
                     refUserStatus.child("Phone").setValue(phone);
+                    bottomSheetDialoglogin.dismiss();
 
                 }else if(title.equals("Email")){
                     String email=et_NewDetails.getText().toString().trim();
                     refUserStatus.child("userEmailId").setValue(email);
+                    bottomSheetDialoglogin.dismiss();
 
                 }else if (title.equals("Location")){
                     String location=et_NewDetails.getText().toString().trim();
                     refUserStatus.child("Location").setValue(location);
+                    bottomSheetDialoglogin.dismiss();
 
                 }
 
-                bottomSheetDialoglogin.dismiss();
             }
         });
         btn_Cancel.setOnClickListener(new View.OnClickListener() {

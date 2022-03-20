@@ -1,18 +1,16 @@
 package com.cllasify.cllasify.Adaptor;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -68,26 +66,45 @@ public class Adaptor_QueryGroup extends RecyclerView.Adapter<Adaptor_QueryGroup.
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         assert currentUser != null;
-        String userID=currentUser.getUid();
-        Class_Group Answers=mDatalistNew.get(position);
+        String userID = currentUser.getUid();
+        Class_Group Answers = mDatalistNew.get(position);
 
-        String groupName=Answers.getGroupName();
-        String groupPushid=Answers.getPosition();
+        String groupName = Answers.getGroupName();
+        String groupPushid = Answers.getPosition();
 
-        String firstchar=groupName.substring(0,1);
+        String firstchar = groupName.substring(0, 1);
+
+        DatabaseReference refSaveServerProfPic = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushid).child("serverProfilePic");
+        refSaveServerProfPic.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Glide.with(context.getApplicationContext()).load(snapshot.getValue()).into(holder.btn_GroupTitle);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
         refSaveCurrentData.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount()>0){
-                    if(snapshot.child("clickedGroupPushId").exists() ) {
+                if (snapshot.getChildrenCount() > 0) {
+                    if (snapshot.child("clickedGroupPushId").exists()) {
                         String GroupPushId = snapshot.child("clickedGroupPushId").getValue().toString().trim();
-                        if (groupPushid.equals(GroupPushId)){
+
+                        Log.d("GRPPUSH", "onDataChange: " + GroupPushId + "\t" + groupPushid);
+
+                        if (groupPushid.equals(GroupPushId)) {
                             holder.btn_GroupTitle.setBorderColor(context.getColor(R.color.splash_end));
                             holder.btn_GroupTitle.setBorderWidth(10);
 //                            holder.btn_GroupTitle.setBackgroundColor(context.getColor(R.color.colorPrimary));
-                        }else{
+                        } else {
 //                            holder.btn_GroupTitle.setBackgroundColor(context.getColor(R.color.transparent));
                             holder.btn_GroupTitle.setBorderColor(context.getColor(R.color.transparent));
                             holder.btn_GroupTitle.setBorderWidth(10);

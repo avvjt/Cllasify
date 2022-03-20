@@ -3,6 +3,7 @@ package com.cllasify.cllasify.Home;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -27,6 +28,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -201,7 +203,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     boolean flagFriend = false;
 
     void init() {
-
 
         onlyAdminLayout = findViewById(R.id.onlyAdminLayout);
         btn_joinNotification = findViewById(R.id.btn_joinNotification);
@@ -667,8 +668,10 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         Log.d("ADMMMM", "is admin : " + checking);
         if (checking) {
             onlyAdminLayout.setVisibility(View.VISIBLE);
+            addNewClassButton.setVisibility(View.VISIBLE);
         } else {
             onlyAdminLayout.setVisibility(View.GONE);
+            addNewClassButton.setVisibility(View.GONE);
         }
     }
 
@@ -879,9 +882,10 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         refGetGRPName.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                textViewGroupName.setText(snapshot.child("groupName").getValue().toString());
+                if (snapshot.child("groupName").exists()) {
+                    textViewGroupName.setText(snapshot.child("groupName").getValue().toString());
+                }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -1173,7 +1177,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             reference.addValueEventListener(readLiveMessageListener);
             allDoubtReference.addValueEventListener(readLiveDoubtListener);
 
-
             onScreen = false;
         }
     }
@@ -1184,6 +1187,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_server);
 
+
+
         SharePref sharePref = new SharePref(this);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
@@ -1192,6 +1197,41 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             currentUser = firebaseAuth.getCurrentUser();
             assert currentUser != null;
             userID = currentUser.getUid();
+
+            DatabaseReference firebaseDatabaseDARKLIGHT = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID).child("darkORlight");
+
+            firebaseDatabaseDARKLIGHT.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        if (snapshot.getValue().toString().equals(true)) {
+                            SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs", MODE_PRIVATE);
+                            final SharedPreferences.Editor editor = sharedPreferences.edit();
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            editor.putBoolean("isDarkModeOn", true);
+                            editor.apply();
+                        }
+                        if (snapshot.getValue().toString().equals(false)) {
+                            SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs", MODE_PRIVATE);
+                            final SharedPreferences.Editor editor = sharedPreferences.edit();
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            editor.putBoolean("isDarkModeOn", false);
+                            editor.apply();
+                        }
+                    } else {
+                        SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs", MODE_PRIVATE);
+                        final SharedPreferences.Editor editor = sharedPreferences.edit();
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        editor.putBoolean("isDarkModeOn", true);
+                        editor.apply();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
             init();
 
@@ -1682,6 +1722,28 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
 
+                addNewClassButton.setVisibility(View.VISIBLE);
+
+                DatabaseReference checkAdminMe = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList").child(userID).child("admin");
+                checkAdminMe.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            if (snapshot.getValue().equals(true)) {
+                                checkAdmmmmin(true);
+                            }
+                        } else {
+                            checkAdmmmmin(false);
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
                 Log.d("CHKFLAG", "showChildGroupAdaptor: " + flagFriend);
 
                 if (flagFriend == true) {
@@ -1697,10 +1759,11 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 tv_GroupMember.setVisibility(View.VISIBLE);
                 adminListText.setVisibility(View.VISIBLE);
                 rv_GrpTeacherList.setVisibility(View.VISIBLE);
-                rv_GrpMemberList.setVisibility(View.VISIBLE);
+                if (listGrpMemberList != null) {
+                    rv_GrpMemberList.setVisibility(View.VISIBLE);
+                }
                 friendSection.setVisibility(View.GONE);
                 FriendListText.setVisibility(View.GONE);
-                onlyAdminLayout.setVisibility(View.VISIBLE);
 
 //                ll_AddJoinGrp.setVisibility(View.VISIBLE);
                 imageViewAddPanelAddGroup.setVisibility(View.VISIBLE);
@@ -1912,6 +1975,25 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
 
+                DatabaseReference checkAdminMe = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList").child(userID).child("admin");
+                checkAdminMe.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            if (snapshot.getValue().equals(true)) {
+                                checkAdmmmmin(true);
+                            }
+                        } else {
+                            checkAdmmmmin(false);
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
 
                 if (flagFriend == true) {
                     FragmentManager manager = getSupportFragmentManager();
@@ -1925,10 +2007,11 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 tv_GroupMember.setVisibility(View.VISIBLE);
                 adminListText.setVisibility(View.VISIBLE);
                 rv_GrpTeacherList.setVisibility(View.VISIBLE);
-                rv_GrpMemberList.setVisibility(View.VISIBLE);
+                if (listGrpMemberList != null) {
+                    rv_GrpMemberList.setVisibility(View.VISIBLE);
+                }
                 friendSection.setVisibility(View.GONE);
                 FriendListText.setVisibility(View.GONE);
-                onlyAdminLayout.setVisibility(View.VISIBLE);
 
 //                ll_AddJoinGrp.setVisibility(View.VISIBLE);
                 imageViewAddPanelAddGroup.setVisibility(View.VISIBLE);
@@ -1940,7 +2023,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
                 DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID).child("clickedGroupPushId");
 
-                databaseReferenceTemp.addListenerForSingleValueEvent(new ValueEventListener() {
+                databaseReferenceTemp.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         parentItemArrayListClassName.clear();
@@ -1948,7 +2031,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
                         DatabaseReference databaseReferenceGrpClass = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class").child(groupPushId).child(userID).child("classUniPushId");
 
-                        databaseReferenceGrpClass.addListenerForSingleValueEvent(new ValueEventListener() {
+                        databaseReferenceGrpClass.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -1982,18 +2065,17 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                     public void onCancelled(@NonNull DatabaseError error) {
                                     }
                                 });
-                                listGrpMemberList.clear();
 
                                 DatabaseReference databaseReferenceStudent = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPush);
 
-                                databaseReferenceStudent.child("classStudentList").child(userID).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                                databaseReferenceStudent.child("classStudentList").child(userID).child("admin").addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        listGrpMemberList.clear();
+                                        Log.d("CHKADMIN", "onDataChange: " + snapshot.getValue());
 
-                                        Log.d("CHKADMIN", "onDataChange: "+snapshot.getValue());
-
-                                        if(Objects.equals(snapshot.getValue(), false)){
-                                            databaseReferenceStudent.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        if (Objects.equals(snapshot.getValue(), false)) {
+                                            databaseReferenceStudent.addValueEventListener(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                                     parentItemArrayListClassName.clear();
@@ -2057,6 +2139,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                             databaseReference.addValueEventListener(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                    listGrpMemberList.clear();
                                                     Log.d(TAG, "showChildGroupAdaptor: Clicked" + snapshot.getKey());
                                                     parentItemArrayListClassName.clear();
                                                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {

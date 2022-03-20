@@ -114,14 +114,29 @@ public class AccountSetting_Activity extends AppCompatActivity {
         userName = currentUser.getDisplayName();
         userEmail = currentUser.getEmail();
 //        userPhoto = currentUser.getPhotoUrl();
-        tv_User_Name.setText(userName);
 
 
 
 
+
+
+        refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+
+        refUserProfPic.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("Name").exists()){
+                    tv_User_Name.setText(snapshot.child("Name").getValue().toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         //Set Profile Pic
-        refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
         refUserProfPic.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -363,7 +378,8 @@ public class AccountSetting_Activity extends AppCompatActivity {
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.bottomsheet_theme);
-
+        DatabaseReference firebaseDatabaseDARKLIGHT;
+        firebaseDatabaseDARKLIGHT = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID).child("darkORlight");
          rg_Theme = dialog.findViewById(R.id.rg_Theme);
          btnDefault = dialog.findViewById(R.id.btnDefault);
          btnDark = dialog.findViewById(R.id.btnDark);
@@ -384,16 +400,19 @@ public class AccountSetting_Activity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 switch (checkedId){
+                    /*
                     case R.id.btnDefault:
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                         rg_Theme.check(R.id.btnDefault);
                         Toast.makeText(AccountSetting_Activity.this, "System Default Mode Selected", Toast.LENGTH_SHORT).show();
                         break;
+                        */
                     case R.id.btnDark:
                         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                         rg_Theme.check(R.id.btnDark);
                         editor.putBoolean("isDarkModeOn",true);
                         editor.apply();
+                        firebaseDatabaseDARKLIGHT.setValue(true);
                         Toast.makeText(AccountSetting_Activity.this, "Dark Mode selected", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.btnLight:
@@ -401,6 +420,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
                         rg_Theme.check(R.id.btnLight);
                         editor.putBoolean("isDarkModeOn",false);
                         editor.apply();
+                        firebaseDatabaseDARKLIGHT.setValue(false);
                         Toast.makeText(AccountSetting_Activity.this, "Light Mode selected", Toast.LENGTH_SHORT).show();
                         break;
                 }
@@ -422,15 +442,14 @@ public class AccountSetting_Activity extends AppCompatActivity {
         bottomSheetDialoglogin.setCancelable(false);
         bottomSheetDialoglogin.setContentView(R.layout.btmdialog_setting);
 
-        Button btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_Cancel);
-        TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.tv_subTitle);
-        TextView tv_SettingTitle = bottomSheetDialoglogin.findViewById(R.id.tv_SettingTitle);
+        Button btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_cancel);
+        TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.editTitle);
         EditText et_NewDetails = bottomSheetDialoglogin.findViewById(R.id.et_NewDetails);
-        Button btn_Submit = bottomSheetDialoglogin.findViewById(R.id.btn_Submit);
+        Button btn_Submit = bottomSheetDialoglogin.findViewById(R.id.btn_submit);
 
 
         tv_subTitle.setText("Please enter the details of the feedback");
-        tv_SettingTitle.setText("Share Feedback");
+        et_NewDetails.setHint("Share Feedback");
 
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -20,8 +20,11 @@ import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.SharePref;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +80,28 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
 /*
 
 */
+
+        DatabaseReference checkAdminMe = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(parentItemArrayListClassName.get(holder.getAdapterPosition()).getGroupPushId()).child("classAdminList").child(userID).child("admin");
+        checkAdminMe.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    if (snapshot.getValue().equals(true)) {
+                        holder.addTopicButton.setVisibility(View.VISIBLE);
+
+                    }
+                } else {
+                    holder.addTopicButton.setVisibility(View.GONE);
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
 

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpClass;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Group_Names;
@@ -56,6 +58,7 @@ public class Discover_Item extends AppCompatActivity {
     String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
     TextView schBio;
     Button join_as_teacher;
+    ImageView schoolLogoImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +80,7 @@ public class Discover_Item extends AppCompatActivity {
         TextView tv_ServerName = findViewById(R.id.tv_ServerName);
         RecyclerView rv_ShowClass = findViewById(R.id.rv_ShowClass);
         join_as_teacher = findViewById(R.id.join_as_teacher);
+        schoolLogoImg = findViewById(R.id.schoolLogoImg);
 
         schBio = findViewById(R.id.schoolBio);
 
@@ -90,6 +94,12 @@ public class Discover_Item extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String serverBio = snapshot.child(groupPushId).child("ServerBio").getValue(String.class);
                 schBio.setText(serverBio);
+
+                if (snapshot.child(groupPushId).child("serverProfilePic").exists()) {
+                    String serverLogo = snapshot.child(groupPushId).child("serverProfilePic").getValue(String.class);
+                    Glide.with(Discover_Item.this).load(serverLogo).into(schoolLogoImg);
+                }
+
             }
 
             @Override

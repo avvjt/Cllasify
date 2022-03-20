@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:visibility="visible"
+        android:layout_toStartOf="@id/memberDelete"
         android:id="@+id/members_search">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -43,11 +44,11 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
                 android:fontFamily="@font/open_sans_light"
-                android:text="@string/name"
+                android:text="UserName"
                 android:textSize="15sp"
                 android:layout_marginStart="10dp"
                 android:gravity="center_vertical"
-                android:id="@+id/tv_name"/>
+                android:id="@+id/tv_unique_userName"/>
 
         </LinearLayout>
     </LinearLayout>
@@ -56,7 +57,6 @@
         android:id="@+id/memberDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
         android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
         android:background="@drawable/ic_delete" />

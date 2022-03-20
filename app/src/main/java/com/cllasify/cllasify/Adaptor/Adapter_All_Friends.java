@@ -3,12 +3,10 @@ package com.cllasify.cllasify.Adaptor;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Class.Class_Group;
-import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -97,6 +94,9 @@ public class Adapter_All_Friends extends RecyclerView.Adapter<Adapter_All_Friend
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 holder.tv_GroupTitle.setText(snapshot.child("Name").getValue().toString());
+                if (snapshot.child("uniqueUserName").exists()) {
+                    holder.tv_userName.setText(snapshot.child("uniqueUserName").getValue().toString());
+                }
             }
 
             @Override
@@ -136,7 +136,7 @@ public class Adapter_All_Friends extends RecyclerView.Adapter<Adapter_All_Friend
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_GroupTitle;
+        TextView tv_GroupTitle, tv_userName;
         LinearLayout ll_Group;
 
         Class_Group class_Group;
@@ -149,7 +149,7 @@ public class Adapter_All_Friends extends RecyclerView.Adapter<Adapter_All_Friend
         public MyViewHolder(View itemView) {
             super(itemView);
 
-
+            tv_userName = itemView.findViewById(R.id.tv_unique_userName);
             tv_GroupTitle = itemView.findViewById(R.id.tv_classGroupTitle);
             ib_followFrnd = itemView.findViewById(R.id.ib_followFrnd);
             ib_AddFrnd = itemView.findViewById(R.id.ib_AddFrnd);
