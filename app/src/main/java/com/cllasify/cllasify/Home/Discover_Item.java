@@ -56,9 +56,10 @@ public class Discover_Item extends AppCompatActivity {
     Calendar calenderCC = Calendar.getInstance();
     SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
     String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-    TextView schBio;
+    TextView schBio, schoolEmail;
     Button join_as_teacher;
     ImageView schoolLogoImg;
+    String serverEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +83,9 @@ public class Discover_Item extends AppCompatActivity {
         join_as_teacher = findViewById(R.id.join_as_teacher);
         schoolLogoImg = findViewById(R.id.schoolLogoImg);
 
+        schoolEmail = findViewById(R.id.schoolEmail);
+
+
         schBio = findViewById(R.id.schoolBio);
 
 
@@ -95,6 +99,10 @@ public class Discover_Item extends AppCompatActivity {
                 String serverBio = snapshot.child(groupPushId).child("ServerBio").getValue(String.class);
                 schBio.setText(serverBio);
 
+                if (snapshot.child(groupPushId).child("ServerEmail").exists()) {
+                    serverEmail = snapshot.child(groupPushId).child("ServerEmail").getValue(String.class);
+                    schoolEmail.setText(serverEmail);
+                }
                 if (snapshot.child(groupPushId).child("serverProfilePic").exists()) {
                     String serverLogo = snapshot.child(groupPushId).child("serverProfilePic").getValue(String.class);
                     Glide.with(Discover_Item.this).load(serverLogo).into(schoolLogoImg);
