@@ -113,13 +113,32 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/et_ServerName"
         android:layout_marginTop="25dp"
-        android:text="Edit School name"/>
+        android:text="Edit School name" />
 
     <EditText
         android:id="@+id/et_schoolBio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/edit_serverBio"
+        android:layout_marginTop="10dp"
+        android:drawablePadding="15dp"
+        android:ellipsize="end"
+        android:maxLines="5"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/edit_serverEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_schoolBio"
+        android:layout_marginTop="25dp"
+        android:text="Edit School Email" />
+
+    <EditText
+        android:id="@+id/et_schoolEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/edit_serverEmail"
         android:layout_marginTop="10dp"
         android:drawablePadding="15dp"
         android:ellipsize="end"

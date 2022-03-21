@@ -41,13 +41,13 @@ public class Server_Settings extends AppCompatActivity {
     DatabaseReference refGroupClassList, getTempData;
     String currUserId;
     RecyclerView rv_ShowClass;
-    String groupPushId, serverBio, serverName;
+    String groupPushId, serverBio, serverName,serverEmail;
     ImageButton serverSettingProfile;
 
     Adaptor_Server_Setting_Items showGrpClassList;
     List<Class_Group_Names> listGrpClassList;
 
-    TextView tv_ServerName, schoolBio;
+    TextView tv_ServerName, schoolBio,schoolEmail;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
     private String userID;
@@ -79,6 +79,7 @@ public class Server_Settings extends AppCompatActivity {
         rv_ShowClass = findViewById(R.id.rv_ShowClass);
         tv_ServerName = findViewById(R.id.tv_ServerName);
         schoolBio = findViewById(R.id.schoolBio);
+        schoolEmail = findViewById(R.id.schoolEmail);
         listGrpClassList = new ArrayList<>();
         rv_ShowClass.setLayoutManager(new LinearLayoutManager(Server_Settings.this));
         showGrpClassList = new Adaptor_Server_Setting_Items(Server_Settings.this, listGrpClassList);
@@ -139,6 +140,21 @@ public class Server_Settings extends AppCompatActivity {
             }
         });
 
+        databaseReference.child(groupPushId).child("ServerEmail").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Log.d("SCHEMAIL", "onDataChange: "+snapshot.getValue());
+                    serverEmail = snapshot.getValue(String.class);
+                    schoolEmail.setText(serverEmail);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         databaseReference.child(groupPushId).child("ServerBio").addValueEventListener(new ValueEventListener() {
             @Override

@@ -31,7 +31,7 @@ import com.google.firebase.storage.UploadTask;
 
 public class Server_Setting_Specifics extends AppCompatActivity {
 
-    EditText et_ServerName, et_schoolBio;
+    EditText et_ServerName, et_schoolBio,et_schoolEmail;
     DatabaseReference getTempData;
     String currUserId;
     String groupPushId;
@@ -49,6 +49,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
 
         et_ServerName = findViewById(R.id.et_ServerName);
         et_schoolBio = findViewById(R.id.et_schoolBio);
+        et_schoolEmail = findViewById(R.id.et_schoolEmail);
         doneBtn = findViewById(R.id.doneBtn);
         serverDelete = findViewById(R.id.deleteBtn);
 
@@ -111,6 +112,17 @@ public class Server_Setting_Specifics extends AppCompatActivity {
 
                     }
                 });
+                databaseReference.child("All_Universal_Group").child(clickedGrpPushId).child("ServerEmail").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        et_schoolEmail.setText(snapshot.getValue(String.class));
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
                 databaseReference.child("All_Universal_Group").child(clickedGrpPushId).child("ServerBio").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -127,7 +139,10 @@ public class Server_Setting_Specifics extends AppCompatActivity {
                     public void onClick(View view) {
                         final String serverName = et_ServerName.getText().toString().trim();
                         final String serverBio = et_schoolBio.getText().toString().trim();
+                        final String serverEmail = et_schoolEmail.getText().toString().trim();
+
                         databaseReference.child("All_Universal_Group").child(clickedGrpPushId).child("ServerBio").setValue(serverBio);
+                        databaseReference.child("All_Universal_Group").child(clickedGrpPushId).child("ServerEmail").setValue(serverEmail);
                         databaseReference.child("All_Universal_Group").child(clickedGrpPushId).child("groupName").setValue(serverName);
                         databaseReference.child("All_Universal_Group").child(clickedGrpPushId).child("User_Subscribed_Groups").child(currUserId).child("groupName").setValue(serverName);
                         databaseReference.child("User_All_Group").child(currUserId).child(clickedGrpPushId).child("groupName").setValue(serverName);

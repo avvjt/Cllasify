@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -178,8 +179,12 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
                                         databaseReferenceTemp.setValue(position);
 
                                         //Push Id lochaaa
-                                        mListener.admissionClass(adminUserId, adminUserName, groupName, groupPushId, className, adminEmailId);
-
+                                        if(snapshot.child("ServerEmail").exists()) {
+                                            String serverEmailId = snapshot.child("ServerEmail").getValue().toString();
+                                            mListener.admissionClass(adminUserId, adminUserName, groupName, groupPushId, className, serverEmailId);
+                                        }else{
+                                            Toast.makeText(context.getApplicationContext(),"The school has not added its email yet",Toast.LENGTH_SHORT).show();
+                                        }
                                     }
 
                                     @Override
