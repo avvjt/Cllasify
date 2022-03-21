@@ -15,8 +15,15 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!--Icons color-->
-    <color name="iconColor">#FFFFFF</color>
+    <!-- Customize theme here. -->
+
+    <color name="page_color">#ffffff</color>
+    <color name="page_background_color">#eff0f5</color>
+    <color name="text_color">#050505</color>
+    <color name="text_background_color">#525460</color>
+    <color name="iconColor">#9195a1</color>
+    <color name="iconPrimaryColor">#FF6200EE</color>
+    <color name="ripple_color">#33ffffff</color>
 
 
 

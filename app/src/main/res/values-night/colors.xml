@@ -16,6 +16,15 @@
     <color name="white">#4C4C4C</color>
 
 
+    <!-- Customize theme here. -->
+
+    <color name="page_color">#17181c</color>
+    <color name="page_background_color">#050505</color>
+    <color name="text_color">#ffffff</color>
+    <color name="text_background_color">#ababb5</color>
+    <color name="iconColor">#6c707c</color>
+    <color name="iconPrimaryColor">#FF6200EE</color>
+    <color name="ripple_color">#33000000</color>
 
     <color name="light_black">#1C1B1B</color>
     <color name="page_black">#000000</color>

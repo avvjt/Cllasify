@@ -292,14 +292,14 @@ public class Profile_Activity extends AppCompatActivity {
                 if (snapshot.getChildrenCount() > 0) {
                     long count = snapshot.getChildrenCount();
                     if(count < 2) {
-                        tv_CountFollowers.setText((int) count + " Following");
+                        tv_CountFollowers.setText(" Following -" + (int) count);
                     }
                     else{
-                        tv_CountFollowers.setText((int) count + " Followings");
+                        tv_CountFollowers.setText( " Following -" + (int) count);
                     }
                     notifyPB.dismiss();
                 } else {
-                    tv_CountFollowers.setText("0 Followings");
+                    tv_CountFollowers.setText("Following - 0");
 
                 }
             }
