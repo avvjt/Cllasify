@@ -2,20 +2,28 @@ package com.cllasify.cllasify.Adaptor;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -58,17 +66,34 @@ public class Adaptor_Attendance extends RecyclerView.Adapter<Adaptor_Attendance.
         Class_Group Answers=mDatalistNew.get(position);
 
         String studentName=Answers.getUserName();
-//        String groupName=Answers.getGroupName();
-//        String subGroupName=Answers.getUserEmailId();
         String attendStatus=Answers.getGrpJoiningStatus();
-//        String attendDate=Answers.getDateTime();
+        String memberUserId = Answers.getUserId();
 
 
-//        holder.tv_groupName.setText(groupName);
-        holder.tv_UserName.setText(studentName);
+        DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(memberUserId);
+        refUserProfPic.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                holder.tv_UserName.setText(snapshot.child("Name").getValue().toString());
+                if (snapshot.child("uniqueUserName").exists()) {
+                    holder.tv_unique_userName.setText(snapshot.child("uniqueUserName").getValue().toString());
+                }
+                if (snapshot.child("profilePic").exists()) {
+                    String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                    Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
+                    Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.profilePic);
+                }else{
+                    Glide.with(context.getApplicationContext()).load(R.drawable.maharaji).into(holder.profilePic);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         holder.tv_AttendStatus.setText(attendStatus);
-//        holder.tv_subGroupName.setText(subGroupName);
-//        holder.tv_AttendDate.setText(attendDate);
 
     }
 
@@ -79,39 +104,18 @@ public class Adaptor_Attendance extends RecyclerView.Adapter<Adaptor_Attendance.
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_groupName,tv_UserName,tv_AttendStatus;
-        TextView tv_subGroupName,tv_AttendDate;
+        TextView tv_UserName,tv_AttendStatus;
+        TextView tv_unique_userName;
+        ImageView profilePic;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
-//            tv_groupName = itemView.findViewById(R.id.tv_groupName);
             tv_UserName = itemView.findViewById(R.id.tv_UserName);
             tv_AttendStatus = itemView.findViewById(R.id.tv_AttendStatus);
-//            tv_subGroupName = itemView.findViewById(R.id.tv_subGroupName);
-//            tv_AttendDate = itemView.findViewById(R.id.tv_AttendDate);
-//
-//            ll_Group.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (mListener != null) {
-//                        int position = getAdapterPosition();
-//                        if (position != RecyclerView.NO_POSITION) {
-//
-//
-//                            Class_Group user = mDatalistNew.get(getAdapterPosition());
-//                            String groupName = user.getGroupName();
-//                            String subGroupName = user.getUserName();
-//                            String groupPushId = user.getGroupCategory();
-//                            String subGroupPushID = user.getUserEmailId();
-//
-//                            mListener.showChildChatAdaptor(position, groupName, subGroupName,groupPushId,subGroupPushID);
-//                        }
-//                    }
-//                }
-//            });
-
+            tv_unique_userName = itemView.findViewById(R.id.tv_unique_userName);
+            profilePic = itemView.findViewById(R.id.civ_UserProfilePic);
         }
     }
 }

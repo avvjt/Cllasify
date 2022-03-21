@@ -93,6 +93,24 @@ public class Discover_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
 
+        DatabaseReference refGroupReqCount = FirebaseDatabase.getInstance().getReference().
+                child( "Groups" ).child( "All_Universal_Group" );
+        refGroupReqCount.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getChildrenCount()>0) {
+                    Log.d("CHKGRPS", "onDataChange: "+snapshot.getChildrenCount());
+                    showAllGroupSearch("All_Universal_Group");
+                }else{
+                    notifyPB.dismiss();
+                    Toast.makeText(Discover_Activity.this, "No Other Group Present", Toast.LENGTH_SHORT).show();
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        });
+
 
         //initialize the toolbar
 //        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
@@ -178,34 +196,10 @@ public class Discover_Activity extends AppCompatActivity {
         });
 
 
-        btn_Group.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                rv_AllJoinUser.setVisibility(View.GONE);
-                rv_AllJoinGroup.setVisibility(View.VISIBLE);
-                DatabaseReference refGroupReqCount = FirebaseDatabase.getInstance().getReference().
-                        child( "Groups" ).child( "All_Universal_Group" );
-                refGroupReqCount.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.getChildrenCount()>0) {
-                            showAllGroupSearch("All_Universal_Group");
-                        }else{
-                            notifyPB.dismiss();
-                            Toast.makeText(view.getContext(), "No Other Group Present", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
-
-            }
-        });
 
 
 
-        showAllGroupSearch("All_Universal_Group");
+//        showAllGroupSearch("All_Universal_Group");
 
     }
 
@@ -251,13 +245,13 @@ public class Discover_Activity extends AppCompatActivity {
 //                        if (!currUserId.equals(databaseUserId) && groupCategory.equals("Public")){
 
                     list_AllJoinUser.add(class_userDashBoard);
-                    notifyPB.dismiss();
+//                    notifyPB.dismiss();
                     showAllJoinUserAdaptor.notifyDataSetChanged();
 //                        }
 
                 } else {
                     Toast.makeText(Discover_Activity.this, "No group yet created", Toast.LENGTH_SHORT).show();
-                    notifyPB.dismiss();
+//                    notifyPB.dismiss();
                 }
 
             }

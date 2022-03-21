@@ -677,9 +677,26 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
     private void setReference(String groupPushId, String subGroupPushId, String groupClassSubject, String classPosition, String classUniPushId, String subjectUniPushId, String serverName) {
 
-       if(subjectUniPushId!= null){
-           ll_bottom_send.setVisibility(View.VISIBLE);
-       }
+        if (subjectUniPushId != null && classUniPushId != null) {
+            DatabaseReference databaseReferenceCHKSUBJECT = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPushId)
+                    .child("classSubjectData").child(subjectUniPushId);
+            databaseReferenceCHKSUBJECT.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()){
+                        ll_bottom_send.setVisibility(View.VISIBLE);
+                    }else{
+                        ll_bottom_send.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        }
 
         DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID).child("clickedGroupPushId");
 
@@ -860,7 +877,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         });
 
 
-        if(subjectUniPushId != null) {
+        if (subjectUniPushId != null) {
             DatabaseReference refGetSubjectN = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId)
                     .child(classUniPushId).child("classSubjectData").child(subjectUniPushId);
             refGetSubjectN.addValueEventListener(new ValueEventListener() {
@@ -870,6 +887,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                         textViewSubjectName.setText(snapshot.child("subjectName").getValue().toString());
                     }
                 }
+
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
 
@@ -886,12 +904,12 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                     textViewGroupName.setText(snapshot.child("groupName").getValue().toString());
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-
 
 
         DatabaseReference checkAdminMe = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList").child(userID).child("admin");
@@ -1168,8 +1186,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     }
 
 
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -1188,7 +1204,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         setContentView(R.layout.activity_server);
 
 
-
         SharePref sharePref = new SharePref(this);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
@@ -1197,6 +1212,27 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             currentUser = firebaseAuth.getCurrentUser();
             assert currentUser != null;
             userID = currentUser.getUid();
+
+            DatabaseReference chkJoinedORAddGRP = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group");
+            chkJoinedORAddGRP.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        if(dataSnapshot.child("User_Subscribed_Groups").child(userID).exists()){
+                            ll_AddJoinGrp.setVisibility(View.GONE);
+                        }
+                        else{
+                            ll_AddJoinGrp.setVisibility(View.VISIBLE);
+                            Log.d("CHKJOINEDORADDGRP", "onDataChange: Nothing");
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
             DatabaseReference firebaseDatabaseDARKLIGHT = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID).child("darkORlight");
 
@@ -1461,7 +1497,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
              */
 
 
-
             showOtherUserGroupRV();
             showUserPublicGroupRV();
 
@@ -1724,26 +1759,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
                 addNewClassButton.setVisibility(View.VISIBLE);
 
-                DatabaseReference checkAdminMe = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList").child(userID).child("admin");
-                checkAdminMe.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            if (snapshot.getValue().equals(true)) {
-                                checkAdmmmmin(true);
-                            }
-                        } else {
-                            checkAdmmmmin(false);
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
                 Log.d("CHKFLAG", "showChildGroupAdaptor: " + flagFriend);
 
                 if (flagFriend == true) {
@@ -1975,26 +1990,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
 
-                DatabaseReference checkAdminMe = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList").child(userID).child("admin");
-                checkAdminMe.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            if (snapshot.getValue().equals(true)) {
-                                checkAdmmmmin(true);
-                            }
-                        } else {
-                            checkAdmmmmin(false);
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
                 if (flagFriend == true) {
                     FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
@@ -2134,7 +2129,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                                 }
                                             });
 
-                                        }else{
+                                        } else {
                                             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
                                             databaseReference.addValueEventListener(new ValueEventListener() {
                                                 @Override
@@ -2203,9 +2198,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                         }
 
 
-
-
-
                                     }
 
                                     @Override
@@ -2213,8 +2205,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
                                     }
                                 });
-
-
 
 
                             }
@@ -2629,7 +2619,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
                     Log.d("FRNDCHKK", "onDataChange: " + snapshot.getValue());
 
-                    if(snapshot.getValue().equals("Accepted")){
+                    if (snapshot.getValue().equals("Accepted")) {
                         unfollowAndMessage.setVisibility(View.VISIBLE);
                         btn_FollowFrnd.setVisibility(View.GONE);
                     }
@@ -2770,14 +2760,12 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         });
 
 
-
-
         btn_unfollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(Server_Activity.this);
                 alertdialogbuilder.setTitle("Please confirm !!!")
-                        .setMessage("Do you really want to unfollow "+memberUserName+" ? \nThis will clear the chats of You and "+memberUserName+" and will be removed from your friend list!!")
+                        .setMessage("Do you really want to unfollow " + memberUserName + " ? \nThis will clear the chats of You and " + memberUserName + " and will be removed from your friend list!!")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
@@ -2793,8 +2781,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                 delFriendsRecChats.child("RecentChats").child(userID).child("recentChatUser").child(memberUserId).removeValue();
                                 delFriendsRecChats.child("RecentChats").child(memberUserId).child("recentChatUser").child(userID).removeValue();
 
-                                String myChatRoom = userID+memberUserId;
-                                String friendChatRoom = memberUserId+userID;
+                                String myChatRoom = userID + memberUserId;
+                                String friendChatRoom = memberUserId + userID;
 
                                 delFriendsRecChats.child(myChatRoom).removeValue();
                                 delFriendsRecChats.child(friendChatRoom).removeValue();
@@ -2817,15 +2805,13 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         });
 
 
-
-
         btn_FollowFrnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 //                sentInvitation(memberUserId, memberUserName, "AddFrnd");
 
-                String adminGroupID,adminUserName,Code;
+                String adminGroupID, adminUserName, Code;
 
                 adminGroupID = memberUserId;
                 adminUserName = memberUserName;
@@ -2904,9 +2890,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 sentInvitation(memberUserId, memberUserName, "FollowFrnd");
             }
         });
-
-
-
 
 
         btmSheetUserProfile.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

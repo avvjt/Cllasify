@@ -143,11 +143,11 @@ public class AccountSetting_Activity extends AppCompatActivity {
                 if (snapshot.child("profilePic").exists()){
                     String profilePic=snapshot.child("profilePic").getValue().toString();
                     if (!(AccountSetting_Activity.this).isFinishing()) {
-                        Glide.with(AccountSetting_Activity.this).load(profilePic).into(prof_pic);
+                        Glide.with(getApplicationContext()).load(profilePic).into(prof_pic);
                     }
                 }else{
                     if (!(AccountSetting_Activity.this).isFinishing()) {
-                        Glide.with(AccountSetting_Activity.this).load(R.drawable.maharaji).into(prof_pic);
+                        Glide.with(getApplicationContext()).load(R.drawable.maharaji).into(prof_pic);
                     }
                 }
             }

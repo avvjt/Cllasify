@@ -27,6 +27,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
         <activity
+            android:name=".Home.Attendance_History"
+            android:exported="false" />
+        <activity
             android:name=".TestLocation"
             android:exported="false" />
         <activity

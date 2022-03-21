@@ -2,6 +2,7 @@ package com.cllasify.cllasify.Server;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -29,6 +30,7 @@ import com.cllasify.cllasify.Adaptor.Adaptor_Attendance;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMemberAttendanceRollNumberList;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Student_Details;
+import com.cllasify.cllasify.Home.Attendance_History;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.SwipeToDeleteCallback;
 import com.google.firebase.auth.FirebaseAuth;
@@ -156,6 +158,16 @@ public class Attendance_Activity extends AppCompatActivity {
 
 
     private void dialog_AttendanceStatus(String currentDate) {
+
+        Intent intent = new Intent(Attendance_Activity.this, Attendance_History.class);
+        intent.putExtra("currentDate",currentDate);
+        intent.putExtra("groupPushId",groupPushId);
+        intent.putExtra("subGroupPushId",subGroupPushId);
+        intent.putExtra("classPushId",classPushId);
+
+        startActivity(intent);
+
+        /*
         btn_ShowAttendStatus.setText("Check Attendance Status");
 
         final android.app.AlertDialog dialogBuilder = new android.app.AlertDialog.Builder(this).create();
@@ -164,6 +176,8 @@ public class Attendance_Activity extends AppCompatActivity {
         LayoutInflater inflater = this.getLayoutInflater();
 
         final View dialogView = inflater.inflate(R.layout.dialog_attendancehistory, null);
+
+
 
         RecyclerView rv_ShowAttend=dialogView.findViewById(R.id.rv_ShowAttend);
         TextView tv_titleAttendance=dialogView.findViewById(R.id.tv_titleAttendance);
@@ -206,9 +220,11 @@ public class Attendance_Activity extends AppCompatActivity {
             }
         };
         refChildGroup1.orderByChild("userName").addChildEventListener(childEventListenerAttend);
+
+
         dialogBuilder.setView(dialogView);
         dialogBuilder.show();
-
+*/
     }
 
     private void show_GrpMemberList(String groupPushId,String subGroupPushId) {
