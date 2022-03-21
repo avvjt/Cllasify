@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/subListItem"
+    android:layout_width="match_parent"
+    android:layout_height="30dp"
+    android:layout_marginStart="14dp"
+    android:layout_marginTop="2dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_subjectTopic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        android:drawableLeft="@drawable/ic_hashtag_public"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/open_sans_regular"
+        android:padding="2dp"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        android:textSize="15sp" />
+</LinearLayout>

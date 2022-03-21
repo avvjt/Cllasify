@@ -65,6 +65,12 @@ public class Profile_Activity extends AppCompatActivity {
     private AdManagerInterstitialAd mAdManagerInterstitialAd;
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Profile_Activity.this, Server_Activity.class);
+        startActivity(intent);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_activity);
@@ -286,14 +292,14 @@ public class Profile_Activity extends AppCompatActivity {
                 if (snapshot.getChildrenCount() > 0) {
                     long count = snapshot.getChildrenCount();
                     if(count < 2) {
-                        tv_CountFollowers.setText((int) count + " Follower");
+                        tv_CountFollowers.setText((int) count + " Following");
                     }
                     else{
-                        tv_CountFollowers.setText((int) count + " Followers");
+                        tv_CountFollowers.setText((int) count + " Followings");
                     }
                     notifyPB.dismiss();
                 } else {
-                    tv_CountFollowers.setText("0 Followers");
+                    tv_CountFollowers.setText("0 Followings");
 
                 }
             }

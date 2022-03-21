@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.cllasify.cllasify">
 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -31,10 +32,12 @@
             android:exported="false" />
         <activity
             android:name=".TestLocation"
-            android:exported="false" />
+            android:exported="false"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".MyBottomSheetFragment"
-            android:exported="false" />
+            android:exported="false"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Home.GRPJoinReqs"
             android:exported="false" />
@@ -52,11 +55,11 @@
             android:exported="false" />
         <activity
             android:name=".Friend_Chat_Activity"
-            android:exported="false" />
+            android:exported="false"
+            tools:ignore="Instantiatable" />
         <activity
             android:name=".Home.Discover_Item"
             android:exported="false" />
-        <activity android:name=".EditLocationActivity" />
         <activity android:name=".Profile.AccountSetting_Activity" />
         <activity android:name=".Home.Notification_Activity" />
         <activity android:name=".Home.Profile_Activity" />
@@ -70,7 +73,6 @@
         <activity android:name=".ClassView" />
         <activity android:name=".ProfileMine.Settings" />
         <activity android:name=".Server.Attendance_Activity" />
-        <activity android:name=".Group_Join" />
         <activity android:name=".ProfileMine.Notification" />
         <activity android:name=".ProfileMine.Premium" />
         <activity android:name=".Register.VerifyNumber" />
@@ -78,7 +80,6 @@
         <activity android:name=".ProfileMine.UnderAccountSettings.Edit_Phone_Number" />
         <activity android:name=".ProfileMine.UnderAccountSettings.Edit_Email" />
         <activity android:name=".ProfileMine.UnderAccountSettings.Edit_Username" />
-        <activity android:name=".ProfileMine.AccountSettings" />
         <activity android:name=".ProfileMine.ProfileOthers" />
         <activity android:name=".Feed.User_Question" />
         <activity android:name=".Register.Phone_Verify" />
@@ -89,7 +90,8 @@
         <activity android:name=".NestedRecyclerview.TestFirebaseActivity" />
         <activity
             android:name=".Register.getStarted"
-            android:theme="@style/SplashScreen">
+            android:theme="@style/SplashScreen"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -103,7 +105,8 @@
 
         <service
             android:name=".MyFirebaseMessagingService"
-            android:permission="com.google.android.c2dm.permission.SEND">
+            android:permission="com.google.android.c2dm.permission.SEND"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />

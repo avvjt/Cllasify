@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#FF6200EE</color>
+    <color name="purple">#FF6200EE</color>
+    <color name="purple_blue">#FF3700B3</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF6200EE</color>
+    <color name="teal_700">#FF6200EE</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#4C4C4C</color>
+
+
+
+    <color name="light_black">#1C1B1B</color>
+    <color name="page_black">#000000</color>
+    <color name="page_light_black">#333333</color>
+    <color name="text_white">#FFFFFF</color>
+    <color name="text_light_black">#4C4C4C</color>
+
+    <color name="blue">#0128FF</color>
+    <color name="red">#FF0000</color>
+    <color name="white_light">#CCCCCC</color>
+    <color name="red_deep">#BA3030</color>
+
+    <color name="splash_start">#9A00E9</color>
+    <color name="splash_end">#6E00D4</color>
+
+
+    <item name="Red" type="color">#ef9a9a</item>
+    <item name="pink" type="color">#f48fb1</item>
+    <item name="purple2" type="color">#ce93d8</item>
+    <item name="deeppurple" type="color">#b39ddb</item>
+    <item name="indigo" type="color">#9fa8da</item>
+    <item name="blue2" type="color">#90caf9</item>
+    <item name="lightblue" type="color">#81d4fa</item>
+    <item name="cyan" type="color">#80deea</item>
+    <item name="teal" type="color">#80cbc4</item>
+    <item name="green" type="color">#a5d6a7</item>
+    <item name="lightgreen" type="color">#c5e1a5</item>
+    <item name="lime" type="color">#e6ee9c</item>
+    <item name="yellow" type="color">#fff59d</item>
+    <item name="amber" type="color">#ffe082</item>
+    <item name="orange" type="color">#ffcc80</item>
+    <item name="deeporange" type="color">#ffab91</item>
+    <item name="grey" type="color">#eeeeee</item>
+    <item name="bluegrey" type="color">#cfd8dc</item>
+    <item name="brown" type="color">#bcaaa4</item>
+    <item name="Red1" type="color">#ff8a80</item>
+    <item name="pink1" type="color">#ff80ab</item>
+    <item name="purple1" type="color">#ea80fc</item>
+    <item name="deeppurple1" type="color">#b388ff</item>
+    <item name="indigo1" type="color">#8c9eff</item>
+    <item name="blue1" type="color">#82b1ff</item>
+    <item name="lightblue1" type="color">#80d8ff</item>
+    <item name="cyan1" type="color">#84ffff</item>
+    <item name="teal1" type="color">#a7ffeb</item>
+    <item name="green1" type="color">#b9f6ca</item>
+    <item name="lightgreen1" type="color">#ccff90</item>
+    <item name="lime1" type="color">#f4ff81</item>
+    <item name="yellow1" type="color">#ffff8d</item>
+    <item name="amber1" type="color">#ffe57f</item>
+    <item name="orange1" type="color">#ffd180</item>
+    <item name="deeporange1" type="color">#ff9e80</item>
+
+    <integer-array name="androidcolors">
+        <item>@color/blue</item>
+        <item>@color/Red</item>
+        <item>@color/pink</item>
+        <item>@color/purple2</item>
+        <item>@color/deeppurple</item>
+        <item>@color/indigo</item>
+        <item>@color/blue2</item>
+        <item>@color/lightblue</item>
+        <item>@color/cyan</item>
+        <item>@color/teal</item>
+        <item>@color/green</item>
+        <item>@color/lightgreen</item>
+        <item>@color/lime</item>
+        <item>@color/yellow</item>
+        <item>@color/amber</item>
+        <item>@color/orange</item>
+        <item>@color/deeporange</item>
+        <item>@color/grey</item>
+        <item>@color/bluegrey</item>
+        <item>@color/brown</item>
+        <item>@color/Red</item>
+        <item>@color/pink</item>
+        <item>@color/purple</item>
+        <item>@color/deeppurple</item>
+        <item>@color/indigo</item>
+        <item>@color/blue</item>
+        <item>@color/lightblue</item>
+        <item>@color/cyan</item>
+        <item>@color/teal</item>
+        <item>@color/green</item>
+        <item>@color/lightgreen</item>
+        <item>@color/lime</item>
+        <item>@color/yellow</item>
+        <item>@color/amber</item>
+        <item>@color/orange</item>
+        <item>@color/deeporange</item>
+    </integer-array>
+
+    <color name="iconPrimary">#ff525560</color>
+    <color name="iconSecondary">#ff9194a1</color>
+
+
+</resources>

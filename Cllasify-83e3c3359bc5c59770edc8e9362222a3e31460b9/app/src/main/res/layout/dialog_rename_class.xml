@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_creategroup"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:padding="8dp"
+            android:id="@+id/tv_AddClassTitle"
+            android:text="Edit Class Name"
+            android:fontFamily="@font/open_sans_bold"
+            android:textColor="@color/black"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:hint="Rename Class Name"
+            android:id="@+id/et_ClassName"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_gradient"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:text="@string/next"
+            android:layout_marginTop="10dp"
+            android:id="@+id/btn_nextAddTopic"/>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

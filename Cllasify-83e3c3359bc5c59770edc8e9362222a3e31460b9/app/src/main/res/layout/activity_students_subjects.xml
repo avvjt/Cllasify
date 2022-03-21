@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home.Students_Subjects">
+
+    <TextView
+        android:id="@+id/studentListText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="Students"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/studentList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/studentListText"
+        android:layout_marginStart="25dp" />
+
+    <TextView
+        android:id="@+id/adminListText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/studentList"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:text="Teachers" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/adminList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/adminListText"
+        android:layout_marginStart="25dp" />
+
+
+
+    <TextView
+        android:id="@+id/subjectListText"
+        android:layout_below="@+id/adminList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:text="Subjects"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/subjectList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/subjectListText"
+        android:layout_marginStart="25dp" />
+
+</RelativeLayout>

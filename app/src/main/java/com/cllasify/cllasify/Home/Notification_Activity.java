@@ -53,6 +53,12 @@ public class Notification_Activity extends AppCompatActivity {
     ChipNavigationBar chipNavigationBar;
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Notification_Activity.this, Server_Activity.class);
+        startActivity(intent);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification2);
@@ -529,16 +535,10 @@ public class Notification_Activity extends AppCompatActivity {
 
                         break;
                     case R.id.bottom_nav_profile:
-//                        fragment = new ProfileFragment();
-//                        tag = "profile";
                         startActivity(new Intent(Notification_Activity.this, Profile_Activity.class));
                         Notification_Activity.this.overridePendingTransition(0, 0);
 
                         break;
-//                    case R.id.action_Share:
-//                        Toast.makeText(landing_Page.this, "Refer and Earn", Toast.LENGTH_LONG).show();
-//                        generateLink();
-//                        break;
                 }
 //                FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
 //                transaction.replace(R.id.fragment_container,fragment,tag);

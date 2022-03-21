@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:backgroundTint="@android:color/darker_gray"
+    android:id="@+id/ll_ShowGroup"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_Group"
+        android:layout_margin="2dp"
+        android:background="@android:color/holo_red_light"
+        android:orientation="horizontal">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="4dp"
+        android:padding="4dp"
+        android:textColor="@color/page_black"
+        android:text="Group Name"
+        android:textSize="18sp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:drawablePadding="8dp"
+        android:drawableLeft="@drawable/ic_cancel"
+        android:id="@+id/tv_classGroupTitle"/>
+
+        <CheckBox
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/cb_selectChildGroup"/>
+
+    </LinearLayout>
+</LinearLayout>

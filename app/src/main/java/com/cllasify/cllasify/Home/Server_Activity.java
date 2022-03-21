@@ -1,6 +1,5 @@
 package com.cllasify.cllasify.Home;
 
-import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +36,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adaptor.Adapter_All_Friends;
 import com.cllasify.cllasify.Adaptor.Adapter_ClassGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_Friends;
@@ -94,6 +94,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class Server_Activity extends AppCompatActivity implements Adapter_ClassGroup.onAddSubjectClickListener {
 
@@ -139,7 +141,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
     Calendar calenderCC = Calendar.getInstance();
     SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
     String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-    ProgressDialog notifyPB;
     FirebaseAuth firebaseAuth;
     FirebaseUser currentUser;
     Uri userPhoto;
@@ -1276,10 +1277,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             userEmailID = currentUser.getEmail();
             userPhoto = currentUser.getPhotoUrl();
             userName = currentUser.getDisplayName();
-            notifyPB = new ProgressDialog(this);
-            notifyPB.setTitle("Govt Jobs");
-            notifyPB.setMessage("Loading All Jobs");
-            notifyPB.setCanceledOnTouchOutside(true);
 
 
             GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(
@@ -1416,7 +1413,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getChildrenCount() > 0) {
-                        notifyPB.dismiss();
 //                        ll_AddJoinGrp.setVisibility(View.GONE);
                         overlappingPanels.openStartPanel();
 
@@ -1931,7 +1927,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 Log.i("SBO", dataSnapshot.getRef().toString());
                 list_UserPublicGroupTitle.add(userQuestions);
                 showUserPublicGroupadaptor.notifyDataSetChanged();
-                notifyPB.dismiss();
 
 
             }
@@ -2262,7 +2257,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                     Log.i("SBO1", "" + dataSnapshot.getValue());
                                     list_OtherUserPublicGroupTitle.add(userQuestions);
                                     showOtherUserPublicGroupAdaptor.notifyDataSetChanged();
-                                    notifyPB.dismiss();
                                     tv_OtherTitle.setText("Other Server");
 
                                 }
@@ -2601,6 +2595,31 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         TextView tv_CountFollowers = btmSheetUserProfile.findViewById(R.id.tv_CountFollowers);
         TextView tv_CountFollowing = btmSheetUserProfile.findViewById(R.id.tv_CountFollowing);
 
+
+        CircleImageView prof_pic_BtmSheet = btmSheetUserProfile.findViewById(R.id.prof_pic);
+
+        DatabaseReference refUserStatusProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(memberUserId);
+        refUserStatusProfPic.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("profilePic").exists()){
+                    String profilePic=snapshot.child("profilePic").getValue().toString();
+                    if (!(Server_Activity.this).isFinishing()) {
+                        Glide.with(getApplicationContext()).load(profilePic).into(prof_pic_BtmSheet);
+                    }
+                }else{
+                    if (!(Server_Activity.this).isFinishing()) {
+                        Glide.with(getApplicationContext()).load(R.drawable.maharaji).into(prof_pic_BtmSheet);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         final String userID = currentUser.getUid();
         final String userName = currentUser.getDisplayName();
@@ -2625,6 +2644,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                     }
 
                     if (snapshot.getValue().equals("Requested")) {
+                        btn_FollowFrnd.setVisibility(View.VISIBLE);
                         btn_FollowFrnd.setText("Requested");
                         btn_FollowFrnd.setEnabled(false);
                     }
@@ -2724,33 +2744,21 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             }
         });
 
-        refUserFollowers = FirebaseDatabase.getInstance().getReference().child("Users").child("Followers").child(memberUserId);
+        refUserFollowers = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(memberUserId);
         refUserFollowers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildrenCount() > 0) {
                     long count = snapshot.getChildrenCount();
-                    tv_CountFollowers.setText((int) count + " Followers");
+                    if(count < 2) {
+                        tv_CountFollowing.setText((int) count + " Following");
+                    }
+                    else{
+                        tv_CountFollowing.setText((int) count + " Followings");
+                    }
                 } else {
-                    tv_CountFollowers.setText("No Followers");
+                    tv_CountFollowing.setText("0 Followings");
 
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
-        refUserFollowing = FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(memberUserId);
-        refUserFollowing.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount() > 0) {
-                    long count = snapshot.getChildrenCount();
-                    tv_CountFollowing.setText((int) count + " Following");
-                } else {
-                    tv_CountFollowing.setText("No Following");
                 }
             }
 
@@ -3290,7 +3298,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                         refUserRegister.child("Category").setValue("Student");
                         refUserRegister.child("userStatus").setValue("Online");
                         refUserRegister.child("token").setValue(token);
-                        notifyPB.dismiss();
                         Toast.makeText(Server_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     }
                 });

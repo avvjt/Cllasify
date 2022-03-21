@@ -106,7 +106,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/username"
+                            android:text="Username: "
                             android:id="@+id/tv_UserName"
                             android:textColor="@color/black"
                             android:textSize="16sp"
@@ -227,7 +227,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/bio"
+                        android:text="Bio: "
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:fontFamily="@font/open_sans_regular"/>
@@ -248,7 +248,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/institution"
+                    android:text="Institution: "
                     android:layout_marginStart="20dp"
                     android:textColor="@color/black"
                     android:textSize="16sp"
@@ -270,7 +270,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_Location"
-                    android:text="Location"
+                    android:text="Location: "
                     android:textColor="@color/black"
                     android:fontFamily="@font/open_sans_regular"
                     android:textSize="16sp"/>
@@ -285,6 +285,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_marginStart="15dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp">
                 <TextView
@@ -292,6 +293,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_CountFollowers"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     android:textColor="@color/page_black"
                     android:textSize="16sp"
                     android:layout_marginStart="20dp"/>
@@ -301,6 +303,7 @@
                     android:layout_height="5dp"
                     android:background="@color/page_black"
                     android:layout_gravity="center"
+                    android:visibility="gone"
                     android:layout_marginStart="10dp" />
 
                 <TextView

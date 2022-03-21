@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Home.Discover_Activity">
+
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:elevation="4dp"
+        android:orientation="horizontal"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:text="@string/join_group"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+
+
+    <!--<com.google.android.material.chip.ChipGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="40dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:singleSelection="true">
+
+        <com.robertlevonyan.views.chip.Chip
+            android:id="@+id/btn_Group"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="Group"
+            android:textAlignment="center"
+            android:textSize="15sp"/>
+
+        <com.robertlevonyan.views.chip.Chip
+            android:id="@+id/btn_School"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="School"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:layout_marginStart="20dp"/>
+
+        <com.robertlevonyan.views.chip.Chip
+            android:id="@+id/btn_Users"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:elevation="2dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:text="User"
+            android:textAlignment="center"
+            android:textSize="15sp"
+            android:layout_marginStart="20dp"/>
+
+
+    </com.google.android.material.chip.ChipGroup>
+-->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/esv_groupSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/action_bar"
+        app:queryHint="Search Groups" />
+
+
+    <LinearLayout
+        android:id="@+id/grpSchUsers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_below="@id/esv_groupSearchView"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_Group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:text="#Group" />
+
+        <Button
+            android:id="@+id/btn_School"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:text="#School" />
+
+        <Button
+            android:id="@+id/btn_Users"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:text="#Users" />
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_AllJoinGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/grpSchUsers"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_AllJoinUser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/grpSchUsers" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        app:itemIconTint="@color/bottom_navigation_color"
+        app:itemTextAppearanceActive="@style/BodyText.NavigationBar"
+        app:itemTextAppearanceInactive="@style/BodyText.NavigationBar"
+        app:itemTextColor="@color/bottom_navigation_color"
+        app:labelVisibilityMode="selected"
+        app:menu="@menu/bottom_nav_menu">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
+</RelativeLayout>

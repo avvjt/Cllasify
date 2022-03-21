@@ -89,6 +89,12 @@ public class Discover_Activity extends AppCompatActivity {
     Button btn_Group,btn_School,btn_Users;
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Discover_Activity.this, Server_Activity.class);
+        startActivity(intent);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);

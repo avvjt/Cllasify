@@ -46,7 +46,6 @@ public class getStarted extends AppCompatActivity {
 
     GoogleSignInClient googleSignInClient;
     Button btn_SignIn;
-    ProgressDialog notifyPB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +73,6 @@ public class getStarted extends AppCompatActivity {
         btn_SignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                notifyPB = new ProgressDialog(getStarted.this);
-                notifyPB.setTitle("Govt Jobs");
-                notifyPB.setMessage("Loading All Jobs");
-                notifyPB.setCanceledOnTouchOutside(true);
-                notifyPB.show();
 
                 // Configure Google Sign In
                 GoogleSignInOptions googleSignInOptions=new GoogleSignInOptions.Builder(
@@ -196,7 +190,6 @@ public class getStarted extends AppCompatActivity {
                         refUserRegister.child( "userStatus" ).setValue("Online");
                         refUserRegister.child( "token" ).setValue(token);
                         refUserRegister.child("profilePic").setValue(userPhoto.toString());
-                        notifyPB.dismiss();
 
                         Toast.makeText(getStarted.this, "Login Successful", Toast.LENGTH_SHORT).show();
 

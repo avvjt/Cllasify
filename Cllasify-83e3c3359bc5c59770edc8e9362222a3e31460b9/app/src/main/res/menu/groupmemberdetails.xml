@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/btn_SuspendStatus"
+        android:title="Suspend Status"
+        app:cnb_iconColor="@color/purple"/>
+    <item
+        android:id="@+id/btn_FeesStatus"
+        android:title="Fees Status"
+        app:cnb_iconColor="@color/purple"/>
+
+</menu>
