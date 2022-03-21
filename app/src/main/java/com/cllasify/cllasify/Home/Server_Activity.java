@@ -1218,14 +1218,18 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             chkJoinedORAddGRP.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        if(dataSnapshot.child("User_Subscribed_Groups").child(userID).exists()){
-                            ll_AddJoinGrp.setVisibility(View.GONE);
+                    if (snapshot.exists()) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            if (dataSnapshot.child("User_Subscribed_Groups").child(userID).exists()) {
+                                ll_AddJoinGrp.setVisibility(View.GONE);
+                            } else {
+                                ll_AddJoinGrp.setVisibility(View.VISIBLE);
+                                Log.d("CHKJOINEDORADDGRP", "onDataChange: Nothing");
+                            }
                         }
-                        else{
-                            ll_AddJoinGrp.setVisibility(View.VISIBLE);
-                            Log.d("CHKJOINEDORADDGRP", "onDataChange: Nothing");
-                        }
+                    } else {
+                        ll_AddJoinGrp.setVisibility(View.VISIBLE);
+                        Log.d("CHKJOINEDORADDGRP", "onDataChange: Nothing");
                     }
                 }
 
