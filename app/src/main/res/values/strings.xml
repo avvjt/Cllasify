@@ -36,7 +36,7 @@
 
     <string name="user_profile">User Profile</string>
     <string name="edit">edit</string>
-    <string name="username">Username : </string>
+    <string name="username">Username</string>
     <string name="user_badge">User Badge</string>
     <string name="user_coin">User Coin</string>
     <string name="introduction">Introduction</string>
@@ -232,7 +232,7 @@
     <string name="restrict">Restrict</string>
     <string name="Wlcm_Cllasify">Welcome to Cllasify</string>
     <string name="institution">Institution : </string>
-    <string name="location">Location : </string>
+    <string name="location">Location</string>
     <string name="followers">followers</string>
     <string name="following">following</string>
     <string name="mutual_servers">Mutual servers</string>

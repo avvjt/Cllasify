@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,7 +52,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
     String userID,userName,userEmail;
     TextView tv_UserName,tv_Name,tv_Email,tv_Institution,tv_Location,tv_Bio,tv_ShowUserName,tv_ChangeProfileImage;
 
-    Button btn_Cancel;
+    ImageButton btn_Cancel;
 
     CircleImageView prof_pic;
     StorageReference storageReference;

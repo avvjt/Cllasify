@@ -62,18 +62,20 @@
                 android:background="@color/page_color"
                 android:orientation="vertical"
                 android:paddingBottom="20dp"
-                android:elevation="2dp">
+                android:elevation="2dp"
+                android:paddingTop="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp">
 
                     <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/prof_pic"
-                        android:layout_width="75dp"
-                        android:layout_height="75dp"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
                         android:layout_marginTop="10dp" />
 
                     <LinearLayout
@@ -100,7 +102,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/inter_regular"
                             android:textColor="@color/text_background_color"
-                            android:textSize="18sp"
+                            android:textSize="17sp"
                             android:layout_weight="1"
                             android:paddingBottom="10dp"/>
 
@@ -115,7 +117,8 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginStart="20dp"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    android:paddingTop="5dp">
 
                     <TextView
                         android:id="@+id/tv_UserBio"
@@ -133,7 +136,8 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    android:paddingTop="5dp">
 
                     <ImageView
                         android:layout_width="16dp"
@@ -161,7 +165,8 @@
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    android:paddingTop="5dp">
 
                     <ImageView
                         android:layout_width="16dp"
@@ -186,7 +191,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingTop="5dp">
 
                     <ImageView
                         android:layout_width="16dp"
