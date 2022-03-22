@@ -24,6 +24,7 @@
     <color name="text_background_color">#ababb5</color>
     <color name="iconColor">#6c707c</color>
     <color name="iconPrimaryColor">#FF6200EE</color>
+    <color name="iconSecondaryColor">#FFFFFF</color>
     <color name="ripple_color">#33000000</color>
 
     <color name="light_black">#1C1B1B</color>

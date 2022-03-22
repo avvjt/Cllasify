@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -51,8 +52,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AccountSetting_Activity extends AppCompatActivity {
 
 
-    Button btn_Back,btn_Submit,btn_Cancel,btn_ProfileSetting,btnDefault,btnDark,btnLight;
-    TextView tv_SignOut,tv_setTheme,tv_ProfileSetting,tv_User_Name , tv_rateUs;
+    Button btn_Submit,btn_Cancel,btnDefault,btnDark,btnLight;
+    ImageView btn_Back;
+    TextView tv_SignOut,tv_setTheme,tv_User_Name ,tv_rateUs;
     SwitchCompat allNotifySwitch;
 //    Spinner spinnerUserStatus;
 //    String[] userStatus = {
@@ -72,7 +74,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
     RadioGroup rg_Theme;
 
     TextView tv_notiConfig,tv_Feedback;
-    LinearLayout ll_showFeedback;
+    LinearLayout ll_showFeedback, ll_profileSetting;
     EditText et_Feedback;
     CircleImageView prof_pic;
 
@@ -94,8 +96,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
         tv_notiConfig=findViewById(R.id.tv_notiConfig);
         tv_setTheme=findViewById(R.id.tv_setTheme);
         tv_Feedback=findViewById(R.id.tv_Feedback);
-        tv_ProfileSetting =findViewById(R.id.tv_ProfileSetting);
-        btn_ProfileSetting =findViewById(R.id.btn_ProfileSetting);
+
         tv_notiConfig =findViewById(R.id.tv_notiConfig);
         builder  = new AlertDialog.Builder(this);
 
@@ -108,6 +109,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
         btnLight=findViewById(R.id.light);
 
         ll_showFeedback=findViewById(R.id.ll_showFeedback);
+        ll_profileSetting = findViewById(R.id.ll_profileSetting);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         userID = currentUser.getUid();
@@ -196,22 +198,8 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
             }
         });
-        tv_ProfileSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.replace(R.id.fragment_container, new ProfileSettingFragment());
-//                //transaction.addToBackStack(null);
-//                transaction.commit();
-
-                Intent i = new Intent(AccountSetting_Activity.this, ProfileSetting_Activity.class);
-                startActivity(i);
-                (AccountSetting_Activity.this).overridePendingTransition(0, 0);
-            }
-        });
-
-        btn_ProfileSetting.setOnClickListener(new View.OnClickListener() {
+        ll_profileSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(AccountSetting_Activity.this, ProfileSetting_Activity.class);
@@ -258,24 +246,6 @@ public class AccountSetting_Activity extends AppCompatActivity {
             }
         });
 
-        btn_Submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                String feedback = et_Feedback.getText().toString();
-//                String to = "cllasify@gmail.com";
-//                String subject = "A feedback for Cllasify App";
-//                String gmailPackage = "com.google.android.gm";
-//
-//                Intent email = new Intent(Intent.ACTION_SEND);
-//                email.setPackage(gmailPackage);
-//                email.putExtra(Intent.EXTRA_EMAIL, new String[]{to});
-//                email.putExtra(Intent.EXTRA_SUBJECT, subject);
-//                email.putExtra(Intent.EXTRA_TEXT, feedback);
-//                email.setType("message/rfc822");
-//                startActivity(Intent.createChooser(email, "Choose an Email client :"));
-
-            }
-        });
 
 
         //
