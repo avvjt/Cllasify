@@ -6,9 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".Register.getStarted">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:id="@+id/upperPartOfSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:weightSum="2">
 
@@ -59,22 +65,24 @@
             android:textSize="30sp"
             android:textColor="@color/black"/>
 
+    </LinearLayout>
+
         <Button
             android:id="@+id/btn_SignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="220dp"
-            android:layout_marginBottom="32dp"
+            android:layout_below="@+id/upperPartOfSignIn"
+            android:layout_centerInParent="true"
             android:background="@drawable/custom_btn"
             android:letterSpacing="0.15"
             android:padding="22dp"
+            android:layout_marginTop="150dp"
             android:text="@string/signingoogle"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="13sp" />
 
-    </LinearLayout>
-
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

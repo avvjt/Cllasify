@@ -31,7 +31,6 @@
             android:layout_height="wrap_content"
             android:shadowColor="@color/colorPrimary"
             android:buttonTint="@color/colorPrimary"
-            android:visibility="gone"
             android:layout_marginTop="20dp"
             style="@style/TextAppearance.AppCompat.Subhead"
             android:text="@string/system_default"/>

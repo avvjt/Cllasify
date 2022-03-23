@@ -33,8 +33,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -46,6 +49,9 @@ public class getStarted extends AppCompatActivity {
 
     GoogleSignInClient googleSignInClient;
     Button btn_SignIn;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser currentUser;
+    String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,19 +62,53 @@ public class getStarted extends AppCompatActivity {
         //initialize() AdMob
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
-            public void onInitializationComplete(InitializationStatus initializationStatus) {
+            public void onInitializationComplete(@NonNull InitializationStatus initializationStatus) {
             }
         });
 
-        SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs",MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        final boolean isDarkModeOn = sharedPreferences.getBoolean("isDarkModeOn",false);
-        if (isDarkModeOn){
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
+            firebaseAuth = FirebaseAuth.getInstance();
+            currentUser = firebaseAuth.getCurrentUser();
+            assert currentUser != null;
+            userID = currentUser.getUid();
+
+            DatabaseReference firebaseDatabaseDARKLIGHT = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID).child("darkORlight");
+/*
+            firebaseDatabaseDARKLIGHT.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        if (snapshot.getValue().toString().equals(true)) {
+                            SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs", MODE_PRIVATE);
+                            final SharedPreferences.Editor editor = sharedPreferences.edit();
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                            editor.putBoolean("isDarkModeOn", true);
+                            editor.apply();
+                        }
+                        if (snapshot.getValue().toString().equals(false)) {
+                            SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs", MODE_PRIVATE);
+                            final SharedPreferences.Editor editor = sharedPreferences.edit();
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                            editor.putBoolean("isDarkModeOn", false);
+                            editor.apply();
+                        }
+                    } else {
+                        SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs", MODE_PRIVATE);
+                        final SharedPreferences.Editor editor = sharedPreferences.edit();
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        editor.putBoolean("isDarkModeOn", true);
+                        editor.apply();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+            */
+        }
         btn_SignIn=findViewById(R.id.btn_SignIn);
         btn_SignIn.setOnClickListener(new View.OnClickListener() {
             @Override
