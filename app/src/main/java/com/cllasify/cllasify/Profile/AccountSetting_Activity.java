@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,13 +30,11 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.bumptech.glide.Glide;
-import com.cllasify.cllasify.Home.Notification_Activity;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Register.getStarted;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -52,9 +51,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class AccountSetting_Activity extends AppCompatActivity {
 
 
-    Button btn_Submit,btn_Cancel,btnDefault,btnDark,btnLight;
+    Button btn_Submit, btn_Cancel;
     ImageView btn_Back;
-    TextView tv_SignOut,tv_setTheme,tv_User_Name ,tv_rateUs;
+    TextView tv_SignOut, tv_setTheme, tv_User_Name, tv_rateUs;
     SwitchCompat allNotifySwitch;
 //    Spinner spinnerUserStatus;
 //    String[] userStatus = {
@@ -65,15 +64,18 @@ public class AccountSetting_Activity extends AppCompatActivity {
 //            "Unavailable",
 //    };
 
-    Boolean showTheme=false,showStatus=false,showFeedback=false;
+    SwitchCompat switchCompat;
+    SharedPreferences sharedPreferences = null;
+
+    Boolean showTheme = false, showStatus = false, showFeedback = false;
     FirebaseUser currentUser;
-    String userID,userName,userEmail;
-    DatabaseReference refUserStatus,refUserProfPic;
+    String userID, userName, userEmail;
+    DatabaseReference refUserStatus, refUserProfPic;
     AlertDialog.Builder builder;
 
     RadioGroup rg_Theme;
 
-    TextView tv_notiConfig,tv_Feedback;
+    TextView tv_notiConfig, tv_Feedback;
     LinearLayout ll_showFeedback, ll_profileSetting;
     EditText et_Feedback;
     CircleImageView prof_pic;
@@ -104,9 +106,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
         btn_Cancel=findViewById(R.id.btn_Cancel);
 
         rg_Theme=findViewById(R.id.rg_Theme);
-        btnDefault=findViewById(R.id.btnDefault);
-        btnDark=findViewById(R.id.btnDark);
-        btnLight=findViewById(R.id.light);
+
 
         ll_showFeedback=findViewById(R.id.ll_showFeedback);
         ll_profileSetting = findViewById(R.id.ll_profileSetting);
@@ -345,64 +345,78 @@ public class AccountSetting_Activity extends AppCompatActivity {
     }
 
     private void showBtmTheme() {
+
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
         dialog.setContentView(R.layout.bottomsheet_theme);
-        DatabaseReference firebaseDatabaseDARKLIGHT;
-        firebaseDatabaseDARKLIGHT = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID).child("darkORlight");
-         rg_Theme = dialog.findViewById(R.id.rg_Theme);
-         btnDefault = dialog.findViewById(R.id.btnDefault);
-         btnDark = dialog.findViewById(R.id.btnDark);
-         btnLight = dialog.findViewById(R.id.btnLight);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs",MODE_PRIVATE);
-        final SharedPreferences.Editor editor = sharedPreferences.edit();
-        final boolean isDarkModeOn = sharedPreferences.getBoolean("isDarkModeOn",false);
-        if (isDarkModeOn){
+        RadioButton btnDefault, btnDark, btnLight;
+//        DatabaseReference firebaseDatabaseDARKLIGHT;
+//        firebaseDatabaseDARKLIGHT = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID).child("darkORlight");
+        rg_Theme = dialog.findViewById(R.id.rg_Theme);
+        btnDefault = dialog.findViewById(R.id.btnDefault);
+        btnDark = dialog.findViewById(R.id.btnDark);
+        btnLight = dialog.findViewById(R.id.btnLight);
+
+        SharedPreferences sharedPreferencesLightDark = getSharedPreferences("night", 0);
+
+        int booleanValue = sharedPreferencesLightDark.getInt("THEME_MODE", 2);
+        Log.d("TAG", "onCreate: " + booleanValue);
+        if (booleanValue == 0) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            rg_Theme.check(R.id.btnDark);
-        } else {
+            btnDark.setChecked(true);
+        }
+        if (booleanValue == 1) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            rg_Theme.check(R.id.btnLight);
+            btnLight.setChecked(true);
+        }
+        if (booleanValue == 2) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            btnDefault.setChecked(true);
         }
 
-        rg_Theme.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
-                    /*
-                    case R.id.btnDefault:
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                        rg_Theme.check(R.id.btnDefault);
-                        Toast.makeText(AccountSetting_Activity.this, "System Default Mode Selected", Toast.LENGTH_SHORT).show();
-                        break;
-                        */
-                    case R.id.btnDark:
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        rg_Theme.check(R.id.btnDark);
-                        editor.putBoolean("isDarkModeOn",true);
-                        editor.apply();
-                        firebaseDatabaseDARKLIGHT.setValue(true);
-                        Toast.makeText(AccountSetting_Activity.this, "Dark Mode selected", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.btnLight:
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        rg_Theme.check(R.id.btnLight);
-                        editor.putBoolean("isDarkModeOn",false);
-                        editor.apply();
-                        firebaseDatabaseDARKLIGHT.setValue(false);
-                        Toast.makeText(AccountSetting_Activity.this, "Light Mode selected", Toast.LENGTH_SHORT).show();
-                        break;
-                }
+        rg_Theme.setOnCheckedChangeListener((radioGroup, i) -> {
+            switch (i) {
+                case R.id.btnDefault:
+                    btnDefault.setChecked(true);
+                    Log.d("TAG", "onCreate: " + btnDefault);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                    SharedPreferences.Editor editorDefault = sharedPreferencesLightDark.edit();
+                    editorDefault.putInt("THEME_MODE", 2);
+                    editorDefault.apply();
+                    dialog.dismiss();
+                    break;
 
+                case R.id.btnDark:
+                    btnDark.setChecked(true);
+                    Log.d("TAG", "onCreate: " + btnDark);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    SharedPreferences.Editor editorDark = sharedPreferencesLightDark.edit();
+                    editorDark.putInt("THEME_MODE", 0);
+                    editorDark.apply();
+                    dialog.dismiss();
+                    break;
+
+                case R.id.btnLight:
+                    btnLight.setChecked(true);
+                    Log.d("TAG", "onCreate: " + btnLight);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    SharedPreferences.Editor editorLight = sharedPreferencesLightDark.edit();
+                    editorLight.putInt("THEME_MODE", 1);
+                    editorLight.apply();
+                    dialog.dismiss();
+                    break;
             }
         });
+
         dialog.show();
-        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
-
     }
 
 
