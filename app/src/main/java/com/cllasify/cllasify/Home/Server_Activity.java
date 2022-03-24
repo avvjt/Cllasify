@@ -2,8 +2,6 @@ package com.cllasify.cllasify.Home;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -33,6 +31,7 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.LifecycleObserver;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -62,6 +61,7 @@ import com.cllasify.cllasify.Server.DoubtFragment;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.SharePref;
 import com.discord.panels.OverlappingPanelsLayout;
+import com.discord.panels.PanelState;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -104,7 +104,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             refuserPublicGroup, refAllGroup, refOtherUserPublicGroup, refUserStatus,
             refSearchShowGroup, refShowUserPublicGroup, refShowUserPrivateGroup,
             refShowUserAllGroup, refShowUserJoinedGroup, refTeachStud, refChildGroup, checkFriends,
-            refGroupSubsList, refGrpMemberList, refClassTeacherList, reference, allDoubtReference;
+            refGroupSubsList, refGrpMemberList, refClassTeacherList, reference, allDoubtReference, addedOrJoinedGroup;
 
     //RecyclerViews
     RecyclerView rv_UserPublicGroupTitle, rv_OtherPublicGroupTitle, rv_GrpMemberList, rv_GrpTeacherList,
@@ -1045,6 +1045,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             assert currentUser != null;
             userID = currentUser.getUid();
 
+            checkDarkLightDefault();
+
             DatabaseReference chkJoinedORAddGRP = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group");
             chkJoinedORAddGRP.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -1052,15 +1054,14 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                     if (snapshot.exists()) {
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             if (dataSnapshot.child("User_Subscribed_Groups").child(userID).exists()) {
+                                Log.d("CHKJOINEDORADDGRP", "onDataChange: "+userID);
                                 ll_AddJoinGrp.setVisibility(View.GONE);
-                            } else {
+                            }
+                            if (!(dataSnapshot.child("User_Subscribed_Groups").child(userID).exists())) {
+                                Log.d("CHKJOINEDORADDGRP", "onDataChange: Doesn't exists");
                                 ll_AddJoinGrp.setVisibility(View.VISIBLE);
-                                Log.d("CHKJOINEDORADDGRP", "onDataChange: Nothing");
                             }
                         }
-                    } else {
-                        ll_AddJoinGrp.setVisibility(View.VISIBLE);
-                        Log.d("CHKJOINEDORADDGRP", "onDataChange: Nothing");
                     }
                 }
 
@@ -1071,6 +1072,23 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             });
 
             init();
+
+            overlappingPanels.registerStartPanelStateListeners(new OverlappingPanelsLayout.PanelStateListener() {
+                @Override
+                public void onPanelStateChange(@NonNull PanelState panelState) {
+                    String store = panelState.toString();
+                    Log.d("SCROLLCHANGE", "onScrollChange: " + store);
+                    String[] words = store.split("\\.");
+                    if(words[3].startsWith("PanelState$Opened")) {
+                        Log.d("SCROLLCHANGESPLIT", "onScrollChange: " + (words[3]));
+                        bottomNavigationView.setVisibility(View.VISIBLE);
+                    }
+                    if(words[3].startsWith("PanelState$Closed")) {
+                        Log.d("SCROLLCHANGESPLIT", "onScrollChange: " + (words[3]));
+                        bottomNavigationView.setVisibility(View.GONE);
+                    }
+                }
+            });
 
             bottomNavigationView.setSelectedItemId(R.id.bottom_nav_home);
             SharePref.setDataPref(Constant.USER_ID, userID);
@@ -1287,6 +1305,42 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
     }
 
+    private void checkDarkLightDefault() {
+
+        DatabaseReference setDarkLightDefault = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+
+        setDarkLightDefault.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("DarkLightDefault").exists()) {
+
+                    Log.d("DARKEXISTS", "onDataChange: " + snapshot.child("DarkLightDefault").exists());
+
+                    String darkLightDefaultVal = Objects.requireNonNull(snapshot.child("DarkLightDefault").getValue()).toString();
+
+                    Log.d("TAG", "onCreate: " + darkLightDefaultVal);
+                    if (darkLightDefaultVal.equals("Dark")) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    }
+                    if (darkLightDefaultVal.equals("Light")) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    }
+                    if (darkLightDefaultVal.equals("Default")) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                    }
+                } else {
+                    Log.d("DARKEXISTS", "onDataChange: " + snapshot.child("DarkLightDefault").exists());
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 
     //Doubt
     private void showAddDoubtBtmDialog(String groupPushId, String subGroupPushId, String groupClassSubjects) {
@@ -1455,6 +1509,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                             refuserAllGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_All_Group").child(userID).child(push);
                             refuserPersonalGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID).child(push);
                             refuserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID).child(push);
+//                            addedOrJoinedGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID).child(push).child("addedOrJoined");
 
                             userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, GroupName, GroupCategory, noofGroupinCategory);
                             userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, GroupName, GroupCategory, noofGroupinCategory);
@@ -1463,6 +1518,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                             refAllGroup.setValue(userAddGroupClass);
                             refGroupSubsList.setValue(userSubsGroupClass);
                             refuserAllGroup.setValue(userAddGroupClass);
+//                            addedOrJoinedGroup.setValue("Added");
 
   /*
 

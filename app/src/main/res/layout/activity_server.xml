@@ -191,22 +191,7 @@
             </LinearLayout>
 
 
-            <com.google.android.material.bottomnavigation.BottomNavigationView
-                android:id="@+id/bottom_nav"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:layout_alignParentBottom="true"
-                app:itemIconTint="@color/bottom_navigation_color"
-                app:itemTextAppearanceActive="@style/BodyText.NavigationBar"
-                app:itemTextAppearanceInactive="@style/BodyText.NavigationBar"
-                app:itemTextColor="@color/bottom_navigation_color"
-                app:labelVisibilityMode="selected"
-                app:menu="@menu/bottom_nav_menu">
-
-            </com.google.android.material.bottomnavigation.BottomNavigationView>
         </RelativeLayout>
-
 
         <RelativeLayout
             android:id="@+id/center_panel"
@@ -550,8 +535,22 @@
             </LinearLayout>
         </RelativeLayout>
 
-
     </com.discord.panels.OverlappingPanelsLayout>
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        app:itemIconTint="@color/bottom_navigation_color"
+        app:itemTextAppearanceActive="@style/BodyText.NavigationBar"
+        app:itemTextAppearanceInactive="@style/BodyText.NavigationBar"
+        app:itemTextColor="@color/bottom_navigation_color"
+        app:labelVisibilityMode="selected"
+        app:menu="@menu/bottom_nav_menu">
+
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
 
 </RelativeLayout>

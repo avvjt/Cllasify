@@ -108,6 +108,8 @@ dependencies {
     //picasso ----> for save the image in the imageview (profilePic)
     implementation 'com.squareup.picasso:picasso:2.71828'
 
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+
 
 }
 apply plugin: 'com.google.gms.google-services'

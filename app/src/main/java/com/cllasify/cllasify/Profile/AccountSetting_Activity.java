@@ -45,6 +45,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -361,22 +362,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
         btnDark = dialog.findViewById(R.id.btnDark);
         btnLight = dialog.findViewById(R.id.btnLight);
 
-        SharedPreferences sharedPreferencesLightDark = getSharedPreferences("night", 0);
-
-        int booleanValue = sharedPreferencesLightDark.getInt("THEME_MODE", 2);
-        Log.d("TAG", "onCreate: " + booleanValue);
-        if (booleanValue == 0) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            btnDark.setChecked(true);
-        }
-        if (booleanValue == 1) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            btnLight.setChecked(true);
-        }
-        if (booleanValue == 2) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-            btnDefault.setChecked(true);
-        }
+        DatabaseReference setDarkLightDefault = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
 
         rg_Theme.setOnCheckedChangeListener((radioGroup, i) -> {
             switch (i) {
@@ -384,31 +370,58 @@ public class AccountSetting_Activity extends AppCompatActivity {
                     btnDefault.setChecked(true);
                     Log.d("TAG", "onCreate: " + btnDefault);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                    SharedPreferences.Editor editorDefault = sharedPreferencesLightDark.edit();
-                    editorDefault.putInt("THEME_MODE", 2);
-                    editorDefault.apply();
-                    dialog.dismiss();
+                    setDarkLightDefault.child("DarkLightDefault").setValue("Default");
                     break;
 
                 case R.id.btnDark:
                     btnDark.setChecked(true);
                     Log.d("TAG", "onCreate: " + btnDark);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    SharedPreferences.Editor editorDark = sharedPreferencesLightDark.edit();
-                    editorDark.putInt("THEME_MODE", 0);
-                    editorDark.apply();
-                    dialog.dismiss();
+                    setDarkLightDefault.child("DarkLightDefault").setValue("Dark");
                     break;
 
                 case R.id.btnLight:
                     btnLight.setChecked(true);
                     Log.d("TAG", "onCreate: " + btnLight);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    SharedPreferences.Editor editorLight = sharedPreferencesLightDark.edit();
-                    editorLight.putInt("THEME_MODE", 1);
-                    editorLight.apply();
-                    dialog.dismiss();
+                    setDarkLightDefault.child("DarkLightDefault").setValue("Light");
                     break;
+            }
+        });
+
+
+        setDarkLightDefault.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.child("DarkLightDefault").exists()) {
+
+                    Log.d("DARKEXISTS", "onDataChange: "+snapshot.child("DarkLightDefault").exists());
+
+                    String darkLightDefaultVal = Objects.requireNonNull(snapshot.child("DarkLightDefault").getValue()).toString();
+
+                    Log.d("TAG", "onCreate: " + darkLightDefaultVal);
+                    if (darkLightDefaultVal.equals("Dark")) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                        btnDark.setChecked(true);
+                    }
+                    if (darkLightDefaultVal.equals("Light")) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                        btnLight.setChecked(true);
+                    }
+                    if (darkLightDefaultVal.equals("Default")) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                        btnDefault.setChecked(true);
+                    }
+                }else{
+                    Log.d("DARKEXISTS", "onDataChange: "+snapshot.child("DarkLightDefault").exists());
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                    btnDefault.setChecked(true);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
@@ -417,6 +430,8 @@ public class AccountSetting_Activity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
         dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+        moveTaskToBack(false);
     }
 
 
