@@ -1,61 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dialog_bg">
+    android:background="@drawable/bg_bottomsheet">
 
-    <TextView
-        android:id="@+id/choosetxt"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="Choose"
-        android:textColor="@color/black"
-        android:layout_marginTop="5dp"
-        android:textSize="25dp"
-        android:textStyle="bold"/>
+        android:orientation="vertical"
+        android:paddingTop="30sp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="4dp"
-        android:textColor="@color/colorPrimary"
-        android:visibility="visible"
-        android:id="@+id/rg_Theme"
-        android:orientation="vertical">
-        <RadioButton
+        <TextView
+            android:id="@+id/choosetxt"
             android:layout_width="match_parent"
-            android:id="@+id/btnDefault"
             android:layout_height="wrap_content"
-            android:shadowColor="@color/colorPrimary"
-            android:buttonTint="@color/colorPrimary"
-            android:layout_marginTop="20dp"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            android:text="@string/system_default"/>
-        <RadioButton
-            android:layout_width="match_parent"
-            android:id="@+id/btnDark"
-            android:shadowColor="@color/colorPrimary"
-            android:buttonTint="@color/colorPrimary"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            android:text="@string/dark"/>
-        <RadioButton
-            android:layout_width="match_parent"
-            android:id="@+id/btnLight"
-            android:shadowColor="@color/colorPrimary"
-            android:buttonTint="@color/colorPrimary"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            style="@style/TextAppearance.AppCompat.Subhead"
-            android:text="@string/light"/>
-    </RadioGroup>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
+            android:text="@string/set_theme"
+            android:textSize="20sp"
+            android:fontFamily="@font/inter_medium"
+            android:textColor="@color/text_color"
+            android:paddingStart="10dp"/>
 
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/colorPrimary"
+            android:visibility="visible"
+            android:id="@+id/rg_Theme"
+            android:orientation="vertical"
+            style="@style/SelectableItemBackground">
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:id="@+id/btnDefault"
+                android:layout_height="wrap_content"
+                android:shadowColor="@color/colorPrimary"
+                android:buttonTint="@color/iconPrimaryColor"
+                android:layout_marginTop="10dp"
+                android:layoutDirection="rtl"
+                android:textSize="16sp"
+                android:fontFamily="@font/inter_regular"
+                android:text="@string/system_default"
+                android:padding="10dp"
+                android:clickable="true"
+                android:focusable="true"
+                style="@style/SelectableItemBackground"/>
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:id="@+id/btnDark"
+                android:shadowColor="@color/colorPrimary"
+                android:buttonTint="@color/iconPrimaryColor"
+                android:layout_height="wrap_content"
+                android:layoutDirection="rtl"
+                android:fontFamily="@font/inter_regular"
+                android:textSize="16sp"
+                android:padding="10dp"
+                android:text="@string/dark"
+                style="@style/SelectableItemBackground"/>
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:id="@+id/btnLight"
+                android:shadowColor="@color/colorPrimary"
+                android:buttonTint="@color/iconPrimaryColor"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_regular"
+                android:layoutDirection="rtl"
+                android:textSize="16sp"
+                android:text="@string/light"
+                android:padding="10dp"
+                style="@style/SelectableItemBackground"/>
+        </RadioGroup>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="30dp"/>
+
+
+    </LinearLayout>
 
 </LinearLayout>
