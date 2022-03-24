@@ -221,6 +221,20 @@ public class Server_Setting_Specifics extends AppCompatActivity {
 
         DatabaseReference databaseReferenceServDel = FirebaseDatabase.getInstance().getReference().child("Groups");
 
+        databaseReferenceServDel.child("UserAddedOrJoinedGrp").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Log.d("CHLDELSERV", "onDataChange: "+dataSnapshot.getKey());
+                    databaseReferenceServDel.child("UserAddedOrJoinedGrp").child(dataSnapshot.getKey()).child(groupPushId).child("addedOrJoined").setValue(null);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
         databaseReferenceServDel.child("Check_Group_Admins").child(groupPushId).removeValue();
         databaseReferenceServDel.child("All_GRPs").child(groupPushId).removeValue();
         databaseReferenceServDel.child("All_Universal_Group").child(groupPushId).removeValue();

@@ -257,6 +257,9 @@ public class Students_Subjects extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins")
                 .child(groupPushId).child("classAdminList").child(teacherUserId).removeValue();
 
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp")
+                .child(teacherUserId).child(groupPushId).removeValue();
+
         FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class")
                 .child(groupPushId).child(teacherUserId).removeValue();
 
@@ -286,6 +289,9 @@ public class Students_Subjects extends AppCompatActivity {
 
             }
         });
+
+        FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp")
+                .child(studentUserId).child(groupPushId).removeValue();
 
         FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class")
                 .child(groupPushId).child(studentUserId).removeValue();

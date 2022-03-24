@@ -221,9 +221,6 @@ public class Notification_Activity extends AppCompatActivity {
                 if(notifyCategory.equals("Group_JoiningReq_Teacher")) {
                     DatabaseReference refSubs_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId).child(classPushId).child("SubGroup_SubsList");
                     DatabaseReference refAll_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("User_Subscribed_Groups");
-                    DatabaseReference addedOrJoinedGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(reqUserID).child(groupPushId).child("addedOrJoined");
-
-                    addedOrJoinedGroup.setValue("Joined");
 
                     DatabaseReference refAllGRPs = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId);
                     refAllGRPs.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -305,9 +302,6 @@ public class Notification_Activity extends AppCompatActivity {
                 if (notifyCategory.equals("Group_JoiningReq")) {
                     DatabaseReference refSubs_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId).child(classPushId).child("SubGroup_SubsList");
                     DatabaseReference refAll_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("User_Subscribed_Groups");
-//                    DatabaseReference addedOrJoinedGroups = FirebaseDatabase.getInstance().getReference().child("UserAddedOrJoinedGrps").child("Uni_Group_No_1_kdid").child("2aBFaV4H7XOGwg8JnOBiSXF5zvf2").child("addedOrJoined");
-//
-//                    addedOrJoinedGroups.setValue("Joined");
 
 
                     DatabaseReference refAllGRPs = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);

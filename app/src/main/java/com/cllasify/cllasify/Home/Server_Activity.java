@@ -31,7 +31,6 @@ import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.LifecycleObserver;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -1047,21 +1046,16 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
             checkDarkLightDefault();
 
-            DatabaseReference chkJoinedORAddGRP = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group");
+            DatabaseReference chkJoinedORAddGRP = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID);
             chkJoinedORAddGRP.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            if (dataSnapshot.child("User_Subscribed_Groups").child(userID).exists()) {
-                                Log.d("CHKJOINEDORADDGRP", "onDataChange: "+userID);
-                                ll_AddJoinGrp.setVisibility(View.GONE);
-                            }
-                            if (!(dataSnapshot.child("User_Subscribed_Groups").child(userID).exists())) {
-                                Log.d("CHKJOINEDORADDGRP", "onDataChange: Doesn't exists");
-                                ll_AddJoinGrp.setVisibility(View.VISIBLE);
-                            }
-                        }
+                        Log.d("CHKJOINEDORADDGRP", "onDataChange: available");
+                        ll_AddJoinGrp.setVisibility(View.GONE);
+                    }else{
+                        Log.d("CHKJOINEDORADDGRP", "onDataChange: Not available");
+                        ll_AddJoinGrp.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -1509,16 +1503,17 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                             refuserAllGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_All_Group").child(userID).child(push);
                             refuserPersonalGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID).child(push);
                             refuserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID).child(push);
-//                            addedOrJoinedGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID).child(push).child("addedOrJoined");
+                            addedOrJoinedGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID).child(push).child("addedOrJoined");
 
                             userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, GroupName, GroupCategory, noofGroupinCategory);
                             userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, GroupName, GroupCategory, noofGroupinCategory);
                             userSubsGroupClass = new Class_Group(dateTimeCC, userName, userID, userID, GroupName, push, "Admin", "Online");
 
+
                             refAllGroup.setValue(userAddGroupClass);
                             refGroupSubsList.setValue(userSubsGroupClass);
                             refuserAllGroup.setValue(userAddGroupClass);
-//                            addedOrJoinedGroup.setValue("Added");
+                            addedOrJoinedGroup.setValue("Added");
 
   /*
 
