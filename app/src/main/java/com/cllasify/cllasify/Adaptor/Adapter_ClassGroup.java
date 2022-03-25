@@ -65,9 +65,9 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         String userID = currentUser.getUid();
 
-        holder.classGroupName.setText(parentItemArrayListClassName.get(position).getClassName());
+        holder.classGroupName.setText(parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName());
 
-        Log.d(TAG, "onBindViewHolder: Adapter Class: "+parentItemArrayListClassName.get(position).getClassName());
+        Log.d(TAG, "onBindViewHolder: Adapter Class: "+parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName());
 
         Class_Group_Names class_group_names = parentItemArrayListClassName.get(holder.getAdapterPosition());
 
@@ -158,7 +158,7 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
 //            }
 //        });
 
-        if(parentItemArrayListClassName.get(position).getChildItemList()!=null){
+        if(parentItemArrayListClassName.get(holder.getAdapterPosition()).getChildItemList()!=null){
             Adapter_TopicList adapter_topicList = new Adapter_TopicList(context.getApplicationContext());
             holder.subjectList.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
             holder.subjectList.setAdapter(adapter_topicList);
@@ -166,6 +166,7 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
             adapter_topicList.setOnSubjectClickListener(new Adapter_TopicList.onSubjectClickListener() {
                 @Override
                 public void onSubjectClick() {
+                    Log.d(TAG, "onSubjectClick: "+holder.getAdapterPosition());
                     onAddSubjectClickListener.onSubClick(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(),class_group_names.getUniPushClassId());
 
                     DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
@@ -174,7 +175,6 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
                     refSaveCurrentData.child("uniPushClassId").setValue(class_group_names.getUniPushClassId());
 
 
-                    Toast.makeText(context, "CLICKKKKKEDDDD on TESTTTT SUBBBJJEECCTT", Toast.LENGTH_SHORT).show();
                 }
             });
 //            Log.d("TOP", "onBindViewHolder: "+parentItemArrayListClassName.get(position).getChildItemList().get(position).getSubjectName());
