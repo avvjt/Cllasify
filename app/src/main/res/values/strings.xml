@@ -203,7 +203,7 @@
     <string name="msg_example">johnappleseed sent you a message</string>
     <string name="server_mention">Server mention</string>
     <string name="server_mention_example">johnappleseed mention and send you a message</string>
-    <string name="set_theme">Set theme</string>
+    <string name="set_theme">Set Theme</string>
     <string name="light">Light</string>
     <string name="dark">Dark</string>
     <string name="system_default">System Default</string>
@@ -262,5 +262,6 @@
     <string name="admission">Admission</string>
 
     <string name="letsetup">Let\'s set up a server for your study</string>
+    <string name="follow_system">Follow system</string>
 
 </resources>
