@@ -222,6 +222,52 @@ public class Notification_Activity extends AppCompatActivity {
                     DatabaseReference refSubs_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId).child(classPushId).child("SubGroup_SubsList");
                     DatabaseReference refAll_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("User_Subscribed_Groups");
 
+                    DatabaseReference refAllGRPsTeacherJoin = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(reqUserID);
+                    refAllGRPsTeacherJoin.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                            refAllGRPsTeacherJoin.child(groupPushId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    Class_Student_Details class_student_details = new Class_Student_Details(true, reqUserID, userName);
+                                    refAllGRPsTeacherJoin.child(groupPushId).child("addedOrJoined").setValue("TeacherJoin");
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+
+
+
+
+                                        /*
+                                        refAllGRPs.child(classPosition).child("classStudentList").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                refAllGRPs.child(classPosition).child("classStudentList").child(String.valueOf(snapshot.getChildrenCount())).child("userName").setValue(userName);
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+                                        */
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
                     DatabaseReference refAllGRPs = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId);
                     refAllGRPs.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -302,6 +348,7 @@ public class Notification_Activity extends AppCompatActivity {
                 if (notifyCategory.equals("Group_JoiningReq")) {
                     DatabaseReference refSubs_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId).child(classPushId).child("SubGroup_SubsList");
                     DatabaseReference refAll_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("User_Subscribed_Groups");
+
 
 
                     DatabaseReference refAllGRPs = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);

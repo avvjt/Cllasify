@@ -429,8 +429,8 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                             saveUserGroupClassRef.setValue(classUni);
 
                             DatabaseReference addedOrJoinedGroups = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(reqUserID).child(groupPushId).child("addedOrJoined");
-
-                            addedOrJoinedGroups.setValue("Joined");
+//
+                            addedOrJoinedGroups.setValue("StudentJoin");
 
                             mListener.acceptNotify(reqUserID, currUserId, groupName, userName, classPushid, groupPushId, notifyReq, notPushId, classUni);
 

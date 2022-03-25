@@ -386,32 +386,58 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         final String[] clickedGroupName = new String[1];
 
 
-        DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
 
-        refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference chkJoinedORAddGRP = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID);
+        chkJoinedORAddGRP.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount() > 0) {
-                    if (snapshot.child("clickedClassName").exists() && snapshot.child("clickedSubjectName").exists() && snapshot.child("clickedGroupPushId").exists()) {
-                        Log.d(TAG, "onDataChange: Clicked");
-                        if (snapshot.child("serverName").exists()) {
-                            serverName[0] = Objects.requireNonNull(snapshot.child("serverName").getValue()).toString().trim();
+                if (snapshot.exists()) {
+                    Log.d("CHKJOINEDORADDGRPNN", "onDataChange: available");
+                    DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+                    refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.getChildrenCount() > 0) {
+                                if (snapshot.child("clickedClassName").exists() && snapshot.child("clickedSubjectName").exists() && snapshot.child("clickedGroupPushId").exists()) {
+                                    Log.d(TAG, "onDataChange: Clicked");
+                                    if (snapshot.child("serverName").exists()) {
+                                        serverName[0] = Objects.requireNonNull(snapshot.child("serverName").getValue()).toString().trim();
+                                    }
+                                    subjectUniPushId[0] = Objects.requireNonNull(snapshot.child("subjectUniPushId").getValue()).toString().trim();
+                                    classPosition[0] = Objects.requireNonNull(snapshot.child("classPosition").getValue()).toString().trim();
+                                    className[0] = Objects.requireNonNull(snapshot.child("clickedClassName").getValue()).toString().trim();
+                                    subjectName[0] = Objects.requireNonNull(snapshot.child("clickedSubjectName").getValue()).toString().trim();
+                                    groupPushId[0] = Objects.requireNonNull(snapshot.child("clickedGroupPushId").getValue()).toString().trim();
+                                    uniPushClassId[0] = Objects.requireNonNull(snapshot.child("uniPushClassId").getValue()).toString().trim();
+                                    clickedGroupName[0] = Objects.requireNonNull(snapshot.child("clickedGroupName").getValue()).toString().trim();
+
+
+                                    setReference(groupPushId[0], className[0], subjectName[0], classPosition[0], uniPushClassId[0], subjectUniPushId[0], clickedGroupName[0]);
+
+
+                                    Log.d("SCSG", "init: serverName: " + serverName[0] + "\nsubjectUniPush: " + subjectUniPushId[0] + "\nclassName: " + className[0] + "\nsubjectName: " + subjectName[0] + "\ngroupPushId: " + groupPushId[0]);
+
+                                }
+                            }
                         }
-                        subjectUniPushId[0] = Objects.requireNonNull(snapshot.child("subjectUniPushId").getValue()).toString().trim();
-                        classPosition[0] = Objects.requireNonNull(snapshot.child("classPosition").getValue()).toString().trim();
-                        className[0] = Objects.requireNonNull(snapshot.child("clickedClassName").getValue()).toString().trim();
-                        subjectName[0] = Objects.requireNonNull(snapshot.child("clickedSubjectName").getValue()).toString().trim();
-                        groupPushId[0] = Objects.requireNonNull(snapshot.child("clickedGroupPushId").getValue()).toString().trim();
-                        uniPushClassId[0] = Objects.requireNonNull(snapshot.child("uniPushClassId").getValue()).toString().trim();
-                        clickedGroupName[0] = Objects.requireNonNull(snapshot.child("clickedGroupName").getValue()).toString().trim();
 
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                        setReference(groupPushId[0], className[0], subjectName[0], classPosition[0], uniPushClassId[0], subjectUniPushId[0], clickedGroupName[0]);
+                        }
+                    });
 
-
-                        Log.d("SCSG", "init: serverName: " + serverName[0] + "\nsubjectUniPush: " + subjectUniPushId[0] + "\nclassName: " + className[0] + "\nsubjectName: " + subjectName[0] + "\ngroupPushId: " + groupPushId[0]);
-
-                    }
+                }else{
+                    Log.d("CHKJOINEDORADDGRPNN", "onDataChange: Not available");
+                    rv_ChatDashboard.setVisibility(View.GONE);
+                    ll_bottom_send.setVisibility(View.GONE);
+                    textViewSubjectName.setVisibility(View.GONE);
+                    textViewGroupName.setVisibility(View.GONE);
+                    rv_GrpMemberList.setVisibility(View.GONE);
+                    rv_GrpTeacherList.setVisibility(View.GONE);
+                    groupSection.setVisibility(View.GONE);
+                    tv_GroupMember.setVisibility(View.GONE);
                 }
             }
 
@@ -420,6 +446,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
             }
         });
+
 
 
 //        setReference("Uni_Group_No_0_Exp Group","Class 1","English","0");
@@ -520,7 +547,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                 String[] push01 = String.valueOf(testDatabaseReference.child(groupPushId).push()).split("/");
 
                                 testDatabaseReference.child(groupPushId).child(push01[6]).child("className").setValue(sbChildGroupName);
-                                testDatabaseReference.child(groupPushId).child(push01[6]).child("classBio").setValue(" ");
+//                                testDatabaseReference.child(groupPushId).child(push01[6]).child("classBio").setValue(" ");
                                 testDatabaseReference.child(groupPushId).child(push01[6]).child("classUniPushId").setValue(push01[6]);
                                 testDatabaseReference.child(groupPushId).child(push01[6]).child("groupPushId").setValue(groupPushId);
                                 testDatabaseReference.child(groupPushId).child(push01[6]).child("classStudentList").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -603,7 +630,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
         DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID).child("clickedGroupPushId");
 
-        databaseReferenceTemp.addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReferenceTemp.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 parentItemArrayListClassName.clear();
@@ -782,6 +809,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
             }
         });
+
+
 
 
         if (subjectUniPushId != null) {

@@ -296,6 +296,35 @@ public class Server_Settings extends AppCompatActivity {
         delSubjectRef.child("Chat_Message").child(groupPushId).child(classPos).removeValue();
         delSubjectRef.child("Doubt").child(groupPushId).child(classPos).removeValue();
 
+        DatabaseReference databaseReferenceClassDelStudent = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp");
+        databaseReferenceClassDelStudent.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                    String classUniJoinedPushId = dataSnapshot.getKey();
+
+
+                    String stuJoin =dataSnapshot.child(groupPushId).child("addedOrJoined").getValue().toString();
+                    if (stuJoin.equals("StudentJoin")) {
+
+                        Log.d("DELCHKST", "classUniJoinedPushId: " + dataSnapshot.child(groupPushId).child("addedOrJoined").getValue());
+                        Log.d("DELCHKST1", "classUniJoinedPushId: " + databaseReferenceClassDelStudent.child(classUniJoinedPushId).child(groupPushId).child("addedOrJoined"));
+
+                        databaseReferenceClassDelStudent.child(classUniJoinedPushId).child(groupPushId).child("addedOrJoined").setValue(null);
+
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         DatabaseReference databaseReferenceClassDel = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class").child(groupPushId);
         databaseReferenceClassDel.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
