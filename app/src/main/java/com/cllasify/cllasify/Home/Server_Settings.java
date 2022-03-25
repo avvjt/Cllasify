@@ -304,6 +304,7 @@ public class Server_Settings extends AppCompatActivity {
 
                     String classUniJoinedPushId = dataSnapshot.getKey();
 
+                    if(dataSnapshot.child(groupPushId).child("addedOrJoined").exists()){
 
                     String stuJoin =dataSnapshot.child(groupPushId).child("addedOrJoined").getValue().toString();
                     if (stuJoin.equals("StudentJoin")) {
@@ -313,6 +314,7 @@ public class Server_Settings extends AppCompatActivity {
 
                         databaseReferenceClassDelStudent.child(classUniJoinedPushId).child(groupPushId).child("addedOrJoined").setValue(null);
 
+                    }
 
                     }
 
