@@ -6,90 +6,89 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_bottomsheet">
 
-        <TextView
-            android:id="@+id/choosetxt"
+    <TextView
+        android:id="@+id/choosetxt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/set_theme"
+        android:textSize="18sp"
+        android:fontFamily="@font/inter_semibold"
+        android:textColor="@color/text_color"
+        android:textAlignment="center"
+        android:paddingTop="20dp"
+        android:paddingEnd="20dp"/>
+
+
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorPrimary"
+        android:visibility="visible"
+        android:id="@+id/rg_Theme"
+        android:orientation="vertical"
+        style="@style/SelectableItemBackground">
+
+        <RadioButton
             android:layout_width="match_parent"
+            android:id="@+id/btnDefault"
             android:layout_height="wrap_content"
-            android:text="@string/set_theme"
-            android:textSize="18sp"
-            android:fontFamily="@font/inter_semibold"
-            android:textColor="@color/text_color"
-            android:textAlignment="center"
+            android:shadowColor="@color/colorPrimary"
+            android:buttonTint="@color/iconPrimaryColor"
+            android:layout_marginTop="20dp"
+            android:layoutDirection="rtl"
+            android:layout_marginStart="20dp"
+            android:textSize="16sp"
+            android:fontFamily="@font/inter_regular"
+            android:text="@string/follow_system"
+            android:paddingBottom="10dp"
             android:paddingTop="20dp"
-            android:paddingEnd="20dp"/>
-
-
-
-        <RadioGroup
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:elevation="1dp"/>
+        <View
             android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@color/page_background_color"/>
+
+        <RadioButton
+            android:layout_width="match_parent"
+            android:id="@+id/btnDark"
+            android:shadowColor="@color/colorPrimary"
+            android:buttonTint="@color/iconPrimaryColor"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorPrimary"
-            android:visibility="visible"
-            android:id="@+id/rg_Theme"
-            android:orientation="vertical"
-            style="@style/SelectableItemBackground"
-            android:paddingBottom="40dp">
+            android:layoutDirection="rtl"
+            android:fontFamily="@font/inter_regular"
+            android:textSize="16sp"
+            android:paddingBottom="10dp"
+            android:paddingTop="20dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:text="@string/dark"
+            android:elevation="1dp"
+            android:layout_marginStart="20dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:background="@color/page_background_color"/>
 
-            <RadioButton
-                android:layout_width="match_parent"
-                android:id="@+id/btnDefault"
-                android:layout_height="wrap_content"
-                android:shadowColor="@color/colorPrimary"
-                android:buttonTint="@color/iconPrimaryColor"
-                android:layout_marginTop="20dp"
-                android:layoutDirection="rtl"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:textSize="16sp"
-                android:fontFamily="@font/inter_regular"
-                android:text="@string/follow_system"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp"
-                android:paddingStart="30dp"
-                android:paddingEnd="30dp"
-                android:elevation="2dp"
-                android:background="@drawable/theme_rectangle"/>
+        <RadioButton
+            android:layout_width="match_parent"
+            android:id="@+id/btnLight"
+            android:shadowColor="@color/colorPrimary"
+            android:buttonTint="@color/iconPrimaryColor"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular"
+            android:layoutDirection="rtl"
+            android:textSize="16sp"
+            android:text="@string/light"
+            android:paddingBottom="30dp"
+            android:paddingTop="20dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:elevation="1dp"
+            android:layout_marginStart="20dp"/>
 
-            <RadioButton
-                android:layout_width="match_parent"
-                android:id="@+id/btnDark"
-                android:shadowColor="@color/colorPrimary"
-                android:buttonTint="@color/iconPrimaryColor"
-                android:layout_height="wrap_content"
-                android:layoutDirection="rtl"
-                android:fontFamily="@font/inter_regular"
-                android:textSize="16sp"
-                android:background="@drawable/theme_rectangle"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp"
-                android:paddingStart="30dp"
-                android:paddingEnd="30dp"
-                android:elevation="2dp"
-                android:text="@string/dark"
-                android:layout_marginTop="15sp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"/>
-
-            <RadioButton
-                android:layout_width="match_parent"
-                android:id="@+id/btnLight"
-                android:shadowColor="@color/colorPrimary"
-                android:buttonTint="@color/iconPrimaryColor"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_regular"
-                android:layoutDirection="rtl"
-                android:textSize="16sp"
-                android:text="@string/light"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp"
-                android:paddingStart="30dp"
-                android:paddingEnd="30dp"
-                android:elevation="2dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/theme_rectangle"/>
-
-        </RadioGroup>
+    </RadioGroup>
 
 </LinearLayout>
