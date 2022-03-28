@@ -1,15 +1,11 @@
 package com.cllasify.cllasify;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.TextView;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -20,7 +16,7 @@ public class TestLocation extends BottomSheetDialogFragment {
     public void setupDialog(Dialog dialog, int style) {
         super.setupDialog(dialog, style);
         //Set the custom view
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.activity_test_location, null);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.bottomsheet_location, null);
         dialog.setContentView(view);
 
 

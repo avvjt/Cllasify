@@ -27,7 +27,8 @@
             android:visibility="visible"
             android:id="@+id/rg_Theme"
             android:orientation="vertical"
-            style="@style/SelectableItemBackground">
+            style="@style/SelectableItemBackground"
+            android:paddingBottom="40dp">
 
             <RadioButton
                 android:layout_width="match_parent"
@@ -38,18 +39,16 @@
                 android:layout_marginTop="20dp"
                 android:layoutDirection="rtl"
                 android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:textSize="16sp"
                 android:fontFamily="@font/inter_regular"
                 android:text="@string/follow_system"
-                android:paddingBottom="10dp"
-                android:paddingTop="20dp"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
                 android:paddingStart="30dp"
                 android:paddingEnd="30dp"
-                android:elevation="1dp"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/page_background_color"/>
+                android:elevation="2dp"
+                android:background="@drawable/theme_rectangle"/>
 
             <RadioButton
                 android:layout_width="match_parent"
@@ -60,17 +59,16 @@
                 android:layoutDirection="rtl"
                 android:fontFamily="@font/inter_regular"
                 android:textSize="16sp"
-                android:paddingBottom="10dp"
-                android:paddingTop="20dp"
+                android:background="@drawable/theme_rectangle"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
                 android:paddingStart="30dp"
                 android:paddingEnd="30dp"
+                android:elevation="2dp"
                 android:text="@string/dark"
-                android:elevation="1dp"
-                android:layout_marginStart="20dp"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/page_background_color"/>
+                android:layout_marginTop="15sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"/>
 
             <RadioButton
                 android:layout_width="match_parent"
@@ -82,12 +80,15 @@
                 android:layoutDirection="rtl"
                 android:textSize="16sp"
                 android:text="@string/light"
-                android:paddingBottom="30dp"
-                android:paddingTop="20dp"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp"
                 android:paddingStart="30dp"
                 android:paddingEnd="30dp"
-                android:elevation="1dp"
-                android:layout_marginStart="20dp"/>
+                android:elevation="2dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/theme_rectangle"/>
 
         </RadioGroup>
 

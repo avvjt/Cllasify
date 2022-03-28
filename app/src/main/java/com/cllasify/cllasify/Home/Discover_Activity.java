@@ -1,6 +1,7 @@
 package com.cllasify.cllasify.Home;
 
 import android.app.ProgressDialog;
+import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -162,7 +163,7 @@ public class Discover_Activity extends AppCompatActivity {
 
         refSearchShowGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Universal_Group" );
 
-        if (esv_groupSearchView != null) {
+        /*if (esv_groupSearchView != null) {
             esv_groupSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
@@ -174,8 +175,20 @@ public class Discover_Activity extends AppCompatActivity {
                     return false;
                 }
             });
-        }
+        }*/
 
+        esv_groupSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
+        });
 
         btn_Users.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,6 +219,17 @@ public class Discover_Activity extends AppCompatActivity {
 
 
 //        showAllGroupSearch("All_Universal_Group");
+
+    }
+
+    private void filterList(String text) {
+        List<Class_Group> filterList = new ArrayList<>();
+        for (Class_Group items : listAllGroupStatus) {
+            if (items.getGroupName().toLowerCase().contains(text.toLowerCase())) {
+                filterList.add(items);
+            }
+        }
+        showAllGroupAdaptor.filterList(filterList);
 
     }
 

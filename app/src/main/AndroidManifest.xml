@@ -28,6 +28,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
         <activity
+            android:name=".About"
+            android:exported="false" />
+        <activity
+            android:name=".Terms"
+            android:exported="false" />
+        <activity
+            android:name=".Privacy"
+            android:exported="false" />
+        <activity
             android:name=".Home.Attendance_History"
             android:exported="false" />
         <activity
@@ -93,8 +102,8 @@
         <activity android:name=".NestedRecyclerview.TestFirebaseActivity" />
         <activity
             android:name=".Register.getStarted"
-            android:theme="@style/SplashScreen"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -108,8 +117,8 @@
 
         <service
             android:name=".MyFirebaseMessagingService"
-            android:permission="com.google.android.c2dm.permission.SEND"
-            android:exported="false">
+            android:exported="false"
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />

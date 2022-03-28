@@ -9,8 +9,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
-import android.view.WindowManager;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -46,18 +48,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileSetting_Activity extends AppCompatActivity {
 
 
-    LinearLayout ll_UserName,ll_Name,ll_Instituion,ll_Email,ll_Location,ll_Bio;
+    LinearLayout ll_UserName, ll_Name, ll_Instituion, ll_Email, ll_Location, ll_Bio;
     DatabaseReference refUserStatus;
     FirebaseUser currentUser;
-    String userID,userName,userEmail;
-    TextView tv_UserName,tv_Name,tv_Email,tv_Institution,tv_Location,tv_Bio,tv_ShowUserName,tv_ChangeProfileImage;
+    String userID, userName, userEmail;
+    TextView tv_UserName, tv_Name, tv_Email, tv_Institution, tv_Location, tv_Bio, tv_ShowUserName, tv_ChangeProfileImage;
 
     ImageButton btn_Cancel;
 
     CircleImageView prof_pic;
     StorageReference storageReference;
-    int TAKE_IMAGE_CODE=1001;
-    Uri imageUrl,userPhoto;
+    int TAKE_IMAGE_CODE = 1001;
+    Uri imageUrl, userPhoto;
 
 
     DatabaseReference root;
@@ -73,28 +75,28 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         userEmail = currentUser.getEmail();
         userPhoto = currentUser.getPhotoUrl();
 
-        root=FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+        root = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
 //        DatabaseReference root=FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
-        storageReference=FirebaseStorage.getInstance().getReference().child(userID);
+        storageReference = FirebaseStorage.getInstance().getReference().child(userID);
 
-        tv_ShowUserName=findViewById(R.id.tv_ShowUserName);
-        tv_Bio=findViewById(R.id.tv_Bio);
-        tv_UserName=findViewById(R.id.tv_UserName);
-        tv_Name=findViewById(R.id.tv_Name);
-        tv_Location=findViewById(R.id.tv_Location);
-        tv_Institution=findViewById(R.id.tv_Institution);
-        tv_Email=findViewById(R.id.tv_Email);
-        tv_ChangeProfileImage=findViewById(R.id.tv_ChangeProfileImage);
-        prof_pic=findViewById(R.id.prof_pic);
+        tv_ShowUserName = findViewById(R.id.tv_ShowUserName);
+        tv_Bio = findViewById(R.id.tv_Bio);
+        tv_UserName = findViewById(R.id.tv_UserName);
+        tv_Name = findViewById(R.id.tv_Name);
+        tv_Location = findViewById(R.id.tv_Location);
+        tv_Institution = findViewById(R.id.tv_Institution);
+        tv_Email = findViewById(R.id.tv_Email);
+        tv_ChangeProfileImage = findViewById(R.id.tv_ChangeProfileImage);
+        prof_pic = findViewById(R.id.prof_pic);
 
-        btn_Cancel=findViewById(R.id.btn_Cancel);
+        btn_Cancel = findViewById(R.id.btn_Cancel);
 
-        ll_UserName=findViewById(R.id.ll_UserName);
-        ll_Name=findViewById(R.id.ll_Name);
-        ll_Location=findViewById(R.id.ll_Location);
-        ll_Instituion=findViewById(R.id.ll_Institution);
-        ll_Email=findViewById(R.id.ll_Email);
-        ll_Bio=findViewById(R.id.ll_Bio);
+        ll_UserName = findViewById(R.id.ll_UserName);
+        ll_Name = findViewById(R.id.ll_Name);
+        ll_Location = findViewById(R.id.ll_Location);
+        ll_Instituion = findViewById(R.id.ll_Institution);
+        ll_Email = findViewById(R.id.ll_Email);
+        ll_Bio = findViewById(R.id.ll_Bio);
 
 
         // Change profile pic
@@ -103,7 +105,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 //open gallery
                 Intent openGalleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(openGalleryIntent,1000);
+                startActivityForResult(openGalleryIntent, 1000);
 
             }
         });
@@ -144,113 +146,105 @@ public class ProfileSetting_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String userName = tv_UserName.getText().toString();
-                editSetting("NickName", userName);
+                editUsername("NickName", userName);
             }
         });
         ll_Name.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String Name=tv_Name.getText().toString();
-                editSetting("Name",Name);
+                String Name = tv_Name.getText().toString();
+                editName("Name", Name);
 
             }
         });
         ll_Instituion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String Institution=tv_Institution.getText().toString();
-                editSetting("Insitution",Institution);
+                String Institution = tv_Institution.getText().toString();
+                editInstitution("Insitution", Institution);
 
             }
         });
         ll_Location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String Location=tv_Location.getText().toString();
+                String Location = tv_Location.getText().toString();
 //                TestLocation fragment = new TestLocation();
 //                fragment.show(getSupportFragmentManager(), "TAG");
-                editLocation("Location",Location);
+                editLocation("Location", Location);
 
             }
         });
-        /*
-        ll_Email.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String Email=tv_Email.getText().toString();
-                editSetting("Email",Email);
-            }
-        });
-        */
+
         ll_Bio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String Bio=tv_Bio.getText().toString();
-                editSetting("Bio",Bio);
+                String Bio = tv_Bio.getText().toString();
+                editBio("Bio", Bio);
             }
         });
 
 
-
         showProfile();
-//        return view;
+
     }
 
     private void showProfile() {
-        refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+        refUserStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
         refUserStatus.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount()>0){
+                if (snapshot.getChildrenCount() > 0) {
 
-                    if (snapshot.child("Bio").exists()){
-                        String bio=snapshot.child("Bio").getValue().toString();
+                    if (snapshot.child("Bio").exists()) {
+                        String bio = snapshot.child("Bio").getValue().toString();
                         tv_Bio.setText(bio);
-                    }else{
+                    } else {
                         tv_Bio.setText("Add");
                     }
-                    if (snapshot.child("Insitution").exists()){
-                        String Institute=snapshot.child("Insitution").getValue().toString();
+                    if (snapshot.child("Insitution").exists()) {
+                        String Institute = snapshot.child("Insitution").getValue().toString();
                         tv_Institution.setText(Institute);
-                    }else{
+                    } else {
                         tv_Institution.setText("Add");
                     }
-                    if (snapshot.child("uniqueUserName").exists()){
-                        String NickName=snapshot.child("uniqueUserName").getValue().toString();
+                    if (snapshot.child("uniqueUserName").exists()) {
+                        String NickName = snapshot.child("uniqueUserName").getValue().toString();
                         tv_UserName.setText(NickName);
-                    }else{
+                    } else {
                         tv_UserName.setText("Add");
                     }
-                    if (snapshot.child("Name").exists()){
-                        String Name=snapshot.child("Name").getValue().toString();
+                    if (snapshot.child("Name").exists()) {
+                        String Name = snapshot.child("Name").getValue().toString();
                         tv_Name.setText(Name);
-                    }else{
+                    } else {
                         tv_Name.setText("Add");
                     }
-                    if (snapshot.child("Location").exists()){
-                        String Location=snapshot.child("Location").getValue().toString();
+                    if (snapshot.child("Location").exists()) {
+                        String Location = snapshot.child("Location").getValue().toString();
                         tv_Location.setText(Location);
-                    }else{
+                    } else {
                         tv_Location.setText("Add");
                     }
-                    if (snapshot.child("userEmailId").exists()){
-                        String email=snapshot.child("userEmailId").getValue().toString();
+                    if (snapshot.child("userEmailId").exists()) {
+                        String email = snapshot.child("userEmailId").getValue().toString();
                         tv_Email.setText(email);
-                    }else{
+                    } else {
                         tv_Location.setText("Email");
                     }
-                    if (snapshot.child("profilePic").exists()){
-                        String profilePic=snapshot.child("profilePic").getValue().toString();
+                    if (snapshot.child("profilePic").exists()) {
+                        String profilePic = snapshot.child("profilePic").getValue().toString();
                         if (!(ProfileSetting_Activity.this).isFinishing()) {
                             Glide.with(ProfileSetting_Activity.this).load(profilePic).into(prof_pic);
                         }
-                    }else{
+                    } else {
                         if (!(ProfileSetting_Activity.this).isFinishing()) {
                             Glide.with(ProfileSetting_Activity.this).load(R.drawable.maharaji).into(prof_pic);
                         }
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -295,11 +289,123 @@ public class ProfileSetting_Activity extends AppCompatActivity {
 
     }
 
+
+    // BottomSheet for username
+    private void editUsername(String title, String userData) {
+
+        BottomSheetDialog bottomSheetDialoglogin = new BottomSheetDialog(this);
+        bottomSheetDialoglogin.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        bottomSheetDialoglogin.setCancelable(true);
+        bottomSheetDialoglogin.setCanceledOnTouchOutside(true);
+        bottomSheetDialoglogin.setContentView(R.layout.bottomsheet_username);
+        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_cancel);
+        TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.editTitle);
+        EditText et_NewDetails = bottomSheetDialoglogin.findViewById(R.id.et_NewDetails);
+        Button btn_Submit = bottomSheetDialoglogin.findViewById(R.id.btn_submit);
+
+        et_NewDetails.setHint(userData);
+
+        btn_Submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (title.equals("NickName")) {
+                    String username = et_NewDetails.getText().toString().trim();
+                    Query uniqueUserName = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").orderByChild("uniqueUserName").equalTo(username);
+                    uniqueUserName.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.getChildrenCount() > 0) {
+                                et_NewDetails.setError("Please choose a different userName");
+                            } else {
+                                refUserStatus.child("uniqueUserName").setValue(username);
+                                bottomSheetDialoglogin.dismiss();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                }
+
+            }
+        });
+        btn_Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialoglogin.dismiss();
+            }
+        });
+
+        bottomSheetDialoglogin.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        bottomSheetDialoglogin.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        bottomSheetDialoglogin.getWindow().setGravity(Gravity.BOTTOM);
+        bottomSheetDialoglogin.show();
+
+        moveTaskToBack(false);
+
+    }
+
+    // BottomSheet for name
+    private void editName(String title, String userData) {
+
+        BottomSheetDialog bottomSheetDialoglogin = new BottomSheetDialog(this);
+        bottomSheetDialoglogin.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        bottomSheetDialoglogin.setCancelable(true);
+        bottomSheetDialoglogin.setCanceledOnTouchOutside(true);
+        bottomSheetDialoglogin.setContentView(R.layout.bottomsheet_name);
+        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_cancel);
+        TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.editTitle);
+        EditText et_NewDetails = bottomSheetDialoglogin.findViewById(R.id.et_NewDetails);
+        Button btn_Submit = bottomSheetDialoglogin.findViewById(R.id.btn_submit);
+
+        et_NewDetails.setHint(userData);
+
+        btn_Submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (title.equals("Name")) {
+                    String name = et_NewDetails.getText().toString().trim();
+                    refUserStatus.child("Name").setValue(name);
+                    bottomSheetDialoglogin.dismiss();
+                } else {
+                    Toast.makeText(ProfileSetting_Activity.this, "Something went wrong !", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        btn_Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialoglogin.dismiss();
+            }
+        });
+
+        bottomSheetDialoglogin.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        bottomSheetDialoglogin.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        bottomSheetDialoglogin.getWindow().setGravity(Gravity.BOTTOM);
+        bottomSheetDialoglogin.show();
+
+        moveTaskToBack(false);
+
+    }
+
+    // BottomSheet for location
     private void editLocation(String title, String userData) {
 
-        BottomSheetDialog bottomSheetDialoglogin = new BottomSheetDialog(ProfileSetting_Activity.this);
-        bottomSheetDialoglogin.setCancelable(false);
-        bottomSheetDialoglogin.setContentView(R.layout.activity_test_location);
+        BottomSheetDialog bottomSheetDialoglogin = new BottomSheetDialog(this);
+        bottomSheetDialoglogin.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        bottomSheetDialoglogin.setCancelable(true);
+        bottomSheetDialoglogin.setCanceledOnTouchOutside(true);
+        bottomSheetDialoglogin.setContentView(R.layout.bottomsheet_location);
+        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
         final String[] pp = {"Bhandup", "Mumbai", "Visakhapatnam", "Coimbatore",
@@ -404,16 +510,6 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         et_NewDetails.setAdapter(adapter);
 
 
-//        tv_subTitle.setText("Enter new " + title);
-//        tv_SettingTitle.setText("Please update " + userData);
-
-        btn_Cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetDialoglogin.dismiss();
-            }
-        });
-
         btn_Submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -431,89 +527,44 @@ public class ProfileSetting_Activity extends AppCompatActivity {
             }
         });
 
-        bottomSheetDialoglogin.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
         bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        bottomSheetDialoglogin.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        bottomSheetDialoglogin.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        bottomSheetDialoglogin.getWindow().setGravity(Gravity.BOTTOM);
         bottomSheetDialoglogin.show();
+
+        moveTaskToBack(false);
 
     }
 
-
-    private void editSetting(String title, String userData) {
+    // BottomSheet for institution
+    private void editInstitution(String title, String userData) {
 
         BottomSheetDialog bottomSheetDialoglogin = new BottomSheetDialog(this);
-        bottomSheetDialoglogin.setCancelable(false);
-        bottomSheetDialoglogin.setContentView(R.layout.btmdialog_setting);
+        bottomSheetDialoglogin.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        bottomSheetDialoglogin.setCancelable(true);
+        bottomSheetDialoglogin.setCanceledOnTouchOutside(true);
+        bottomSheetDialoglogin.setContentView(R.layout.bottomsheet_institution);
+        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         Button btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_cancel);
         TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.editTitle);
-        EditText et_NewDetails=bottomSheetDialoglogin.findViewById(R.id.et_NewDetails);
-        Button btn_Submit=bottomSheetDialoglogin.findViewById(R.id.btn_submit);
+        EditText et_NewDetails = bottomSheetDialoglogin.findViewById(R.id.et_NewDetails);
+        Button btn_Submit = bottomSheetDialoglogin.findViewById(R.id.btn_submit);
 
 
-        tv_subTitle.setText("Enter new "+title);
         et_NewDetails.setHint(userData);
-        btn_Submit.setText("Update "+title);
-
-        btn_Cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetDialoglogin.dismiss();
-            }
-        });
 
         btn_Submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (title.equals("NickName")) {
-                    String username = et_NewDetails.getText().toString().trim();
-                    Query uniqueUserName = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").orderByChild("uniqueUserName").equalTo(username);
-                    uniqueUserName.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.getChildrenCount() > 0) {
-                                et_NewDetails.setError("Please choose a different userName");
-                            } else {
-                                refUserStatus.child("uniqueUserName").setValue(username);
-                                bottomSheetDialoglogin.dismiss();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-                }else if(title.equals("Name")){
-                    String name=et_NewDetails.getText().toString().trim();
-                    refUserStatus.child("Name").setValue(name);
-                    bottomSheetDialoglogin.dismiss();
-
-                }else if(title.equals("Insitution")){
-                    String institution=et_NewDetails.getText().toString().trim();
+                if (title.equals("Insitution")) {
+                    String institution = et_NewDetails.getText().toString().trim();
                     refUserStatus.child("Insitution").setValue(institution);
                     bottomSheetDialoglogin.dismiss();
 
-                }else if(title.equals("Bio")){
-                    String bio=et_NewDetails.getText().toString().trim();
-                    refUserStatus.child("Bio").setValue(bio);
-                    bottomSheetDialoglogin.dismiss();
-
-                }else if(title.equals("Phone")){
-                    String phone=et_NewDetails.getText().toString().trim();
-                    refUserStatus.child("Phone").setValue(phone);
-                    bottomSheetDialoglogin.dismiss();
-
-                }else if(title.equals("Email")){
-                    String email=et_NewDetails.getText().toString().trim();
-                    refUserStatus.child("userEmailId").setValue(email);
-                    bottomSheetDialoglogin.dismiss();
-
-                }else if (title.equals("Location")){
-                    String location=et_NewDetails.getText().toString().trim();
-                    refUserStatus.child("Location").setValue(location);
-                    bottomSheetDialoglogin.dismiss();
+                } else {
+                    Toast.makeText(ProfileSetting_Activity.this, "Something went wrong !", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -526,10 +577,61 @@ public class ProfileSetting_Activity extends AppCompatActivity {
             }
         });
 
-        bottomSheetDialoglogin.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
+        bottomSheetDialoglogin.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        bottomSheetDialoglogin.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        bottomSheetDialoglogin.getWindow().setGravity(Gravity.BOTTOM);
         bottomSheetDialoglogin.show();
+
+        moveTaskToBack(false);
+
+    }
+
+    // BottomSheet for bio
+    private void editBio(String title, String userData) {
+
+        BottomSheetDialog bottomSheetDialoglogin = new BottomSheetDialog(this);
+        bottomSheetDialoglogin.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        bottomSheetDialoglogin.setCancelable(true);
+        bottomSheetDialoglogin.setCanceledOnTouchOutside(true);
+        bottomSheetDialoglogin.setContentView(R.layout.bottomsheet_bio);
+        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_cancel);
+        TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.editTitle);
+        EditText et_NewDetails = bottomSheetDialoglogin.findViewById(R.id.et_NewDetails);
+        Button btn_Submit = bottomSheetDialoglogin.findViewById(R.id.btn_submit);
+
+        et_NewDetails.setHint(userData);
+
+        btn_Submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (title.equals("Bio")) {
+                    String bio = et_NewDetails.getText().toString().trim();
+                    refUserStatus.child("Bio").setValue(bio);
+                    bottomSheetDialoglogin.dismiss();
+
+                } else {
+                    Toast.makeText(ProfileSetting_Activity.this, "Something went wrong !", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        btn_Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bottomSheetDialoglogin.dismiss();
+            }
+        });
+
+        bottomSheetDialoglogin.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        bottomSheetDialoglogin.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        bottomSheetDialoglogin.getWindow().setGravity(Gravity.BOTTOM);
+        bottomSheetDialoglogin.show();
+
+        moveTaskToBack(false);
 
     }
 
@@ -537,8 +639,8 @@ public class ProfileSetting_Activity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @androidx.annotation.Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 1000){
-            if(resultCode == Activity.RESULT_OK){
+        if (requestCode == 1000) {
+            if (resultCode == Activity.RESULT_OK) {
                 Uri imageUri = data.getData();
 
                 uploadImageToFirebaseStorage(imageUri);
@@ -552,7 +654,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
     private void uploadImageToFirebaseStorage(Uri imageUri) {
         // upload Image To FirebaseStorage
 
-        final StorageReference fileRef = storageReference.child("users profile pic/"+userID+"/profile.jpg");
+        final StorageReference fileRef = storageReference.child("users profile pic/" + userID + "/profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -560,7 +662,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         if (!(ProfileSetting_Activity.this).isFinishing()) {
-                            Log.d("PROFPIC", "onSuccess: "+uri);
+                            Log.d("PROFPIC", "onSuccess: " + uri);
                             DatabaseReference refSaveProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
                             refSaveProfPic.child("profilePic").setValue(uri.toString());
                             Glide.with(ProfileSetting_Activity.this).load(uri).into(prof_pic);
@@ -576,14 +678,12 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         });
 
 
-
-
     }
 
 
-    private String getFileExtention(Uri mUri){
-        ContentResolver cr=getContentResolver();
-        MimeTypeMap mine=MimeTypeMap.getSingleton();
+    private String getFileExtention(Uri mUri) {
+        ContentResolver cr = getContentResolver();
+        MimeTypeMap mine = MimeTypeMap.getSingleton();
         return mine.getExtensionFromMimeType(cr.getType(mUri));
     }
 

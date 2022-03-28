@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGroup.MyViewHolder> {
@@ -34,20 +35,9 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
-//        void onSaveQues(int position, String mTitle, String mDesc);
-        //void fillbyOfficialLink(int position, String offWeb);
-
-        //void dislikeAns(int position, String tag);
-//        void shareQues(int position, String question);
-
-
-//        void listitem(int position, String question, String pushQues, String pushAns,String category);
 
         void createGroupDialog(String adminGroupID, String groupName, String groupPushId);
-        //void likeAns(int position, String tag);
-//        void saveAns(int position, String tag);
-//        void likeAns(View v, int position, Boolean clicked);
-//        void onWebLinkClick(int position);
+
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -66,6 +56,10 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
         return new MyViewHolder(rootview);
     }
 
+    public void filterList(List<Class_Group> filterList) {
+        mDatalistNew = filterList;
+        notifyDataSetChanged();
+    }
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
@@ -75,16 +69,13 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
         String userComment = class_GroupDetails.getGroupCategory();
         String groupUserName = class_GroupDetails.getUserName();
         String pushid = class_GroupDetails.getPosition();
-//        String userid=class_GroupDetails.getUserId();
+
 
         String databaseUserId = class_GroupDetails.getUserId();
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         assert mUser != null;
         String currUserId = mUser.getUid();
-//
-//            if(!currUserId.equals(databaseUserId)) {
-//
-//                holder.ll_list_group_search.setVisibility(View.VISIBLE);
+
         if (userComment.isEmpty()) {
             holder.tv_groupname.setVisibility(View.GONE);
         } else {
@@ -97,7 +88,7 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
             holder.tv_groupownername.setText(groupUserName);
         }
 
-//        holder.getGroupStatus(groupName, position, pushid);
+
 
         DatabaseReference referenceALLGroup = FirebaseDatabase.getInstance().getReference().
                 child("Groups").child("All_Universal_Group").child(pushid).child("User_Subscribed_Groups");
@@ -120,43 +111,13 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
                     }
                 }
 
-////                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
-//                long noofGroupinCategory=snapshot.getChildrenCount()+1;
-////                            String position=getString((int) noofQuesinCategory);
-//                String push="GroupNo_"+noofGroupinCategory+"_"+GroupName;
-//                Calendar calenderCC= Calendar.getInstance();
-//                SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
-//                String dateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
-//
-////                            refuserPersonalGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID).child(push);
-////                            refuserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID).child(push);
-//                refuserAllGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_All_Group").child(userID).child(push);
-//                refSubsGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups");
-////                            refAllPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Public_Group").child(push);
-//
-//                if (GroupCategory.equals("Private")) {
-//                    userAddGroup = new Class_Group(dateTimeCC,userName, userID, userEmailID,push, GroupName,GroupCategory,noofGroupinCategory);
-////                                refuserPersonalGroup.setValue(userAddGroup);
-//                    refuserAllGroup.setValue(userAddGroup);
-//                } else if (GroupCategory.equals("Public")) {
-//                    userAddGroup = new Class_Group(dateTimeCC,userName, userID, userEmailID,push, GroupName,GroupCategory,noofGroupinCategory);
-////                                refuserPublicGroup.setValue(userAddGroup);
-////                                refAllPublicGroup.setValue(userAddGroup);
-//                    refuserAllGroup.setValue(userAddGroup);
-//                }
-//                refSubsGroup.child(userID).setValue(true);
-
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-//            }
-//            else{
-//                holder.ll_list_group_search.setVisibility(View.GONE);
-//            }
+
     }
 
     @Override
@@ -257,42 +218,11 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
 
                         if (position != RecyclerView.NO_POSITION) {
                             mListener.createGroupDialog(adminGroupID, groupName, groupPushId);
-                            //mListener.dislikeAns();
                         }
                     }
                 }
             });
         }
-
-//        private void getGroupStatus(String Answer, int position,String pushid){
-//            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//            final String userID = currentUser.getUid();
-//            final String userName = currentUser.getDisplayName();
-//            final String userEmail = currentUser.getEmail();
-//
-//            DatabaseReference refAcceptingReq = FirebaseDatabase.getInstance().getReference()
-//                    .child( "Notification" ).child("Submit_Req").child(userID);
-//
-//            refAcceptingReq.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(@NonNull DataSnapshot snapshot) {
-////                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" AnswersTab");
-//                    if(snapshot.hasChildren()){
-//                        String groupStatus=snapshot.child("grpJoiningStatus").getValue().toString();
-//
-//                        if(groupStatus.equals("req_sent")){
-//                            tv_GroupStatus.setText("Request Sent");
-//                        }else{
-//                            tv_GroupStatus.setText("Join");
-//                        }
-//
-//                    }
-//                }
-//                @Override
-//                public void onCancelled(@NonNull DatabaseError error) {
-//                }
-//            });
-//        }
 
     }
 

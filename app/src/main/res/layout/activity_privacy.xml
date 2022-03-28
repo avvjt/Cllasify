@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/page_background_color"
+    android:orientation="vertical"
+    tools:context=".Privacy">
+
+    <LinearLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/page_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <ImageButton
+            android:id="@+id/btn_Back"
+            style="@style/SelectableItemBackgroundBorderless"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_arrow_left_24"
+            app:tint="@color/iconSecondaryColor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/privacy_policy"
+            android:textColor="@color/text_color"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/action_bar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="10dp"
+                android:background="@color/page_color"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:text="Cllasify Data Policy"
+                    android:textColor="@color/text_color"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/inter_semibold_italic"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:text="Cllasify built the Cllasify app as a Free app. This SERVICE is provided by Cllasify at no cost and is intended for use as is."
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:text="This page is used to inform visitors regarding our policies with the collection, use, and disclosure of Personal Information if anyone decided to use our Service."
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:text="If you choose to use our Service, then you agree to the collection and use of information in relation to this policy. The Personal Information that we collect is used for providing and improving the Service. We will not use or share your information with anyone except as described in this Privacy Policy."
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:text="The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which are accessible at Cllasify unless otherwise defined in this Privacy Policy."
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="20dp"
+                android:paddingTop="10dp"
+                android:background="@color/page_color">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:text="Information Collection and Use"
+                    android:textColor="@color/text_color"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/inter_semibold_italic"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:textColor="@color/text_background_color"
+                    android:text="For a better experience, while using our Service, we may require you to provide us with certain personally identifiable information, including but not limited to Email, Name, Location, Institution name. The information that we request will be retained by us and used as described in this privacy policy."
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:text="The app does use third-party services that may collect information used to identify you."
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:text="Link to the privacy policy of third-party service providers used by the app"
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:text="The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which are accessible at Cllasify unless otherwise defined in this Privacy Policy."
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:layout_marginTop="10dp"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Google Play Services"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/inter_medium_italic"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="AdMob"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/inter_medium_italic"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Google Analytics for Firebase"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/inter_medium_italic"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Firebase Crashlytics"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/inter_medium_italic"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="20dp"
+                android:paddingTop="10dp"
+                android:background="@color/page_color">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:text="Log Data"
+                    android:textColor="@color/text_color"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/inter_semibold_italic"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:text="We want to inform you that whenever you use our Service, in a case of an error in the app we collect data and information (through third-party products) on your phone called Log Data. This Log Data may include information such as your device Internet Protocol (“IP”) address, device name, operating system version, the configuration of the app when utilizing our Service, the time and date of your use of the Service, and other statistics."
+                    android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="20dp"
+                android:background="@color/page_color">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:text="Cookies"
+                    android:textColor="@color/text_color"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/inter_semibold_italic"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:text="Cookies are files with a small amount of data that are commonly used as anonymous unique identifiers. These are sent to your browser from the websites that you visit and are stored on your device's internal memory."
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:text="This Service does not use these “cookies” explicitly. However, the app may use third-party code and libraries that use “cookies” to collect information and improve their services. You have the option to either accept or refuse these cookies and know when a cookie is being sent to your device. If you choose to refuse our cookies, you may not be able to use some portions of this Service."
+                    android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="10dp"
+                android:background="@color/page_color"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:text="Service Providers"
+                    android:textColor="@color/text_color"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/inter_semibold_italic"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:text="We may employ third-party companies and individuals due to the following reasons:"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="To facilitate our Service"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/inter_medium_italic"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="To provide the Service on our behalf"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/inter_medium_italic"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="To perform Service-related services"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/inter_medium_italic"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="To assist us in analyzing how our Service is used"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/inter_medium_italic"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:text="We want to inform users of this Service that these third parties have access to their Personal Information. The reason is to perform the tasks assigned to them on our behalf. However, they are obligated not to disclose or use the information for any other purpose."
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="10dp"
+                android:background="@color/page_color"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:text="Security"
+                    android:textColor="@color/text_color"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/inter_semibold_italic"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:text="We value your trust in providing us your Personal Information, thus we are striving to use commercially acceptable means of protecting it. But remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and we cannot guarantee its absolute security."
+                    android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="10dp"
+                android:background="@color/page_color"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:text="Links to Other Sites"
+                    android:textColor="@color/text_color"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/inter_semibold_italic"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:text="This Service may contain links to other sites. If you click on a third-party link, you will be directed to that site. Note that these external sites are not operated by us. Therefore, we strongly advise you to review the Privacy Policy of these websites. We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services."
+                    android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="10dp"
+                android:background="@color/page_color"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:text="Children’s Privacy"
+                    android:textColor="@color/text_color"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/inter_semibold_italic"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:text="These Services do not address anyone under the age of 13. We do not knowingly collect personally identifiable information from children under 13 years of age. In the case we discover that a child under 13 has provided us with personal information, we immediately delete this from our servers. If you are a parent or guardian and you are aware that your child has provided us with personal information, please contact us so that we will be able to do the necessary actions."
+                    android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="10dp"
+                android:background="@color/page_color"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:text="Changes to This Privacy Policy"
+                    android:textColor="@color/text_color"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/inter_semibold_italic"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:text="We may update our Privacy Policy from time to time. Thus, you are advised to review this page periodically for any changes. We will notify you of any changes by posting the new Privacy Policy on this page."
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="This policy is effective as of 2022-03-01"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/inter_medium_italic"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="10dp"
+                android:background="@color/page_color"
+                android:paddingBottom="20dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textStart"
+                    android:text="Contact Us"
+                    android:textColor="@color/text_color"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/inter_semibold_italic"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:textStyle="italic"
+                    android:textColor="@color/text_background_color"
+                    android:textSize="14sp"
+                    android:text="If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at"
+                    android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Cllasify@gmail.com"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/inter_medium_italic"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+</LinearLayout>

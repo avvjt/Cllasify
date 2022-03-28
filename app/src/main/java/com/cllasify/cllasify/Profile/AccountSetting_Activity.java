@@ -30,8 +30,10 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.Privacy;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Register.getStarted;
+import com.cllasify.cllasify.Terms;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -54,7 +56,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
     Button btn_Submit, btn_Cancel;
     ImageView btn_Back;
-    TextView tv_SignOut, tv_setTheme, tv_User_Name, tv_rateUs;
+    TextView tv_SignOut, tv_setTheme, tv_User_Name, tv_privacy, tv_terms, tv_rateUs;
     SwitchCompat allNotifySwitch;
 //    Spinner spinnerUserStatus;
 //    String[] userStatus = {
@@ -111,6 +113,8 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
         ll_showFeedback=findViewById(R.id.ll_showFeedback);
         ll_profileSetting = findViewById(R.id.ll_profileSetting);
+        tv_privacy = findViewById(R.id.tv_privacyPolicy);
+        tv_terms = findViewById(R.id.tv_termsServices);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         userID = currentUser.getUid();
@@ -210,6 +214,26 @@ public class AccountSetting_Activity extends AppCompatActivity {
             }
         });
 
+        tv_privacy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(AccountSetting_Activity.this, Privacy.class);
+                startActivity(i);
+                (AccountSetting_Activity.this).overridePendingTransition(0, 0);
+
+            }
+        });
+
+        tv_terms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(AccountSetting_Activity.this, Terms.class);
+                startActivity(i);
+                (AccountSetting_Activity.this).overridePendingTransition(0, 0);
+
+            }
+        });
+
 
         tv_notiConfig.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,15 +259,6 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
                 editSetting();
 
-/*
-                    if (!showFeedback){
-                        ll_showFeedback.setVisibility(View.VISIBLE);
-                        showFeedback=true;
-                    }else{
-                        ll_showFeedback.setVisibility(View.GONE);
-                        showFeedback=false;
-                    }
-*/
             }
         });
 
@@ -355,8 +370,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         RadioButton btnDefault, btnDark, btnLight;
-//        DatabaseReference firebaseDatabaseDARKLIGHT;
-//        firebaseDatabaseDARKLIGHT = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID).child("darkORlight");
+
         rg_Theme = dialog.findViewById(R.id.rg_Theme);
         btnDefault = dialog.findViewById(R.id.btnDefault);
         btnDark = dialog.findViewById(R.id.btnDark);
@@ -438,8 +452,11 @@ public class AccountSetting_Activity extends AppCompatActivity {
     private void editSetting() {
 
         BottomSheetDialog bottomSheetDialoglogin = new BottomSheetDialog(this);
-        bottomSheetDialoglogin.setCancelable(false);
-        bottomSheetDialoglogin.setContentView(R.layout.btmdialog_setting);
+        bottomSheetDialoglogin.setCancelable(true);
+        bottomSheetDialoglogin.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        bottomSheetDialoglogin.setCanceledOnTouchOutside(true);
+        bottomSheetDialoglogin.setContentView(R.layout.bottomsheet_feedback);
+        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         Button btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_cancel);
         TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.editTitle);
@@ -447,21 +464,10 @@ public class AccountSetting_Activity extends AppCompatActivity {
         Button btn_Submit = bottomSheetDialoglogin.findViewById(R.id.btn_submit);
 
 
-        tv_subTitle.setText("Please enter the details of the feedback");
-        et_NewDetails.setHint("Share Feedback");
-
-        btn_Cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                bottomSheetDialoglogin.dismiss();
-            }
-        });
-
         btn_Submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String feedback = et_NewDetails.getText().toString().trim();
-//                String feedback = et_Feedback.getText().toString();
                 String to = "cllasify@gmail.com";
                 String subject = "A feedback for Cllasify App";
                 String gmailPackage = "com.google.android.gm";
@@ -474,7 +480,6 @@ public class AccountSetting_Activity extends AppCompatActivity {
                 email.setType("message/rfc822");
                 startActivity(Intent.createChooser(email, "Choose an Email client :"));
 
-
                 bottomSheetDialoglogin.dismiss();
             }
         });
@@ -486,7 +491,12 @@ public class AccountSetting_Activity extends AppCompatActivity {
         });
 
         bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        bottomSheetDialoglogin.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        bottomSheetDialoglogin.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        bottomSheetDialoglogin.getWindow().setGravity(Gravity.BOTTOM);
         bottomSheetDialoglogin.show();
+
+        moveTaskToBack(false);
 
     }
 

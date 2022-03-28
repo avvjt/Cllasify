@@ -4,86 +4,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/text_background_color"
     tools:context=".Home.Notification_Activity">
+
     <LinearLayout
+        android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:id="@+id/action_bar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/page_color"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:elevation="4dp">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginStart="20dp"
+            android:fontFamily="@font/inter_semibold"
             android:text="@string/notification"
-            android:textColor="@color/black"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_gravity="center"/>
-
+            android:textColor="@color/text_color"
+            android:textSize="20sp" />
     </LinearLayout>
 
-    <!--    <com.google.android.material.appbar.AppBarLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:background="@color/white"-->
-    <!--        android:layout_below="@id/action_bar"-->
-    <!--        android:id="@+id/appbar_layout">-->
-    <!--        <com.google.android.material.tabs.TabLayout-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:id="@+id/tabl_chatdis">-->
-    <!--            <com.google.android.material.tabs.TabItem-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:text="Chat"/>-->
-    <!--            <com.google.android.material.tabs.TabItem-->
-    <!--                android:layout_width="wrap_content"-->
-    <!--                android:layout_height="wrap_content"-->
-    <!--                android:text="Discussion"/>-->
-    <!--        </com.google.android.material.tabs.TabLayout>-->
-    <!--    </com.google.android.material.appbar.AppBarLayout>-->
-
-    <!--    <androidx.viewpager.widget.ViewPager-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:layout_below="@id/appbar_layout"-->
-    <!--        android:id="@+id/view_Pager"/>-->
-
-
-    <androidx.appcompat.widget.SearchView
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:queryHint="Search Groups"
-        android:visibility="gone"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_nav"
         android:layout_below="@id/action_bar"
-        android:id="@+id/sv_notifySearchView"/>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/page_color">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_below="@id/sv_notifySearchView"
-        android:id="@+id/rv_AllNotifications"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_AllNotifications"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"/>
+
+    </ScrollView>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:id="@+id/bottom_nav"
-        app:menu="@menu/bottom_nav_menu"
-        android:background="@color/white"
+        android:background="@color/page_color"
         app:itemIconTint="@color/bottom_navigation_color"
-        app:itemTextColor="@color/bottom_navigation_color"
         app:itemTextAppearanceActive="@style/BodyText.NavigationBar"
         app:itemTextAppearanceInactive="@style/BodyText.NavigationBar"
-        app:labelVisibilityMode="selected">
+        app:itemTextColor="@color/bottom_navigation_color"
+        app:labelVisibilityMode="selected"
+        app:layout_constraintBaseline_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_nav_menu">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
