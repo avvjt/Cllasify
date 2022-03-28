@@ -529,54 +529,43 @@ public class Discover_Activity extends AppCompatActivity {
 //        } else if(GroupName.equals("All_Universal_Group")){
         showAllGroupAdaptor.setOnItemClickListener(new Adaptor_SearchGroup.OnItemClickListener() {
             @Override
-            public void createGroupDialog(String adminGroupID, String groupName,String groupPushId) {
-                showBtmDialogClass(adminGroupID,groupName,groupPushId);
+            public void createGroupDialog(String adminGroupID, String groupName, String groupPushId) {
+                showBtmDialogClass(adminGroupID, groupName, groupPushId);
             }
         });
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         assert mUser != null;
         String currUserId = mUser.getUid();
 
-        listAllGroupStatus.clear();
-        ChildEventListener childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.getChildrenCount()>0) {
-                    Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
-                    String databaseUserId=class_userDashBoard.getUserId();
-                    String groupCategory=class_userDashBoard.getGroupCategory();
-                    if (!currUserId.equals(databaseUserId) && groupCategory.equals("Public")){
 
-                        listAllGroupStatus.add(class_userDashBoard);
+        refSearchShowGroup.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                listAllGroupStatus.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (dataSnapshot.getChildrenCount() > 0) {
+                        Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
+                        String databaseUserId = class_userDashBoard.getUserId();
+                        String groupCategory = class_userDashBoard.getGroupCategory();
+                        if (!currUserId.equals(databaseUserId) && groupCategory.equals("Public")) {
+
+                            listAllGroupStatus.add(class_userDashBoard);
+                            notifyPB.dismiss();
+                            showAllGroupAdaptor.notifyDataSetChanged();
+                        }
+
+                    } else {
+                        Toast.makeText(Discover_Activity.this, "No group yet created", Toast.LENGTH_SHORT).show();
                         notifyPB.dismiss();
-                        showAllGroupAdaptor.notifyDataSetChanged();
                     }
-
-                } else {
-                    Toast.makeText(Discover_Activity.this, "No group yet created", Toast.LENGTH_SHORT).show();
-                    notifyPB.dismiss();
                 }
-
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
+            public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
             }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        };
-        //refAdmin.addChildEventListener(childEventListener);
-        refSearchShowGroup.addChildEventListener(childEventListener);
+        });
     }
     private void sentGroupJoinInvitation(String adminGroupID,String adminUserName, String groupName, String groupPushId,String subGroupName) {
 

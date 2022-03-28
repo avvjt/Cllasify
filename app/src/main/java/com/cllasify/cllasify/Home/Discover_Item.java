@@ -370,12 +370,31 @@ public class Discover_Item extends AppCompatActivity {
                                             grpJoiningReqs.child(pushLong).setValue(userAddComment);
                                             //                                            refjoiningReq.child(pushLong).setValue(userAddComment);
                                             refacceptingReq.child(pushLong).setValue(userAddComment);
-                                        }else {
+                                        }
+
+
+                                        showGrpClassList.notifyDataSetChanged();
+
+
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                    }
+                                });
+
+
+                                refjoiningReq.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        long noofQuesinCategory = snapshot.getChildrenCount() + 1;
+                                        String pushLong = "Joining B Reqno_" + noofQuesinCategory;
+
+                                        if (JoinStatus.equals("TeacherJoin")) {
                                             Class_Group userAddComment = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq_Teacher", classPushId);
                                             refjoiningReq.child(pushLong).setValue(userAddComment);
                                             refacceptingReq.child(pushLong).setValue(userAddComment);
                                         }
-
 
 
                                         showGrpClassList.notifyDataSetChanged();

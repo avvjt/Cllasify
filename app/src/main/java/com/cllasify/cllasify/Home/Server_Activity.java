@@ -1561,6 +1561,8 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                             refuserAllGroup.setValue(userAddGroupClass);
                             addedOrJoinedGroup.setValue("Added");
 
+                            openDialog(push);
+
   /*
 
                             refClassStudentList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(push);
@@ -1729,50 +1731,10 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                     @Override
                     public void onClick(View view) {
 //                addSubChild0(position, groupName, groupPushId, groupUserID, Category, "newClass");
-                        openDialog();
+                        openDialog(groupPushId);
 
                     }
 
-                    private void openDialog() {
-
-                        View customAlertDialog = LayoutInflater.from(Server_Activity.this).inflate(R.layout.dialog_add_class_group, null, false);
-
-
-                        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(Server_Activity.this);
-                        EditText et_ClassName = customAlertDialog.findViewById(R.id.et_ClassName);
-                        Button btn_nextAddTopic = customAlertDialog.findViewById(R.id.btn_nextAddTopic);
-
-
-                        dialogBuilder.setView(customAlertDialog);
-                        AlertDialog dialog = dialogBuilder.show();
-
-                        btn_nextAddTopic.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                String classGroupName = et_ClassName.getText().toString().trim();
-                                if (classGroupName.isEmpty()) {
-                                    Toast.makeText(Server_Activity.this, "Enter All Details", Toast.LENGTH_SHORT).show();
-                                    et_ClassName.setError("Enter Class Name");
-                                } else {
-                                    dialog.cancel();
-                                    saveClassGroup(groupPushId, classGroupName);
-                                }
-                            }
-                        });
-
-
-                        //dialogBuilder.setCancelable(false);
-
-                        firebaseAuth = FirebaseAuth.getInstance();
-                        currentUser = firebaseAuth.getCurrentUser();
-                        assert currentUser != null;
-                        userID = currentUser.getUid();
-                        userEmailID = currentUser.getEmail();
-                        userPhoto = currentUser.getPhotoUrl();
-                        userName = currentUser.getDisplayName();
-
-
-                    }
 
 
                 });
@@ -1792,17 +1754,39 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
         friendSection.setVisibility(View.GONE);
 
+
+
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
+
+                Log.d("CHILDTST", "onChildAdded: "+dataSnapshot.getValue());
+
                 Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
 
-                Log.i("SBO", dataSnapshot.getRef().toString());
-                list_UserPublicGroupTitle.add(userQuestions);
-                showUserPublicGroupAdaptor.notifyDataSetChanged();
+                String testGroupName = dataSnapshot.child("position").getValue().toString();
 
+                DatabaseReference databaseReferenceCHKADMIN = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(testGroupName).child("classAdminList");
 
+                databaseReferenceCHKADMIN.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                            Log.i("SBO", dataSnapshot1.child("userId").getValue().toString());
+                            String adminUserId = dataSnapshot1.child("userId").getValue().toString();
+                            if(dataSnapshot.exists() && adminUserId.equals(currentUser.getUid())){
+                                list_UserPublicGroupTitle.add(userQuestions);
+                                showUserPublicGroupAdaptor.notifyDataSetChanged();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
 
             @Override
@@ -1825,21 +1809,48 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         list_UserPublicGroupTitle.clear();
         refShowUserPublicGroup.orderByChild("groupno").addChildEventListener(childEventListener);
 
+//    }
 
-        refShowUserPublicGroup.addValueEventListener(new ValueEventListener() {
+    }
+
+    private void openDialog(String groupPushId) {
+
+        View customAlertDialog = LayoutInflater.from(Server_Activity.this).inflate(R.layout.dialog_add_class_group, null, false);
+
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(Server_Activity.this);
+        EditText et_ClassName = customAlertDialog.findViewById(R.id.et_ClassName);
+        Button btn_nextAddTopic = customAlertDialog.findViewById(R.id.btn_nextAddTopic);
+
+
+        dialogBuilder.setView(customAlertDialog);
+        AlertDialog dialog = dialogBuilder.show();
+
+        btn_nextAddTopic.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount() > 0) {
-                    tv_UserPublicTitle.setText("Public Server");
+            public void onClick(View view) {
+                String classGroupName = et_ClassName.getText().toString().trim();
+                if (classGroupName.isEmpty()) {
+                    Toast.makeText(Server_Activity.this, "Enter All Details", Toast.LENGTH_SHORT).show();
+                    et_ClassName.setError("Enter Class Name");
+                } else {
+                    dialog.cancel();
+                    saveClassGroup(groupPushId, classGroupName);
                 }
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
         });
-//
-//    }
+
+
+        //dialogBuilder.setCancelable(false);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
+        assert currentUser != null;
+        userID = currentUser.getUid();
+        userEmailID = currentUser.getEmail();
+        userPhoto = currentUser.getPhotoUrl();
+        userName = currentUser.getDisplayName();
+
 
     }
 
