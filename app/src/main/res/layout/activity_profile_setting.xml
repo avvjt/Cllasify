@@ -139,8 +139,9 @@
                     <TextView
                         android:id="@+id/userName"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center"
+                        android:paddingTop="10dp"
                         android:fontFamily="@font/inter_regular"
                         android:text="@string/username"
                         android:textColor="@color/text_color"
@@ -153,17 +154,19 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/userName"
-                        android:drawableEnd="@drawable/abc_ic_right"
-                        android:drawableTint="@color/iconSecondaryColor"
                         android:fontFamily="@font/inter_medium"
                         android:text="Add"
+                        android:drawablePadding="10dp"
+                        android:paddingTop="10dp"
                         android:textAlignment="textEnd"
                         android:textColor="@color/text_background_color"
-                        android:textSize="16sp" />
+                        android:textSize="16sp"
+                        app:drawableEndCompat="@drawable/abc_ic_right"
+                        app:drawableTint="@color/iconSecondaryColor" />
 
                 </RelativeLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_Name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -179,34 +182,29 @@
                         android:layout_gravity="center"
                         android:fontFamily="@font/inter_regular"
                         android:text="@string/name"
+                        android:paddingTop="10dp"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
 
                     <TextView
                         android:id="@+id/tv_Name"
-                        android:layout_width="264dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="10dp"
                         android:fontFamily="@font/inter_medium"
-                        android:gravity="end"
-                        android:textAlignment="textEnd"
                         android:text="Add"
+                        android:drawablePadding="10dp"
+                        android:paddingTop="10dp"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/text_background_color"
                         android:textSize="16sp"
-                        android:layout_marginStart="10dp"/>
+                        app:drawableEndCompat="@drawable/abc_ic_right"
+                        app:drawableTint="@color/iconSecondaryColor" />
 
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/abc_ic_right"
-                        app:tint="@color/iconSecondaryColor"
-                        android:layout_marginStart="30dp"
-                        android:paddingTop="10dp"
-                        android:background="@color/transparent"/>
+                </RelativeLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_Location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -222,34 +220,29 @@
                         android:layout_gravity="center"
                         android:fontFamily="@font/inter_regular"
                         android:text="@string/location"
+                        android:paddingTop="10dp"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
 
                     <TextView
                         android:id="@+id/tv_Location"
-                        android:layout_width="242dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="10dp"
                         android:fontFamily="@font/inter_medium"
-                        android:gravity="end"
-                        android:textAlignment="textEnd"
                         android:text="Add"
+                        android:drawablePadding="10dp"
+                        android:paddingTop="10dp"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/text_background_color"
                         android:textSize="16sp"
-                        android:layout_marginStart="10dp"/>
+                        app:drawableEndCompat="@drawable/abc_ic_right"
+                        app:drawableTint="@color/iconSecondaryColor" />
 
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/abc_ic_right"
-                        app:tint="@color/iconSecondaryColor"
-                        android:layout_marginStart="30dp"
-                        android:paddingTop="10dp"
-                        android:background="@color/transparent"/>
+                </RelativeLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_Institution"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -265,34 +258,29 @@
                         android:layout_gravity="center"
                         android:fontFamily="@font/inter_regular"
                         android:text="Institution"
+                        android:paddingTop="10dp"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
 
                     <TextView
                         android:id="@+id/tv_Institution"
-                        android:layout_width="214dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="10dp"
                         android:fontFamily="@font/inter_medium"
-                        android:gravity="end"
-                        android:textAlignment="textEnd"
                         android:text="Add"
+                        android:drawablePadding="10dp"
+                        android:paddingTop="10dp"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/text_background_color"
                         android:textSize="16sp"
-                        android:layout_marginStart="10dp"/>
+                        app:drawableEndCompat="@drawable/abc_ic_right"
+                        app:drawableTint="@color/iconSecondaryColor" />
 
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/abc_ic_right"
-                        app:tint="@color/iconSecondaryColor"
-                        android:layout_marginStart="30dp"
-                        android:paddingTop="10dp"
-                        android:background="@color/transparent"/>
+                </RelativeLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_Bio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -308,34 +296,29 @@
                         android:layout_gravity="center"
                         android:fontFamily="@font/inter_regular"
                         android:text="Bio"
+                        android:paddingTop="10dp"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
 
                     <TextView
                         android:id="@+id/tv_Bio"
-                        android:layout_width="286dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="10dp"
                         android:fontFamily="@font/inter_medium"
-                        android:gravity="end"
-                        android:textAlignment="textEnd"
                         android:text="Add"
+                        android:drawablePadding="10dp"
+                        android:paddingTop="10dp"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/text_background_color"
                         android:textSize="16sp"
-                        android:layout_marginStart="10dp"/>
+                        app:drawableEndCompat="@drawable/abc_ic_right"
+                        app:drawableTint="@color/iconSecondaryColor" />
 
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/abc_ic_right"
-                        app:tint="@color/iconSecondaryColor"
-                        android:layout_marginStart="30dp"
-                        android:paddingTop="10dp"
-                        android:background="@color/transparent"/>
+                </RelativeLayout>
 
-                </LinearLayout>
-
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_Email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -354,24 +337,27 @@
                         android:fontFamily="@font/inter_regular"
                         android:text="@string/email"
                         android:textColor="@color/text_color"
-                        android:textSize="17sp" />
+                        android:textSize="17sp"
+                        android:paddingTop="10dp"/>
 
                     <TextView
                         android:id="@+id/tv_Email"
-                        android:layout_width="268dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/inter_medium"
                         android:gravity="end"
                         android:textAlignment="textEnd"
+                        android:paddingTop="10dp"
                         android:text="Add"
+                        android:paddingEnd="46dp"
                         android:textColor="@color/text_background_color"
                         android:textSize="16sp"
                         android:layout_marginStart="10dp"/>
 
 
 
-                </LinearLayout>
+                </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

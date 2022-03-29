@@ -179,8 +179,8 @@ public class Discover_Activity extends AppCompatActivity {
 
                 @Override
                 public boolean onQueryTextChange(String newText) {
-//                    searchGroup(newTesxt);
-                    return false;
+                    filterList(newText);
+                    return true;
                 }
             });
         }
@@ -217,6 +217,18 @@ public class Discover_Activity extends AppCompatActivity {
 //        showAllGroupSearch("All_Universal_Group");
 
     }
+
+    private void filterList(String text) {
+            List<Class_Group> filterList = new ArrayList<>();
+            for (Class_Group items : listAllGroupStatus) {
+                if (items.getGroupName().toLowerCase().contains(text.toLowerCase())) {
+                    filterList.add(items);
+                }
+            }
+            showAllGroupAdaptor.filtterList(filterList);
+
+        }
+
 
     private void showEAllGroupUser(String registration) {
 

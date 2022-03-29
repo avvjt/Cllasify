@@ -54,8 +54,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileSetting_Activity extends AppCompatActivity {
 
 
-    LinearLayout  ll_Name, ll_Instituion, ll_Email, ll_Location, ll_Bio;
-    RelativeLayout ll_UserName;
+    RelativeLayout  ll_Name, ll_Instituion, ll_Email, ll_Location, ll_Bio, ll_UserName;
     DatabaseReference refUserStatus;
     FirebaseUser currentUser;
     String userID, userName, userEmail;

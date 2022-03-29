@@ -53,6 +53,12 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
     }
 
 
+    public void filtterList(List<Class_Group> filterList) {
+        mDatalistNew = filterList;
+        notifyDataSetChanged();
+    }
+
+
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         Class_Group class_GroupDetails = mDatalistNew.get(position);
