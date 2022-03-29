@@ -102,10 +102,12 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
         if (NotifyCategory.equals("Friend_Request")) {
 
             if (inviteStatus.equals("Approve")) {
+                holder.username.setText(userName);
                 holder.tv_Groupinvite.setText("User " + userName + " request for Add you as a friend has been approved");
                 holder.tv_ReqDate.setVisibility(View.GONE);
                 holder.ll_groupdetails.setVisibility(View.GONE);
             } else if (inviteStatus.equals("Reject")) {
+                holder.username.setText(userName);
                 holder.ll_groupdetails.setVisibility(View.GONE);
                 holder.tv_ReqDate.setVisibility(View.GONE);
                 holder.tv_Groupinvite.setText("User " + userName + " request for Add you as a friend has been rejected");
@@ -115,6 +117,7 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                 if (GroupName.isEmpty()) {
                     holder.tv_Groupinvite.setVisibility(View.GONE);
                 } else {
+                    holder.username.setText(userName);
                     holder.tv_Groupinvite.setText("User " + userName + " wants to add you as a Friend");
                 }
                 if (GroupName.isEmpty()) {
@@ -139,20 +142,23 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                         if (NotifyCategory.equals("Group_JoiningReq_Teacher")) {
 
                             if (inviteStatus.equals("Approve")) {
+                                holder.username.setText(userName);
                                 holder.tv_ReqDate.setVisibility(View.GONE);
-                                holder.tv_Groupinvite.setText("User " + userName + " request to join Sub-class : " + subServer + " of server " + GroupName + " has been approved");
+                                holder.tv_Groupinvite.setText(GroupName+" joining has been approved");
                                 holder.ll_groupdetails.setVisibility(View.GONE);
                             } else if (inviteStatus.equals("Reject")) {
+                                holder.username.setText(userName);
                                 holder.ll_groupdetails.setVisibility(View.GONE);
                                 holder.tv_ReqDate.setVisibility(View.GONE);
-                                holder.tv_Groupinvite.setText("User " + userName + " request to join Sub-class : " + subServer + " of server " + GroupName + " has been rejected");
+                                holder.tv_Groupinvite.setText(GroupName+" joining has been rejected");
                             } else {
 
                                 holder.ll_groupdetails.setVisibility(View.VISIBLE);
                                 if (GroupName.isEmpty()) {
                                     holder.tv_Groupinvite.setVisibility(View.GONE);
                                 } else {
-                                    holder.tv_Groupinvite.setText("User " + userName + " wants to join Sub-class : " + subServer + " of server " + GroupName);
+                                    holder.username.setText(userName);
+                                    holder.tv_Groupinvite.setText("Want to join");
 
                                 }
                                 if (GroupName.isEmpty()) {
@@ -165,22 +171,24 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                         if (NotifyCategory.equals("Group_JoiningReq")) {
 
                             if (inviteStatus.equals("Approve")) {
-                                holder.tv_Groupinvite.setText("User " + userName + " request to join Sub-class : " + subServer + " of server " + GroupName + " has been approved");
+                                holder.tv_Groupinvite.setText(GroupName+" joining has been approved");
                                 holder.ll_groupdetails.setVisibility(View.GONE);
                                 holder.tv_ReqDate.setVisibility(View.GONE);
+                                holder.username.setText(userName);
 
                             } else if (inviteStatus.equals("Reject")) {
                                 holder.ll_groupdetails.setVisibility(View.GONE);
                                 holder.tv_ReqDate.setVisibility(View.GONE);
-
-                                holder.tv_Groupinvite.setText("User " + userName + " request to join Sub-class : " + subServer + " of server " + GroupName + " has been rejected");
+                                holder.username.setText(userName);
+                                holder.tv_Groupinvite.setText(GroupName+" joining has been rejected");
                             } else {
 
                                 holder.ll_groupdetails.setVisibility(View.VISIBLE);
                                 if (GroupName.isEmpty()) {
                                     holder.tv_Groupinvite.setVisibility(View.GONE);
                                 } else {
-                                    holder.tv_Groupinvite.setText("User " + userName + " wants to join Sub-class : " + subServer + " of server " + GroupName);
+                                    holder.username.setText(userName);
+                                    holder.tv_Groupinvite.setText("Want to join");
 
                                 }
                                 if (GroupName.isEmpty()) {
@@ -193,19 +201,22 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                     if (NotifyCategory.equals("Friend_Request")) {
 
                         if (inviteStatus.equals("Approve")) {
-                            holder.tv_Groupinvite.setText("User " + userName + " request to make you friend you has been approved");
+                            holder.username.setText(userName);
+                            holder.tv_Groupinvite.setText("Follow request has been approved");
                             holder.tv_ReqDate.setVisibility(View.GONE);
                             holder.ll_groupdetails.setVisibility(View.GONE);
                         } else if (inviteStatus.equals("Reject")) {
+                            holder.username.setText(userName);
                             holder.ll_groupdetails.setVisibility(View.GONE);
                             holder.tv_ReqDate.setVisibility(View.GONE);
-                            holder.tv_Groupinvite.setText("User " + userName + " request to make you friend has been rejected");
+                            holder.tv_Groupinvite.setText("Follow request has been rejected");
                         } else {
                             holder.ll_groupdetails.setVisibility(View.VISIBLE);
                             if (GroupName.isEmpty()) {
                                 holder.tv_Groupinvite.setVisibility(View.GONE);
                             } else {
-                                holder.tv_Groupinvite.setText("User " + userName + " wants to follow you");
+                                holder.username.setText(userName);
+                                holder.tv_Groupinvite.setText("Follow request");
                             }
                             if (GroupName.isEmpty()) {
                                 holder.tv_ReqDate.setVisibility(View.GONE);
@@ -217,19 +228,22 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                         else if (NotifyCategory.equals("Follow_Request")) {
 
                             if (inviteStatus.equals("Approve")) {
-                                holder.tv_Groupinvite.setText("User " + userName + " request to Follow you has been approved");
+                                holder.tv_Groupinvite.setText("Follow request has been approved");
                                 holder.tv_ReqDate.setVisibility(View.GONE);
                                 holder.ll_groupdetails.setVisibility(View.GONE);
+                                holder.username.setText(userName);
                             } else if (inviteStatus.equals("Reject")) {
+                                holder.username.setText(userName);
                                 holder.ll_groupdetails.setVisibility(View.GONE);
                                 holder.tv_ReqDate.setVisibility(View.GONE);
-                                holder.tv_Groupinvite.setText("User " + userName + " request to Follow you has been rejected");
+                                holder.tv_Groupinvite.setText("Follow request has been rejected");
                             } else {
                                 holder.ll_groupdetails.setVisibility(View.VISIBLE);
                                 if (GroupName.isEmpty()) {
                                     holder.tv_Groupinvite.setVisibility(View.GONE);
                                 } else {
-                                    holder.tv_Groupinvite.setText("User " + userName + " wants to follow you");
+                                    holder.username.setText(userName);
+                                    holder.tv_Groupinvite.setText("Follow request");
                                 }
                                 if (GroupName.isEmpty()) {
                                     holder.tv_ReqDate.setVisibility(View.GONE);
@@ -336,7 +350,7 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_Groupinvite, tv_approve, tv_reject, tv_ReqDate;
+        TextView tv_Groupinvite, tv_approve, tv_reject, tv_ReqDate, username;
         LinearLayout ll_groupdetails;
         CircleImageView profilePic;
 
@@ -349,6 +363,7 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
             tv_ReqDate = itemView.findViewById(R.id.tv_ReqDate);
             ll_groupdetails = itemView.findViewById(R.id.ll_groupdetails);
             profilePic = itemView.findViewById(R.id.profilePicture);
+            username = itemView.findViewById(R.id.username);
 
 
             tv_reject.setOnClickListener(new View.OnClickListener() {

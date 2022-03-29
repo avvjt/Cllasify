@@ -57,8 +57,8 @@ public class GRPJoinReqs extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         JoiningReqVPAdapter joiningReqVPAdapter = new JoiningReqVPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        joiningReqVPAdapter.addFragment(new Student_Joining_Reqs(),"Student Joining Requests");
-        joiningReqVPAdapter.addFragment(new Teacher_Joining_Reqs(),"Teacher Joining Requests");
+        joiningReqVPAdapter.addFragment(new Student_Joining_Reqs(),"Students");
+        joiningReqVPAdapter.addFragment(new Teacher_Joining_Reqs(),"Teachers");
 
         viewPager.setAdapter(joiningReqVPAdapter);
 

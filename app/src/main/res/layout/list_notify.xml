@@ -1,81 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:orientation="horizontal"
+    android:paddingStart="20dp"
+    android:paddingTop="20dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profilePicture"
-        android:layout_width="60dp"
-        android:layout_height="80dp"
-        android:layout_centerVertical="true" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/reqAndDate"
-        android:layout_width="220dp"
-        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_toEndOf="@id/profilePicture">
+        android:paddingStart="10dp"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/username"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            android:fontFamily="@font/inter_bold"/>
 
         <TextView
             android:id="@+id/tv_Groupinvite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="2"
-            android:text="the_following_user has followed you and one another"
-            android:textColor="@color/black"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:text="Requested to follow"
+            android:textColor="@color/text_color"
+            android:textSize="14sp"
+            android:fontFamily="@font/inter_medium"/>
 
         <TextView
             android:id="@+id/tv_ReqDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_Groupinvite"
             android:text="20h"
+            android:visibility="gone"
             android:textSize="15sp" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <LinearLayout
         android:id="@+id/ll_groupdetails"
         android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_toEndOf="@id/reqAndDate"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center_vertical">
 
         <Button
             android:id="@+id/tv_approve"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="35dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/cust_corner"
+            android:background="@drawable/button_small"
             android:text="Approve"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textColor="@color/btn_text_white"
+            android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/tv_reject"
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
             android:layout_height="35dp"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/cust_red_corner"
+            android:background="@drawable/button_stroke"
             android:text="Reject"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textColor="@color/btn_text_black"
+            android:layout_marginStart="5dp"
+            android:textAllCaps="false"/>
 
     </LinearLayout>
 
-</RelativeLayout><!--
+</LinearLayout><!--
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"

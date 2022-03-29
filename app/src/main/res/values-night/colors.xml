@@ -28,6 +28,9 @@
     <color name="sheet_color">#262626</color>
     <color name="sheet_head_color">#737373</color>
     <color name="transparent">#00000000</color>
+    <color name="btn_stroke">#FFFFFF</color>
+    <color name="btn_text_white">#FFFFFF</color>
+    <color name="btn_text_black">#FFFFFF</color>
 
 
 
