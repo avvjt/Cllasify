@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -37,7 +36,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adaptor.Adapter_All_Friends;
@@ -47,7 +45,6 @@ import com.cllasify.cllasify.Adaptor.Adaptor_FriendsList;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
-import com.cllasify.cllasify.Adaptor_Tab_ChatDiscussion;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.Class_Student_Details;
@@ -58,8 +55,6 @@ import com.cllasify.cllasify.MessageAdapter;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Register.getStarted;
 import com.cllasify.cllasify.Server.Attendance_Activity;
-import com.cllasify.cllasify.Server.Chat_List_Fragment;
-import com.cllasify.cllasify.Server.Chat_New_Fragment;
 import com.cllasify.cllasify.Server.DoubtFragment;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.SharePref;
@@ -143,7 +138,7 @@ public class Server_Activity extends AppCompatActivity {
 
     //Linear Layouts
     LinearLayout onlyAdminLayout, groupSection, ll_AddJoinGrp, ll_ChatDoubtDashboard,
-            endPanelLinearLayout, friendSection;
+            endPanelLinearLayout, friendSection,rightPanelMems;
 
 
     //Buttons
@@ -155,7 +150,6 @@ public class Server_Activity extends AppCompatActivity {
 
 
     TabLayout tabLayout, tabL_ChatView;
-    ViewPager viewPager, view_Pager_ChatView;
     BottomNavigationView bottomNavigationView;
     TextView tv_GroupMember, adminListText, FriendListText;
     FirebaseDatabase refFriendList;
@@ -214,6 +208,8 @@ public class Server_Activity extends AppCompatActivity {
     boolean flagFriend = false;
 
     void init() {
+
+        rightPanelMems = findViewById(R.id.rightPanelMembs);
 
         onlyAdminLayout = findViewById(R.id.onlyAdminLayout);
         btn_joinNotification = findViewById(R.id.btn_joinNotification);
@@ -421,6 +417,7 @@ public class Server_Activity extends AppCompatActivity {
                                 uniPushClassId[0] = snapshot.child("uniPushClassId").getValue().toString().trim();
                                 clickedGroupName[0] = snapshot.child("clickedGroupName").getValue().toString().trim();
 
+                                rightPanelMems.setVisibility(View.VISIBLE);
 
                                 setReference(groupPushId[0], clickedClassName, subjectName[0], String.valueOf(classUniPosition), uniClassPushId, subjectUniPushId[0], clickedGroupName[0]);
 
@@ -581,86 +578,6 @@ public class Server_Activity extends AppCompatActivity {
 
     }
 
-
-    private void saveClassGroup(String groupPushId, String sbChildGroupName) {
-
-        DatabaseReference testDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs");
-
-        testDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                DatabaseReference getServerTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
-                getServerTemp.child("className").setValue(sbChildGroupName);
-
-                DatabaseReference setAdmins = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins");
-
-                getServerTemp.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                        String serverName = (Objects.requireNonNull(snapshot.child("serverName").getValue())).toString();
-
-                        Log.d("SerT", "Temp Server name: " + serverName);
-                        Log.d("SerT", "Temp Group Push Id: " + (snapshot.child("tpGroupPushId").getValue()));
-                        Log.d("SerT", "Group Push Id: " + groupPushId);
-                        Log.d("SerT", "Group name: " + sbChildGroupName);
-
-
-                        testDatabaseReference.child(groupPushId).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                String[] push01 = String.valueOf(testDatabaseReference.child(groupPushId).push()).split("/");
-
-                                testDatabaseReference.child(groupPushId).child(push01[6]).child("className").setValue(sbChildGroupName);
-//                                testDatabaseReference.child(groupPushId).child(push01[6]).child("classBio").setValue(" ");
-                                testDatabaseReference.child(groupPushId).child(push01[6]).child("classUniPushId").setValue(push01[6]);
-                                testDatabaseReference.child(groupPushId).child(push01[6]).child("groupPushId").setValue(groupPushId);
-                                testDatabaseReference.child(groupPushId).child(push01[6]).child("classStudentList").addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot01) {
-                                        Class_Student_Details class_student_details = new Class_Student_Details(true, userID, userName);
-                                        setAdmins.child(groupPushId).child("classAdminList")
-                                                .child(userID).setValue(class_student_details);
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
-
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-                /*
-
-                 */
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-    }
-
     public void checkAdmmmmin(boolean checking) {
         Log.d("ADMMMM", "is admin : " + checking);
         if (checking) {
@@ -710,6 +627,7 @@ public class Server_Activity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Log.d("CHKADMINCLASS", "onDataChange: "+snapshot.child("admin").getValue());
                         if (Objects.equals(snapshot.child("admin").getValue(), true)) {
+                            checkAdmmmmin(true);
                             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
                             databaseReference.addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -796,6 +714,7 @@ public class Server_Activity extends AppCompatActivity {
 
                                 Log.d("CHKADMIN", "onDataChange: " + snapshot.exists());
                                 if (Objects.equals(snapshot.getValue(), false)) {
+                                    checkAdmmmmin(false);
                                     databaseReferenceStudent.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -906,27 +825,6 @@ public class Server_Activity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child("groupName").exists()) {
                     textViewGroupName.setText(snapshot.child("groupName").getValue().toString());
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-        DatabaseReference checkAdminMe = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList").child(userID).child("admin");
-        checkAdminMe.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    if (snapshot.getValue().equals(true)) {
-                        checkAdmmmmin(true);
-                    }
-                } else {
-                    checkAdmmmmin(false);
-
                 }
             }
 
@@ -1393,12 +1291,6 @@ public class Server_Activity extends AppCompatActivity {
             ll_bottom_send = findViewById(R.id.ll_bottom_send);
 
 
-            tabLayout = findViewById(R.id.tabl_chatdis);
-            viewPager = findViewById(R.id.view_Pager);
-
-            tabL_ChatView = findViewById(R.id.tabl_ChatView);
-            view_Pager_ChatView = findViewById(R.id.view_Pager_ChatView);
-
             btn_cJoinGroup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -1418,25 +1310,6 @@ public class Server_Activity extends AppCompatActivity {
                 }
             });
 
-
-            //??
-            tabL_ChatView.setupWithViewPager(view_Pager_ChatView);
-            tabL_ChatView.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(TabLayout.Tab tab) {
-                }
-
-                @Override
-                public void onTabUnselected(TabLayout.Tab tab) {
-                }
-
-                @Override
-                public void onTabReselected(TabLayout.Tab tab) {
-                }
-            });
-
-            setupViewPager1(view_Pager_ChatView);
-
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -1447,7 +1320,6 @@ public class Server_Activity extends AppCompatActivity {
 
 
             showOtherUserGroupRV();
-            showUserPublicGroupRV();
 
         } else {
             startActivity(new Intent(this, getStarted.class));
@@ -1588,376 +1460,118 @@ public class Server_Activity extends AppCompatActivity {
 
     }
 
-
-    /*
-    Dialog box when click on + symbol in left slider where it have option to create Public server and Private Server
-     */
-    private void createGroupDialog() {
-        android.app.AlertDialog dialogBuilder = new android.app.AlertDialog.Builder(this).create();
-        dialogBuilder.setCanceledOnTouchOutside(true);
-        dialogBuilder.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        LayoutInflater inflater = this.getLayoutInflater();
-
-        View dialogView = inflater.inflate(R.layout.dialog_creategroup, null);
-        firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = firebaseAuth.getCurrentUser();
-        assert currentUser != null;
-        userID = currentUser.getUid();
-        userEmailID = currentUser.getEmail();
-        userPhoto = currentUser.getPhotoUrl();
-        userName = currentUser.getDisplayName();
-
-        Button btn_Public = dialogView.findViewById(R.id.btn_Public);
-        Button btn_Private = dialogView.findViewById(R.id.btn_Private);
-        Button btn_CreateGroup = dialogView.findViewById(R.id.btn_CreateGroup);
-        LinearLayout ll_CreatingServer = dialogView.findViewById(R.id.ll_groupFamFrnds);
-        LinearLayout ll_creategroup = dialogView.findViewById(R.id.ll_creategroup);
-        EditText et_GroupName = dialogView.findViewById(R.id.et_GroupName);
-
-        ll_CreatingServer.setVisibility(View.VISIBLE);
-        btn_Public.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                GroupCategory = "Public";
-                ll_CreatingServer.setVisibility(View.GONE);
-                ll_creategroup.setVisibility(View.VISIBLE);
-            }
-        });
-        btn_Private.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ll_CreatingServer.setVisibility(View.GONE);
-                ll_creategroup.setVisibility(View.VISIBLE);
-                GroupCategory = "Private";
-            }
-        });
-        btn_CreateGroup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String GroupName = et_GroupName.getText().toString().trim();
-
-                DatabaseReference changeCOor = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
-                changeCOor.child("serverName").setValue(GroupName);
-
-                if (GroupName.isEmpty()) {
-                    Toast.makeText(Server_Activity.this, "Enter Group Name", Toast.LENGTH_SHORT).show();
-                    et_GroupName.setError("Enter Group Name");
-                } else {
-
-                    DatabaseReference referenceALLPBLCGroup = FirebaseDatabase.getInstance().getReference().
-                            child("Groups").child("All_Universal_Group");
-
-                    referenceALLPBLCGroup.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            long noofGroupinCategory = snapshot.getChildrenCount();
-                            String push = "Uni_Group_No_" + noofGroupinCategory + "_" + GroupName;
-                            changeCOor.child("groupPushId").setValue(push);
-
-                            refAllGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(push);
-                            refGroupSubsList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(push).child("User_Subscribed_Groups").child(userID);
-
-                            refuserAllGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_All_Group").child(userID).child(push);
-                            refuserPersonalGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID).child(push);
-                            refuserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID).child(push);
-                            addedOrJoinedGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID).child(push).child("addedOrJoined");
-
-                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, GroupName, GroupCategory, noofGroupinCategory);
-                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, GroupName, GroupCategory, noofGroupinCategory);
-                            userSubsGroupClass = new Class_Group(dateTimeCC, userName, userID, userID, GroupName, push, "Admin", "Online");
-
-
-                            refAllGroup.setValue(userAddGroupClass);
-                            refGroupSubsList.setValue(userSubsGroupClass);
-                            refuserAllGroup.setValue(userAddGroupClass);
-                            addedOrJoinedGroup.setValue("Added");
-
-                            openDialog(push);
-
-  /*
-
-                            refClassStudentList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(push);
-                            Log.d(TAG, "onDataChange: St" + push);
-
-                            refClassStudentList.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-                                    .child("0").child("classStudentList");
-                            refClassStudentList.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                        Log.d(TAG, "onDataChange: St" + dataSnapshot.child("studentName"));
-                                        Class_Student_Details class_student_details = new Class_Student_Details(true,userID,userName);
-                                        refClassStudentList.setValue(class_student_details);
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-*/
-                            if (GroupCategory.equals("Public")) {
-                                refuserPublicGroup.setValue(userAddGroupClass);
-                            }
-                            if (GroupCategory.equals("Private")) {
-                                refuserPersonalGroup.setValue(userAddGroupClass);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
-                    });
-
-
-                    Toast.makeText(Server_Activity.this, "Group Successfully Created", Toast.LENGTH_SHORT).show();
-                    dialogBuilder.dismiss();
-                }
-            }
-        });
-        dialogBuilder.setView(dialogView);
-        dialogBuilder.show();
-    }
-
-    /*
-    Public group part
-     */
-
-    public void showUserPublicGroupRV() {
-
-        showUserPublicGroupAdaptor.setOnItemClickListener(new Adaptor_QueryGroup.OnItemClickListener() {
-
-            @Override
-            public void addChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID) {
-            }
-
-            @Override
-            public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
-
-                Log.d("CHKFLAG", "showChildGroupAdaptor: " + flagFriend);
-
-                if (flagFriend == true) {
-                    FragmentManager manager = getSupportFragmentManager();
-                    FragmentTransaction transaction = manager.beginTransaction();
-                    manager.getBackStackEntryCount();
-                    transaction.remove(friendChatFragment);
-                    transaction.commit();
-                    flagFriend = false;
-                }
-
-
-                tv_GroupMember.setVisibility(View.VISIBLE);
-                adminListText.setVisibility(View.VISIBLE);
-                rv_GrpTeacherList.setVisibility(View.VISIBLE);
-                if (listGrpMemberList != null) {
-                    rv_GrpMemberList.setVisibility(View.VISIBLE);
-                }
-                friendSection.setVisibility(View.GONE);
-                FriendListText.setVisibility(View.GONE);
-
-//                ll_AddJoinGrp.setVisibility(View.VISIBLE);
-                imageViewAddPanelAddGroup.setVisibility(View.VISIBLE);
-                endPanelAllFriendsRecyclerView.setVisibility(View.GONE);
-                groupSection.setVisibility(View.VISIBLE);
-
-                Log.d(TAG, "showChildGroupAdaptor: Clicked");
-
-                textViewGroupName.setText(groupName.trim());
-
-
-                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
-                databaseReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Log.d(TAG, "showChildGroupAdaptor: Clicked" + snapshot.getKey());
-                        parentItemArrayListClassName.clear();
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            Log.d(TAG, "showChildGroupAdaptor: ClickedDS" + dataSnapshot.child("className").getValue().toString());
-
-                            if (dataSnapshot.getChildrenCount() > 0) {
-                                ib_servSettings.setVisibility(View.VISIBLE);
-                            }
-
-                            Class_Group_Names class_group_names = new Class_Group_Names();
-                            class_group_names.setGroupPushId(groupPushId);
-                            class_group_names.setClassName(dataSnapshot.child("className").getValue(String.class));
-                            class_group_names.setClassBio(dataSnapshot.child("classBio").getValue(String.class));
-                            class_group_names.setUniPushClassId(dataSnapshot.child("classUniPushId").getValue(String.class));
-
-                            Log.d("JOIN", "onClick: " + groupPushId);
-
-                            List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
-
-                            for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classSubjectData").getChildren()) {
-                                Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
-                                Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
-                                Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
-                                subjectDetailsModelList.add(object);
-
-                            }
-
-                            class_group_names.setChildItemList(subjectDetailsModelList);
-
-
-                            List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
-
-                            for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classStudentList").getChildren()) {
-                                Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
-                                Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
-                                Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
-                                class_student_detailsList.add(class_student_details);
-
-                            }
-
-                            class_group_names.setClass_student_detailsList(class_student_detailsList);
-
-
-                            parentItemArrayListClassName.add(class_group_names);
-                        }
-                        adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
-                        adapter_classGroup.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-            }
-
-            @Override
-            public void showll_Group(int position, String groupName, String groupPushId, String groupUserID) {
-
-            }
-
-
-        });
-        int count = 0;
-
-        Toast.makeText(getApplicationContext(), "Clicked on Server", Toast.LENGTH_SHORT).show();
-
-        friendSection.setVisibility(View.GONE);
-
-
-
-        ChildEventListener childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-
-                Log.d("CHILDTST", "onChildAdded: "+dataSnapshot.getValue());
-
-                Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
-
-                String testGroupName = dataSnapshot.child("position").getValue().toString();
-
-                DatabaseReference databaseReferenceCHKADMIN = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(testGroupName).child("classAdminList");
-
-                databaseReferenceCHKADMIN.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
-                            Log.i("SBO", dataSnapshot1.child("userId").getValue().toString());
-                            String adminUserId = dataSnapshot1.child("userId").getValue().toString();
-                            if(dataSnapshot.exists() && adminUserId.equals(currentUser.getUid())){
-                                list_UserPublicGroupTitle.add(userQuestions);
-                                showUserPublicGroupAdaptor.notifyDataSetChanged();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        };
-        //refAdmin.addChildEventListener(childEventListener);
-        list_UserPublicGroupTitle.clear();
-        refShowUserPublicGroup.orderByChild("groupno").addChildEventListener(childEventListener);
-
-//    }
-
-    }
-
-    private void openDialog(String groupPushId) {
-
-        View customAlertDialog = LayoutInflater.from(Server_Activity.this).inflate(R.layout.dialog_add_class_group, null, false);
-
-
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(Server_Activity.this);
-        EditText et_ClassName = customAlertDialog.findViewById(R.id.et_ClassName);
-        Button btn_nextAddTopic = customAlertDialog.findViewById(R.id.btn_nextAddTopic);
-
-
-        dialogBuilder.setView(customAlertDialog);
-        AlertDialog dialog = dialogBuilder.show();
-
-        btn_nextAddTopic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String classGroupName = et_ClassName.getText().toString().trim();
-                if (classGroupName.isEmpty()) {
-                    Toast.makeText(Server_Activity.this, "Enter All Details", Toast.LENGTH_SHORT).show();
-                    et_ClassName.setError("Enter Class Name");
-                } else {
-                    dialog.cancel();
-                    saveClassGroup(groupPushId, classGroupName);
-                }
-            }
-        });
-
-
-        //dialogBuilder.setCancelable(false);
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = firebaseAuth.getCurrentUser();
-        assert currentUser != null;
-        userID = currentUser.getUid();
-        userEmailID = currentUser.getEmail();
-        userPhoto = currentUser.getPhotoUrl();
-        userName = currentUser.getDisplayName();
-
-
-    }
-
-
     /*
     Other group part
      */
     public void showOtherUserGroupRV() {
 
+
+        DatabaseReference userJoinedOrAddServer = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID);
+        userJoinedOrAddServer.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list_OtherUserPublicGroupTitle.clear();
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Log.i("UserAddedOrJoinedGrpPUSHIDS", "" + dataSnapshot.getKey());
+
+                    String UserAddedOrJoinedGrpPUSHIDS = dataSnapshot.getKey();
+                    if (dataSnapshot.exists() && UserAddedOrJoinedGrpPUSHIDS != null) {
+
+                        if (Objects.equals(dataSnapshot.child("addedOrJoined").getValue(), "Added")
+                                || Objects.equals(dataSnapshot.child("addedOrJoined").getValue(), "TeacherJoin")) {
+
+                            DatabaseReference databaseReferenceCHKADMIN = FirebaseDatabase.getInstance().getReference()
+                                    .child("Groups").child("Check_Group_Admins").child(UserAddedOrJoinedGrpPUSHIDS).child("classAdminList");
+
+                            databaseReferenceCHKADMIN.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                                        String adminUserId = dataSnapshot1.child("userId").getValue().toString();
+                                        refOtherUserPublicGroup.child(UserAddedOrJoinedGrpPUSHIDS).addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot newSnap) {
+
+                                                Class_Group userQuestionsAdded = newSnap.getValue(Class_Group.class);
+
+                                                if (newSnap.exists() && adminUserId.equals(currentUser.getUid())) {
+                                                    Log.i("SBO", dataSnapshot1.child("userId").getValue().toString());
+                                                    list_OtherUserPublicGroupTitle.add(userQuestionsAdded);
+                                                    showOtherUserPublicGroupAdaptor.notifyDataSetChanged();
+                                                }
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                        } else {
+                            DatabaseReference databaseReferenceGetUserJoinedClass = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class").child(UserAddedOrJoinedGrpPUSHIDS);
+
+                            databaseReferenceGetUserJoinedClass.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot01) {
+
+                                    if (snapshot01.child(userID).child("classUniPushId").exists()) {
+
+                                        refOtherUserPublicGroup.child(UserAddedOrJoinedGrpPUSHIDS).addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot otherSnap) {
+
+                                                if (otherSnap.child("User_Subscribed_Groups").child(userID).exists()) {
+                                                    String check = otherSnap.child("User_Subscribed_Groups").child(userID).child("subsStatus").getValue().toString();
+                                                    if (check.equals("Class Member")) {
+                                                        Class_Group userQuestions = otherSnap.getValue(Class_Group.class);
+                                                        list_OtherUserPublicGroupTitle.add(userQuestions);
+                                                        showOtherUserPublicGroupAdaptor.notifyDataSetChanged();
+
+                                                    }
+                                                }
+
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                            }
+                                        });
+
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                        }
+
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         showOtherUserPublicGroupAdaptor.setOnItemClickListener(new Adaptor_QueryGroup.OnItemClickListener() {
             @Override
@@ -1967,6 +1581,8 @@ public class Server_Activity extends AppCompatActivity {
 
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
+
+                rightPanelMems.setVisibility(View.GONE);
 
                 if (flagFriend == true) {
                     FragmentManager manager = getSupportFragmentManager();
@@ -2048,6 +1664,7 @@ public class Server_Activity extends AppCompatActivity {
                                         Log.d("CHKADMIN", "onDataChange: " + snapshot.getValue());
 
                                         if (Objects.equals(snapshot.getValue(), false)) {
+                                            checkAdmmmmin(false);
                                             databaseReferenceStudent.addValueEventListener(new ValueEventListener() {
                                                 @Override
                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -2101,6 +1718,7 @@ public class Server_Activity extends AppCompatActivity {
                                             });
 
                                         } else {
+                                            checkAdmmmmin(true);
                                             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
                                             databaseReference.addValueEventListener(new ValueEventListener() {
                                                 @Override
@@ -2200,66 +1818,8 @@ public class Server_Activity extends AppCompatActivity {
 
 
         });
-        int count = 0;
 
         friendSection.setVisibility(View.GONE);
-
-        ChildEventListener childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-                Log.i("pushid", "" + dataSnapshot.getKey());
-
-                String groupPushIdJoined = dataSnapshot.getKey();
-
-                DatabaseReference databaseReferenceGetUserJoinedClass = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class").child(groupPushIdJoined);
-
-                databaseReferenceGetUserJoinedClass.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot01) {
-
-                        if (snapshot01.child(userID).child("classUniPushId").exists()) {
-                            if (dataSnapshot.child("User_Subscribed_Groups").child(userID).exists()) {
-                                String check = dataSnapshot.child("User_Subscribed_Groups").child(userID).child("subsStatus").getValue().toString();
-                                if (check.equals("Class Member")) {
-                                    Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
-
-                                    Log.i("SBO1", "" + dataSnapshot.getValue());
-                                    list_OtherUserPublicGroupTitle.add(userQuestions);
-                                    showOtherUserPublicGroupAdaptor.notifyDataSetChanged();
-                                    tv_OtherTitle.setText("Other Server");
-
-                                }
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        };
-        refOtherUserPublicGroup.orderByChild("groupno").addChildEventListener(childEventListener);
 
 
     }
@@ -2302,46 +1862,6 @@ public class Server_Activity extends AppCompatActivity {
 
             }
         });
-
-    }
-
-    private void fetchFriendList(List<Class_Group> friends) {
-        Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
-        for (Class_Group friend : friends) {
-            FriendsListClass friendsList = new FriendsListClass(friend.getUserId(), friend.getUserName());
-//            friendsListClasses.add(friendsList);
-            Toast.makeText(getApplicationContext(), "" + friendsList.getName(), Toast.LENGTH_SHORT).show();
-//            Log.d("TAGN", "chatListDashboard: \n" + friend.getUserName());
-
-        }
-    }
-
-    private void showchildGroupRV(int position, String groupName, String groupPushId, String groupUserID, String Category) {
-
-
-        groupSection.setVisibility(View.VISIBLE);
-        refChildGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId);
-        refChildGroup.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount() > 0) {
-                    recyclerViewClassList.setVisibility(View.VISIBLE);
-                    textViewGroupName.setVisibility(View.VISIBLE);
-                    classNameTextView.setVisibility(View.VISIBLE);
-
-                } else {
-                    Toast.makeText(Server_Activity.this, "Please Create Sub Group using (+) Sign", Toast.LENGTH_LONG).show();
-                    recyclerViewClassList.setVisibility(View.GONE);
-                    textViewGroupName.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
-        DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
 
     }
 
@@ -2418,45 +1938,6 @@ public class Server_Activity extends AppCompatActivity {
                         });
         AlertDialog alert = alertdialogbuilder.create();
         alert.show();
-    }
-
-    //end panel friends clicked
-    private void updateFriendList() {
-        show_FriendAdaptor.setOnItemClickListener(new Adaptor_Friends.OnItemClickListener() {
-            @Override
-            public void showChildChatAdaptor(int position, String groupName, String subGroupName, String groupPushId, String subGroupPushID, String frndUserId) {
-                checkChatDashboard(frndUserId);
-            }
-        });
-        list_Friend.clear();
-
-        ChildEventListener childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
-                list_Friend.add(userQuestions);
-                show_FriendAdaptor.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        };
-
-        //refAdmin.addChildEventListener(childEventListener);
-//        refFriendList.addChildEventListener(childEventListener);
     }
 
 
@@ -2801,80 +2282,6 @@ public class Server_Activity extends AppCompatActivity {
     }
 
 
-    private void checkChatDashboard(String friendUserId) {
-        rl_FriendChatLayout.setVisibility(View.VISIBLE);
-        overlappingPanels.closePanels();
-        refChatDashboard = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(userID).child(friendUserId).child("Chat_Message");
-//        list_NewChatDashboard.clear();
-        ChildEventListener childEventListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.getChildrenCount() > 0) {
-                    Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
-                    list_NewChatDashboard.add(class_userDashBoard);
-                    showChatDashAdaptor.notifyDataSetChanged();
-                    showChatDashAdaptor.scrollDownl();
-                } else {
-                    Toast.makeText(Server_Activity.this, "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        };
-        //refAdmin.addChildEventListener(childEventListener);
-        refChatDashboard.addChildEventListener(childEventListener);
-
-
-        ib_FrndP_csubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String subGroupMsg = et_FrndP_text.getText().toString().trim();
-                if (subGroupMsg.isEmpty()) {
-                    Toast.makeText(Server_Activity.this, "Enter text", Toast.LENGTH_SHORT).show();
-                    et_FrndP_text.setError("Enter text");
-                } else {
-                    refChatDashboard = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(userID).child(friendUserId).child("Chat_Message");
-                    refChatDashboard.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            long noOfGroupInCategory = snapshot.getChildrenCount() + 1;
-                            String push = "mszno_" + noOfGroupInCategory;
-
-                            Calendar calenderCC = Calendar.getInstance();
-                            SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
-                            String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-                            Class_Group userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, "groupPushId", "subGroupPushId", subGroupMsg);
-                            refChatDashboard.child(push).setValue(userAddGroupClass);
-                            et_FrndP_text.setText("");
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                        }
-                    });
-
-                }
-            }
-        });
-
-    }
-
     /*
         Google SignIn Result
      */
@@ -2919,17 +2326,6 @@ public class Server_Activity extends AppCompatActivity {
 
         }
     }
-
-    private void setupViewPager1(ViewPager view_pager_chatView) {
-        Adaptor_Tab_ChatDiscussion adaptorTabFriendChat = new Adaptor_Tab_ChatDiscussion(getSupportFragmentManager());
-
-        adaptorTabFriendChat.addFragment(new Chat_New_Fragment(), "New Chat");
-        adaptorTabFriendChat.addFragment(new Chat_List_Fragment(), "Friends List");
-
-        view_pager_chatView.setAdapter(adaptorTabFriendChat);
-    }
-
-
     /*
     Chat box part..........................
      */

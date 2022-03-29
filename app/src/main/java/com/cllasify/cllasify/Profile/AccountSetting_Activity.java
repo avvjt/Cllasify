@@ -450,17 +450,17 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
     private void editSetting() {
 
-        BottomSheetDialog bottomSheetDialoglogin = new BottomSheetDialog(this);
-        bottomSheetDialoglogin.setCancelable(true);
-        bottomSheetDialoglogin.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        bottomSheetDialoglogin.setCanceledOnTouchOutside(true);
-        bottomSheetDialoglogin.setContentView(R.layout.bottomsheet_feedback);
-        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setContentView(R.layout.bottomsheet_feedback);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        Button btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_cancel);
-        TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.editTitle);
-        EditText et_NewDetails = bottomSheetDialoglogin.findViewById(R.id.et_NewDetails);
-        Button btn_Submit = bottomSheetDialoglogin.findViewById(R.id.btn_submit);
+        Button btn_Cancel = dialog.findViewById(R.id.btn_cancel);
+        TextView tv_subTitle = dialog.findViewById(R.id.editTitle);
+        EditText et_NewDetails = dialog.findViewById(R.id.et_NewDetails);
+        Button btn_Submit = dialog.findViewById(R.id.btn_submit);
 
 
         btn_Submit.setOnClickListener(new View.OnClickListener() {
@@ -479,21 +479,20 @@ public class AccountSetting_Activity extends AppCompatActivity {
                 email.setType("message/rfc822");
                 startActivity(Intent.createChooser(email, "Choose an Email client :"));
 
-                bottomSheetDialoglogin.dismiss();
+                dialog.dismiss();
             }
         });
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottomSheetDialoglogin.dismiss();
+                dialog.dismiss();
             }
         });
 
-        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        bottomSheetDialoglogin.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        bottomSheetDialoglogin.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        bottomSheetDialoglogin.getWindow().setGravity(Gravity.BOTTOM);
-        bottomSheetDialoglogin.show();
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
 
         moveTaskToBack(false);
 

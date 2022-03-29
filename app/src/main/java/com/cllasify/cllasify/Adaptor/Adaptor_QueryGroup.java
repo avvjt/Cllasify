@@ -69,10 +69,7 @@ public class Adaptor_QueryGroup extends RecyclerView.Adapter<Adaptor_QueryGroup.
         String userID = currentUser.getUid();
         Class_Group Answers = mDatalistNew.get(position);
 
-        String groupName = Answers.getGroupName();
         String groupPushid = Answers.getPosition();
-
-        String firstchar = groupName.substring(0, 1);
 
         DatabaseReference refSaveServerProfPic = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushid).child("serverProfilePic");
         refSaveServerProfPic.addValueEventListener(new ValueEventListener() {

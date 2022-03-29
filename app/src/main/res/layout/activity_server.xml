@@ -415,6 +415,7 @@
             </LinearLayout>
         </RelativeLayout>
 
+
         <RelativeLayout
             android:id="@+id/end_panel"
             style="@style/Panel"
@@ -488,30 +489,39 @@
                     android:visibility="gone"
                     android:layout_height="wrap_content" />
 
-                <TextView
-                    android:id="@+id/adminListText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Teachers" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/adminList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/adminListText" />
-
-                <TextView
-                    android:id="@+id/tv_GroupMember"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Students" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_GrpMemberList"
+                <LinearLayout
+                    android:id="@+id/rightPanelMembs"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="84dp" />
+                    android:visibility="gone"
+                    android:orientation="vertical">
 
+
+                    <TextView
+                        android:id="@+id/adminListText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Teachers" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/adminList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/adminListText" />
+
+                    <TextView
+                        android:id="@+id/tv_GroupMember"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Students" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_GrpMemberList"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="84dp" />
+
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
