@@ -126,7 +126,7 @@
                     android:textSize="17sp" />
 
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_UserName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -137,6 +137,7 @@
                     style="@style/SelectableItemBackground">
 
                     <TextView
+                        android:id="@+id/userName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -147,27 +148,20 @@
 
                     <TextView
                         android:id="@+id/tv_UserName"
-                        android:layout_width="230dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@+id/userName"
+                        android:drawableEnd="@drawable/abc_ic_right"
+                        android:drawableTint="@color/iconSecondaryColor"
                         android:fontFamily="@font/inter_medium"
-                        android:gravity="end"
-                        android:textAlignment="textEnd"
                         android:text="Add"
+                        android:textAlignment="textEnd"
                         android:textColor="@color/text_background_color"
-                        android:textSize="16sp"
-                        android:layout_marginStart="10dp"/>
+                        android:textSize="16sp" />
 
-                    <ImageButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/abc_ic_right"
-                        app:tint="@color/iconSecondaryColor"
-                        android:layout_marginStart="30dp"
-                        android:paddingTop="10dp"
-                        android:background="@color/transparent"/>
-
-                </LinearLayout>
+                </RelativeLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_Name"
@@ -270,7 +264,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/inter_regular"
-                        android:text="@string/introduction"
+                        android:text="Institution"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
 

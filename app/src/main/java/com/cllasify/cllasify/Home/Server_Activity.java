@@ -7,11 +7,15 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -82,7 +86,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -95,7 +98,7 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class Server_Activity extends AppCompatActivity implements Adapter_ClassGroup.onAddSubjectClickListener {
+public class Server_Activity extends AppCompatActivity {
 
 
     //Database References
@@ -136,15 +139,15 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
 
     //Relative Layouts
-    RelativeLayout rl_ChatView, rl_FriendChatLayout;
+    RelativeLayout rl_ChatView, rl_FriendChatLayout, ll_bottom_send;
 
     //Linear Layouts
-    LinearLayout onlyAdminLayout, groupSection, ll_AddJoinGrp, ll_bottom_send, ll_ChatDoubtDashboard,
+    LinearLayout onlyAdminLayout, groupSection, ll_AddJoinGrp, ll_ChatDoubtDashboard,
             endPanelLinearLayout, friendSection;
 
 
     //Buttons
-    Button btn_cAddGroup, btn_cJoinGroup, addNewClassButton, btn_lTeachResult, btn_lTeachExam;
+    Button btn_cAddGroup, btn_cJoinGroup, btn_lTeachResult, btn_lTeachExam;
 
     //Image Buttons
     ImageButton ib_cattach, ib_csubmit, ib_doubtSubmit, ImageViewRecentChat, ib_FrndP_csubmit,
@@ -269,7 +272,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         groupSection = findViewById(R.id.groupSection);
         textViewGroupName = findViewById(R.id.groupName);
         textViewSubjectName = findViewById(R.id.subjectName);
-        addNewClassButton = findViewById(R.id.addNewClassButton);
         recyclerViewClassList = findViewById(R.id.recyclerViewClassList);
         classNameTextView = findViewById(R.id.classNameTextView);
 
@@ -369,7 +371,72 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
 
         //Class-Group
-        adapter_classGroup = new Adapter_ClassGroup(getApplicationContext(), this);
+        adapter_classGroup = new Adapter_ClassGroup(getApplicationContext());
+        adapter_classGroup.setOnItemClickListener(new Adapter_ClassGroup.onAddSubjectClickListener() {
+            @Override
+            public void onAddSubjectClickListener(String groupName, String uniPushClassId) {
+
+            }
+
+            @Override
+            public void onClassClickListener(int position, String classGroupName, String uniPushClassId) {
+
+                DatabaseReference posTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+                posTemp.child("classPosition").setValue(position);
+                posTemp.child("clickedClassName").setValue(classGroupName);
+                posTemp.child("uniPushClassId").setValue(uniPushClassId);
+
+            }
+
+
+            @Override
+            public void onSubClick(int classUniPosition, String clickedClassName, String uniClassPushId) {
+
+                final String[] serverName = new String[1];
+                final String[] className = new String[1];
+                final String[] subjectName = new String[1];
+                final String[] groupPushId = new String[1];
+                final String[] classPosition = new String[1];
+                final String[] uniPushClassId = new String[1];
+                final String[] subjectUniPushId = new String[1];
+                final String[] clickedGroupName = new String[1];
+
+
+                DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+                refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.getChildrenCount() > 0) {
+                            if (snapshot.child("clickedClassName").exists() && snapshot.child("clickedSubjectName").exists() && snapshot.child("clickedGroupPushId").exists()) {
+                                Log.d(TAG, "onDataChange: Clicked");
+                                if (snapshot.child("serverName").exists()) {
+                                    serverName[0] = snapshot.child("serverName").getValue().toString().trim();
+                                }
+                                subjectUniPushId[0] = snapshot.child("subjectUniPushId").getValue().toString().trim();
+                                classPosition[0] = snapshot.child("classPosition").getValue().toString().trim();
+                                className[0] = snapshot.child("clickedClassName").getValue().toString().trim();
+                                subjectName[0] = snapshot.child("clickedSubjectName").getValue().toString().trim();
+                                groupPushId[0] = snapshot.child("clickedGroupPushId").getValue().toString().trim();
+                                uniPushClassId[0] = snapshot.child("uniPushClassId").getValue().toString().trim();
+                                clickedGroupName[0] = snapshot.child("clickedGroupName").getValue().toString().trim();
+
+
+                                setReference(groupPushId[0], clickedClassName, subjectName[0], String.valueOf(classUniPosition), uniClassPushId, subjectUniPushId[0], clickedGroupName[0]);
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                overlappingPanels.closePanels();
+            }
+
+        });
         parentItemArrayListClassName = new ArrayList<>();
         childItemArrayListClassName = new ArrayList<>();
         adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
@@ -598,24 +665,25 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
         Log.d("ADMMMM", "is admin : " + checking);
         if (checking) {
             onlyAdminLayout.setVisibility(View.VISIBLE);
-            addNewClassButton.setVisibility(View.VISIBLE);
         } else {
             onlyAdminLayout.setVisibility(View.GONE);
-            addNewClassButton.setVisibility(View.GONE);
         }
     }
 
     private void setReference(String groupPushId, String subGroupPushId, String groupClassSubject, String classPosition, String classUniPushId, String subjectUniPushId, String serverName) {
 
+        if (subjectUniPushId != null && classUniPushId != null && groupPushId != null) {
+            showDoubt(groupPushId, classUniPushId, subjectUniPushId);
+        }
         if (subjectUniPushId != null && classUniPushId != null) {
             DatabaseReference databaseReferenceCHKSUBJECT = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPushId)
                     .child("classSubjectData").child(subjectUniPushId);
             databaseReferenceCHKSUBJECT.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if(snapshot.exists()){
+                    if (snapshot.exists()) {
                         ll_bottom_send.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         ll_bottom_send.setVisibility(View.GONE);
                     }
                 }
@@ -649,7 +717,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                     Log.d(TAG, "showChildGroupAdaptor: Clicked" + snapshot.getKey());
                                     parentItemArrayListClassName.clear();
                                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                        Log.d(TAG, "showChildGroupAdaptor: ClickedDS" + dataSnapshot.child("className").getValue().toString());
+//                                        Log.d(TAG, "showChildGroupAdaptor: ClickedDS" + dataSnapshot.child("className").getValue().toString());
 
                                         if (dataSnapshot.getChildrenCount() > 0) {
                                             ib_servSettings.setVisibility(View.VISIBLE);
@@ -785,7 +853,7 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                                 }
                                 }
 
-                            
+
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
 
@@ -1113,17 +1181,54 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
 
             init();
 
+            et_ctext = findViewById(R.id.et_ctext);
+
+            et_ctext.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    String c = String.valueOf(s);
+                    if (!(c.contains(" "))) {
+                        //backspace pressed
+                        Log.d("ETChange", "onTextChanged: " + s);
+
+                        if (count > 0) {
+                            ib_doubtSubmit.setVisibility(View.GONE);
+                            ib_csubmit.setVisibility(View.VISIBLE);
+
+                        }
+                    }
+                    if (count == 0 || c.contains(" ")) {
+                        ib_doubtSubmit.setVisibility(View.VISIBLE);
+                        ib_csubmit.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
+
+
             overlappingPanels.registerStartPanelStateListeners(new OverlappingPanelsLayout.PanelStateListener() {
                 @Override
                 public void onPanelStateChange(@NonNull PanelState panelState) {
                     String store = panelState.toString();
                     Log.d("SCROLLCHANGE", "onScrollChange: " + store);
                     String[] words = store.split("\\.");
-                    if(words[3].startsWith("PanelState$Opened")) {
+                    if (words[3].startsWith("PanelState$Opened")) {
                         Log.d("SCROLLCHANGESPLIT", "onScrollChange: " + (words[3]));
+                        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in_bottom);
+                        bottomNavigationView.startAnimation(animation);
                         bottomNavigationView.setVisibility(View.VISIBLE);
                     }
-                    if(words[3].startsWith("PanelState$Closed")) {
+                    if (words[3].startsWith("PanelState$Closed")) {
                         Log.d("SCROLLCHANGESPLIT", "onScrollChange: " + (words[3]));
                         bottomNavigationView.setVisibility(View.GONE);
                     }
@@ -1180,7 +1285,10 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
              */
 
             //add server option clicked(+)
-            imageViewAddPanelAddGroup.setOnClickListener(view -> createGroupDialog());
+            imageViewAddPanelAddGroup.setOnClickListener(view -> {
+                Intent intent = new Intent(Server_Activity.this, Create_Server.class);
+                startActivity(intent);
+            });
 
             chatListDashboard();
 
@@ -1302,7 +1410,11 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             btn_cAddGroup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    createGroupDialog();
+
+                    Intent intent = new Intent(Server_Activity.this, Create_Server.class);
+                    startActivity(intent);
+
+//                    createGroupDialog();
                 }
             });
 
@@ -1354,9 +1466,9 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child("DarkLightDefault").exists()) {
 
-                    Log.d("DARKEXISTS", "onDataChange: " + snapshot.child("DarkLightDefault").exists());
+//                    Log.d("DARKEXISTS", "onDataChange: " + snapshot.child("DarkLightDefault").exists());
 
-                    String darkLightDefaultVal = Objects.requireNonNull(snapshot.child("DarkLightDefault").getValue()).toString();
+                    String darkLightDefaultVal = snapshot.child("DarkLightDefault").getValue().toString();
 
                     Log.d("TAG", "onCreate: " + darkLightDefaultVal);
                     if (darkLightDefaultVal.equals("Dark")) {
@@ -1635,8 +1747,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
 
-                addNewClassButton.setVisibility(View.VISIBLE);
-
                 Log.d("CHKFLAG", "showChildGroupAdaptor: " + flagFriend);
 
                 if (flagFriend == true) {
@@ -1725,18 +1835,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                     public void onCancelled(@NonNull DatabaseError error) {
 
                     }
-                });
-
-                addNewClassButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-//                addSubChild0(position, groupName, groupPushId, groupUserID, Category, "newClass");
-                        openDialog(groupPushId);
-
-                    }
-
-
-
                 });
 
             }
@@ -2933,189 +3031,6 @@ public class Server_Activity extends AppCompatActivity implements Adapter_ClassG
                 Server_Activity.this.finish();
             }
         }
-    }
-
-
-    /*
-    Alert box show when user want to exit the app
-     */
-
-    @Override
-    public void onClassClickListener(int position, String classGroupName, String uniPushClassId) {
-
-        DatabaseReference posTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
-        posTemp.child("classPosition").setValue(position);
-        posTemp.child("clickedClassName").setValue(classGroupName);
-        posTemp.child("uniPushClassId").setValue(uniPushClassId);
-
-
-//        classPosition = String.valueOf(position);
-//        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("")
-    }
-
-    @Override
-    public void onSubClick(int classUniPosition, String clickedClassName, String uniClassPushId) {
-
-        final String[] serverName = new String[1];
-        final String[] className = new String[1];
-        final String[] subjectName = new String[1];
-        final String[] groupPushId = new String[1];
-        final String[] classPosition = new String[1];
-        final String[] uniPushClassId = new String[1];
-        final String[] subjectUniPushId = new String[1];
-        final String[] clickedGroupName = new String[1];
-
-
-        DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
-
-        refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount() > 0) {
-                    if (snapshot.child("clickedClassName").exists() && snapshot.child("clickedSubjectName").exists() && snapshot.child("clickedGroupPushId").exists()) {
-                        Log.d(TAG, "onDataChange: Clicked");
-                        if (snapshot.child("serverName").exists()) {
-                            serverName[0] = snapshot.child("serverName").getValue().toString().trim();
-                        }
-                        subjectUniPushId[0] = snapshot.child("subjectUniPushId").getValue().toString().trim();
-                        classPosition[0] = snapshot.child("classPosition").getValue().toString().trim();
-                        className[0] = snapshot.child("clickedClassName").getValue().toString().trim();
-                        subjectName[0] = snapshot.child("clickedSubjectName").getValue().toString().trim();
-                        groupPushId[0] = snapshot.child("clickedGroupPushId").getValue().toString().trim();
-                        uniPushClassId[0] = snapshot.child("uniPushClassId").getValue().toString().trim();
-                        clickedGroupName[0] = snapshot.child("clickedGroupName").getValue().toString().trim();
-
-
-                        setReference(groupPushId[0], clickedClassName, subjectName[0], String.valueOf(classUniPosition), uniClassPushId, subjectUniPushId[0], clickedGroupName[0]);
-
-                        showDoubt(groupPushId[0], uniClassPushId, subjectUniPushId[0]);
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        overlappingPanels.closePanels();
-    }
-
-    @Override
-    public void onAddSubjectClickListener(String groupName, String uniPushClassId) {
-
-        View customAlertDialog = LayoutInflater.from(Server_Activity.this).inflate(R.layout.dialog_add_new_subject_topic, null, false);
-
-
-        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(Server_Activity.this);
-
-
-        Button btn_CreateTopic = customAlertDialog.findViewById(R.id.btn_CreateTopic);
-
-        EditText et_TopicName = customAlertDialog.findViewById(R.id.et_TopicName);
-        dialogBuilder.setView(customAlertDialog);
-
-        AlertDialog dialog = dialogBuilder.show();
-
-
-        btn_CreateTopic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!et_TopicName.getText().toString().isEmpty()) {
-
-                    DatabaseReference getServerTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
-                    getServerTemp.child("subjectName").setValue(et_TopicName.getText().toString());
-
-                    getServerTemp.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Log.d("SerT", "Temp Server name: " + (snapshot.child("serverName").getValue()));
-                            Log.d("SerT", "Temp Group Push Id: " + (snapshot.child("tpGroupPushId").getValue()));
-
-                            String groupPushId = snapshot.child("clickedGroupPushId").getValue().toString();
-
-                            DatabaseReference testDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
-
-                            String[] pushSubject = String.valueOf(testDatabaseReference.child(uniPushClassId).child("classSubjectData").child(String.valueOf(snapshot.getChildrenCount())).push()).split("/");
-
-                            testDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                        Log.d(TAG, "showChildGroupAdaptor: ClickedDDS" + dataSnapshot.getKey());
-                                        Log.d(TAG, "showChildGroupAdaptor: ClickedDS" + dataSnapshot.child("className").getValue().toString());
-                                        Class_Group_Names class_group_names = new Class_Group_Names();
-                                        class_group_names.setGroupPushId(groupPushId);
-                                        class_group_names.setClassName(dataSnapshot.child("className").getValue(String.class));
-                                        class_group_names.setClassBio(dataSnapshot.child("classBio").getValue(String.class));
-                                        class_group_names.setUniPushClassId(dataSnapshot.child("classUniPushId").getValue(String.class));
-
-
-                                        testDatabaseReference.child(uniPushClassId).child("classSubjectData").addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                testDatabaseReference.child(uniPushClassId).child("classSubjectData").child(pushSubject[9]).child("subjectName").setValue(et_TopicName.getText().toString());
-                                                testDatabaseReference.child(uniPushClassId).child("classSubjectData").child(pushSubject[9]).child("subjectUniPushId").setValue(pushSubject[9]);
-
-
-                                                GenericTypeIndicator<ArrayList<Subject_Details_Model>> genericTypeIndicator =
-                                                        new GenericTypeIndicator<ArrayList<Subject_Details_Model>>() {
-                                                        };
-
-
-                                                if (snapshot.hasChild("classSubjectData")) {
-                                                    childItemArrayListClassName = snapshot.child("classSubjectData").getValue(genericTypeIndicator);
-                                                }
-                                                Subject_Details_Model subject_details_model = new Subject_Details_Model();
-                                                subject_details_model.setSubjectName(et_TopicName.getText().toString());
-                                                subject_details_model.setSubjectUniPushId(pushSubject[9]);
-                                                childItemArrayListClassName.add(subject_details_model);
-
-                                                class_group_names.setChildItemList(childItemArrayListClassName);
-
-                                                GenericTypeIndicator<ArrayList<Class_Student_Details>> genericTypeIndicatorStudent =
-                                                        new GenericTypeIndicator<ArrayList<Class_Student_Details>>() {
-                                                        };
-
-                                                class_group_names.setClass_student_detailsList(snapshot.child("classStudentList").getValue(genericTypeIndicatorStudent));
-
-
-                                                parentItemArrayListClassName.add(class_group_names);
-
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-
-                                            }
-                                        });
-
-                                    }
-                                }
-
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                    dialog.dismiss();
-
-                }
-            }
-        });
-
-
     }
 
 }

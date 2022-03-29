@@ -39,24 +39,12 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
-//        void onSaveQues(int position, String mTitle, String mDesc);
-        //void fillbyOfficialLink(int position, String offWeb);
-
-        //void dislikeAns(int position, String tag);
-//        void shareQues(int position, String question);
-
-
-//        void listitem(int position, String question, String pushQues, String pushAns,String category);
-
         void createGroupDialog(String adminGroupID, String groupName);
 
         void rejectNotify(String reqUserID, String currUserId, String groupName, String userName, String classPushId, String groupPushId, String notifyCategory, String notPushId);
 
         void acceptNotify(String reqUserID, String currUserId, String groupName, String userName, String classPushId, String groupPushId, String notifyCategory, String notPushId, String classUniPush);
-        //void likeAns(int position, String tag);
-        //        void saveAns(int position, String tag);
-        //        void likeAns(View v, int position, Boolean clicked);
-        //        void onWebLinkClick(int position);
+
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {

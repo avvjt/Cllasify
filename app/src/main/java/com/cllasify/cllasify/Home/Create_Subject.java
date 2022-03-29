@@ -1,0 +1,205 @@
+package com.cllasify.cllasify.Home;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.cllasify.cllasify.Class_Group_Names;
+import com.cllasify.cllasify.Class_Student_Details;
+import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Subject_Details_Model;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Create_Subject extends AppCompatActivity {
+
+    FirebaseAuth firebaseAuth;
+    FirebaseUser currentUser;
+    Uri userPhoto;
+    String userID, userEmailID, userName;
+    String uniPushClassId;
+    List<Subject_Details_Model> childItemArrayListClassName;
+    List<Class_Group_Names> parentItemArrayListClassName;
+    String groupPushId;
+
+    @Override
+    public void onBackPressed() {
+        if(getIntent().hasExtra("justBack")){
+            finish();
+        } else {
+            Toast.makeText(Create_Subject.this, "Please click the skip button or next button to continue", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_create_subject);
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
+        assert currentUser != null;
+        userID = currentUser.getUid();
+        userEmailID = currentUser.getEmail();
+        userPhoto = currentUser.getPhotoUrl();
+        userName = currentUser.getDisplayName();
+
+        childItemArrayListClassName = new ArrayList<>();
+        parentItemArrayListClassName = new ArrayList<>();
+
+        if(getIntent().hasExtra("classUniPushId")){
+            uniPushClassId = getIntent().getStringExtra("classUniPushId");
+        }
+
+        if(getIntent().hasExtra("groupPushId")){
+            groupPushId = getIntent().getStringExtra("groupPushId");
+        }
+
+        Button btn_CreateTopic = findViewById(R.id.btn_CreateTopic);
+        Button btn_Skip = findViewById(R.id.skipBtn);
+
+        btn_Skip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getIntent().hasExtra("justBack")){
+                    finish();
+                }
+                else {
+                    Intent intent = new Intent(Create_Subject.this, Server_Activity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        EditText et_TopicName = findViewById(R.id.et_TopicName);
+
+
+
+        btn_CreateTopic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!et_TopicName.getText().toString().isEmpty()) {
+
+                    saveSubject(et_TopicName.getText().toString(),uniPushClassId,groupPushId);
+
+                    if(getIntent().hasExtra("justBack")){
+                        finish();
+                    }
+                    else{
+                        Intent intent = new Intent(Create_Subject.this,Server_Activity.class);
+                        startActivity(intent);
+                    }
+
+
+
+                }
+            }
+        });
+
+    }
+
+    private void saveSubject(String topicName,String uniPushClassId,String groupPushId) {
+
+        DatabaseReference getServerTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+        getServerTemp.child("subjectName").setValue(topicName);
+
+        getServerTemp.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d("SerT", "Temp Server name: " + (snapshot.child("serverName").getValue()));
+                Log.d("SerT", "Temp Group Push Id: " + (snapshot.child("tpGroupPushId").getValue()));
+
+                DatabaseReference testDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
+
+                String[] pushSubject = String.valueOf(testDatabaseReference.child(uniPushClassId).child("classSubjectData").child(String.valueOf(snapshot.getChildrenCount())).push()).split("/");
+
+                testDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            Log.d("TAG", "showChildGroupAdaptor: ClickedDDS" + dataSnapshot.getKey());
+                            Log.d("TAG", "showChildGroupAdaptor: ClickedDS" + dataSnapshot.child("className").getValue().toString());
+                            Class_Group_Names class_group_names = new Class_Group_Names();
+                            class_group_names.setGroupPushId(groupPushId);
+                            class_group_names.setClassName(dataSnapshot.child("className").getValue(String.class));
+                            class_group_names.setClassBio(dataSnapshot.child("classBio").getValue(String.class));
+                            class_group_names.setUniPushClassId(dataSnapshot.child("classUniPushId").getValue(String.class));
+
+
+                            testDatabaseReference.child(uniPushClassId).child("classSubjectData").addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    testDatabaseReference.child(uniPushClassId).child("classSubjectData").child(pushSubject[9]).child("subjectName").setValue(topicName);
+                                    testDatabaseReference.child(uniPushClassId).child("classSubjectData").child(pushSubject[9]).child("subjectUniPushId").setValue(pushSubject[9]);
+
+
+                                    GenericTypeIndicator<ArrayList<Subject_Details_Model>> genericTypeIndicator =
+                                            new GenericTypeIndicator<ArrayList<Subject_Details_Model>>() {
+                                            };
+
+
+                                    if (snapshot.hasChild("classSubjectData")) {
+                                        childItemArrayListClassName = snapshot.child("classSubjectData").getValue(genericTypeIndicator);
+                                    }
+                                    Subject_Details_Model subject_details_model = new Subject_Details_Model();
+                                    subject_details_model.setSubjectName(topicName);
+                                    subject_details_model.setSubjectUniPushId(pushSubject[9]);
+                                    childItemArrayListClassName.add(subject_details_model);
+
+                                    class_group_names.setChildItemList(childItemArrayListClassName);
+
+                                    GenericTypeIndicator<ArrayList<Class_Student_Details>> genericTypeIndicatorStudent =
+                                            new GenericTypeIndicator<ArrayList<Class_Student_Details>>() {
+                                            };
+
+                                    class_group_names.setClass_student_detailsList(snapshot.child("classStudentList").getValue(genericTypeIndicatorStudent));
+
+
+                                    parentItemArrayListClassName.add(class_group_names);
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                        }
+                    }
+
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+}

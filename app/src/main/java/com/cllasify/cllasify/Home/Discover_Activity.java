@@ -1,7 +1,6 @@
 package com.cllasify.cllasify.Home;
 
 import android.app.ProgressDialog;
-import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -87,7 +86,11 @@ public class Discover_Activity extends AppCompatActivity {
     String NOTIFICATION_MESSAGE;
     String TOPIC;
 
-    Button btn_Group,btn_School,btn_Users;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser currentUser;
+    String userID;
+
+    Button btn_Group, btn_School, btn_Users;
 
     @Override
     public void onBackPressed() {
@@ -100,15 +103,19 @@ public class Discover_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
+        userID = currentUser.getUid();
+
         DatabaseReference refGroupReqCount = FirebaseDatabase.getInstance().getReference().
-                child( "Groups" ).child( "All_Universal_Group" );
+                child("Groups").child("All_Universal_Group");
         refGroupReqCount.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount()>0) {
-                    Log.d("CHKGRPS", "onDataChange: "+snapshot.getChildrenCount());
+                if (snapshot.getChildrenCount() > 0) {
+                    Log.d("CHKGRPS", "onDataChange: " + snapshot.getChildrenCount());
                     showAllGroupSearch("All_Universal_Group");
-                }else{
+                } else {
                     notifyPB.dismiss();
                     Toast.makeText(Discover_Activity.this, "No Other Group Present", Toast.LENGTH_SHORT).show();
                 }
@@ -163,32 +170,21 @@ public class Discover_Activity extends AppCompatActivity {
 
         refSearchShowGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Universal_Group" );
 
-        /*if (esv_groupSearchView != null) {
+        if (esv_groupSearchView != null) {
             esv_groupSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                 @Override
                 public boolean onQueryTextSubmit(String query) {
                     return false;
                 }
+
                 @Override
                 public boolean onQueryTextChange(String newText) {
 //                    searchGroup(newTesxt);
                     return false;
                 }
             });
-        }*/
+        }
 
-        esv_groupSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                filterList(newText);
-                return true;
-            }
-        });
 
         btn_Users.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -219,17 +215,6 @@ public class Discover_Activity extends AppCompatActivity {
 
 
 //        showAllGroupSearch("All_Universal_Group");
-
-    }
-
-    private void filterList(String text) {
-        List<Class_Group> filterList = new ArrayList<>();
-        for (Class_Group items : listAllGroupStatus) {
-            if (items.getGroupName().toLowerCase().contains(text.toLowerCase())) {
-                filterList.add(items);
-            }
-        }
-        showAllGroupAdaptor.filterList(filterList);
 
     }
 
@@ -310,121 +295,32 @@ public class Discover_Activity extends AppCompatActivity {
 
     private void showBtmDialogClass(String adminGroupID,String groupName,String groupPushId) {
 
-        Intent intent = new Intent(getApplicationContext(), Discover_Item.class);
-        intent.putExtra("groupName",groupName);
-        intent.putExtra("groupPushId",groupPushId);
-        Log.d("Grouup", "GroupName: "+groupName+"\n"+"GroupPushId: "+groupPushId);
-        startActivity(intent);
+        DatabaseReference checkAdmin = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList");
 
-/*
-        Adaptor_ShowGrpClass showGrpClassList;
-        List<Class_Group> listGrpClassList;
-        DatabaseReference refGroupClassList;
-
-        BottomSheetDialog bottomSheetDialoglogin=new BottomSheetDialog(Discover_Activity.this);
-//        bottomSheetDialoglogin.setCancelable(false);
-        bottomSheetDialoglogin.setContentView(R.layout.btmdialog_serverview);
-
-        Button btn_Share=bottomSheetDialoglogin.findViewById(R.id.btn_Share);
-        ImageView iv_ServerDP=bottomSheetDialoglogin.findViewById(R.id.iv_ServerDP);
-        TextView tv_ServerName=bottomSheetDialoglogin.findViewById(R.id.tv_ServerName);
-        TextView tv_ServerBio=bottomSheetDialoglogin.findViewById(R.id.tv_ServerBio);
-        RecyclerView rv_ShowClass=bottomSheetDialoglogin.findViewById(R.id.rv_ShowClass);
-
-
-        tv_ServerName.setText(groupName);
-        rv_ShowClass.setLayoutManager(new LinearLayoutManager(Discover_Activity.this));
-
-        listGrpClassList = new ArrayList<>();
-        showGrpClassList = new Adaptor_ShowGrpClass(Discover_Activity.this, listGrpClassList);
-        rv_ShowClass.setAdapter(showGrpClassList);
-
-        refGroupClassList = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child("All_Sub_Group").child(groupPushId);
-        listGrpClassList.clear();
-
-        showGrpClassList.setOnItemClickListener(new Adaptor_ShowGrpClass.OnItemClickListener() {
+        checkAdmin.addValueEventListener(new ValueEventListener() {
             @Override
-            public void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId) {
-                sentGroupJoinInvitation(adminGroupID,adminUserName,groupName,groupPushId,subGroupName);
-
-            }
-        });
-
-        refGroupClassList.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//                String value=snapshot.getValue(String.class);
-//                Toast.makeText(getContext(), "c"+value, Toast.LENGTH_SHORT).show();
-////                arrayList.add(value);fatten
-////                arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,arrayList);
-////                listView.setAdapter(arrayAdapter);
-                Class_Group class_userDashBoard = snapshot.getValue(Class_Group.class);
-                listGrpClassList.add(class_userDashBoard);
-
-                showGrpClassList.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    if (userID.equals(dataSnapshot.getKey())) {
+                        Log.d("CHKADMIN", "showBtmDialogClass: " + dataSnapshot.getKey() + "\n UserId: " + userID);
+                        Toast.makeText(Discover_Activity.this, "You have already joined this group!!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Intent intent = new Intent(getApplicationContext(), Discover_Item.class);
+                        intent.putExtra("groupName", groupName);
+                        intent.putExtra("groupPushId", groupPushId);
+                        Log.d("Grouup", "GroupName: " + groupName + "\n" + "GroupPushId: " + groupPushId);
+                        startActivity(intent);
+                    }
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
-
         });
 
 
-//        btn_Cancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                bottomSheetDialoglogin.dismiss();
-//            }
-//        });
-
-        btn_Share.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent shareIntent = new Intent(android.content.Intent.ACTION_SEND);
-                shareIntent.setType("text/plain");
-                String body = "Cllasify is the best App to Discuss Study Material with Classmates using Servers," +
-                        "\nPlease Click on Below Link to Install:";
-                String subject = "Install Classify App";
-                String app_url = " https://play.google.com/store/apps/details?id=in.dreamworld.fillformonline";
-                shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, body + app_url);
-                shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
-                startActivity(Intent.createChooser(shareIntent, "Share via"));
-
-                bottomSheetDialoglogin.dismiss();
-
-            }
-        });
-
-
-//
-//        btn_phonelogin.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(getContext(), Phone_Login.class));
-//                bottomSheetDialoglogin.dismiss();
-//            }
-//        });
-
-        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        bottomSheetDialoglogin.show();
-*/
     }
 
 
@@ -571,12 +467,9 @@ public class Discover_Activity extends AppCompatActivity {
                         Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
                         String databaseUserId = class_userDashBoard.getUserId();
                         String groupCategory = class_userDashBoard.getGroupCategory();
-                        if (!currUserId.equals(databaseUserId) && groupCategory.equals("Public")) {
-
-                            listAllGroupStatus.add(class_userDashBoard);
-                            notifyPB.dismiss();
-                            showAllGroupAdaptor.notifyDataSetChanged();
-                        }
+                        listAllGroupStatus.add(class_userDashBoard);
+                        notifyPB.dismiss();
+                        showAllGroupAdaptor.notifyDataSetChanged();
 
                     } else {
                         Toast.makeText(Discover_Activity.this, "No group yet created", Toast.LENGTH_SHORT).show();

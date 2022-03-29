@@ -35,24 +35,27 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Server_Settings extends AppCompatActivity {
 
     DatabaseReference refGroupClassList, getTempData;
     String currUserId;
     RecyclerView rv_ShowClass;
-    String groupPushId, serverBio, serverName,serverEmail;
+    String groupPushId, serverBio, serverName, serverEmail;
     ImageButton serverSettingProfile;
 
     Adaptor_Server_Setting_Items showGrpClassList;
     List<Class_Group_Names> listGrpClassList;
 
-    TextView tv_ServerName, schoolBio,schoolEmail;
-    private FirebaseAuth firebaseAuth;
-    private FirebaseUser currentUser;
-    private String userID;
+    TextView tv_ServerName, schoolBio, schoolEmail;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser currentUser;
+    String userID,userName;
+
 
     ImageView schoolLogoImg;
+    Button addNewClass;
 
     @Override
     public void onBackPressed() {
@@ -71,10 +74,12 @@ public class Server_Settings extends AppCompatActivity {
             currentUser = firebaseAuth.getCurrentUser();
             assert currentUser != null;
             userID = currentUser.getUid();
+            userName = currentUser.getDisplayName();
         }
 
 
         schoolLogoImg = findViewById(R.id.schoolLogoImg);
+        addNewClass = findViewById(R.id.addNewClass);
 
         rv_ShowClass = findViewById(R.id.rv_ShowClass);
         tv_ServerName = findViewById(R.id.tv_ServerName);
@@ -95,7 +100,7 @@ public class Server_Settings extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     if (!(Server_Settings.this).isFinishing()) {
-                        Log.d("SERVIMG", "onDataChange: "+snapshot.getValue());
+                        Log.d("SERVIMG", "onDataChange: " + snapshot.getValue());
                         Glide.with(Server_Settings.this).load(snapshot.getValue()).into(schoolLogoImg);
                     }
                 }
@@ -130,6 +135,21 @@ public class Server_Settings extends AppCompatActivity {
                 if (snapshot.exists()) {
                     serverName = snapshot.getValue(String.class);
                     tv_ServerName.setText(serverName);
+
+
+
+                    addNewClass.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            Intent intent = new Intent(Server_Settings.this,Create_Class.class);
+                            intent.putExtra("GroupName",serverName);
+                            intent.putExtra("groupPushId",groupPushId);
+                            startActivity(intent);
+
+                        }
+                    });
+
 
                 }
             }
@@ -356,7 +376,84 @@ public class Server_Settings extends AppCompatActivity {
     }
 
 
+    private void saveClassGroup(String groupPushId, String sbChildGroupName) {
 
+        DatabaseReference testDatabaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs");
+
+        testDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                DatabaseReference getServerTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+                getServerTemp.child("className").setValue(sbChildGroupName);
+
+                DatabaseReference setAdmins = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins");
+
+                getServerTemp.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        String serverName = (Objects.requireNonNull(snapshot.child("serverName").getValue())).toString();
+
+                        Log.d("SerT", "Temp Server name: " + serverName);
+                        Log.d("SerT", "Temp Group Push Id: " + (snapshot.child("tpGroupPushId").getValue()));
+                        Log.d("SerT", "Group Push Id: " + groupPushId);
+                        Log.d("SerT", "Group name: " + sbChildGroupName);
+
+
+                        testDatabaseReference.child(groupPushId).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                String[] push01 = String.valueOf(testDatabaseReference.child(groupPushId).push()).split("/");
+
+                                testDatabaseReference.child(groupPushId).child(push01[6]).child("className").setValue(sbChildGroupName);
+//                                testDatabaseReference.child(groupPushId).child(push01[6]).child("classBio").setValue(" ");
+                                testDatabaseReference.child(groupPushId).child(push01[6]).child("classUniPushId").setValue(push01[6]);
+                                testDatabaseReference.child(groupPushId).child(push01[6]).child("groupPushId").setValue(groupPushId);
+                                testDatabaseReference.child(groupPushId).child(push01[6]).child("classStudentList").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot01) {
+                                        Class_Student_Details class_student_details = new Class_Student_Details(true, userID, userName);
+                                        setAdmins.child(groupPushId).child("classAdminList")
+                                                .child(userID).setValue(class_student_details);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                /*
+
+                 */
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
 
 
 }

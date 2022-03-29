@@ -1,6 +1,7 @@
 package com.cllasify.cllasify.Home;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,7 +36,8 @@ public class Students_Subjects extends AppCompatActivity {
 
     String currUserID;
     RecyclerView rv_showStudents, rv_ShowSubject, rv_showTeachers;
-    TextView tv_studentList,tv_adminList,tv_SubjectList;
+    TextView tv_studentList,tv_adminList, tv_SubjectList;
+    Button addNewSubject;
 
     //Students
     Adaptor_ShowGrpMember_Serv showGrpMemberList;
@@ -59,6 +61,7 @@ public class Students_Subjects extends AppCompatActivity {
         tv_studentList = findViewById(R.id.studentListText);
         tv_adminList = findViewById(R.id.adminListText);
         tv_SubjectList = findViewById(R.id.subjectListText);
+        addNewSubject = findViewById(R.id.addNewSubject);
 
 
         //Set Students
@@ -78,6 +81,23 @@ public class Students_Subjects extends AppCompatActivity {
         });
         rv_showStudents.setLayoutManager(new LinearLayoutManager(Students_Subjects.this));
 
+
+        if (getIntent().hasExtra("uniGroupPushId") && getIntent().hasExtra("uniClassPushId")) {
+
+            String uniGrpPushId = getIntent().getStringExtra("uniGroupPushId");
+            String uniClassPushId = getIntent().getStringExtra("uniClassPushId");
+
+            addNewSubject.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Students_Subjects.this, Create_Subject.class);
+                    intent.putExtra("classUniPushId", uniClassPushId);
+                    intent.putExtra("groupPushId", uniGrpPushId);
+                    intent.putExtra("justBack",true);
+                    startActivity(intent);
+                }
+            });
+        }
 
         //Set Subjects
         rv_ShowSubject = findViewById(R.id.subjectList);

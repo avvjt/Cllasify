@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Home.Students_Subjects">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
 
     <TextView
         android:id="@+id/studentListText"
@@ -39,20 +44,40 @@
         android:layout_marginStart="25dp" />
 
 
-
     <TextView
         android:id="@+id/subjectListText"
-        android:layout_below="@+id/adminList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:text="Subjects"/>
+        android:layout_below="@+id/adminList"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:text="Subjects" />
+
+        <Button
+            android:id="@+id/addNewSubject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/subjectListText"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/cust_rounded_corner"
+            android:text="Add new Subject"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/subjectList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/subjectListText"
+        android:layout_below="@+id/addNewSubject"
         android:layout_marginStart="25dp" />
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>

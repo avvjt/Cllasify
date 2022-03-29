@@ -1,6 +1,7 @@
 package com.cllasify.cllasify.Profile;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,6 +9,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -20,6 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +34,6 @@ import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -43,12 +46,16 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileSetting_Activity extends AppCompatActivity {
 
 
-    LinearLayout ll_UserName, ll_Name, ll_Instituion, ll_Email, ll_Location, ll_Bio;
+    LinearLayout  ll_Name, ll_Instituion, ll_Email, ll_Location, ll_Bio;
+    RelativeLayout ll_UserName;
     DatabaseReference refUserStatus;
     FirebaseUser currentUser;
     String userID, userName, userEmail;
@@ -249,103 +256,97 @@ public class ProfileSetting_Activity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
-//
-//        refUserFollowers= FirebaseDatabase.getInstance().getReference().child("Users").child("Followers").child(userID);
-//        refUserFollowers.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.getChildrenCount()>0){
-//                    long count=snapshot.getChildrenCount();
-//                    tv_CountFollowers.setText((int) count+" Followers");
-//                    notifyPB.dismiss();
-////                        notifyPB.show();
-//                }else{
-//                    tv_CountFollowers.setText("No Followers");
-//
-//                }
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//            }
-//        });
-//
-//        refUserFollowing= FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(userID);
-//        refUserFollowing.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.getChildrenCount()>0){
-//                    long count=snapshot.getChildrenCount();
-//                    tv_CountFollowing.setText((int) count+" Following");
-//                    notifyPB.dismiss();
-//                }else {
-//                    tv_CountFollowing.setText("No Following");
-//                }
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//            }
-//        });
 
 
     }
 
+    boolean validateUsername(String input) {
+        Pattern pattern = Pattern.compile("^[a-z_]([a-z0-9_-]{0,31}|[a-z0-9_-]{0,30}\\$)$");
+        Matcher matcher = pattern.matcher(input);
+        return matcher.matches();
+    }
 
     // BottomSheet for username
     private void editUsername(String title, String userData) {
 
-        BottomSheetDialog bottomSheetDialoglogin = new BottomSheetDialog(this);
-        bottomSheetDialoglogin.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        bottomSheetDialoglogin.setCancelable(true);
-        bottomSheetDialoglogin.setCanceledOnTouchOutside(true);
-        bottomSheetDialoglogin.setContentView(R.layout.bottomsheet_username);
-        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setContentView(R.layout.bottomsheet_username);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        Button btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_cancel);
-        TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.editTitle);
-        EditText et_NewDetails = bottomSheetDialoglogin.findViewById(R.id.et_NewDetails);
-        Button btn_Submit = bottomSheetDialoglogin.findViewById(R.id.btn_submit);
+
+        Button btn_Cancel = dialog.findViewById(R.id.btn_cancel);
+        TextView tv_subTitle = dialog.findViewById(R.id.editTitle);
+        EditText et_NewDetails = dialog.findViewById(R.id.et_NewDetails);
+        Button btn_Submit = dialog.findViewById(R.id.btn_submit);
 
         et_NewDetails.setHint(userData);
 
-        btn_Submit.setOnClickListener(new View.OnClickListener() {
+        et_NewDetails.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                if (title.equals("NickName")) {
-                    String username = et_NewDetails.getText().toString().trim();
-                    Query uniqueUserName = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").orderByChild("uniqueUserName").equalTo(username);
-                    uniqueUserName.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.getChildrenCount() > 0) {
-                                et_NewDetails.setError("Please choose a different userName");
-                            } else {
-                                refUserStatus.child("uniqueUserName").setValue(username);
-                                bottomSheetDialoglogin.dismiss();
-                            }
-                        }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (validateUsername(et_NewDetails.getText().toString())) {
+                    btn_Submit.setEnabled(true);
+                    btn_Submit.setTextColor(Color.parseColor("#FF6200EE"));
+                    btn_Submit.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                        public void onClick(View v) {
+                            if (title.equals("NickName")) {
+                                String username = et_NewDetails.getText().toString().trim();
+                                Query uniqueUserName = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").orderByChild("uniqueUserName").equalTo(username);
+                                uniqueUserName.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.getChildrenCount() > 0) {
+                                            et_NewDetails.setError("Please choose a different userName");
+                                        } else {
+                                            refUserStatus.child("uniqueUserName").setValue(username);
+                                            dialog.dismiss();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+                            }
 
                         }
                     });
 
+                } else {
+                    btn_Submit.setEnabled(false);
+                    btn_Submit.setTextColor(Color.parseColor("#eeeeee"));
+                    Toast.makeText(ProfileSetting_Activity.this, "Usernames can only use letters,numbers and underscores.", Toast.LENGTH_SHORT).show();
                 }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
 
             }
         });
+
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottomSheetDialoglogin.dismiss();
+                dialog.dismiss();
             }
         });
 
-        bottomSheetDialoglogin.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        bottomSheetDialoglogin.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        bottomSheetDialoglogin.getWindow().setGravity(Gravity.BOTTOM);
-        bottomSheetDialoglogin.show();
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
 
         moveTaskToBack(false);
 
@@ -354,17 +355,17 @@ public class ProfileSetting_Activity extends AppCompatActivity {
     // BottomSheet for name
     private void editName(String title, String userData) {
 
-        BottomSheetDialog bottomSheetDialoglogin = new BottomSheetDialog(this);
-        bottomSheetDialoglogin.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        bottomSheetDialoglogin.setCancelable(true);
-        bottomSheetDialoglogin.setCanceledOnTouchOutside(true);
-        bottomSheetDialoglogin.setContentView(R.layout.bottomsheet_name);
-        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setContentView(R.layout.bottomsheet_name);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        Button btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_cancel);
-        TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.editTitle);
-        EditText et_NewDetails = bottomSheetDialoglogin.findViewById(R.id.et_NewDetails);
-        Button btn_Submit = bottomSheetDialoglogin.findViewById(R.id.btn_submit);
+        Button btn_Cancel = dialog.findViewById(R.id.btn_cancel);
+        TextView tv_subTitle = dialog.findViewById(R.id.editTitle);
+        EditText et_NewDetails = dialog.findViewById(R.id.et_NewDetails);
+        Button btn_Submit = dialog.findViewById(R.id.btn_submit);
 
         et_NewDetails.setHint(userData);
 
@@ -374,7 +375,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                 if (title.equals("Name")) {
                     String name = et_NewDetails.getText().toString().trim();
                     refUserStatus.child("Name").setValue(name);
-                    bottomSheetDialoglogin.dismiss();
+                    dialog.dismiss();
                 } else {
                     Toast.makeText(ProfileSetting_Activity.this, "Something went wrong !", Toast.LENGTH_SHORT).show();
                 }
@@ -383,15 +384,14 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottomSheetDialoglogin.dismiss();
+                dialog.dismiss();
             }
         });
 
-        bottomSheetDialoglogin.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        bottomSheetDialoglogin.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        bottomSheetDialoglogin.getWindow().setGravity(Gravity.BOTTOM);
-        bottomSheetDialoglogin.show();
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
 
         moveTaskToBack(false);
 
@@ -400,12 +400,12 @@ public class ProfileSetting_Activity extends AppCompatActivity {
     // BottomSheet for location
     private void editLocation(String title, String userData) {
 
-        BottomSheetDialog bottomSheetDialoglogin = new BottomSheetDialog(this);
-        bottomSheetDialoglogin.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        bottomSheetDialoglogin.setCancelable(true);
-        bottomSheetDialoglogin.setCanceledOnTouchOutside(true);
-        bottomSheetDialoglogin.setContentView(R.layout.bottomsheet_location);
-        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setContentView(R.layout.bottomsheet_location);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
         final String[] pp = {"Bhandup", "Mumbai", "Visakhapatnam", "Coimbatore",
@@ -498,17 +498,27 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 R.layout.custom_list_item, R.id.text_view_list_item, pp);
 
-        Button btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_cancel);
+        Button btn_Cancel = dialog.findViewById(R.id.btn_cancel);
 //        TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.tv_subTitle);
 //        TextView tv_SettingTitle = bottomSheetDialoglogin.findViewById(R.id.tv_SettingTitle);
-        AutoCompleteTextView et_NewDetails = bottomSheetDialoglogin.findViewById(R.id.actv);
-        Button btn_Submit = bottomSheetDialoglogin.findViewById(R.id.btn_submit);
+        AutoCompleteTextView et_NewDetails = dialog.findViewById(R.id.actv);
+        Button btn_Submit = dialog.findViewById(R.id.btn_submit);
 
         et_NewDetails.setHint(userData);
 
         assert et_NewDetails != null;
         et_NewDetails.setAdapter(adapter);
 
+
+//        tv_subTitle.setText("Enter new " + title);
+//        tv_SettingTitle.setText("Please update " + userData);
+
+        btn_Cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
         btn_Submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -517,40 +527,41 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                 String location = et_NewDetails.getText().toString().trim();
                 refUserStatus.child("Location").setValue(location);
 
-                bottomSheetDialoglogin.dismiss();
+                dialog.dismiss();
             }
         });
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottomSheetDialoglogin.dismiss();
+                dialog.dismiss();
             }
         });
 
-        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        bottomSheetDialoglogin.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        bottomSheetDialoglogin.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        bottomSheetDialoglogin.getWindow().setGravity(Gravity.BOTTOM);
-        bottomSheetDialoglogin.show();
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
 
         moveTaskToBack(false);
 
     }
 
+
     // BottomSheet for institution
     private void editInstitution(String title, String userData) {
 
-        BottomSheetDialog bottomSheetDialoglogin = new BottomSheetDialog(this);
-        bottomSheetDialoglogin.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        bottomSheetDialoglogin.setCancelable(true);
-        bottomSheetDialoglogin.setCanceledOnTouchOutside(true);
-        bottomSheetDialoglogin.setContentView(R.layout.bottomsheet_institution);
-        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setContentView(R.layout.bottomsheet_institution);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        Button btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_cancel);
-        TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.editTitle);
-        EditText et_NewDetails = bottomSheetDialoglogin.findViewById(R.id.et_NewDetails);
-        Button btn_Submit = bottomSheetDialoglogin.findViewById(R.id.btn_submit);
+
+        Button btn_Cancel = dialog.findViewById(R.id.btn_cancel);
+        TextView tv_subTitle = dialog.findViewById(R.id.editTitle);
+        EditText et_NewDetails = dialog.findViewById(R.id.et_NewDetails);
+        Button btn_Submit = dialog.findViewById(R.id.btn_submit);
 
 
         et_NewDetails.setHint(userData);
@@ -561,7 +572,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                 if (title.equals("Insitution")) {
                     String institution = et_NewDetails.getText().toString().trim();
                     refUserStatus.child("Insitution").setValue(institution);
-                    bottomSheetDialoglogin.dismiss();
+                    dialog.dismiss();
 
                 } else {
                     Toast.makeText(ProfileSetting_Activity.this, "Something went wrong !", Toast.LENGTH_SHORT).show();
@@ -573,15 +584,14 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottomSheetDialoglogin.dismiss();
+                dialog.dismiss();
             }
         });
 
-        bottomSheetDialoglogin.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        bottomSheetDialoglogin.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        bottomSheetDialoglogin.getWindow().setGravity(Gravity.BOTTOM);
-        bottomSheetDialoglogin.show();
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
 
         moveTaskToBack(false);
 
@@ -590,17 +600,18 @@ public class ProfileSetting_Activity extends AppCompatActivity {
     // BottomSheet for bio
     private void editBio(String title, String userData) {
 
-        BottomSheetDialog bottomSheetDialoglogin = new BottomSheetDialog(this);
-        bottomSheetDialoglogin.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        bottomSheetDialoglogin.setCancelable(true);
-        bottomSheetDialoglogin.setCanceledOnTouchOutside(true);
-        bottomSheetDialoglogin.setContentView(R.layout.bottomsheet_bio);
-        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        final Dialog dialog = new Dialog(this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setContentView(R.layout.bottomsheet_bio);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        Button btn_Cancel = bottomSheetDialoglogin.findViewById(R.id.btn_cancel);
-        TextView tv_subTitle = bottomSheetDialoglogin.findViewById(R.id.editTitle);
-        EditText et_NewDetails = bottomSheetDialoglogin.findViewById(R.id.et_NewDetails);
-        Button btn_Submit = bottomSheetDialoglogin.findViewById(R.id.btn_submit);
+
+        Button btn_Cancel = dialog.findViewById(R.id.btn_cancel);
+        TextView tv_subTitle = dialog.findViewById(R.id.editTitle);
+        EditText et_NewDetails = dialog.findViewById(R.id.et_NewDetails);
+        Button btn_Submit = dialog.findViewById(R.id.btn_submit);
 
         et_NewDetails.setHint(userData);
 
@@ -610,7 +621,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                 if (title.equals("Bio")) {
                     String bio = et_NewDetails.getText().toString().trim();
                     refUserStatus.child("Bio").setValue(bio);
-                    bottomSheetDialoglogin.dismiss();
+                    dialog.dismiss();
 
                 } else {
                     Toast.makeText(ProfileSetting_Activity.this, "Something went wrong !", Toast.LENGTH_SHORT).show();
@@ -621,15 +632,14 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottomSheetDialoglogin.dismiss();
+                dialog.dismiss();
             }
         });
 
-        bottomSheetDialoglogin.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        bottomSheetDialoglogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        bottomSheetDialoglogin.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-        bottomSheetDialoglogin.getWindow().setGravity(Gravity.BOTTOM);
-        bottomSheetDialoglogin.show();
+        dialog.show();
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        dialog.getWindow().setGravity(Gravity.BOTTOM);
 
         moveTaskToBack(false);
 

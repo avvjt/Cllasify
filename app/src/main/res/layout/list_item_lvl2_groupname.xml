@@ -83,18 +83,6 @@
             android:src="@drawable/drop_up" />
     </RelativeLayout>
 
-
-        <ImageButton
-            android:id="@+id/addNewTopicButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:layout_margin="12dp"
-            android:background="@color/transparent"
-            android:src="@drawable/ic_add"
-            app:tint="@color/black" />
-
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

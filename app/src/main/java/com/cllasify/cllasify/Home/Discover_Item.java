@@ -237,12 +237,7 @@ public class Discover_Item extends AppCompatActivity {
 
             }
         });
-//        btn_Cancel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                bottomSheetDialoglogin.dismiss();
-//            }
-//        });
+
         btn_Share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -354,7 +349,6 @@ public class Discover_Item extends AppCompatActivity {
                                 final String userName = currentUser.getDisplayName();
                                 final String userEmail = currentUser.getEmail();
                                 final Uri userPhoto = currentUser.getPhotoUrl();
-                                DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(adminGroupID);
                                 DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(userID);
 
                                 DatabaseReference grpJoiningReqs = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classPushId).child("groupJoiningReqs");
@@ -368,7 +362,6 @@ public class Discover_Item extends AppCompatActivity {
                                         if (JoinStatus.equals("StudentJoin")) {
                                             Class_Group userAddComment = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq", classPushId);
                                             grpJoiningReqs.child(pushLong).setValue(userAddComment);
-                                            //                                            refjoiningReq.child(pushLong).setValue(userAddComment);
                                             refacceptingReq.child(pushLong).setValue(userAddComment);
                                         }
 
@@ -383,6 +376,7 @@ public class Discover_Item extends AppCompatActivity {
                                     }
                                 });
 
+                                DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(groupPushId).child("groupTeacherJoiningReqs");
 
                                 refjoiningReq.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
@@ -406,23 +400,7 @@ public class Discover_Item extends AppCompatActivity {
                                     public void onCancelled(@NonNull DatabaseError error) {
                                     }
                                 });
-//
-//                                TOPIC = "/topics/userABC"; //topic must match with what the receiver subscribed to
-//                                NOTIFICATION_TITLE = edtTitle.getText().toString();
-//                                NOTIFICATION_MESSAGE = edtMessage.getText().toString();
-//
-//                                JSONObject notification = new JSONObject();
-//                                JSONObject notifcationBody = new JSONObject();
-//                                try {
-//                                    notifcationBody.put("title", NOTIFICATION_TITLE);
-//                                    notifcationBody.put("message", NOTIFICATION_MESSAGE);
-//
-//                                    notification.put("to", TOPIC);
-//                                    notification.put("data", notifcationBody);
-//                                } catch (JSONException e) {
-//                                    Log.e(TAG, "onCreate: " + e.getMessage() );
-//                                }
-//                                sendPushNotification(notification);
+
                             }
                         })
                 .setNegativeButton("No",

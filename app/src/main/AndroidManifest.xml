@@ -37,6 +37,15 @@
             android:name=".Privacy"
             android:exported="false" />
         <activity
+            android:name=".Home.Create_Subject"
+            android:exported="false" />
+        <activity
+            android:name=".Home.Create_Class"
+            android:exported="false" />
+        <activity
+            android:name=".Home.Create_Server"
+            android:exported="false" />
+        <activity
             android:name=".Home.Attendance_History"
             android:exported="false" />
         <activity

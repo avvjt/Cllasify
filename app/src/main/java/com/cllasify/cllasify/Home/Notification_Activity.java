@@ -427,7 +427,8 @@ public class Notification_Activity extends AppCompatActivity {
 
 
 
-                }else if (notifyCategory.equals("Friend_Request")){
+                }
+                else if (notifyCategory.equals("Friend_Request")){
 
                     DatabaseReference refSubs_Frnd_Group = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(reqUserID);
 //                    DatabaseReference refAdmin_Frnd_Group = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(currUserId);

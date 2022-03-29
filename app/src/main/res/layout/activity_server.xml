@@ -169,14 +169,6 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <Button
-                            android:id="@+id/addNewClassButton"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textAllCaps="false"
-                            android:visibility="gone"
-                            android:text="Add New Class" />
-
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerViewClassList"
@@ -368,13 +360,14 @@
                         android:layout_above="@+id/ll_bottom_send"
                         android:layout_below="@+id/subjectName" />
                     <!--Chat box sending message layout-->
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:id="@+id/ll_bottom_send"
                         android:visibility="gone"
                         android:orientation="horizontal">
+
                         <EditText
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
@@ -382,31 +375,41 @@
                             android:background="@drawable/chat_input_background"
                             android:hint="Message..."
                             android:layout_gravity="center"
+                            android:paddingStart="15dp"
+                            android:paddingEnd="15dp"
                             android:imeOptions="actionDone"
                             android:importantForAutofill="no"
                             android:inputType="text"
-                            android:paddingStart="16dp"
-                            android:paddingEnd="16dp"
+                            android:layout_toStartOf="@+id/sendDoubt"
                             android:textColor="@color/black"
                             android:textColorHint="@color/light_black"
-                            android:layout_weight="1"
-                            android:id="@+id/et_ctext"/>
+                            android:id="@+id/et_ctext" />
 
-                        <ImageButton
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:id="@+id/ib_doubtSubmit"
-                            android:src="@drawable/drop_down"
-                            android:layout_weight="3" />
+                        <RelativeLayout
+                            android:id="@+id/sendDoubt"
+                            android:layout_width="50dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_height="wrap_content">
 
-                        <ImageButton
-                            android:layout_width="match_parent"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center"
-                            android:id="@+id/ib_csubmit"
-                            android:layout_weight="3" />
-                    </LinearLayout>
+
+                            <ImageButton
+                                android:id="@+id/ib_doubtSubmit"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:background="@color/transparent"
+                                android:src="@drawable/todo_add_24" />
+
+                            <ImageButton
+                                android:id="@+id/ib_csubmit"
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp"
+                                android:visibility="gone"
+                                android:background="@color/transparent"
+                                android:src="@drawable/ic_send_24" />
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
                 </RelativeLayout>
 
             </LinearLayout>

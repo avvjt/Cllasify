@@ -1,12 +1,11 @@
 package com.cllasify.cllasify.Adaptor;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +23,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGroup.MyViewHolder> {
@@ -35,9 +33,7 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
     private OnItemClickListener mListener;
 
     public interface OnItemClickListener {
-
         void createGroupDialog(String adminGroupID, String groupName, String groupPushId);
-
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -56,10 +52,6 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
         return new MyViewHolder(rootview);
     }
 
-    public void filterList(List<Class_Group> filterList) {
-        mDatalistNew = filterList;
-        notifyDataSetChanged();
-    }
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
@@ -70,51 +62,55 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
         String groupUserName = class_GroupDetails.getUserName();
         String pushid = class_GroupDetails.getPosition();
 
-
         String databaseUserId = class_GroupDetails.getUserId();
         FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
         assert mUser != null;
         String currUserId = mUser.getUid();
-
         if (userComment.isEmpty()) {
             holder.tv_groupname.setVisibility(View.GONE);
         } else {
             holder.tv_groupname.setText(groupName);
         }
 
-        if (userComment.isEmpty()) {
-            holder.tv_groupownername.setVisibility(View.GONE);
-        } else {
-            holder.tv_groupownername.setText(groupUserName);
-        }
-
-
 
         DatabaseReference referenceALLGroup = FirebaseDatabase.getInstance().getReference().
-                child("Groups").child("All_Universal_Group").child(pushid).child("User_Subscribed_Groups");
-        referenceALLGroup.addListenerForSingleValueEvent(new ValueEventListener() {
+                child("Groups").child("All_GRPs").child(pushid);
+
+
+        referenceALLGroup.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChildren()) {
-                    if (snapshot.hasChild(currUserId)) {
-                        holder.tv_GroupStatus.setEnabled(false);
-                        String joinStatus = snapshot.child(currUserId).child("subsStatus").getValue().toString();
-                        if (joinStatus.equals("true")) {
-                            holder.tv_GroupStatus.setText("Subscribed");
-                        } else if (joinStatus.equals("req_sent")) {
-                            holder.tv_GroupStatus.setText("Req Sent");
-                        } else if (joinStatus.equals("reject")) {
-                            holder.tv_GroupStatus.setText("Rejected");
-                        }
-                    } else {
-                        holder.tv_GroupStatus.setText("Join");
-                    }
+                int totalSize = 0;
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    totalSize += dataSnapshot.child("classStudentList").getChildrenCount();
                 }
+
+                Log.d("TOTALSTU", "onDataChange: "+totalSize);
+
+                holder.numbStudents.setText(String.valueOf(totalSize));
 
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        DatabaseReference referenceALLGroupTeachers = FirebaseDatabase.getInstance().getReference().
+                child("Groups").child("Check_Group_Admins").child(pushid).child("classAdminList");
+
+
+        referenceALLGroupTeachers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                holder.numbTeachers.setText(String.valueOf(snapshot.getChildrenCount()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
@@ -127,25 +123,19 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
 
     class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tv_groupname, tv_groupownername, tv_GroupStatus;
+        TextView tv_groupname;
         RelativeLayout ll_list_group_search;
-        NumberPicker numberPicker;
-        LinearLayout showAllClasses;
         Button showAllClassesBtn;
+        TextView numbStudents, numbTeachers;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             tv_groupname = itemView.findViewById(R.id.tv_groupname);
-            tv_groupownername = itemView.findViewById(R.id.tv_groupownername);
-            tv_GroupStatus = itemView.findViewById(R.id.tv_GroupStatus);
             ll_list_group_search = itemView.findViewById(R.id.ll_list_group_search);
-            numberPicker = itemView.findViewById(R.id.classPicker);
-            showAllClasses = itemView.findViewById(R.id.showClasses);
             showAllClassesBtn = itemView.findViewById(R.id.showAllClassesBtn);
-
-            numberPicker.setMinValue(1);
-            numberPicker.setMaxValue(12);
+            numbStudents = itemView.findViewById(R.id.numbStudentsInt);
+            numbTeachers = itemView.findViewById(R.id.numbTeachersInt);
 
             ll_list_group_search.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -176,7 +166,6 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
                                 if (snapshot.getChildrenCount() > 0) {
                                     if (position != RecyclerView.NO_POSITION) {
                                         mListener.createGroupDialog(adminGroupID, groupName, groupPushId);
-                                        //mListener.dislikeAns();
                                     }
                                 } else {
                                     Toast.makeText(context.getApplicationContext(), "No class isn't created yet!!", Toast.LENGTH_SHORT).show();
@@ -197,32 +186,8 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
                 }
             });
 
-            showAllClassesBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showAllClasses.setVisibility(View.VISIBLE);
-                }
-            });
-
-            tv_GroupStatus.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (mListener != null) {
-                        int position = getAdapterPosition();
-                        Class_Group user = mDatalistNew.get(getAdapterPosition());
-                        String adminGroupID = user.userId;
-                        String groupName = user.groupName;
-                        String groupPushId = user.position;
-                        String subGrpName = user.subGroupName;
-
-
-                        if (position != RecyclerView.NO_POSITION) {
-                            mListener.createGroupDialog(adminGroupID, groupName, groupPushId);
-                        }
-                    }
-                }
-            });
         }
+
 
     }
 

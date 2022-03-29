@@ -38,9 +38,8 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
     List <Subject_Details_Model> testingNo;
     onAddSubjectClickListener onAddSubjectClickListener;
 
-    public Adapter_ClassGroup(Context context, onAddSubjectClickListener onAddSubjectClickListener) {
+    public Adapter_ClassGroup(Context context) {
         this.context = context;
-        this.onAddSubjectClickListener = onAddSubjectClickListener;
     }
 
     public void setOnItemClickListener(onAddSubjectClickListener listener){
@@ -70,43 +69,9 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
         Log.d(TAG, "onBindViewHolder: Adapter Class: "+parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName());
 
         Class_Group_Names class_group_names = parentItemArrayListClassName.get(holder.getAdapterPosition());
-
-        holder.addTopicButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onAddSubjectClickListener.onAddSubjectClickListener(parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(),class_group_names.getUniPushClassId());
-            }
-        });
 /*
 
 */
-
-        DatabaseReference checkAdminMe = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(parentItemArrayListClassName.get(holder.getAdapterPosition()).getGroupPushId()).child("classAdminList").child(userID).child("admin");
-        checkAdminMe.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    if (snapshot.getValue().equals(true)) {
-                        holder.addTopicButton.setVisibility(View.VISIBLE);
-
-                    }
-                } else {
-                    holder.addTopicButton.setVisibility(View.GONE);
-
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-
-
-
 
         holder.classGroupName.setOnClickListener(new View.OnClickListener() {
             @Override

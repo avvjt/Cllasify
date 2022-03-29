@@ -143,6 +143,7 @@ public class User_Notification_Frag extends Fragment {
 //        listGroupSTitle=new ArrayList<>();
 
         showAllGroupAdaptor.setOnItemClickListener(new Adaptor_Notify.OnItemClickListener() {
+
             @Override
             public void createGroupDialog(String adminGroupID, String groupName) {
 

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:background="@drawable/rounded_corner"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:layout_gravity="center">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_groupFamFrnds"
+        android:visibility="visible"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:layout_margin="8dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:padding="8dp"
+            android:textColor="@color/black"
+            android:id="@+id/tv_title"
+            android:text="@string/letsetup"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:id="@+id/tv_title1"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:fontFamily="@font/open_sans_regular"
+            android:textColor="@color/black"
+            android:text="In your new group is only for you family, friends, community"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Public group is able to show in search
+            anyone can able to see and ask to join"
+            android:textColor="@color/black"
+            android:fontFamily="@font/open_sans_regular"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:gravity="center"/>
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_below="@id/tv_title"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:fontFamily="@font/open_sans_regular"
+            android:textColor="@color/black"
+            android:text="Not sure? You can skip y pressing cross button on above"/>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ll_creategroup"
+        android:layout_below="@id/ll_groupFamFrnds"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:layout_margin="8dp"
+            android:padding="8dp"
+            android:id="@+id/tv_title3"
+            android:text="Create a Group"
+            android:textColor="@color/black"
+            android:fontFamily="@font/open_sans_bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:id="@+id/tv_title4"
+            android:layout_below="@id/tv_title"
+            android:layout_margin="8dp"
+            android:padding="4dp"
+            android:fontFamily="@font/open_sans_regular"
+            android:textColor="@color/black"
+            android:text="Your Group is where you can clear your doubt add notes and check assignment Discuss for your project"/>
+
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:hint="Enter Server Name"
+            android:layout_below="@id/iv_UploadGroupImage"
+            android:id="@+id/et_GroupName"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:layout_margin="8dp"
+            android:padding="4dp"
+            android:id="@+id/tv_title2"
+            android:fontFamily="@font/open_sans_regular"
+            android:textColor="@color/black"
+            android:text="By creating a server, you agree to privacy policy"/>
+
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/button_gradient"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:text="Create Group"
+            android:layout_marginTop="10dp"
+            android:id="@+id/btn_CreateGroup" />
+
+    </LinearLayout>
+</RelativeLayout>

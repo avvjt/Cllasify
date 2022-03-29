@@ -91,17 +91,16 @@
         android:textSize="15dp" />
 
     <Button
-        android:id="@+id/ShowAllClass_Btn"
+        android:id="@+id/addNewClass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/schoolEmail"
-        android:visibility="gone"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/cust_rounded_corner"
-        android:text="Show all classes"
+        android:text="Add new Class"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="20dp" />
@@ -110,7 +109,7 @@
         android:id="@+id/rv_ShowClass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/ShowAllClass_Btn" />
+        android:layout_below="@id/addNewClass" />
 
 </RelativeLayout>
 
