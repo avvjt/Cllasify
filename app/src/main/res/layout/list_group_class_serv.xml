@@ -27,15 +27,16 @@
         <TextView
             android:id="@+id/tv_ClassTitle"
             android:layout_width="wrap_content"
-            android:layout_toStartOf="@id/spinner1"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="25dp"
+            android:layout_toStartOf="@id/spinner1"
             android:layout_toEndOf="@id/dummy_icon"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:drawableEnd="@drawable/drop_down"
-            android:text="Class name"
-            android:textColor="@color/black"
             android:paddingEnd="15dp"
+            android:textColor="@color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
 

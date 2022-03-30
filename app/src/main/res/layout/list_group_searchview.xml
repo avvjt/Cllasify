@@ -15,7 +15,7 @@
         <RelativeLayout
             android:id="@+id/ll_groupdetails"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/schImg"
@@ -50,9 +50,13 @@
                     android:id="@+id/tv_groupname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
                     android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:paddingEnd="15dp"
                     android:layout_toEndOf="@+id/schLogo"
+                    android:layout_toStartOf="@+id/tv_GroupStatus"
+                    android:layout_centerInParent="true"
                     android:fontFamily="sans-serif-black"
                     android:textColor="@color/black" />
 
@@ -64,8 +68,7 @@
                     android:layout_centerInParent="true"
                     android:gravity="center"
                     android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_toEndOf="@id/tv_groupname">
+                    android:layout_marginEnd="30dp">
 
                     <TextView
                         android:id="@+id/numbStudents"
@@ -100,22 +103,6 @@
 
 
             </RelativeLayout>
-
-            <Button
-                android:id="@+id/showAllClassesBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_below="@+id/shortDescription"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="sans-serif-black"
-                android:text="Show All Classes"
-                android:textAllCaps="false"
-                android:textColor="@color/black" />
-
 
         </RelativeLayout>
 

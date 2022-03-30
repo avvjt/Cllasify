@@ -131,7 +131,6 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
 
         TextView tv_groupname;
         RelativeLayout ll_list_group_search;
-        Button showAllClassesBtn;
         TextView numbStudents, numbTeachers;
 
         public MyViewHolder(View itemView) {
@@ -139,7 +138,6 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
 
             tv_groupname = itemView.findViewById(R.id.tv_groupname);
             ll_list_group_search = itemView.findViewById(R.id.ll_list_group_search);
-            showAllClassesBtn = itemView.findViewById(R.id.showAllClassesBtn);
             numbStudents = itemView.findViewById(R.id.numbStudentsInt);
             numbTeachers = itemView.findViewById(R.id.numbTeachersInt);
 

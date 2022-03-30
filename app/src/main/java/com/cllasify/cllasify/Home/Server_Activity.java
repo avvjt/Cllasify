@@ -13,8 +13,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -417,7 +415,33 @@ public class Server_Activity extends AppCompatActivity {
                                 uniPushClassId[0] = snapshot.child("uniPushClassId").getValue().toString().trim();
                                 clickedGroupName[0] = snapshot.child("clickedGroupName").getValue().toString().trim();
 
-                                rightPanelMems.setVisibility(View.VISIBLE);
+
+                                //Agar middle panel stuck ho kar aaye then yaha se lekar
+
+                                btn_joinNotification.setEnabled(true);
+                                btn_lteachattend.setEnabled(true);
+                                ib_servSettings.setEnabled(true);
+
+                                btn_lteachattend.setOnClickListener(view -> {
+
+                                    Intent intent = new Intent(Server_Activity.this, Attendance_Activity.class);
+                                    intent.putExtra("groupPushId", groupPushId[0]);
+                                    intent.putExtra("subGroupPushId", uniPushClassId[0]);
+                                    intent.putExtra("classPushId", subjectUniPushId[0]);
+                                    startActivity(intent);
+                                });
+
+                                btn_joinNotification.setOnClickListener(v -> {
+                                    Intent intent = new Intent(Server_Activity.this, GRPJoinReqs.class);
+                                    intent.putExtra("groupPushId", groupPushId[0]);
+                                    intent.putExtra("subGroupPushId", uniPushClassId[0]);
+                                    intent.putExtra("classPushId", subjectUniPushId[0]);
+                                    startActivity(intent);
+                                });
+
+                                memVis(true);
+
+                                //yaha tak comment kardena
 
                                 setReference(groupPushId[0], clickedClassName, subjectName[0], String.valueOf(classUniPosition), uniClassPushId, subjectUniPushId[0], clickedGroupName[0]);
 
@@ -575,6 +599,15 @@ public class Server_Activity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private void memVis(boolean b) {
+        if (b == true) {
+            rightPanelMems.setVisibility(View.VISIBLE);
+        } else {
+            rightPanelMems.setVisibility(View.GONE);
+        }
 
     }
 
@@ -1002,30 +1035,10 @@ public class Server_Activity extends AppCompatActivity {
 
         });
 
-        ib_servSettings.setOnClickListener(view -> {
-            Intent intent = new Intent(Server_Activity.this, Server_Settings.class);
-            intent.putExtra("currUserId", userID);
-            intent.putExtra("groupPushId", groupPushId);
-            intent.putExtra("serverName", serverName);
-            startActivity(intent);
-        });
 
-        btn_lteachattend.setOnClickListener(view -> {
 
-            Intent intent = new Intent(Server_Activity.this, Attendance_Activity.class);
-            intent.putExtra("groupPushId", groupPushId);
-            intent.putExtra("subGroupPushId", classUniPushId);
-            intent.putExtra("classPushId", subjectUniPushId);
-            startActivity(intent);
-        });
 
-        btn_joinNotification.setOnClickListener(v -> {
-            Intent intent = new Intent(Server_Activity.this, GRPJoinReqs.class);
-            intent.putExtra("groupPushId", groupPushId);
-            intent.putExtra("subGroupPushId", classUniPushId);
-            intent.putExtra("classPushId", subjectUniPushId);
-            startActivity(intent);
-        });
+
 
     }
 
@@ -1056,7 +1069,6 @@ public class Server_Activity extends AppCompatActivity {
             assert currentUser != null;
             userID = currentUser.getUid();
 
-            checkDarkLightDefault();
 
             DatabaseReference chkJoinedORAddGRP = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID);
             chkJoinedORAddGRP.addValueEventListener(new ValueEventListener() {
@@ -1091,19 +1103,13 @@ public class Server_Activity extends AppCompatActivity {
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                     String c = String.valueOf(s);
-                    if (!(c.contains(" "))) {
-                        //backspace pressed
-                        Log.d("ETChange", "onTextChanged: " + s);
 
-                        if (count > 0) {
-                            ib_doubtSubmit.setVisibility(View.GONE);
-                            ib_csubmit.setVisibility(View.VISIBLE);
-
-                        }
-                    }
-                    if (count == 0 || c.contains(" ")) {
+                    if (c.trim().isEmpty()) {
                         ib_doubtSubmit.setVisibility(View.VISIBLE);
                         ib_csubmit.setVisibility(View.GONE);
+                    } else {
+                        ib_doubtSubmit.setVisibility(View.GONE);
+                        ib_csubmit.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -1122,8 +1128,6 @@ public class Server_Activity extends AppCompatActivity {
                     String[] words = store.split("\\.");
                     if (words[3].startsWith("PanelState$Opened")) {
                         Log.d("SCROLLCHANGESPLIT", "onScrollChange: " + (words[3]));
-                        Animation animation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in_bottom);
-                        bottomNavigationView.startAnimation(animation);
                         bottomNavigationView.setVisibility(View.VISIBLE);
                     }
                     if (words[3].startsWith("PanelState$Closed")) {
@@ -1465,6 +1469,44 @@ public class Server_Activity extends AppCompatActivity {
      */
     public void showOtherUserGroupRV() {
 
+        DatabaseReference clickedGroupPush = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+        clickedGroupPush.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                ib_servSettings.setOnClickListener(view -> {
+
+                    Log.d("REFGRPP", "onDataChange: " + snapshot.child("clickedGroupPushId").getValue().toString());
+
+                    Intent intent = new Intent(Server_Activity.this, Server_Settings.class);
+                    intent.putExtra("currUserId", userID);
+                    intent.putExtra("groupPushId", snapshot.child("clickedGroupPushId").getValue().toString());
+                    intent.putExtra("serverName", snapshot.child("serverName").getValue().toString());
+                    startActivity(intent);
+                });
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        btn_joinNotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Server_Activity.this, "Please select a subject to continue,", Toast.LENGTH_SHORT).show();
+                btn_joinNotification.setEnabled(false);
+            }
+        });
+
+        btn_lteachattend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(Server_Activity.this, "Please select a subject to continue,", Toast.LENGTH_SHORT).show();
+                btn_lteachattend.setEnabled(false);
+            }
+        });
 
         DatabaseReference userJoinedOrAddServer = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID);
         userJoinedOrAddServer.addValueEventListener(new ValueEventListener() {
@@ -1582,7 +1624,7 @@ public class Server_Activity extends AppCompatActivity {
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
 
-                rightPanelMems.setVisibility(View.GONE);
+                memVis(false);
 
                 if (flagFriend == true) {
                     FragmentManager manager = getSupportFragmentManager();
