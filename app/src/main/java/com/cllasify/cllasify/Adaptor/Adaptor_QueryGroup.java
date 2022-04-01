@@ -99,12 +99,12 @@ public class Adaptor_QueryGroup extends RecyclerView.Adapter<Adaptor_QueryGroup.
 
                         if (groupPushid.equals(GroupPushId)) {
                             holder.btn_GroupTitle.setBorderColor(context.getColor(R.color.splash_end));
-                            holder.btn_GroupTitle.setBorderWidth(10);
+                            holder.btn_GroupTitle.setBorderWidth(5);
 //                            holder.btn_GroupTitle.setBackgroundColor(context.getColor(R.color.colorPrimary));
                         } else {
 //                            holder.btn_GroupTitle.setBackgroundColor(context.getColor(R.color.transparent));
                             holder.btn_GroupTitle.setBorderColor(context.getColor(R.color.transparent));
-                            holder.btn_GroupTitle.setBorderWidth(10);
+                            holder.btn_GroupTitle.setBorderWidth(5);
                         }
 
                     }

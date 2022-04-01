@@ -13,13 +13,15 @@
         android:id="@+id/overlapping_panels"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:background="@color/page_background_color">
 
 
         <!-- Start Panel       -->
         <RelativeLayout
             android:id="@+id/start_panel"
-            style="@style/Panel"
+            android:padding="20dp"
+            android:background="@color/page_color"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
@@ -38,7 +40,8 @@
                     <RelativeLayout
                         android:id="@+id/cardRecChatIMG"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        style="@style/SelectableItemBackground">
 
 
                         <androidx.cardview.widget.CardView
@@ -46,25 +49,17 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="50dp"
-                            app:cardElevation="0dp">
+                            app:cardElevation="2dp"
+                            >
 
                             <ImageButton
                                 android:id="@+id/ib_FrndsList"
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
-                                android:background="@color/grey"
-                                android:src="@drawable/ic_baseline_message_24" />
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
+                                android:background="@color/icon_background"
+                                android:src="@drawable/ic_baseline_message_24"/>
 
                         </androidx.cardview.widget.CardView>
-
-                        <View
-                            android:layout_width="40dp"
-                            android:layout_height="2dp"
-                            android:layout_below="@+id/cardFriendRec"
-                            android:layout_centerInParent="true"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="5dp"
-                            android:background="@color/black" />
                     </RelativeLayout>
 
                     <TextView
@@ -75,10 +70,11 @@
                         android:layout_toEndOf="@+id/cardRecChatIMG"
                         android:ellipsize="end"
                         android:maxLines="2"
-                        android:paddingStart="15dp"
+                        android:paddingStart="20dp"
                         android:paddingEnd="15dp"
-                        android:fontFamily="@font/open_sans_bold"
-                        android:textSize="20dp" />
+                        android:textColor="@color/text_color"
+                        android:fontFamily="@font/inter_semibold"
+                        android:textSize="15sp" />
 
                 </RelativeLayout>
 
@@ -133,11 +129,11 @@
 
                             <ImageView
                                 android:id="@+id/addNewTopicButton"
-                                android:background="@color/grey"
-                                android:layout_width="60dp"
-                                android:layout_height="60dp"
+                                android:background="@color/icon_background"
+                                android:layout_width="50dp"
+                                android:layout_height="50dp"
                                 android:scaleType="center"
-                                android:src="@drawable/ic_add" />
+                                android:src="@drawable/ic_plus_16" />
 
                         </androidx.cardview.widget.CardView>
 
@@ -185,12 +181,14 @@
 
         </RelativeLayout>
 
+        <!-- Center Panel       -->
         <RelativeLayout
             android:id="@+id/center_panel"
             style="@style/Panel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="match_parent"
@@ -415,14 +413,15 @@
             </LinearLayout>
         </RelativeLayout>
 
-
+        <!-- End Panel       -->
         <RelativeLayout
             android:id="@+id/end_panel"
             style="@style/Panel"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/endPanelLinearLayout"
@@ -553,16 +552,17 @@
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:background="@color/white"
         android:layout_alignParentBottom="true"
+        android:background="@color/page_color"
         app:itemIconTint="@color/bottom_navigation_color"
         app:itemTextAppearanceActive="@style/BodyText.NavigationBar"
         app:itemTextAppearanceInactive="@style/BodyText.NavigationBar"
         app:itemTextColor="@color/bottom_navigation_color"
         app:labelVisibilityMode="selected"
+        app:layout_constraintBaseline_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_nav_menu">
-
     </com.google.android.material.bottomnavigation.BottomNavigationView>
+
 
 </RelativeLayout>
