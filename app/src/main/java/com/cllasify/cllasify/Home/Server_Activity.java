@@ -1333,42 +1333,6 @@ public class Server_Activity extends AppCompatActivity {
 
     }
 
-    private void checkDarkLightDefault() {
-
-        DatabaseReference setDarkLightDefault = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
-
-        setDarkLightDefault.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child("DarkLightDefault").exists()) {
-
-//                    Log.d("DARKEXISTS", "onDataChange: " + snapshot.child("DarkLightDefault").exists());
-
-                    String darkLightDefaultVal = snapshot.child("DarkLightDefault").getValue().toString();
-
-                    Log.d("TAG", "onCreate: " + darkLightDefaultVal);
-                    if (darkLightDefaultVal.equals("Dark")) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    }
-                    if (darkLightDefaultVal.equals("Light")) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    }
-                    if (darkLightDefaultVal.equals("Default")) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                    }
-                } else {
-                    Log.d("DARKEXISTS", "onDataChange: " + snapshot.child("DarkLightDefault").exists());
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
-
 
     //Doubt
     private void showAddDoubtBtmDialog(String groupPushId, String subGroupPushId, String groupClassSubjects) {

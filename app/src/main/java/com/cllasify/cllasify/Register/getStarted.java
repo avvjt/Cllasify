@@ -1,6 +1,5 @@
 package com.cllasify.cllasify.Register;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -15,7 +14,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
-import com.cllasify.cllasify.Home.Discover_Activity;
 import com.cllasify.cllasify.Home.Server_Activity;
 import com.cllasify.cllasify.R;
 import com.google.android.gms.ads.MobileAds;
@@ -52,11 +50,50 @@ public class getStarted extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     FirebaseUser currentUser;
     String userID;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+
+    private void checkDarkLightDefault(String userId) {
+
+        DatabaseReference setDarkLightDefault = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userId);
+
+        setDarkLightDefault.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("DarkLightDefault").exists()) {
+
+//                    Log.d("DARKEXISTS", "onDataChange: " + snapshot.child("DarkLightDefault").exists());
+
+                    String darkLightDefaultVal = snapshot.child("DarkLightDefault").getValue().toString();
+
+                    Log.d("TAG", "onCreate: " + darkLightDefaultVal);
+                    if (darkLightDefaultVal.equals("Dark")) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    }
+                    if (darkLightDefaultVal.equals("Light")) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    }
+                    if (darkLightDefaultVal.equals("Default")) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                    }
+                } else {
+                    Log.d("DARKEXISTS", "onDataChange: " + snapshot.child("DarkLightDefault").exists());
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_Cllasify);
+//        checkDarkLightDefault("IVZo1W5lsWRU3occSlSPQJatM583");
         setContentView(R.layout.activity_get_started);
 
         //initialize() AdMob
@@ -73,41 +110,6 @@ public class getStarted extends AppCompatActivity {
             assert currentUser != null;
             userID = currentUser.getUid();
 
-            DatabaseReference firebaseDatabaseDARKLIGHT = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID).child("darkORlight");
-/*
-            firebaseDatabaseDARKLIGHT.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        if (snapshot.getValue().toString().equals(true)) {
-                            SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs", MODE_PRIVATE);
-                            final SharedPreferences.Editor editor = sharedPreferences.edit();
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                            editor.putBoolean("isDarkModeOn", true);
-                            editor.apply();
-                        }
-                        if (snapshot.getValue().toString().equals(false)) {
-                            SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs", MODE_PRIVATE);
-                            final SharedPreferences.Editor editor = sharedPreferences.edit();
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                            editor.putBoolean("isDarkModeOn", false);
-                            editor.apply();
-                        }
-                    } else {
-                        SharedPreferences sharedPreferences = getSharedPreferences("SharedPrefs", MODE_PRIVATE);
-                        final SharedPreferences.Editor editor = sharedPreferences.edit();
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        editor.putBoolean("isDarkModeOn", true);
-                        editor.apply();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-            */
         }
         btn_SignIn=findViewById(R.id.btn_SignIn);
         btn_SignIn.setOnClickListener(new View.OnClickListener() {
@@ -240,68 +242,6 @@ public class getStarted extends AppCompatActivity {
                 });
 
     }
-//    private void showStudTeachBtmDialog() {
-////        rl_feed.setBackgroundColor(Color.GRAY);
-//        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(getStarted.this);
-//        bottomSheetDialog.setCancelable(false);
-//        bottomSheetDialog.setContentView(R.layout.btmdialog_studteach);
-//
-//        LinearLayout student_ll=bottomSheetDialog.findViewById(R.id.student_ll);
-//        LinearLayout teacher_ll=bottomSheetDialog.findViewById(R.id.teacher_ll);
-//
-//        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//        userID = currentUser.getUid();
-//        userName = currentUser.getDisplayName();
-//        userEmailID = currentUser.getEmail();
-//        userPhoto = currentUser.getPhotoUrl();
-//        Calendar calenderCC= Calendar.getInstance();
-//        SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
-//        final String udateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
-//
-//        student_ll.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                DatabaseReference refUserRegister = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
-//                refUserRegister.child( "Name" ).setValue( userName );
-//                refUserRegister.child( "Email" ).setValue( userEmailID );
-////                refUserRegister.child( "photo" ).setValue( userPhoto );
-//                refUserRegister.child( "UserId" ).setValue( userID );
-//                refUserRegister.child( "DateTime" ).setValue( udateTimeCC );
-//                refUserRegister.child( "Category" ).setValue("Student");
-////                startActivity(new Intent(getStarted.this,Landing_Activity.class)
-////                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-//                Toast.makeText(getStarted.this, "Login Sucessful as Student", Toast.LENGTH_SHORT).show();
-//                bottomSheetDialog.dismiss();
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                ft.detach(HomeFragment.this).attach(HomeFragment.this).commit();
-//
-//            }
-//        });
-//        teacher_ll.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                DatabaseReference refUserRegister = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
-//                refUserRegister.child( "Name" ).setValue( userName );
-//                refUserRegister.child( "Email" ).setValue( userEmailID );
-////                refUserRegister.child( "photo" ).setValue( userPhoto );
-//                refUserRegister.child( "UserId" ).setValue( userID );
-//                refUserRegister.child( "DateTime" ).setValue( udateTimeCC );
-//                refUserRegister.child( "Category" ).setValue("Teacher");
-////                startActivity(new Intent(getStarted.this,Landing_Activity.class)
-////                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-//                Toast.makeText(getStarted.this, "Login Sucessful as Teacher", Toast.LENGTH_SHORT).show();
-//                bottomSheetDialog.dismiss();
-//
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                ft.detach(HomeFragment.this).attach(HomeFragment.this).commit();
-//            }
-//        });
-//
-//        bottomSheetDialog.show();
-//
-//    }
 
 
     @Override
@@ -309,8 +249,6 @@ public class getStarted extends AppCompatActivity {
         super.onStart();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            // User is signed in
-//            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,new HomeFragment(),"home").commit();
 
             Intent intent=new Intent(getStarted.this, Server_Activity.class);
             intent.putExtra("Check","appRestart");

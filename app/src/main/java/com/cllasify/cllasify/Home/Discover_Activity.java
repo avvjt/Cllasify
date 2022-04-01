@@ -9,12 +9,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,6 +27,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -60,7 +65,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Discover_Activity extends AppCompatActivity {
-    ProgressDialog notifyPB;
     Adaptor_SearchGroup showAllGroupAdaptor;
     Adaptor_ShowGrpMember showAllJoinUserAdaptor;
     Adaptor_JoinGroupReq showSubChild_Adaptor;
@@ -70,7 +74,6 @@ public class Discover_Activity extends AppCompatActivity {
     Calendar calenderCC=Calendar.getInstance();
     SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
     String dateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
-    SearchView esv_groupSearchView;
 
     DatabaseReference refGroupClassList;
 
@@ -91,6 +94,7 @@ public class Discover_Activity extends AppCompatActivity {
     String userID;
 
     Button btn_Group, btn_School, btn_Users;
+    ProgressBar progressBar;
 
     @Override
     public void onBackPressed() {
@@ -99,9 +103,37 @@ public class Discover_Activity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.disc_search,menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) menuItem.getActionView();
+        searchView.setQueryHint("Search Groups");
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover);
+
+        Toolbar toolbar = findViewById(R.id.searchToolBar);
+        setSupportActionBar(toolbar);
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -116,7 +148,7 @@ public class Discover_Activity extends AppCompatActivity {
                     Log.d("CHKGRPS", "onDataChange: " + snapshot.getChildrenCount());
                     showAllGroupSearch("All_Universal_Group");
                 } else {
-                    notifyPB.dismiss();
+                    progressBar.setVisibility(View.GONE);
                     Toast.makeText(Discover_Activity.this, "No Other Group Present", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -126,23 +158,7 @@ public class Discover_Activity extends AppCompatActivity {
         });
 
 
-        //initialize the toolbar
-//        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
-//        toolbar.setTitle("Join Group");
-//        toolbar.setNavigationIcon(R.drawable.ic_left_back);
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //open navigation drawer when click navigation back button
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.replace(R.id.fragment_container, new HomeFragment());
-//                //transaction.addToBackStack(null);
-//                transaction.commit();
-//            }
-//        });
-
         bottomMenu();
-        esv_groupSearchView =findViewById(R.id.esv_groupSearchView);
         rv_AllJoinGroup =findViewById(R.id.rv_AllJoinGroup);
         rv_AllJoinUser =findViewById(R.id.rv_AllJoinUser);
 
@@ -150,11 +166,7 @@ public class Discover_Activity extends AppCompatActivity {
         btn_School =findViewById(R.id.btn_School);
         btn_Group =findViewById(R.id.btn_Group);
 
-        notifyPB = new ProgressDialog(this);
-        notifyPB.setTitle("Join Group");
-        notifyPB.setMessage("Loading All Groups");
-        notifyPB.setCanceledOnTouchOutside(true);
-        notifyPB.show();
+        progressBar = findViewById(R.id.progBar);
 
         rv_AllJoinGroup.setLayoutManager(new LinearLayoutManager(this));
         rv_AllJoinUser.setLayoutManager(new LinearLayoutManager(this));
@@ -170,22 +182,6 @@ public class Discover_Activity extends AppCompatActivity {
 
         refSearchShowGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Universal_Group" );
 
-        if (esv_groupSearchView != null) {
-            esv_groupSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(String query) {
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(String newText) {
-                    filterList(newText);
-                    return true;
-                }
-            });
-        }
-
-
         btn_Users.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,7 +195,7 @@ public class Discover_Activity extends AppCompatActivity {
                         if (snapshot.getChildrenCount()>0) {
                             showEAllGroupUser("Registration");
                         }else{
-                            notifyPB.dismiss();
+                            progressBar.setVisibility(View.GONE);
                             Toast.makeText(view.getContext(), "No Other Group Present", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -228,6 +224,7 @@ public class Discover_Activity extends AppCompatActivity {
             showAllGroupAdaptor.filtterList(filterList);
 
         }
+
 
 
     private void showEAllGroupUser(String registration) {
@@ -480,12 +477,14 @@ public class Discover_Activity extends AppCompatActivity {
                         String databaseUserId = class_userDashBoard.getUserId();
                         String groupCategory = class_userDashBoard.getGroupCategory();
                         listAllGroupStatus.add(class_userDashBoard);
-                        notifyPB.dismiss();
+                        progressBar.setVisibility(View.GONE);
+
                         showAllGroupAdaptor.notifyDataSetChanged();
 
                     } else {
                         Toast.makeText(Discover_Activity.this, "No group yet created", Toast.LENGTH_SHORT).show();
-                        notifyPB.dismiss();
+                        progressBar.setVisibility(View.GONE);
+
                     }
                 }
             }
@@ -692,7 +691,8 @@ public class Discover_Activity extends AppCompatActivity {
                 Class_Group userQuestions = dataSnapshot.getValue(Class_Group.class);
                 list_SubChild.add(userQuestions);
                 showSubChild_Adaptor.notifyDataSetChanged();
-                notifyPB.dismiss();
+                progressBar.setVisibility(View.GONE);
+
 //                } else {
 //                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
 //                    notifyPB.dismiss();
