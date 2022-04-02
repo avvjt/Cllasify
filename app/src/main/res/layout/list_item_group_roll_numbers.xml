@@ -4,17 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/page_color">
 
     <TextView
         android:id="@+id/rollNumbers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:fontFamily="@font/open_sans_regular"
+        android:fontFamily="@font/inter_semibold"
         android:text="Roll number"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textColor="@color/text_color"
+        android:textSize="18sp" />
 
 
 </LinearLayout>

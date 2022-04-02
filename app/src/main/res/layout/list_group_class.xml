@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:background="@color/page_color">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/dummy_icon"
@@ -26,9 +27,9 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:paddingEnd="15dp"
-        android:textColor="@color/black"
+        android:textColor="@color/text_color"
         android:textSize="15sp"
-        android:textStyle="bold" />
+        android:fontFamily="@font/inter_medium" />
 
 
     <LinearLayout
@@ -46,10 +47,11 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/cust_corner"
+            android:background="@drawable/button_small"
             android:text="Admission"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:fontFamily="@font/inter_medium"
+            android:textColor="@color/btn_text_white"
             android:textStyle="bold" />
 
         <Button
@@ -59,10 +61,11 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/cust_corner"
+            android:background="@drawable/button_small"
             android:text="Join"
+            android:fontFamily="@font/inter_medium"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/btn_text_white"
             android:textStyle="bold" />
 
     </LinearLayout>

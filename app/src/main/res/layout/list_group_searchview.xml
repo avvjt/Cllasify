@@ -1,113 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_list_group_search"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/ll_list_group_search">
+    android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/ll_groupdetails"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="25dp"
-        android:layout_margin="15dp">
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/ll_groupdetails"
+        <ImageView
+            android:id="@+id/schImg"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/demo_sch" />
+
+        <LinearLayout
+            android:id="@+id/shortDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/schImg"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/demo_sch" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="center"
+                android:src="@drawable/default_school_logo" />
 
-            <RelativeLayout
-                android:id="@+id/shortDescription"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_groupname"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/schImg">
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-black"
+                android:maxLines="2"
+                android:paddingEnd="15dp"
+                android:textColor="@color/black" />
 
 
-                <androidx.cardview.widget.CardView
-                    android:id="@id/schLogo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    app:cardCornerRadius="5dp">
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:scaleType="center"
-                        android:src="@drawable/default_school_logo" />
-
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/tv_groupname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:paddingEnd="15dp"
-                    android:layout_toEndOf="@+id/schLogo"
-                    android:layout_toStartOf="@+id/tv_GroupStatus"
-                    android:layout_centerInParent="true"
-                    android:fontFamily="sans-serif-black"
-                    android:textColor="@color/black" />
-
-                <RelativeLayout
-                    android:id="@+id/tv_GroupStatus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerInParent="true"
-                    android:gravity="center"
-                    android:layout_marginStart="30dp"
-                    android:layout_marginEnd="30dp">
-
-                    <TextView
-                        android:id="@+id/numbStudents"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="No. of Students: "
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:id="@+id/numbStudentsInt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/numbStudents" />
-
-                    <TextView
-                        android:id="@+id/numbTeachers"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/numbStudents"
-                        android:layout_centerVertical="true"
-                        android:text="No. of Teachers: "
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:id="@+id/numbTeachersInt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/numbStudentsInt"
-                        android:layout_toEndOf="@id/numbTeachers" />
-
-                </RelativeLayout>
 
 
-            </RelativeLayout>
+        </LinearLayout>
 
-        </RelativeLayout>
+        <!--Extra things-->
 
-    </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:id="@+id/tv_GroupStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/numbStudents"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No. of Students: "
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/numbStudentsInt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/numbStudents" />
+
+            <TextView
+                android:id="@+id/numbTeachers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/numbStudents"
+                android:layout_centerVertical="true"
+                android:text="No. of Teachers: "
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/numbTeachersInt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/numbStudentsInt"
+                android:layout_toEndOf="@id/numbTeachers" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>
 

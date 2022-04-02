@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:background="@color/page_color">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/dummy_icon"
@@ -22,9 +23,9 @@
         android:layout_marginStart="25dp"
         android:layout_toEndOf="@id/dummy_icon"
         android:text="Class 1"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textColor="@color/text_color"
+        android:textSize="16sp"
+        android:fontFamily="@font/inter_semibold"/>
 
 
     <LinearLayout
@@ -42,11 +43,10 @@
             android:layout_marginStart="5dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="5dp"
-            android:background="@drawable/cust_corner"
+            android:background="@drawable/button_small"
             android:text="Join"
             android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            android:textColor="@color/btn_text_white"/>
 
     </LinearLayout>
 

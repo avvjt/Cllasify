@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
+    android:layout_height="match_parent"
+    android:background="@color/page_color">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,12 +13,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:padding="8dp"
             android:id="@+id/tv_AddClassTitle"
-            android:text="Edit Class Name"
-            android:fontFamily="@font/open_sans_bold"
-            android:textColor="@color/black"/>
+            android:text="Rename class"
+            android:fontFamily="@font/inter_semibold"
+            android:textColor="@color/text_color"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,7 +32,7 @@
             android:layout_margin="10dp"
             android:background="@drawable/button_gradient"
             android:layout_gravity="center"
-            android:textColor="@color/white"
+            android:textColor="@color/btn_text_white"
             android:text="@string/next"
             android:layout_marginTop="10dp"
             android:id="@+id/btn_nextAddTopic"/>

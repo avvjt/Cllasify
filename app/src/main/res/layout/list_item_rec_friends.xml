@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_ShowGroup"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="10dp"
-    android:backgroundTint="@android:color/white">
+    android:backgroundTint="@color/page_color">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/rec_friends_profPic"
@@ -24,8 +23,8 @@
         android:layout_marginBottom="10dp"
         android:layout_toEndOf="@+id/rec_friends_profPic"
         android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textColor="@color/text_color"
+        android:textSize="18sp"
+        android:fontFamily="@font/inter_semibold"/>
 
 </RelativeLayout>

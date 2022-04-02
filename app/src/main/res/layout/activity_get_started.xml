@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Register.getStarted">
+    tools:context=".Register.getStarted"
+    android:background="@color/page_color">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -39,7 +40,7 @@
                 android:layout_marginTop="115dp"
                 android:fontFamily="serif"
                 android:text="@string/cllasify"
-                android:textColor="@color/page_black"
+                android:textColor="@color/text_color"
                 android:textSize="30sp" />
         </LinearLayout>
 
@@ -52,18 +53,18 @@
             android:text="@string/explore"
             android:textSize="35sp"
             android:textAllCaps="false"
-            android:fontFamily="@font/open_sans_light"
-            android:textColor="@color/page_black"/>
+            android:fontFamily="@font/inter_regular"
+            android:textColor="@color/text_background_color"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginStart="30dp"
-            android:fontFamily="@font/open_sans_bold"
+            android:fontFamily="@font/inter_semibold"
             android:text="@string/education"
             android:textSize="30sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/text_color"/>
 
     </LinearLayout>
 
@@ -80,7 +81,7 @@
             android:layout_marginTop="150dp"
             android:text="@string/signingoogle"
             android:textAllCaps="false"
-            android:textColor="@color/white"
+            android:textColor="@color/btn_text_white"
             android:textSize="13sp" />
 
     </RelativeLayout>

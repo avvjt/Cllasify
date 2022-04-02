@@ -24,6 +24,7 @@
     <string name="hint_name"><font size="15">Hint here!</font> </string>
     <string name="hint_feedback"><font size="15">What would you like us to improve?</font> </string>
     <string name="hint_location"><font size="15">Select your city</font> </string>
+    <string name="hint_crateServer"><font size="15">Type here...</font> </string>
 
     <string name="start_panel_name">Start Panel</string>
     <string name="center_panel_name">Welcome to Server</string>

@@ -1,45 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/page_color"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
+    android:layout_height="match_parent"
+    tools:context=".Home.Create_Class">
 
     <LinearLayout
+        android:id="@+id/action_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/ll_creategroup"
-        android:orientation="vertical">
+        android:layout_height="?actionBarSize"
+        android:background="@color/page_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <ImageButton
+            android:id="@+id/btn_Back"
+            style="@style/SelectableItemBackgroundBorderless"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_arrow_left_24"
+            app:tint="@color/iconSecondaryColor" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:padding="8dp"
-            android:id="@+id/tv_AddClassTitle"
-            android:text="Add New Class"
-            android:fontFamily="@font/open_sans_bold"
-            android:textColor="@color/black"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:hint="Enter Class Name"
-            android:id="@+id/et_ClassName"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/button_gradient"
             android:layout_gravity="center"
-            android:textColor="@color/white"
-            android:text="@string/next"
-            android:layout_marginTop="10dp"
-            android:id="@+id/btn_nextAddTopic"/>
-
+            android:layout_marginStart="80dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Create class"
+            android:textColor="@color/text_color"
+            android:textSize="20sp" />
     </LinearLayout>
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/action_bar">
 
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll_creategroup"
+            android:orientation="vertical"
+            android:layout_marginTop="100dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:id="@+id/tv_AddClassTitle"
+                android:text="Create a class for your server"
+                android:textColor="@color/text_color"
+                android:fontFamily="@font/inter_semibold"
+                android:textAlignment="center"/>
+
+
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Class name"
+                android:textColor="@color/text_background_color"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:layout_marginTop="30dp"
+                app:layout_constraintBottom_toTopOf="@+id/Edittext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/et_ClassName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/iconPrimaryColor"
+                android:hint="@string/hint_crateServer"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/iconColor"
+                android:textSize="18sp"
+                android:gravity="center_horizontal"
+                android:layout_margin="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="* It will create a new class in the server"
+                android:textSize="13sp"
+                android:textColor="@color/text_background_color"
+                android:fontFamily="@font/inter_regular"/>
+
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:background="@drawable/button_small_big"
+                android:layout_gravity="center"
+                android:textColor="@color/btn_text_white"
+                android:text="Create Class"
+                android:id="@+id/btn_nextAddTopic" />
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>

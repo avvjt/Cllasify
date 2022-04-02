@@ -49,8 +49,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             app:cardCornerRadius="50dp"
-                            app:cardElevation="2dp"
-                            >
+                            app:cardElevation="2dp">
 
                             <ImageButton
                                 android:id="@+id/ib_FrndsList"
@@ -111,7 +110,9 @@
                             android:id="@+id/tv_OtherTitle"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textStyle="bold"
+                            android:textColor="@color/text_color"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/inter_medium"
                             android:layout_margin="8dp"
                             android:visibility="gone" />
 
@@ -188,7 +189,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="gone"
+            android:background="@color/page_color">
 
             <TextView
                 android:layout_width="match_parent"
@@ -347,9 +349,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_margin="10dp"
-                        android:textColor="@color/black"
-                        android:textSize="25sp"
-                        android:textStyle="bold" />
+                        android:textColor="@color/text_color"
+                        android:textSize="20sp"
+                        android:fontFamily="@font/inter_semibold"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_ChatDashboard"
@@ -379,8 +381,8 @@
                             android:importantForAutofill="no"
                             android:inputType="text"
                             android:layout_toStartOf="@+id/sendDoubt"
-                            android:textColor="@color/black"
-                            android:textColorHint="@color/light_black"
+                            android:textColor="@color/text_color"
+                            android:textColorHint="@color/text_background_color"
                             android:id="@+id/et_ctext" />
 
                         <RelativeLayout
@@ -421,7 +423,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="end"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="gone"
+            android:background="@color/page_color">
 
             <LinearLayout
                 android:id="@+id/endPanelLinearLayout"
@@ -479,6 +482,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Friends"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_color"
+                    android:fontFamily="@font/inter_semibold"
                     android:visibility="gone" />
 
 
@@ -499,7 +505,11 @@
                         android:id="@+id/adminListText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Teachers" />
+                        android:text="Teachers"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_color"
+                        android:fontFamily="@font/inter_semibold"
+                        android:visibility="gone"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/adminList"
@@ -511,7 +521,11 @@
                         android:id="@+id/tv_GroupMember"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Students" />
+                        android:text="Students"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_color"
+                        android:fontFamily="@font/inter_semibold"
+                        android:visibility="gone"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_GrpMemberList"
@@ -531,13 +545,19 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Exam"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_color"
+                        android:fontFamily="@font/inter_semibold"/>
 
                     <Button
                         android:id="@+id/btn_lteachresult"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Result"
+                        android:textSize="16sp"
+                        android:textColor="@color/text_color"
+                        android:fontFamily="@font/inter_semibold"
                         android:visibility="gone" />
 
 

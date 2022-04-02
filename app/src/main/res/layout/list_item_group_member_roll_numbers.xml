@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="6dp"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:background="@color/page_color">
 
 
 
@@ -24,13 +25,14 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="25dp"
             android:text="5"
-            android:textSize="25dp"
+            android:textColor="@color/text_color"
+            android:textSize="22sp"
             android:layout_height="wrap_content"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civ_UserProfilePic"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
             android:src="@drawable/maharaji" />
 
         <LinearLayout
@@ -42,8 +44,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/text_color"
+                android:fontFamily="@font/inter_medium"
                 android:text="Group Name"
                 android:textSize="15sp"
                 android:layout_marginStart="10dp"
@@ -53,8 +55,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:fontFamily="@font/open_sans_light"
+                android:textColor="@color/text_background_color"
+                android:fontFamily="@font/inter_medium"
                 android:text="UserName"
                 android:textSize="15sp"
                 android:layout_marginStart="10dp"
@@ -74,8 +76,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/prof_pics"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:src="@drawable/maharaji" />
 
         <LinearLayout
@@ -87,8 +89,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/text_color"
+                android:fontFamily="@font/inter_medium"
                 android:text="Group Name"
                 android:textSize="14sp"
                 android:layout_marginStart="10dp"
@@ -98,8 +100,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:fontFamily="@font/open_sans_light"
+                android:textColor="@color/text_background_color"
+                android:fontFamily="@font/inter_medium"
                 android:text="@string/online_status"
                 android:textSize="14sp"
                 android:layout_marginStart="10dp"
@@ -123,13 +125,12 @@
             android:text="21"
             android:layout_gravity="center"
             android:textSize="16sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
+            android:textColor="@color/text_color"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/prof_picss"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
             android:src="@drawable/maharaji"
             android:layout_marginStart="20dp"/>
 
@@ -142,10 +143,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:fontFamily="@font/open_sans_regular"
+                android:textColor="@color/text_color"
+                android:fontFamily="@font/inter_medium"
                 android:text="Name"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:layout_marginStart="10dp"
                 android:gravity="center_vertical"
                 android:id="@+id/tv_GroupTitless"/>

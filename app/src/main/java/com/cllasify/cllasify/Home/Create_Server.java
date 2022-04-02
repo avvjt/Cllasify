@@ -46,14 +46,10 @@ public class Create_Server extends AppCompatActivity {
         userPhoto = currentUser.getPhotoUrl();
         userName = currentUser.getDisplayName();
 
-        Button btn_Public = findViewById(R.id.btn_Public);
-        Button btn_Private = findViewById(R.id.btn_Private);
         Button btn_CreateGroup = findViewById(R.id.btn_CreateGroup);
         LinearLayout ll_CreatingServer = findViewById(R.id.ll_groupFamFrnds);
-        LinearLayout ll_creategroup = findViewById(R.id.ll_creategroup);
         EditText et_GroupName = findViewById(R.id.et_GroupName);
 
-        ll_CreatingServer.setVisibility(View.VISIBLE);
 
         btn_CreateGroup.setOnClickListener(new View.OnClickListener() {
             @Override
