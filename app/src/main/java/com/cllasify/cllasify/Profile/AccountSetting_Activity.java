@@ -2,6 +2,7 @@ package com.cllasify.cllasify.Profile;
 
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -30,6 +32,8 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.Constant;
+import com.cllasify.cllasify.Home.Profile_Activity;
 import com.cllasify.cllasify.Privacy;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Register.getStarted;
@@ -87,6 +91,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkDarkLightDefault();
         setContentView(R.layout.account_setting_activity);
 
         btn_Back=findViewById(R.id.btn_Back);
@@ -191,15 +196,9 @@ public class AccountSetting_Activity extends AppCompatActivity {
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                FragmentTransaction transaction = getSupportFragmentManager()FragmentManager().beginTransaction();
-//                transaction.replace(R.id.fragment_container, new ProfileFragment());
-//                //transaction.addToBackStack(null);
-//                transaction.commit();
-
-                finish();
-//                Intent i = new Intent(AccountSetting_Activity.this, ProfileFragment.class);
-//                startActivity(i);
-//                (AccountSetting_Activity.this).overridePendingTransition(0, 0);
+                Intent i = new Intent(AccountSetting_Activity.this, Profile_Activity.class);
+                startActivity(i);
+                (AccountSetting_Activity.this).overridePendingTransition(0, 0);
 
             }
         });
@@ -350,14 +349,25 @@ public class AccountSetting_Activity extends AppCompatActivity {
                                 dialogInterface.cancel();
                             }
                         })
-                        .show();
-
+                         .show();
 
 
             }
         });
 
 
+    }
+
+    public static void setDefaults(String key, String value, Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(key, value);
+        editor.apply(); // or editor.commit() in case you want to write data instantly
+    }
+
+    public static String getDefaults(String key, Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return preferences.getString(key, "Default");
     }
 
     private void showBtmTheme() {
@@ -382,62 +392,48 @@ public class AccountSetting_Activity extends AppCompatActivity {
             switch (i) {
                 case R.id.btnDefault:
                     btnDefault.setChecked(true);
-                    Log.d("TAG", "onCreate: " + btnDefault);
+                    Log.d("DLD", "onCreate: " + btnDefault);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
                     setDarkLightDefault.child("DarkLightDefault").setValue("Default");
+                    setDefaults("DefaultDarkLight", "Default", AccountSetting_Activity.this);
+                    dialog.dismiss();
                     break;
 
                 case R.id.btnDark:
                     btnDark.setChecked(true);
-                    Log.d("TAG", "onCreate: " + btnDark);
+                    Log.d("DLD", "onCreate: " + btnDark);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     setDarkLightDefault.child("DarkLightDefault").setValue("Dark");
+                    setDefaults("DefaultDarkLight", "Dark", AccountSetting_Activity.this);
+                    dialog.dismiss();
                     break;
 
                 case R.id.btnLight:
                     btnLight.setChecked(true);
-                    Log.d("TAG", "onCreate: " + btnLight);
+                    Log.d("DLD", "onCreate: " + btnLight);
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     setDarkLightDefault.child("DarkLightDefault").setValue("Light");
+                    setDefaults("DefaultDarkLight", "Light", AccountSetting_Activity.this);
+                    dialog.dismiss();
                     break;
             }
         });
 
+        String darkLightDefaultVal = getDefaults("DefaultDarkLight", AccountSetting_Activity.this);
 
-        setDarkLightDefault.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.child("DarkLightDefault").exists()) {
-
-                    Log.d("DARKEXISTS", "onDataChange: "+snapshot.child("DarkLightDefault").exists());
-
-                    String darkLightDefaultVal = Objects.requireNonNull(snapshot.child("DarkLightDefault").getValue()).toString();
-
-                    Log.d("TAG", "onCreate: " + darkLightDefaultVal);
-                    if (darkLightDefaultVal.equals("Dark")) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                        btnDark.setChecked(true);
-                    }
-                    if (darkLightDefaultVal.equals("Light")) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                        btnLight.setChecked(true);
-                    }
-                    if (darkLightDefaultVal.equals("Default")) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                        btnDefault.setChecked(true);
-                    }
-                }else{
-                    Log.d("DARKEXISTS", "onDataChange: "+snapshot.child("DarkLightDefault").exists());
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                    btnDefault.setChecked(true);
-                }
+        if (darkLightDefaultVal != null) {
+            if (darkLightDefaultVal.equals("Dark")) {
+                btnDark.setChecked(true);
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            if (darkLightDefaultVal.equals("Light")) {
+                btnLight.setChecked(true);
             }
-        });
+            if (darkLightDefaultVal.equals("Default")) {
+                btnDefault.setChecked(true);
+            }
+        } else {
+            btnDefault.setChecked(true);
+        }
 
         dialog.show();
         dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -445,6 +441,25 @@ public class AccountSetting_Activity extends AppCompatActivity {
         dialog.getWindow().setGravity(Gravity.BOTTOM);
 
         moveTaskToBack(false);
+    }
+
+    private void checkDarkLightDefault() {
+
+        String darkLightDefaultVal = getDefaults("DefaultDarkLight", AccountSetting_Activity.this);
+        Log.d("USERIDSA", "onCreate: " + getDefaults("DefaultDarkLight", AccountSetting_Activity.this));
+        if (darkLightDefaultVal != null) {
+            if (darkLightDefaultVal.equals("Dark")) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }
+            if (darkLightDefaultVal.equals("Light")) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+            if (darkLightDefaultVal.equals("Default")) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            }
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        }
     }
 
 

@@ -1,5 +1,7 @@
 package com.cllasify.cllasify.Register;
 
+import static com.cllasify.cllasify.Profile.AccountSetting_Activity.getDefaults;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -14,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import com.cllasify.cllasify.Constant;
 import com.cllasify.cllasify.Home.Server_Activity;
 import com.cllasify.cllasify.R;
 import com.google.android.gms.ads.MobileAds;
@@ -53,47 +56,30 @@ public class getStarted extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
-    private void checkDarkLightDefault(String userId) {
+    private void checkDarkLightDefault() {
 
-        DatabaseReference setDarkLightDefault = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userId);
-
-        setDarkLightDefault.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child("DarkLightDefault").exists()) {
-
-//                    Log.d("DARKEXISTS", "onDataChange: " + snapshot.child("DarkLightDefault").exists());
-
-                    String darkLightDefaultVal = snapshot.child("DarkLightDefault").getValue().toString();
-
-                    Log.d("TAG", "onCreate: " + darkLightDefaultVal);
-                    if (darkLightDefaultVal.equals("Dark")) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    }
-                    if (darkLightDefaultVal.equals("Light")) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    }
-                    if (darkLightDefaultVal.equals("Default")) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                    }
-                } else {
-                    Log.d("DARKEXISTS", "onDataChange: " + snapshot.child("DarkLightDefault").exists());
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                }
+        String darkLightDefaultVal = getDefaults("DefaultDarkLight", getStarted.this);
+        Log.d("USERIDSA", "onCreate: " + getDefaults("DefaultDarkLight", getStarted.this));
+        if(darkLightDefaultVal != null) {
+            if (darkLightDefaultVal.equals("Dark")) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            if (darkLightDefaultVal.equals("Light")) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }
-        });
+            if (darkLightDefaultVal.equals("Default")) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            }
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkDarkLightDefault();
         setTheme(R.style.Theme_Cllasify);
-//        checkDarkLightDefault("IVZo1W5lsWRU3occSlSPQJatM583");
         setContentView(R.layout.activity_get_started);
 
         //initialize() AdMob

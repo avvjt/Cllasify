@@ -57,9 +57,6 @@
             android:exported="false"
             tools:ignore="Instantiatable" />
         <activity
-            android:name=".Home.Dark_Light"
-            android:exported="false" />
-        <activity
             android:name=".Home.GRPJoinReqs"
             android:exported="false" />
         <activity

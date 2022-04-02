@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/page_background_color"
     android:orientation="vertical"
     tools:context=".Profile.AccountSetting_Activity">
 
@@ -32,7 +31,9 @@
             android:paddingStart="10dp"
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
-            app:tint="@color/iconSecondaryColor" />
+            app:tint="@color/iconSecondaryColor"
+            android:contentDescription="TODO"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -105,7 +106,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/inter_regular"
-                                android:text="Profile Setting"
+                                android:text="@string/profile_setting"
                                 android:textColor="@color/text_background_color"
                                 android:textSize="14sp" />
 
@@ -118,7 +119,8 @@
                             android:paddingTop="10dp"
                             android:paddingEnd="30dp"
                             app:drawableEndCompat="@drawable/abc_ic_right"
-                            app:drawableTint="@color/iconSecondaryColor" />
+                            app:drawableTint="@color/iconSecondaryColor"
+                            tools:ignore="RtlSymmetry" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -144,7 +146,7 @@
                 <TextView
                     android:id="@+id/tv_notiConfig"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"

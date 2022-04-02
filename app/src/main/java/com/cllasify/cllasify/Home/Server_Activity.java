@@ -1,7 +1,10 @@
 package com.cllasify.cllasify.Home;
 
+import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
+
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -803,7 +806,7 @@ public class Server_Activity extends AppCompatActivity {
                                 else{
                                     Toast.makeText(Server_Activity.this, "You are not admin", Toast.LENGTH_SHORT).show();
                                 }
-                                }
+                            }
 
 
                             @Override
@@ -1054,10 +1057,23 @@ public class Server_Activity extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.Q)
+    @RequiresApi(api = Build.VERSION_CODES.R)
+    private void checkDarkLightDefaultStatusBar() {
+        switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+            case Configuration.UI_MODE_NIGHT_YES:
+                getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(0, APPEARANCE_LIGHT_STATUS_BARS);
+                break;
+            case Configuration.UI_MODE_NIGHT_NO:
+                getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
+                break;
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_server);
 
         SharePref sharePref = new SharePref(this);
@@ -1331,6 +1347,42 @@ public class Server_Activity extends AppCompatActivity {
         }
 
 
+    }
+
+    private void checkDarkLightDefault() {
+
+        DatabaseReference setDarkLightDefault = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+
+        setDarkLightDefault.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("DarkLightDefault").exists()) {
+
+//                    Log.d("DARKEXISTS", "onDataChange: " + snapshot.child("DarkLightDefault").exists());
+
+                    String darkLightDefaultVal = snapshot.child("DarkLightDefault").getValue().toString();
+
+                    Log.d("TAG", "onCreate: " + darkLightDefaultVal);
+                    if (darkLightDefaultVal.equals("Dark")) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                    }
+                    if (darkLightDefaultVal.equals("Light")) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    }
+                    if (darkLightDefaultVal.equals("Default")) {
+                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                    }
+                } else {
+                    Log.d("DARKEXISTS", "onDataChange: " + snapshot.child("DarkLightDefault").exists());
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 
