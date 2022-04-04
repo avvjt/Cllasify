@@ -1,7 +1,10 @@
 package com.cllasify.cllasify;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adaptor.Adaptor_Friend_Chat;
+import com.cllasify.cllasify.Class.Class_Group;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -77,9 +82,37 @@ public class Friend_Chat_Activity extends Fragment {
         messageTxtFriend = v.findViewById(R.id.et_FrndP_text);
         friendImg = v.findViewById(R.id.friendImg);
 
+        ib_FrndP_csubmit.setEnabled(false);
+
+        messageTxtFriend.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                String c = String.valueOf(s);
+
+                if (c.trim().isEmpty()) {
+                    ib_FrndP_csubmit.setEnabled(false);
+                    ib_FrndP_csubmit.setBackgroundColor(Color.parseColor("#FF6200EE"));
+                } else {
+                    ib_FrndP_csubmit.setEnabled(true);
+                    ib_FrndP_csubmit.setBackgroundColor(Color.TRANSPARENT);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
 
         messageList = new ArrayList<>();
-        adaptor_friend_chat = new Adaptor_Friend_Chat(getContext(), messageList, senderRoom, receiverRoom);
+        adaptor_friend_chat = new Adaptor_Friend_Chat(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adaptor_friend_chat);
 
@@ -188,14 +221,26 @@ public class Friend_Chat_Activity extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 messageList.clear();
-
+/*
                 for (DataSnapshot snapshot1 : snapshot.getChildren()) {
                     Class_Single_Friend message = snapshot1.getValue(Class_Single_Friend.class);
                     message.setMessageId(snapshot1.getKey());
                     messageList.add(message);
                 }
-
+                recyclerView.smoothScrollToPosition(Objects.requireNonNull(recyclerView.getAdapter()).getItemCount());
                 adaptor_friend_chat.notifyDataSetChanged();
+*/
+
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    Log.d("DOUBTCHK", "onDataChange: " + postSnapshot.getValue());
+
+                    Class_Single_Friend class_userDashBoard = postSnapshot.getValue(Class_Single_Friend.class);
+                    messageList.add(class_userDashBoard);
+                }
+                adaptor_friend_chat.setList(messageList);
+                adaptor_friend_chat.notifyDataSetChanged();
+                recyclerView.smoothScrollToPosition(Objects.requireNonNull(recyclerView.getAdapter()).getItemCount());
+
             }
 
             @Override
@@ -214,6 +259,7 @@ public class Friend_Chat_Activity extends Fragment {
 
                 Date date = new Date();
                 Class_Single_Friend messages = new Class_Single_Friend(messageText, senderUid, date.getTime());
+//                Class_Group userAddGroupClass = new Class_Group(String.valueOf(date.getTime()), userName, senderUid, "nope", "classPosition[0]", messageText, "chat", "subjectUniPushId[0]", "push", 0);
                 messageTxtFriend.setText("");
                 firebaseDatabase.getReference().child("chats")
                         .child(senderRoom)

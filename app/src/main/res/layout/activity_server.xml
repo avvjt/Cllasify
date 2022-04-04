@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/refreshLayout"
     android:orientation="vertical"
     tools:context=".Home.Server_Activity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
     <com.discord.panels.OverlappingPanelsLayout
@@ -585,5 +589,7 @@
         app:menu="@menu/bottom_nav_menu">
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
+    </RelativeLayout>
 
-</RelativeLayout>
+
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -37,6 +37,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adaptor.Adapter_All_Friends;
@@ -193,11 +194,11 @@ public class Server_Activity extends AppCompatActivity {
     Friend_Chat_Activity friendChatFragment;
 
 
-
     //Right Panel Class and Sub-class
     Adapter_ClassGroup adapter_classGroup;
 
-
+    //SwipeRefreshLayout
+    SwipeRefreshLayout swipeRefreshLayout;
 
 
     //Chat_Activity
@@ -211,6 +212,7 @@ public class Server_Activity extends AppCompatActivity {
     void init() {
 
         rightPanelMems = findViewById(R.id.rightPanelMembs);
+        swipeRefreshLayout = findViewById(R.id.refreshLayout);
 
         onlyAdminLayout = findViewById(R.id.onlyAdminLayout);
         btn_joinNotification = findViewById(R.id.btn_joinNotification);
@@ -1106,6 +1108,17 @@ public class Server_Activity extends AppCompatActivity {
             });
 
             init();
+
+            swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+
+                    Intent intent = new Intent(Server_Activity.this, Server_Activity.class);
+                    startActivity(intent);
+
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            });
 
             et_ctext = findViewById(R.id.et_ctext);
 

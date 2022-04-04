@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -130,7 +131,7 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_groupname;
-        RelativeLayout ll_list_group_search;
+        LinearLayout ll_list_group_search;
         TextView numbStudents, numbTeachers;
 
         public MyViewHolder(View itemView) {
@@ -163,7 +164,7 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
                         databaseReference.setValue(groupPushId);
 
                         DatabaseReference checkOnGroupClick = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
-                        checkOnGroupClick.addListenerForSingleValueEvent(new ValueEventListener() {
+                        checkOnGroupClick.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 Toast.makeText(context.getApplicationContext(), "Classes : " + snapshot.getChildrenCount(), Toast.LENGTH_SHORT).show();

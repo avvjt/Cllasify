@@ -190,6 +190,8 @@ public class Discover_Item extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                join_as_teacher.setEnabled(false);
+
                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();
                 assert currentUser != null;

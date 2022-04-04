@@ -310,16 +310,29 @@ public class Discover_Activity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    if (userID.equals(dataSnapshot.getKey())) {
-                        Log.d("CHKADMIN", "showBtmDialogClass: " + dataSnapshot.getKey() + "\n UserId: " + userID);
-                        Toast.makeText(Discover_Activity.this, "You have already joined this group!!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Intent intent = new Intent(getApplicationContext(), Discover_Item.class);
-                        intent.putExtra("groupName", groupName);
-                        intent.putExtra("groupPushId", groupPushId);
-                        Log.d("Grouup", "GroupName: " + groupName + "\n" + "GroupPushId: " + groupPushId);
-                        startActivity(intent);
-                    }
+
+                    Log.d("CHKADMIN", "showBtmDialogClass: " + dataSnapshot.getKey() + "\n UserId: " + userID);
+
+                    DatabaseReference checkJoined = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID).child(groupPushId).child("addedOrJoined");
+                    checkJoined.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists()){
+                                Toast.makeText(Discover_Activity.this, "You have already joined this group!!", Toast.LENGTH_SHORT).show();
+                            }else{
+                                Intent intent = new Intent(getApplicationContext(), Discover_Item.class);
+                                intent.putExtra("groupName", groupName);
+                                intent.putExtra("groupPushId", groupPushId);
+                                Log.d("Grouup", "GroupName: " + groupName + "\n" + "GroupPushId: " + groupPushId);
+                                startActivity(intent);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
                 }
             }
 

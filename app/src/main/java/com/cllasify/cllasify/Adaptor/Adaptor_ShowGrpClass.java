@@ -144,6 +144,10 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
             btn_ClassAdmission.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    btn_ClassAdmission.setEnabled(false);
+
+
                     if (mListener != null) {
                         int position = getAdapterPosition();
                         Class_Group_Names classGroupNames = mDatalistNew.get(position);
@@ -232,6 +236,8 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
             btn_ClassJoin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    btn_ClassJoin.setEnabled(false);
 
                     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                     FirebaseUser currentUser = firebaseAuth.getCurrentUser();
