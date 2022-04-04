@@ -1114,6 +1114,7 @@ public class Server_Activity extends AppCompatActivity {
                 public void onRefresh() {
 
                     Intent intent = new Intent(Server_Activity.this, Server_Activity.class);
+                    intent.putExtra("notOpen","notOpen");
                     startActivity(intent);
 
                     swipeRefreshLayout.setRefreshing(false);
@@ -1277,7 +1278,11 @@ public class Server_Activity extends AppCompatActivity {
                             String chkUserID = dataSnapshot1.getKey();
                             if (chkUserID.equals(userID)) {
 //                                ll_AddJoinGrp.setVisibility(View.GONE);
-                                overlappingPanels.openStartPanel();
+                                if(getIntent().hasExtra("notOpen")){
+                                    Log.d("JOINEDGRP", "onDataChange: No panel");
+                                }else {
+                                    overlappingPanels.openStartPanel();
+                                }
                             }
                         }
                     }
@@ -1294,7 +1299,11 @@ public class Server_Activity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getChildrenCount() > 0) {
 //                        ll_AddJoinGrp.setVisibility(View.GONE);
-                        overlappingPanels.openStartPanel();
+                        if(getIntent().hasExtra("notOpen")){
+                            Log.d("JOINEDGRP", "onDataChange: No panel");
+                        }else {
+                            overlappingPanels.openStartPanel();
+                        }
 
                     }
                     if (snapshot.getChildrenCount() < 0) {
