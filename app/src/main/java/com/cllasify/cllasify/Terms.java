@@ -29,7 +29,6 @@ public class Terms extends AppCompatActivity {
 
                 break;
 
-
         }
     }
 
