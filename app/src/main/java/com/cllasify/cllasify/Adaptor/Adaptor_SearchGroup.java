@@ -82,6 +82,22 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
             holder.tv_groupname.setText(groupName);
         }
 
+        DatabaseReference refSaveServerProfPic = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(pushid).child("serverProfilePic");
+        refSaveServerProfPic.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Glide.with(context.getApplicationContext()).load(snapshot.getValue()).into(holder.schoolLogoImg);
+                    Glide.with(context.getApplicationContext()).load(snapshot.getValue()).into(holder.schImg);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         DatabaseReference referenceALLGroup = FirebaseDatabase.getInstance().getReference().
                 child("Groups").child("All_GRPs").child(pushid);
@@ -190,21 +206,7 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
                             }
                         });
 
-                        DatabaseReference refSaveServerProfPic = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("serverProfilePic");
-                        refSaveServerProfPic.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.exists()) {
-                                        Glide.with(context.getApplicationContext()).load(snapshot.getValue()).into(schoolLogoImg);
-                                        Glide.with(context.getApplicationContext()).load(snapshot.getValue()).into(schImg);
-                                }
-                            }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
 
 
                     }
