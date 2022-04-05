@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,7 +15,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Class.Class_Group;
+import com.cllasify.cllasify.Home.Server_Settings;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -133,6 +136,7 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
         TextView tv_groupname;
         LinearLayout ll_list_group_search;
         TextView numbStudents, numbTeachers;
+        ImageView schoolLogoImg, schImg;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -141,6 +145,8 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
             ll_list_group_search = itemView.findViewById(R.id.ll_list_group_search);
             numbStudents = itemView.findViewById(R.id.numbStudentsInt);
             numbTeachers = itemView.findViewById(R.id.numbTeachersInt);
+            schoolLogoImg = itemView.findViewById(R.id.schoolLogoImg);
+            schImg = itemView.findViewById(R.id.schImg);
 
             ll_list_group_search.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -176,6 +182,22 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
                                     Toast.makeText(context.getApplicationContext(), "No class isn't created yet!!", Toast.LENGTH_SHORT).show();
                                 }
 
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                        DatabaseReference refSaveServerProfPic = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("serverProfilePic");
+                        refSaveServerProfPic.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()) {
+                                        Glide.with(context.getApplicationContext()).load(snapshot.getValue()).into(schoolLogoImg);
+                                        Glide.with(context.getApplicationContext()).load(snapshot.getValue()).into(schImg);
+                                }
                             }
 
                             @Override

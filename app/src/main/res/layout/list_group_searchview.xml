@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_list_group_search"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginBottom="15dp"
+    android:background="@color/page_color">
 
     <LinearLayout
         android:id="@+id/ll_groupdetails"
@@ -16,33 +19,63 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/demo_sch" />
+            android:src="@drawable/demo_sch"
+            android:elevation="5dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:layout_marginStart="10dp">
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_explore"
+                app:tint="@color/iconColor" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_background_color"
+                android:text="Based on your profile location"
+                android:fontFamily="@font/inter_regular"
+                android:layout_marginStart="10dp"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/shortDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
 
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:scaleType="center"
-                android:src="@drawable/default_school_logo" />
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="2dp">
+                <ImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:scaleType="center"
+                    android:src="@drawable/default_school_logo"
+                    android:id="@+id/schoolLogoImg"/>
+            </androidx.cardview.widget.CardView>
+
 
             <TextView
                 android:id="@+id/tv_groupname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:ellipsize="end"
-                android:fontFamily="sans-serif-black"
+                android:fontFamily="@font/inter_semibold"
                 android:maxLines="2"
-                android:paddingEnd="15dp"
-                android:textColor="@color/black" />
-
-
-
+                android:text="Kalyani sikshayatan high school"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="15dp"
+                android:textColor="@color/text_color"
+                android:textSize="18sp"/>
 
         </LinearLayout>
 
@@ -50,45 +83,66 @@
 
         <LinearLayout
             android:id="@+id/tv_GroupStatus"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:gravity="center">
+            android:paddingStart="25dp"
+            android:paddingEnd="20dp"
+            android:orientation="horizontal"
+            android:paddingTop="5dp"
+            android:paddingBottom="10dp">
 
-            <TextView
-                android:id="@+id/numbStudents"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="No. of Students: "
-                android:textColor="@color/black" />
+            <ImageView
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_person_16"
+                app:tint="@color/iconColor"
+                android:layout_gravity="center_vertical"/>
 
             <TextView
                 android:id="@+id/numbStudentsInt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/numbStudents" />
+                android:layout_marginStart="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/text_background_color"/>
 
             <TextView
-                android:id="@+id/numbTeachers"
+                android:id="@+id/numbStudents"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/numbStudents"
-                android:layout_centerVertical="true"
-                android:text="No. of Teachers: "
-                android:textColor="@color/black" />
+                android:text="Students"
+                android:textColor="@color/text_background_color"
+                android:textSize="15sp"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/inter_regular" />
+
+            <View
+                android:layout_width="5dp"
+                android:layout_height="5dp"
+                android:background="@color/iconColor"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"/>
 
             <TextView
                 android:id="@+id/numbTeachersInt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/numbStudentsInt"
-                android:layout_toEndOf="@id/numbTeachers" />
+                android:layout_marginStart="10dp"
+                android:textSize="15sp"
+                android:textColor="@color/text_background_color"/>
+
+            <TextView
+                android:id="@+id/numbTeachers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Teachers"
+                android:textColor="@color/text_background_color"
+                android:textSize="15sp"
+                android:layout_marginStart="10dp"
+                android:fontFamily="@font/inter_regular" />
+
 
         </LinearLayout>
-
     </LinearLayout>
-
-
 </LinearLayout>
 
