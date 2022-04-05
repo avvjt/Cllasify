@@ -15,7 +15,6 @@ public class Terms extends AppCompatActivity {
 
     ImageButton btn_back;
 
-
     public void checkDarkLightDefaultStatusBar() {
         switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
 
