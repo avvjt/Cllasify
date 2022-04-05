@@ -9,9 +9,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_Notify;
@@ -45,9 +48,28 @@ public class GRPJoinReqs extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void checkDarkLightDefaultStatusBar() {
+        switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+
+            case Configuration.UI_MODE_NIGHT_YES:
+                getWindow().setStatusBarColor(Color.parseColor("#17181c"));
+                break;
+
+            case Configuration.UI_MODE_NIGHT_NO:
+                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                // edited here
+                getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
+
+                break;
+
+
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_grpjoin_reqs);
 
         tabLayout = findViewById(R.id.reqTabLayout);

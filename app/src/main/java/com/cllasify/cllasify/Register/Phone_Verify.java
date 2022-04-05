@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -42,9 +44,28 @@ public class Phone_Verify extends AppCompatActivity {
     String verificationcodebysystem,userphoneno,phone;
     FirebaseAuth mAuth;
 
+    public void checkDarkLightDefaultStatusBar() {
+        switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+
+            case Configuration.UI_MODE_NIGHT_YES:
+                getWindow().setStatusBarColor(Color.parseColor("#17181c"));
+                break;
+
+            case Configuration.UI_MODE_NIGHT_NO:
+                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                // edited here
+                getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
+
+                break;
+
+
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkDarkLightDefaultStatusBar();
         setContentView(R.layout.phone_verify_activity);
         verifyotp_btn=findViewById(R.id.verifyotp_btn);
         enterotp_et=findViewById(R.id.enterotp_et);

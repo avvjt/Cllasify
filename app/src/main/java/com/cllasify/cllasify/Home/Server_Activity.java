@@ -1059,19 +1059,24 @@ public class Server_Activity extends AppCompatActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
-    private void checkDarkLightDefaultStatusBar() {
+    public void checkDarkLightDefaultStatusBar() {
         switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+
             case Configuration.UI_MODE_NIGHT_YES:
-                getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(0, APPEARANCE_LIGHT_STATUS_BARS);
+                getWindow().setStatusBarColor(Color.parseColor("#17181c"));
                 break;
+
             case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().getDecorView().getWindowInsetsController().setSystemBarsAppearance(APPEARANCE_LIGHT_STATUS_BARS, APPEARANCE_LIGHT_STATUS_BARS);
+                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                // edited here
+                getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
+
                 break;
+
+
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.R)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

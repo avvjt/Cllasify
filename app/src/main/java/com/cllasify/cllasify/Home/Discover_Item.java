@@ -2,6 +2,7 @@ package com.cllasify.cllasify.Home;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
@@ -61,9 +62,28 @@ public class Discover_Item extends AppCompatActivity {
     ImageView schoolLogoImg;
     String serverEmail;
 
+    public void checkDarkLightDefaultStatusBar() {
+        switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+
+            case Configuration.UI_MODE_NIGHT_YES:
+                getWindow().setStatusBarColor(Color.parseColor("#17181c"));
+                break;
+
+            case Configuration.UI_MODE_NIGHT_NO:
+                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                // edited here
+                getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
+
+                break;
+
+
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_discover_item);
 /*
         recyclerView = findViewById(R.id.class_items_rv);

@@ -4,6 +4,8 @@ import static com.cllasify.cllasify.Profile.AccountSetting_Activity.getDefaults;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -75,11 +77,31 @@ public class getStarted extends AppCompatActivity {
         }
     }
 
+    public void checkDarkLightDefaultStatusBar() {
+        switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
+
+            case Configuration.UI_MODE_NIGHT_YES:
+                getWindow().setStatusBarColor(Color.parseColor("#17181c"));
+                break;
+
+            case Configuration.UI_MODE_NIGHT_NO:
+                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                // edited here
+                getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
+
+                break;
+
+
+        }
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkDarkLightDefault();
         setTheme(R.style.Theme_Cllasify);
+        checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_get_started);
 
         //initialize() AdMob
