@@ -28,7 +28,6 @@ public class Terms extends AppCompatActivity {
                 getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
 
                 break;
-
         }
     }
 
