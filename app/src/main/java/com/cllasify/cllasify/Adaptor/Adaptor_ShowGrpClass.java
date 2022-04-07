@@ -72,42 +72,16 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         assert currentUser != null;
-//        String currUserID=currentUser.getUid();
+        String currUserID = currentUser.getUid();
         Class_Group_Names Answers = mDatalistNew.get(position);
 
         String groupClassName = Answers.getClassName();
         Log.d("Grouupt", "GroupName: " + groupClassName);
-//        String userID=Answers.getUserId();
 
         holder.tv_ClassTitle.setText(groupClassName);
-//        refUserFollowing= FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(currUserID);
-//
-//        holder.ib_followFrnd.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (!subsClick){
-//                    refUserFollowing.child(userID).setValue(true);
-//                subsClick=true;
-//                }else{
-//                    refUserFollowing.child(userID).setValue(null);
-//                    subsClick=false;
-//                }
-//
-//            }
-//        });
-//        holder.ib_AddFrnd.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (!addFrndClick){
-//                    refUserFollowing.child(userID).setValue(true);
-//                    addFrndClick=true;
-//                }else{
-//                    refUserFollowing.child(userID).setValue(null);
-//                    addFrndClick=false;
-//                }
-//
-//            }
-//        });
+
+        String groupPushId = Answers.getGroupPushId();
+        String classPushId = Answers.getUniPushClassId();
 
     }
 
@@ -144,9 +118,6 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
             btn_ClassAdmission.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    btn_ClassAdmission.setEnabled(false);
-
 
                     if (mListener != null) {
                         int position = getAdapterPosition();
@@ -236,8 +207,6 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
             btn_ClassJoin.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    btn_ClassJoin.setEnabled(false);
 
                     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                     FirebaseUser currentUser = firebaseAuth.getCurrentUser();

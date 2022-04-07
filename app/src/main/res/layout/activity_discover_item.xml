@@ -115,15 +115,18 @@
                     android:id="@+id/ll_bio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:visibility="gone"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/schoolBio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textSize="17sp"
-                        android:padding="20dp"
+                        android:paddingStart="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:paddingEnd="5dp"
                         android:textColor="@color/text_color" />
 
                 </LinearLayout>
@@ -135,7 +138,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="20dp"
                     android:orientation="horizontal"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:paddingTop="5dp">
 
                     <ImageView
@@ -177,8 +180,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:textSize="15sp"
-                        android:textColor="@color/text_background_color"/>
+                        android:textColor="@color/text_background_color"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/numbStudents"

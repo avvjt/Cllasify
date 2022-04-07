@@ -117,7 +117,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/schoolBio"
@@ -136,7 +136,7 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginStart="20dp"
                     android:orientation="horizontal"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:paddingTop="5dp">
 
                     <ImageView

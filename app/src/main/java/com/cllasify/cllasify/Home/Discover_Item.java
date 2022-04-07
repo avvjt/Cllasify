@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,6 +62,9 @@ public class Discover_Item extends AppCompatActivity {
     Button join_as_teacher;
     ImageView schoolLogoImg;
     String serverEmail;
+    LinearLayout emailLayout;
+    LinearLayout bioLayout;
+    TextView studentCount, teacherCount;
 
     public void checkDarkLightDefaultStatusBar() {
         switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
@@ -70,7 +74,7 @@ public class Discover_Item extends AppCompatActivity {
                 break;
 
             case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 // edited here
                 getWindow().setStatusBarColor(Color.parseColor("#eff0f5"));
 
@@ -98,10 +102,16 @@ public class Discover_Item extends AppCompatActivity {
 //        ImageView iv_ServerDP= findViewById(R.id.iv_ServerDP);
 //        TextView tv_ServerBio= findViewById(R.id.tv_ServerBio);
         Button btn_Share = findViewById(R.id.btn_Share);
-        TextView tv_ServerName = findViewById(R.id.tv_ServerName);
+        TextView tv_ServerName = findViewById(R.id.schoolName);
         RecyclerView rv_ShowClass = findViewById(R.id.rv_ShowClass);
         join_as_teacher = findViewById(R.id.join_as_teacher);
         schoolLogoImg = findViewById(R.id.schoolLogoImg);
+
+        studentCount = findViewById(R.id.numbStudentsInt);
+        teacherCount = findViewById(R.id.numbTeachersInt);
+
+        emailLayout = findViewById(R.id.ll_email);
+        bioLayout = findViewById(R.id.ll_bio);
 
         schoolEmail = findViewById(R.id.schoolEmail);
 
@@ -112,16 +122,68 @@ public class Discover_Item extends AppCompatActivity {
         String groupName = getIntent().getStringExtra("groupName");
         String groupPushId = getIntent().getStringExtra("groupPushId");
 
+
+        DatabaseReference referenceALLGroup = FirebaseDatabase.getInstance().getReference().
+                child("Groups").child("All_GRPs").child(groupPushId);
+
+
+        referenceALLGroup.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int totalSize = 0;
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                    if (dataSnapshot.exists()) {
+
+                        totalSize += dataSnapshot.child("classStudentList").getChildrenCount();
+                    }
+                }
+
+                studentCount.setText(String.valueOf(totalSize));
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        DatabaseReference referenceALLGroupTeachers = FirebaseDatabase.getInstance().getReference().
+                child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList");
+
+
+        referenceALLGroupTeachers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                teacherCount.setText(String.valueOf(snapshot.getChildrenCount()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String serverBio = snapshot.child(groupPushId).child("ServerBio").getValue(String.class);
-                schBio.setText(serverBio);
-
+                if (snapshot.child(groupPushId).child("ServerBio").exists()) {
+                    bioLayout.setVisibility(View.VISIBLE);
+                    String serverBio = snapshot.child(groupPushId).child("ServerBio").getValue(String.class);
+                    schBio.setText(serverBio);
+                }if(!(snapshot.exists()) || snapshot.getValue().toString().equals("")){
+                    bioLayout.setVisibility(View.GONE);
+                }
                 if (snapshot.child(groupPushId).child("ServerEmail").exists()) {
+                    emailLayout.setVisibility(View.VISIBLE);
                     serverEmail = snapshot.child(groupPushId).child("ServerEmail").getValue(String.class);
                     schoolEmail.setText(serverEmail);
+                }if(!(snapshot.exists()) || snapshot.getValue().toString().equals("")){
+                    emailLayout.setVisibility(View.GONE);
                 }
                 if (snapshot.child(groupPushId).child("serverProfilePic").exists()) {
                     String serverLogo = snapshot.child(groupPushId).child("serverProfilePic").getValue(String.class);
@@ -209,8 +271,6 @@ public class Discover_Item extends AppCompatActivity {
         join_as_teacher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                join_as_teacher.setEnabled(false);
 
                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                 FirebaseUser currentUser = firebaseAuth.getCurrentUser();

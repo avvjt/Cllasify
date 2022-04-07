@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -59,6 +60,11 @@ public class Server_Settings extends AppCompatActivity {
     ImageView schoolLogoImg;
     Button addNewClass;
 
+    LinearLayout emailLayout;
+    LinearLayout bioLayout;
+
+    TextView studentCount, teacherCount;
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(Server_Settings.this, Server_Activity.class);
@@ -98,6 +104,11 @@ public class Server_Settings extends AppCompatActivity {
             userName = currentUser.getDisplayName();
         }
 
+        emailLayout = findViewById(R.id.ll_email);
+        bioLayout = findViewById(R.id.ll_bio);
+
+        studentCount = findViewById(R.id.numbStudentsInt);
+        teacherCount = findViewById(R.id.numbTeachersInt);
 
         schoolLogoImg = findViewById(R.id.schoolLogoImg);
         addNewClass = findViewById(R.id.addNewClass);
@@ -148,6 +159,50 @@ public class Server_Settings extends AppCompatActivity {
         }
 
 
+        DatabaseReference referenceALLGroup = FirebaseDatabase.getInstance().getReference().
+                child("Groups").child("All_GRPs").child(groupPushId);
+
+
+        referenceALLGroup.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int totalSize = 0;
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                    if (dataSnapshot.exists()) {
+
+                        totalSize += dataSnapshot.child("classStudentList").getChildrenCount();
+                    }
+                }
+
+                studentCount.setText(String.valueOf(totalSize));
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        DatabaseReference referenceALLGroupTeachers = FirebaseDatabase.getInstance().getReference().
+                child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList");
+
+
+        referenceALLGroupTeachers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                teacherCount.setText(String.valueOf(snapshot.getChildrenCount()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group");
 
         databaseReference.child(groupPushId).child("groupName").addValueEventListener(new ValueEventListener() {
@@ -180,14 +235,16 @@ public class Server_Settings extends AppCompatActivity {
 
             }
         });
-
         databaseReference.child(groupPushId).child("ServerEmail").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     Log.d("SCHEMAIL", "onDataChange: "+snapshot.getValue());
+                    emailLayout.setVisibility(View.VISIBLE);
                     serverEmail = snapshot.getValue(String.class);
                     schoolEmail.setText(serverEmail);
+                }if(!(snapshot.exists()) || snapshot.getValue().toString().equals("")){
+                    emailLayout.setVisibility(View.GONE);
                 }
             }
 
@@ -201,8 +258,11 @@ public class Server_Settings extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
+                    bioLayout.setVisibility(View.VISIBLE);
                     serverBio = snapshot.getValue(String.class);
                     schoolBio.setText(serverBio);
+                }if(!(snapshot.exists()) || snapshot.getValue().toString().equals("")){
+                    bioLayout.setVisibility(View.GONE);
                 }
             }
 
