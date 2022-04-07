@@ -66,13 +66,13 @@ public class Discover_Item extends AppCompatActivity {
         switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
 
             case Configuration.UI_MODE_NIGHT_YES:
-                getWindow().setStatusBarColor(Color.parseColor("#17181c"));
+                getWindow().setStatusBarColor(Color.parseColor("#050505"));
                 break;
 
             case Configuration.UI_MODE_NIGHT_NO:
                 getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 // edited here
-                getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
+                getWindow().setStatusBarColor(Color.parseColor("#eff0f5"));
 
                 break;
 
