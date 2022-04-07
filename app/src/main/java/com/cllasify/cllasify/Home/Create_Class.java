@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,7 @@ public class Create_Class extends AppCompatActivity {
     String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
     private DatabaseReference refAllGroup, refGroupSubsList, refuserAllGroup, refuserPersonalGroup, refuserPublicGroup, addedOrJoinedGroup;
     Class_Group userAddGroupClass, userSubsGroupClass;
+    ProgressBar progressBar;
 
 
     public void checkDarkLightDefaultStatusBar() {
@@ -74,6 +76,8 @@ public class Create_Class extends AppCompatActivity {
         userPhoto = currentUser.getPhotoUrl();
         userName = currentUser.getDisplayName();
 
+        progressBar = findViewById(R.id.middleProgress);
+
         if (getIntent().hasExtra("GroupName")) {
             groupName = getIntent().getStringExtra("GroupName");
         }
@@ -92,6 +96,8 @@ public class Create_Class extends AppCompatActivity {
                 } else {
 
                     btn_nextAddTopic.setClickable(false);
+
+                    progressBar.setVisibility(View.VISIBLE);
 
                     if (getIntent().hasExtra("groupPushId")) {
                         saveClassGroup(groupName, getIntent().getStringExtra("groupPushId"), classGroupName);

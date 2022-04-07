@@ -1,7 +1,7 @@
 package com.cllasify.cllasify.Adaptor;
 
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +13,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Constant;
-import com.cllasify.cllasify.Home.Server_Activity;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.SharePref;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -54,15 +56,38 @@ public class Adapter_TopicList extends RecyclerView.Adapter<Adapter_TopicList.Vi
     public void onBindViewHolder(@NonNull Adapter_TopicList.ViewHolder holder, int position) {
         holder.subjectTopic.setText(subjectDetailsModelList.get(position).getSubjectName());
 
+        Subject_Details_Model getTopic = subjectDetailsModelList.get(position);
+
+        String userID = SharePref.getDataFromPref(Constant.USER_ID);
+
+        DatabaseReference posTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+        String subjectPushId = getTopic.getSubjectUniPushId();
+
+        posTemp.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("subjectUniPushId").getValue().toString().equals(subjectPushId)) {
+                    holder.subjectTopic.setBackgroundColor(Color.YELLOW);
+                } else {
+                    holder.subjectTopic.setBackgroundColor(Color.TRANSPARENT);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         holder.subjectTopic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(context, "Clicked on Subject", Toast.LENGTH_SHORT).show();
-                String userID = SharePref.getDataFromPref(Constant.USER_ID);
-                DatabaseReference posTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
                 posTemp.child("subjectPosition").setValue(holder.getAdapterPosition());
                 posTemp.child("clickedSubjectName").setValue(subjectDetailsModelList.get(holder.getAdapterPosition()).getSubjectName());
                 posTemp.child("subjectUniPushId").setValue(subjectDetailsModelList.get(holder.getAdapterPosition()).getSubjectUniPushId());
+
 
                 onSubjectClickListener.onSubjectClick();
 

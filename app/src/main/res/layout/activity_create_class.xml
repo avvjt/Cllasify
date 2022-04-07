@@ -49,79 +49,91 @@
         android:layout_height="match_parent"
         app:layout_constraintTop_toBottomOf="@id/action_bar">
 
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/ll_creategroup"
-            android:orientation="vertical"
-            android:layout_marginTop="100dp">
+            android:layout_height="match_parent">
 
-            <TextView
+
+            <ProgressBar
+                android:id="@+id/middleProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_centerInParent="true"/>
+
+
+            <LinearLayout
+                android:id="@+id/ll_creategroup"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:id="@+id/tv_AddClassTitle"
-                android:text="Create a class for your server"
-                android:textColor="@color/text_color"
-                android:fontFamily="@font/inter_semibold"
-                android:textAlignment="center"/>
+                android:layout_marginTop="100dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_AddClassTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_semibold"
+                    android:text="Create a class for your server"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_color"
+                    android:textSize="20sp"/>
 
 
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="Class name"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_background_color"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/Edittext"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Class name"
-                android:textColor="@color/text_background_color"
-                android:textSize="16sp"
-                android:textAlignment="center"
-                android:layout_marginTop="30dp"
-                app:layout_constraintBottom_toTopOf="@+id/Edittext"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                <EditText
+                    android:id="@+id/et_ClassName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:backgroundTint="@color/iconPrimaryColor"
+                    android:gravity="center_horizontal"
+                    android:hint="@string/hint_crateServer"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/iconColor"
+                    android:textSize="18sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
 
-            <EditText
-                android:id="@+id/et_ClassName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/iconPrimaryColor"
-                android:hint="@string/hint_crateServer"
-                android:textColor="@color/text_color"
-                android:textColorHint="@color/iconColor"
-                android:textSize="18sp"
-                android:gravity="center_horizontal"
-                android:layout_margin="20dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="* It will create a new class in the server"
-                android:textSize="13sp"
-                android:textColor="@color/text_background_color"
-                android:fontFamily="@font/inter_regular"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="* It will create a new class in the server"
+                    android:textAlignment="center"
+                    android:textColor="@color/text_background_color"
+                    android:textSize="13sp"/>
 
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:layout_marginStart="50dp"
-                android:layout_marginEnd="50dp"
-                android:background="@drawable/button_small_big"
-                android:layout_gravity="center"
-                android:textColor="@color/btn_text_white"
-                android:text="Create Class"
-                android:id="@+id/btn_nextAddTopic" />
+                <Button
+                    android:id="@+id/btn_nextAddTopic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="50dp"
+                    android:background="@drawable/button_small_big"
+                    android:text="Create Class"
+                    android:textColor="@color/btn_text_white" />
 
-        </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
 
     </ScrollView>
 </LinearLayout>
