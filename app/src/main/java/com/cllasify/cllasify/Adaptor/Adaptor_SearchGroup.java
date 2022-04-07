@@ -89,6 +89,9 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
                 if (snapshot.exists()) {
                     Glide.with(context.getApplicationContext()).load(snapshot.getValue()).into(holder.schoolLogoImg);
                     Glide.with(context.getApplicationContext()).load(snapshot.getValue()).into(holder.schImg);
+                }else{
+                    Glide.with(context.getApplicationContext()).load(R.drawable.default_school_logo).into(holder.schoolLogoImg);
+                    Glide.with(context.getApplicationContext()).load(R.drawable.demo_sch).into(holder.schImg);
                 }
             }
 
@@ -110,8 +113,6 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()){
                     totalSize += dataSnapshot.child("classStudentList").getChildrenCount();
                 }
-
-                Log.d("TOTALSTU", "onDataChange: "+totalSize);
 
                 holder.numbStudents.setText(String.valueOf(totalSize));
 
