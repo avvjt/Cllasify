@@ -9,9 +9,11 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -31,16 +33,21 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Server_Setting_Specifics extends AppCompatActivity {
 
     EditText et_ServerName, et_schoolBio,et_schoolEmail;
     DatabaseReference getTempData;
     String currUserId;
     String groupPushId;
-    ImageButton doneBtn, serverDelete;
+    ImageButton doneBtn;
     DatabaseReference databaseReference;
 
-    ImageView changeServerImage, serverImage;
+    CircleImageView serverImage;
+    TextView changeServerImage;
+    Button serverDelete;
+
     StorageReference storageReference;
 
 

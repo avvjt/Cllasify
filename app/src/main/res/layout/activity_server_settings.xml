@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:visibility="visible"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/page_color"
+    android:orientation="vertical"
+    android:visibility="visible"
     tools:context=".Home.Server_Settings">
 
     <LinearLayout
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
+        android:background="@color/page_background_color"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:background="@color/page_background_color"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,30 +29,30 @@
             android:layout_height="46dp"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
+            android:contentDescription="TODO"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
             app:tint="@color/iconSecondaryColor"
-            android:contentDescription="TODO"
-            tools:ignore="RtlSymmetry"/>
+            tools:ignore="RtlSymmetry" />
 
         <ImageButton
             android:id="@+id/serverSettingProfile"
             style="@style/SelectableItemBackgroundBorderless"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_settings_24"
-            app:tint="@color/iconPrimaryColor"
             android:layout_marginStart="300dp"
-            android:layout_marginEnd="20dp"/>
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_settings_24"
+            app:tint="@color/iconPrimaryColor" />
 
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/noti_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/action_bar"
-        android:id="@+id/noti_layout">
+        app:layout_constraintTop_toBottomOf="@id/action_bar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -70,10 +70,10 @@
                     android:id="@+id/btn_Share"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:visibility="gone"
                     android:layout_marginStart="200dp"
                     android:background="@color/transparent"
-                    android:drawableEnd="@drawable/ic_share" />
+                    android:drawableEnd="@drawable/ic_share"
+                    android:visibility="gone" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/schoolLogo"
@@ -94,21 +94,21 @@
                     android:id="@+id/tv_ServerName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
                     android:fontFamily="@font/inter_semibold"
                     android:maxLines="2"
                     android:text="Kalyani sikshayatan school"
-                    android:layout_marginStart="20dp"
                     android:textColor="@color/text_color"
-                    android:textSize="19sp"
-                    android:layout_gravity="center_vertical"/>
+                    android:textSize="19sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/page_background_color">
+                android:background="@color/page_background_color"
+                android:orientation="vertical">
 
                 <!--Ya ky chiz hai? again server name option ku diahai-->
 
@@ -123,9 +123,9 @@
                         android:id="@+id/schoolBio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="17sp"
                         android:padding="20dp"
-                        android:textColor="@color/text_color" />
+                        android:textColor="@color/text_color"
+                        android:textSize="17sp" />
 
                 </LinearLayout>
 
@@ -133,26 +133,26 @@
                     android:id="@+id/ll_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    android:visibility="gone"
-                    android:paddingTop="5dp">
+                    android:paddingTop="5dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
+                        android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_mail_16"
-                        app:tint="@color/iconColor"
-                        android:layout_gravity="center_vertical"/>
+                        app:tint="@color/iconColor" />
 
                     <TextView
                         android:id="@+id/schoolEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="17sp"
                         android:layout_marginStart="10dp"
-                        android:textColor="@color/text_color" />
+                        android:textColor="@color/text_color"
+                        android:textSize="17sp" />
 
                 </LinearLayout>
 
@@ -160,86 +160,102 @@
                     android:id="@+id/tv_GroupStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
                     android:orientation="horizontal"
+                    android:paddingStart="20dp"
                     android:paddingTop="10dp"
+                    android:paddingEnd="20dp"
                     android:paddingBottom="10dp">
 
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
+                        android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_person_16"
-                        app:tint="@color/iconColor"
-                        android:layout_gravity="center_vertical"/>
+                        app:tint="@color/iconColor" />
 
                     <TextView
                         android:id="@+id/numbStudentsInt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:textSize="15sp"
-                        android:textColor="@color/text_background_color"/>
+                        android:textColor="@color/text_background_color"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/numbStudents"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/inter_regular"
                         android:text="Students"
                         android:textColor="@color/text_background_color"
-                        android:textSize="15sp"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/inter_regular" />
+                        android:textSize="15sp" />
 
                     <View
                         android:layout_width="5dp"
                         android:layout_height="5dp"
-                        android:background="@color/iconColor"
                         android:layout_gravity="center"
-                        android:layout_marginStart="10dp"/>
+                        android:layout_marginStart="10dp"
+                        android:background="@color/iconColor" />
 
                     <TextView
                         android:id="@+id/numbTeachersInt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:textSize="15sp"
-                        android:textColor="@color/text_background_color"/>
+                        android:textColor="@color/text_background_color"
+                        android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/numbTeachers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/inter_regular"
                         android:text="Teachers"
                         android:textColor="@color/text_background_color"
-                        android:textSize="15sp"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/inter_regular" />
+                        android:textSize="15sp" />
 
 
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/addNewClass"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:background="@drawable/jojn_teacher_btn"
-                    android:text="Add new class"
-                    android:textAllCaps="false"
-                    android:fontFamily="@font/inter_semibold"
-                    android:textColor="@color/text_color"
-                    android:textSize="18sp"/>
 
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_ShowClass"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                style="@style/SelectableItemBackground">
+
+                <Button
+                    android:id="@+id/addNewClass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:drawableStart="@drawable/ic_add"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/iconPrimaryColor"
+                    android:fontFamily="@font/inter_medium"
+                    android:text="Add class"
+                    android:letterSpacing="0.01"
+                    android:textAlignment="textStart"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp"
+                    />
+
+            </LinearLayout>
+
+
 
         </LinearLayout>
 
