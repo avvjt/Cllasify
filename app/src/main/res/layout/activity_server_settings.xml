@@ -196,7 +196,7 @@
                         android:layout_height="5dp"
                         android:layout_gravity="center"
                         android:layout_marginStart="10dp"
-                        android:background="@color/iconColor" />
+                        android:background="@drawable/ic_dot" />
 
                     <TextView
                         android:id="@+id/numbTeachersInt"
@@ -245,7 +245,7 @@
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/iconPrimaryColor"
                     android:fontFamily="@font/inter_medium"
-                    android:text="Add class"
+                    android:text="Create class"
                     android:letterSpacing="0.01"
                     android:textAlignment="textStart"
                     android:textAllCaps="false"
