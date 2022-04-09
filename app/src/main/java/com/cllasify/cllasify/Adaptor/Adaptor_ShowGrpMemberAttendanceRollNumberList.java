@@ -104,7 +104,9 @@ public class Adaptor_ShowGrpMemberAttendanceRollNumberList extends RecyclerView.
         refUserProfPic.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                holder.tv_GroupTitle.setText(snapshot.child("Name").getValue().toString());
+                if (snapshot.child("Name").exists()) {
+                    holder.tv_GroupTitle.setText(snapshot.child("Name").getValue().toString());
+                }
                 if (snapshot.child("uniqueUserName").exists()) {
                     holder.tv_userName.setText(snapshot.child("uniqueUserName").getValue().toString());
                 }

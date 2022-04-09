@@ -74,7 +74,9 @@ public class Adaptor_Attendance extends RecyclerView.Adapter<Adaptor_Attendance.
         refUserProfPic.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                holder.tv_UserName.setText(snapshot.child("Name").getValue().toString());
+                if (snapshot.child("Name").exists()) {
+                    holder.tv_UserName.setText(snapshot.child("Name").getValue().toString());
+                }
                 if (snapshot.child("uniqueUserName").exists()) {
                     holder.tv_unique_userName.setText(snapshot.child("uniqueUserName").getValue().toString());
                 }

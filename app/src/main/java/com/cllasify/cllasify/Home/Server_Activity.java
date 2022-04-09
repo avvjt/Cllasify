@@ -136,7 +136,7 @@ public class Server_Activity extends AppCompatActivity {
 
 
     //Relative Layouts
-    RelativeLayout rl_ChatView, rl_FriendChatLayout, ll_bottom_send;
+    RelativeLayout ll_bottom_send;
 
     //Linear Layouts
     LinearLayout onlyAdminLayout, groupSection, ll_AddJoinGrp, ll_ChatDoubtDashboard,
@@ -156,13 +156,6 @@ public class Server_Activity extends AppCompatActivity {
     TextView tv_GroupMember, adminListText, FriendListText;
     FirebaseDatabase refFriendList;
 
-
-
-
-
-
-
-    FloatingActionButton fab_addDoubtQ;
     String GroupCategory;
     GoogleSignInClient googleSignInClient;
     Calendar calenderCC = Calendar.getInstance();
@@ -178,16 +171,10 @@ public class Server_Activity extends AppCompatActivity {
     ImageView imageViewAddPanelAddGroup;
     Class_Group userAddGroupClass, userSubsGroupClass;
     EditText et_FrndP_text, et_ctext;
-    TextView tv_UserPublicTitle, tv_UserPrivateTitle, tv_OtherTitle,
-            tv_cpaneltitle, tv_cpanelbody,
-            textViewGroupName, classNameTextView,
+    TextView tv_UserPublicTitle, tv_OtherTitle,
+            textViewGroupName,
             tv_FrndP_Title, textViewSubjectName;
 
-
-
-
-
-    SearchView Rv_DoubtChat;
 
     FragmentManager fragmentManager;
     DoubtFragment doubtFragment;
@@ -221,7 +208,6 @@ public class Server_Activity extends AppCompatActivity {
         rv_UserPublicGroupTitle = findViewById(R.id.rv_UserPublicGroupTitle);
         rv_OtherPublicGroupTitle = findViewById(R.id.rv_OtherPublicGroupTitle);
         fragmentManager = getSupportFragmentManager();
-        Rv_DoubtChat = findViewById(R.id.Rv_DoubtChat);
         doubtFragment = new DoubtFragment();
 
         tv_GroupMember = findViewById(R.id.tv_GroupMember);
@@ -229,9 +215,6 @@ public class Server_Activity extends AppCompatActivity {
         FriendListText = findViewById(R.id.FriendListText);
 
         endPanelAllFriendsRecyclerView = findViewById(R.id.endPanelAllFriendsRecyclerView);
-
-        rl_ChatView = findViewById(R.id.rl_ChatView);
-        rl_FriendChatLayout = findViewById(R.id.rl_FrndChatLayout);
 
         ll_AddJoinGrp = findViewById(R.id.ll_AddJoinGrp);
 
@@ -241,7 +224,6 @@ public class Server_Activity extends AppCompatActivity {
 
         tv_FrndP_Title = findViewById(R.id.tv_FrndP_Title);
         tv_UserPublicTitle = findViewById(R.id.tv_UserPublicTitle);
-        tv_UserPrivateTitle = findViewById(R.id.tv_UserPrivateTitle);
         tv_OtherTitle = findViewById(R.id.tv_OtherTitle);
 
         ib_FrndP_csubmit = findViewById(R.id.ib_FrndP_csubmit);
@@ -272,21 +254,16 @@ public class Server_Activity extends AppCompatActivity {
         textViewGroupName = findViewById(R.id.groupName);
         textViewSubjectName = findViewById(R.id.subjectName);
         recyclerViewClassList = findViewById(R.id.recyclerViewClassList);
-        classNameTextView = findViewById(R.id.classNameTextView);
 
 //        ll_TabChatDoubt = findViewById(R.id.ll_TabChatDoubt);
 
         overlappingPanels = findViewById(R.id.overlapping_panels);
-        tv_cpaneltitle = findViewById(R.id.tv_cpaneltitle);
-        tv_cpanelbody = findViewById(R.id.tv_cpanelbody);
 
 
         ImageViewRecentChat = findViewById(R.id.ib_FrndsList);
 
         //start panel initialisation
         imageViewAddPanelAddGroup = findViewById(R.id.addNewTopicButton);
-//        srl_ChatDashbaord = findViewById(R.id.srl_ChatDashbaord);
-        fab_addDoubtQ = findViewById(R.id.fab_addDoubtQ);
 
         list_GroupTitle = new ArrayList<>();
         list_UserPrivateGroupTitle = new ArrayList<>();

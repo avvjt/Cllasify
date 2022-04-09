@@ -93,7 +93,9 @@ public class Adapter_All_Friends extends RecyclerView.Adapter<Adapter_All_Friend
         dr.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                holder.tv_GroupTitle.setText(snapshot.child("Name").getValue().toString());
+                if (snapshot.child("Name").exists()) {
+                    holder.tv_GroupTitle.setText(snapshot.child("Name").getValue().toString());
+                }
                 if (snapshot.child("uniqueUserName").exists()) {
                     holder.tv_userName.setText(snapshot.child("uniqueUserName").getValue().toString());
                 }

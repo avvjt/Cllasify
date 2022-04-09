@@ -101,7 +101,9 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
         refUserProfPic.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                holder.tv_GroupTitle.setText(snapshot.child("Name").getValue().toString());
+                if (snapshot.child("Name").exists()) {
+                    holder.tv_GroupTitle.setText(snapshot.child("Name").getValue().toString());
+                }
                 if (snapshot.child("uniqueUserName").exists()) {
                     holder.tv_unique_userName.setText(snapshot.child("uniqueUserName").getValue().toString());
                 }
@@ -109,7 +111,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
                     String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                     Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
                     Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.civ_UserProfilePic);
-                }else{
+                } else {
                     Glide.with(context.getApplicationContext()).load(R.drawable.maharaji).into(holder.civ_UserProfilePic);
                 }
             }

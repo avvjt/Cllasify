@@ -84,8 +84,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
     RadioGroup rg_Theme;
 
     TextView tv_notiConfig, tv_Feedback;
-    LinearLayout ll_showFeedback, ll_profileSetting;
-    EditText et_Feedback;
+    LinearLayout ll_profileSetting;
     CircleImageView prof_pic;
 
 
@@ -116,7 +115,6 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
         btn_Back=findViewById(R.id.btn_Back);
         tv_SignOut =findViewById(R.id.tv_SignOut);
-        et_Feedback =findViewById(R.id.et_Feedback);
         tv_User_Name =findViewById(R.id.tv_User_Name);
         tv_rateUs = findViewById(R.id.tv_rateUs);
         prof_pic = findViewById(R.id.prof_pic);
@@ -135,8 +133,6 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
         rg_Theme=findViewById(R.id.rg_Theme);
 
-
-        ll_showFeedback=findViewById(R.id.ll_showFeedback);
         ll_profileSetting = findViewById(R.id.ll_profileSetting);
         tv_privacy = findViewById(R.id.tv_privacyPolicy);
         tv_terms = findViewById(R.id.tv_termsServices);

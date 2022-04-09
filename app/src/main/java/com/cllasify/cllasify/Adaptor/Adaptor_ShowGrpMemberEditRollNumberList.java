@@ -106,7 +106,9 @@ public class Adaptor_ShowGrpMemberEditRollNumberList extends RecyclerView.Adapte
                 if (snapshot.child("uniqueUserName").exists()) {
                     holder.tv_userName.setText(snapshot.child("uniqueUserName").getValue().toString());
                 }
-                holder.tv_GroupTitle.setText(snapshot.child("Name").getValue().toString());
+                if (snapshot.child("Name").exists()) {
+                    holder.tv_GroupTitle.setText(snapshot.child("Name").getValue().toString());
+                }
                 if (snapshot.child("profilePic").exists()) {
                     String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                     Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);

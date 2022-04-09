@@ -67,39 +67,18 @@ public class Adapter_TopicList extends RecyclerView.Adapter<Adapter_TopicList.Vi
         posTemp.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child("subjectUniPushId").getValue().toString().equals(subjectPushId)) {
-                    holder.subjectTopic.setBackgroundColor(Color.YELLOW);
-                } else {
-                    holder.subjectTopic.setBackgroundColor(Color.TRANSPARENT);
+                if (snapshot.child("subjectUniPushId").exists()) {
+                    if (snapshot.child("subjectUniPushId").getValue().toString().equals(subjectPushId)) {
+                        holder.subjectTopic.setBackgroundColor(Color.YELLOW);
+                    } else {
+                        holder.subjectTopic.setBackgroundColor(Color.TRANSPARENT);
+                    }
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
-
-        holder.subjectTopic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "Clicked on Subject", Toast.LENGTH_SHORT).show();
-                posTemp.child("subjectPosition").setValue(holder.getAdapterPosition());
-                posTemp.child("clickedSubjectName").setValue(subjectDetailsModelList.get(holder.getAdapterPosition()).getSubjectName());
-                posTemp.child("subjectUniPushId").setValue(subjectDetailsModelList.get(holder.getAdapterPosition()).getSubjectUniPushId());
-
-
-                onSubjectClickListener.onSubjectClick();
-
-//                Intent intent = new Intent(context.getApplicationContext(),Server_Activity.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                intent.putExtra("closePanels","close");
-//                context.startActivity(intent);
-
-                    /*
-                    DatabaseReference saveTempClassName = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
-                    saveTempClassName.child("clickedClassName").setValue(classGroupName);
-                    */
             }
         });
 
@@ -128,48 +107,31 @@ public class Adapter_TopicList extends RecyclerView.Adapter<Adapter_TopicList.Vi
             assert currentUser != null;
             String userID = currentUser.getUid();
 
+            DatabaseReference setTempData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
 
-//            DatabaseReference changeCOor = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+            subjectTopic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (subjectDetailsModelList != null) {
 
-//            subjectTopic.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    Toast.makeText(context, "Testing the subject", Toast.LENGTH_SHORT).show();
-//                    if (mListener != null) {
-//                        int position = getAdapterPosition();
-//                        if (position != RecyclerView.NO_POSITION) {
-//                            /*
-//                            When doing this in the previous commit of the project it's working
-//                            Class_Group user = mDatalistNew.get(getAdapterPosition());
-//                            String groupName = user.getGroupName();
-//                            String groupSubjectPushId = user.getUserEmailId();
-//                            String groupPushId = user.getGroupCategory();
-//                            String groupClassSubjects = user.getGroup2();
-//                             */
-//                            Subject_Details_Model user = subjectDetailsModelList.get(getAdapterPosition());
-//
-//                            String groupPushId = user.getGroupPushId();
-//
-//                            String groupSubjectPushId = user.getGroupSubjectPushId();
-//                            String groupClassSubjects = user.getSubjectTitle();
-//                            String groupName = user.getGroupName();
-//
-//                            Log.i("lionlion", groupPushId);
-//                            Log.i("lionlion", groupSubjectPushId);
-//
-//                            Log.i("lionlion", groupClassSubjects);
-//                            Log.i("lionlion", groupName);
-//                            subjectTopic.setBackgroundColor(context.getColor(R.color.colorPrimary));
-////                            changeCOor.child("tgroupClassSubjects").setValue(groupClassSubjects);
-//
-//
-//                            Log.d("Topiccs", "onClick: "+"GroupName: "+groupName+"\nGroupSubjectId: "+groupSubjectPushId+"\ngroupPushId: "+groupPushId+"\ngroupClassSubjects: "+groupClassSubjects);
-//
-//                            mListener.subjectChildClick(groupName, groupPushId, groupSubjectPushId, groupClassSubjects);
-//                        }
-//                    }
-//                }
-//            });
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            Toast.makeText(context, "Clicked on Subject", Toast.LENGTH_SHORT).show();
+
+                            Subject_Details_Model user = subjectDetailsModelList.get(position);
+
+                            String subjectName = user.getSubjectName();
+                            String subjectUniPush = user.getSubjectUniPushId();
+
+                            setTempData.child("subjectPosition").setValue(position);
+                            setTempData.child("clickedSubjectName").setValue(subjectName);
+                            setTempData.child("subjectUniPushId").setValue(subjectUniPush);
+
+                            onSubjectClickListener.onSubjectClick();
+                        }
+                    }
+                }
+            });
 
         }
     }

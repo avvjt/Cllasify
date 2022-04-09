@@ -44,9 +44,6 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
 
         void admissionClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String adminEmailId);
 
-//        void AddFrndDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId);
-//        void FollowFriendDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId);
-
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -80,9 +77,6 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
 
         holder.tv_ClassTitle.setText(groupClassName);
 
-        String groupPushId = Answers.getGroupPushId();
-        String classPushId = Answers.getUniPushClassId();
-
     }
 
     @Override
@@ -107,7 +101,6 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
             tv_ClassTitle = itemView.findViewById(R.id.tv_ClassTitle);
             btn_ClassAdmission = itemView.findViewById(R.id.btn_ClassAdmission);
             btn_ClassJoin = itemView.findViewById(R.id.btn_ClassJoin);
-//            ib_SubMenu =itemView.findViewById(R.id.ib_SubMenu);
 
 
             firebaseAuth = FirebaseAuth.getInstance();
@@ -178,27 +171,6 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
                         });
 
 
-
-                        /*
-                        Class_Group user = mDatalistNew.get(getAdapterPosition());
-                        String adminGroupID=user.userId;
-                        String subGroupName=user.userEmailId;
-                        String adminUserName=user.userName;
-                        String pushId=user.position;
-                        String groupName=user.groupName;
-                        String groupPushId=user.groupCategory;
-
-                        if (!currUserID.equals(adminGroupID)) {
-                            if (position != RecyclerView.NO_POSITION) {
-
-                                Log.d("JOIN", "adminGroupID: "+adminGroupID+"\nsubGroupName: "+subGroupName+
-                                        "\nadminUserName: "+adminUserName+"\npushId: "+pushId+"\ngroupName: "+groupName+"\ngroupPushId: "+groupPushId);
-                                mListener.JoinGroupClass(adminGroupID,adminUserName, groupName,groupPushId,subGroupName, pushId);
-                                //mListener.dislikeAns();
-                            }
-                        }
-                        */
-
                     }
 
                 }
@@ -240,16 +212,9 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
                                         Log.d("JOIN", "adminGroupID: " + adminGroupID + "\nsubGroupName: " + className +
                                                 "\nadminUserName: " + adminUserName + "\ngroupName: " + groupName + "\ngroupPushId: " + groupPushId + "\nClass position: " + position);
 
-
-                                        String userID = currentUser.getUid();
-
-//                                DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
-//                                databaseReferenceTemp.child("classPos").setValue(position);
-//
-//                                databaseReferenceTemp.child("uniPushClassId").setValue(classGroupNames.getUniPushClassId());
                                         String classReqPosition = String.valueOf(position);
                                         String classUniPush = classGroupNames.getUniPushClassId();
-                                        //Push Id lochaaa
+
                                         if (!(classUniPush.equals("null"))) {
                                             Log.d("GRPPush", "Class Uni Group Push Id is: "+classUniPush);
                                             mListener.JoinGroupClass(adminGroupID, adminUserName, groupName, groupPushId, className, "pushId", classUniPush, classReqPosition);
