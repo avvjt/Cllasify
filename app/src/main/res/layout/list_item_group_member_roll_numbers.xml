@@ -31,8 +31,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civ_UserProfilePic"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/maharaji" />
 
         <LinearLayout
@@ -46,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_color"
                 android:fontFamily="@font/inter_medium"
-                android:text="Group Name"
+                android:text="User Name"
                 android:textSize="15sp"
                 android:layout_marginStart="10dp"
                 android:gravity="center_vertical"
@@ -58,6 +58,7 @@
                 android:textColor="@color/text_background_color"
                 android:fontFamily="@font/inter_medium"
                 android:text="UserName"
+                android:visibility="gone"
                 android:textSize="15sp"
                 android:layout_marginStart="10dp"
                 android:gravity="center_vertical"

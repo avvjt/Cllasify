@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/refreshLayout"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".Home.Server_Activity">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <!--swipeRefreshLayout we don't need as of now-->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
     <com.discord.panels.OverlappingPanelsLayout
@@ -24,12 +28,13 @@
         <!-- Start Panel       -->
         <RelativeLayout
             android:id="@+id/start_panel"
-            android:padding="20dp"
-            android:background="@color/page_color"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="start"
-            android:orientation="vertical">
+            android:background="@color/page_color"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:visibility="gone">
 
 
             <RelativeLayout
@@ -68,20 +73,20 @@
                     android:layout_centerInParent="true"
                     android:layout_toEndOf="@+id/cardRecChatIMG"
                     android:ellipsize="end"
+                    android:fontFamily="@font/inter_semibold"
                     android:maxLines="2"
                     android:paddingStart="20dp"
                     android:paddingEnd="15dp"
                     android:textColor="@color/text_color"
-                    android:fontFamily="@font/inter_semibold"
                     android:textSize="15sp" />
 
             </RelativeLayout>
 
 
             <RelativeLayout
-                android:layout_below="@+id/chatItemAndGroupName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/chatItemAndGroupName"
                 android:orientation="horizontal">
 
 
@@ -111,10 +116,10 @@
                         android:id="@+id/tv_OtherTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:fontFamily="@font/inter_medium"
                         android:textColor="@color/text_color"
                         android:textSize="16sp"
-                        android:fontFamily="@font/inter_medium"
-                        android:layout_margin="8dp"
                         android:visibility="gone" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -126,14 +131,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        app:cardElevation="0dp"
-                        app:cardCornerRadius="50dp">
+                        app:cardCornerRadius="50dp"
+                        app:cardElevation="0dp">
 
                         <ImageView
                             android:id="@+id/addNewTopicButton"
-                            android:background="@color/icon_background"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
+                            android:background="@color/icon_background"
                             android:scaleType="center"
                             android:src="@drawable/ic_plus_16" />
 
@@ -145,15 +150,15 @@
                 <LinearLayout
                     android:id="@+id/friendsSection"
                     android:layout_width="150dp"
-                    android:layout_toEndOf="@+id/groupRVs"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/groupRVs">
 
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerViewFriendsNameList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:elevation="5dp"/>
+                        android:elevation="5dp" />
 
 
                 </LinearLayout>
@@ -162,8 +167,8 @@
                 <LinearLayout
                     android:id="@+id/groupSection"
                     android:layout_width="200dp"
-                    android:layout_toEndOf="@+id/friendsSection"
                     android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/friendsSection"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -176,7 +181,6 @@
                 </LinearLayout>
 
 
-
             </RelativeLayout>
 
         </RelativeLayout>
@@ -187,52 +191,55 @@
             style="@style/Panel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/page_color"
             android:orientation="vertical"
-            android:background="@color/page_color">
+            android:visibility="gone">
 
             <!--add group join group button show when new user login-->
             <LinearLayout
+                android:id="@+id/ll_AddJoinGrp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/ll_AddJoinGrp"
                 android:layout_centerInParent="true"
                 android:elevation="50dp"
-                android:visibility="gone"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
+
                 <Button
-                    android:layout_width="match_parent"
-                    android:text="@string/add_group"
-                    android:layout_height="70dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:background="@drawable/cust_rounded_corner"
                     android:id="@+id/btn_caddgroup"
-                    android:textSize="30sp"/>
-                <Button
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
-                    android:layout_marginTop="25dp"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:background="@drawable/cust_rounded_corner"
-                    android:layout_below="@id/btn_caddgroup"
+                    android:text="@string/add_group"
+                    android:textSize="30sp" />
+
+                <Button
                     android:id="@+id/btn_cjoingroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:layout_below="@id/btn_caddgroup"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="@drawable/cust_rounded_corner"
                     android:text="@string/join_group"
-                    android:textSize="30sp"/>
+                    android:textSize="30sp" />
             </LinearLayout>
 
             <!--Upper heading-->
             <LinearLayout
+                android:id="@+id/ll_ChatDoubtDashboard"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/ll_ChatDoubtDashboard"
                 android:layout_alignParentTop="true"
                 android:orientation="vertical">
 
                 <RelativeLayout
+                    android:id="@+id/rl_ChatDashboard"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/rl_ChatDashboard"
                     android:orientation="vertical">
 
                     <TextView
@@ -241,9 +248,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_margin="10dp"
+                        android:fontFamily="@font/inter_semibold"
                         android:textColor="@color/text_color"
-                        android:textSize="20sp"
-                        android:fontFamily="@font/inter_semibold"/>
+                        android:textSize="20sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_ChatDashboard"
@@ -254,35 +261,35 @@
 
                     <!--Chat box sending message layout-->
                     <RelativeLayout
+                        android:id="@+id/ll_bottom_send"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:id="@+id/ll_bottom_send"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <EditText
+                            android:id="@+id/et_ctext"
                             android:layout_width="match_parent"
                             android:layout_height="50dp"
+                            android:layout_gravity="center"
                             android:layout_margin="8dp"
+                            android:layout_toStartOf="@+id/sendDoubt"
                             android:background="@drawable/chat_input_background"
                             android:hint="Message..."
-                            android:layout_gravity="center"
-                            android:paddingStart="15dp"
-                            android:paddingEnd="15dp"
                             android:imeOptions="actionDone"
                             android:importantForAutofill="no"
                             android:inputType="text"
-                            android:layout_toStartOf="@+id/sendDoubt"
+                            android:paddingStart="15dp"
+                            android:paddingEnd="15dp"
                             android:textColor="@color/text_color"
-                            android:textColorHint="@color/text_background_color"
-                            android:id="@+id/et_ctext" />
+                            android:textColorHint="@color/text_background_color" />
 
                         <RelativeLayout
                             android:id="@+id/sendDoubt"
                             android:layout_width="50dp"
-                            android:layout_alignParentEnd="true"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true">
 
 
                             <ImageButton
@@ -296,9 +303,9 @@
                                 android:id="@+id/ib_csubmit"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
-                                android:visibility="gone"
                                 android:background="@color/transparent"
-                                android:src="@drawable/ic_send_24" />
+                                android:src="@drawable/ic_send_24"
+                                android:visibility="gone" />
 
                         </RelativeLayout>
 
@@ -311,152 +318,255 @@
         <!-- End Panel       -->
         <RelativeLayout
             android:id="@+id/end_panel"
-            style="@style/Panel"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:orientation="vertical"
-            android:visibility="gone"
-            android:background="@color/page_color">
+            android:background="@color/page_color"
+            android:visibility="visible">
 
-            <LinearLayout
-                android:id="@+id/endPanelLinearLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/onlyAdminLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:layout_margin="15dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
-
-
-                    <ImageButton
-                        android:id="@+id/ib_servSettings"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_margin="10dp"
-                        android:padding="5dp"
-                        android:scaleType="fitCenter"
-                        android:background="@color/white"
-                        android:src="@drawable/ic_edit" />
-
-
-
-                    <ImageButton
-                        android:id="@+id/btn_lteachattend"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_margin="10dp"
-                        android:scaleType="fitCenter"
-                        android:background="@color/transparent"
-                        android:src="@drawable/ic_attendance"
-                        android:text="@string/attendance" />
-
-
-                    <ImageButton
-                        android:id="@+id/btn_joinNotification"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_margin="10dp"
-                        android:scaleType="fitCenter"
-                        android:background="@color/transparent"
-                        android:src="@drawable/ic_joined_noti"
-                        android:text="Joining Request" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:id="@+id/FriendListText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Friends"
-                    android:textSize="16sp"
-                    android:textColor="@color/text_color"
-                    android:fontFamily="@font/inter_semibold"
-                    android:visibility="gone" />
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/endPanelAllFriendsRecyclerView"
-                    android:layout_width="match_parent"
-                    android:visibility="gone"
-                    android:layout_height="wrap_content" />
+            <!-- End Panel scrollview   -->
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:scrollbarSize="1dp">
 
                 <LinearLayout
-                    android:id="@+id/rightPanelMembs"
+                    android:id="@+id/endPanelLinearLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <!--primary options layout-->
+                    <LinearLayout
+                        android:id="@+id/onlyAdminLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="visible"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="20dp"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp">
 
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_color"
+                            android:textSize="15sp"
+                            android:text="Favorite"
+                            android:fontFamily="@font/inter_semibold"
+                            android:padding="10dp"
+                            android:layout_marginBottom="10dp"/>
+
+                        <!--server setting option-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="10dp"
+                            android:gravity="center_vertical"
+                            style="@style/SelectableItemBackground"
+                            android:id="@+id/ib_servSettings">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="@drawable/background_server_setting"
+                                android:src="@drawable/ic_settings_24"
+                                android:padding="7dp"
+                                app:tint="@color/btn_text_white"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_regular"
+                                android:text="Server setting"
+                                android:textColor="@color/text_color"
+                                android:textSize="16sp"
+                                android:layout_marginStart="15dp"/>
+
+                        </LinearLayout>
+
+                        <!--attendances option-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="10dp"
+                            android:gravity="center_vertical"
+                            style="@style/SelectableItemBackground"
+                            android:id="@+id/btn_lteachattend">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="@drawable/backgroud_attendances"
+                                android:src="@drawable/ic_edit"
+                                android:padding="7dp"
+                                app:tint="@color/btn_text_white" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_regular"
+                                android:text="Attendance"
+                                android:textColor="@color/text_color"
+                                android:textSize="16sp"
+                                android:layout_marginStart="15dp"/>
+
+                        </LinearLayout>
+
+                        <!--notifications option-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="10dp"
+                            android:gravity="center_vertical"
+                            style="@style/SelectableItemBackground"
+                            android:id="@+id/btn_joinNotification">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="@drawable/backgroud_notification"
+                                android:src="@drawable/ic_menu_notifications"
+                                android:padding="7dp"
+                                app:tint="@color/btn_text_white" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/inter_regular"
+                                android:text="Notification"
+                                android:textColor="@color/text_color"
+                                android:textSize="16sp"
+                                android:layout_marginStart="15dp"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#282930"/>
+
+                    <!--friends tag and friend list don't needed-->
                     <TextView
-                        android:id="@+id/adminListText"
-                        android:layout_width="match_parent"
+                        android:id="@+id/FriendListText"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Teachers"
-                        android:textSize="16sp"
+                        android:text="Friends"
+                        android:fontFamily="@font/inter_medium"
                         android:textColor="@color/text_color"
-                        android:fontFamily="@font/inter_semibold"
-                        android:visibility="gone"/>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/adminList"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/adminListText" />
-
-                    <TextView
-                        android:id="@+id/tv_GroupMember"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Students"
                         android:textSize="16sp"
-                        android:textColor="@color/text_color"
-                        android:fontFamily="@font/inter_semibold"
-                        android:visibility="gone"/>
-
+                        android:visibility="gone" />
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_GrpMemberList"
+                        android:id="@+id/endPanelAllFriendsRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:fastScrollEnabled="false"/>
+
+                    <!--Teachers list recyclerview-->
+                    <LinearLayout
+                        android:id="@+id/rightPanelMembs"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="84dp" />
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <TextView
+                            android:id="@+id/adminListText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Teachers"
+                            android:fontFamily="@font/inter_semibold"
+                            android:textColor="@color/text_color"
+                            android:textSize="15sp"
+                            android:visibility="visible"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/adminList"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginStart="10dp"
+                            app:fastScrollEnabled="false"
+                            android:nestedScrollingEnabled="false"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="#282930"/>
+
+                    <!--Student list recyclerview-->
+                    <LinearLayout
+                        android:id="@+id/rightPanelMember"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <TextView
+                            android:id="@+id/tv_GroupMember"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Students"
+                            android:fontFamily="@font/inter_semibold"
+                            android:textColor="@color/text_color"
+                            android:textSize="15sp"
+                            android:visibility="gone"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_GrpMemberList"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginStart="10dp"
+                            app:fastScrollEnabled="false"
+                            android:nestedScrollingEnabled="false"/>
+
+                    </LinearLayout>
+
+                    <!--Exam and result button ; don't need-->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <Button
+                            android:id="@+id/btn_lteachexam"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_semibold"
+                            android:text="Exam"
+                            android:textColor="@color/text_color"
+                            android:textSize="16sp"
+                            android:visibility="gone" />
+
+                        <Button
+                            android:id="@+id/btn_lteachresult"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/inter_semibold"
+                            android:text="Result"
+                            android:textColor="@color/text_color"
+                            android:textSize="16sp"
+                            android:visibility="gone" />
+
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+            </ScrollView>
 
-
-                    <Button
-                        android:id="@+id/btn_lteachexam"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Exam"
-                        android:visibility="gone"
-                        android:textSize="16sp"
-                        android:textColor="@color/text_color"
-                        android:fontFamily="@font/inter_semibold"/>
-
-                    <Button
-                        android:id="@+id/btn_lteachresult"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Result"
-                        android:textSize="16sp"
-                        android:textColor="@color/text_color"
-                        android:fontFamily="@font/inter_semibold"
-                        android:visibility="gone" />
-
-
-                </RelativeLayout>
-
-            </LinearLayout>
         </RelativeLayout>
 
     </com.discord.panels.OverlappingPanelsLayout>
@@ -466,8 +576,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:visibility="gone"
         android:background="@color/page_color"
+        android:visibility="gone"
         app:itemIconTint="@color/bottom_navigation_color"
         app:itemTextAppearanceActive="@style/BodyText.NavigationBar"
         app:itemTextAppearanceInactive="@style/BodyText.NavigationBar"
@@ -475,10 +585,6 @@
         app:labelVisibilityMode="selected"
         app:layout_constraintBaseline_toBottomOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_nav_menu">
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+        app:menu="@menu/bottom_nav_menu" />
 
-    </RelativeLayout>
-
-
-</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</RelativeLayout>

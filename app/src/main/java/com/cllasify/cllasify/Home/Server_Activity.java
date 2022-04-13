@@ -140,15 +140,16 @@ public class Server_Activity extends AppCompatActivity {
 
     //Linear Layouts
     LinearLayout onlyAdminLayout, groupSection, ll_AddJoinGrp, ll_ChatDoubtDashboard,
-            endPanelLinearLayout, friendSection,rightPanelMems;
+            endPanelLinearLayout, friendSection,rightPanelMems, rightPanelMember,
+            ib_servSettings, btn_lteachattend, btn_joinNotification;
 
 
     //Buttons
     Button btn_cAddGroup, btn_cJoinGroup, btn_lTeachResult, btn_lTeachExam;
 
     //Image Buttons
-    ImageButton ib_cattach, ib_csubmit, ib_doubtSubmit, ImageViewRecentChat, ib_FrndP_csubmit,
-            ib_servSettings, btn_lteachattend, btn_joinNotification;
+    ImageButton ib_cattach, ib_csubmit, ib_doubtSubmit, ImageViewRecentChat, ib_FrndP_csubmit;
+
 
 
     TabLayout tabLayout, tabL_ChatView;
@@ -199,6 +200,7 @@ public class Server_Activity extends AppCompatActivity {
     void init() {
 
         rightPanelMems = findViewById(R.id.rightPanelMembs);
+        rightPanelMember = findViewById(R.id.rightPanelMember);
         swipeRefreshLayout = findViewById(R.id.refreshLayout);
 
         onlyAdminLayout = findViewById(R.id.onlyAdminLayout);
@@ -587,8 +589,11 @@ public class Server_Activity extends AppCompatActivity {
     private void memVis(boolean b) {
         if (b == true) {
             rightPanelMems.setVisibility(View.VISIBLE);
+            rightPanelMember.setVisibility(View.VISIBLE);
         } else {
             rightPanelMems.setVisibility(View.GONE);
+            rightPanelMember.setVisibility(View.GONE);
+
         }
 
     }
