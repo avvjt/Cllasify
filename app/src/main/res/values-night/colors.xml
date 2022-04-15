@@ -33,6 +33,12 @@
     <color name="btn_stroke">#FFFFFF</color>
     <color name="btn_text_white">#FFFFFF</color>
     <color name="btn_text_black">#FFFFFF</color>
+    <color name="gradient_msg_start">#B535F8</color>
+    <color name="gradient_msg_end">#8705FF</color>
+    <color name="received_message">#222222</color>
+    <color name="edittext_background">#292929</color>
+    <color name="view_divider">#282930</color>
+    <color name="edittext_stroke">#191919</color>
 
 
 

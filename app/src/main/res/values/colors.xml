@@ -32,6 +32,15 @@
     <color name="btn_stroke">#8A8A8A</color>
     <color name="btn_text_white">#FFFFFF</color>
     <color name="btn_text_black">#000000</color>
+    <color name="splash_start">#9A00E9</color>
+    <color name="splash_end">#6E00D4</color>
+    <color name="gradient_msg_start">#B535F8</color>
+    <color name="gradient_msg_end">#8705FF</color>
+    <color name="received_message">#eff0f5</color>
+    <color name="edittext_background">#eff0f5</color>
+    <color name="view_divider">#E4E4E4</color>
+    <color name="edittext_stroke">#E8E6E6</color>
+
 
 
 
@@ -46,8 +55,7 @@
     <color name="white_light">#CCCCCC</color>
     <color name="red_deep">#BA3030</color>
 
-    <color name="splash_start">#9A00E9</color>
-    <color name="splash_end">#6E00D4</color>
+
 
 
     <item name="Red" type="color">#ef9a9a</item>

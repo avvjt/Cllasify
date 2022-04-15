@@ -148,7 +148,7 @@ public class Server_Activity extends AppCompatActivity {
     Button btn_cAddGroup, btn_cJoinGroup, btn_lTeachResult, btn_lTeachExam;
 
     //Image Buttons
-    ImageButton ib_cattach, ib_csubmit, ib_doubtSubmit, ImageViewRecentChat, ib_FrndP_csubmit;
+    ImageButton ib_cattach, ib_csubmit, ib_doubtSubmit, ImageViewRecentChat, ib_FrndP_csubmit, swipe_left, swipe_right;
 
 
 
@@ -343,6 +343,9 @@ public class Server_Activity extends AppCompatActivity {
 
         ib_csubmit = findViewById(R.id.ib_csubmit);
         ib_doubtSubmit = findViewById(R.id.ib_doubtSubmit);
+
+        swipe_left = findViewById(R.id.swipe_left);
+        swipe_right = findViewById(R.id.swipe_right);
 
 
         adaptor_friendsList = new Adaptor_FriendsList(getApplicationContext(), friendsListClasses);
@@ -1095,6 +1098,25 @@ public class Server_Activity extends AppCompatActivity {
             });
 
             init();
+
+
+            swipe_left.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    overlappingPanels.openStartPanel();
+                }
+            });
+
+
+
+            swipe_right.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    overlappingPanels.openEndPanel();
+                }
+            });
 
             swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
                 @Override

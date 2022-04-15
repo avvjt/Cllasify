@@ -116,7 +116,7 @@
                     android:background="@drawable/button_small_big"
                     android:layout_gravity="center"
                     android:textColor="@color/btn_text_white"
-                    android:text="Create Group"
+                    android:text="Create Server"
                     android:id="@+id/btn_CreateGroup" />
 
             </LinearLayout>

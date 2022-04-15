@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!--Doubt layout -->
     <LinearLayout
         android:id="@+id/ll_Doubt"
         android:layout_width="match_parent"
@@ -120,9 +120,12 @@
 
     </LinearLayout>
 
+    <!--Opposite person chat layout -->
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
         android:gravity="end">
 
         <TextView
@@ -131,9 +134,12 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:background="@drawable/sent_message_background"
+            android:fontFamily="@font/inter_regular"
             android:padding="12dp"
-            android:textColor="@color/white"
-            android:textSize="13sp" />
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/btn_text_white"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/tvMyDateTime"
@@ -142,7 +148,6 @@
             android:layout_alignBottom="@id/tv_MyMessage"
             android:layout_centerInParent="true"
             android:layout_marginStart="10dp"
-            android:layout_marginBottom="5dp"
             android:layout_toEndOf="@id/tv_MyMessage"
             android:textColor="@color/black"
             android:textSize="10sp" />

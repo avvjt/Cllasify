@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!--Doubt layout -->
     <LinearLayout
         android:id="@+id/ll_Doubt"
         android:layout_width="match_parent"
@@ -115,18 +116,19 @@
 
     </LinearLayout>
 
+    <!--Opposite person chat layout -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/prof_pics_chat_doubt"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_account_24" />
 
@@ -139,8 +141,10 @@
             android:layout_toEndOf="@id/prof_pics_chat_doubt"
             android:background="@drawable/received_message_background"
             android:padding="12dp"
-            android:textColor="@color/black"
-            android:textSize="13sp" />
+            android:layout_marginEnd="50dp"
+            android:fontFamily="@font/inter_regular"
+            android:textColor="@color/text_color"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/tvOtherDateTime"
