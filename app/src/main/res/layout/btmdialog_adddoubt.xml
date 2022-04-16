@@ -25,7 +25,8 @@
         android:id="@+id/et_AddTopic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Topic" />
+        android:hint="Enter Topic"
+        android:inputType="textCapSentences|textMultiLine"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -38,7 +39,8 @@
         android:layout_height="wrap_content"
         android:hint="Add Doubt"
         android:lines="5"
-        android:maxLines="5" />
+        android:maxLines="5"
+        android:inputType="textCapSentences|textMultiLine"/>
 
     <LinearLayout
         android:layout_width="match_parent"

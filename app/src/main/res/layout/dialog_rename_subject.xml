@@ -26,7 +26,8 @@
             android:textColor="@color/text_color"
             android:fontFamily="@font/inter_regular"
             android:hint="Rename Subject Name"
-            android:id="@+id/et_SubjectName"/>
+            android:id="@+id/et_SubjectName"
+            android:inputType="textCapSentences|textMultiLine"/>
 
         <Button
             android:layout_width="match_parent"

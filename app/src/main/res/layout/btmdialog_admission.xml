@@ -60,7 +60,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter your full name"
-        android:padding="8dp" />
+        android:padding="8dp"
+        android:inputType="textCapSentences|textMultiLine"/>
 
     <TextView
         android:id="@+id/tv_phoneNumber"
@@ -75,7 +76,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter your phone number"
-        android:padding="8dp" />
+        android:padding="8dp"
+        android:inputType="textCapSentences|textMultiLine"/>
 
     <TextView
         android:id="@+id/tv_address"
@@ -90,7 +92,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter your adress"
-        android:padding="8dp" />
+        android:padding="8dp"
+        android:inputType="textCapSentences|textMultiLine"/>
 
 
     <Button

@@ -75,6 +75,7 @@
             android:textColorHint="@color/iconColor"
             android:completionThreshold="1"
             android:textSize="18sp"
+            android:inputType="textCapSentences|textMultiLine"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

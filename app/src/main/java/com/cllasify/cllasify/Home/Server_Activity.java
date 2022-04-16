@@ -141,7 +141,7 @@ public class Server_Activity extends AppCompatActivity {
     //Linear Layouts
     LinearLayout onlyAdminLayout, groupSection, ll_AddJoinGrp, ll_ChatDoubtDashboard,
             endPanelLinearLayout, friendSection,rightPanelMems, rightPanelMember,
-            ib_servSettings, btn_lteachattend, btn_joinNotification;
+            ib_servSettings, btn_lteachattend, FriendListText, btn_joinNotification;
 
 
     //Buttons
@@ -154,7 +154,7 @@ public class Server_Activity extends AppCompatActivity {
 
     TabLayout tabLayout, tabL_ChatView;
     BottomNavigationView bottomNavigationView;
-    TextView tv_GroupMember, adminListText, FriendListText;
+    TextView tv_GroupMember, adminListText, FriendListTextt;
     FirebaseDatabase refFriendList;
 
     String GroupCategory;
@@ -215,6 +215,7 @@ public class Server_Activity extends AppCompatActivity {
         tv_GroupMember = findViewById(R.id.tv_GroupMember);
         adminListText = findViewById(R.id.adminListText);
         FriendListText = findViewById(R.id.FriendListText);
+        FriendListTextt = findViewById(R.id.FriendListTextt);
 
         endPanelAllFriendsRecyclerView = findViewById(R.id.endPanelAllFriendsRecyclerView);
 
@@ -1238,6 +1239,7 @@ public class Server_Activity extends AppCompatActivity {
                 tv_GroupMember.setVisibility(View.GONE);
                 adminListText.setVisibility(View.GONE);
                 FriendListText.setVisibility(View.VISIBLE);
+                FriendListTextt.setVisibility(View.VISIBLE);
                 rv_GrpTeacherList.setVisibility(View.GONE);
                 rv_GrpMemberList.setVisibility(View.GONE);
                 friendSection.setVisibility(View.VISIBLE);
@@ -1690,6 +1692,7 @@ public class Server_Activity extends AppCompatActivity {
                 }
                 friendSection.setVisibility(View.GONE);
                 FriendListText.setVisibility(View.GONE);
+                FriendListTextt.setVisibility(View.GONE);
 
 //                ll_AddJoinGrp.setVisibility(View.VISIBLE);
                 imageViewAddPanelAddGroup.setVisibility(View.VISIBLE);

@@ -482,6 +482,18 @@
         <entry key="..\:/Users/Abhi/AndroidStudioProjects/Cllasify/app/src/main/res/layout/user_notification_fragment.xml" value="0.16" />
         <entry key="..\:/Users/Abhi/AndroidStudioProjects/Cllasifyyy/app/src/main/res/layout/activity_p_f_s.xml" value="0.21302083333333333" />
         <entry key="..\:/Users/Abhi/AppData/Local/Temp/drawable-temp/fake_of_ic_password_eye.xml" value="0.1085" />
+        <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/drawable/chat_input_background.xml" value="0.1405" />
+        <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/drawable/ic_question_24.xml" value="0.1405" />
+        <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/drawable/ic_question_circle.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/drawable/ic_quote_24.xml" value="0.1405" />
+        <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/drawable/ic_send_24.xml" value="0.1405" />
+        <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/drawable/round.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/drawable/round_circle.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/drawable/round_doubt.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/drawable/rounded_corner.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/drawable/todo_add_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/layout/activity_friend_chat.xml" value="0.23143115942028986" />
+        <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/layout/activity_server.xml" value="0.22" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Classify-demoo-master/Classify-demoo-master/app/src/main/res/drawable/ic_baseline_message_24.xml" value="0.240625" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Classify-demoo-master/Classify-demoo-master/app/src/main/res/layout/activity_discover.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Classify-demoo-master/Classify-demoo-master/app/src/main/res/layout/activity_friend_chat.xml" value="0.22" />
@@ -855,7 +867,7 @@
     </option>
   </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

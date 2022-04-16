@@ -331,7 +331,8 @@
                                 android:hint="@string/hint_edittext"
                                 android:imeOptions="actionDone"
                                 android:importantForAutofill="no"
-                                android:inputType="text"
+                                android:layout_marginEnd="10dp"
+                                android:inputType="textCapSentences|textMultiLine"
                                 android:paddingStart="20dp"
                                 android:paddingEnd="20dp"
                                 android:textColor="@color/text_color"
@@ -339,24 +340,29 @@
 
                             <RelativeLayout
                                 android:id="@+id/sendDoubt"
-                                android:layout_width="50dp"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true">
+                                android:layout_alignParentEnd="true"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginTop="10dp"
+                                style="@style/SelectableItemBackgroundBorderless">
 
                                 <ImageButton
                                     android:id="@+id/ib_doubtSubmit"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="50dp"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
                                     android:background="@color/transparent"
-                                    android:src="@drawable/todo_add_24" />
+                                    android:elevation="2dp"
+                                    android:src="@drawable/ic_question_24" />
 
                                 <ImageButton
                                     android:id="@+id/ib_csubmit"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="50dp"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
                                     android:background="@color/transparent"
                                     android:src="@drawable/ic_send_24"
-                                    android:visibility="gone" />
+                                    android:visibility="gone"
+                                    android:elevation="2dp"/>
 
                             </RelativeLayout>
 
@@ -504,22 +510,38 @@
                         android:layout_height="1dp"
                         android:background="@color/view_divider"/>
 
-                    <!--friends tag and friend list don't needed-->
-                    <TextView
+                    <!--Friends list recyclerview use in recent chat right panel-->
+                    <LinearLayout
                         android:id="@+id/FriendListText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Friends"
-                        android:fontFamily="@font/inter_medium"
-                        android:textColor="@color/text_color"
-                        android:textSize="16sp"
-                        android:visibility="gone" />
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/endPanelAllFriendsRecyclerView"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        app:fastScrollEnabled="false"/>
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="20dp"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_color"
+                            android:textSize="15sp"
+                            android:id="@+id/FriendListTextt"
+                            android:text="Friends"
+                            android:visibility="gone"
+                            android:fontFamily="@font/inter_semibold"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/endPanelAllFriendsRecyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginStart="10dp"
+                            app:fastScrollEnabled="false"
+                            android:nestedScrollingEnabled="false"
+                            android:visibility="gone"/>
+
+                    </LinearLayout>
 
                     <!--Teachers list recyclerview-->
                     <LinearLayout

@@ -101,6 +101,7 @@
                 android:textColor="@color/text_color"
                 android:textColorHint="@color/iconColor"
                 android:textSize="18sp"
+                android:inputType="textCapSentences|textMultiLine"
                 android:gravity="center_horizontal"
                 android:layout_margin="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
