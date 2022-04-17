@@ -21,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import org.jetbrains.annotations.NotNull;
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,11 +84,39 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         if (chat != null) {
             holder.show_message.setText(chat.get(position).getGroupSubGroupComb());
 
+            holder.tv_UserName.setText(chat.get(position).getUserId());
 
             Class_Group class_GroupDetails = chat.get(position);
 
+            String groupPushId = class_GroupDetails.getGroupName();
+            String classPushId = class_GroupDetails.getSubGroupName();
+            String subjectPushId = class_GroupDetails.getSubGroupPushId();
+            String doubtPushId = class_GroupDetails.getDoubtUniPushId();
+
+
+            DatabaseReference databaseReferenceDoubtCheck = FirebaseDatabase.getInstance().getReference().child("Groups").child("Doubt").child(groupPushId)
+                    .child(classPushId).child(subjectPushId).child("All_Doubt").child(doubtPushId);
+
+            databaseReferenceDoubtCheck.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        if (snapshot.child("Answer").exists()) {
+                            holder.tv_AnswerCount.setText(String.valueOf(snapshot.child("Answer").getChildrenCount()));
+                            Log.d("TOPICDATA", "onDataChange: " + snapshot.child("Answer").getChildrenCount());
+                        }
+                        holder.tv_topicTitle.setText(snapshot.child("groupName").getValue().toString());
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
             String reqUserID = class_GroupDetails.position;
-            Log.d("DBTTT", "onClick: " + reqUserID);
 
             DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(reqUserID);
             refUserProfPic.addValueEventListener(new ValueEventListener() {
@@ -97,7 +126,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                         String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                         Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
                         Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.prof_pics_chat_doubt);
-                    }else{
+                    } else {
                         Glide.with(context.getApplicationContext()).load(R.drawable.maharaji).into(holder.prof_pics_chat_doubt);
                     }
                 }
@@ -131,10 +160,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         private final TextView show_message;
         LinearLayout ll_Doubt;
         CircleImageView prof_pics_chat_doubt;
+        TextView tv_UserName, tv_topicTitle, tv_AnswerCount;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
             show_message = itemView.findViewById(R.id.tv_MyMessage);
+            tv_UserName = itemView.findViewById(R.id.tv_UserName);
+            tv_topicTitle = itemView.findViewById(R.id.tv_topicTitle);
+            tv_AnswerCount = itemView.findViewById(R.id.answerCount);
 
             ll_Doubt = itemView.findViewById(R.id.ll_Doubt);
             prof_pics_chat_doubt = itemView.findViewById(R.id.prof_pics_chat_doubt);

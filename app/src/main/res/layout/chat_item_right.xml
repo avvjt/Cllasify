@@ -12,6 +12,31 @@
         android:visibility="gone"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="0"
+            android:visibility="gone"
+            android:id="@+id/answerCount"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_topicTitle"
+            android:textColor="@color/black"
+            android:visibility="gone"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_UserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginStart="15dp"/>
+
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/prof_pics_chat_doubt"
             android:layout_width="40dp"

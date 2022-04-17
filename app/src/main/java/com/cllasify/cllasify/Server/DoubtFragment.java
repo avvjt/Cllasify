@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryAnswer;
 import com.cllasify.cllasify.Class.Class_Answer;
 import com.cllasify.cllasify.R;
@@ -86,7 +88,7 @@ public class DoubtFragment extends Fragment {
     String currUserId, currUserName, currUserEmail;
 
     String groupPushId, groupClassPushId, groupClassSubjectPushId, doubtQuestionPushId;
-    TextView tv_DoubtGroupClassSubject, tv_DoubtGroupName, tv_DoubtGroupClass;
+    TextView tv_DoubtGroupName, tv_DoubtGroupClass, tv_Name;
 
 
     List<Class_Answer> list_DoubtAnswer;
@@ -95,8 +97,7 @@ public class DoubtFragment extends Fragment {
     ImageButton ib_attachDoubtAns, ib_submitDoubtAns;
     EditText et_DoubtAns;
     Class_Answer userAddAnsClass;
-
-
+    ImageView ib_AnsUserProfile;
 
 
     @Override
@@ -118,7 +119,9 @@ public class DoubtFragment extends Fragment {
 
         tv_DoubtGroupClass = view.findViewById(R.id.tv_DoubtGroupClass);
         tv_DoubtGroupName = view.findViewById(R.id.tv_DoubtGroupName);
-        tv_DoubtGroupClassSubject = view.findViewById(R.id.tv_DoubtGroupClassSubject);
+        tv_Name = view.findViewById(R.id.tv_Name);
+
+        ib_AnsUserProfile = view.findViewById(R.id.ib_UserProfile);
 
         rv_DoubtAnswer = view.findViewById(R.id.rv_DoubtAnswer);
 
@@ -127,27 +130,29 @@ public class DoubtFragment extends Fragment {
         ib_submitDoubtAns = view.findViewById(R.id.ib_submitDoubtAns);
 
 
-        tv_DoubtGroupClass.setText(groupPushId);
-        tv_DoubtGroupName.setText(groupClassPushId);
-        tv_DoubtGroupClassSubject.setText(groupClassSubjectPushId);
-
         list_DoubtAnswer = new ArrayList<>();
         answerAdaptor = new Adaptor_QueryAnswer(getContext(), list_DoubtAnswer);
         rv_DoubtAnswer.setLayoutManager(new LinearLayoutManager(requireContext()));
         rv_DoubtAnswer.setAdapter(answerAdaptor);
 
-        Bundle bundle = this.getArguments();
-//        if (bundle != null) {
-////            bundle.putString("groupPushId", groupPush);
-////            bundle.putString("groupClassPushId", groupClassPush);
-////            bundle.putString("groupClassSubjectPushId", groupSubjectPush);
-//
-//
-//            groupPushId = bundle.getString("groupPushId");
-//            groupClassPushId = bundle.getString("groupClassPushId");
-//            groupClassSubjectPushId = bundle.getString("groupClassSubjectPushId");
-//        }
-        Log.d("DOUUBT", "onClick: ");
+        DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(currUserId);
+        refUserProfPic.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("profilePic").exists()) {
+                    String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                    Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
+                    Glide.with(DoubtFragment.this).load(profilePicUrl).into(ib_AnsUserProfile);
+                } else {
+                    Glide.with(DoubtFragment.this).load(R.drawable.maharaji).into(ib_AnsUserProfile);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         DatabaseReference doubtTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(currUserId);
 
@@ -158,7 +163,6 @@ public class DoubtFragment extends Fragment {
                 groupClassPushId = snapshot.child("DoubtTemps").child("groupClassPushId").getValue(String.class);
                 groupClassSubjectPushId = snapshot.child("DoubtTemps").child("groupClassSubjectPushId").getValue(String.class);
                 doubtQuestionPushId = snapshot.child("DoubtTemps").child("doubtQuestionPushId").getValue(String.class);
-
 
 
                 ib_submitDoubtAns.setOnClickListener(new View.OnClickListener() {
@@ -207,6 +211,38 @@ public class DoubtFragment extends Fragment {
                         }
                     }
 
+                });
+
+                doubtTemp.child("clickedSubjectName").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        tv_DoubtGroupName.setText(snapshot.getValue().toString());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+                DatabaseReference referenceDoubt = FirebaseDatabase.getInstance().getReference().
+                        child("Groups").child("Doubt").child(groupPushId).child(groupClassPushId).child(groupClassSubjectPushId).
+                        child("All_Doubt").child(doubtQuestionPushId);
+
+                referenceDoubt.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Log.d("DOUBTANS", "onChildAdded: " + snapshot.getValue());
+                        tv_DoubtGroupClass.setText(snapshot.child("groupName").getValue().toString());
+                        tv_Name.setText(snapshot.child("groupPositionId").getValue().toString());
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
                 });
 
 

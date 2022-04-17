@@ -158,7 +158,7 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                                     holder.tv_Groupinvite.setVisibility(View.GONE);
                                 } else {
                                     holder.username.setText(userName);
-                                    holder.tv_Groupinvite.setText("Want to join");
+                                    holder.tv_Groupinvite.setText("Wants to join");
 
                                 }
                                 if (GroupName.isEmpty()) {
@@ -188,7 +188,7 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                                     holder.tv_Groupinvite.setVisibility(View.GONE);
                                 } else {
                                     holder.username.setText(userName);
-                                    holder.tv_Groupinvite.setText("Want to join");
+                                    holder.tv_Groupinvite.setText("Wants to join");
 
                                 }
                                 if (GroupName.isEmpty()) {
@@ -263,82 +263,6 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
 
             }
         });
-
-
-//
-//        holder.tv_approve.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (mListener != null) {
-//                    if (position != RecyclerView.NO_POSITION) {
-////                        int position = getAdapterPosition();
-//                        Class_Group user = mDatalistNew.get(position);
-//                        String reqUserID=user.userId;
-//                        String currUserId=user.groupCategory;
-//                        String groupName=user.groupName;
-//                        String userName=user.userName;
-//
-//
-//                        DatabaseReference refSubsGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups").child(groupName);
-//                        refSubsGroup.child(reqUserID).setValue(true);
-//                        DatabaseReference refNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child(currUserId);
-//                        refNotify.child("groupno").setValue("Approve");
-//                        holder.tv_reject.setEnabled(false);
-//                        Toast.makeText(context, "Group request from "+userName+"has been Approve", Toast.LENGTH_SHORT).show();
-//
-//                        //mListener.dislikeAns();
-//                    }
-//                }
-//            }
-//        });
-//
-//        DatabaseReference referenceALLGroup= FirebaseDatabase.getInstance().getReference().
-//                child( "Groups" ).child( "User_Subscribed_Groups" );
-//        referenceALLGroup.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if (snapshot.hasChild(userId)) {
-//                    if (snapshot.child(userId).getValue().equals(true)) {
-//                        holder.tv_GroupStatus.setText("Subscribed");
-//                    } else {
-//                        holder.tv_GroupStatus.setText("Join");
-//                    }
-//                }else {
-//                    holder.tv_GroupStatus.setText("Join");
-//                }
-
-////                    userallAns_tv.setText("View All "+ snapshot.getChildrenCount()+" Answers");
-//                long noofGroupinCategory=snapshot.getChildrenCount()+1;
-////                            String position=getString((int) noofQuesinCategory);
-//                String push="GroupNo_"+noofGroupinCategory+"_"+GroupName;
-//                Calendar calenderCC= Calendar.getInstance();
-//                SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
-//                String dateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
-//
-////                            refuserPersonalGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID).child(push);
-////                            refuserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID).child(push);
-//                refuserAllGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_All_Group").child(userID).child(push);
-//                refSubsGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups");
-////                            refAllPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Public_Group").child(push);
-//
-//                if (GroupCategory.equals("Private")) {
-//                    userAddGroup = new Class_Group(dateTimeCC,userName, userID, userEmailID,push, GroupName,GroupCategory,noofGroupinCategory);
-////                                refuserPersonalGroup.setValue(userAddGroup);
-//                    refuserAllGroup.setValue(userAddGroup);
-//                } else if (GroupCategory.equals("Public")) {
-//                    userAddGroup = new Class_Group(dateTimeCC,userName, userID, userEmailID,push, GroupName,GroupCategory,noofGroupinCategory);
-////                                refuserPublicGroup.setValue(userAddGroup);
-////                                refAllPublicGroup.setValue(userAddGroup);
-//                    refuserAllGroup.setValue(userAddGroup);
-//                }
-//                refSubsGroup.child(userID).setValue(true);
-
-//
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//            }
-//        });
 
     }
 

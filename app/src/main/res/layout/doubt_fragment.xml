@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:clickable="true"
     tools:context=".Server.DoubtFragment"
@@ -10,37 +11,203 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/tv_DoubtGroupName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="22sp"
-        android:textStyle="bold"
-        android:id="@+id/tv_DoubtGroupName" />
+        android:textStyle="bold" />
+
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/tv_DoubtGroupClass"
-        android:textSize="20sp"
-        android:layout_below="@+id/tv_DoubtGroupName"
-        android:text="@string/hello_blank_fragment" />
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:layout_below="@+id/tv_DoubtGroupName"
+        android:textSize="20sp" />
+
+    <androidx.cardview.widget.CardView
         android:layout_margin="8dp"
-        android:background="@color/green"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:padding="8dp"
-        android:textColor="@color/white"
+        android:id="@+id/questionPriority"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="1dp"
+        app:cardUseCompatPadding="true"
         android:layout_below="@+id/tv_DoubtGroupClass"
-        android:id="@+id/tv_DoubtGroupClassSubject" />
+        app:strokeWidth="2dp"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:backgroundTint="@color/text_white">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/touch_ll"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_AskQuestion"
+                android:visibility="gone"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_gravity="center_horizontal"
+                android:paddingStart="10dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginBottom="2dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/page_black"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:layout_marginBottom="4dp"
+                android:id="@+id/rl_quesData">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ib_UserProfile"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/ic_account_24" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_centerInParent="true"
+                    android:layout_toEndOf="@id/ib_UserProfile">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:textStyle="italic"
+                        android:id="@+id/tv_Name"
+                        android:textColor="@color/light_black"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        android:layout_marginBottom="2dp"
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:id="@+id/tv_likeCount"
+                            app:drawableStartCompat="@drawable/thumbupdark16" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:id="@+id/tv_dislikeCount"
+                            app:drawableStartCompat="@drawable/thumbdowndark_16" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="center_vertical"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:id="@+id/tv_flagCount"
+                            app:drawableStartCompat="@drawable/flagdark_16" />
+                        <TextView
+                            android:id="@+id/tv_AnsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:drawableStart="@drawable/ic_search_24"
+                            android:drawablePadding="2dp"
+                            app:drawableStartCompat="@drawable/ic_search_24" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
+                <!--        </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+            </RelativeLayout>
+            <!--            <TextView-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:id="@+id/ans_userName_tv" />-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:background="@drawable/edittext_rounded_corners"
+                android:id="@+id/viewAns_ll"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginEnd="4dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="start"
+                    android:padding="2dp"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_weight="1"
+                    android:textStyle="italic"
+                    android:text="@string/asked_on"
+                    android:id="@+id/tv_date"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/userAns_tv"
+                    android:padding="2dp"
+                    android:textStyle="bold"
+                    style="@style/TextAppearance.AppCompat.Subhead"
+                    android:text="@string/please_answer"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/userallAns_tv"
+                    android:padding="2dp"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:hint="@string/view_answer"/>
+
+            </LinearLayout>
+            <!--            <LinearLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:orientation="horizontal">-->
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="Like"-->
+            <!--                    android:layout_marginStart="4dp"-->
+            <!--                    android:layout_marginEnd="4dp"-->
+            <!--                    android:gravity="center"-->
+            <!--                    android:textStyle="italic" />-->
+            <!--                <TextView-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:text="Reply"-->
+            <!--                    android:gravity="start"-->
+            <!--                    android:layout_marginStart="4dp"-->
+            <!--                    android:textStyle="italic" />-->
+            <!--            </LinearLayout>-->
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_DoubtAnswer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:layout_below="@id/tv_DoubtGroupClassSubject"
-        android:id="@+id/rv_DoubtAnswer"/>
+        android:layout_below="@id/questionPriority"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp" />
 
 
     <LinearLayout
