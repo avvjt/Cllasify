@@ -133,11 +133,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/sent_message_background"
             android:fontFamily="@font/inter_regular"
             android:padding="12dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="10dp"
             android:textColor="@color/btn_text_white"
             android:textSize="15sp" />
 

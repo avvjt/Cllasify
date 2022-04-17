@@ -4,18 +4,17 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp">
 
-
     <TextView
         android:id="@+id/tv_MyMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:layout_marginStart="10dp"
-        android:layout_alignParentStart="true"
         android:background="@drawable/received_message_background"
         android:padding="12dp"
-        android:textColor="@color/black"
-        android:textSize="13sp" />
+        android:layout_marginEnd="50dp"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="@color/text_color"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/tvOtherDateTime"
@@ -27,6 +26,7 @@
         android:layout_marginBottom="5dp"
         android:layout_toEndOf="@id/tv_MyMessage"
         android:textColor="@color/black"
-        android:textSize="10sp" />
+        android:textSize="10sp"
+        android:visibility="gone"/>
 
 </RelativeLayout>

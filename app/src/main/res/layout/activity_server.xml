@@ -203,7 +203,7 @@
                 android:elevation="50dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:padding="20dp">
 
                 <Button
@@ -265,27 +265,27 @@
                                 android:layout_gravity="center"
                                 android:layout_marginStart="10dp"
                                 android:src="@drawable/ic_swipe_menux"
-                                app:tint="@color/iconSecondaryColor"/>
+                                app:tint="@color/iconSecondaryColor" />
 
                             <TextView
+                                android:id="@+id/subjectName"
                                 android:layout_width="250dp"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:layout_marginStart="30dp"
                                 android:fontFamily="@font/inter_medium"
                                 android:textColor="@color/text_color"
-                                android:textSize="16sp"
-                                android:id="@+id/subjectName"/>
+                                android:textSize="16sp" />
 
                             <ImageButton
                                 android:id="@+id/swipe_right"
                                 style="@style/SelectableItemBackgroundBorderless"
                                 android:layout_width="40dp"
                                 android:layout_height="40dp"
-                                android:layout_marginStart="20dp"
                                 android:layout_gravity="center"
+                                android:layout_marginStart="20dp"
                                 android:src="@drawable/ic_swipe_menu"
-                                app:tint="@color/iconSecondaryColor"/>
+                                app:tint="@color/iconSecondaryColor" />
                         </LinearLayout>
 
 
