@@ -97,10 +97,10 @@ public class Friend_Chat_Activity extends Fragment {
 
                 if (c.trim().isEmpty()) {
                     ib_FrndP_csubmit.setEnabled(false);
-                    ib_FrndP_csubmit.setBackgroundColor(Color.parseColor("#FF6200EE"));
+                    ib_FrndP_csubmit.setImageResource(R.drawable.ic_send_disable);
                 } else {
                     ib_FrndP_csubmit.setEnabled(true);
-                    ib_FrndP_csubmit.setBackgroundColor(Color.TRANSPARENT);
+                    ib_FrndP_csubmit.setImageResource(R.drawable.ic_send_24);
                 }
             }
 
