@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".Home.Server_Activity">
 
     <!--swipeRefreshLayout we don't need as of now-->
@@ -13,8 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone">
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        android:visibility="gone"></androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
     <com.discord.panels.OverlappingPanelsLayout
@@ -203,166 +201,182 @@
                 android:elevation="50dp"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
-                android:visibility="gone"
-                android:padding="20dp">
+                android:padding="20dp"
+                android:visibility="gone">
 
                 <Button
                     android:id="@+id/btn_caddgroup"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
+                    android:layout_margin="7dp"
                     android:background="@drawable/button_gradient"
-                    android:text="Create server"
-                    android:textSize="20sp"
-                    android:letterSpacing="0.1"
                     android:fontFamily="@font/inter_medium"
+                    android:letterSpacing="0.1"
+                    android:text="Create server"
                     android:textColor="@color/btn_text_white"
-                    android:layout_margin="7dp"/>
+                    android:textSize="20sp" />
 
                 <Button
                     android:id="@+id/btn_cjoingroup"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:fontFamily="@font/inter_medium"
-                    android:background="@drawable/button_gradient"
-                    android:text="Join server"
-                    android:textSize="20sp"
-                    android:letterSpacing="0.1"
                     android:layout_margin="7dp"
-                    android:textColor="@color/btn_text_white"/>
+                    android:background="@drawable/button_gradient"
+                    android:fontFamily="@font/inter_medium"
+                    android:letterSpacing="0.1"
+                    android:text="Join server"
+                    android:textColor="@color/btn_text_white"
+                    android:textSize="20sp" />
             </LinearLayout>
 
-                <!--Upper heading-->
-                <LinearLayout
-                    android:id="@+id/ll_ChatDoubtDashboard"
+            <!--Upper heading-->
+            <LinearLayout
+                android:id="@+id/ll_ChatDoubtDashboard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_ChatDashboard"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent">
 
                     <RelativeLayout
-                        android:id="@+id/rl_ChatDashboard"
+                        android:id="@+id/action_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        android:background="@color/page_color"
+                        android:orientation="horizontal"
+                        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                        <ImageButton
+                            android:id="@+id/swipe_left"
+                            style="@style/SelectableItemBackgroundBorderless"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerInParent="true"
+                            android:layout_marginStart="10dp"
+                            android:src="@drawable/ic_swipe_menux"
+                            app:tint="@color/iconSecondaryColor" />
+
+
+                        <ImageButton
+                            android:id="@+id/swipe_right"
+                            style="@style/SelectableItemBackgroundBorderless"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerInParent="true"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="20dp"
+                            android:src="@drawable/ic_swipe_menu"
+                            app:tint="@color/iconSecondaryColor" />
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/chatDoubtLayout"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_below="@+id/action_bar"
                         android:orientation="vertical">
 
-                        <LinearLayout
-                            android:id="@+id/action_bar"
-                            android:layout_width="match_parent"
-                            android:layout_height="?actionBarSize"
-                            android:background="@color/page_color"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-                            <ImageButton
-                                android:id="@+id/swipe_left"
-                                style="@style/SelectableItemBackgroundBorderless"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="10dp"
-                                android:src="@drawable/ic_swipe_menux"
-                                app:tint="@color/iconSecondaryColor" />
-
-                            <TextView
-                                android:id="@+id/subjectName"
-                                android:layout_width="250dp"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="30dp"
-                                android:fontFamily="@font/inter_medium"
-                                android:textColor="@color/text_color"
-                                android:textSize="16sp" />
-
-                            <ImageButton
-                                android:id="@+id/swipe_right"
-                                style="@style/SelectableItemBackgroundBorderless"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:layout_gravity="center"
-                                android:layout_marginStart="20dp"
-                                android:src="@drawable/ic_swipe_menu"
-                                app:tint="@color/iconSecondaryColor" />
-                        </LinearLayout>
+                        <TextView
+                            android:id="@+id/subjectName"
+                            android:layout_width="250dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="30dp"
+                            android:layout_marginBottom="10dp"
+                            android:fontFamily="@font/inter_medium"
+                            android:textColor="@color/text_color"
+                            android:textSize="16sp" />
 
 
                         <View
                             android:layout_width="match_parent"
                             android:layout_height="1dp"
                             android:background="@color/view_divider"
-                            android:layout_below="@id/action_bar"
-                            android:elevation="1dp"/>
+                            android:elevation="1dp" />
 
 
-                        <!--Chat showing RecyclerView-->
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_ChatDashboard"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_above="@+id/ll_bottom_send"
-                            android:layout_below="@id/action_bar"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="1dp" />
-
-                        <!--Chat box sending message layout-->
                         <RelativeLayout
-                            android:id="@+id/ll_bottom_send"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:orientation="horizontal"
-                            android:visibility="visible"
-                            android:layout_marginStart="20dp">
+                            android:layout_below="@+id/subjectName"
+                            android:layout_height="match_parent">
 
-                            <EditText
-                                android:id="@+id/et_ctext"
+
+                            <!--Chat showing RecyclerView-->
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_ChatDashboard"
                                 android:layout_width="match_parent"
-                                android:layout_height="45dp"
-                                android:layout_gravity="center"
-                                android:layout_marginTop="8dp"
-                                android:layout_marginBottom="8dp"
-                                android:layout_toStartOf="@+id/sendDoubt"
-                                android:background="@drawable/chat_input_background"
-                                android:focusable="true"
-                                android:hint="@string/hint_edittext"
-                                android:imeOptions="actionDone"
-                                android:importantForAutofill="no"
-                                android:layout_marginEnd="10dp"
-                                android:inputType="textCapSentences|textMultiLine"
-                                android:paddingStart="20dp"
-                                android:paddingEnd="20dp"
-                                android:textColor="@color/text_color"
-                                android:textColorHint="@color/text_background_color" />
+                                android:layout_height="match_parent"
+                                android:layout_above="@+id/ll_bottom_send"
+                                android:paddingStart="10dp"
+                                android:paddingEnd="1dp" />
 
+                            <!--Chat box sending message layout-->
                             <RelativeLayout
-                                android:id="@+id/sendDoubt"
-                                android:layout_width="wrap_content"
+                                android:id="@+id/ll_bottom_send"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentEnd="true"
-                                android:layout_marginEnd="10dp"
-                                android:layout_marginTop="10dp"
-                                style="@style/SelectableItemBackgroundBorderless">
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginStart="20dp"
+                                android:orientation="horizontal"
+                                android:visibility="visible">
 
-                                <ImageButton
-                                    android:id="@+id/ib_doubtSubmit"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:background="@color/transparent"
-                                    android:elevation="2dp"
-                                    android:src="@drawable/ic_question_24" />
+                                <EditText
+                                    android:id="@+id/et_ctext"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="45dp"
+                                    android:layout_gravity="center"
+                                    android:layout_marginTop="8dp"
+                                    android:layout_marginEnd="10dp"
+                                    android:layout_marginBottom="8dp"
+                                    android:layout_toStartOf="@+id/sendDoubt"
+                                    android:background="@drawable/chat_input_background"
+                                    android:focusable="true"
+                                    android:hint="@string/hint_edittext"
+                                    android:imeOptions="actionDone"
+                                    android:importantForAutofill="no"
+                                    android:inputType="textCapSentences|textMultiLine"
+                                    android:paddingStart="20dp"
+                                    android:paddingEnd="20dp"
+                                    android:textColor="@color/text_color"
+                                    android:textColorHint="@color/text_background_color" />
 
-                                <ImageButton
-                                    android:id="@+id/ib_csubmit"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
-                                    android:background="@color/transparent"
-                                    android:src="@drawable/ic_send_24"
-                                    android:visibility="gone"
-                                    android:elevation="2dp"/>
+                                <RelativeLayout
+                                    android:id="@+id/sendDoubt"
+                                    style="@style/SelectableItemBackgroundBorderless"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginTop="10dp"
+                                    android:layout_marginEnd="10dp">
+
+                                    <ImageButton
+                                        android:id="@+id/ib_doubtSubmit"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:background="@color/transparent"
+                                        android:elevation="2dp"
+                                        android:src="@drawable/ic_question_24" />
+
+                                    <ImageButton
+                                        android:id="@+id/ib_csubmit"
+                                        android:layout_width="40dp"
+                                        android:layout_height="40dp"
+                                        android:background="@color/transparent"
+                                        android:elevation="2dp"
+                                        android:src="@drawable/ic_send_24"
+                                        android:visibility="gone" />
+
+                                </RelativeLayout>
 
                             </RelativeLayout>
 
@@ -370,7 +384,10 @@
 
                     </RelativeLayout>
 
-                </LinearLayout>
+
+                </RelativeLayout>
+
+            </LinearLayout>
 
         </RelativeLayout>
 
@@ -401,114 +418,115 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:visibility="visible"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="20dp"
                         android:paddingStart="20dp"
-                        android:paddingEnd="20dp">
+                        android:paddingTop="10dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="20dp"
+                        android:visibility="visible">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/text_color"
-                            android:textSize="15sp"
-                            android:text="Favorite"
+                            android:layout_marginBottom="10dp"
                             android:fontFamily="@font/inter_semibold"
                             android:padding="10dp"
-                            android:layout_marginBottom="10dp"/>
+                            android:text="Favorite"
+                            android:textColor="@color/text_color"
+                            android:textSize="15sp" />
 
                         <!--server setting option-->
                         <LinearLayout
+                            android:id="@+id/ib_servSettings"
+                            style="@style/SelectableItemBackground"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="10dp"
                             android:gravity="center_vertical"
-                            style="@style/SelectableItemBackground"
-                            android:id="@+id/ib_servSettings">
+                            android:orientation="horizontal"
+                            android:padding="10dp">
 
                             <ImageView
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:background="@drawable/background_server_setting"
-                                android:src="@drawable/ic_settings_24"
                                 android:padding="7dp"
-                                app:tint="@color/btn_text_white"/>
+                                android:src="@drawable/ic_settings_24"
+                                app:tint="@color/btn_text_white" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
                                 android:fontFamily="@font/inter_regular"
                                 android:text="Server setting"
                                 android:textColor="@color/text_color"
-                                android:textSize="16sp"
-                                android:layout_marginStart="15dp"/>
+                                android:textSize="16sp" />
 
                         </LinearLayout>
 
                         <!--attendances option-->
                         <LinearLayout
+                            android:id="@+id/btn_lteachattend"
+                            style="@style/SelectableItemBackground"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="10dp"
                             android:gravity="center_vertical"
-                            style="@style/SelectableItemBackground"
-                            android:id="@+id/btn_lteachattend">
+                            android:orientation="horizontal"
+                            android:padding="10dp">
 
                             <ImageView
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:background="@drawable/backgroud_attendances"
-                                android:src="@drawable/ic_edit"
                                 android:padding="7dp"
+                                android:src="@drawable/ic_edit"
                                 app:tint="@color/btn_text_white" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
                                 android:fontFamily="@font/inter_regular"
                                 android:text="Attendance"
                                 android:textColor="@color/text_color"
-                                android:textSize="16sp"
-                                android:layout_marginStart="15dp"/>
+                                android:textSize="16sp" />
 
                         </LinearLayout>
 
                         <!--notifications option-->
                         <LinearLayout
+                            android:id="@+id/btn_joinNotification"
+                            style="@style/SelectableItemBackground"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:padding="10dp"
                             android:gravity="center_vertical"
-                            style="@style/SelectableItemBackground"
-                            android:id="@+id/btn_joinNotification">
+                            android:orientation="horizontal"
+                            android:padding="10dp">
 
                             <ImageView
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:background="@drawable/backgroud_notification"
-                                android:src="@drawable/ic_menu_notifications"
                                 android:padding="7dp"
+                                android:src="@drawable/ic_menu_notifications"
                                 app:tint="@color/btn_text_white" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
                                 android:fontFamily="@font/inter_regular"
                                 android:text="Notification"
                                 android:textColor="@color/text_color"
-                                android:textSize="16sp"
-                                android:layout_marginStart="15dp"/>
+                                android:textSize="16sp" />
 
                         </LinearLayout>
 
                     </LinearLayout>
+
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/view_divider"/>
+                        android:background="@color/view_divider" />
 
                     <!--Friends list recyclerview use in recent chat right panel-->
                     <LinearLayout
@@ -520,26 +538,26 @@
                         android:visibility="gone">
 
                         <TextView
+                            android:id="@+id/FriendListTextt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:textColor="@color/text_color"
-                            android:textSize="15sp"
-                            android:id="@+id/FriendListTextt"
-                            android:text="Friends"
-                            android:visibility="gone"
                             android:fontFamily="@font/inter_semibold"
                             android:paddingStart="10dp"
-                            android:paddingEnd="10dp"/>
+                            android:paddingEnd="10dp"
+                            android:text="Friends"
+                            android:textColor="@color/text_color"
+                            android:textSize="15sp"
+                            android:visibility="gone" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/endPanelAllFriendsRecyclerView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
                             android:layout_marginStart="10dp"
-                            app:fastScrollEnabled="false"
+                            android:layout_marginTop="20dp"
                             android:nestedScrollingEnabled="false"
-                            android:visibility="gone"/>
+                            android:visibility="gone"
+                            app:fastScrollEnabled="false" />
 
                     </LinearLayout>
 
@@ -555,29 +573,29 @@
                             android:id="@+id/adminListText"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Teachers"
                             android:fontFamily="@font/inter_semibold"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:text="Teachers"
                             android:textColor="@color/text_color"
                             android:textSize="15sp"
-                            android:visibility="visible"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="10dp"/>
+                            android:visibility="visible" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/adminList"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
                             android:layout_marginStart="10dp"
-                            app:fastScrollEnabled="false"
-                            android:nestedScrollingEnabled="false"/>
+                            android:layout_marginTop="20dp"
+                            android:nestedScrollingEnabled="false"
+                            app:fastScrollEnabled="false" />
 
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/view_divider"/>
+                        android:background="@color/view_divider" />
 
                     <!--Student list recyclerview-->
                     <LinearLayout
@@ -591,22 +609,22 @@
                             android:id="@+id/tv_GroupMember"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Students"
                             android:fontFamily="@font/inter_semibold"
+                            android:paddingStart="10dp"
+                            android:paddingEnd="10dp"
+                            android:text="Students"
                             android:textColor="@color/text_color"
                             android:textSize="15sp"
-                            android:visibility="gone"
-                            android:paddingStart="10dp"
-                            android:paddingEnd="10dp"/>
+                            android:visibility="gone" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_GrpMemberList"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
                             android:layout_marginStart="10dp"
-                            app:fastScrollEnabled="false"
-                            android:nestedScrollingEnabled="false"/>
+                            android:layout_marginTop="20dp"
+                            android:nestedScrollingEnabled="false"
+                            app:fastScrollEnabled="false" />
 
                     </LinearLayout>
 

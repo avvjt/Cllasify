@@ -1267,7 +1267,7 @@ public class Server_Activity extends AppCompatActivity {
 
                             friendChatFragment = new Friend_Chat_Activity();
                             getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.center_panel, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
+                                    .replace(R.id.chatDoubtLayout, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
 
                             Bundle bundle = new Bundle();
                             bundle.putString("name", friendName);
