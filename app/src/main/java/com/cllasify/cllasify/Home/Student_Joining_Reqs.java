@@ -215,7 +215,7 @@ public class Student_Joining_Reqs extends Fragment {
 //                    }
 
                 } else {
-                    Toast.makeText(getActivity(), "No Group request Pending", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "No Group request Pending", Toast.LENGTH_SHORT).show();
                 }
 
             }

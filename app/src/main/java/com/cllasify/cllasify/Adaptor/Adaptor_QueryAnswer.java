@@ -72,7 +72,7 @@ public class Adaptor_QueryAnswer extends RecyclerView.Adapter<Adaptor_QueryAnswe
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
-        Toast.makeText(context, "OnBind Test", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "OnBind Test", Toast.LENGTH_SHORT).show();
 
 //        final Class_Answer user = mDatalistNew.get(position);
 
@@ -106,8 +106,8 @@ public class Adaptor_QueryAnswer extends RecyclerView.Adapter<Adaptor_QueryAnswe
         String anspushid = Answers.getAnsPushId();
         String databaseUserId = Answers.getUserId();
 
-        Toast.makeText(context, "quespushid:: " + quespushid, Toast.LENGTH_SHORT).show();
-        Toast.makeText(context, "anspushid:: " + anspushid, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "quespushid:: " + quespushid, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "anspushid:: " + anspushid, Toast.LENGTH_SHORT).show();
 
         Log.d("DOUBTANS", "onBindViewHolder: "+Answers.userId);
 

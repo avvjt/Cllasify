@@ -76,7 +76,7 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
         holder.classGroupName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Clicked on Class", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Clicked on Class", Toast.LENGTH_SHORT).show();
                 Log.d("POSS", "Class position : "+class_group_names.getClassName());
                 onAddSubjectClickListener.onClassClickListener(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(),class_group_names.getUniPushClassId());
             }
@@ -153,7 +153,7 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
             holder.subjectList.setAdapter(adapter_topicList);
             adapter_topicList.setSubjectDetailsModelList(testingNo);
             adapter_topicList.notifyDataSetChanged();
-            Toast.makeText(context, "No sub classes", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(context, "No sub classes", Toast.LENGTH_SHORT).show();
         }
 
     }

@@ -190,13 +190,13 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
                         checkOnGroupClick.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                Toast.makeText(context.getApplicationContext(), "Classes : " + snapshot.getChildrenCount(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(context.getApplicationContext(), "Classes : " + snapshot.getChildrenCount(), Toast.LENGTH_SHORT).show();
                                 if (snapshot.getChildrenCount() > 0) {
                                     if (position != RecyclerView.NO_POSITION) {
                                         mListener.createGroupDialog(adminGroupID, groupName, groupPushId);
                                     }
                                 } else {
-                                    Toast.makeText(context.getApplicationContext(), "No class isn't created yet!!", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(context.getApplicationContext(), "No class isn't created yet!!", Toast.LENGTH_SHORT).show();
                                 }
 
                             }

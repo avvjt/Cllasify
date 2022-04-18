@@ -59,7 +59,7 @@ public class Adapter_All_Friends extends RecyclerView.Adapter<Adapter_All_Friend
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
-        Toast.makeText(context, "Friend List", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "Friend List", Toast.LENGTH_SHORT).show();
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -169,7 +169,7 @@ public class Adapter_All_Friends extends RecyclerView.Adapter<Adapter_All_Friend
             ll_Group.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context.getApplicationContext(), "Clicked Friend", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context.getApplicationContext(), "Clicked Friend", Toast.LENGTH_SHORT).show();
                     if (mListener != null) {
                         int position = getAdapterPosition();
 

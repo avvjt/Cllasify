@@ -171,7 +171,7 @@ public class DoubtFragment extends Fragment {
 
                         String subGroupMsg = et_DoubtAns.getText().toString().trim();
                         if (subGroupMsg.isEmpty()) {
-                            Toast.makeText(getContext(), "Enter Answer", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getContext(), "Enter Answer", Toast.LENGTH_SHORT).show();
                             et_DoubtAns.setError("Enter Answer");
                         } else {
 

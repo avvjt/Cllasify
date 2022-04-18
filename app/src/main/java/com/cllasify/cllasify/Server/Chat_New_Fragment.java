@@ -123,7 +123,7 @@ public class Chat_New_Fragment extends Fragment {
                     showChatDashadaptor.notifyDataSetChanged();
 //                    notifyPB.dismiss();
                 } else {
-                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
 //                    notifyPB.dismiss();
                 }
 
@@ -155,7 +155,7 @@ public class Chat_New_Fragment extends Fragment {
 
                 String subGroupMsg = et_FrndP_text.getText().toString().trim();
                 if (subGroupMsg.isEmpty()) {
-                    Toast.makeText(getContext(), "Enter text", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "Enter text", Toast.LENGTH_SHORT).show();
                     et_FrndP_text.setError("Enter text");
                 } else {
                     refChatDashboard = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(userID).child(frndUserId).child("Chat_Message");

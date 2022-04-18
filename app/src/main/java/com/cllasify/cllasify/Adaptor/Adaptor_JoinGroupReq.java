@@ -104,7 +104,7 @@ public class Adaptor_JoinGroupReq extends RecyclerView.Adapter<Adaptor_JoinGroup
                     public void onCancelled(@NonNull DatabaseError error) {
                     }
                 });
-                Toast.makeText(context, "Child Group "+subGroupName+ " Added", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Child Group "+subGroupName+ " Added", Toast.LENGTH_SHORT).show();
         }
             else {
 //                holder.cb_selectChildGroup.setChecked(true);
@@ -123,7 +123,7 @@ public class Adaptor_JoinGroupReq extends RecyclerView.Adapter<Adaptor_JoinGroup
                     public void onCancelled(@NonNull DatabaseError error) {
                     }
                 });
-                Toast.makeText(context, "Child Group "+subGroupName+ " Added", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Child Group "+subGroupName+ " Added", Toast.LENGTH_SHORT).show();
             }
 
         });

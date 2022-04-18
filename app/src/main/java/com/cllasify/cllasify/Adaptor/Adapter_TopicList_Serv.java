@@ -1,6 +1,7 @@
 package com.cllasify.cllasify.Adaptor;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,9 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.Constant;
+import com.cllasify.cllasify.Home.Students_Subjects;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.SharePref;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +37,7 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
     List<Subject_Details_Model> subjectDetailsModelList;
     List<Class_Group_Names> class_group_namesList;
     private OnItemClickListener mListener;
+    String uniPush;
 
     public interface OnItemClickListener {
 
@@ -41,6 +45,14 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
 
         void deleteSubject(String groupPushId, String classPos, String subjectUniPush);
 
+    }
+
+    public String getUniPush() {
+        return uniPush;
+    }
+
+    public void setUniPush(String uniPush) {
+        this.uniPush = uniPush;
     }
 
     public void setClass_group_namesList(List<Class_Group_Names> class_group_namesList) {
@@ -99,7 +111,7 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
 
                         case "Rename Subject":
                             if (mListener != null) {
-                                Toast.makeText(context, "Clicked on Subject", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(context, "Clicked on Subject", Toast.LENGTH_SHORT).show();
                                 String userID = SharePref.getDataFromPref(Constant.USER_ID);
                                 DatabaseReference posTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
                                 posTemp.child("subjectPosition").setValue(getAdapterPosition());
@@ -112,7 +124,7 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
                                             int subPos = getAdapterPosition();
                                             Subject_Details_Model subject_details_model = subjectDetailsModelList.get(subPos);
                                             String groupPushId = String.valueOf(snapshot.child("clickedGroupPushId").getValue());
-                                            String classUniPushId = String.valueOf(snapshot.child("uniPushClassId").getValue());
+                                            String classUniPushId = getUniPush();
                                             String subjectUniPush = subject_details_model.getSubjectUniPushId();
                                             String subjectName = subject_details_model.getSubjectName();
                                             mListener.renameSubject(groupPushId, classUniPushId, subjectUniPush, subjectName);
@@ -125,7 +137,7 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
                                     }
                                 });
 
-                                Toast.makeText(context, "Clicked on Delete Subject: " + subjectDetailsModelList.get(getAdapterPosition()).getSubjectName(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(context, "Clicked on Delete Subject: " + subjectDetailsModelList.get(getAdapterPosition()).getSubjectName(), Toast.LENGTH_SHORT).show();
 
 
                             }
@@ -133,7 +145,7 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
 
                         case "Delete Subject":
                             if (mListener != null) {
-                                Toast.makeText(context, "Clicked on Subject", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(context, "Clicked on Subject", Toast.LENGTH_SHORT).show();
                                 String userID = SharePref.getDataFromPref(Constant.USER_ID);
                                 DatabaseReference posTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
                                 posTemp.child("subjectPosition").setValue(getAdapterPosition());
@@ -151,9 +163,29 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
                                             String subjectName = subject_details_model.getSubjectName();
 
 
-                                            mListener.deleteSubject(groupPushId, classUniPushId, subjectUniPush);
-                                            subjectDetailsModelList.remove(subPos);
-                                            notifyItemRemoved(subPos);
+                                            androidx.appcompat.app.AlertDialog.Builder alertdialogbuilder = new androidx.appcompat.app.AlertDialog.Builder(context);
+                                            alertdialogbuilder.setTitle("Please confirm !!!")
+                                                    .setMessage("Do you delete Subject")
+                                                    .setCancelable(false)
+                                                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            mListener.deleteSubject(groupPushId, classUniPushId, subjectUniPush);
+                                                            subjectDetailsModelList.remove(subPos);
+                                                            notifyItemRemoved(subPos);
+                                                        }
+                                                    }).setNegativeButton("No",
+                                                    new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            dialog.cancel();
+                                                        }
+                                                    });
+                                            androidx.appcompat.app.AlertDialog alert = alertdialogbuilder.create();
+                                            alert.show();
+
+
+
 
                                         }
                                     }
@@ -164,7 +196,7 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
                                     }
                                 });
 
-                                Toast.makeText(context, "Clicked on Delete Subject: " + subjectDetailsModelList.get(getAdapterPosition()).getSubjectName(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(context, "Clicked on Delete Subject: " + subjectDetailsModelList.get(getAdapterPosition()).getSubjectName(), Toast.LENGTH_SHORT).show();
                             }
                             break;
 

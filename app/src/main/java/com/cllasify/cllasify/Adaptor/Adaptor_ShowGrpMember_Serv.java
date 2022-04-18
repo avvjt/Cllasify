@@ -85,7 +85,7 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
-        Toast.makeText(context, "Friend List", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "Friend List", Toast.LENGTH_SHORT).show();
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -100,7 +100,7 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
         refUserProfPic.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.child("Name").exists()){
+                if (snapshot.child("Name").exists()) {
                     holder.tv_GroupTitle.setText(snapshot.child("Name").getValue().toString());
                 }
                 if (snapshot.child("uniqueUserName").exists()) {
@@ -110,7 +110,7 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
                     String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                     Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
                     Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.civ_UserProfilePic);
-                }else{
+                } else {
                     Glide.with(context.getApplicationContext()).load(R.drawable.maharaji).into(holder.civ_UserProfilePic);
                 }
             }
@@ -152,7 +152,7 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_GroupTitle,tv_userName;
+        TextView tv_GroupTitle, tv_userName;
         ImageButton memberDelete;
         CircleImageView civ_UserProfilePic;
 
@@ -163,7 +163,7 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
             tv_userName = itemView.findViewById(R.id.tv_unique_userName);
             tv_GroupTitle = itemView.findViewById(R.id.tv_classGroupTitle);
             memberDelete = itemView.findViewById(R.id.memberDelete);
-            civ_UserProfilePic =itemView.findViewById(R.id.civ_UserProfilePic);
+            civ_UserProfilePic = itemView.findViewById(R.id.civ_UserProfilePic);
 
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
@@ -220,7 +220,23 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             if (snapshot.getValue() == studentUniPush) {
                                                 Log.d("STUTECH", "onDataChange: " + snapshot.getValue());
-                                                mListener.removeTeacher(groupPushId, studentUniPush);
+                                                AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(context);
+                                                alertdialogbuilder.setTitle("You are admin!!!")
+                                                        .setMessage("You cannot remove yourself from the School")
+                                                        .setCancelable(false)
+                                                        .setPositiveButton("OK",
+                                                                new DialogInterface.OnClickListener() {
+                                                                    @Override
+                                                                    public void onClick(DialogInterface dialog, int which) {
+                                                                        mListener.removeTeacher(groupPushId, studentUniPush);
+                                                                        mDatalistNew.remove(studPos);
+                                                                        notifyItemRemoved(studPos);
+                                                                        dialog.dismiss();
+                                                                    }
+                                                                });
+                                                AlertDialog alert = alertdialogbuilder.create();
+                                                alert.show();
+
                                             }
                                         }
 
@@ -230,11 +246,23 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
                                         }
                                     });
 
+                                    AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(context);
+                                    alertdialogbuilder.setTitle("You are admin!!!")
+                                            .setMessage("You cannot remove yourself from the School")
+                                            .setCancelable(false)
+                                            .setPositiveButton("OK",
+                                                    new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+                                                            mListener.removeStudent(groupPushId, classUniPushId, studentUniPush);
+                                                            mDatalistNew.remove(studPos);
+                                                            notifyItemRemoved(studPos);
+                                                            dialog.dismiss();
+                                                        }
+                                                    });
+                                    AlertDialog alert = alertdialogbuilder.create();
+                                    alert.show();
 
-                                    mListener.removeStudent(groupPushId, classUniPushId, studentUniPush);
-
-                                    mDatalistNew.remove(studPos);
-                                    notifyItemRemoved(studPos);
 
                                 }
                             }
@@ -251,32 +279,6 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
 
                 }
             });
-
-            /*
-//            onFriendClick
-                        ll_Group.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(context.getApplicationContext(), "Clicked Friend", Toast.LENGTH_SHORT).show();
-                    if (mListener != null) {
-                        int position = getAdapterPosition();
-                        Class_Student_Details user = mDatalistNew.get(getAdapterPosition());
-                        String memberUserId=user.userId;
-                        String memberUserName=user.userName;
-
-                        if (!currUserID.equals(memberUserId)) {
-                            if (position != RecyclerView.NO_POSITION) {
-//                                String adminUserName=user.userName;
-
-
-                                mListener.MemberProfile(memberUserId,memberUserName);
-                                //mListener.dislikeAns();
-                            }
-                        }
-                    }
-                }
-            });
-             */
 
 
         }

@@ -7,6 +7,13 @@
     android:background="@color/text_background_color"
     tools:context=".Home.Notification_Activity">
 
+    <ProgressBar
+        android:id="@+id/progBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="1dp"
+        android:layout_centerInParent="true"/>
+
     <LinearLayout
         android:id="@+id/action_bar"
         android:layout_width="match_parent"

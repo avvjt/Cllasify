@@ -176,7 +176,7 @@ public class Landing_Feed_Answer extends AppCompatActivity {
                 public void onClick(View v) {
                     if (addAnswer_et.getText().toString().equals("")){
                         addAnswer_et.setError("Enter Answer");
-                        Toast.makeText(Landing_Feed_Answer.this,"Enter Answer",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Landing_Feed_Answer.this,"Enter Answer",Toast.LENGTH_SHORT).show();
 
                     } else{
                         String Answer=addAnswer_et.getText().toString().trim();
@@ -280,7 +280,7 @@ public class Landing_Feed_Answer extends AppCompatActivity {
 
 
         } else {
-            Toast.makeText(this, "Internet Connection Not Available", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Internet Connection Not Available", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -486,7 +486,7 @@ public class Landing_Feed_Answer extends AppCompatActivity {
 
 
                 } else {
-                    Toast.makeText(Landing_Feed_Answer.this, "No one Answer yet,Be first to give Answer", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Landing_Feed_Answer.this, "No one Answer yet,Be first to give Answer", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -593,7 +593,7 @@ public class Landing_Feed_Answer extends AppCompatActivity {
                             userAllAnsRef.child(commentpush).setValue(userAddQues);
 
                             addComment_et.setText("");
-                            Toast.makeText(Landing_Feed_Answer.this, "Comment has been updated Successfully", Toast.LENGTH_LONG).show();
+//                            Toast.makeText(Landing_Feed_Answer.this, "Comment has been updated Successfully", Toast.LENGTH_LONG).show();
 
                         }
 

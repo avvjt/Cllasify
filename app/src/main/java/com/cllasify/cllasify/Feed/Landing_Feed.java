@@ -121,7 +121,7 @@ public class Landing_Feed extends AppCompatActivity {
                 if (FirebaseAuth.getInstance().getCurrentUser() == null) {
                     showLoginDialog();
                 } else {
-                    Toast.makeText(Landing_Feed.this, "Opening User Profile ", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Landing_Feed.this, "Opening User Profile ", Toast.LENGTH_SHORT).show();
 //                    startActivity(new Intent(Landing_Feed.this,User_Profile.class));
                 }
 
@@ -268,14 +268,14 @@ public class Landing_Feed extends AppCompatActivity {
                 //String TotalOtherForm=examName+"=="+addQuestion;
 
                 if (quesCategory.isEmpty() && addQuestion.isEmpty()) {
-                    Toast.makeText(Landing_Feed.this, "Please Fill All Details", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(Landing_Feed.this, "Please Fill All Details", Toast.LENGTH_LONG).show();
                     quesCaterory_et.setError("Please Fill");
                     addQuestion_et.setError("Please Fill");
                 }else   if(quesCategory.isEmpty()){
-                    Toast.makeText(Landing_Feed.this, "Please Enter Exam Name", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(Landing_Feed.this, "Please Enter Exam Name", Toast.LENGTH_LONG).show();
                     quesCaterory_et.setError("Exam Name?");
                 }else if(addQuestion.isEmpty()){
-                    Toast.makeText(Landing_Feed.this, "Please Enter QuestionsTab", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(Landing_Feed.this, "Please Enter QuestionsTab", Toast.LENGTH_LONG).show();
                     addQuestion_et.setError("Ask Question");
                 }
                 else {
@@ -343,7 +343,7 @@ public class Landing_Feed extends AppCompatActivity {
                         }
                     });
                     //startActivity( new Intent( landing_OtherForms.this, user_Profile_UploadDoc.class ) );
-                    Toast.makeText(Landing_Feed.this, "Question has been Submitted Successfully", Toast.LENGTH_LONG).show();
+//                    Toast.makeText(Landing_Feed.this, "Question has been Submitted Successfully", Toast.LENGTH_LONG).show();
 
                     dialogBuilder.dismiss();
                 }
@@ -376,7 +376,7 @@ public class Landing_Feed extends AppCompatActivity {
             @Override
             public void shareQues(int position, String Title) {
 //                generateLink(Title);
-                Toast.makeText(Landing_Feed.this, "share", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Landing_Feed.this, "share", Toast.LENGTH_SHORT).show();
             }
         });
         ChildEventListener childEventListener = new ChildEventListener() {
@@ -388,7 +388,7 @@ public class Landing_Feed extends AppCompatActivity {
                     showQuesadaptor.notifyDataSetChanged();
                     notifyPB.dismiss();
                 } else {
-                    Toast.makeText(Landing_Feed.this, "No Question asked yet,Please Ask First QuestionsTab", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Landing_Feed.this, "No Question asked yet,Please Ask First QuestionsTab", Toast.LENGTH_SHORT).show();
                     notifyPB.dismiss();
                 }
 

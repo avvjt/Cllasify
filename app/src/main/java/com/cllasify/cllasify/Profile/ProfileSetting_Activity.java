@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,7 +56,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileSetting_Activity extends AppCompatActivity {
 
 
-    RelativeLayout  ll_Name, ll_Instituion, ll_Email, ll_Location, ll_Bio, ll_UserName;
+    RelativeLayout ll_Name, ll_Instituion, ll_Email, ll_Location, ll_Bio, ll_UserName;
     DatabaseReference refUserStatus;
     FirebaseUser currentUser;
     String userID, userName, userEmail;
@@ -70,6 +71,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
 
 
     DatabaseReference root;
+    ProgressBar progBar;
 
 
     public void checkDarkLightDefaultStatusBar() {
@@ -80,7 +82,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                 break;
 
             case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 // edited here
                 getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
 
@@ -104,6 +106,8 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         root = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
 //        DatabaseReference root=FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
         storageReference = FirebaseStorage.getInstance().getReference().child(userID);
+
+        progBar = findViewById(R.id.progBar);
 
         tv_ShowUserName = findViewById(R.id.tv_ShowUserName);
         tv_Bio = findViewById(R.id.tv_Bio);
@@ -682,7 +686,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
 
     private void uploadImageToFirebaseStorage(Uri imageUri) {
         // upload Image To FirebaseStorage
-
+        progBar.setVisibility(View.VISIBLE);
         final StorageReference fileRef = storageReference.child("users profile pic/" + userID + "/profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -695,6 +699,10 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                             DatabaseReference refSaveProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
                             refSaveProfPic.child("profilePic").setValue(uri.toString());
                             Glide.with(ProfileSetting_Activity.this).load(uri).into(prof_pic);
+                            progBar.setVisibility(View.GONE);
+
+                            Toast.makeText(ProfileSetting_Activity.this,"DP updated successfully",Toast.LENGTH_SHORT).show();
+
                         }
                     }
                 });

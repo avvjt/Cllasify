@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -57,12 +58,13 @@ public class getStarted extends AppCompatActivity {
     String userID;
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
+    ProgressBar progressBar;
 
     private void checkDarkLightDefault() {
 
         String darkLightDefaultVal = getDefaults("DefaultDarkLight", getStarted.this);
         Log.d("USERIDSA", "onCreate: " + getDefaults("DefaultDarkLight", getStarted.this));
-        if(darkLightDefaultVal != null) {
+        if (darkLightDefaultVal != null) {
             if (darkLightDefaultVal.equals("Dark")) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }
@@ -72,7 +74,7 @@ public class getStarted extends AppCompatActivity {
             if (darkLightDefaultVal.equals("Default")) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
             }
-        }else{
+        } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         }
     }
@@ -85,7 +87,7 @@ public class getStarted extends AppCompatActivity {
                 break;
 
             case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 // edited here
                 getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
 
@@ -104,6 +106,8 @@ public class getStarted extends AppCompatActivity {
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_get_started);
 
+        progressBar = findViewById(R.id.SignInProgress);
+
         //initialize() AdMob
         MobileAds.initialize(this, new OnInitializationCompleteListener() {
             @Override
@@ -119,23 +123,24 @@ public class getStarted extends AppCompatActivity {
             userID = currentUser.getUid();
 
         }
-        btn_SignIn=findViewById(R.id.btn_SignIn);
+        btn_SignIn = findViewById(R.id.btn_SignIn);
         btn_SignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 // Configure Google Sign In
-                GoogleSignInOptions googleSignInOptions=new GoogleSignInOptions.Builder(
+                GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(
                         GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken("1085537073642-dq2djhhvidcgmb4c3a5ushet55jk6hf5.apps.googleusercontent.com")
                         .requestEmail()
                         .build();
 
+                progressBar.setVisibility(View.VISIBLE);
 
-                googleSignInClient= GoogleSignIn.getClient(getStarted.this,googleSignInOptions);
+                googleSignInClient = GoogleSignIn.getClient(getStarted.this, googleSignInOptions);
 
-                Intent intent=googleSignInClient.getSignInIntent();
+                Intent intent = googleSignInClient.getSignInIntent();
 
-                startActivityForResult(intent,100);
+                startActivityForResult(intent, 100);
 
             }
         });
@@ -144,41 +149,39 @@ public class getStarted extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Toast.makeText(getStarted.this, "on activity result called", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getStarted.this, "on activity result called", Toast.LENGTH_SHORT).show();
 
-        if (requestCode==100){
-            Toast.makeText(getStarted.this, "100", Toast.LENGTH_SHORT).show();
+        if (requestCode == 100) {
+//            Toast.makeText(getStarted.this, "100", Toast.LENGTH_SHORT).show();
 
-            Task<GoogleSignInAccount> signInAccountTask= GoogleSignIn
+            Task<GoogleSignInAccount> signInAccountTask = GoogleSignIn
                     .getSignedInAccountFromIntent(data);
-            Toast.makeText(getStarted.this, "checking", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getStarted.this, "checking", Toast.LENGTH_SHORT).show();
 
 
-            if (signInAccountTask.isSuccessful()){
-//                String s= "Google Signin is sucessful";
-//                Toast.makeText(getStarted.this, s, Toast.LENGTH_SHORT).show();
+            if (signInAccountTask.isSuccessful()) {
                 try {
-                    GoogleSignInAccount googleSignInAccount=signInAccountTask.getResult(ApiException.class);
-                    if (googleSignInAccount!=null){
-                        AuthCredential authCredential= GoogleAuthProvider.getCredential(googleSignInAccount.getIdToken(),null);
-                        FirebaseAuth firebaseAuth=FirebaseAuth.getInstance();
+                    GoogleSignInAccount googleSignInAccount = signInAccountTask.getResult(ApiException.class);
+                    if (googleSignInAccount != null) {
+                        AuthCredential authCredential = GoogleAuthProvider.getCredential(googleSignInAccount.getIdToken(), null);
+                        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                         firebaseAuth.signInWithCredential(authCredential).addOnCompleteListener(getStarted.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()){
+                                if (task.isSuccessful()) {
                                     submitLoginData();
+
+                                    progressBar.setVisibility(View.GONE);
+
                                     Log.i("shitt0", "login successful,el");
-//                                    showStudTeachBtmDialog();
-//                                    chipNavigationBar.setVisibility(View.VISIBLE);
-                                }else{
+                                } else {
                                     Log.i("shitt22", task.getException().toString());
-                                    Toast.makeText(getStarted.this, "Authentication Failed: "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getStarted.this, "Authentication Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-                    }
-                    else{
-                        Toast.makeText(getStarted.this, "google account null", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getStarted.this, "Google account null", Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -187,41 +190,32 @@ public class getStarted extends AppCompatActivity {
                     e.printStackTrace();
                     Log.i("shitt1", e.toString());
                 }
-            }else{
+            } else {
                 Log.i("shitt2", signInAccountTask.getException().toString());
             }
 
-        }
-        else{
-            Toast.makeText(getStarted.this, "wrong request code", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getStarted.this, "Wrong Request Code", Toast.LENGTH_SHORT).show();
 
         }
     }
 
     private void submitLoginData() {
-//        rl_feed.setBackgroundColor(Color.GRAY);
-//        BottomSheetDialog bottomSheetDialog=new BottomSheetDialog(getStarted.this);
-//        bottomSheetDialog.setCancelable(false);
-//        bottomSheetDialog.setContentView(R.layout.btmdialog_studteach);
-//
-//        LinearLayout student_ll=bottomSheetDialog.findViewById(R.id.student_ll);
-//        LinearLayout teacher_ll=bottomSheetDialog.findViewById(R.id.teacher_ll);
 
 
         StorageReference storageReference;
-        storageReference= FirebaseStorage.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
 
-        Calendar calenderCC= Calendar.getInstance();
-        SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
-        final String udateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
+        Calendar calenderCC = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+        final String udateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
 
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
                     public void onComplete(@NonNull Task<String> task) {
                         if (!task.isSuccessful()) {
-                            Toast.makeText(getStarted.this, "Token Failed"+task.getException().toString(), Toast.LENGTH_SHORT).show();
-//                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
+//                            Toast.makeText(getStarted.this, "Token Failed" + task.getException().toString(), Toast.LENGTH_SHORT).show();
                             return;
                         }
                         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -233,17 +227,17 @@ public class getStarted extends AppCompatActivity {
                         // Get new FCM registration token
                         String token = task.getResult();
                         DatabaseReference refUserRegister = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
-                        refUserRegister.child( "Name" ).setValue( Name );
-                        refUserRegister.child( "userEmailId" ).setValue( userEmailID );
-                        refUserRegister.child( "userId" ).setValue( userID );
-                        refUserRegister.child( "dateTime" ).setValue( udateTimeCC );
-                        refUserRegister.child( "userStatus" ).setValue("Online");
-                        refUserRegister.child( "token" ).setValue(token);
+                        refUserRegister.child("Name").setValue(Name);
+                        refUserRegister.child("userEmailId").setValue(userEmailID);
+                        refUserRegister.child("userId").setValue(userID);
+                        refUserRegister.child("dateTime").setValue(udateTimeCC);
+                        refUserRegister.child("userStatus").setValue("Online");
+                        refUserRegister.child("token").setValue(token);
                         refUserRegister.child("profilePic").setValue(userPhoto.toString());
 
                         Toast.makeText(getStarted.this, "Login Successful", Toast.LENGTH_SHORT).show();
 
-                        Intent intent=new Intent(getStarted.this, Server_Activity.class);
+                        Intent intent = new Intent(getStarted.this, Server_Activity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }
@@ -258,10 +252,10 @@ public class getStarted extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
 
-            Intent intent=new Intent(getStarted.this, Server_Activity.class);
-            intent.putExtra("Check","appRestart");
+            Intent intent = new Intent(getStarted.this, Server_Activity.class);
+            intent.putExtra("Check", "appRestart");
             startActivity(intent);
-            getStarted.this.overridePendingTransition(0,0);
+            getStarted.this.overridePendingTransition(0, 0);
         }
 
     }

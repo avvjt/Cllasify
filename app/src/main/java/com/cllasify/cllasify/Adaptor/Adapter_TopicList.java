@@ -116,7 +116,7 @@ public class Adapter_TopicList extends RecyclerView.Adapter<Adapter_TopicList.Vi
 
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
-                            Toast.makeText(context, "Clicked on Subject", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "Clicked on Subject", Toast.LENGTH_SHORT).show();
 
                             Subject_Details_Model user = subjectDetailsModelList.get(position);
 

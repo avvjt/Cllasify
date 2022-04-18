@@ -71,7 +71,7 @@ public class Teacher_Joining_Reqs extends Fragment {
                         if (snapshot.getChildrenCount()>0) {
                             showEAllGroupSearchRV(uniPushClassId[0]);
                         }else{
-                            Toast.makeText(getActivity(), "No group Notifications", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), "No notifications available at this moment", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -118,7 +118,7 @@ public class Teacher_Joining_Reqs extends Fragment {
                     refrejuserNotify.child("grpJoiningStatus").setValue("Reject");
                     refrejadminNotify.child("grpJoiningStatus").setValue("Reject");
 
-                    Toast.makeText(getActivity(), "Group request from "+userName+"has been Rejected", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Group request from "+userName+"has been Rejected", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -203,7 +203,7 @@ public class Teacher_Joining_Reqs extends Fragment {
                             refAccUserNotify.child("grpJoiningStatus").setValue("Approve");
                             refAccAdminNotify.child("grpJoiningStatus").setValue("Approve");
 
-                            Toast.makeText(getActivity(), "Group request from "+userName+"has been Approved", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getActivity(), "Group request from "+userName+"has been Approved", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -234,7 +234,7 @@ public class Teacher_Joining_Reqs extends Fragment {
 //                    }
 
                 } else {
-                    Toast.makeText(getActivity(), "No Group request Pending", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "No Group request Pending", Toast.LENGTH_SHORT).show();
                 }
 
             }

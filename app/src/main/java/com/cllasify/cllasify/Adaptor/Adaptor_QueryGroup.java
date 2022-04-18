@@ -137,7 +137,7 @@ public class Adaptor_QueryGroup extends RecyclerView.Adapter<Adaptor_QueryGroup.
                 @Override
                 public void onClick(View v) {
 
-                    Toast.makeText(context, "Clicked on Server", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "Clicked on Server", Toast.LENGTH_SHORT).show();
                     if (mListener != null) {
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {

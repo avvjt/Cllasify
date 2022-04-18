@@ -85,7 +85,7 @@ public class Adaptor_ShowGrpMemberEditRollNumberList extends RecyclerView.Adapte
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
 
-        Toast.makeText(context, "Friend List", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "Friend List", Toast.LENGTH_SHORT).show();
 
         Log.d("CHKADMIN", "onBindViewHolder: "+mDatalistNew.get(position).isAdmin());
 
@@ -278,7 +278,7 @@ public class Adaptor_ShowGrpMemberEditRollNumberList extends RecyclerView.Adapte
             ll_Group.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context.getApplicationContext(), currUserID, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context.getApplicationContext(), currUserID, Toast.LENGTH_SHORT).show();
                     if (mListener != null) {
                         int position = getAdapterPosition();
                         Class_Student_Details user = mDatalistNew.get(getAdapterPosition());

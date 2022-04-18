@@ -55,13 +55,13 @@ public class ProfileOthers extends Activity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.block:
-                Toast.makeText(ProfileOthers.this, "Block", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ProfileOthers.this, "Block", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.report:
-                Toast.makeText(ProfileOthers.this, "Report", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ProfileOthers.this, "Report", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.restrict:
-                Toast.makeText(ProfileOthers.this, "Restrict", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(ProfileOthers.this, "Restrict", Toast.LENGTH_SHORT).show();
                 return true;
 
             default:

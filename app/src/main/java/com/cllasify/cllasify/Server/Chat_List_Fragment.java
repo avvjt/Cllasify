@@ -116,7 +116,7 @@ public class Chat_List_Fragment extends Fragment {
                     showChatDashadaptor.notifyDataSetChanged();
 //                    notifyPB.dismiss();
                 } else {
-                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
 //                    notifyPB.dismiss();
                 }
 

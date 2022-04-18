@@ -140,7 +140,7 @@ public class Adaptor_ShowDoubt extends RecyclerView.Adapter<Adaptor_ShowDoubt.My
                             mListener.showDoubtChat(doubtQuestion,groupPush,groupClassPush,groupSubjectPush,doubtQuestionPush);
                         }
                     }else{
-                        Toast.makeText(context, "no any doubt", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(context, "no any doubt", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

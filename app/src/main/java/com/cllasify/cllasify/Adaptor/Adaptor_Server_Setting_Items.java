@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
@@ -110,12 +111,12 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
             public void onClick(View v) {
                 String userID = SharePref.getDataFromPref(Constant.USER_ID);
                 DatabaseReference posTempSaveUniClass = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
-                Log.d("CLGR", "onDataChange: "+mDatalistNew.get(position).getUniPushClassId());
+                Log.d("CLGR", "onDataChange: " + mDatalistNew.get(position).getUniPushClassId());
                 posTempSaveUniClass.child("clickedStudentUniPushClassId").setValue(mDatalistNew.get(position).getUniPushClassId());
 
                 Intent intent = new Intent(context.getApplicationContext(), Students_Subjects.class);
-                intent.putExtra("uniGroupPushId",mDatalistNew.get(position).getGroupPushId());
-                intent.putExtra("uniClassPushId",mDatalistNew.get(position).getUniPushClassId());
+                intent.putExtra("uniGroupPushId", mDatalistNew.get(position).getGroupPushId());
+                intent.putExtra("uniClassPushId", mDatalistNew.get(position).getUniPushClassId());
                 context.startActivity(intent);
 
             }
@@ -341,9 +342,7 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
     }
 
 
-
-
-    private void delStudent(String groupPushId,String classUniPushId,String studentUserId) {
+    private void delStudent(String groupPushId, String classUniPushId, String studentUserId) {
         FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
                 .child(groupPushId).child(classUniPushId).child("classStudentList").child(studentUserId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -378,7 +377,7 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
             spinnerMore = itemView.findViewById(R.id.spinner1);
             ll_classGroup = itemView.findViewById(R.id.ll_Group);
 
-            Log.d("CONT", "ViewHolder: "+context);
+            Log.d("CONT", "ViewHolder: " + context);
 
             final PopupMenu dropDownMenu = new PopupMenu(context, spinnerMore);
 
@@ -396,9 +395,28 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
                                 Class_Group_Names class_group_namesList = mDatalistNew.get(position);
                                 Log.d("UNIP", "onChildAdded: " + class_group_namesList.getUniPushClassId());
 
-                                mListener.onClassDeleteBtn(class_group_namesList.getUniPushClassId());
-                                mDatalistNew.remove(position);
-                                notifyItemRemoved(position);
+                                androidx.appcompat.app.AlertDialog.Builder alertdialogbuilder = new androidx.appcompat.app.AlertDialog.Builder(context);
+                                alertdialogbuilder.setTitle("Please confirm !!!")
+                                        .setMessage("Do you delete the class")
+                                        .setCancelable(false)
+                                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                mListener.onClassDeleteBtn(class_group_namesList.getUniPushClassId());
+                                                mDatalistNew.remove(position);
+                                                notifyItemRemoved(position);
+                                            }
+                                        }).setNegativeButton("No",
+                                        new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                            }
+                                        });
+                                androidx.appcompat.app.AlertDialog alert = alertdialogbuilder.create();
+                                alert.show();
+
+
                             }
 
                             Log.d("GRPT", "onClick: " + getAdapterPosition());
@@ -420,8 +438,8 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
                             String uniClassPush = class_group_namesList.getUniPushClassId();
                             String groupPushId = class_group_namesList.getGroupPushId();
                             Intent intent = new Intent(context.getApplicationContext(), Edit_RollNumber.class);
-                            intent.putExtra("uniClassPush",uniClassPush);
-                            intent.putExtra("groupPushId",groupPushId);
+                            intent.putExtra("uniClassPush", uniClassPush);
+                            intent.putExtra("groupPushId", groupPushId);
                             context.startActivity(intent);
                             break;
                     }

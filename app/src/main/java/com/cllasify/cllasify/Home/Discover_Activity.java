@@ -169,7 +169,7 @@ public class Discover_Activity extends AppCompatActivity {
                     showAllGroupSearch("All_Universal_Group");
                 } else {
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(Discover_Activity.this, "No Other Group Present", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Discover_Activity.this, "No Groups available at this moment", Toast.LENGTH_SHORT).show();
                 }
             }
             @Override
@@ -216,7 +216,8 @@ public class Discover_Activity extends AppCompatActivity {
                             showEAllGroupUser("Registration");
                         }else{
                             progressBar.setVisibility(View.GONE);
-                            Toast.makeText(view.getContext(), "No Other Group Present", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Discover_Activity.this, "No Groups available at this moment", Toast.LENGTH_SHORT).show();
+
                         }
                     }
                     @Override
@@ -294,7 +295,8 @@ public class Discover_Activity extends AppCompatActivity {
 //                        }
 
                 } else {
-                    Toast.makeText(Discover_Activity.this, "No group yet created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Discover_Activity.this, "No Groups available at this moment", Toast.LENGTH_SHORT).show();
+
 //                    notifyPB.dismiss();
                 }
 

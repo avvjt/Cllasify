@@ -60,7 +60,7 @@ public class Discover_Item extends AppCompatActivity {
     String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
     TextView schBio, schoolEmail;
     Button join_as_teacher;
-    ImageView schoolLogoImg;
+    ImageView schoolLogoImg,btn_Back;
     String serverEmail;
     LinearLayout emailLayout;
     LinearLayout bioLayout;
@@ -85,6 +85,15 @@ public class Discover_Item extends AppCompatActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(Discover_Item.this,Discover_Activity.class);
+        startActivity(intent);
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
@@ -101,6 +110,16 @@ public class Discover_Item extends AppCompatActivity {
 
 //        ImageView iv_ServerDP= findViewById(R.id.iv_ServerDP);
 //        TextView tv_ServerBio= findViewById(R.id.tv_ServerBio);
+
+        btn_Back = findViewById(R.id.btn_Back);
+
+        btn_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Discover_Item.this,Discover_Activity.class);
+                startActivity(intent);
+            }
+        });
         Button btn_Share = findViewById(R.id.btn_Share);
         TextView tv_ServerName = findViewById(R.id.schoolName);
         RecyclerView rv_ShowClass = findViewById(R.id.rv_ShowClass);

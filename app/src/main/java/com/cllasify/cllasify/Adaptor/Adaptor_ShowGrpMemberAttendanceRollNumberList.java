@@ -85,7 +85,7 @@ public class Adaptor_ShowGrpMemberAttendanceRollNumberList extends RecyclerView.
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
 
-        Toast.makeText(context, "Friend List", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(context, "Friend List", Toast.LENGTH_SHORT).show();
 
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -279,7 +279,7 @@ public class Adaptor_ShowGrpMemberAttendanceRollNumberList extends RecyclerView.
             ll_Group.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context.getApplicationContext(), "Clicked Friend", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context.getApplicationContext(), "Clicked Friend", Toast.LENGTH_SHORT).show();
                     if (mListener != null) {
                         int position = getAdapterPosition();
                         Class_Student_Details user = mDatalistNew.get(getAdapterPosition());

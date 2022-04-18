@@ -4,43 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home.Discover_Activity"
-    android:background="@color/page_background_color">
+    android:background="@color/page_background_color"
+    tools:context=".Home.Discover_Activity">
 
     <ProgressBar
         android:id="@+id/progBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="1dp"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:elevation="1dp" />
 
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/searchToolBar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:paddingStart="20dp"
         android:background="@color/page_color"
+        android:paddingStart="20dp"
         app:title="@string/explore" />
 
     <!--    SearchView visibility - gone -->
 
-    <ScrollView
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_AllJoinGroup"
+        android:layout_below="@+id/searchToolBar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_nav"
-        android:layout_below="@+id/searchToolBar"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:background="@color/page_background_color">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_AllJoinGroup"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </ScrollView>
-
+        android:background="@color/page_background_color" />
 
 
     <!--    Filter buttons  visibility - gone -->
@@ -48,8 +39,8 @@
         android:id="@+id/grpSchUsers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <Button
             android:id="@+id/btn_Group"
@@ -83,7 +74,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/grpSchUsers"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

@@ -52,7 +52,7 @@ public class Create_Class extends AppCompatActivity {
                 break;
 
             case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 // edited here
                 getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
 
@@ -91,7 +91,7 @@ public class Create_Class extends AppCompatActivity {
             public void onClick(View view) {
                 String classGroupName = et_ClassName.getText().toString().trim();
                 if (classGroupName.isEmpty()) {
-                    Toast.makeText(Create_Class.this, "Enter All Details", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Create_Class.this, "Enter All Details", Toast.LENGTH_SHORT).show();
                     et_ClassName.setError("Enter Class Name");
                 } else {
 
@@ -155,7 +155,7 @@ public class Create_Class extends AppCompatActivity {
         });
 
 
-        Toast.makeText(Create_Class.this, "Group Successfully Created", Toast.LENGTH_SHORT).show();
+        Toast.makeText(Create_Class.this, "Server Successfully Created", Toast.LENGTH_SHORT).show();
     }
 
     private void saveClassGroup(String serverName, String groupPushId, String sbChildGroupName) {
@@ -208,8 +208,8 @@ public class Create_Class extends AppCompatActivity {
                                 Intent intent = new Intent(Create_Class.this, Create_Subject.class);
                                 intent.putExtra("classUniPushId", push01[6]);
                                 intent.putExtra("groupPushId", groupPushId);
-                                if(getIntent().hasExtra("justBackServSetting")){
-                                    intent.putExtra("justBackServSetting",true);
+                                if (getIntent().hasExtra("justBackServSetting")) {
+                                    intent.putExtra("justBackServSetting", true);
                                 }
                                 startActivity(intent);
 

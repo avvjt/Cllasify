@@ -38,7 +38,7 @@ public class Students_Subjects extends AppCompatActivity {
 
     String currUserID;
     RecyclerView rv_showStudents, rv_ShowSubject, rv_showTeachers;
-    TextView tv_studentList,tv_adminList, tv_SubjectList;
+    TextView tv_studentList, tv_adminList, tv_SubjectList;
     Button addNewSubject;
 
     //Students
@@ -62,7 +62,7 @@ public class Students_Subjects extends AppCompatActivity {
                 break;
 
             case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 // edited here
                 getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
 
@@ -115,7 +115,7 @@ public class Students_Subjects extends AppCompatActivity {
                     Intent intent = new Intent(Students_Subjects.this, Create_Subject.class);
                     intent.putExtra("classUniPushId", uniClassPushId);
                     intent.putExtra("groupPushId", uniGrpPushId);
-                    intent.putExtra("justBack",true);
+                    intent.putExtra("justBack", true);
                     startActivity(intent);
                 }
             });
@@ -133,7 +133,7 @@ public class Students_Subjects extends AppCompatActivity {
 
             @Override
             public void deleteSubject(String groupPushId, String classPos, String subjectUniPush) {
-                delSubject(groupPushId,classPos,subjectUniPush);
+                delSubject(groupPushId, classPos, subjectUniPush);
             }
         });
         rv_ShowSubject.setLayoutManager(new LinearLayoutManager(Students_Subjects.this));
@@ -158,6 +158,8 @@ public class Students_Subjects extends AppCompatActivity {
 
             String uniGrpPushId = getIntent().getStringExtra("uniGroupPushId");
             String uniClassPushId = getIntent().getStringExtra("uniClassPushId");
+
+            Log.d("UNICLASS", "onCreate: " + uniClassPushId);
 
             DatabaseReference databaseReferenceGetStudent = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(uniGrpPushId).child(uniClassPushId);
             databaseReferenceGetStudent.addValueEventListener(new ValueEventListener() {
@@ -192,7 +194,7 @@ public class Students_Subjects extends AppCompatActivity {
                         subjectDetailsModelList.add(object);
 
                     }
-
+                    adapter_topicList.setUniPush(uniClassPushId);
                     adapter_topicList.setSubjectDetailsModelList(subjectDetailsModelList);
                     rv_ShowSubject.setAdapter(adapter_topicList);
                     adapter_topicList.notifyDataSetChanged();

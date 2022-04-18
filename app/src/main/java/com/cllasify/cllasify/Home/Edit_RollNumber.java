@@ -98,7 +98,7 @@ public class Edit_RollNumber extends AppCompatActivity {
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 int fromPosition = viewHolder.getAdapterPosition();
                 int toPosition = target.getAdapterPosition();
-                Toast.makeText(Edit_RollNumber.this, "From" + fromPosition + "gggto" + toPosition, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Edit_RollNumber.this, "From" + fromPosition + "gggto" + toPosition, Toast.LENGTH_SHORT).show();
                 Log.d("POSS", "from position: "+listGrpMemberList.get(fromPosition).getUserId());
                 Log.d("POSS", "to Position: "+toPosition);
                 Collections.swap(listGrpMemberList, fromPosition, toPosition);

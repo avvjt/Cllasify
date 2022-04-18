@@ -1,6 +1,7 @@
 package com.cllasify.cllasify;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Home.Server_Activity;
+import com.cllasify.cllasify.Profile.ProfileSetting_Activity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -37,7 +40,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Server_Setting_Specifics extends AppCompatActivity {
 
-    EditText et_ServerName, et_schoolBio,et_schoolEmail;
+    EditText et_ServerName, et_schoolBio, et_schoolEmail;
     DatabaseReference getTempData;
     String currUserId;
     String groupPushId;
@@ -49,6 +52,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
     Button serverDelete;
 
     StorageReference storageReference;
+    ProgressBar progBar;
 
 
     public void checkDarkLightDefaultStatusBar() {
@@ -59,7 +63,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
                 break;
 
             case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 // edited here
                 getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
 
@@ -81,6 +85,8 @@ public class Server_Setting_Specifics extends AppCompatActivity {
         doneBtn = findViewById(R.id.doneBtn);
         serverDelete = findViewById(R.id.deleteBtn);
 
+        progBar = findViewById(R.id.progBar);
+
         changeServerImage = findViewById(R.id.changeServerImage);
         serverImage = findViewById(R.id.serverImage);
 
@@ -95,7 +101,27 @@ public class Server_Setting_Specifics extends AppCompatActivity {
         serverDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteSpecificServer(groupPushId, currUserId);
+
+
+                androidx.appcompat.app.AlertDialog.Builder alertdialogbuilder = new androidx.appcompat.app.AlertDialog.Builder(Server_Setting_Specifics.this);
+                alertdialogbuilder.setTitle("Please confirm !!!")
+                        .setMessage("Do you delete the Server")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                deleteSpecificServer(groupPushId, currUserId);
+                            }
+                        }).setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.cancel();
+                            }
+                        });
+                androidx.appcompat.app.AlertDialog alert = alertdialogbuilder.create();
+                alert.show();
+
             }
         });
 
@@ -207,10 +233,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
         if (requestCode == 1000) {
             if (resultCode == Activity.RESULT_OK) {
                 Uri imageUri = data.getData();
-
                 uploadImageToFirebaseStorage(imageUri);
-
-
             }
         }
 
@@ -218,7 +241,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
 
     private void uploadImageToFirebaseStorage(Uri imageUri) {
         // upload Image To FirebaseStorage
-
+        progBar.setVisibility(View.VISIBLE);
         final StorageReference fileRef = storageReference.child("server profile image/" + groupPushId + "/ServerProfile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -231,6 +254,8 @@ public class Server_Setting_Specifics extends AppCompatActivity {
                             DatabaseReference refSaveServerProfPic = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId);
                             refSaveServerProfPic.child("serverProfilePic").setValue(uri.toString());
                             Glide.with(Server_Setting_Specifics.this).load(uri).into(serverImage);
+                            progBar.setVisibility(View.GONE);
+                            Toast.makeText(Server_Setting_Specifics.this,"DP updated successfully",Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -252,8 +277,8 @@ public class Server_Setting_Specifics extends AppCompatActivity {
         databaseReferenceServDel.child("UserAddedOrJoinedGrp").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-                    Log.d("CHLDELSERV", "onDataChange: "+dataSnapshot.getKey());
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Log.d("CHLDELSERV", "onDataChange: " + dataSnapshot.getKey());
                     databaseReferenceServDel.child("UserAddedOrJoinedGrp").child(dataSnapshot.getKey()).child(groupPushId).child("addedOrJoined").setValue(null);
                 }
             }

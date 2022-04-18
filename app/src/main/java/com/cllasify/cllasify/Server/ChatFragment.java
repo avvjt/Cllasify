@@ -112,7 +112,7 @@ public class ChatFragment extends Fragment {
                         String groupClassSubjects = snapshot.child("groupClassSubjects").getValue().toString().trim();
 //                        Toast.makeText(getContext(), "Grouppushid"+ GroupPushId+"=Subgrouppushid"+SubGroupPushId+"/n"+subGroupName+"/n"+groupClassSubjects, Toast.LENGTH_SHORT).show();
 //                        list_ChatDashboard.clear();
-                        Toast.makeText(getContext(), "v"+groupName+GroupPushId+subGroupName+groupClassSubjects, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(), "v"+groupName+GroupPushId+subGroupName+groupClassSubjects, Toast.LENGTH_SHORT).show();
 //                        checkChatDashboard(GroupPushId,SubGroupPushId,subGroupName,groupClassSubjects);
 
                         checkChatDashboard(GroupPushId,SubGroupPushId,subGroupName,groupClassSubjects);
@@ -149,7 +149,7 @@ public class ChatFragment extends Fragment {
                     showChatDashadaptor.notifyDataSetChanged();
 //                    notifyPB.dismiss();
                 } else {
-                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
 //                    notifyPB.dismiss();
                 }
             }
@@ -178,7 +178,7 @@ public class ChatFragment extends Fragment {
             public void onClick(View view) {
                 String subGroupMsg = et_ctext.getText().toString().trim();
                 if (subGroupMsg.isEmpty()) {
-                    Toast.makeText(getContext(), "Enter text", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getContext(), "Enter text", Toast.LENGTH_SHORT).show();
                     et_ctext.setError("Enter text");
                 } else {
                     DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child("Chat_Message").child(groupPushId).child(subGroupPushId).child(groupClassSub);

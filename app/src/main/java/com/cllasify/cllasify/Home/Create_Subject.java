@@ -43,7 +43,7 @@ public class Create_Subject extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(getIntent().hasExtra("justBack")){
+        if (getIntent().hasExtra("justBack")) {
             finish();
         } else {
             Toast.makeText(Create_Subject.this, "Please click the skip button or next button to continue", Toast.LENGTH_SHORT).show();
@@ -58,7 +58,7 @@ public class Create_Subject extends AppCompatActivity {
                 break;
 
             case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 // edited here
                 getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
 
@@ -85,11 +85,11 @@ public class Create_Subject extends AppCompatActivity {
         childItemArrayListClassName = new ArrayList<>();
         parentItemArrayListClassName = new ArrayList<>();
 
-        if(getIntent().hasExtra("classUniPushId")){
+        if (getIntent().hasExtra("classUniPushId")) {
             uniPushClassId = getIntent().getStringExtra("classUniPushId");
         }
 
-        if(getIntent().hasExtra("groupPushId")){
+        if (getIntent().hasExtra("groupPushId")) {
             groupPushId = getIntent().getStringExtra("groupPushId");
         }
 
@@ -99,10 +99,9 @@ public class Create_Subject extends AppCompatActivity {
         btn_Skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(getIntent().hasExtra("justBack")){
+                if (getIntent().hasExtra("justBack")) {
                     finish();
-                }
-                else {
+                } else {
                     Intent intent = new Intent(Create_Subject.this, Server_Activity.class);
                     startActivity(intent);
                 }
@@ -112,22 +111,19 @@ public class Create_Subject extends AppCompatActivity {
         EditText et_TopicName = findViewById(R.id.et_TopicName);
 
 
-
         btn_CreateTopic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!et_TopicName.getText().toString().isEmpty()) {
 
-                    saveSubject(et_TopicName.getText().toString(),uniPushClassId,groupPushId);
+                    saveSubject(et_TopicName.getText().toString(), uniPushClassId, groupPushId);
 
-                    if(getIntent().hasExtra("justBack")){
+                    if (getIntent().hasExtra("justBack")) {
                         finish();
-                    }
-                    else{
-                        Intent intent = new Intent(Create_Subject.this,Server_Activity.class);
+                    } else {
+                        Intent intent = new Intent(Create_Subject.this, Server_Activity.class);
                         startActivity(intent);
                     }
-
 
 
                 }
@@ -136,7 +132,7 @@ public class Create_Subject extends AppCompatActivity {
 
     }
 
-    private void saveSubject(String topicName,String uniPushClassId,String groupPushId) {
+    private void saveSubject(String topicName, String uniPushClassId, String groupPushId) {
 
         DatabaseReference getServerTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
         getServerTemp.child("subjectName").setValue(topicName);

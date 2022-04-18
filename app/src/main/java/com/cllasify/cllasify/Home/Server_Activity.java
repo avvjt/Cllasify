@@ -541,7 +541,7 @@ public class Server_Activity extends AppCompatActivity {
 
         messageAdapter.setOnDoubtClickListener((doubtQuestion, groupPush, groupClassPush, groupSubjectPush, doubtQuestionPush) -> {
 
-            Toast.makeText(getApplicationContext(), "Test doubt", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getApplicationContext(), "Test doubt", Toast.LENGTH_SHORT).show();
 
             DatabaseReference putTempDoubt = FirebaseDatabase.getInstance().getReference().child("Groups");
             putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("groupPushId").setValue(groupPush);
@@ -564,7 +564,7 @@ public class Server_Activity extends AppCompatActivity {
             String subGroupMsg = et_ctext.getText().toString().trim();
 
             if (subGroupMsg.isEmpty()) {
-                Toast.makeText(Server_Activity.this, "Enter text", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(Server_Activity.this, "Enter text", Toast.LENGTH_SHORT).show();
             } else {
                 et_ctext.getText().clear();
                 reference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -711,7 +711,7 @@ public class Server_Activity extends AppCompatActivity {
                                 }
                             });
                         }else{
-                            Toast.makeText(Server_Activity.this, "You are an admin", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Server_Activity.this, "You are an admin", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -792,7 +792,7 @@ public class Server_Activity extends AppCompatActivity {
 
                                 }
                                 else{
-                                    Toast.makeText(Server_Activity.this, "You are not admin", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(Server_Activity.this, "You are not admin", Toast.LENGTH_SHORT).show();
                                 }
                             }
 
@@ -907,7 +907,7 @@ public class Server_Activity extends AppCompatActivity {
                             rv_ChatDashboard.smoothScrollToPosition(Objects.requireNonNull(rv_ChatDashboard.getAdapter()).getItemCount());
                         }
                     } else {
-                        Toast.makeText(Server_Activity.this, "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Server_Activity.this, "No Question asked yet,Please Ask First Questions", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -1318,7 +1318,7 @@ public class Server_Activity extends AppCompatActivity {
 
                     }
                     if (snapshot.getChildrenCount() < 0) {
-                        Toast.makeText(Server_Activity.this, "Please create Group using left swipe", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Server_Activity.this, "Please create Group using left swipe", Toast.LENGTH_SHORT).show();
 //                        ll_AddJoinGrp.setVisibility(View.VISIBLE);
                     }
                 }
@@ -1466,7 +1466,7 @@ public class Server_Activity extends AppCompatActivity {
 
                             userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, subGroupPushId, addDoubt, "doubt", groupClassSubjects, push, 0);
                             reference.push().setValue(userAddGroupClass);
-                            Toast.makeText(Server_Activity.this, "Doubt Successfully Added", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Server_Activity.this, "Doubt Successfully Added", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -1544,7 +1544,7 @@ public class Server_Activity extends AppCompatActivity {
         btn_joinNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Server_Activity.this, "Please select a subject to continue,", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Server_Activity.this, "Please select a subject to continue", Toast.LENGTH_SHORT).show();
                 btn_joinNotification.setEnabled(false);
             }
         });
@@ -1552,7 +1552,7 @@ public class Server_Activity extends AppCompatActivity {
         btn_lteachattend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Server_Activity.this, "Please select a subject to continue,", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Server_Activity.this, "Please select a subject to continue", Toast.LENGTH_SHORT).show();
                 btn_lteachattend.setEnabled(false);
             }
         });

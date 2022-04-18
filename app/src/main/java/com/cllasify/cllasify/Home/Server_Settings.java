@@ -1,6 +1,7 @@
 package com.cllasify.cllasify.Home;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -407,15 +408,15 @@ public class Server_Settings extends AppCompatActivity {
 
                     if(dataSnapshot.child(groupPushId).child("addedOrJoined").exists()){
 
-                    String stuJoin =dataSnapshot.child(groupPushId).child("addedOrJoined").getValue().toString();
-                    if (stuJoin.equals("StudentJoin")) {
+                        String stuJoin =dataSnapshot.child(groupPushId).child("addedOrJoined").getValue().toString();
+                        if (stuJoin.equals("StudentJoin")) {
 
-                        Log.d("DELCHKST", "classUniJoinedPushId: " + dataSnapshot.child(groupPushId).child("addedOrJoined").getValue());
-                        Log.d("DELCHKST1", "classUniJoinedPushId: " + databaseReferenceClassDelStudent.child(classUniJoinedPushId).child(groupPushId).child("addedOrJoined"));
+                            Log.d("DELCHKST", "classUniJoinedPushId: " + dataSnapshot.child(groupPushId).child("addedOrJoined").getValue());
+                            Log.d("DELCHKST1", "classUniJoinedPushId: " + databaseReferenceClassDelStudent.child(classUniJoinedPushId).child(groupPushId).child("addedOrJoined"));
 
-                        databaseReferenceClassDelStudent.child(classUniJoinedPushId).child(groupPushId).child("addedOrJoined").setValue(null);
+                            databaseReferenceClassDelStudent.child(classUniJoinedPushId).child(groupPushId).child("addedOrJoined").setValue(null);
 
-                    }
+                        }
 
                     }
 
