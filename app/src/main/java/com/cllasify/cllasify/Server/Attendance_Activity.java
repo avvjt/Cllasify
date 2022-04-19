@@ -10,7 +10,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -22,16 +24,24 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.applikeysolutions.cosmocalendar.dialog.CalendarDialog;
+import com.applikeysolutions.cosmocalendar.dialog.OnDaysSelectionListener;
+import com.applikeysolutions.cosmocalendar.model.Day;
+import com.applikeysolutions.cosmocalendar.selection.RangeSelectionManager;
+import com.applikeysolutions.cosmocalendar.utils.SelectionType;
+import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.cllasify.cllasify.Adaptor.Adaptor_Attendance;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMemberAttendanceRollNumberList;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.Home.Attendance_History;
+import com.cllasify.cllasify.Home.Students_Subjects;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.SwipeToDeleteCallback;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,6 +58,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
@@ -67,7 +78,6 @@ public class Attendance_Activity extends AppCompatActivity {
 
     Paint p = new Paint();
     TextView tv_groupName, tv_subGroupName;
-
 
     Calendar calenderCC = Calendar.getInstance();
     SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
@@ -132,30 +142,13 @@ public class Attendance_Activity extends AppCompatActivity {
 
         myCalendar = Calendar.getInstance();
 
-        final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, monthOfYear);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-
-                String myFormat = "dd-MM-yyyy";
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                String btnData = sdf.format(myCalendar.getTime());
-                dialog_AttendanceStatus(btnData);
-            }
-
-        };
-
         btn_CheckAttendHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new DatePickerDialog(Attendance_Activity.this, date, myCalendar
-                        .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                        myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-
+                calenderDialog();
             }
+
+
         });
 
         btn_ShowAttendStatus.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +169,57 @@ public class Attendance_Activity extends AppCompatActivity {
 //        enableSwipeToDeleteAndUndo();
     }
 
+
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    private void calenderDialog() {
+        View customAlertDialog = LayoutInflater.from(Attendance_Activity.this).inflate(R.layout.attendance_calander, null, false);
+        AlertDialog.Builder builder = new AlertDialog.Builder(Attendance_Activity.this);
+        builder.setView(customAlertDialog);
+        AlertDialog dialog = builder.show();
+
+        CalendarView calendarDialog = customAlertDialog.findViewById(R.id.attCal);
+        Button okBtn = customAlertDialog.findViewById(R.id.ok_button);
+        Button cancelBtn = customAlertDialog.findViewById(R.id.cancel_btn);
+
+        calendarDialog.setCalendarBackgroundColor(Color.parseColor("#000000"));
+        calendarDialog.setFirstDayOfWeek(Calendar.MONDAY);
+        calendarDialog.setCalendarOrientation(0);
+        calendarDialog.setWeekendDays(new HashSet() {{
+            add(Calendar.SATURDAY);
+            add(Calendar.SUNDAY);
+        }});
+        calendarDialog.setSelectionType(SelectionType.SINGLE);
+        calendarDialog.setOutlineAmbientShadowColor(Color.parseColor("#000000"));
+        calendarDialog.setOutlineSpotShadowColor(Color.parseColor("#000000"));
+        calendarDialog.setSelectionBarMonthTextColor(Color.parseColor("#000000"));
+
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (calendarDialog.getSelectedDays().toString().equals("[]")) {
+                    Toast.makeText(Attendance_Activity.this, "Please select a date to continue!!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Date calTime = calendarDialog.getSelectedDays().get(0).getCalendar().getTime();
+                    Log.d("DATEDATA", "valid" + calTime);
+                    String myFormat = "dd-MM-yyyy";
+                    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                    String btnData = sdf.format(calTime);
+                    Log.d("DATEDATA", "onDaysSelected: " + btnData);
+                    dialog_AttendanceStatus(btnData);
+                }
+            }
+
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+
+    }
 
     private void dialog_AttendanceStatus(String currentDate) {
 
