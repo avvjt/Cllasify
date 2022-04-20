@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_marginStart="15dp"
-                    android:layout_toEndOf="@+id/prof_pics_chat_doubt"/>
+                    android:layout_toEndOf="@+id/prof_pics_chat_doubt" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

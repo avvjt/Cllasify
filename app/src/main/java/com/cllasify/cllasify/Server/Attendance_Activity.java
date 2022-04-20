@@ -143,6 +143,7 @@ public class Attendance_Activity extends AppCompatActivity {
         myCalendar = Calendar.getInstance();
 
         btn_CheckAttendHistory.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.P)
             @Override
             public void onClick(View view) {
                 calenderDialog();

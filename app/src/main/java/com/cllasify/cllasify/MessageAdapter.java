@@ -88,35 +88,40 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
             Class_Group class_GroupDetails = chat.get(position);
 
-            String groupPushId = class_GroupDetails.getGroupName();
-            String classPushId = class_GroupDetails.getSubGroupName();
-            String subjectPushId = class_GroupDetails.getSubGroupPushId();
+            String reqUserID = class_GroupDetails.position;
+
+            Log.d("TSTNOTIFY", "MyViewHolder: " + class_GroupDetails.getDoubtUniPushId());
             String doubtPushId = class_GroupDetails.getDoubtUniPushId();
 
+            if (doubtPushId.startsWith("Doubt")) {
 
-            DatabaseReference databaseReferenceDoubtCheck = FirebaseDatabase.getInstance().getReference().child("Groups").child("Doubt").child(groupPushId)
-                    .child(classPushId).child(subjectPushId).child("All_Doubt").child(doubtPushId);
+                String groupPushId = class_GroupDetails.getGroupName();
+                String classPushId = class_GroupDetails.getSubGroupName();
+                String subjectPushId = class_GroupDetails.getSubGroupPushId();
 
-            databaseReferenceDoubtCheck.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()) {
-                        if (snapshot.child("Answer").exists()) {
-                            holder.tv_AnswerCount.setText(String.valueOf(snapshot.child("Answer").getChildrenCount()));
-                            Log.d("TOPICDATA", "onDataChange: " + snapshot.child("Answer").getChildrenCount());
+                DatabaseReference databaseReferenceDoubtCheck = FirebaseDatabase.getInstance().getReference().child("Groups").child("Doubt").child(groupPushId)
+                        .child(classPushId).child(subjectPushId).child("All_Doubt").child(doubtPushId);
+
+                databaseReferenceDoubtCheck.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            if (snapshot.child("Answer").exists()) {
+                                holder.tv_AnswerCount.setText(String.valueOf(snapshot.child("Answer").getChildrenCount()));
+                                Log.d("TOPICDATA", "onDataChange: " + snapshot.child("Answer").getChildrenCount());
+                            }
+                            holder.tv_topicTitle.setText(snapshot.child("groupName").getValue().toString());
                         }
-                        holder.tv_topicTitle.setText(snapshot.child("groupName").getValue().toString());
                     }
-                }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            });
-
-
-            String reqUserID = class_GroupDetails.position;
+                    }
+                });
+            } else {
+                Log.d("TOPICDATA", "message");
+            }
 
             DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(reqUserID);
             refUserProfPic.addValueEventListener(new ValueEventListener() {
@@ -124,7 +129,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.child("profilePic").exists()) {
                         String profilePicUrl = snapshot.child("profilePic").getValue().toString();
-                        Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
                         Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.prof_pics_chat_doubt);
                     } else {
                         Glide.with(context.getApplicationContext()).load(R.drawable.maharaji).into(holder.prof_pics_chat_doubt);

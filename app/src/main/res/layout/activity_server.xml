@@ -328,7 +328,7 @@
                                 android:layout_alignParentBottom="true"
                                 android:layout_marginStart="20dp"
                                 android:orientation="horizontal"
-                                android:visibility="visible">
+                                android:visibility="gone">
 
                                 <EditText
                                     android:id="@+id/et_ctext"

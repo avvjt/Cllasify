@@ -216,7 +216,9 @@ public class DoubtFragment extends Fragment {
                 doubtTemp.child("clickedSubjectName").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        tv_DoubtGroupName.setText(snapshot.getValue().toString());
+                        if (snapshot.exists()) {
+                            tv_DoubtGroupName.setText(snapshot.getValue().toString());
+                        }
                     }
 
                     @Override
@@ -233,10 +235,11 @@ public class DoubtFragment extends Fragment {
                 referenceDoubt.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Log.d("DOUBTANS", "onChildAdded: " + snapshot.getValue());
-                        tv_DoubtGroupClass.setText(snapshot.child("groupName").getValue().toString());
-                        tv_Name.setText(snapshot.child("groupPositionId").getValue().toString());
-
+                        if (snapshot.exists()) {
+                            Log.d("DOUBTANS", "onChildAdded: " + snapshot.getValue());
+                            tv_DoubtGroupClass.setText(snapshot.child("groupName").getValue().toString());
+                            tv_Name.setText(snapshot.child("groupPositionId").getValue().toString());
+                        }
                     }
 
                     @Override
@@ -253,12 +256,15 @@ public class DoubtFragment extends Fragment {
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        list_DoubtAnswer.clear();
-                        for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
-                            Log.d("DOUBTANS", "onChildAdded: " + dataSnapshot1.getValue());
-                            Class_Answer class_userDashBoard = dataSnapshot1.getValue(Class_Answer.class);
-                            list_DoubtAnswer.add(class_userDashBoard);
-                            answerAdaptor.notifyDataSetChanged();
+                        if (snapshot.exists()) {
+
+                            list_DoubtAnswer.clear();
+                            for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                                Log.d("DOUBTANS", "onChildAdded: " + dataSnapshot1.getValue());
+                                Class_Answer class_userDashBoard = dataSnapshot1.getValue(Class_Answer.class);
+                                list_DoubtAnswer.add(class_userDashBoard);
+                                answerAdaptor.notifyDataSetChanged();
+                            }
                         }
                     }
 
