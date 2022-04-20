@@ -87,8 +87,8 @@ public class DoubtFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     String currUserId, currUserName, currUserEmail;
 
-    String groupPushId, groupClassPushId, groupClassSubjectPushId, doubtQuestionPushId;
-    TextView tv_DoubtGroupName, tv_DoubtGroupClass, tv_Name;
+    String groupPushId, groupClassPushId, groupClassSubjectPushId, doubtQuestionPushId, doubtCreatorName, doubtCreatorId;
+    TextView tv_DoubtGroupName, tv_DoubtGroupClass, tv_Name, byName;
 
 
     List<Class_Answer> list_DoubtAnswer;
@@ -128,6 +128,7 @@ public class DoubtFragment extends Fragment {
         ib_attachDoubtAns = view.findViewById(R.id.ib_attachDoubtAns);
         et_DoubtAns = view.findViewById(R.id.et_DoubtAns);
         ib_submitDoubtAns = view.findViewById(R.id.ib_submitDoubtAns);
+        byName = view.findViewById(R.id.byName);
 
 
         list_DoubtAnswer = new ArrayList<>();
@@ -135,145 +136,155 @@ public class DoubtFragment extends Fragment {
         rv_DoubtAnswer.setLayoutManager(new LinearLayoutManager(requireContext()));
         rv_DoubtAnswer.setAdapter(answerAdaptor);
 
-        DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(currUserId);
-        refUserProfPic.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child("profilePic").exists()) {
-                    String profilePicUrl = snapshot.child("profilePic").getValue().toString();
-                    Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
-                    Glide.with(DoubtFragment.this).load(profilePicUrl).into(ib_AnsUserProfile);
-                } else {
-                    Glide.with(DoubtFragment.this).load(R.drawable.maharaji).into(ib_AnsUserProfile);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
         DatabaseReference doubtTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(currUserId);
 
         doubtTemp.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                groupPushId = snapshot.child("DoubtTemps").child("groupPushId").getValue(String.class);
-                groupClassPushId = snapshot.child("DoubtTemps").child("groupClassPushId").getValue(String.class);
-                groupClassSubjectPushId = snapshot.child("DoubtTemps").child("groupClassSubjectPushId").getValue(String.class);
-                doubtQuestionPushId = snapshot.child("DoubtTemps").child("doubtQuestionPushId").getValue(String.class);
 
+                if (snapshot.exists()) {
 
-                ib_submitDoubtAns.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                    groupPushId = snapshot.child("DoubtTemps").child("groupPushId").getValue(String.class);
+                    groupClassPushId = snapshot.child("DoubtTemps").child("groupClassPushId").getValue(String.class);
+                    groupClassSubjectPushId = snapshot.child("DoubtTemps").child("groupClassSubjectPushId").getValue(String.class);
+                    doubtQuestionPushId = snapshot.child("DoubtTemps").child("doubtQuestionPushId").getValue(String.class);
+                    doubtCreatorName = snapshot.child("DoubtTemps").child("doubtCreatorName").getValue(String.class);
+                    doubtCreatorId = snapshot.child("DoubtTemps").child("doubtCreatorId").getValue(String.class);
 
-                        String subGroupMsg = et_DoubtAns.getText().toString().trim();
-                        if (subGroupMsg.isEmpty()) {
-//                            Toast.makeText(getContext(), "Enter Answer", Toast.LENGTH_SHORT).show();
-                            et_DoubtAns.setError("Enter Answer");
-                        } else {
+                    byName.setText("Question asked by: " + doubtCreatorName);
 
-                            DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
-                                    child("Groups").child("Doubt").child(groupPushId).child(groupClassPushId).child(groupClassSubjectPushId).
-                                    child("All_Doubt").child(doubtQuestionPushId).child("Answer");
-                            reference.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    long noofGroupinCategory = snapshot.getChildrenCount() + 1;
-                                    String push = "ansno_" + noofGroupinCategory;
-
-                                    Calendar calenderCC = Calendar.getInstance();
-                                    SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
-                                    String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-                                    userAddAnsClass = new Class_Answer();
-                                    //dateTimeCC, currUserName, currUserId,currUserEmail, push, doubtQuestionPushId,subGroupMsg
-                                    userAddAnsClass.setAns(subGroupMsg);
-                                    userAddAnsClass.setUserName(currUserName);
-                                    userAddAnsClass.setAnsUserName(currUserName);
-                                    userAddAnsClass.setDateTime(dateTimeCC);
-                                    userAddAnsClass.setPushId(doubtQuestionPushId);
-//                            userAddAnsClass.setAnsPushId(pus);
-                                    userAddAnsClass.setQuesCategory(push);
-                                    userAddAnsClass.setUserId(currUserId);
-                                    reference.child(push).setValue(userAddAnsClass);
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                }
-                            });
-
-
-                            et_DoubtAns.setText("");
-//                    et_DoubtAns.setfocus
-                        }
-                    }
-
-                });
-
-                doubtTemp.child("clickedSubjectName").addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            tv_DoubtGroupName.setText(snapshot.getValue().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-
-                DatabaseReference referenceDoubt = FirebaseDatabase.getInstance().getReference().
-                        child("Groups").child("Doubt").child(groupPushId).child(groupClassPushId).child(groupClassSubjectPushId).
-                        child("All_Doubt").child(doubtQuestionPushId);
-
-                referenceDoubt.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            Log.d("DOUBTANS", "onChildAdded: " + snapshot.getValue());
-                            tv_DoubtGroupClass.setText(snapshot.child("groupName").getValue().toString());
-                            tv_Name.setText(snapshot.child("groupPositionId").getValue().toString());
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-
-                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
-                        child("Groups").child("Doubt").child(groupPushId).child(groupClassPushId).child(groupClassSubjectPushId).
-                        child("All_Doubt").child(doubtQuestionPushId).child("Answer");
-
-                reference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-
-                            list_DoubtAnswer.clear();
-                            for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
-                                Log.d("DOUBTANS", "onChildAdded: " + dataSnapshot1.getValue());
-                                Class_Answer class_userDashBoard = dataSnapshot1.getValue(Class_Answer.class);
-                                list_DoubtAnswer.add(class_userDashBoard);
-                                answerAdaptor.notifyDataSetChanged();
+                    DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(doubtCreatorId);
+                    refUserProfPic.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.child("profilePic").exists()) {
+                                String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                                Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
+                                Glide.with(DoubtFragment.this).load(profilePicUrl).into(ib_AnsUserProfile);
+                            } else {
+                                Glide.with(DoubtFragment.this).load(R.drawable.maharaji).into(ib_AnsUserProfile);
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                        }
+                    });
 
+
+                    ib_submitDoubtAns.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                            String subGroupMsg = et_DoubtAns.getText().toString().trim();
+                            if (subGroupMsg.isEmpty()) {
+//                            Toast.makeText(getContext(), "Enter Answer", Toast.LENGTH_SHORT).show();
+                                et_DoubtAns.setError("Enter Answer");
+                            } else {
+
+                                DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
+                                        child("Groups").child("Doubt").child(groupPushId).child(groupClassPushId).child(groupClassSubjectPushId).
+                                        child("All_Doubt").child(doubtQuestionPushId).child("Answer");
+                                reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        long noofGroupinCategory = snapshot.getChildrenCount() + 1;
+                                        String push = "ansno_" + noofGroupinCategory;
+
+                                        Calendar calenderCC = Calendar.getInstance();
+                                        SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+                                        String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
+                                        userAddAnsClass = new Class_Answer();
+                                        //dateTimeCC, currUserName, currUserId,currUserEmail, push, doubtQuestionPushId,subGroupMsg
+                                        userAddAnsClass.setAns(subGroupMsg);
+                                        userAddAnsClass.setUserName(currUserName);
+                                        userAddAnsClass.setAnsUserName(currUserName);
+                                        userAddAnsClass.setDateTime(dateTimeCC);
+                                        userAddAnsClass.setPushId(doubtQuestionPushId);
+//                            userAddAnsClass.setAnsPushId(pus);
+                                        userAddAnsClass.setQuesCategory(push);
+                                        userAddAnsClass.setUserId(currUserId);
+                                        reference.child(push).setValue(userAddAnsClass);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+                                    }
+                                });
+
+
+                                et_DoubtAns.setText("");
+//                    et_DoubtAns.setfocus
+                            }
+                        }
+
+                    });
+
+                    doubtTemp.child("clickedSubjectName").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                tv_DoubtGroupName.setText(snapshot.getValue().toString());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                    DatabaseReference referenceDoubt = FirebaseDatabase.getInstance().getReference().
+                            child("Groups").child("Doubt").child(groupPushId).child(groupClassPushId).child(groupClassSubjectPushId).
+                            child("All_Doubt").child(doubtQuestionPushId);
+
+                    referenceDoubt.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                Log.d("DOUBTANS", "onChildAdded: " + snapshot.getValue());
+                                tv_DoubtGroupClass.setText(snapshot.child("groupName").getValue().toString());
+                                tv_Name.setText(snapshot.child("groupPositionId").getValue().toString());
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                    DatabaseReference reference = FirebaseDatabase.getInstance().getReference().
+                            child("Groups").child("Doubt").child(groupPushId).child(groupClassPushId).child(groupClassSubjectPushId).
+                            child("All_Doubt").child(doubtQuestionPushId).child("Answer");
+
+                    reference.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+
+                                list_DoubtAnswer.clear();
+                                for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                                    Log.d("DOUBTANS", "onChildAdded: " + dataSnapshot1.getValue());
+                                    Class_Answer class_userDashBoard = dataSnapshot1.getValue(Class_Answer.class);
+                                    list_DoubtAnswer.add(class_userDashBoard);
+                                    answerAdaptor.notifyDataSetChanged();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                }
 
             }
 

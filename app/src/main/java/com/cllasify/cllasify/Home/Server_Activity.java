@@ -140,7 +140,7 @@ public class Server_Activity extends AppCompatActivity {
 
     //Linear Layouts
     LinearLayout onlyAdminLayout, groupSection, ll_AddJoinGrp, ll_ChatDoubtDashboard,
-            endPanelLinearLayout, friendSection,rightPanelMems, rightPanelMember,
+            endPanelLinearLayout, friendSection, rightPanelMems, rightPanelMember,
             ib_servSettings, btn_lteachattend, FriendListText, btn_joinNotification;
 
 
@@ -149,7 +149,6 @@ public class Server_Activity extends AppCompatActivity {
 
     //Image Buttons
     ImageButton ib_cattach, ib_csubmit, ib_doubtSubmit, ImageViewRecentChat, ib_FrndP_csubmit, swipe_left, swipe_right;
-
 
 
     TabLayout tabLayout, tabL_ChatView;
@@ -462,7 +461,6 @@ public class Server_Activity extends AppCompatActivity {
         final String[] clickedGroupName = new String[1];
 
 
-
         DatabaseReference chkJoinedORAddGRP = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID);
         chkJoinedORAddGRP.addValueEventListener(new ValueEventListener() {
             @Override
@@ -504,7 +502,7 @@ public class Server_Activity extends AppCompatActivity {
                         }
                     });
 
-                }else{
+                } else {
                     Log.d("CHKJOINEDORADDGRPNN", "onDataChange: Not available");
                     rv_ChatDashboard.setVisibility(View.GONE);
                     ll_bottom_send.setVisibility(View.GONE);
@@ -524,7 +522,6 @@ public class Server_Activity extends AppCompatActivity {
         });
 
 
-
 //        setReference("Uni_Group_No_0_Exp Group","Class 1","English","0");
 
 
@@ -538,16 +535,15 @@ public class Server_Activity extends AppCompatActivity {
         rv_ChatDashboard.setLayoutManager(linearLayout);
         rv_ChatDashboard.setAdapter(messageAdapter);
 
-
-        messageAdapter.setOnDoubtClickListener((doubtQuestion, groupPush, groupClassPush, groupSubjectPush, doubtQuestionPush) -> {
-
-//            Toast.makeText(getApplicationContext(), "Test doubt", Toast.LENGTH_SHORT).show();
-
+        messageAdapter.setOnDoubtClickListener((doubtQuestion, groupPush, groupClassPush, groupSubjectPush, doubtQuestionPush, userId, userName) -> {
             DatabaseReference putTempDoubt = FirebaseDatabase.getInstance().getReference().child("Groups");
             putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("groupPushId").setValue(groupPush);
             putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("groupClassPushId").setValue(groupClassPush);
             putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("groupClassSubjectPushId").setValue(groupSubjectPush);
             putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("doubtQuestionPushId").setValue(doubtQuestionPush);
+            putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("doubtCreatorName").setValue(userName);
+            putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("doubtCreatorId").setValue(userId);
+
 
             if (!flag) {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -649,7 +645,7 @@ public class Server_Activity extends AppCompatActivity {
                 databaseReferenceAdminShow.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Log.d("CHKADMINCLASS", "onDataChange: "+snapshot.child("admin").getValue());
+                        Log.d("CHKADMINCLASS", "onDataChange: " + snapshot.child("admin").getValue());
                         if (Objects.equals(snapshot.child("admin").getValue(), true)) {
                             checkAdmmmmin(true);
                             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
@@ -710,7 +706,7 @@ public class Server_Activity extends AppCompatActivity {
 
                                 }
                             });
-                        }else{
+                        } else {
 //                            Toast.makeText(Server_Activity.this, "You are an admin", Toast.LENGTH_SHORT).show();
                         }
 
@@ -790,8 +786,7 @@ public class Server_Activity extends AppCompatActivity {
                                         }
                                     });
 
-                                }
-                                else{
+                                } else {
 //                                    Toast.makeText(Server_Activity.this, "You are not admin", Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -820,8 +815,6 @@ public class Server_Activity extends AppCompatActivity {
 
             }
         });
-
-
 
 
         if (subjectUniPushId != null) {
@@ -1027,10 +1020,6 @@ public class Server_Activity extends AppCompatActivity {
         });
 
 
-
-
-
-
     }
 
 
@@ -1053,7 +1042,7 @@ public class Server_Activity extends AppCompatActivity {
                 break;
 
             case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 // edited here
                 getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
 
@@ -1086,7 +1075,7 @@ public class Server_Activity extends AppCompatActivity {
                     if (snapshot.exists()) {
                         Log.d("CHKJOINEDORADDGRP", "onDataChange: available");
                         ll_AddJoinGrp.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         Log.d("CHKJOINEDORADDGRP", "onDataChange: Not available");
                         ll_AddJoinGrp.setVisibility(View.VISIBLE);
                     }
@@ -1110,7 +1099,6 @@ public class Server_Activity extends AppCompatActivity {
             });
 
 
-
             swipe_right.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -1124,7 +1112,7 @@ public class Server_Activity extends AppCompatActivity {
                 public void onRefresh() {
 
                     Intent intent = new Intent(Server_Activity.this, Server_Activity.class);
-                    intent.putExtra("notOpen","notOpen");
+                    intent.putExtra("notOpen", "notOpen");
                     startActivity(intent);
 
                     swipeRefreshLayout.setRefreshing(false);
@@ -1289,9 +1277,9 @@ public class Server_Activity extends AppCompatActivity {
                             String chkUserID = dataSnapshot1.getKey();
                             if (chkUserID.equals(userID)) {
 //                                ll_AddJoinGrp.setVisibility(View.GONE);
-                                if(getIntent().hasExtra("notOpen")){
+                                if (getIntent().hasExtra("notOpen")) {
                                     Log.d("JOINEDGRP", "onDataChange: No panel");
-                                }else {
+                                } else {
                                     overlappingPanels.openStartPanel();
                                 }
                             }
@@ -1310,9 +1298,9 @@ public class Server_Activity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getChildrenCount() > 0) {
 //                        ll_AddJoinGrp.setVisibility(View.GONE);
-                        if(getIntent().hasExtra("notOpen")){
+                        if (getIntent().hasExtra("notOpen")) {
                             Log.d("JOINEDGRP", "onDataChange: No panel");
-                        }else {
+                        } else {
                             overlappingPanels.openStartPanel();
                         }
 
@@ -2074,12 +2062,12 @@ public class Server_Activity extends AppCompatActivity {
         refUserStatusProfPic.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child("profilePic").exists()){
-                    String profilePic=snapshot.child("profilePic").getValue().toString();
+                if (snapshot.child("profilePic").exists()) {
+                    String profilePic = snapshot.child("profilePic").getValue().toString();
                     if (!(Server_Activity.this).isFinishing()) {
                         Glide.with(getApplicationContext()).load(profilePic).into(prof_pic_BtmSheet);
                     }
-                }else{
+                } else {
                     if (!(Server_Activity.this).isFinishing()) {
                         Glide.with(getApplicationContext()).load(R.drawable.maharaji).into(prof_pic_BtmSheet);
                     }
@@ -2148,7 +2136,7 @@ public class Server_Activity extends AppCompatActivity {
 
                     friendChatFragment = new Friend_Chat_Activity();
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.center_panel, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
+                            .replace(R.id.chatDoubtLayout, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
 
                     Bundle bundle = new Bundle();
                     bundle.putString("name", memberUserName);
@@ -2219,10 +2207,9 @@ public class Server_Activity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildrenCount() > 0) {
                     long count = snapshot.getChildrenCount();
-                    if(count < 2) {
+                    if (count < 2) {
                         tv_CountFollowing.setText((int) count + " Following");
-                    }
-                    else{
+                    } else {
                         tv_CountFollowing.setText((int) count + " Followings");
                     }
                 } else {
@@ -2418,6 +2405,7 @@ public class Server_Activity extends AppCompatActivity {
 
         }
     }
+
     /*
     Chat box part..........................
      */

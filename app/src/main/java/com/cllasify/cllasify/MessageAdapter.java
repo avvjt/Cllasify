@@ -41,7 +41,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     onDoubtClickListener onDoubtClickListener;
 
     public interface onDoubtClickListener {
-        void onDoubtClick(String doubtQuestion, String groupPush, String groupClassPush, String groupSubjectPush, String doubtQuestionPush);
+        void onDoubtClick(String doubtQuestion, String groupPush, String groupClassPush, String groupSubjectPush, String doubtQuestionPush,String userId,String userName);
     }
 
     public void setOnDoubtClickListener(MessageAdapter.onDoubtClickListener onDoubtClickListener) {
@@ -109,6 +109,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                             if (snapshot.child("Answer").exists()) {
                                 holder.tv_AnswerCount.setText(String.valueOf(snapshot.child("Answer").getChildrenCount()));
                                 Log.d("TOPICDATA", "onDataChange: " + snapshot.child("Answer").getChildrenCount());
+                            }else{
+                                holder.tv_AnswerCount.setText("0");
                             }
                             holder.tv_topicTitle.setText(snapshot.child("groupName").getValue().toString());
                         }
@@ -181,7 +183,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 public void onClick(View v) {
                     int position = getAdapterPosition();
 
-                    Log.d("DBTTT", "onClick: " + position);
 
 
                     if (chat.get(position).getMsgCategory().equals("doubt")) {
@@ -191,13 +192,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
 
                                 Class_Group user = chat.get(position);
+                                Log.d("DBTTT", "onClick: " + user.getPosition());
+
                                 String doubtQuestion = user.getGroupSubGroupComb();
                                 String groupPush = user.getGroupName();
                                 String groupClassPush = user.getSubGroupName();
                                 String groupSubjectPush = user.getSubGroupPushId();
                                 String doubtQuestionPush = user.getDoubtUniPushId();
+                                String userId = user.getPosition();
+                                String userName = user.getUserId();
 
-                                onDoubtClickListener.onDoubtClick(doubtQuestion, groupPush, groupClassPush, groupSubjectPush, doubtQuestionPush);
+                                onDoubtClickListener.onDoubtClick(doubtQuestion, groupPush, groupClassPush, groupSubjectPush, doubtQuestionPush,userId,userName);
                             }
 
                         }
