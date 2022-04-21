@@ -44,7 +44,16 @@
             android:fontFamily="@font/inter_semibold"
             android:text="Take attendance"
             android:textColor="@color/text_color"
-            android:textSize="18sp" />
+            android:textSize="18sp"/>
+
+        <ImageButton
+            android:id="@+id/btn_attendance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/menu_attendance"
+            android:background="@color/transparent"
+            android:spinnerMode="dropdown"
+            android:layout_marginStart="140dp"/>
     </LinearLayout>
 
     <!--2 Useless textview-->
@@ -65,34 +74,7 @@
         android:id="@+id/rv_GrpMemberAttendance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/btn_holder"
-        android:layout_below="@id/action_bar"
-        android:padding="20dp" />
-
-    <LinearLayout
-        android:id="@+id/btn_holder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+        android:layout_below="@id/action_bar"/>
 
-        <ImageButton
-            android:id="@+id/btn_ShowAttendStatus"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/button_gradient"
-            android:text="Show Attendance Status"
-            android:textColor="@color/white" />
-
-        <ImageButton
-            android:id="@+id/btn_CheckAttendHistory"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="10dp"
-            android:background="@drawable/button_gradient"
-            android:text="Check Attendance History"
-            android:textColor="@color/white" />
-
-    </LinearLayout>
 </RelativeLayout>

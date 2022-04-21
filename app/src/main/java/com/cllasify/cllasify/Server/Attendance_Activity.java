@@ -2,6 +2,7 @@ package com.cllasify.cllasify.Server;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -14,6 +15,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -27,6 +31,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -41,10 +46,13 @@ import com.cllasify.cllasify.Adaptor.Adaptor_Attendance;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMemberAttendanceRollNumberList;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Student_Details;
+import com.cllasify.cllasify.Constant;
 import com.cllasify.cllasify.Home.Attendance_History;
 import com.cllasify.cllasify.Home.Students_Subjects;
 import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.SwipeToDeleteCallback;
+import com.cllasify.cllasify.Utility.SharePref;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -74,7 +82,7 @@ public class Attendance_Activity extends AppCompatActivity {
     Adaptor_ShowGrpMemberAttendanceRollNumberList showGrpMemberList;
     Adaptor_Attendance showAttendanceStatus;
     Class_Group userAddGroupClass;
-    ImageButton btn_ShowAttendStatus, btn_CheckAttendHistory;
+    ImageButton btn_ShowAttendStatus, btn_CheckAttendHistory, btn_attendance;
     ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String, String>>();
 
     Paint p = new Paint();
@@ -128,12 +136,9 @@ public class Attendance_Activity extends AppCompatActivity {
         classPushId = getIntent().getStringExtra("classPushId");
 
 
-//        Toast.makeText(Attendance_Activity.this,groupPushId+"_"+subGroupPushId+"_"+classPushId,Toast.LENGTH_SHORT).show();
-        btn_ShowAttendStatus = findViewById(R.id.btn_ShowAttendStatus);
-        btn_CheckAttendHistory = findViewById(R.id.btn_CheckAttendHistory);
-
         tv_groupName = findViewById(R.id.tv_groupName);
         tv_subGroupName = findViewById(R.id.tv_subGroupName);
+        btn_attendance = findViewById(R.id.btn_attendance);
 
         rv_GrpMemberList = findViewById(R.id.rv_GrpMemberAttendance);
 
@@ -143,25 +148,13 @@ public class Attendance_Activity extends AppCompatActivity {
 
         myCalendar = Calendar.getInstance();
 
-        btn_CheckAttendHistory.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.P)
+
+        btn_attendance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                calenderDialog();
-            }
 
+                showmenu();
 
-        });
-
-        btn_ShowAttendStatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String myFormat = "dd-MM-yyyy";
-                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                //btn_ShowAttendStatus.setText("Check Attendance Status");
-                String btnData = sdf.format(myCalendar.getTime());
-
-                dialog_AttendanceStatus(btnData);
             }
         });
 
@@ -170,6 +163,47 @@ public class Attendance_Activity extends AppCompatActivity {
         initSwipe(groupPushId, subGroupPushId);
 //        enableSwipeToDeleteAndUndo();
     }
+
+
+    //for attendances menu
+    private void showmenu() {
+
+        PopupMenu popupMenu = new PopupMenu(Attendance_Activity.this, btn_attendance);
+
+        popupMenu.getMenuInflater().inflate(R.menu.attendance_menu, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.P)
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                switch (item.getItemId()) {
+                    case R.id.Recent_attendance: recent_attendance();
+                    break;
+                    case R.id.Attendance_history: calenderDialog();
+                    break;
+
+
+                }
+                return true;
+
+            }
+        });
+        popupMenu.show();
+
+    }
+
+
+    private void recent_attendance() {
+
+        String myFormat = "dd-MM-yyyy";
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+        //btn_ShowAttendStatus.setText("Check Attendance Status");
+        String btnData = sdf.format(myCalendar.getTime());
+
+        dialog_AttendanceStatus(btnData);
+    }
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.P)

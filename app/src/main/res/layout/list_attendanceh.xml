@@ -5,7 +5,7 @@
     android:background="@color/page_color"
     style="@style/SelectableItemBackground"
     android:gravity="center_vertical"
-    android:layout_marginTop="5dp"
+    android:layout_marginTop="10dp"
     android:padding="5dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
