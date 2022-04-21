@@ -222,9 +222,9 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
                                                 Log.d("STUTECH", "onDataChange: " + snapshot.getValue());
                                                 AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(context);
                                                 alertdialogbuilder.setTitle("You are admin!!!")
-                                                        .setMessage("You cannot remove yourself from the School")
+                                                        .setMessage("Do you really want to remove this teacher")
                                                         .setCancelable(false)
-                                                        .setPositiveButton("OK",
+                                                        .setPositiveButton("Yes",
                                                                 new DialogInterface.OnClickListener() {
                                                                     @Override
                                                                     public void onClick(DialogInterface dialog, int which) {
@@ -237,6 +237,24 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
                                                 AlertDialog alert = alertdialogbuilder.create();
                                                 alert.show();
 
+                                            }else{
+
+                                                AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(context);
+                                                alertdialogbuilder.setTitle("You are admin!!!")
+                                                        .setMessage("Do you really want to remove this student")
+                                                        .setCancelable(false)
+                                                        .setPositiveButton("OK",
+                                                                new DialogInterface.OnClickListener() {
+                                                                    @Override
+                                                                    public void onClick(DialogInterface dialog, int which) {
+                                                                        mListener.removeStudent(groupPushId, classUniPushId, studentUniPush);
+                                                                        mDatalistNew.remove(studPos);
+                                                                        notifyItemRemoved(studPos);
+                                                                        dialog.dismiss();
+                                                                    }
+                                                                });
+                                                AlertDialog alert = alertdialogbuilder.create();
+                                                alert.show();
                                             }
                                         }
 
@@ -246,22 +264,6 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
                                         }
                                     });
 
-                                    AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(context);
-                                    alertdialogbuilder.setTitle("You are admin!!!")
-                                            .setMessage("You cannot remove yourself from the School")
-                                            .setCancelable(false)
-                                            .setPositiveButton("OK",
-                                                    new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            mListener.removeStudent(groupPushId, classUniPushId, studentUniPush);
-                                                            mDatalistNew.remove(studPos);
-                                                            notifyItemRemoved(studPos);
-                                                            dialog.dismiss();
-                                                        }
-                                                    });
-                                    AlertDialog alert = alertdialogbuilder.create();
-                                    alert.show();
 
 
                                 }

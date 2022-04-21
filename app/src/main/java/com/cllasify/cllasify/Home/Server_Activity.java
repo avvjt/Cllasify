@@ -1517,7 +1517,7 @@ public class Server_Activity extends AppCompatActivity {
                     Intent intent = new Intent(Server_Activity.this, Server_Settings.class);
                     intent.putExtra("currUserId", userID);
                     intent.putExtra("groupPushId", snapshot.child("clickedGroupPushId").getValue().toString());
-                    intent.putExtra("serverName", snapshot.child("serverName").getValue().toString());
+//                    intent.putExtra("serverName", snapshot.child("serverName").getValue().toString());
                     startActivity(intent);
                 });
 
