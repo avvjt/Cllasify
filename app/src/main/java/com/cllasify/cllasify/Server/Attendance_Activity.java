@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,7 +74,7 @@ public class Attendance_Activity extends AppCompatActivity {
     Adaptor_ShowGrpMemberAttendanceRollNumberList showGrpMemberList;
     Adaptor_Attendance showAttendanceStatus;
     Class_Group userAddGroupClass;
-    Button btn_ShowAttendStatus, btn_CheckAttendHistory;
+    ImageButton btn_ShowAttendStatus, btn_CheckAttendHistory;
     ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String, String>>();
 
     Paint p = new Paint();
@@ -157,7 +158,7 @@ public class Attendance_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 String myFormat = "dd-MM-yyyy";
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                btn_ShowAttendStatus.setText("Check Attendance Status");
+                //btn_ShowAttendStatus.setText("Check Attendance Status");
                 String btnData = sdf.format(myCalendar.getTime());
 
                 dialog_AttendanceStatus(btnData);

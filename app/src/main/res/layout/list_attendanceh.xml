@@ -2,12 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/page_color">
+    android:background="@color/page_color"
+    style="@style/SelectableItemBackground"
+    android:gravity="center_vertical"
+    android:layout_marginTop="5dp"
+    android:padding="5dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/civ_UserProfilePic"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:src="@drawable/maharaji" />
 
         <LinearLayout
@@ -18,27 +22,17 @@
             android:layout_centerInParent="true"
             android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tv_UserName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:fontFamily="@font/inter_medium"
-                    android:gravity="center_vertical"
-                    android:text="Group Name"
-                    android:textColor="@color/text_color"
-                    android:textSize="15sp" />
 
                 <TextView
-                    android:id="@+id/tv_unique_userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/text_color"
+                    android:fontFamily="@font/inter_regular"
+                    android:text="User Name"
+                    android:textSize="15sp"
                     android:layout_marginStart="10dp"
-                    android:fontFamily="@font/inter_medium"
                     android:gravity="center_vertical"
-                    android:text="UserName"
-                    android:textColor="@color/text_background_color"
-                    android:textSize="15sp" />
+                    android:id="@+id/tv_UserName"/>
 
         </LinearLayout>
 
@@ -49,9 +43,9 @@
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
             android:layout_marginEnd="20dp"
-            android:text="f asdffadsdsf"
-            android:textColor="@color/text_color"
             android:fontFamily="@font/inter_medium"
-            android:textSize="15sp"/>
+            android:text="Status"
+            android:textColor="@color/text_color"
+            android:textSize="15sp" />
 
 </RelativeLayout>

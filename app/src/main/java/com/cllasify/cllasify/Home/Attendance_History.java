@@ -68,7 +68,7 @@ public class Attendance_History extends AppCompatActivity {
         rv_ShowAttend.setAdapter(showAttendanceStatus);
 
 
-        tv_titleAttendance.setText("Attendance-"+currentDate+"\n");
+        tv_titleAttendance.setText("Attendance "+currentDate+"\n");
 
         DatabaseReference refChildGroup1 = FirebaseDatabase.getInstance().getReference().child("Groups").child("Attendance").child(groupPushId).child(subGroupPushId).child(classPushId).child(currentDate);
         ChildEventListener childEventListenerAttend= new ChildEventListener() {

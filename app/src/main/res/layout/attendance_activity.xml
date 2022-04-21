@@ -1,66 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/page_color"
     android:orientation="vertical"
     tools:context=".Server.Attendance_Activity">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:id="@+id/tv_titleAttendance"
-        android:text="Attendance Portal" />
 
+    <LinearLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/page_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <ImageButton
+            android:id="@+id/btn_Cancel"
+            style="@style/SelectableItemBackgroundBorderless"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_arrow_left_24"
+            app:tint="@color/iconSecondaryColor" />
+
+        <TextView
+            android:id="@+id/tv_titleAttendance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Take attendance"
+            android:textColor="@color/text_color"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <!--2 Useless textview-->
     <TextView
         android:id="@+id/tv_groupName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_titleAttendance" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_subGroupName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_groupName" />
+        android:layout_below="@+id/tv_groupName"
+        android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_GrpMemberAttendance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_subGroupName"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp" />
+        android:layout_above="@id/btn_holder"
+        android:layout_below="@id/action_bar"
+        android:padding="20dp" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/button_gradient"
-        android:layout_gravity="center"
-        android:textColor="@color/white"
-        android:text="Show Attendance Status"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:id="@+id/btn_ShowAttendStatus" />
-
-
-    <Button
-        android:id="@+id/btn_CheckAttendHistory"
+    <LinearLayout
+        android:id="@+id/btn_holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="center"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginBottom="80dp"
-        android:background="@drawable/button_gradient"
-        android:text="Check Attendance History"
-        android:textColor="@color/white" />
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
+        <ImageButton
+            android:id="@+id/btn_ShowAttendStatus"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button_gradient"
+            android:text="Show Attendance Status"
+            android:textColor="@color/white" />
+
+        <ImageButton
+            android:id="@+id/btn_CheckAttendHistory"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/button_gradient"
+            android:text="Check Attendance History"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
 </RelativeLayout>
