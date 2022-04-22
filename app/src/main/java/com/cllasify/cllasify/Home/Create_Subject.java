@@ -12,11 +12,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Server_Setting_Specifics;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -40,6 +42,7 @@ public class Create_Subject extends AppCompatActivity {
     List<Subject_Details_Model> childItemArrayListClassName;
     List<Class_Group_Names> parentItemArrayListClassName;
     String groupPushId;
+    ImageButton btn_Back;
 
     @Override
     public void onBackPressed() {
@@ -95,6 +98,18 @@ public class Create_Subject extends AppCompatActivity {
 
         Button btn_CreateTopic = findViewById(R.id.btn_CreateTopic);
         Button btn_Skip = findViewById(R.id.skipBtn);
+        btn_Back = findViewById(R.id.btn_Back);
+
+
+        btn_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Create_Subject.this, Create_Class.class);
+                startActivity(i);
+                (Create_Subject.this).overridePendingTransition(0, 0);
+            }
+        });
+
 
         btn_Skip.setOnClickListener(new View.OnClickListener() {
             @Override

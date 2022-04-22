@@ -7,10 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_Attendance;
@@ -62,10 +64,20 @@ public class Attendance_History extends AppCompatActivity {
 
         RecyclerView rv_ShowAttend=findViewById(R.id.rv_ShowAttend);
         TextView tv_titleAttendance=findViewById(R.id.tv_titleAttendance);
+        ImageButton btn_Back = findViewById(R.id.btn_Back);
         rv_ShowAttend.setLayoutManager(new LinearLayoutManager(this));
         list_showAttend = new ArrayList<>();
         showAttendanceStatus = new Adaptor_Attendance(this, list_showAttend);
         rv_ShowAttend.setAdapter(showAttendanceStatus);
+
+        btn_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Attendance_History.this, Adaptor_Attendance.class);
+                startActivity(i);
+                (Attendance_History.this).overridePendingTransition(0, 0);
+            }
+        });
 
 
         tv_titleAttendance.setText("Attendance "+currentDate+"\n");

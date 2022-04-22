@@ -23,7 +23,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.Home.Profile_Activity;
 import com.cllasify.cllasify.Home.Server_Activity;
+import com.cllasify.cllasify.Home.Server_Settings;
+import com.cllasify.cllasify.Profile.AccountSetting_Activity;
 import com.cllasify.cllasify.Profile.ProfileSetting_Activity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,7 +47,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
     DatabaseReference getTempData;
     String currUserId;
     String groupPushId;
-    ImageButton doneBtn;
+    ImageButton doneBtn, btn_Back;
     DatabaseReference databaseReference;
 
     CircleImageView serverImage;
@@ -83,6 +86,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
         et_schoolBio = findViewById(R.id.et_schoolBio);
         et_schoolEmail = findViewById(R.id.et_schoolEmail);
         doneBtn = findViewById(R.id.doneBtn);
+        btn_Back = findViewById(R.id.btn_Back);
         serverDelete = findViewById(R.id.deleteBtn);
 
         progBar = findViewById(R.id.progBar);
@@ -212,6 +216,15 @@ public class Server_Setting_Specifics extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        btn_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Server_Setting_Specifics.this, Server_Settings.class);
+                startActivity(i);
+                (Server_Setting_Specifics.this).overridePendingTransition(0, 0);
             }
         });
 

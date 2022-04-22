@@ -48,6 +48,9 @@ import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.Constant;
 import com.cllasify.cllasify.Home.Attendance_History;
+import com.cllasify.cllasify.Home.Create_Class;
+import com.cllasify.cllasify.Home.Create_Subject;
+import com.cllasify.cllasify.Home.Server_Activity;
 import com.cllasify.cllasify.Home.Students_Subjects;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Subject_Details_Model;
@@ -82,7 +85,7 @@ public class Attendance_Activity extends AppCompatActivity {
     Adaptor_ShowGrpMemberAttendanceRollNumberList showGrpMemberList;
     Adaptor_Attendance showAttendanceStatus;
     Class_Group userAddGroupClass;
-    ImageButton btn_ShowAttendStatus, btn_CheckAttendHistory, btn_attendance;
+    ImageButton btn_ShowAttendStatus, btn_Back, btn_CheckAttendHistory, btn_attendance;
     ArrayList<HashMap<String, String>> arrayList = new ArrayList<HashMap<String, String>>();
 
     Paint p = new Paint();
@@ -139,6 +142,7 @@ public class Attendance_Activity extends AppCompatActivity {
         tv_groupName = findViewById(R.id.tv_groupName);
         tv_subGroupName = findViewById(R.id.tv_subGroupName);
         btn_attendance = findViewById(R.id.btn_attendance);
+        btn_Back = findViewById(R.id.btn_Back);
 
         rv_GrpMemberList = findViewById(R.id.rv_GrpMemberAttendance);
 
@@ -148,6 +152,16 @@ public class Attendance_Activity extends AppCompatActivity {
 
         myCalendar = Calendar.getInstance();
 
+
+
+        btn_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Attendance_Activity.this, Server_Activity.class);
+                startActivity(i);
+                (Attendance_Activity.this).overridePendingTransition(0, 0);
+            }
+        });
 
         btn_attendance.setOnClickListener(new View.OnClickListener() {
             @Override

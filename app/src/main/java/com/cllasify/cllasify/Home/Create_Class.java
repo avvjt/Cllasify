@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Server_Setting_Specifics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -42,6 +44,7 @@ public class Create_Class extends AppCompatActivity {
     private DatabaseReference refAllGroup, refGroupSubsList, refuserAllGroup, refuserPersonalGroup, refuserPublicGroup, addedOrJoinedGroup;
     Class_Group userAddGroupClass, userSubsGroupClass;
     ProgressBar progressBar;
+    ImageButton btn_Back;
 
 
     public void checkDarkLightDefaultStatusBar() {
@@ -77,6 +80,8 @@ public class Create_Class extends AppCompatActivity {
         userName = currentUser.getDisplayName();
 
         progressBar = findViewById(R.id.middleProgress);
+        btn_Back = findViewById(R.id.btn_Back);
+
 
         if (getIntent().hasExtra("GroupName")) {
             groupName = getIntent().getStringExtra("GroupName");
@@ -107,6 +112,16 @@ public class Create_Class extends AppCompatActivity {
                 }
             }
         });
+
+        btn_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Create_Class.this, Create_Server.class);
+                startActivity(i);
+                (Create_Class.this).overridePendingTransition(0, 0);
+            }
+        });
+
 
     }
 

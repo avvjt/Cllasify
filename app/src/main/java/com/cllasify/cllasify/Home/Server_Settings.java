@@ -25,6 +25,7 @@ import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adaptor.Adaptor_Server_Setting_Items;
 import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.Class_Student_Details;
+import com.cllasify.cllasify.Profile.AccountSetting_Activity;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Server_Setting_Specifics;
 import com.cllasify.cllasify.Subject_Details_Model;
@@ -47,7 +48,7 @@ public class Server_Settings extends AppCompatActivity {
     String currUserId;
     RecyclerView rv_ShowClass;
     String groupPushId, serverBio, serverName, serverEmail;
-    ImageButton serverSettingProfile;
+    ImageButton serverSettingProfile, btn_back;
 
     Adaptor_Server_Setting_Items showGrpClassList;
     List<Class_Group_Names> listGrpClassList;
@@ -113,6 +114,7 @@ public class Server_Settings extends AppCompatActivity {
 
         schoolLogoImg = findViewById(R.id.schoolLogoImg);
         addNewClass = findViewById(R.id.addNewClass);
+        btn_back = findViewById(R.id.btn_Back);
 
         rv_ShowClass = findViewById(R.id.rv_ShowClass);
         tv_ServerName = findViewById(R.id.tv_ServerName);
@@ -125,6 +127,15 @@ public class Server_Settings extends AppCompatActivity {
         serverSettingProfile = findViewById(R.id.serverSettingProfile);
 
         groupPushId = getIntent().getStringExtra("groupPushId");
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Server_Settings.this, Server_Activity.class);
+                startActivity(i);
+                (Server_Settings.this).overridePendingTransition(0, 0);
+            }
+        });
 
 
         DatabaseReference refSaveServerProfPic = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("serverProfilePic");

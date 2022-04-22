@@ -24,7 +24,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <ImageButton
-            android:id="@+id/btn_Cancel"
+            android:id="@+id/btn_Back"
             style="@style/SelectableItemBackgroundBorderless"
             android:layout_width="46dp"
             android:layout_height="46dp"
@@ -74,7 +74,7 @@
         android:id="@+id/rv_GrpMemberAttendance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/action_bar"/>
+        android:layout_below="@id/action_bar"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

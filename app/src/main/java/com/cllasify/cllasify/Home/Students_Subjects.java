@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember_Serv;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.Constant;
 import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Server.Attendance_Activity;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.SharePref;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,6 +42,7 @@ public class Students_Subjects extends AppCompatActivity {
     RecyclerView rv_showStudents, rv_ShowSubject, rv_showTeachers;
     TextView tv_studentList, tv_adminList, tv_SubjectList;
     Button addNewSubject;
+    ImageButton btn_Back;
 
     //Students
     Adaptor_ShowGrpMember_Serv showGrpMemberList;
@@ -84,6 +87,17 @@ public class Students_Subjects extends AppCompatActivity {
         tv_adminList = findViewById(R.id.adminListText);
         tv_SubjectList = findViewById(R.id.subjectListText);
         addNewSubject = findViewById(R.id.addNewSubject);
+        btn_Back = findViewById(R.id.btn_Back);
+
+
+        btn_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Students_Subjects.this, Server_Settings.class);
+                startActivity(i);
+                (Students_Subjects.this).overridePendingTransition(0, 0);
+            }
+        });
 
 
         //Set Students

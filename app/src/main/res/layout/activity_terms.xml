@@ -39,7 +39,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/inter_semibold"
-            android:text="@string/privacy_policy"
+            android:text="@string/terms_of_service"
             android:textColor="@color/text_color"
             android:textSize="20sp" />
     </LinearLayout>

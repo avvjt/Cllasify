@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.cllasify.cllasify.Adaptor.Adaptor_Notify;
@@ -41,6 +42,7 @@ public class GRPJoinReqs extends AppCompatActivity {
 
     TabLayout tabLayout;
     ViewPager viewPager;
+    ImageButton btn_back;
 
     @Override
     public void onBackPressed() {
@@ -74,6 +76,16 @@ public class GRPJoinReqs extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.reqTabLayout);
         viewPager = findViewById(R.id.view_Pager);
+        btn_back = findViewById(R.id.btn_Back);
+
+        btn_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(GRPJoinReqs.this, Server_Activity.class);
+                startActivity(i);
+                (GRPJoinReqs.this).overridePendingTransition(0, 0);
+            }
+        });
 
 
         tabLayout.setupWithViewPager(viewPager);

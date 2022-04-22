@@ -22,7 +22,7 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <ImageButton
-            android:id="@+id/btn_Cancel"
+            android:id="@+id/btn_Back"
             style="@style/SelectableItemBackgroundBorderless"
             android:layout_width="46dp"
             android:layout_height="46dp"
