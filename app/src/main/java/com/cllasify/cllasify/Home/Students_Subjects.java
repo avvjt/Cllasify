@@ -93,9 +93,7 @@ public class Students_Subjects extends AppCompatActivity {
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Students_Subjects.this, Server_Settings.class);
-                startActivity(i);
-                (Students_Subjects.this).overridePendingTransition(0, 0);
+               finish();
             }
         });
 

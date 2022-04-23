@@ -131,9 +131,7 @@ public class Server_Settings extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Server_Settings.this, Server_Activity.class);
-                startActivity(i);
-                (Server_Settings.this).overridePendingTransition(0, 0);
+                finish();
             }
         });
 

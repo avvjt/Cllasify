@@ -222,9 +222,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Server_Setting_Specifics.this, Server_Settings.class);
-                startActivity(i);
-                (Server_Setting_Specifics.this).overridePendingTransition(0, 0);
+                finish();
             }
         });
 

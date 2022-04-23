@@ -104,9 +104,7 @@ public class Create_Subject extends AppCompatActivity {
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Create_Subject.this, Create_Class.class);
-                startActivity(i);
-                (Create_Subject.this).overridePendingTransition(0, 0);
+                finish();
             }
         });
 

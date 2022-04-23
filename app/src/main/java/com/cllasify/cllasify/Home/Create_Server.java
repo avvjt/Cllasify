@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -69,6 +70,14 @@ public class Create_Server extends AppCompatActivity {
         Button btn_CreateGroup = findViewById(R.id.btn_CreateGroup);
         LinearLayout ll_CreatingServer = findViewById(R.id.ll_groupFamFrnds);
         EditText et_GroupName = findViewById(R.id.et_GroupName);
+        ImageButton btn_Back = findViewById(R.id.btn_Back);
+
+        btn_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
 
         btn_CreateGroup.setOnClickListener(new View.OnClickListener() {

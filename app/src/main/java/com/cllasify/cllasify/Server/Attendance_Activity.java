@@ -157,9 +157,7 @@ public class Attendance_Activity extends AppCompatActivity {
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Attendance_Activity.this, Server_Activity.class);
-                startActivity(i);
-                (Attendance_Activity.this).overridePendingTransition(0, 0);
+                finish();
             }
         });
 

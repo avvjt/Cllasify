@@ -116,9 +116,7 @@ public class Create_Class extends AppCompatActivity {
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Create_Class.this, Create_Server.class);
-                startActivity(i);
-                (Create_Class.this).overridePendingTransition(0, 0);
+                finish();
             }
         });
 

@@ -73,9 +73,7 @@ public class Attendance_History extends AppCompatActivity {
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(Attendance_History.this, Adaptor_Attendance.class);
-                startActivity(i);
-                (Attendance_History.this).overridePendingTransition(0, 0);
+                finish();
             }
         });
 

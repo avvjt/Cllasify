@@ -81,9 +81,7 @@ public class GRPJoinReqs extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(GRPJoinReqs.this, Server_Activity.class);
-                startActivity(i);
-                (GRPJoinReqs.this).overridePendingTransition(0, 0);
+                finish();
             }
         });
 
