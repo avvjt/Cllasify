@@ -110,8 +110,6 @@ dependencies {
 
     implementation "android.arch.lifecycle:extensions:1.1.1"
 
-    //Cosmo Calender
-    implementation "com.github.applikeysolutions:cosmocalendar:1.0.4"
 
 
 }

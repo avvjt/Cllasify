@@ -35,13 +35,6 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.applikeysolutions.cosmocalendar.dialog.CalendarDialog;
-import com.applikeysolutions.cosmocalendar.dialog.OnDaysSelectionListener;
-import com.applikeysolutions.cosmocalendar.model.Day;
-import com.applikeysolutions.cosmocalendar.selection.RangeSelectionManager;
-import com.applikeysolutions.cosmocalendar.utils.SelectionType;
-import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.cllasify.cllasify.Adaptor.Adaptor_Attendance;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMemberAttendanceRollNumberList;
 import com.cllasify.cllasify.Class.Class_Group;
@@ -177,6 +170,22 @@ public class Attendance_Activity extends AppCompatActivity {
     }
 
 
+    final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, monthOfYear);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+
+            String myFormat = "dd-MM-yyyy";
+            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+            String btnData = sdf.format(myCalendar.getTime());
+            dialog_AttendanceStatus(btnData);
+        }
+
+    };
+
     //for attendances menu
     private void showmenu() {
 
@@ -216,57 +225,10 @@ public class Attendance_Activity extends AppCompatActivity {
         dialog_AttendanceStatus(btnData);
     }
 
-
-
-    @RequiresApi(api = Build.VERSION_CODES.P)
     private void calenderDialog() {
-        View customAlertDialog = LayoutInflater.from(Attendance_Activity.this).inflate(R.layout.attendance_calander, null, false);
-        AlertDialog.Builder builder = new AlertDialog.Builder(Attendance_Activity.this);
-        builder.setView(customAlertDialog);
-        AlertDialog dialog = builder.show();
-
-        CalendarView calendarDialog = customAlertDialog.findViewById(R.id.attCal);
-        Button okBtn = customAlertDialog.findViewById(R.id.ok_button);
-        Button cancelBtn = customAlertDialog.findViewById(R.id.cancel_btn);
-
-        calendarDialog.setCalendarBackgroundColor(Color.parseColor("#000000"));
-        calendarDialog.setFirstDayOfWeek(Calendar.MONDAY);
-        calendarDialog.setCalendarOrientation(0);
-        calendarDialog.setWeekendDays(new HashSet() {{
-            add(Calendar.SATURDAY);
-            add(Calendar.SUNDAY);
-        }});
-        calendarDialog.setSelectionType(SelectionType.SINGLE);
-        calendarDialog.setOutlineAmbientShadowColor(Color.parseColor("#000000"));
-        calendarDialog.setOutlineSpotShadowColor(Color.parseColor("#000000"));
-        calendarDialog.setSelectionBarMonthTextColor(Color.parseColor("#000000"));
-
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (calendarDialog.getSelectedDays().toString().equals("[]")) {
-                    Toast.makeText(Attendance_Activity.this, "Please select a date to continue!!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Date calTime = calendarDialog.getSelectedDays().get(0).getCalendar().getTime();
-                    Log.d("DATEDATA", "valid" + calTime);
-                    String myFormat = "dd-MM-yyyy";
-                    SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                    String btnData = sdf.format(calTime);
-                    Log.d("DATEDATA", "onDaysSelected: " + btnData);
-                    dialog_AttendanceStatus(btnData);
-                }
-            }
-
-        });
-
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-
-
+        new DatePickerDialog(Attendance_Activity.this, date, myCalendar
+                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private void dialog_AttendanceStatus(String currentDate) {
