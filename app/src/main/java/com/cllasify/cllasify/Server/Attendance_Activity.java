@@ -170,22 +170,6 @@ public class Attendance_Activity extends AppCompatActivity {
     }
 
 
-    final DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, monthOfYear);
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-
-            String myFormat = "dd-MM-yyyy";
-            SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-            String btnData = sdf.format(myCalendar.getTime());
-            dialog_AttendanceStatus(btnData);
-        }
-
-    };
-
     //for attendances menu
     private void showmenu() {
 
@@ -226,9 +210,20 @@ public class Attendance_Activity extends AppCompatActivity {
     }
 
     private void calenderDialog() {
-        new DatePickerDialog(Attendance_Activity.this, date, myCalendar
-                .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
-                myCalendar.get(Calendar.DAY_OF_MONTH)).show();
+        new DatePickerDialog(Attendance_Activity.this, R.style.calender_style, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                //do something with the date
+                myCalendar.set(Calendar.YEAR, year);
+                myCalendar.set(Calendar.MONTH, monthOfYear);
+                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                String myFormat = "dd-MM-yyyy";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+                String btnData = sdf.format(myCalendar.getTime());
+                dialog_AttendanceStatus(btnData);
+            }
+        }, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
     }
 
     private void dialog_AttendanceStatus(String currentDate) {

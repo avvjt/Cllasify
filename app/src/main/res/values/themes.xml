@@ -32,6 +32,53 @@
     </style>
 
 
+    <!--Calender style-->
+    <style name="calender_style" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="android:textColorPrimaryInverse">@color/btn_text_white</item> <!-- header date, month color && calendar text highlight color -->
+        <item name="android:textColorSecondaryInverse">@color/iconPrimaryColor</item> <!-- header year color -->
+        <item name="android:datePickerStyle">@style/header_Color</item>
+        <item name="android:windowBackground">@drawable/calendar_background</item> <!--calendar background-->
+        <item name="android:colorControlActivated">@color/purple</item>             <!--selected day-->
+        <item name="android:textColorPrimary">@color/text_color</item>                <!--days of the month-->
+        <item name="android:textColorSecondary">@color/colorAccent</item>               <!--days of the week-->
+        <item name="android:buttonBarPositiveButtonStyle">@style/AppTheme.Alert.Button.Positive</item> <!--Calender positive style-->
+        <item name="android:buttonBarNegativeButtonStyle">@style/AppTheme.Alert.Button.Negative</item>   <!--Calender negative style-->
+        <item name="android:buttonBarNeutralButtonStyle">@style/AppTheme.Alert.Button.Neutral</item>       <!--Calender neutral style-->
+    </style>
+
+    <!--Calender header color-->
+    <style name="header_Color" parent="@android:style/Widget.Material.Light.DatePicker">
+        <item name="android:headerBackground">@color/calender_head</item> <!-- header background color -->
+    </style>
+
+    <!--Calender positive button style-->
+    <style name="AppTheme.Alert.Button.Positive" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/purple</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/inter_medium</item>
+    </style>
+
+    <!--Calender negative button style-->
+    <style name="AppTheme.Alert.Button.Negative" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/purple</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/inter_medium</item>
+    </style>
+
+    <!--Calender neutral button style-->
+    <style name="AppTheme.Alert.Button.Neutral" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/purple</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="fontFamily">@font/inter_medium</item>
+    </style>
+
+
+
+
+
     <style name="Tabstyle" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">16sp</item>
         <item name="font">@font/inter_semibold</item>
