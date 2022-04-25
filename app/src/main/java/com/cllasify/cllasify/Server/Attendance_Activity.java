@@ -11,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -169,6 +172,21 @@ public class Attendance_Activity extends AppCompatActivity {
 //        enableSwipeToDeleteAndUndo();
     }
 
+
+    public static Bitmap getBitmapFromVectorDrawable(Attendance_Activity context, int drawableId) {
+        Drawable drawable = ContextCompat.getDrawable(context, drawableId);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            drawable = (DrawableCompat.wrap(drawable)).mutate();
+        }
+
+        Bitmap bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(),
+                drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
+        return bitmap;
+    }
 
     //for attendances menu
     private void showmenu() {
@@ -359,20 +377,18 @@ public class Attendance_Activity extends AppCompatActivity {
                     float width = height / 3;
 
                     if (dX > 0) {
-                        p.setColor(Color.parseColor("#388E3C"));
+                        p.setColor(Color.parseColor("#FF6200EE"));
                         RectF background = new RectF((float) itemView.getLeft(), (float) itemView.getTop(), dX, (float) itemView.getBottom());
                         c.drawRect(background, p);
-                        icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_edit_white);
                         RectF icon_dest = new RectF((float) itemView.getLeft() + width, (float) itemView.getTop() + width, (float) itemView.getLeft() + 2 * width, (float) itemView.getBottom() - width);
-                        c.drawBitmap(icon, null, icon_dest, p);
+                        c.drawBitmap(getBitmapFromVectorDrawable(Attendance_Activity.this, R.drawable.ic_present), null, icon_dest, p);
 
                     } else {
-                        p.setColor(Color.parseColor("#D32F2F"));
+                        p.setColor(Color.parseColor("#333333"));
                         RectF background = new RectF((float) itemView.getRight() + dX, (float) itemView.getTop(), (float) itemView.getRight(), (float) itemView.getBottom());
                         c.drawRect(background, p);
-                        icon = BitmapFactory.decodeResource(getResources(), R.drawable.ic_delete_white);
                         RectF icon_dest = new RectF((float) itemView.getRight() - 2 * width, (float) itemView.getTop() + width, (float) itemView.getRight() - width, (float) itemView.getBottom() - width);
-                        c.drawBitmap(icon, null, icon_dest, p);
+                        c.drawBitmap(getBitmapFromVectorDrawable(Attendance_Activity.this, R.drawable.ic_absent), null, icon_dest, p);
                     }
                 }
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
