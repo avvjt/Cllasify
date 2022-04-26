@@ -28,7 +28,9 @@
     <string name="hint_serverName"><font size="15">Server name...</font> </string>
     <string name="hint_serverDescription"><font size="15">Server description...</font> </string>
     <string name="hint_serverEmail"><font size="15">Server email...</font> </string>
-    <string name="hint_edittext"><font size="16">Message...</font> </string>
+    <string name="hint_edittext"><font size="15">Message...</font> </string>
+    <string name="hint_doubt_title"><font size="18">Doubt title</font> </string>
+    <string name="hint_doubt"><font size="20">Start doubt conversation</font> </string>
 
     <string name="start_panel_name">Start Panel</string>
     <string name="center_panel_name">Welcome to Server</string>

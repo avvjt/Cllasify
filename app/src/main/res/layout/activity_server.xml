@@ -344,6 +344,7 @@
                                     android:focusable="true"
                                     android:hint="@string/hint_edittext"
                                     android:imeOptions="actionDone"
+                                    android:textCursorDrawable="@null"
                                     android:importantForAutofill="no"
                                     android:inputType="textCapSentences|textMultiLine"
                                     android:paddingStart="20dp"

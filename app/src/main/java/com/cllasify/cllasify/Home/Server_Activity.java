@@ -2,6 +2,7 @@ package com.cllasify.cllasify.Home;
 
 import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -13,8 +14,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -1407,11 +1411,14 @@ public class Server_Activity extends AppCompatActivity {
     }
 
 
-    //Doubt
+    //Doubt bottom sheet layout
     private void showAddDoubtBtmDialog(String groupPushId, String subGroupPushId, String groupClassSubjects) {
-        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
-        bottomSheetDialog.setCancelable(false);
+        final Dialog bottomSheetDialog = new Dialog(this);
+        bottomSheetDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        bottomSheetDialog.setCancelable(true);
+        bottomSheetDialog.setCanceledOnTouchOutside(true);
         bottomSheetDialog.setContentView(R.layout.btmdialog_adddoubt);
+        bottomSheetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         Button btn_Cancel = bottomSheetDialog.findViewById(R.id.btn_Cancel);
         Button btn_Submit = bottomSheetDialog.findViewById(R.id.btn_Submit);
@@ -1494,10 +1501,11 @@ public class Server_Activity extends AppCompatActivity {
             }
         });
 
-        bottomSheetDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-
-
         bottomSheetDialog.show();
+        bottomSheetDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        bottomSheetDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        bottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+        moveTaskToBack(false);
 
     }
 

@@ -8,50 +8,56 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        app:cardCornerRadius="25dp"
-        android:layout_margin="10dp"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        android:layout_margin="20dp">
 
         <LinearLayout
             android:id="@+id/doubt_item"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#CD1FA4B6"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:background="@drawable/background_doubt">
 
             <RelativeLayout
                 android:id="@+id/topParent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="10dp">
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="20dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/prof_pics_chat_doubt"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/maharaji" />
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/maharaji"/>
 
                 <TextView
                     android:id="@+id/tv_UserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginStart="15dp"
-                    android:layout_toEndOf="@+id/prof_pics_chat_doubt" />
+                    android:layout_toEndOf="@+id/prof_pics_chat_doubt"
+                    android:fontFamily="@font/inter_regular"
+                    android:textColor="@color/text_color"
+                    android:textSize="14sp"
+                    android:padding="5dp"
+                    android:layout_marginStart="5dp"/>
 
+                <!--Useless don't need-->
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    android:orientation="vertical"
-                    android:paddingStart="10dp">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/tv_Username"
+                        android:visibility="gone"
                         android:text="You started a thread"
                         android:textColor="@color/black" />
 
@@ -59,6 +65,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Time"
+                        android:visibility="gone"
                         android:id="@+id/tv_DateTime"
                         android:textColor="@color/black"
                         android:textSize="14sp" />
@@ -68,33 +75,35 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_margin="15dp"
-                    android:layout_gravity="center_vertical"
                     android:orientation="horizontal">
 
                     <ImageView
                         android:layout_width="15dp"
                         android:layout_height="15dp"
-                        android:src="@drawable/ic_comment" />
+                        android:layout_marginTop="3dp"
+                        android:src="@drawable/ic_comment"
+                        app:tint="@color/iconPrimaryColor" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:text="0"
+                        android:textSize="12sp"
                         android:id="@+id/answerCount"
-                        android:textColor="@color/black"
-                        android:textStyle="bold" />
+                        android:fontFamily="@font/inter_medium"
+                        android:textColor="@color/text_color"/>
                 </LinearLayout>
 
             </RelativeLayout>
 
+
+            <!--Only tv_topicTitle is used-->
             <LinearLayout
                 android:id="@+id/endParent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -109,14 +118,19 @@
                     android:id="@+id/tv_Doubt"
                     android:textAllCaps="true"
                     android:textColor="@color/white"
-                    android:textSize="14dp" />
+                    android:textSize="14sp" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/tv_topicTitle"
-                    android:textColor="@color/black"
-                    android:textSize="20sp" />
+                    android:textColor="@color/text_color"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/inter_regular"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"/>
 
                 <TextView
                     android:layout_width="match_parent"
