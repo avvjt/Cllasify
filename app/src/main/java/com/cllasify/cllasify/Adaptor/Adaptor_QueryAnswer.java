@@ -132,8 +132,8 @@ public class Adaptor_QueryAnswer extends RecyclerView.Adapter<Adaptor_QueryAnswe
             }
         });
 
-        holder.examQues_tv.setText("Answer: \t"+userAnswers);
-        holder.tv_UserName.setText(answerUserName + " Answered on: " + date);
+        holder.examQues_tv.setText(userAnswers);
+        holder.tv_UserName.setText(answerUserName);
 //        DatabaseReference refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(databaseUserId);
 //        refUserStatus.addValueEventListener(new ValueEventListener() {
 //            @Override

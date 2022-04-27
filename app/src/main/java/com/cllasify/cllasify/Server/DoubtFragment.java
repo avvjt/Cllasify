@@ -34,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -94,7 +95,7 @@ public class DoubtFragment extends Fragment {
     List<Class_Answer> list_DoubtAnswer;
     Adaptor_QueryAnswer answerAdaptor;
     RecyclerView rv_DoubtAnswer;
-    ImageButton ib_attachDoubtAns, ib_submitDoubtAns;
+    ImageButton ib_attachDoubtAns, ib_submitDoubtAns, btn_Back, btn_menu;
     EditText et_DoubtAns;
     Class_Answer userAddAnsClass;
     ImageView ib_AnsUserProfile;
@@ -125,10 +126,14 @@ public class DoubtFragment extends Fragment {
 
         rv_DoubtAnswer = view.findViewById(R.id.rv_DoubtAnswer);
 
-        ib_attachDoubtAns = view.findViewById(R.id.ib_attachDoubtAns);
         et_DoubtAns = view.findViewById(R.id.et_DoubtAns);
         ib_submitDoubtAns = view.findViewById(R.id.ib_submitDoubtAns);
         byName = view.findViewById(R.id.byName);
+
+        btn_Back = view.findViewById(R.id.btn_Back);
+        btn_menu = view.findViewById(R.id.btn_menu);
+
+        Fragment doubtFragment=this;
 
 
         list_DoubtAnswer = new ArrayList<>();
@@ -152,7 +157,7 @@ public class DoubtFragment extends Fragment {
                     doubtCreatorName = snapshot.child("DoubtTemps").child("doubtCreatorName").getValue(String.class);
                     doubtCreatorId = snapshot.child("DoubtTemps").child("doubtCreatorId").getValue(String.class);
 
-                    byName.setText("Question asked by: " + doubtCreatorName);
+                    byName.setText("Asked by - " + doubtCreatorName);
 
                     DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(doubtCreatorId);
                     refUserProfPic.addValueEventListener(new ValueEventListener() {
@@ -174,6 +179,7 @@ public class DoubtFragment extends Fragment {
                     });
 
 
+                    /*Send button*/
                     ib_submitDoubtAns.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -233,6 +239,21 @@ public class DoubtFragment extends Fragment {
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
 
+                        }
+                    });
+
+                    btn_Back.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            requireActivity().onBackPressed();
+
+                        }
+                    });
+                    
+                    btn_menu.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(getActivity(), "In process doubt features", Toast.LENGTH_SHORT).show();
                         }
                     });
 

@@ -1,139 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:background="@color/page_color"
     android:clickable="true"
-    tools:context=".Server.DoubtFragment"
-    android:focusable="true">
+    android:focusable="true"
+    tools:context=".Server.DoubtFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/tv_DoubtGroupName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tv_DoubtGroupClass"
+    <!--Action bar-->
+    <RelativeLayout
+        android:id="@+id/action_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_DoubtGroupName"
-        android:textSize="20sp" />
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/page_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-    <androidx.cardview.widget.CardView
-        android:layout_margin="8dp"
-        android:id="@+id/questionPriority"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="1dp"
-        app:cardUseCompatPadding="true"
-        android:layout_below="@+id/tv_DoubtGroupClass"
-        app:strokeWidth="2dp"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:backgroundTint="@color/text_white">
-        <LinearLayout
+        <ImageButton
+            android:id="@+id/btn_Back"
+            style="@style/SelectableItemBackgroundBorderless"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="1dp"
+            android:src="@drawable/ic_arrow_left_24"
+            app:tint="@color/iconSecondaryColor" />
+
+        <ImageButton
+            android:id="@+id/btn_menu"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"
+            android:background="@color/transparent"
+            android:spinnerMode="dropdown"
+            android:src="@drawable/menu_attendance" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbarSize="1dp"
+        android:id="@+id/scrollView"
+        android:layout_below="@id/action_bar"
+        android:layout_above="@id/ll_bottom_send">
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/touch_ll"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
+
+            <!--Doubt title-->
             <TextView
-                android:id="@+id/tv_AskQuestion"
-                android:visibility="gone"
-                style="@style/TextAppearance.AppCompat.Body2"
-                android:layout_gravity="center_horizontal"
-                android:paddingStart="10dp"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="2dp"
+                android:id="@+id/tv_DoubtGroupClass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/page_black"/>
-            <RelativeLayout
+                android:layout_alignParentTop="true"
+                android:fontFamily="@font/inter_medium"
+                android:paddingStart="20dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="5dp"
+                android:textColor="@color/text_color"
+                android:textSize="17sp" />
+
+            <!--Subject-->
+            <TextView
+                android:id="@+id/tv_DoubtGroupName"
                 android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:layout_marginBottom="4dp"
-                android:id="@+id/rl_quesData">
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_DoubtGroupClass"
+                android:fontFamily="@font/inter_regular"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:textColor="@color/text_background_color"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                app:drawableLeftCompat="@drawable/ic_hashtag_16" />
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/ib_UserProfile"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_account_24" />
-
-                <TextView
-                    android:id="@+id/byName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginTop="15dp"
-                    android:textColor="@color/black"
-                    android:layout_toEndOf="@id/ib_UserProfile"
-                    android:text="Question asked By Sohel" />
+            <!--First conversation from doubt creator-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/questionPriority"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_DoubtGroupName"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp"
+                app:strokeWidth="2dp">
 
                 <LinearLayout
+                    android:id="@+id/touch_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_below="@id/byName"
-                    android:layout_centerInParent="true"
-                    android:layout_toEndOf="@id/ib_UserProfile">
+                    android:background="@drawable/background_doubt">
+
+                    <!--Useless-->
                     <TextView
+                        android:id="@+id/tv_AskQuestion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textStyle="italic"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="2dp"
+                        android:paddingStart="10dp"
+                        android:textColor="@color/page_black"
+                        android:visibility="gone" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_quesData"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/ib_UserProfile"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_account_24" />
+
+                        <TextView
+                            android:id="@+id/byName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="30dp"
+                            android:layout_toEndOf="@id/ib_UserProfile"
+                            android:fontFamily="@font/inter_medium"
+                            android:text="Asked By"
+                            android:textColor="@color/text_color"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:id="@+id/tv_Name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:maxLines="1"
-                        android:padding="5dp"
-                        android:id="@+id/tv_Name"
-                        android:textColor="@color/light_black"/>
+                        android:textColor="@color/text_color"
+                        android:fontFamily="@font/inter_regular"
+                        android:textSize="14sp"
+                        android:layout_marginStart="22dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"/>
+
+                    <!--Useless layout-->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:layout_marginBottom="2dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginEnd="4dp"
                             android:id="@+id/tv_likeCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
                             app:drawableStartCompat="@drawable/thumbupdark16" />
+
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:gravity="center_vertical"
-                            android:layout_marginStart="4dp"
-                            android:layout_marginEnd="4dp"
                             android:id="@+id/tv_dislikeCount"
-                            app:drawableStartCompat="@drawable/thumbdowndark_16" />
-                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:gravity="center_vertical"
                             android:layout_marginStart="4dp"
                             android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
+                            app:drawableStartCompat="@drawable/thumbdowndark_16" />
+
+                        <TextView
                             android:id="@+id/tv_flagCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
                             app:drawableStartCompat="@drawable/flagdark_16" />
+
                         <TextView
                             android:id="@+id/tv_AnsCount"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:layout_alignParentEnd="true"
                             android:layout_marginStart="4dp"
                             android:layout_marginEnd="4dp"
                             android:drawableStart="@drawable/ic_search_24"
@@ -141,111 +219,106 @@
                             app:drawableStartCompat="@drawable/ic_search_24" />
                     </LinearLayout>
 
+
+                    <LinearLayout
+                        android:id="@+id/viewAns_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="2dp"
+                        android:background="@drawable/edittext_rounded_corners"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tv_date"
+                            style="@style/TextAppearance.AppCompat.Body1"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:padding="2dp"
+                            android:text="@string/asked_on"
+                            android:textStyle="italic" />
+
+                        <TextView
+                            android:id="@+id/userAns_tv"
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:text="@string/please_answer"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/userallAns_tv"
+                            style="@style/TextAppearance.AppCompat.Body1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/view_answer"
+                            android:padding="2dp" />
+
+                    </LinearLayout>
                 </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-
-
-                <!--        </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
-            </RelativeLayout>
-            <!--            <TextView-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:id="@+id/ans_userName_tv" />-->
-            <LinearLayout
+            <!--RecyclerView for doubt answer holder-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_DoubtAnswer"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone"
-                android:background="@drawable/edittext_rounded_corners"
-                android:id="@+id/viewAns_ll"
-                android:layout_marginStart="4dp"
-                android:layout_marginBottom="2dp"
-                android:layout_marginEnd="4dp">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:gravity="start"
-                    android:padding="2dp"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:layout_weight="1"
-                    android:textStyle="italic"
-                    android:text="@string/asked_on"
-                    android:id="@+id/tv_date"/>
+                android:layout_height="match_parent"
+                android:layout_below="@id/questionPriority"
+                android:layout_alignParentBottom="true"
+                android:nestedScrollingEnabled="false"
+                app:fastScrollEnabled="false" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/userAns_tv"
-                    android:padding="2dp"
-                    android:textStyle="bold"
-                    style="@style/TextAppearance.AppCompat.Subhead"
-                    android:text="@string/please_answer"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/userallAns_tv"
-                    android:padding="2dp"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:hint="@string/view_answer"/>
+        </RelativeLayout>
 
-            </LinearLayout>
-            <!--            <LinearLayout-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:orientation="horizontal">-->
-            <!--                <TextView-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:text="Like"-->
-            <!--                    android:layout_marginStart="4dp"-->
-            <!--                    android:layout_marginEnd="4dp"-->
-            <!--                    android:gravity="center"-->
-            <!--                    android:textStyle="italic" />-->
-            <!--                <TextView-->
-            <!--                    android:layout_width="wrap_content"-->
-            <!--                    android:layout_height="wrap_content"-->
-            <!--                    android:text="Reply"-->
-            <!--                    android:gravity="start"-->
-            <!--                    android:layout_marginStart="4dp"-->
-            <!--                    android:textStyle="italic" />-->
-            <!--            </LinearLayout>-->
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_DoubtAnswer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/questionPriority"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp" />
+    </ScrollView>
 
 
-    <LinearLayout
+    <!--Chat box sending message layout-->
+    <RelativeLayout
+        android:id="@+id/ll_bottom_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:id="@+id/ll_bottom_send"
-        android:orientation="horizontal">
-        <ImageButton
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_weight="3"
-            android:id="@+id/ib_attachDoubtAns"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/et_DoubtAns"/>
-        <ImageButton
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:id="@+id/ib_submitDoubtAns"
-            android:layout_weight="3" />
-    </LinearLayout>
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:orientation="horizontal"
+        android:visibility="visible">
 
+        <EditText
+            android:id="@+id/et_DoubtAns"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/doubt_input_background"
+            android:focusable="true"
+            android:hint="@string/hint_edittext_doubt"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="textCapSentences|textMultiLine"
+            android:paddingStart="20dp"
+            android:paddingEnd="50dp"
+            android:textColor="@color/text_color"
+            android:textColorHint="@color/text_background_color"
+            android:textCursorDrawable="@null" />
+
+
+        <ImageButton
+            android:id="@+id/ib_submitDoubtAns"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@color/transparent"
+            android:elevation="10dp"
+            android:src="@drawable/ic_send_24"
+            android:visibility="visible"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"/>
+
+    </RelativeLayout>
 
 
 </RelativeLayout>
