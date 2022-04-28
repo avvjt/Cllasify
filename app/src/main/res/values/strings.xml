@@ -32,6 +32,9 @@
     <string name="hint_edittext_doubt"><font size="15">Answer...</font> </string>
     <string name="hint_doubt_title"><font size="18">Doubt title</font> </string>
     <string name="hint_doubt"><font size="20">Start doubt conversation</font> </string>
+    <string name="hint_admission_name"><font size="15">Full name...</font> </string>
+    <string name="hint_phone_no"><font size="15">Contact number...</font> </string>
+    <string name="hint_address"><font size="15">Address...</font> </string>
 
     <string name="start_panel_name">Start Panel</string>
     <string name="center_panel_name">Welcome to Server</string>

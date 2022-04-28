@@ -2,106 +2,184 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/dialogrounded_corner"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_bottomsheet"
+    android:orientation="vertical"
+    android:padding="20dp">
 
-
-    <RelativeLayout
-        android:id="@+id/headline"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp">
+        android:orientation="vertical">
 
-        <ImageButton
-            android:id="@+id/btn_Cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="10dp"
-            android:background="@color/transparent"
-            android:src="@drawable/ic_cancel"
-            android:textColor="@color/page_black"
-            android:textStyle="bold" />
-
+        <!--Server name-->
         <TextView
-            android:id="@+id/tv_SettingTitle"
-            android:layout_width="wrap_content"
+            android:id="@+id/serverName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Enter the details for admission"
-            android:textColor="@color/page_black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
+            android:text="Exparimental school"
+            android:textSize="19sp"
+            android:textColor="@color/text_color"
+            android:fontFamily="@font/inter_semibold"
+            android:textAlignment="center"/>
 
-    <TextView
-        android:layout_margin="10dp"
-        android:id="@+id/teacherName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <!--Class name-->
+        <TextView
+            android:id="@+id/classNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Experimental school - Class Xi"
+            android:textColor="@color/text_color"
+            android:textSize="16sp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/inter_medium"/>
 
-    <TextView
-        android:id="@+id/classNumber"
-        android:layout_margin="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:padding="8dp"
-        android:text="Please enter full name" />
-
-    <EditText
-        android:id="@+id/et_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter your full name"
-        android:padding="8dp"
-        android:inputType="textCapSentences|textMultiLine"/>
-
-    <TextView
-        android:id="@+id/tv_phoneNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:padding="8dp"
-        android:text="Please enter phone number" />
-
-    <EditText
-        android:id="@+id/et_phoneNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter your phone number"
-        android:padding="8dp"
-        android:inputType="textCapSentences|textMultiLine"/>
-
-    <TextView
-        android:id="@+id/tv_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:padding="8dp"
-        android:text="Please enter adress" />
-
-    <EditText
-        android:id="@+id/et_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter your adress"
-        android:padding="8dp"
-        android:inputType="textCapSentences|textMultiLine"/>
+        <!--Name layout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
 
 
-    <Button
-        android:id="@+id/btn_Submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="8dp"
-        android:text="Submit" />
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Full name"
+                android:textColor="@color/text_color"
+                android:textSize="14sp"
+                android:layout_marginStart="4dp"
+                app:layout_constraintBottom_toTopOf="@+id/Edittext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/iconPrimaryColor"
+                android:hint="@string/hint_admission_name"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/iconColor"
+                android:textSize="18sp"
+                android:inputType="textCapSentences|textMultiLine|textPersonName"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </LinearLayout>
+
+
+        <!--Phone number layout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+
+            <TextView
+                android:id="@+id/tv_phoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Phone number"
+                android:textColor="@color/text_color"
+                android:textSize="14sp"
+                android:layout_marginStart="4dp"
+                app:layout_constraintBottom_toTopOf="@+id/Edittext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/et_phoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/iconPrimaryColor"
+                android:hint="@string/hint_phone_no"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/iconColor"
+                android:textSize="18sp"
+                android:inputType="phone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </LinearLayout>
+
+
+        <!--Address number layout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+
+
+            <TextView
+                android:id="@+id/tv_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Your Address"
+                android:textColor="@color/text_color"
+                android:textSize="14sp"
+                android:layout_marginStart="4dp"
+                app:layout_constraintBottom_toTopOf="@+id/Edittext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/et_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/iconPrimaryColor"
+                android:hint="@string/hint_address"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/iconColor"
+                android:textSize="18sp"
+                android:inputType="textCapSentences|textMultiLine"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </LinearLayout>
+
+
+        <!--Button holder layout-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <Button
+                android:id="@+id/btn_Cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="150dp"
+                android:background="@color/transparent"
+                android:text="Discard"
+                android:textColor="@color/iconPrimaryColor" />
+
+
+            <Button
+                android:id="@+id/btn_Submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:background="@color/transparent"
+                android:text="crate"
+                android:textColor="@color/iconPrimaryColor" />
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

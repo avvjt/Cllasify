@@ -212,7 +212,7 @@ public class DoubtFragment extends Fragment {
 //                            userAddAnsClass.setAnsPushId(pus);
                                         userAddAnsClass.setQuesCategory(push);
                                         userAddAnsClass.setUserId(currUserId);
-                                        reference.child(push).setValue(userAddAnsClass);
+                                        reference.push().setValue(userAddAnsClass);
                                     }
 
                                     @Override
@@ -294,6 +294,7 @@ public class DoubtFragment extends Fragment {
                                     Class_Answer class_userDashBoard = dataSnapshot1.getValue(Class_Answer.class);
                                     list_DoubtAnswer.add(class_userDashBoard);
                                     answerAdaptor.notifyDataSetChanged();
+                                    rv_DoubtAnswer.smoothScrollToPosition(Objects.requireNonNull(rv_DoubtAnswer.getAdapter()).getItemCount());
                                 }
                             }
                         }

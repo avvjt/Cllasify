@@ -1,5 +1,6 @@
 package com.cllasify.cllasify.Home;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -8,7 +9,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -60,7 +64,7 @@ public class Discover_Item extends AppCompatActivity {
     String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
     TextView schBio, schoolEmail;
     Button join_as_teacher;
-    ImageView schoolLogoImg,btn_Back;
+    ImageView schoolLogoImg, btn_Back;
     String serverEmail;
     LinearLayout emailLayout;
     LinearLayout bioLayout;
@@ -88,7 +92,7 @@ public class Discover_Item extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
 
-        Intent intent = new Intent(Discover_Item.this,Discover_Activity.class);
+        Intent intent = new Intent(Discover_Item.this, Discover_Activity.class);
         startActivity(intent);
 
     }
@@ -116,7 +120,7 @@ public class Discover_Item extends AppCompatActivity {
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Discover_Item.this,Discover_Activity.class);
+                Intent intent = new Intent(Discover_Item.this, Discover_Activity.class);
                 startActivity(intent);
             }
         });
@@ -194,14 +198,16 @@ public class Discover_Item extends AppCompatActivity {
                     bioLayout.setVisibility(View.VISIBLE);
                     String serverBio = snapshot.child(groupPushId).child("ServerBio").getValue(String.class);
                     schBio.setText(serverBio);
-                }if(!(snapshot.exists()) || snapshot.getValue().toString().equals("")){
+                }
+                if (!(snapshot.exists()) || snapshot.getValue().toString().equals("")) {
                     bioLayout.setVisibility(View.GONE);
                 }
                 if (snapshot.child(groupPushId).child("ServerEmail").exists()) {
                     emailLayout.setVisibility(View.VISIBLE);
                     serverEmail = snapshot.child(groupPushId).child("ServerEmail").getValue(String.class);
                     schoolEmail.setText(serverEmail);
-                }if(!(snapshot.exists()) || snapshot.getValue().toString().equals("")){
+                }
+                if (!(snapshot.exists()) || snapshot.getValue().toString().equals("")) {
                     emailLayout.setVisibility(View.GONE);
                 }
                 if (snapshot.child(groupPushId).child("serverProfilePic").exists()) {
@@ -226,9 +232,6 @@ public class Discover_Item extends AppCompatActivity {
 
         refGroupClassList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
         listGrpClassList.clear();
-
-
-
 
 
         showGrpClassList.setOnItemClickListener(new Adaptor_ShowGrpClass.OnItemClickListener() {
@@ -314,10 +317,10 @@ public class Discover_Item extends AppCompatActivity {
                                 String adminUserName = snapshot.child("userName").getValue().toString();
                                 String groupName = snapshot.child("groupName").getValue().toString();
 
-                                Log.d("JOIN", "adminGroupID: " + adminGroupID + "\nsubGroupName: "+
+                                Log.d("JOIN", "adminGroupID: " + adminGroupID + "\nsubGroupName: " +
                                         "\nadminUserName: " + adminUserName + "\ngroupName: " + groupName + "\ngroupPushId: " + groupPushId);
 
-                                sentGroupJoinInvitation(adminGroupID,adminUserName,groupName,groupPushId,"className","classPushId","TeacherJoin");
+                                sentGroupJoinInvitation(adminGroupID, adminUserName, groupName, groupPushId, "className", "classPushId", "TeacherJoin");
 
                                 String userID = currentUser.getUid();
 
@@ -347,7 +350,7 @@ public class Discover_Item extends AppCompatActivity {
                 String body = "Cllasify is the best App to Discuss Study Material with Classmates using Servers," +
                         "\nPlease Click on Below Link to Install:";
                 String subject = "Install Classify App";
-                String app_url = " https://play.google.com/store/apps/details?id=in.dreamworld.fillformonline";
+                String app_url = " https://play.google.com/store/apps/details?id=com.cllasify.cllasify";
                 shareIntent.putExtra(android.content.Intent.EXTRA_TEXT, body + app_url);
                 shareIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
                 startActivity(Intent.createChooser(shareIntent, "Share via"));
@@ -358,30 +361,36 @@ public class Discover_Item extends AppCompatActivity {
 
     }
 
+    // BottomDialog for admission request
     private void sentAdmissionRequest(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String adminEmailId) {
 
-        BottomSheetDialog bottomSheetDialogLogin = new BottomSheetDialog(this);
-        bottomSheetDialogLogin.setCancelable(false);
-        bottomSheetDialogLogin.setContentView(R.layout.btmdialog_admission);
-        ImageButton btn_Cancel = bottomSheetDialogLogin.findViewById(R.id.btn_Cancel);
-        Button btn_Submit = bottomSheetDialogLogin.findViewById(R.id.btn_Submit);
+        Dialog bottomSheetDialog = new BottomSheetDialog(this);
+        bottomSheetDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        bottomSheetDialog.setCancelable(true);
+        bottomSheetDialog.setCanceledOnTouchOutside(true);
+        bottomSheetDialog.setContentView(R.layout.btmdialog_admission);
+        bottomSheetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        TextView teacherName, classNumber;
-        teacherName = bottomSheetDialogLogin.findViewById(R.id.teacherName);
-        classNumber = bottomSheetDialogLogin.findViewById(R.id.classNumber);
+        Button btn_Cancel, btn_Submit;
 
-        teacherName.setText("Teacher's name: " + adminUserName);
-        classNumber.setText("Class number: " + subGroupName);
+        btn_Cancel = bottomSheetDialog.findViewById(R.id.btn_Cancel);
+        btn_Submit = bottomSheetDialog.findViewById(R.id.btn_Submit);
+
+        TextView classNumber = bottomSheetDialog.findViewById(R.id.classNumber);
+        TextView serverName = bottomSheetDialog.findViewById(R.id.serverName);
+
+        serverName.setText("Admission from");
+        classNumber.setText(groupName+" - "+ subGroupName);
 
         EditText et_name, et_phoneNumber, et_address;
-        et_name = bottomSheetDialogLogin.findViewById(R.id.et_name);
-        et_phoneNumber = bottomSheetDialogLogin.findViewById(R.id.et_phoneNumber);
-        et_address = bottomSheetDialogLogin.findViewById(R.id.et_address);
+        et_name = bottomSheetDialog.findViewById(R.id.et_name);
+        et_phoneNumber = bottomSheetDialog.findViewById(R.id.et_phoneNumber);
+        et_address = bottomSheetDialog.findViewById(R.id.et_address);
 
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bottomSheetDialogLogin.dismiss();
+                bottomSheetDialog.dismiss();
             }
         });
 
@@ -420,14 +429,17 @@ public class Discover_Item extends AppCompatActivity {
                     startActivity(Intent.createChooser(email, "Choose an Email client :"));
 
 
-                    bottomSheetDialogLogin.dismiss();
+                    bottomSheetDialog.dismiss();
                 }
             }
 
         });
 
-        bottomSheetDialogLogin.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        bottomSheetDialogLogin.show();
+        bottomSheetDialog.show();
+        bottomSheetDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        bottomSheetDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        bottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+        moveTaskToBack(false);
 
     }
 

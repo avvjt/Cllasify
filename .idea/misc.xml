@@ -636,6 +636,8 @@
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_create_class.xml" value="0.2210144927536232" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_create_server.xml" value="0.1816123188405797" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_create_subject.xml" value="0.2210144927536232" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_discover.xml" value="0.31979166666666664" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_discover_item.xml" value="0.20199275362318841" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_grpjoin_reqs.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server.xml" value="0.22" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server_setting_specifics.xml" value="0.2210144927536232" />
@@ -646,8 +648,11 @@
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/attendance_activity.xml" value="0.25" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/attendance_calander.xml" value="0.22" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/bottomsheet_feedback.xml" value="0.22282608695652173" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/bottomsheet_name.xml" value="0.2346014492753623" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/bottomsheet_theme.xml" value="0.2346014492753623" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_adddoubt.xml" value="0.18" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_addgroup.xml" value="0.22282608695652173" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_admission.xml" value="0.25" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_profileothers.xml" value="0.22282608695652173" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_studteach.xml" value="0.2210144927536232" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmfialog_notifysetting.xml" value="0.22282608695652173" />
