@@ -364,7 +364,7 @@ public class Discover_Item extends AppCompatActivity {
     // BottomDialog for admission request
     private void sentAdmissionRequest(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String adminEmailId) {
 
-        Dialog bottomSheetDialog = new BottomSheetDialog(this);
+        Dialog bottomSheetDialog = new Dialog(this);
         bottomSheetDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         bottomSheetDialog.setCancelable(true);
         bottomSheetDialog.setCanceledOnTouchOutside(true);

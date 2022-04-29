@@ -11,8 +11,6 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF6200EE</color>
     <color name="teal_700">#FF6200EE</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
 
     <!-- Customize theme here. -->
 
@@ -42,6 +40,11 @@
     <color name="edittext_stroke">#E8E6E6</color>
     <color name="calender_head">#666666</color>
     <color name="doubt_background">#eff0f5</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="white_constant">#FFFFFF</color>
+    <color name="black_constant">#000000</color>
+    <color name="msg_button">#DFE2F3</color>
 
 
 

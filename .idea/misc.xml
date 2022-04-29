@@ -698,6 +698,66 @@
         <entry key="..\:/Users/abhib/StudioProjects/Cllasifyyy/app/src/main/res/drawable/ic_absent.xml" value="0.1725" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasifyyy/app/src/main/res/drawable/ic_present.xml" value="0.1725" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasifyyy/app/src/main/res/layout/attendance_activity.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/drawable/button_solid.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/drawable/button_solid_follow.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/drawable/button_solid_message.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/drawable/button_solid_unfollow.xml" value="0.166" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/drawable/button_stroke.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_attendance_history.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_change_password.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_class_view.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_create_server.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_discover.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_discover_item.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_edit__username.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_edit_roll_number.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_explore.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_friend_chat.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_get_started.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_grpjoin_reqs.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_main.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_notification.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_notification2.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_premium.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_privacy.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_profile_others.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_profile_setting.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_server.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_server_setting_specifics.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_server_settings.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_server_view.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_settings.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_students_subjects.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_terms.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/activity_verify_number.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/attendance_activity.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/attendance_calander.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/bottomsheet_bio.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/bottomsheet_feedback.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/bottomsheet_institution.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/bottomsheet_location.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/bottomsheet_name.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/bottomsheet_theme.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/bottomsheet_username.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/btmdialog_adddoubt.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/btmdialog_addgroup.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/btmdialog_addquestion.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/btmdialog_admission.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/btmdialog_comment.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/btmdialog_enter_number.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/btmdialog_enter_otp.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/btmdialog_location.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/btmdialog_login.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/btmdialog_profileothers.xml" value="0.25" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/btmdialog_serverview.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/btmdialog_setting.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/btmdialog_status.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/btmdialog_studteach.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/btndialog_server_profile.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/doubt_fragment.xml" value="0.22871376811594202" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/fragment_user_friends.xml" value="0.213768115942029" />
+        <entry key="..\:/Users/abhib/StudioProjects/Should/app/src/main/res/layout/profile_activity.xml" value="0.19" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Classify-demoo-master/Classify-demoo-master/app/src/main/res/drawable/ic_baseline_message_24.xml" value="0.240625" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Classify-demoo-master/Classify-demoo-master/app/src/main/res/layout/activity_discover.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Classify-demoo-master/Classify-demoo-master/app/src/main/res/layout/activity_friend_chat.xml" value="0.22" />

@@ -1,416 +1,376 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_marginBottom="20dp"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <!--
-    btmdialog_profileothers
-    -->
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:id="@+id/action_bar"
-        android:orientation="horizontal"
-        android:elevation="4dp">
-
-        <ImageButton
-            android:id="@+id/btn_ShareApp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_alignParentStart="true"
-            android:visibility="gone"
-            android:layout_margin="8dp"
-            android:src="@drawable/ic_share"
-            android:elevation="1dp"
-            android:background="@color/transparent" />
-
-        <ImageButton
-            android:id="@+id/btn_Settings"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="8dp"
-            android:layout_gravity="center"
-            android:elevation="1dp"
-            android:visibility="gone"
-            android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_settings"
-            android:background="@color/transparent"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:background="@color/red_deep" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/prof_pic"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="25dp"
-                android:src="@drawable/maharaji" />
-
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-<!--    <ScrollView-->
-<!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="0dp"-->
-    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/action_bar" >-->
-
-    <!--        <LinearLayout-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:orientation="vertical"-->
-    <!--            android:id="@+id/main">-->
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottomsheet"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/page_background_color"
         android:orientation="vertical">
+
+        <!-- ActionBar with profile dp layout-->
+        <RelativeLayout
+            android:id="@+id/action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/page_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <ImageButton
+                android:id="@+id/btn_ShareApp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="20dp"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_share"
+                android:visibility="visible"
+                app:tint="@color/black" />
+
+            <ImageButton
+                android:id="@+id/btn_Settings"
+                style="@style/SelectableItemBackgroundBorderless"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/menu_xxx"
+                app:tint="@color/black" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/view_divider" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:background="@color/page_color"
             android:gravity="center_vertical"
             android:orientation="vertical"
-            android:paddingStart="20dp">
+            android:padding="20dp">
 
+            <!-- Profile dp layout-->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/prof_pic"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/maharaji" />
+
+            <!-- Name layout-->
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_Name"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/inter_medium"
                 android:text="@string/name"
-                        android:id="@+id/tv_Name"
-                        android:textColor="@color/black"
-                        android:textSize="20sp"
-                        android:layout_marginBottom="8dp"
-                        android:fontFamily="@font/open_sans_regular" />
+                android:textColor="@color/text_color"
+                android:textSize="18sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@id/ll_UserName"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Username: "
-                            android:id="@+id/tv_UserName"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"
-                            android:fontFamily="@font/open_sans_regular" />
-                        <!--                        <TextView-->
-                        <!--                            android:layout_width="match_parent"-->
-                        <!--                            android:layout_height="wrap_content"-->
-                        <!--                            android:layout_marginStart="4dp"-->
-                        <!--                            android:textSize="16sp"-->
-                        <!--                            android:id="@+id/tv_addUserName"-->
-                        <!--                            android:text="(Click to add)"-->
-                        <!--                            android:textColor="@color/black"-->
-                        <!--                            android:fontFamily="@font/open_sans_light"/>-->
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tv_UserUserName"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/ll_category"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Category"
-                            android:id="@+id/tv_Category"
-                            android:fontFamily="@font/open_sans_regular"
-                            android:textColor="@color/black"
-                            android:textSize="16sp"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="(Click to Add)"
-                            android:id="@+id/tv_addCategory"
-                            android:textSize="16sp"
-                            android:textColor="@color/black"
-                            android:layout_marginStart="4dp"
-                            android:fontFamily="@font/open_sans_light"/>
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone"
-                            android:id="@+id/tv_userCategory"/>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="36dp"
-                        android:id="@+id/ll_AddCategory"
-                        android:visibility="gone"
-                        android:orientation="vertical">
-                        <androidx.appcompat.widget.AppCompatSpinner
-                            android:id="@+id/spinnerCategory"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:visibility="gone"
-                            android:backgroundTint="@color/colorAccent"
-                            android:padding="4dp"
-                            android:layout_weight="1"/>
-                    </LinearLayout>
-                    <!--                    </LinearLayout>-->
-                </LinearLayout>
-            </LinearLayout>
-
-            <!--&lt;!&ndash;            <LinearLayout&ndash;&gt;-->
-            <!--&lt;!&ndash;                android:layout_width="match_parent"&ndash;&gt;-->
-            <!--&lt;!&ndash;                android:layout_height="match_parent"&ndash;&gt;-->
-            <!--&lt;!&ndash;                android:id="@+id/ll_AddUserName"&ndash;&gt;-->
-            <!--&lt;!&ndash;                android:visibility="gone"&ndash;&gt;-->
-            <!--&lt;!&ndash;                android:orientation="vertical">&ndash;&gt;-->
-            <!--&lt;!&ndash;                <EditText&ndash;&gt;-->
-            <!--&lt;!&ndash;                    android:layout_width="match_parent"&ndash;&gt;-->
-            <!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;                    android:maxLines="5"&ndash;&gt;-->
-            <!--&lt;!&ndash;                    android:hint="Add UserName"&ndash;&gt;-->
-            <!--&lt;!&ndash;                    android:id="@+id/et_AddUserName"&ndash;&gt;-->
-            <!--&lt;!&ndash;                    android:lines="5"&ndash;&gt;-->
-            <!--&lt;!&ndash;                    android:layout_margin="8dp"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;                <LinearLayout&ndash;&gt;-->
-            <!--&lt;!&ndash;                    android:layout_width="match_parent"&ndash;&gt;-->
-            <!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;                    android:orientation="horizontal">&ndash;&gt;-->
-            <!--&lt;!&ndash;                    <Button&ndash;&gt;-->
-            <!--&lt;!&ndash;                        android:layout_width="match_parent"&ndash;&gt;-->
-            <!--&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;                        android:id="@+id/btn_AddUserNameCancel"&ndash;&gt;-->
-            <!--&lt;!&ndash;                        android:text="Cancel"&ndash;&gt;-->
-            <!--&lt;!&ndash;                        android:layout_weight="1"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;                    <Button&ndash;&gt;-->
-            <!--&lt;!&ndash;                        android:layout_width="match_parent"&ndash;&gt;-->
-            <!--&lt;!&ndash;                        android:layout_height="wrap_content"&ndash;&gt;-->
-            <!--&lt;!&ndash;                        android:id="@+id/btn_AddUserName"&ndash;&gt;-->
-            <!--&lt;!&ndash;                        android:text="Add UserName"&ndash;&gt;-->
-            <!--&lt;!&ndash;                        android:layout_weight="1"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;                </LinearLayout>&ndash;&gt;-->
-            <!--            </LinearLayout>-->
-
-            <LinearLayout
+            <!--Following count-->
+            <TextView
+                android:id="@+id/tv_CountFollowing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                android:fontFamily="@font/inter_regular"
+                android:textColor="@color/text_color"
+                android:textSize="16sp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:id="@+id/ll_bio"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Bio: "
-                        android:textColor="@color/black"
-                        android:textSize="16sp"
-                        android:fontFamily="@font/open_sans_regular"/>
+        </LinearLayout>
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/tv_UserBio"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:id="@+id/ll_Institution"
-                android:layout_marginTop="10dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Institution: "
-                    android:layout_marginStart="20dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:fontFamily="@font/open_sans_regular"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_UserInstitute"/>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/ll_location"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="20dp"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_Location"
-                    android:text="Location: "
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/open_sans_regular"
-                    android:textSize="16sp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_userLocation"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginStart="15dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_CountFollowers"
-                    android:textStyle="bold"
-                    android:visibility="gone"
-                    android:textColor="@color/page_black"
-                    android:textSize="16sp"
-                    android:layout_marginStart="20dp"/>
-
-                <View
-                    android:layout_width="5dp"
-                    android:layout_height="5dp"
-                    android:background="@color/page_black"
-                    android:layout_gravity="center"
-                    android:visibility="gone"
-                    android:layout_marginStart="10dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tv_CountFollowing"
-                    android:textColor="@color/page_black"
-                    android:textSize="16sp"
-                    android:layout_marginStart="5dp" />
-
-            </LinearLayout>
-
-    <!--            </LinearLayout>-->
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
-        android:background="@color/grey" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <LinearLayout
-            android:id="@+id/reqFriend"
+        <!--Message and unfollow button || Follow button -->
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            android:orientation="horizontal">
+            android:background="@color/page_color"
+            android:paddingStart="30dp"
+            android:paddingTop="10dp"
+            android:paddingEnd="30dp"
+            android:paddingBottom="30dp">
 
-            <Button
-                android:id="@+id/btn_SentFrndReq"
+            <LinearLayout
+                android:id="@+id/unfollowAndMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:visibility="gone"
-                android:background="@drawable/cust_rounded_corner"
-                android:text="Send Friend Request" />
+                android:background="@color/page_color"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <Button
+                    android:id="@+id/btn_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_solid_message"
+                    android:elevation="2dp"
+                    android:text="Message"
+                    android:textColor="@color/black_constant" />
+
+                <Button
+                    android:id="@+id/btn_unfollow"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_solid_unfollow"
+                    android:elevation="2dp"
+                    android:text="Unfollow"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btn_FollowFrnd"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:visibility="gone"
-                android:background="@drawable/cust_rounded_corner"
-                android:text="Follow" />
-        </LinearLayout>
+                android:layout_height="45dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/button_solid_message"
+                android:elevation="2dp"
+                android:text="Follow"
+                android:textColor="@color/black_constant"
+                android:visibility="gone" />
+
+        </RelativeLayout>
 
 
-        <LinearLayout
-            android:id="@+id/unfollowAndMessage"
+    </LinearLayout>
+
+
+    <!--All useless layouts down below-->
+
+    <!--Username layout-->
+    <LinearLayout
+        android:id="@id/ll_UserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_UserName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="Username: "
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_UserUserName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--User category layout-->
+    <LinearLayout
+        android:id="@+id/ll_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_Category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="Category"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_addCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/reqFriend"
-            android:visibility="gone"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="4dp"
+            android:fontFamily="@font/open_sans_light"
+            android:text="(Click to Add)"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_userCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+    </LinearLayout>
+    <!--Spinner layout-->
+    <LinearLayout
+        android:id="@+id/ll_AddCategory"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spinnerCategory"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:backgroundTint="@color/colorAccent"
+            android:gravity="center"
+            android:padding="4dp"
+            android:visibility="gone" />
+    </LinearLayout>
+    <!--Bio layout-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/ll_bio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/btn_message"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/cust_rounded_corner"
-                android:text="Message" />
+                android:fontFamily="@font/open_sans_regular"
+                android:text="Bio: "
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
-            <Button
-                android:id="@+id/btn_unfollow"
+            <TextView
+                android:id="@+id/tv_UserBio"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:background="@drawable/cust_rounded_corner"
-                android:text="unFollow" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
-
+    </LinearLayout>
+    <!--Institution layout-->
+    <LinearLayout
+        android:id="@+id/ll_Institution"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/unfollowAndMessage"
-            android:layout_marginStart="25dp"
-            android:visibility="gone"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="15dp"
-            android:text="Connections"
-            android:textAllCaps="true" />
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="Institution: "
+            android:textColor="@color/black"
+            android:textSize="16sp" />
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_UserInstitute"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
+    </LinearLayout>
+    <!--Location layout-->
+    <LinearLayout
+        android:id="@+id/ll_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_Location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/open_sans_regular"
+            android:text="Location: "
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tv_userLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+    <!--Follow and send friend req-->
+    <LinearLayout
+        android:id="@+id/reqFriend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_SentFrndReq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/cust_rounded_corner"
+            android:text="Send Friend Request"
+            android:visibility="gone" />
+
+    </LinearLayout>
+    <!--Connections layout-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/unfollowAndMessage"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="15dp"
+        android:text="Connections"
+        android:textAllCaps="true"
+        android:visibility="gone" />
+    <!--Followers layout-->
+    <TextView
+        android:id="@+id/tv_CountFollowers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:textColor="@color/page_black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+    <!--Mutual server and friend layout-->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginEnd="25dp"
-        android:visibility="gone"
         android:layout_marginBottom="10dp"
         android:orientation="vertical"
+        android:visibility="gone"
         app:cardCornerRadius="10dp">
 
         <LinearLayout
@@ -441,7 +401,5 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-<!--        </LinearLayout>-->
-<!--    </ScrollView>-->
 
 </LinearLayout>

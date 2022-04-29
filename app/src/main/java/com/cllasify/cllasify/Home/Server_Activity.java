@@ -2031,11 +2031,15 @@ public class Server_Activity extends AppCompatActivity {
 
     private void showBtmDialogUserProfile(String memberUserId, String memberUserName) {
 
-        BottomSheetDialog btmSheetUserProfile = new BottomSheetDialog(this);
+        Dialog btmSheetUserProfile = new Dialog(this);
+        btmSheetUserProfile.requestWindowFeature(Window.FEATURE_NO_TITLE);
         btmSheetUserProfile.setCancelable(true);
+        btmSheetUserProfile.setCanceledOnTouchOutside(true);
         btmSheetUserProfile.setContentView(R.layout.btmdialog_profileothers);
-        DatabaseReference refUserStatus, refUserFollowers, refUserFollowing;
+        btmSheetUserProfile.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+
+        DatabaseReference refUserStatus, refUserFollowers, refUserFollowing;
 
         Button btn_SentFrndReq = btmSheetUserProfile.findViewById(R.id.btn_SentFrndReq);
         Button btn_FollowFrnd = btmSheetUserProfile.findViewById(R.id.btn_FollowFrnd);
@@ -2216,12 +2220,12 @@ public class Server_Activity extends AppCompatActivity {
                 if (snapshot.getChildrenCount() > 0) {
                     long count = snapshot.getChildrenCount();
                     if (count < 2) {
-                        tv_CountFollowing.setText((int) count + " Following");
+                        tv_CountFollowing.setText(" Following - " + (int) count);
                     } else {
-                        tv_CountFollowing.setText((int) count + " Followings");
+                        tv_CountFollowing.setText(" Following - " + (int) count);
                     }
                 } else {
-                    tv_CountFollowing.setText("0 Followings");
+                    tv_CountFollowing.setText("Following - 0");
 
                 }
             }
@@ -2364,8 +2368,11 @@ public class Server_Activity extends AppCompatActivity {
         });
 
 
-        btmSheetUserProfile.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         btmSheetUserProfile.show();
+        btmSheetUserProfile.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        btmSheetUserProfile.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        btmSheetUserProfile.getWindow().setGravity(Gravity.BOTTOM);
+        moveTaskToBack(false);
     }
 
 
