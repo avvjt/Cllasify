@@ -76,7 +76,7 @@ public class Adaptor_ShowGrpMemberEditRollNumberList extends RecyclerView.Adapte
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View rootview = LayoutInflater.from(context).inflate(R.layout.list_item_group_member, parent, false);
+        View rootview = LayoutInflater.from(context).inflate(R.layout.list_item_edit_rollnumbers, parent, false);
         return new  MyViewHolder(rootview);
     }
 

@@ -164,7 +164,8 @@
             android:fontFamily="@font/inter_regular"
             android:padding="12dp"
             android:textColor="@color/btn_text_white"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:elevation="1dp"/>
 
         <TextView
             android:id="@+id/tvMyDateTime"

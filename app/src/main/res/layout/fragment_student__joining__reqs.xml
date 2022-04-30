@@ -6,15 +6,9 @@
     android:background="@color/page_color"
     tools:context=".Home.Student_Joining_Reqs">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_StudentJoiningNotification"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </ScrollView>
-
 
 </FrameLayout>

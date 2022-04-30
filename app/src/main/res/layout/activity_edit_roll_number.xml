@@ -4,35 +4,94 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/page_color"
     tools:context=".Home.Edit_RollNumber">
 
+    <!--Action bar-->
+    <LinearLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/page_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
+        <ImageButton
+            android:id="@+id/btn_Back"
+            style="@style/SelectableItemBackgroundBorderless"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_arrow_left_24"
+            app:tint="@color/iconSecondaryColor" />
+
+        <TextView
+            android:id="@+id/tv_titleAttendance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Roll numbers"
+            android:textColor="@color/text_color"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <!--Scrollview for both recyclerview parallel scrolling-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/btn_done"
+        android:layout_below="@id/action_bar"
+        android:scrollbarSize="1dp">
+
+        <!--RecyclerView holding layouts-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="20dp">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_SiderollNumberList"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:nestedScrollingEnabled="false"
+                app:fastScrollEnabled="false"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_rollNumberStudentList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:nestedScrollingEnabled="false"
+                app:fastScrollEnabled="false"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+    <!--Save button-->
     <Button
         android:id="@+id/btn_done"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_height="45dp"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/button_gradient"
-        android:text="Done"
-        android:textColor="@color/white" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_SiderollNumberList"
-        android:layout_width="wrap_content"
-        android:layout_marginEnd="15dp"
-        android:layout_height="match_parent"
-        android:layout_above="@id/btn_done"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_rollNumberStudentList"
-        android:layout_toEndOf="@+id/rv_SiderollNumberList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/btn_done"/>
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button_solid_message"
+        android:text="Save"
+        android:textColor="@color/black_constant" />
 
 </RelativeLayout>
