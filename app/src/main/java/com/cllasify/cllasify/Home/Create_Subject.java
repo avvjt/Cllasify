@@ -9,7 +9,10 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -49,7 +52,7 @@ public class Create_Subject extends AppCompatActivity {
         if (getIntent().hasExtra("justBack")) {
             finish();
         } else {
-            Toast.makeText(Create_Subject.this, "Please click the skip button or next button to continue", Toast.LENGTH_SHORT).show();
+            showToastBack();
         }
     }
 
@@ -101,17 +104,11 @@ public class Create_Subject extends AppCompatActivity {
         btn_Back = findViewById(R.id.btn_Back);
 
 
-        btn_Back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
 
         btn_Skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //showToast();
                 if (getIntent().hasExtra("justBack")) {
                     finish();
                 } else {
@@ -127,6 +124,7 @@ public class Create_Subject extends AppCompatActivity {
         btn_CreateTopic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //showToast();
                 if (!et_TopicName.getText().toString().isEmpty()) {
 
                     saveSubject(et_TopicName.getText().toString(), uniPushClassId, groupPushId);
@@ -143,6 +141,28 @@ public class Create_Subject extends AppCompatActivity {
             }
         });
 
+    }
+
+    //Toast for server icon click command
+    public void showToast(){
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_server_create_successful,  (ViewGroup) findViewById(R.id.toast));
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM,0,100);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
+
+    //Toast for on backed pressed
+    public void showToastBack(){
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_backpressed,  (ViewGroup) findViewById(R.id.toast));
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM,0,100);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
     }
 
     private void saveSubject(String topicName, String uniPushClassId, String groupPushId) {

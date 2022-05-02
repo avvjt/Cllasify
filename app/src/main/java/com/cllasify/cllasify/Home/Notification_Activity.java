@@ -136,7 +136,7 @@ public class Notification_Activity extends AppCompatActivity {
                     showEAllGroupSearchRV();
                 } else {
                     progressBar.setVisibility(View.GONE);
-                    Toast.makeText(Notification_Activity.this, "No group Notifications", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(Notification_Activity.this, "No group Notifications", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -479,7 +479,7 @@ public class Notification_Activity extends AppCompatActivity {
 //                    }
 
                 } else {
-                    Toast.makeText(Notification_Activity.this, "No Group request Pending", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(Notification_Activity.this, "No Group request Pending", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                 }
 

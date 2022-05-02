@@ -127,6 +127,8 @@ public class Attendance_Activity extends AppCompatActivity {
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.attendance_activity);
 
+        showToast();
+
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
         assert currentUser != null;
@@ -287,8 +289,6 @@ public class Attendance_Activity extends AppCompatActivity {
 
                                 rv_GrpMemberList.setAdapter(showGrpMemberList);
                                 showGrpMemberList.notifyDataSetChanged();
-
-                                showToast();
 
                             }
 

@@ -15,6 +15,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -1540,7 +1541,7 @@ public class Server_Activity extends AppCompatActivity {
         btn_joinNotification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Server_Activity.this, "Please select a subject to continue", Toast.LENGTH_SHORT).show();
+                showToast();
                 btn_joinNotification.setEnabled(false);
             }
         });
@@ -1548,7 +1549,7 @@ public class Server_Activity extends AppCompatActivity {
         btn_lteachattend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Server_Activity.this, "Please select a subject to continue", Toast.LENGTH_SHORT).show();
+                showToast();
                 btn_lteachattend.setEnabled(false);
             }
         });
@@ -1910,6 +1911,17 @@ public class Server_Activity extends AppCompatActivity {
         friendSection.setVisibility(View.GONE);
 
 
+    }
+
+//Toast for subject select warning
+    public void showToast(){
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_subject_select,  (ViewGroup) findViewById(R.id.toast));
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM,0,100);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
     }
 
 

@@ -71,7 +71,7 @@ public class Teacher_Joining_Reqs extends Fragment {
                         if (snapshot.getChildrenCount()>0) {
                             showEAllGroupSearchRV(uniPushClassId[0]);
                         }else{
-                            Toast.makeText(getActivity(), "No notifications available at this moment", Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(getActivity(), "No notifications available at this moment", Toast.LENGTH_SHORT).show();
                         }
                     }
 

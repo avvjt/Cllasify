@@ -126,7 +126,7 @@ public class User_Notification_Frag extends Fragment {
                     showEAllGroupSearchRV();
                 }else{
                     notifyPB.dismiss();
-                    Toast.makeText(getContext(), "No group Notifications", Toast.LENGTH_SHORT).show();
+                  //  Toast.makeText(getContext(), "No group Notifications", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -280,7 +280,7 @@ public class User_Notification_Frag extends Fragment {
 //                    }
 
                 } else {
-                    Toast.makeText(getContext(), "No Group request Pending", Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(getContext(), "No Group request Pending", Toast.LENGTH_SHORT).show();
                     notifyPB.dismiss();
                 }
 

@@ -75,7 +75,7 @@ public class Student_Joining_Reqs extends Fragment {
                         if (snapshot.getChildrenCount()>0) {
                             showEAllGroupSearchRV(uniPushClassId[0]);
                         }else{
-                            Toast.makeText(getActivity(), "No group Notifications", Toast.LENGTH_SHORT).show();
+                          //  Toast.makeText(getActivity(), "No group Notifications", Toast.LENGTH_SHORT).show();
                         }
                     }
 
