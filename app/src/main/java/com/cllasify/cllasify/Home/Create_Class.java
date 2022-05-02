@@ -168,7 +168,7 @@ public class Create_Class extends AppCompatActivity {
         });
 
 
-        Toast.makeText(Create_Class.this, "Server Successfully Created", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(Create_Class.this, "Server Successfully Created", Toast.LENGTH_SHORT).show();
     }
 
     private void saveClassGroup(String serverName, String groupPushId, String sbChildGroupName) {

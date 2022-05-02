@@ -15,11 +15,13 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -286,7 +288,7 @@ public class Attendance_Activity extends AppCompatActivity {
                                 rv_GrpMemberList.setAdapter(showGrpMemberList);
                                 showGrpMemberList.notifyDataSetChanged();
 
-                                Toast.makeText(Attendance_Activity.this, "Please swipe students \n Left for Absent and Right for present", Toast.LENGTH_SHORT).show();
+                                showToast();
 
                             }
 
@@ -319,6 +321,29 @@ public class Attendance_Activity extends AppCompatActivity {
         });
 
 
+    }
+
+
+    //Toast for take attendance
+    public void showToast() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_attendances, (ViewGroup) findViewById(R.id.toast));
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM, 0, 100);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
+
+    //Toast for complete attendance
+    public void showToastComplete() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_attendance_complete, (ViewGroup) findViewById(R.id.toast));
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM, 0, 100);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
     }
 
 
@@ -361,6 +386,11 @@ public class Attendance_Activity extends AppCompatActivity {
                 }
 
                 showGrpMemberList.removeItem(position);
+
+                //Showing toast
+                if (listGrpMemberList.size() == 0) {
+                    showToastComplete();
+                }
 
 
             }

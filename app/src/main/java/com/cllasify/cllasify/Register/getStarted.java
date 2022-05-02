@@ -9,7 +9,10 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -235,7 +238,7 @@ public class getStarted extends AppCompatActivity {
                         refUserRegister.child("token").setValue(token);
                         refUserRegister.child("profilePic").setValue(userPhoto.toString());
 
-                        Toast.makeText(getStarted.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                        showToast();
 
                         Intent intent = new Intent(getStarted.this, Server_Activity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -245,6 +248,15 @@ public class getStarted extends AppCompatActivity {
 
     }
 
+    public void showToast() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_signin_successful, (ViewGroup) findViewById(R.id.toast));
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM, 0, 100);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
 
     @Override
     protected void onStart() {
