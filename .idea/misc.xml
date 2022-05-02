@@ -629,6 +629,7 @@
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_hashtag_16.xml" value="0.1065" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_hashtag_18.xml" value="0.1705" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_info_16.xml" value="0.1185" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_joining.xml" value="0.1185" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_question_24.xml" value="0.1065" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/menu_attendance.xml" value="0.1595" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/menu_xxx.xml" value="0.235" />
@@ -695,7 +696,11 @@
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/toast_attendance_complete.xml" value="0.24094202898550723" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/toast_backpressed.xml" value="0.22" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/toast_server_create_successful.xml" value="0.2318840579710145" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/toast_serverdp.xml" value="0.2318840579710145" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/toast_student_req.xml" value="0.2318840579710145" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/toast_subject_select.xml" value="0.25" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/toast_teacher_req.xml" value="0.2318840579710145" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/toast_userdp.xml" value="0.2" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/user_notification_fragment.xml" value="0.22282608695652173" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/menu/attendance_menu.xml" value="0.31979166666666664" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/menu/class_more.xml" value="0.31979166666666664" />

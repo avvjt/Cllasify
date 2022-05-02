@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -23,7 +24,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -701,8 +701,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                             Glide.with(ProfileSetting_Activity.this).load(uri).into(prof_pic);
                             progBar.setVisibility(View.GONE);
 
-                            Toast.makeText(ProfileSetting_Activity.this,"DP updated successfully",Toast.LENGTH_SHORT).show();
-
+                            showToast();
                         }
                     }
                 });
@@ -715,6 +714,16 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         });
 
 
+    }
+
+    public void showToast(){
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_user_dp,  (ViewGroup) findViewById(R.id.toast));
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM,0,100);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
     }
 
 

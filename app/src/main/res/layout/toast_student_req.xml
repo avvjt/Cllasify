@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/toast"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="5dp">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_toast"
+        android:fontFamily="@font/inter_regular"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:text="Class joining request has been sent"
+        android:textAlignment="center"
+        android:textColor="@color/text_color"
+        android:textSize="14sp"
+        android:drawablePadding="10dp"
+        app:drawableStartCompat="@drawable/ic_joining"/>
+
+
+</androidx.cardview.widget.CardView>

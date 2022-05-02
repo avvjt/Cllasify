@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -443,6 +444,28 @@ public class Discover_Item extends AppCompatActivity {
 
     }
 
+    //for student joining request toast
+    public void showToastStudent(){
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_student_req,  (ViewGroup) findViewById(R.id.toast));
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM,0,100);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
+
+    //for teacher joining request toast
+    public void showToastTeacher(){
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_teacher_req,  (ViewGroup) findViewById(R.id.toast));
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM,0,100);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
+
 
     private void sentGroupJoinInvitation(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String classPushId, String JoinStatus) {
 
@@ -476,6 +499,7 @@ public class Discover_Item extends AppCompatActivity {
                                             Class_Group userAddComment = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq", classPushId);
                                             grpJoiningReqs.child(pushLong).setValue(userAddComment);
                                             refacceptingReq.child(pushLong).setValue(userAddComment);
+                                            showToastStudent();
                                         }
 
 
@@ -501,6 +525,7 @@ public class Discover_Item extends AppCompatActivity {
                                             Class_Group userAddComment = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq_Teacher", classPushId);
                                             refjoiningReq.child(pushLong).setValue(userAddComment);
                                             refacceptingReq.child(pushLong).setValue(userAddComment);
+                                            showToastTeacher();
                                         }
 
 

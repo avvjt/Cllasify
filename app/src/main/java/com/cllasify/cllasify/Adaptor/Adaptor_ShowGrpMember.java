@@ -289,6 +289,8 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
                                 mListener.MemberProfile(memberUserId,memberUserName);
                                 //mListener.dislikeAns();
                             }
+                        } else {
+                            Toast.makeText(context, "This is you", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }

@@ -9,11 +9,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,11 +25,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.cllasify.cllasify.Home.Profile_Activity;
 import com.cllasify.cllasify.Home.Server_Activity;
-import com.cllasify.cllasify.Home.Server_Settings;
-import com.cllasify.cllasify.Profile.AccountSetting_Activity;
-import com.cllasify.cllasify.Profile.ProfileSetting_Activity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -266,7 +264,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
                             refSaveServerProfPic.child("serverProfilePic").setValue(uri.toString());
                             Glide.with(Server_Setting_Specifics.this).load(uri).into(serverImage);
                             progBar.setVisibility(View.GONE);
-                            Toast.makeText(Server_Setting_Specifics.this,"DP updated successfully",Toast.LENGTH_SHORT).show();
+                            showToast();
                         }
                     }
                 });
@@ -279,6 +277,16 @@ public class Server_Setting_Specifics extends AppCompatActivity {
         });
 
 
+    }
+
+    public void showToast(){
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_server_dp,  (ViewGroup) findViewById(R.id.toast));
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM,0,100);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
     }
 
     private void deleteSpecificServer(String groupPushId, String userID) {
