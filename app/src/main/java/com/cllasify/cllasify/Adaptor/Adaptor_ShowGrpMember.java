@@ -3,6 +3,7 @@ package com.cllasify.cllasify.Adaptor;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -290,7 +291,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
                                 //mListener.dislikeAns();
                             }
                         } else {
-                            Toast.makeText(context, "This is you", Toast.LENGTH_SHORT).show();
+                            showToast();
                         }
                     }
                 }
@@ -327,7 +328,15 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
 
         }
 
-
+        public void showToast() {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.toast_thisis_you, null);
+            Toast toast = new Toast(context.getApplicationContext());
+            toast.setGravity(Gravity.BOTTOM, 0, 100);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setView(layout);
+            toast.show();
+        }
 
     }
 }

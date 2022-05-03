@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -182,19 +183,7 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
 
                     if (class_student_details.getUserId().equals(currUserID)) {
 
-                        AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(context);
-                        alertdialogbuilder.setTitle("You are admin!!!")
-                                .setMessage("You cannot remove yourself from the School")
-                                .setCancelable(false)
-                                .setPositiveButton("OK",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.cancel();
-                                            }
-                                        });
-                        AlertDialog alert = alertdialogbuilder.create();
-                        alert.show();
+                        showToast();
 
                     } else {
                         String userID = SharePref.getDataFromPref(Constant.USER_ID);
@@ -285,6 +274,15 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
 
         }
 
+        public void showToast() {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View layout = inflater.inflate(R.layout.toast_cant_remove, null);
+            Toast toast = new Toast(context.getApplicationContext());
+            toast.setGravity(Gravity.BOTTOM, 0, 100);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setView(layout);
+            toast.show();
+        }
 
     }
 }

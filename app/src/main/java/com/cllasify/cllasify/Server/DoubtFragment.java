@@ -325,7 +325,7 @@ public class DoubtFragment extends Fragment {
 
     public void showToast() {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.toast_subject_select, null);
+        View layout = inflater.inflate(R.layout.toast_endittext, null);
         Toast toast = new Toast(getActivity().getApplicationContext());
         toast.setGravity(Gravity.BOTTOM, 0, 100);
         toast.setDuration(Toast.LENGTH_SHORT);

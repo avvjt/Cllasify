@@ -611,22 +611,6 @@ public class Server_Activity extends AppCompatActivity {
                 intent.putExtra("classPushId", subjectUniPushId);
                 startActivity(intent);
             });
-        } else {
-            btn_joinNotification.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showToast();
-                    btn_joinNotification.setEnabled(false);
-                }
-            });
-
-            btn_lteachattend.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showToast();
-                    btn_lteachattend.setEnabled(false);
-                }
-            });
         }
 
 
@@ -1276,7 +1260,7 @@ public class Server_Activity extends AppCompatActivity {
 
                             friendChatFragment = new Friend_Chat_Activity();
                             getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.chatDoubtLayout, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
+                                    .replace(R.id.center_panel, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
 
                             Bundle bundle = new Bundle();
                             bundle.putString("name", friendName);
@@ -1670,6 +1654,24 @@ public class Server_Activity extends AppCompatActivity {
 
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
+
+
+
+                btn_joinNotification.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showToast();
+                        btn_joinNotification.setEnabled(false);
+                    }
+                });
+
+                btn_lteachattend.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showToast();
+                        btn_lteachattend.setEnabled(false);
+                    }
+                });
 
                 memVis(false);
 
@@ -2161,7 +2163,7 @@ public class Server_Activity extends AppCompatActivity {
 
                     friendChatFragment = new Friend_Chat_Activity();
                     getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.chatDoubtLayout, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
+                            .replace(R.id.center_panel, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
 
                     Bundle bundle = new Bundle();
                     bundle.putString("name", memberUserName);

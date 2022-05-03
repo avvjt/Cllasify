@@ -22,7 +22,7 @@
         <LinearLayout
             android:id="@+id/action_bar"
             android:layout_width="match_parent"
-            android:visibility="gone"
+            android:visibility="visible"
             android:layout_height="?actionBarSize"
             android:background="@color/page_color"
             android:gravity="center_vertical"
@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:layout_below="@+id/action_bar"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_alignParentTop="true"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="2dp">
 

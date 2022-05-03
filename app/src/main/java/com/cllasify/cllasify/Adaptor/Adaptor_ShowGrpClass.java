@@ -252,7 +252,7 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
 
     public void showToast() {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.toast_subject_select, null);
+        View layout = inflater.inflate(R.layout.toast_school_email, null);
         Toast toast = new Toast(context.getApplicationContext());
         toast.setGravity(Gravity.BOTTOM, 0, 100);
         toast.setDuration(Toast.LENGTH_SHORT);

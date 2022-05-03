@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -56,7 +58,7 @@ public class Friend_Chat_Activity extends Fragment {
 
 
     String senderUid, receiverUid;
-    ImageButton ib_FrndP_csubmit;
+    ImageButton ib_FrndP_csubmit, swipe_left, swipe_right;
 
     EditText messageTxtFriend;
     CircleImageView friendImg;
@@ -81,6 +83,24 @@ public class Friend_Chat_Activity extends Fragment {
         ib_FrndP_csubmit = v.findViewById(R.id.ib_FrndP_csubmit);
         messageTxtFriend = v.findViewById(R.id.et_FrndP_text);
         friendImg = v.findViewById(R.id.friendImg);
+
+        swipe_left = v.findViewById(R.id.swipe_left);
+        swipe_right = v.findViewById(R.id.swipe_right);
+
+
+        swipe_right.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showToast();
+            }
+        });
+
+        swipe_left.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showToast();
+            }
+        });
 
         ib_FrndP_csubmit.setEnabled(false);
 
@@ -288,6 +308,18 @@ public class Friend_Chat_Activity extends Fragment {
         return v;
 
     }
+
+        public void showToast() {
+            LayoutInflater inflater = getLayoutInflater();
+            View layout = inflater.inflate(R.layout.toast_swipe, null);
+            Toast toast = new Toast(getActivity().getApplicationContext());
+            toast.setGravity(Gravity.BOTTOM, 0, 100);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.setView(layout);
+            toast.show();
+        }
+
+
 
 
 

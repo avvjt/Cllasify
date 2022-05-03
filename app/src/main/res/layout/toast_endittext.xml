@@ -15,16 +15,16 @@
         android:layout_height="wrap_content"
         android:background="@drawable/background_toast"
         android:fontFamily="@font/inter_regular"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
+        android:paddingStart="40dp"
+        android:paddingEnd="40dp"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        android:text="The school has not added its email yet"
+        android:text="Please type something to send"
         android:textAlignment="center"
         android:textColor="@color/text_color"
         android:textSize="14sp"
         android:drawablePadding="10dp"
-        app:drawableStartCompat="@drawable/ic_email" />
+        app:drawableStartCompat="@drawable/ic_info_16" />
 
 
 </androidx.cardview.widget.CardView>

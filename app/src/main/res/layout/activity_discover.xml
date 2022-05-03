@@ -29,6 +29,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_AllJoinGroup"
         android:layout_below="@+id/searchToolBar"
+        android:layout_above="@id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/page_background_color" />
