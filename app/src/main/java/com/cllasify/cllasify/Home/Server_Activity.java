@@ -407,33 +407,9 @@ public class Server_Activity extends AppCompatActivity {
                                 uniPushClassId[0] = snapshot.child("uniPushClassId").getValue().toString().trim();
                                 clickedGroupName[0] = snapshot.child("clickedGroupName").getValue().toString().trim();
 
-
-                                //Agar middle panel stuck ho kar aaye then yaha se lekar
-
-                                btn_joinNotification.setEnabled(true);
-                                btn_lteachattend.setEnabled(true);
                                 ib_servSettings.setEnabled(true);
 
-                                btn_lteachattend.setOnClickListener(view -> {
-
-                                    Intent intent = new Intent(Server_Activity.this, Attendance_Activity.class);
-                                    intent.putExtra("groupPushId", groupPushId[0]);
-                                    intent.putExtra("subGroupPushId", uniPushClassId[0]);
-                                    intent.putExtra("classPushId", subjectUniPushId[0]);
-                                    startActivity(intent);
-                                });
-
-                                btn_joinNotification.setOnClickListener(v -> {
-                                    Intent intent = new Intent(Server_Activity.this, GRPJoinReqs.class);
-                                    intent.putExtra("groupPushId", groupPushId[0]);
-                                    intent.putExtra("subGroupPushId", uniPushClassId[0]);
-                                    intent.putExtra("classPushId", subjectUniPushId[0]);
-                                    startActivity(intent);
-                                });
-
                                 memVis(true);
-
-                                //yaha tak comment kardena
 
                                 setReference(groupPushId[0], clickedClassName, subjectName[0], String.valueOf(classUniPosition), uniClassPushId, subjectUniPushId[0], clickedGroupName[0]);
 
@@ -613,6 +589,46 @@ public class Server_Activity extends AppCompatActivity {
     }
 
     private void setReference(String groupPushId, String subGroupPushId, String groupClassSubject, String classPosition, String classUniPushId, String subjectUniPushId, String serverName) {
+
+        if (groupPushId != null && classUniPushId != null && subjectUniPushId != null) {
+
+            btn_joinNotification.setEnabled(true);
+            btn_lteachattend.setEnabled(true);
+
+            btn_lteachattend.setOnClickListener(view -> {
+
+                Intent intent = new Intent(Server_Activity.this, Attendance_Activity.class);
+                intent.putExtra("groupPushId", groupPushId);
+                intent.putExtra("subGroupPushId", classUniPushId);
+                intent.putExtra("classPushId", subjectUniPushId);
+                startActivity(intent);
+            });
+
+            btn_joinNotification.setOnClickListener(v -> {
+                Intent intent = new Intent(Server_Activity.this, GRPJoinReqs.class);
+                intent.putExtra("groupPushId", groupPushId);
+                intent.putExtra("subGroupPushId", classUniPushId);
+                intent.putExtra("classPushId", subjectUniPushId);
+                startActivity(intent);
+            });
+        } else {
+            btn_joinNotification.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showToast();
+                    btn_joinNotification.setEnabled(false);
+                }
+            });
+
+            btn_lteachattend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showToast();
+                    btn_lteachattend.setEnabled(false);
+                }
+            });
+        }
+
 
         if (subjectUniPushId != null && classUniPushId != null && groupPushId != null) {
             showDoubt(groupPushId, classUniPushId, subjectUniPushId);
@@ -1538,21 +1554,6 @@ public class Server_Activity extends AppCompatActivity {
             }
         });
 
-        btn_joinNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showToast();
-                btn_joinNotification.setEnabled(false);
-            }
-        });
-
-        btn_lteachattend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showToast();
-                btn_lteachattend.setEnabled(false);
-            }
-        });
 
         DatabaseReference userJoinedOrAddServer = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID);
         userJoinedOrAddServer.addValueEventListener(new ValueEventListener() {
@@ -1913,12 +1914,12 @@ public class Server_Activity extends AppCompatActivity {
 
     }
 
-//Toast for subject select warning
-    public void showToast(){
+    //Toast for subject select warning
+    public void showToast() {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.toast_subject_select,  (ViewGroup) findViewById(R.id.toast));
+        View layout = inflater.inflate(R.layout.toast_subject_select, (ViewGroup) findViewById(R.id.toast));
         Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.BOTTOM,0,100);
+        toast.setGravity(Gravity.BOTTOM, 0, 100);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
