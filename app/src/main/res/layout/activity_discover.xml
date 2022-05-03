@@ -12,7 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:elevation="1dp" />
+        android:elevation="5dp"
+        android:indeterminate="true"
+        android:indeterminateTintMode="src_atop"
+        android:indeterminateTint="@color/purple"/>
 
 
     <androidx.appcompat.widget.Toolbar
@@ -28,10 +31,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_AllJoinGroup"
-        android:layout_below="@+id/searchToolBar"
-        android:layout_above="@id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@id/bottom_nav"
+        android:layout_below="@+id/searchToolBar"
         android:background="@color/page_background_color" />
 
 
