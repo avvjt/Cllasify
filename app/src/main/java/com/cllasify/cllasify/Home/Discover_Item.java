@@ -146,7 +146,6 @@ public class Discover_Item extends AppCompatActivity {
         String groupName = getIntent().getStringExtra("groupName");
         String groupPushId = getIntent().getStringExtra("groupPushId");
 
-
         DatabaseReference referenceALLGroup = FirebaseDatabase.getInstance().getReference().
                 child("Groups").child("All_GRPs").child(groupPushId);
 
@@ -381,7 +380,7 @@ public class Discover_Item extends AppCompatActivity {
         TextView serverName = bottomSheetDialog.findViewById(R.id.serverName);
 
         serverName.setText("Admission from");
-        classNumber.setText(groupName+" - "+ subGroupName);
+        classNumber.setText(groupName + " - " + subGroupName);
 
         EditText et_name, et_phoneNumber, et_address;
         et_name = bottomSheetDialog.findViewById(R.id.et_name);
@@ -445,22 +444,22 @@ public class Discover_Item extends AppCompatActivity {
     }
 
     //for student joining request toast
-    public void showToastStudent(){
+    public void showToastStudent() {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.toast_student_req,  (ViewGroup) findViewById(R.id.toast));
+        View layout = inflater.inflate(R.layout.toast_student_req, (ViewGroup) findViewById(R.id.toast));
         Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.BOTTOM,0,100);
+        toast.setGravity(Gravity.BOTTOM, 0, 100);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
     }
 
     //for teacher joining request toast
-    public void showToastTeacher(){
+    public void showToastTeacher() {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.toast_teacher_req,  (ViewGroup) findViewById(R.id.toast));
+        View layout = inflater.inflate(R.layout.toast_teacher_req, (ViewGroup) findViewById(R.id.toast));
         Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.BOTTOM,0,100);
+        toast.setGravity(Gravity.BOTTOM, 0, 100);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();

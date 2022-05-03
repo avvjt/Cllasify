@@ -3,6 +3,7 @@ package com.cllasify.cllasify.Adaptor;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Group_Names;
+import com.cllasify.cllasify.Home.Discover_Activity;
+import com.cllasify.cllasify.Home.Discover_Item;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -147,11 +150,11 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
                                         databaseReferenceTemp.setValue(position);
 
                                         //Push Id lochaaa
-                                        if(snapshot.child("ServerEmail").exists()) {
+                                        if (snapshot.child("ServerEmail").exists()) {
                                             String serverEmailId = snapshot.child("ServerEmail").getValue().toString();
                                             mListener.admissionClass(adminUserId, adminUserName, groupName, groupPushId, className, serverEmailId);
-                                        }else{
-                                            Toast.makeText(context.getApplicationContext(),"The school has not added its email yet",Toast.LENGTH_SHORT).show();
+                                        } else {
+                                            showToast();
                                         }
                                     }
 
@@ -216,7 +219,7 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
                                         String classUniPush = classGroupNames.getUniPushClassId();
 
                                         if (!(classUniPush.equals("null"))) {
-                                            Log.d("GRPPush", "Class Uni Group Push Id is: "+classUniPush);
+                                            Log.d("GRPPush", "Class Uni Group Push Id is: " + classUniPush);
                                             mListener.JoinGroupClass(adminGroupID, adminUserName, groupName, groupPushId, className, "pushId", classUniPush, classReqPosition);
                                         } else {
                                             Log.d("GRPPush", "Class Uni Group Push Id is: null");
@@ -246,6 +249,17 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
 
 
     }
+
+    public void showToast() {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = inflater.inflate(R.layout.toast_subject_select, null);
+        Toast toast = new Toast(context.getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM, 0, 100);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
+
 }
 
 

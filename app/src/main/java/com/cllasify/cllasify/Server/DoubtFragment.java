@@ -1,7 +1,9 @@
 package com.cllasify.cllasify.Server;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -186,6 +188,7 @@ public class DoubtFragment extends Fragment {
 
                             String subGroupMsg = et_DoubtAns.getText().toString().trim();
                             if (subGroupMsg.isEmpty()) {
+                                showToast();
 //                            Toast.makeText(getContext(), "Enter Answer", Toast.LENGTH_SHORT).show();
                                 et_DoubtAns.setError("Enter Answer");
                             } else {
@@ -249,7 +252,7 @@ public class DoubtFragment extends Fragment {
 
                         }
                     });
-                    
+
                     btn_menu.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
@@ -318,6 +321,16 @@ public class DoubtFragment extends Fragment {
 
 
         return view;
+    }
+
+    public void showToast() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_subject_select, null);
+        Toast toast = new Toast(getActivity().getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM, 0, 100);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
     }
 
 }
