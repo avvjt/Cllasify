@@ -74,7 +74,7 @@
             android:layout_height="35dp"
             android:background="@drawable/button_stroke"
             android:text="Reject"
-            android:textColor="@color/btn_text_black"
+            android:textColor="@color/black"
             android:layout_marginStart="5dp"
             android:textAllCaps="false"/>
 

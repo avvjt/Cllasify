@@ -214,6 +214,7 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="15dp"
                     android:text="About us"
+                    android:visibility="gone"
                     android:textColor="@color/text_color"
                     android:textSize="16sp"
                     android:layout_marginTop="5dp"/>

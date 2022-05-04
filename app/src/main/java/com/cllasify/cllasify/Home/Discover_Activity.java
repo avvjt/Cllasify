@@ -532,9 +532,9 @@ public class Discover_Activity extends AppCompatActivity {
     }
     private void sentGroupJoinInvitation(String adminGroupID,String adminUserName, String groupName, String groupPushId,String subGroupName) {
 
-        AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(Discover_Activity.this);
+        AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(Discover_Activity.this, R.style.AlertDialogCustom);
         alertdialogbuilder.setTitle("Please confirm !!!")
-                .setMessage("Do you want to send Group Joining request to Admin?")
+                .setMessage("Do you want to join the server?")
                 .setCancelable(false)
                 .setPositiveButton("Yes",
                         new DialogInterface.OnClickListener() {

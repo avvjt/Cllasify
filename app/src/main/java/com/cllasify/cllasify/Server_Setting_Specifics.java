@@ -105,9 +105,9 @@ public class Server_Setting_Specifics extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                androidx.appcompat.app.AlertDialog.Builder alertdialogbuilder = new androidx.appcompat.app.AlertDialog.Builder(Server_Setting_Specifics.this);
+                androidx.appcompat.app.AlertDialog.Builder alertdialogbuilder = new androidx.appcompat.app.AlertDialog.Builder(Server_Setting_Specifics.this , R.style.AlertDialogCustom);
                 alertdialogbuilder.setTitle("Please confirm !!!")
-                        .setMessage("Do you delete the Server")
+                        .setMessage("Do you want to delete the Server?")
                         .setCancelable(false)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override

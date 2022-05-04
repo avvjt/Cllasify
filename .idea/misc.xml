@@ -613,6 +613,9 @@
         <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/layout/subject_list_item_serv.xml" value="0.24456521739130435" />
         <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/layout/user_notification_fragment.xml" value="0.24456521739130435" />
         <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/layout/user_question_activity.xml" value="0.24456521739130435" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/bg_bottomsheet.xml" value="0.112" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/popup_background.xml" value="0.112" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/account_setting_activity.xml" value="0.18" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_create_class.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_discover.xml" value="0.67" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_friend_chat.xml" value="0.2164855072463768" />
@@ -621,7 +624,9 @@
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_profile_setting.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server.xml" value="0.18" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server_setting_specifics.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_enter_number.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_profileothers.xml" value="0.24094202898550723" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/dialog_rename_subject.xml" value="0.31979166666666664" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/doubt_fragment.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/fragment_user_friends.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/list_item_group_member.xml" value="0.2269021739130435" />
