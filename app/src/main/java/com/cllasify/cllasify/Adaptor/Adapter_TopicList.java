@@ -69,7 +69,8 @@ public class Adapter_TopicList extends RecyclerView.Adapter<Adapter_TopicList.Vi
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.child("subjectUniPushId").exists()) {
                     if (snapshot.child("subjectUniPushId").getValue().toString().equals(subjectPushId)) {
-                        holder.subjectTopic.setBackgroundColor(Color.YELLOW);
+                        holder.subjectTopic.setBackgroundResource(R.drawable.selector_subject);
+                        holder.subjectTopic.setTextColor(Color.WHITE);
                     } else {
                         holder.subjectTopic.setBackgroundColor(Color.TRANSPARENT);
                     }

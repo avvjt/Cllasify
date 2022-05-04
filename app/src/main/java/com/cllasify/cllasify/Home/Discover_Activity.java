@@ -9,11 +9,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
@@ -340,7 +342,7 @@ public class Discover_Activity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if(snapshot.exists()){
-                                Toast.makeText(Discover_Activity.this, "You have already joined this group!!", Toast.LENGTH_SHORT).show();
+                                showToast();
                             }else{
                                 Intent intent = new Intent(getApplicationContext(), Discover_Item.class);
                                 intent.putExtra("groupName", groupName);
@@ -365,6 +367,18 @@ public class Discover_Activity extends AppCompatActivity {
         });
 
 
+    }
+
+
+    //Toast for already join this server
+    public void showToast() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_already_joined, (ViewGroup) findViewById(R.id.toast));
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM, 0, 100);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
     }
 
 

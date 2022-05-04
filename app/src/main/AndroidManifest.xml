@@ -28,24 +28,38 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
         <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:name=".About"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:name=".Terms"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:name=".Privacy"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:name=".Home.Create_Subject"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:name=".Home.Create_Class"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:name=".Home.Create_Server"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:name=".Home.Attendance_History"
             android:exported="false" />
         <activity
@@ -57,18 +71,28 @@
             android:exported="false"
             tools:ignore="Instantiatable" />
         <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:name=".Home.GRPJoinReqs"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:name=".Home.Students_Subjects"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:name=".Server_Setting_Specifics"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:name=".Home.Edit_RollNumber"
             android:exported="false" />
         <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:name=".Home.Server_Settings"
             android:exported="false" />
         <activity
@@ -76,35 +100,111 @@
             android:exported="false"
             tools:ignore="Instantiatable" />
         <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:name=".Home.Discover_Item"
             android:exported="false" />
-        <activity android:name=".Profile.AccountSetting_Activity" />
-        <activity android:name=".Home.Notification_Activity" />
-        <activity android:name=".Home.Profile_Activity" />
-        <activity android:name=".Home.Discover_Activity" />
-        <activity android:name=".Home.Server_Activity" />
-        <activity android:name=".Profile.ProfileSetting_Activity" />
         <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".Profile.AccountSetting_Activity"/>
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".Home.Notification_Activity" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".Home.Profile_Activity"/>
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".Home.Discover_Activity" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".Home.Server_Activity">
+        </activity>
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".Profile.ProfileSetting_Activity" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:name=".Explore"
             android:exported="true" />
-        <activity android:name=".ServerView" />
-        <activity android:name=".ClassView" />
-        <activity android:name=".ProfileMine.Settings" />
-        <activity android:name=".Server.Attendance_Activity" />
-        <activity android:name=".ProfileMine.Notification" />
-        <activity android:name=".ProfileMine.Premium" />
-        <activity android:name=".Register.VerifyNumber" />
-        <activity android:name=".ProfileMine.UnderAccountSettings.Change_password" />
-        <activity android:name=".ProfileMine.UnderAccountSettings.Edit_Phone_Number" />
-        <activity android:name=".ProfileMine.UnderAccountSettings.Edit_Email" />
-        <activity android:name=".ProfileMine.UnderAccountSettings.Edit_Username" />
-        <activity android:name=".ProfileMine.ProfileOthers" />
-        <activity android:name=".Feed.User_Question" />
-        <activity android:name=".Register.Phone_Login" />
-        <activity android:name=".Feed.Landing_Feed_Answer" />
-        <activity android:name=".Feed.Landing_Feed" />
-        <activity android:name=".NestedRecyclerview.TestFirebaseActivity" />
         <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".ServerView" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".ClassView" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".ProfileMine.Settings" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".Server.Attendance_Activity" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".ProfileMine.Notification" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".ProfileMine.Premium" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".Register.VerifyNumber" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".ProfileMine.UnderAccountSettings.Change_password" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".ProfileMine.UnderAccountSettings.Edit_Phone_Number" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".ProfileMine.UnderAccountSettings.Edit_Email" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".ProfileMine.UnderAccountSettings.Edit_Username" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".ProfileMine.ProfileOthers" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".Feed.User_Question" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".Register.Phone_Login" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".Feed.Landing_Feed_Answer" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".Feed.Landing_Feed" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
+            android:name=".NestedRecyclerview.TestFirebaseActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity"
             android:name=".Register.getStarted"
             android:exported="true"
             android:theme="@style/SplashScreen">
