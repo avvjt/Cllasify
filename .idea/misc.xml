@@ -616,10 +616,16 @@
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/bg_bottomsheet.xml" value="0.112" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/drop_up.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_baseline_message_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_download_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_dp.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_hashtag_public.xml" value="0.1375" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_joined.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_plus_16.xml" value="0.167" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_plus_circle_24.xml" value="0.1075" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_profile.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_user.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_user_exclamation.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/illustration_default_empty.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/popup_background.xml" value="0.112" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/round_circle.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/round_doubt.xml" value="0.1" />
@@ -628,6 +634,7 @@
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/account_setting_activity.xml" value="0.18" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_create_class.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_discover.xml" value="0.67" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_discover_item.xml" value="0.11666666666666667" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_friend_chat.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_get_started.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_notification2.xml" value="0.2164855072463768" />
@@ -635,6 +642,8 @@
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_profile_setting.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server.xml" value="0.18" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server_setting_specifics.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server_settings.xml" value="0.16" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server_view.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_enter_number.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_profileothers.xml" value="0.24094202898550723" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/dialog_rename_subject.xml" value="0.31979166666666664" />
