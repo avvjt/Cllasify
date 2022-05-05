@@ -54,6 +54,8 @@
                         android:layout_height="50dp"
                         android:background="@drawable/round_icon_background"
                         android:elevation="2dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="2dp"
                         android:scaleType="center"
                         android:src="@drawable/ic_baseline_message_24" />
 
@@ -129,9 +131,11 @@
                         android:id="@+id/addNewTopicButton"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:layout_marginTop="10dp"
+                        android:padding="3dp"
                         android:background="@drawable/round_icon_background"
                         android:elevation="2dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginStart="2dp"
                         android:scaleType="center"
                         android:src="@drawable/ic_plus_16" />
 

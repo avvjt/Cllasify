@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/school_background"
+            android:src="@drawable/school_bg"
             android:elevation="5dp"/>
         <LinearLayout
             android:layout_width="match_parent"

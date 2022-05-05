@@ -91,7 +91,7 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
                     Glide.with(context.getApplicationContext()).load(snapshot.getValue()).into(holder.schImg);
                 }else{
                     Glide.with(context.getApplicationContext()).load(R.drawable.ic_logotext).into(holder.schoolLogoImg);
-                    Glide.with(context.getApplicationContext()).load(R.drawable.school_background).into(holder.schImg);
+                    Glide.with(context.getApplicationContext()).load(R.drawable.school_bg).into(holder.schImg);
                 }
             }
 
