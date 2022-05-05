@@ -75,8 +75,8 @@
                         android:id="@+id/schoolLogoImg"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:scaleType="center"
-                        android:src="@drawable/default_school_logo" />
+                        android:background="@drawable/explore_icon_background"
+                        android:src="@drawable/ic_logotext" />
 
                 </androidx.cardview.widget.CardView>
 
