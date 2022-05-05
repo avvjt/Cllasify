@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_Group"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_margin="10dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
     android:background="@color/page_color">
 
-    <androidx.cardview.widget.CardView
+    <ImageButton
         android:id="@+id/dummy_icon"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="15dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_centerVertical="true"
-        app:cardCornerRadius="15dp"
-        android:foreground="@drawable/acornn" />
+        android:layout_marginStart="15dp"
+        android:background="@drawable/background_class"
+        android:padding="10dp"
+        android:src="@drawable/ic_repo_24"
+        app:tint="@color/white_constant" />
 
     <TextView
         android:id="@+id/tv_ClassTitle"
@@ -51,8 +54,7 @@
             android:text="Admission"
             android:textAllCaps="false"
             android:fontFamily="@font/inter_medium"
-            android:textColor="@color/btn_text_white"
-            android:textStyle="bold" />
+            android:textColor="@color/white_constant"/>
 
         <Button
             android:id="@+id/btn_ClassJoin"
@@ -65,7 +67,7 @@
             android:text="Join"
             android:fontFamily="@font/inter_medium"
             android:textAllCaps="false"
-            android:textColor="@color/btn_text_white"
+            android:textColor="@color/white_constant"
             android:textStyle="bold" />
 
     </LinearLayout>

@@ -613,28 +613,292 @@
         <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/layout/subject_list_item_serv.xml" value="0.24456521739130435" />
         <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/layout/user_notification_fragment.xml" value="0.24456521739130435" />
         <entry key="..\:/Users/abhib/Projects/Cllasify/app/src/main/res/layout/user_question_activity.xml" value="0.24456521739130435" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable-v24/class_background.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable-v24/jojn_teacher_btn.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/abc_ic_clear.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/abc_ic_copy.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/abc_ic_left_x.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/abc_ic_menu.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/abc_ic_right.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/abc_ic_search.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/abc_ic_voice_search.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/app_image_placeholder.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/arrow_right.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/backgroud_attendances.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/backgroud_notification.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/background_class.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/background_doubt.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/background_server_setting.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/background_toast.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/bg_bottomsheet.xml" value="0.112" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/bing_as_msb_user_default.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/button_gradient.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/button_gradient_small.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/button_signin.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/button_small.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/button_small_big.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/button_solid.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/button_solid_message.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/button_solid_unfollow.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/button_stroke.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/category_background.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/chat_input_background.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/custom_btn.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/done.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/drop_down.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/drop_up.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/flagdark_72.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/flags_72.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_about.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_absent.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_account.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_account_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_adguard.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_alert_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_alert_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_app_info.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_app_reinstall.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_app_uninstall.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_app_update.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_archive.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_arrow_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_arrow_down_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_arrow_left_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_arrow_right_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_arrow_up.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_arrow_up_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_arrow_up_left_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_arrow_up_x.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_attendance.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_baseline_drag_indicator_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_baseline_launch_24.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_baseline_message_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_baseline_navigate_next_36.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_baseline_navigate_next_48.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_baseline_save_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_baseline_thumb_up_dark.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_beaker.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_brave.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_brave_light.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_briefcase_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_cancel.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_cancel_small.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_circle.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_circle_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_class.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_clear.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_clippy_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_clock_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_cloud.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_code_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_comment.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_comment_12.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_comment_discussion_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_comment_discussion_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_copy_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_cross.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_delete.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_dependabot_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_discord.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_done.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_dot.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_down.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_download_16.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_dp.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_dynamic_feed_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_email.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_empty_calendar_icon_12dp.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_error.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_error_sign.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_explore.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_explore_empty.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_feed.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_feedback.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_filter.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_filter_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_flame_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_friends.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_friends_chat.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_global_x.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_globe.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_google.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_hashtag.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_hashtag_16.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_hashtag_public.xml" value="0.1375" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_heart_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_heart_fill_8.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_help.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_home_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_home_fill_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_image_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_inbox_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_info_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_instagram.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_issue_closed_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_issue_opened_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_issue_reopened_24.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_joined.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_joined_noti.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_keyboard.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_law_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_left_back.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_left_xx.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_left_xxx.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_link_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_link_external_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_list_unordered_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_live.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_location_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_lock_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_logotext.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_logout.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_mail_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_mail_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_mark_github.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_menu_explore.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_menu_home.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_menu_home_filled.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_menu_home_outline.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_menu_notifications.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_menu_notifications_filled.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_menu_notifications_outline.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_menu_profile.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_meter_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_milestone_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_moon_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_mute_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_mute_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_mute_32.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_north_star_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_noti.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_notification.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_notification_saved.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_organization_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_organization_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_paper_airplane_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_pencil_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_people_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_person_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_person_fill_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_phone.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_pin.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_pin_16.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_plus_16.xml" value="0.167" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_plus_circle_24.xml" value="0.1075" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_premium.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_present.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_privicy.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_profile.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_project_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_question_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_question_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_quote_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_reddit.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_refresh_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_reply_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_reply_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_repo_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_repo_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_right_arrow.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_right_tick.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_rocket_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_rocket_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_save.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_saved.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_search_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_search_x.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_send_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_send_disable.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_settings.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_settings_x.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_share.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_share_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_share_black_24dp.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_shield_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_shield_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_smiley_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_square_fill_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_squirrel_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_star_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_status.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_stop_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_subscriptions_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_swipe.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_swipe_menu.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_swipe_menux.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_swipe_onboarding.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_sync_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_tag_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_tag_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_tasklist_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_telegram.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_telescope_fill_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_textsms.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_theme.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_timeline_removed_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_trash_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_trash_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_triangle_down_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_triangle_right_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_twitter.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_unlock_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_unmute_32.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_user.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_user_exclamation.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_visibility_off.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_whatshot.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_workflow_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_x_12.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_x_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_x_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_x_circle_fill_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_zap_16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/ic_zap_8.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/illustration_default_empty.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/illustration_inbox_empty.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/left_arrow.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/make_admin.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/menu_attendance.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/more.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/mtrl_ic_cancel.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/mtrl_ic_error.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/popup_background.xml" value="0.112" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/popup_corner.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/pw_ai_designer.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/pw_all_devices.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/pw_powerpoint.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/pw_security.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/pw_storage_premium.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/pw_together.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/pw_word.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/received_message_background.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/round.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/round_circle.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/round_doubt.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/round_icon_background.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/scarch_xxx.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/scarch_xxxx.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/selector_subject.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/server_settings.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/splash_screen.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/surface_pen.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/textview_highlights.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/theme_rectangle.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/thumbdown_72.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/thumbdowndark_72.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/thumbup_72.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/thumbupdark16.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/todo_add_24.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/vanced_gradient.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/view.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/voice_ic_settings.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/account_setting_activity.xml" value="0.18" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_class_view.xml" value="0.23278985507246377" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_create_class.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_discover.xml" value="0.67" />
-        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_discover_item.xml" value="0.11666666666666667" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_discover_item.xml" value="0.18" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_friend_chat.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_get_started.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_notification2.xml" value="0.2164855072463768" />
@@ -642,13 +906,29 @@
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_profile_setting.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server.xml" value="0.18" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server_setting_specifics.xml" value="0.15552178318135765" />
-        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server_settings.xml" value="0.16" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server_settings.xml" value="0.18" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server_view.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_enter_number.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_profileothers.xml" value="0.24094202898550723" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/chat_item_left.xml" value="0.11666666666666667" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/chat_item_left_friend.xml" value="0.18" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/chat_item_right.xml" value="0.23278985507246377" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/chat_list_fragment.xml" value="0.23278985507246377" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/chat_new_fragment.xml" value="0.23278985507246377" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/custom_list_item.xml" value="0.23278985507246377" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/dialog_add_class_group.xml" value="0.23278985507246377" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/dialog_add_new_subject_topic.xml" value="0.23278985507246377" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/dialog_attendance.xml" value="0.23278985507246377" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/dialog_rename_subject.xml" value="0.31979166666666664" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/doubt_fragment.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/each_child_item.xml" value="0.23278985507246377" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/each_parent_item.xml" value="0.23278985507246377" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/fragment_user_friends.xml" value="0.2164855072463768" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/list_attendance.xml" value="0.23278985507246377" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/list_attendanceh.xml" value="0.11666666666666667" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/list_d_answer.xml" value="0.23278985507246377" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/list_group_class.xml" value="0.22" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/list_group_class_serv.xml" value="0.17" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/list_item_childgroup.xml" value="0.23278985507246377" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/list_item_edit_rollnumbers.xml" value="0.23278985507246377" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/list_item_group_member.xml" value="0.2269021739130435" />

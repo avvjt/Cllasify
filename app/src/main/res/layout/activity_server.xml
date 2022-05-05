@@ -428,7 +428,7 @@
                                 android:background="@drawable/background_server_setting"
                                 android:padding="7dp"
                                 android:src="@drawable/ic_settings_24"
-                                app:tint="@color/btn_text_white" />
+                                app:tint="@color/white_constant" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -457,7 +457,7 @@
                                 android:background="@drawable/backgroud_attendances"
                                 android:padding="7dp"
                                 android:src="@drawable/ic_edit"
-                                app:tint="@color/btn_text_white" />
+                                app:tint="@color/white_constant" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -486,7 +486,7 @@
                                 android:background="@drawable/backgroud_notification"
                                 android:padding="7dp"
                                 android:src="@drawable/ic_menu_notifications"
-                                app:tint="@color/btn_text_white" />
+                                app:tint="@color/white_constant" />
 
                             <TextView
                                 android:layout_width="match_parent"

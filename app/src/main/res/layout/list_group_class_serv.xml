@@ -4,32 +4,44 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="15dp"
+    android:padding="10dp"
     android:background="@drawable/class_background"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp"
     android:layout_marginStart="20dp"
     android:layout_marginEnd="20dp">
 
+
+
     <RelativeLayout
         android:id="@+id/classNameRV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <ImageButton
+            android:id="@+id/dummy_icon"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/background_class"
+            android:src="@drawable/ic_repo_24"
+            app:tint="@color/white_constant" />
 
         <TextView
             android:id="@+id/tv_ClassTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="25dp"
-            android:layout_toStartOf="@id/spinner1"
+            android:layout_toEndOf="@id/dummy_icon"
+            android:layout_alignEnd="@id/spinner1"
             android:ellipsize="end"
+            android:fontFamily="@font/inter_semibold"
             android:maxLines="1"
-            android:paddingEnd="15dp"
+            android:paddingEnd="40dp"
             android:textColor="@color/text_color"
             android:textSize="16sp"
-            android:fontFamily="@font/inter_semibold"
             app:drawableEndCompat="@drawable/drop_down" />
 
         <ImageButton
@@ -38,10 +50,12 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerInParent="true"
-            android:layout_marginEnd="25dp"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/menu_xxx"
             android:spinnerMode="dropdown" />
+
 
     </RelativeLayout>
 
 </RelativeLayout>
+

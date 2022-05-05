@@ -50,221 +50,232 @@
             android:src="@drawable/menu_attendance" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <ScrollView
+        android:id="@+id/ll_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/action_bar"
-        android:id="@+id/ll_layout">
+        android:layout_above="@id/ll_bottom_send">
 
-        <!--Doubt title-->
-        <TextView
-            android:id="@+id/tv_DoubtGroupClass"
+
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:fontFamily="@font/inter_medium"
-            android:paddingStart="20dp"
-            android:paddingTop="5dp"
-            android:paddingEnd="20dp"
-            android:paddingBottom="5dp"
-            android:textColor="@color/text_color"
-            android:textSize="17sp" />
+            android:layout_height="wrap_content">
 
-        <!--Subject-->
-        <TextView
-            android:id="@+id/tv_DoubtGroupName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tv_DoubtGroupClass"
-            android:fontFamily="@font/inter_regular"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:textColor="@color/text_background_color"
-            android:textSize="14sp"
-            android:textStyle="italic"
-            app:drawableLeftCompat="@drawable/ic_hashtag_16" />
-    </RelativeLayout>
-
-    <!--First conversation from doubt creator-->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/questionPriority"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/ll_layout"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="2dp"
-        app:strokeWidth="2dp">
-
-        <LinearLayout
-            android:id="@+id/touch_ll"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/background_doubt"
-            android:orientation="vertical">
-
-            <!--Useless-->
+            <!--Doubt title-->
             <TextView
-                android:id="@+id/tv_AskQuestion"
+                android:id="@+id/tv_DoubtGroupClass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="2dp"
-                android:paddingStart="10dp"
-                android:textColor="@color/page_black"
-                android:visibility="gone" />
-
-            <RelativeLayout
-                android:id="@+id/rl_quesData"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/ib_UserProfile"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@android:color/transparent"
-                    android:src="@drawable/ic_account_24" />
-
-                <TextView
-                    android:id="@+id/byName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_toEndOf="@id/ib_UserProfile"
-                    android:fontFamily="@font/inter_medium"
-                    android:text="Asked By"
-                    android:textColor="@color/text_color"
-                    android:textSize="14sp" />
-
-            </RelativeLayout>
-
-
-            <TextView
-                android:id="@+id/tv_Name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="22dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/inter_regular"
-                android:maxLines="1"
+                android:layout_alignParentTop="true"
+                android:fontFamily="@font/inter_medium"
+                android:paddingStart="20dp"
+                android:paddingTop="5dp"
+                android:paddingEnd="20dp"
+                android:paddingBottom="5dp"
                 android:textColor="@color/text_color"
-                android:textSize="14sp" />
+                android:textSize="17sp" />
 
-            <!--Useless layout-->
-            <LinearLayout
+            <!--Subject-->
+            <TextView
+                android:id="@+id/tv_DoubtGroupName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/tv_likeCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:gravity="center_vertical"
-                    app:drawableStartCompat="@drawable/thumbupdark16" />
-
-                <TextView
-                    android:id="@+id/tv_dislikeCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:gravity="center_vertical"
-                    app:drawableStartCompat="@drawable/thumbdowndark_16" />
-
-                <TextView
-                    android:id="@+id/tv_flagCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:gravity="center_vertical"
-                    app:drawableStartCompat="@drawable/flagdark_16" />
-
-                <TextView
-                    android:id="@+id/tv_AnsCount"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:drawableStart="@drawable/ic_search_24"
-                    android:drawablePadding="2dp"
-                    app:drawableStartCompat="@drawable/ic_search_24" />
-            </LinearLayout>
+                android:layout_below="@id/tv_DoubtGroupClass"
+                android:fontFamily="@font/inter_regular"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:textColor="@color/text_background_color"
+                android:textSize="14sp"
+                android:textStyle="italic"
+                app:drawableLeftCompat="@drawable/ic_hashtag_16" />
 
 
-            <LinearLayout
-                android:id="@+id/viewAns_ll"
+            <!--First conversation from doubt creator-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/questionPriority"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="2dp"
-                android:background="@drawable/edittext_rounded_corners"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:layout_below="@id/tv_DoubtGroupName"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="2dp">
 
-                <TextView
-                    android:id="@+id/tv_date"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:padding="2dp"
-                    android:text="@string/asked_on"
-                    android:textStyle="italic" />
-
-                <TextView
-                    android:id="@+id/userAns_tv"
-                    style="@style/TextAppearance.AppCompat.Subhead"
+                <LinearLayout
+                    android:id="@+id/touch_ll"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="2dp"
-                    android:text="@string/please_answer"
-                    android:textStyle="bold" />
+                    android:background="@drawable/background_doubt"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/userallAns_tv"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/view_answer"
-                    android:padding="2dp" />
+                    <!--Useless-->
+                    <TextView
+                        android:id="@+id/tv_AskQuestion"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="2dp"
+                        android:paddingStart="10dp"
+                        android:textColor="@color/page_black"
+                        android:visibility="gone" />
 
-            </LinearLayout>
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+                    <RelativeLayout
+                        android:id="@+id/rl_quesData"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-    <!--RecyclerView for doubt answer holder-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_DoubtAnswer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/ll_bottom_send"
-        android:layout_below="@id/questionPriority" />
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/ib_UserProfile"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:background="@android:color/transparent"
+                            android:src="@drawable/ic_account_24" />
+
+                        <TextView
+                            android:id="@+id/byName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="30dp"
+                            android:layout_toEndOf="@id/ib_UserProfile"
+                            android:fontFamily="@font/inter_medium"
+                            android:text="Asked By"
+                            android:textColor="@color/text_color"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
+
+
+                    <TextView
+                        android:id="@+id/tv_Name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="22dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/inter_regular"
+                        android:maxLines="1"
+                        android:textColor="@color/text_color"
+                        android:textSize="14sp" />
+
+                    <!--Useless layout-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tv_likeCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
+                            app:drawableStartCompat="@drawable/thumbupdark16" />
+
+                        <TextView
+                            android:id="@+id/tv_dislikeCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
+                            app:drawableStartCompat="@drawable/thumbdowndark_16" />
+
+                        <TextView
+                            android:id="@+id/tv_flagCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:gravity="center_vertical"
+                            app:drawableStartCompat="@drawable/flagdark_16" />
+
+                        <TextView
+                            android:id="@+id/tv_AnsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="4dp"
+                            android:layout_marginEnd="4dp"
+                            android:drawableStart="@drawable/ic_search_24"
+                            android:drawablePadding="2dp"
+                            app:drawableStartCompat="@drawable/ic_search_24" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/viewAns_ll"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="2dp"
+                        android:background="@drawable/edittext_rounded_corners"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:id="@+id/tv_date"
+                            style="@style/TextAppearance.AppCompat.Body1"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:gravity="start"
+                            android:padding="2dp"
+                            android:text="@string/asked_on"
+                            android:textStyle="italic" />
+
+                        <TextView
+                            android:id="@+id/userAns_tv"
+                            style="@style/TextAppearance.AppCompat.Subhead"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="2dp"
+                            android:text="@string/please_answer"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/userallAns_tv"
+                            style="@style/TextAppearance.AppCompat.Body1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/view_answer"
+                            android:padding="2dp" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!--RecyclerView for doubt answer holder-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_DoubtAnswer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/questionPriority"
+                android:nestedScrollingEnabled="false"
+                app:fastScrollEnabled="false" />
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 
     <!--Chat box sending message layout-->
