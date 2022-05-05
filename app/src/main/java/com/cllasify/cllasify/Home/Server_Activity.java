@@ -1540,7 +1540,7 @@ public class Server_Activity extends AppCompatActivity {
 
 
         DatabaseReference userJoinedOrAddServer = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID);
-        userJoinedOrAddServer.addValueEventListener(new ValueEventListener() {
+        userJoinedOrAddServer.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list_OtherUserPublicGroupTitle.clear();
@@ -1594,7 +1594,7 @@ public class Server_Activity extends AppCompatActivity {
                         } else {
                             DatabaseReference databaseReferenceGetUserJoinedClass = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class").child(UserAddedOrJoinedGrpPUSHIDS);
 
-                            databaseReferenceGetUserJoinedClass.addValueEventListener(new ValueEventListener() {
+                            databaseReferenceGetUserJoinedClass.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot01) {
 

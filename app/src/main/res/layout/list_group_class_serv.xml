@@ -5,12 +5,10 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="10dp"
-    android:background="@drawable/class_background"
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp"
     android:layout_marginStart="20dp"
     android:layout_marginEnd="20dp">
-
 
 
     <RelativeLayout
@@ -32,10 +30,10 @@
             android:id="@+id/tv_ClassTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/spinner1"
             android:layout_centerVertical="true"
             android:layout_marginStart="25dp"
             android:layout_toEndOf="@id/dummy_icon"
-            android:layout_alignEnd="@id/spinner1"
             android:ellipsize="end"
             android:fontFamily="@font/inter_semibold"
             android:maxLines="1"
