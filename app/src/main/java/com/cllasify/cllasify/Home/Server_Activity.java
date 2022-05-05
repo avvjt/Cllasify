@@ -859,31 +859,29 @@ public class Server_Activity extends AppCompatActivity {
 
         reference = FirebaseDatabase.getInstance().getReference().child("Groups").child("Chat_Message").child(groupPushId).child(classUniPushId).child(subjectUniPushId);
 
-        if (reference != null) {
-            readLiveMessageListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    chats.clear();
-                    Log.d(TAG, "onDataChange: " + snapshot.getChildrenCount());
-                    for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                        Log.d("DOUBTCHK", "onDataChange: " + postSnapshot.getValue());
+        readLiveMessageListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                chats.clear();
+                Log.d(TAG, "onDataChange: " + snapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    Log.d("DOUBTCHK", "onDataChange: " + postSnapshot.getValue());
 
-                        Class_Group class_userDashBoard = postSnapshot.getValue(Class_Group.class);
-                        chats.add(class_userDashBoard);
-                    }
-                    messageAdapter.setList(chats);
-                    messageAdapter.notifyDataSetChanged();
-                    rv_ChatDashboard.smoothScrollToPosition(Objects.requireNonNull(rv_ChatDashboard.getAdapter()).getItemCount());
+                    Class_Group class_userDashBoard = postSnapshot.getValue(Class_Group.class);
+                    chats.add(class_userDashBoard);
                 }
+                messageAdapter.setList(chats);
+                messageAdapter.notifyDataSetChanged();
+                rv_ChatDashboard.smoothScrollToPosition(Objects.requireNonNull(rv_ChatDashboard.getAdapter()).getItemCount());
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            };
+            }
+        };
 
-            reference.addValueEventListener(readLiveMessageListener);
-        }
+        reference.addValueEventListener(readLiveMessageListener);
 
         allDoubtReference = FirebaseDatabase.getInstance().getReference().
                 child("Groups").child("Doubt").child(groupPushId).child(classUniPushId).child(subjectUniPushId).child("All_Doubt");
@@ -1540,10 +1538,10 @@ public class Server_Activity extends AppCompatActivity {
 
 
         DatabaseReference userJoinedOrAddServer = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID);
+        list_OtherUserPublicGroupTitle.clear();
         userJoinedOrAddServer.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                list_OtherUserPublicGroupTitle.clear();
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Log.i("UserAddedOrJoinedGrpPUSHIDS", "" + dataSnapshot.getKey());
 
@@ -1560,6 +1558,7 @@ public class Server_Activity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                                        list_OtherUserPublicGroupTitle.clear();
                                         String adminUserId = dataSnapshot1.child("userId").getValue().toString();
                                         refOtherUserPublicGroup.child(UserAddedOrJoinedGrpPUSHIDS).addValueEventListener(new ValueEventListener() {
                                             @Override
@@ -1597,7 +1596,7 @@ public class Server_Activity extends AppCompatActivity {
                             databaseReferenceGetUserJoinedClass.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot01) {
-
+                                    list_OtherUserPublicGroupTitle.clear();
                                     if (snapshot01.child(userID).child("classUniPushId").exists()) {
 
                                         refOtherUserPublicGroup.child(UserAddedOrJoinedGrpPUSHIDS).addValueEventListener(new ValueEventListener() {
