@@ -1,6 +1,9 @@
 package com.cllasify.cllasify.Adaptor;
 
+import static com.cllasify.cllasify.Profile.AccountSetting_Activity.getDefaults;
+
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,15 +38,15 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
 
     Context context;
     List<Class_Group_Names> parentItemArrayListClassName;
-    List <Subject_Details_Model> testingNo;
+    List<Subject_Details_Model> testingNo;
     onAddSubjectClickListener onAddSubjectClickListener;
 
     public Adapter_ClassGroup(Context context) {
         this.context = context;
     }
 
-    public void setOnItemClickListener(onAddSubjectClickListener listener){
-        onAddSubjectClickListener =listener;
+    public void setOnItemClickListener(onAddSubjectClickListener listener) {
+        onAddSubjectClickListener = listener;
     }
 
 
@@ -66,19 +69,19 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
 
         holder.classGroupName.setText(parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName());
 
-        Log.d(TAG, "onBindViewHolder: Adapter Class: "+parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName());
+        Log.d(TAG, "onBindViewHolder: Adapter Class: " + parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName());
 
         Class_Group_Names class_group_names = parentItemArrayListClassName.get(holder.getAdapterPosition());
-/*
+        /*
 
-*/
+         */
 
         holder.classGroupName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Toast.makeText(context, "Clicked on Class", Toast.LENGTH_SHORT).show();
-                Log.d("POSS", "Class position : "+class_group_names.getClassName());
-                onAddSubjectClickListener.onClassClickListener(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(),class_group_names.getUniPushClassId());
+                Log.d("POSS", "Class position : " + class_group_names.getClassName());
+                onAddSubjectClickListener.onClassClickListener(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(), class_group_names.getUniPushClassId());
             }
         });
 
@@ -123,7 +126,7 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
 //            }
 //        });
 
-        if(parentItemArrayListClassName.get(holder.getAdapterPosition()).getChildItemList()!=null){
+        if (parentItemArrayListClassName.get(holder.getAdapterPosition()).getChildItemList() != null) {
             Adapter_TopicList adapter_topicList = new Adapter_TopicList(context.getApplicationContext());
             holder.subjectList.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
             holder.subjectList.setAdapter(adapter_topicList);
@@ -131,8 +134,8 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
             adapter_topicList.setOnSubjectClickListener(new Adapter_TopicList.onSubjectClickListener() {
                 @Override
                 public void onSubjectClick() {
-                    Log.d(TAG, "onSubjectClick: "+holder.getAdapterPosition());
-                    onAddSubjectClickListener.onSubClick(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(),class_group_names.getUniPushClassId());
+                    Log.d(TAG, "onSubjectClick: " + holder.getAdapterPosition());
+                    onAddSubjectClickListener.onSubClick(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(), class_group_names.getUniPushClassId());
 
                     DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
                     refSaveCurrentData.child("classPosition").setValue(holder.getAdapterPosition());
@@ -145,8 +148,7 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
 //            Log.d("TOP", "onBindViewHolder: "+parentItemArrayListClassName.get(position).getChildItemList().get(position).getSubjectName());
             adapter_topicList.setSubjectDetailsModelList(parentItemArrayListClassName.get(position).getChildItemList());
             adapter_topicList.notifyDataSetChanged();
-        }
-        else {
+        } else {
             testingNo = new ArrayList<>();
             Adapter_TopicList adapter_topicList = new Adapter_TopicList(context.getApplicationContext());
             holder.subjectList.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
@@ -159,7 +161,6 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
     }
 
 
-
     @Override
     public int getItemCount() {
         return parentItemArrayListClassName.size();
@@ -167,13 +168,28 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView classGroupName;
-        ImageButton dropUpBtn,dropDownBtn;
+        ImageButton dropUpBtn, dropDownBtn;
         ImageButton addTopicButton;
         RecyclerView subjectList;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             classGroupName = itemView.findViewById(R.id.tv_classGroupTitle);
+
+            String darkLightDefaultVal = getDefaults("DefaultDarkLight", context);
+
+            if (darkLightDefaultVal != null) {
+                if (darkLightDefaultVal.equals("Dark")) {
+                    Log.d("Theme", "ViewHolder: Dark");
+                    classGroupName.setTextColor(Color.parseColor("#ffffff"));
+                }
+                if (darkLightDefaultVal.equals("Light")) {
+                    Log.d("Theme", "ViewHolder: Light");
+                    classGroupName.setTextColor(Color.parseColor("#050505"));
+
+                }
+            }
+
             addTopicButton = itemView.findViewById(R.id.addNewTopicButton);
             subjectList = itemView.findViewById(R.id.subjectList);
             dropUpBtn = itemView.findViewById(R.id.dropUpBtn);
@@ -181,10 +197,12 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
         }
     }
 
-    public interface onAddSubjectClickListener{
-        void onAddSubjectClickListener(String groupName,String uniPushClassId);
-        void onClassClickListener(int position,String classGroupName,String uniPushClassId);
-        void onSubClick(int classPosition,String clickedClassName,String uniClassPushId);
+    public interface onAddSubjectClickListener {
+        void onAddSubjectClickListener(String groupName, String uniPushClassId);
+
+        void onClassClickListener(int position, String classGroupName, String uniPushClassId);
+
+        void onSubClick(int classPosition, String clickedClassName, String uniClassPushId);
     }
 }
 

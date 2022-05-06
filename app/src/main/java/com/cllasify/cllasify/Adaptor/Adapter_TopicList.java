@@ -1,7 +1,10 @@
 package com.cllasify.cllasify.Adaptor;
 
+import static com.cllasify.cllasify.Profile.AccountSetting_Activity.getDefaults;
+
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Constant;
+import com.cllasify.cllasify.Home.Server_Activity;
+import com.cllasify.cllasify.Profile.AccountSetting_Activity;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.SharePref;
@@ -102,6 +107,21 @@ public class Adapter_TopicList extends RecyclerView.Adapter<Adapter_TopicList.Vi
             super(itemView);
             subListItem = itemView.findViewById(R.id.subListItem);
             subjectTopic = itemView.findViewById(R.id.tv_subjectTopic);
+
+
+            String darkLightDefaultVal = getDefaults("DefaultDarkLight", context);
+
+            if (darkLightDefaultVal != null) {
+                if (darkLightDefaultVal.equals("Dark")) {
+                    Log.d("Theme", "ViewHolder: Dark");
+                    subjectTopic.setTextColor(Color.parseColor("#ffffff"));
+                }
+                if (darkLightDefaultVal.equals("Light")) {
+                    Log.d("Theme", "ViewHolder: Light");
+                    subjectTopic.setTextColor(Color.parseColor("#050505"));
+
+                }
+            }
 
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
