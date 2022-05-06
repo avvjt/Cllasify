@@ -1558,7 +1558,6 @@ public class Server_Activity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
-                                        list_OtherUserPublicGroupTitle.clear();
                                         String adminUserId = dataSnapshot1.child("userId").getValue().toString();
                                         refOtherUserPublicGroup.child(UserAddedOrJoinedGrpPUSHIDS).addValueEventListener(new ValueEventListener() {
                                             @Override
