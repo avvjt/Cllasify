@@ -4,8 +4,7 @@
     android:id="@+id/subListItem"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/page_color">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_subjectTopic"
