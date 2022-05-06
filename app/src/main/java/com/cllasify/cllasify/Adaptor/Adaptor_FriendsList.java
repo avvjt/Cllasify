@@ -1,7 +1,10 @@
 package com.cllasify.cllasify.Adaptor;
 
+import static com.cllasify.cllasify.Profile.AccountSetting_Activity.getDefaults;
+
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -109,6 +112,18 @@ public class Adaptor_FriendsList extends RecyclerView.Adapter<Adaptor_FriendsLis
         public MyViewHolder(View itemView) {
             super(itemView);
             userName = itemView.findViewById(R.id.tv_name);
+            String darkLightDefaultVal = getDefaults("DefaultDarkLight", context);
+
+            if (darkLightDefaultVal != null) {
+                if (darkLightDefaultVal.equals("Dark")) {
+                    Log.d("Theme", "ViewHolder: Dark");
+                    userName.setTextColor(Color.parseColor("#ffffff"));
+                }
+                if (darkLightDefaultVal.equals("Light")) {
+                    Log.d("Theme", "ViewHolder: Light");
+                    userName.setTextColor(Color.parseColor("#050505"));
+                }
+            }
             rec_friends_profPic = itemView.findViewById(R.id.rec_friends_profPic);
 
 

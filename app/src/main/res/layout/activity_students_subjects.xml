@@ -44,7 +44,7 @@
             android:textSize="20sp" />
     </LinearLayout>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -79,7 +79,9 @@
                     android:id="@+id/subjectList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:nestedScrollingEnabled="false"
+                    app:fastScrollEnabled="false"/>
 
                 <Button
                     android:id="@+id/addNewSubject"
@@ -124,7 +126,9 @@
                     android:id="@+id/adminList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:nestedScrollingEnabled="false"
+                    app:fastScrollEnabled="false"/>
 
             </LinearLayout>
 
@@ -152,13 +156,15 @@
                     android:id="@+id/studentList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="10dp"
+                    android:nestedScrollingEnabled="false"
+                    app:fastScrollEnabled="false"/>
 
             </LinearLayout>
 
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

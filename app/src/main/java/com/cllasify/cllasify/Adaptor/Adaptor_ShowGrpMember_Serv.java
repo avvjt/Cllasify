@@ -222,11 +222,18 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
                                                                         notifyItemRemoved(studPos);
                                                                         dialog.dismiss();
                                                                     }
-                                                                });
+                                                                })
+                                                .setNegativeButton("No",
+                                                        new DialogInterface.OnClickListener() {
+                                                            @Override
+                                                            public void onClick(DialogInterface dialog, int which) {
+                                                                dialog.cancel();
+                                                            }
+                                                        });
                                                 AlertDialog alert = alertdialogbuilder.create();
                                                 alert.show();
 
-                                            }else{
+                                            } else {
 
                                                 AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(context);
                                                 alertdialogbuilder.setTitle("You are admin!!!")
@@ -241,6 +248,13 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
                                                                         notifyItemRemoved(studPos);
                                                                         dialog.dismiss();
                                                                     }
+                                                                })
+                                                        .setNegativeButton("No",
+                                                                new DialogInterface.OnClickListener() {
+                                                                    @Override
+                                                                    public void onClick(DialogInterface dialog, int which) {
+                                                                        dialog.cancel();
+                                                                    }
                                                                 });
                                                 AlertDialog alert = alertdialogbuilder.create();
                                                 alert.show();
@@ -252,7 +266,6 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
 
                                         }
                                     });
-
 
 
                                 }
