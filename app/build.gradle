@@ -11,8 +11,8 @@ android {
         applicationId "com.cllasify.cllasify"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 3
-        versionName "1.2"
+        versionCode 8
+        versionName "1.7"
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -20,7 +20,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
