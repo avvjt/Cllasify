@@ -1539,7 +1539,7 @@ public class Server_Activity extends AppCompatActivity {
 
         DatabaseReference userJoinedOrAddServer = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID);
         list_OtherUserPublicGroupTitle.clear();
-        userJoinedOrAddServer.addListenerForSingleValueEvent(new ValueEventListener() {
+        userJoinedOrAddServer.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -1592,10 +1592,10 @@ public class Server_Activity extends AppCompatActivity {
                         } else {
                             DatabaseReference databaseReferenceGetUserJoinedClass = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class").child(UserAddedOrJoinedGrpPUSHIDS);
 
-                            databaseReferenceGetUserJoinedClass.addListenerForSingleValueEvent(new ValueEventListener() {
+                            list_OtherUserPublicGroupTitle.clear();
+                            databaseReferenceGetUserJoinedClass.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot01) {
-                                    list_OtherUserPublicGroupTitle.clear();
                                     if (snapshot01.child(userID).child("classUniPushId").exists()) {
 
                                         refOtherUserPublicGroup.child(UserAddedOrJoinedGrpPUSHIDS).addValueEventListener(new ValueEventListener() {
@@ -1652,7 +1652,6 @@ public class Server_Activity extends AppCompatActivity {
 
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
-
 
 
                 btn_joinNotification.setOnClickListener(new View.OnClickListener() {
