@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -24,7 +25,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
 
         <LinearLayout
@@ -83,21 +85,30 @@
 
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_SignIn"
-            android:layout_width="wrap_content"
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/upperPartOfSignIn"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:layout_marginTop="150dp"
-            android:background="@drawable/custom_btn"
-            android:letterSpacing="0.15"
-            android:padding="22dp"
-            android:text="@string/signingoogle"
-            android:textAllCaps="false"
-            android:textColor="@color/btn_text_white"
-            android:textSize="13sp" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/btn_SignIn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/custom_btn"
+                android:letterSpacing="0.15"
+                android:padding="22dp"
+                android:text="@string/signingoogle"
+                android:textAllCaps="false"
+                android:textColor="@color/btn_text_white"
+                android:textSize="13sp"
+                android:layout_marginBottom="50dp"/>
+
+        </RelativeLayout>
+
+
 
     </RelativeLayout>
 

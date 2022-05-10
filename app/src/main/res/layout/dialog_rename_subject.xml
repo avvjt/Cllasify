@@ -26,6 +26,7 @@
             android:textColor="@color/text_color"
             android:fontFamily="@font/inter_regular"
             android:hint="Rename Subject Name"
+            android:textCursorDrawable="@drawable/cursor_color"
             android:id="@+id/et_SubjectName"
             android:inputType="textCapSentences|textMultiLine"/>
 

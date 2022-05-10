@@ -643,6 +643,7 @@
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/button_stroke.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/category_background.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/chat_input_background.xml" value="0.1" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/cursor_color.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/custom_btn.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/done.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/drop_down.xml" value="0.1" />
@@ -897,23 +898,51 @@
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/view.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/drawable/voice_ic_settings.xml" value="0.1" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/account_setting_activity.xml" value="0.18" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_about.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_class_view.xml" value="0.23278985507246377" />
-        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_create_class.xml" value="0.15552178318135765" />
-        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_discover.xml" value="0.2" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_create_class.xml" value="0.2" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_create_server.xml" value="0.13518518518518519" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_create_subject.xml" value="0.18" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_discover.xml" value="0.33" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_discover_item.xml" value="0.25" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_edit__email.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_edit__phone__number.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_explore.xml" value="0.23278985507246377" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_friend_chat.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_get_started.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_notification2.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_profile_others.xml" value="0.23278985507246377" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_profile_setting.xml" value="0.2164855072463768" />
-        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server.xml" value="0.18" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server.xml" value="0.2" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server_setting_specifics.xml" value="0.18" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server_settings.xml" value="0.25" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_server_view.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_settings.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_students_subjects.xml" value="0.1527777777777778" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_terms.xml" value="0.13518518518518519" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/activity_verify_number.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/bottomsheet_bio.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/bottomsheet_feedback.xml" value="0.13518518518518519" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/bottomsheet_institution.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/bottomsheet_location.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/bottomsheet_name.xml" value="0.13518518518518519" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/bottomsheet_theme.xml" value="0.13518518518518519" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/bottomsheet_username.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_adddoubt.xml" value="0.13518518518518519" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_addgroup.xml" value="0.13518518518518519" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_addquestion.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_admission.xml" value="0.22" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_comment.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_enter_number.xml" value="0.2164855072463768" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_location.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_login.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_profileothers.xml" value="0.24094202898550723" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_serverview.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_setting.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_status.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmdialog_studteach.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btmfialog_notifysetting.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/btndialog_server_profile.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/chat_item_left.xml" value="0.11666666666666667" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/chat_item_left_friend.xml" value="0.18" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/chat_item_right.xml" value="0.23278985507246377" />
@@ -923,12 +952,23 @@
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/dialog_add_class_group.xml" value="0.23278985507246377" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/dialog_add_new_subject_topic.xml" value="0.23278985507246377" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/dialog_attendance.xml" value="0.23278985507246377" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/dialog_attendancehistory.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/dialog_createclass.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/dialog_creategroup1.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/dialog_joingroup.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/dialog_loginaccess.xml" value="0.22146739130434784" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/dialog_rename_class.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/dialog_rename_subject.xml" value="0.31979166666666664" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/discover_class_item.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/doubt_fragment.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/each_child_item.xml" value="0.23278985507246377" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/each_parent_item.xml" value="0.23278985507246377" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/fragment_bottom_sheet.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/fragment_chat.xml" value="0.20969202898550723" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/fragment_student__joining__reqs.xml" value="0.13518518518518519" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/fragment_teacher__joining__reqs.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/fragment_user_friends.xml" value="0.2164855072463768" />
+        <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/landing_feed_activity.xml" value="0.22146739130434784" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/list_attendance.xml" value="0.23278985507246377" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/list_attendanceh.xml" value="0.11666666666666667" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/list_d_answer.xml" value="0.23278985507246377" />

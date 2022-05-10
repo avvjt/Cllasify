@@ -25,6 +25,7 @@
             android:layout_margin="8dp"
             android:hint="Rename Class Name"
             android:id="@+id/et_ClassName"
+            android:textCursorDrawable="@drawable/cursor_color"
             android:inputType="textCapSentences|textMultiLine"/>
 
         <Button

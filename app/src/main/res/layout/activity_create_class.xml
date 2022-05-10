@@ -106,6 +106,7 @@
                     android:backgroundTint="@color/iconPrimaryColor"
                     android:gravity="center_horizontal"
                     android:hint="@string/hint_crateServer"
+                    android:textCursorDrawable="@drawable/cursor_color"
                     android:textColor="@color/text_color"
                     android:textColorHint="@color/iconColor"
                     android:textSize="18sp"

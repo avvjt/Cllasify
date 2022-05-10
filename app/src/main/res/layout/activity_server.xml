@@ -153,7 +153,8 @@
                         android:id="@+id/recyclerViewFriendsNameList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:elevation="5dp" />
+                        android:elevation="5dp"
+                        android:layout_marginBottom="32dp"/>
 
 
                 </LinearLayout>
@@ -170,7 +171,8 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerViewClassList"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="32dp"/>
 
                 </LinearLayout>
 
@@ -315,7 +317,7 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginStart="20dp"
                         android:orientation="horizontal"
-                        android:visibility="visible">
+                        android:visibility="gone">
 
                         <EditText
                             android:id="@+id/et_ctext"
@@ -328,6 +330,7 @@
                             android:layout_toStartOf="@+id/sendDoubt"
                             android:background="@drawable/chat_input_background"
                             android:focusable="true"
+                            android:textCursorDrawable="@drawable/cursor_color"
                             android:hint="@string/hint_edittext"
                             android:imeOptions="actionDone"
                             android:importantForAutofill="no"
@@ -561,7 +564,7 @@
                             android:text="Teachers"
                             android:textColor="@color/text_color"
                             android:textSize="15sp"
-                            android:visibility="visible" />
+                            android:visibility="gone" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/adminList"

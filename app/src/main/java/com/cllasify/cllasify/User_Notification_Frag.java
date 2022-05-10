@@ -161,7 +161,7 @@ public class User_Notification_Frag extends Fragment {
                     refrejuserNotify.child("grpJoiningStatus").setValue("Reject");
                     refrejadminNotify.child("grpJoiningStatus").setValue("Reject");
 
-                    Toast.makeText(getContext(), "Group request from "+userName+"has been Rejected", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "Group request from "+userName+"has been Rejected", Toast.LENGTH_SHORT).show();
                 }
                 else
                 if (notifyCategory.equals("Friend_Request")){
@@ -174,7 +174,7 @@ public class User_Notification_Frag extends Fragment {
                     refrejuserNotify.child("grpJoiningStatus").setValue("Reject");
                     refrejadminNotify.child("grpJoiningStatus").setValue("Reject");
 
-                    Toast.makeText(getContext(), "Friend request from "+userName+"has been Rejected", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "Friend request from "+userName+"has been Rejected", Toast.LENGTH_SHORT).show();
 
                 }
                 else
@@ -188,7 +188,7 @@ public class User_Notification_Frag extends Fragment {
                     refrejuserNotify.child("grpJoiningStatus").setValue("Reject");
                     refrejadminNotify.child("grpJoiningStatus").setValue("Reject");
 
-                    Toast.makeText(getContext(), "Follow request from "+userName+"has been Rejected", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "Follow request from "+userName+"has been Rejected", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -222,7 +222,7 @@ public class User_Notification_Frag extends Fragment {
                             refAccUserNotify.child("grpJoiningStatus").setValue("Approve");
                             refAccAdminNotify.child("grpJoiningStatus").setValue("Approve");
 
-                            Toast.makeText(getContext(), "Group request from "+userName+"has been Approved", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getContext(), "Group request from "+userName+"has been Approved", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -244,7 +244,7 @@ public class User_Notification_Frag extends Fragment {
                     DatabaseReference refAccAdminNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(reqUserID).child(notPushId);
                     refAccUserNotify.child("grpJoiningStatus").setValue("Approve");
                     refAccAdminNotify.child("grpJoiningStatus").setValue("Approve");
-                    Toast.makeText(getContext(), "Friend request from "+userName+"has been Approved", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "Friend request from "+userName+"has been Approved", Toast.LENGTH_SHORT).show();
 
                 }else if (notifyCategory.equals("Follow_Request")){
                     DatabaseReference refSubs_J_Group = FirebaseDatabase.getInstance().getReference().child("Users").child("Follow").child(reqUserID);
@@ -256,7 +256,7 @@ public class User_Notification_Frag extends Fragment {
                     DatabaseReference refAccAdminNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(reqUserID).child(notPushId);
                     refAccUserNotify.child("grpJoiningStatus").setValue("Approve");
                     refAccAdminNotify.child("grpJoiningStatus").setValue("Approve");
-                    Toast.makeText(getContext(), "Follow request from "+userName+"has been Approved", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "Follow request from "+userName+"has been Approved", Toast.LENGTH_SHORT).show();
 
                 }
 

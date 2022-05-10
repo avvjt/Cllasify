@@ -133,6 +133,7 @@
             android:background="@drawable/chat_input_background"
             android:focusable="true"
             android:hint="@string/hint_edittext"
+            android:textCursorDrawable="@drawable/cursor_color"
             android:imeOptions="actionDone"
             android:importantForAutofill="no"
             android:paddingStart="20dp"

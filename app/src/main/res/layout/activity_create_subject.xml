@@ -31,13 +31,14 @@
             android:paddingStart="10dp"
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
-            app:tint="@color/iconColor" />
+            app:tint="@color/iconColor"
+            android:visibility="gone"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="80dp"
+            android:layout_marginStart="130dp"
             android:fontFamily="@font/inter_semibold"
             android:text="Create subject"
             android:textColor="@color/text_color"
@@ -98,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/iconPrimaryColor"
                 android:hint="@string/hint_crateServer"
+                android:textCursorDrawable="@drawable/cursor_color"
                 android:textColor="@color/text_color"
                 android:textColorHint="@color/iconColor"
                 android:textSize="18sp"

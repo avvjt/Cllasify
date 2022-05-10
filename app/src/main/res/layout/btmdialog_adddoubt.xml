@@ -20,7 +20,7 @@
         android:focusable="true"
         android:textSize="15sp"
         android:maxLines="2"
-        android:textCursorDrawable="@null"
+        android:textCursorDrawable="@drawable/cursor_color"
         android:padding="10dp"/>
 
 
@@ -35,7 +35,7 @@
         android:textColorHint="@color/iconColor"
         android:background="@null"
         android:focusable="true"
-        android:textCursorDrawable="@null"
+        android:textCursorDrawable="@drawable/cursor_color"
         android:padding="10dp"
         android:layout_marginTop="10dp"
         android:textSize="16sp"/>
