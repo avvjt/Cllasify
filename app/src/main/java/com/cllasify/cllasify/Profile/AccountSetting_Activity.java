@@ -383,7 +383,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
     public static String getDefaults(String key, Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        return preferences.getString(key, "Default");
+        return preferences.getString(key, "Dark");
     }
 
     private void showBtmTheme() {
@@ -406,14 +406,6 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
         rg_Theme.setOnCheckedChangeListener((radioGroup, i) -> {
             switch (i) {
-                case R.id.btnDefault:
-                    btnDefault.setChecked(true);
-                    Log.d("DLD", "onCreate: " + btnDefault);
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                    setDarkLightDefault.child("DarkLightDefault").setValue("Default");
-                    setDefaults("DefaultDarkLight", "Default", AccountSetting_Activity.this);
-                    dialog.dismiss();
-                    break;
 
                 case R.id.btnDark:
                     btnDark.setChecked(true);
@@ -421,6 +413,15 @@ public class AccountSetting_Activity extends AppCompatActivity {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                     setDarkLightDefault.child("DarkLightDefault").setValue("Dark");
                     setDefaults("DefaultDarkLight", "Dark", AccountSetting_Activity.this);
+                    dialog.dismiss();
+                    break;
+
+                case R.id.btnDefault:
+                    btnDefault.setChecked(true);
+                    Log.d("DLD", "onCreate: " + btnDefault);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                    setDarkLightDefault.child("DarkLightDefault").setValue("Default");
+                    setDefaults("DefaultDarkLight", "Default", AccountSetting_Activity.this);
                     dialog.dismiss();
                     break;
 
@@ -448,7 +449,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
                 btnDefault.setChecked(true);
             }
         } else {
-            btnDefault.setChecked(true);
+            btnDark.setChecked(true);
         }
 
         dialog.show();
@@ -474,7 +475,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
             }
         } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
     }
 
