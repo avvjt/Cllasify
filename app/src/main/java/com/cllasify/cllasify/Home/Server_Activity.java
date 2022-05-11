@@ -950,6 +950,28 @@ public class Server_Activity extends AppCompatActivity {
             }
         });
 
+        DatabaseReference refGrpTeacherList = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId);
+        refGrpTeacherList.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.hasChild("classAdminList")) {
+                    Log.d("STUCHK", "onSUBS: yes");
+                    rv_GrpTeacherList.setVisibility(View.VISIBLE);
+                    adminListText.setVisibility(View.VISIBLE);
+                } else {
+                    Log.d("STUCHK", "onSUBS: nooo");
+                    rv_GrpTeacherList.setVisibility(View.GONE);
+                    adminListText.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         Log.d(TAG, "onSUBS: " + classUniPushId);
 
         DatabaseReference refGrpMembers = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPushId);
