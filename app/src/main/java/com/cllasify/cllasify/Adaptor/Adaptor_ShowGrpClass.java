@@ -78,6 +78,38 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
         String groupClassName = Answers.getClassName();
         Log.d("Grouupt", "GroupName: " + groupClassName);
 
+
+        String classPushId = Answers.getUniPushClassId();
+        String groupPushId = Answers.getGroupPushId();
+
+        DatabaseReference userNotiCheck = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(currUserID).child(groupPushId).child(classPushId);
+
+        userNotiCheck.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (snapshot.exists()) {
+                    if (snapshot.child("joiningStatus").exists()) {
+                        if (snapshot.child("joiningStatus").getValue().equals("req_sent")) {
+                            holder.btn_ClassJoin.setText("Requested");
+                        }
+                        if (snapshot.child("joiningStatus").getValue().equals("Approve")) {
+                            holder.btn_ClassJoin.setText("Joined");
+                        }
+                        if (snapshot.child("joiningStatus").getValue().equals("Reject")) {
+                            holder.btn_ClassJoin.setText("Join");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         holder.tv_ClassTitle.setText(groupClassName);
 
     }
