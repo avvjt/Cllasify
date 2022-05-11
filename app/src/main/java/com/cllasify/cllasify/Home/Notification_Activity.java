@@ -136,7 +136,7 @@ public class Notification_Activity extends AppCompatActivity {
                     showEAllGroupSearchRV();
                 } else {
                     progressBar.setVisibility(View.GONE);
-                   // Toast.makeText(Notification_Activity.this, "No group Notifications", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(Notification_Activity.this, "No group Notifications", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -179,6 +179,7 @@ public class Notification_Activity extends AppCompatActivity {
 
                     DatabaseReference refrejuserNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(currUserId).child(notPushId);
                     DatabaseReference refrejadminNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(reqUserID).child(notPushId);
+
                     refrejuserNotify.child("grpJoiningStatus").setValue("Reject");
                     refrejadminNotify.child("grpJoiningStatus").setValue("Reject");
 
@@ -349,7 +350,6 @@ public class Notification_Activity extends AppCompatActivity {
                     DatabaseReference refSubs_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId).child(classPushId).child("SubGroup_SubsList");
                     DatabaseReference refAll_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("User_Subscribed_Groups");
 
-
                     DatabaseReference refAllGRPs = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
                     refAllGRPs.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -479,7 +479,7 @@ public class Notification_Activity extends AppCompatActivity {
 //                    }
 
                 } else {
-                  //  Toast.makeText(Notification_Activity.this, "No Group request Pending", Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(Notification_Activity.this, "No Group request Pending", Toast.LENGTH_SHORT).show();
                     progressBar.setVisibility(View.GONE);
                 }
 

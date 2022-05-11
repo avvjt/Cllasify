@@ -304,6 +304,7 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                         String notPushId = user.position;
                         String groupPushId = user.groupPositionId;
                         String notifyReq = user.notifyCategory;
+                        String classUni = user.classUniPushId;
 
                         ll_groupdetails.setVisibility(View.GONE);
 
@@ -312,10 +313,13 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
 //                            refSubsGroup.child(reqUserID).setValue(false);
 
                             Log.d("REJECT", "onClick: " + "reqUserID: " + reqUserID + "\ncurrUserId: " + currUserId +
-                                    "\ngroupName: " + groupName + "\nuserName: " + userName + "\nnotPushId: " + notPushId + "\nclassPushid: "+
+                                    "\ngroupName: " + groupName + "\nuserName: " + userName + "\nnotPushId: " + notPushId + "\nclassPushid: "+ user.classUniPushId+
                                     "\ngroupPushId: " + groupPushId + "\nnotifyReq: " + notifyReq );
 
                             ll_groupdetails.setVisibility(View.GONE);
+                            DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(reqUserID).child(groupPushId).child(classUni);
+                            userNoti.child("joiningStatus").setValue("Reject");
+
 
 //                            tv_Groupinvite.setText("User " + userName + " request to join Sub-class : " + classPushid + " of server " + groupName + " has been approved");
 
@@ -358,6 +362,13 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                             DatabaseReference addedOrJoinedGroups = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(reqUserID).child(groupPushId).child("addedOrJoined");
 //
                             addedOrJoinedGroups.setValue("StudentJoin");
+
+                            DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(reqUserID).child(groupPushId).child(classPushid);
+
+                            userNoti.child("joiningStatus").setValue("Approve");
+
+
+                            Log.d("ACCEPTTT", "acceptNotify: "+reqUserID+groupPushId);
 
                             mListener.acceptNotify(reqUserID, currUserId, groupName, userName, classPushid, groupPushId, notifyReq, notPushId, classUni);
 

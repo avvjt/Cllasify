@@ -346,6 +346,9 @@ public class Students_Subjects extends AppCompatActivity {
             }
         });
 
+        FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications")
+                .child(studentUserId).child(groupPushId).child(classUniPushId).removeValue();
+
         FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp")
                 .child(studentUserId).child(groupPushId).removeValue();
 
