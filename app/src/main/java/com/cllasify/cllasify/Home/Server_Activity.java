@@ -1561,7 +1561,7 @@ public class Server_Activity extends AppCompatActivity {
 
         DatabaseReference userJoinedOrAddServer = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID);
         list_OtherUserPublicGroupTitle.clear();
-        userJoinedOrAddServer.addListenerForSingleValueEvent(new ValueEventListener() {
+        userJoinedOrAddServer.orderByChild("dateTime").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
