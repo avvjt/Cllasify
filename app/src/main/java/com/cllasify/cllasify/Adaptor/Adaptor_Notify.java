@@ -24,6 +24,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -37,6 +39,11 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
     String userID;
 
     private OnItemClickListener mListener;
+
+    Calendar calenderCC = Calendar.getInstance();
+    SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+    String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
+
 
     public interface OnItemClickListener {
         void createGroupDialog(String adminGroupID, String groupName);
@@ -359,11 +366,11 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                                     .child("All_User_Group_Class").child(groupPushId).child(reqUserID).child("classUniPushId");
                             saveUserGroupClassRef.setValue(classUni);
 
-                            DatabaseReference addedOrJoinedGroups = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(reqUserID).child(groupPushId).child("addedOrJoined");
-//
-                            addedOrJoinedGroups.setValue("StudentJoin");
+                            DatabaseReference addedOrJoinedGroups = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(reqUserID).child(groupPushId);
+                            addedOrJoinedGroups.child("dateTime").setValue(dateTimeCC);
+                            addedOrJoinedGroups.child("addedOrJoined").setValue("StudentJoin");
 
-                            DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(reqUserID).child(groupPushId).child(classPushid);
+                            DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(reqUserID).child(groupPushId).child(classUni);
 
                             userNoti.child("joiningStatus").setValue("Approve");
 

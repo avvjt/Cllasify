@@ -313,6 +313,9 @@ public class Students_Subjects extends AppCompatActivity {
         FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins")
                 .child(groupPushId).child("classAdminList").child(teacherUserId).removeValue();
 
+        FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications")
+                .child(teacherUserId).child(groupPushId).removeValue();
+
         FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp")
                 .child(teacherUserId).child(groupPushId).removeValue();
 

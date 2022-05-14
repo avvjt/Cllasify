@@ -146,6 +146,38 @@ public class Discover_Item extends AppCompatActivity {
         String groupName = getIntent().getStringExtra("groupName");
         String groupPushId = getIntent().getStringExtra("groupPushId");
 
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        final String userID = currentUser.getUid();
+        final String userName = currentUser.getDisplayName();
+        final String userEmail = currentUser.getEmail();
+
+        DatabaseReference userNotiCheck = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(userID).child(groupPushId).child("classPushId");
+
+        userNotiCheck.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (snapshot.exists()) {
+                    if (snapshot.child("joiningStatus").exists()) {
+                        if (snapshot.child("joiningStatus").getValue().equals("req_sent")) {
+                            join_as_teacher.setText("Requested");
+                        }
+                        if (snapshot.child("joiningStatus").getValue().equals("Approve")) {
+                            join_as_teacher.setText("Joined");
+                        }
+                        if (snapshot.child("joiningStatus").getValue().equals("Reject")) {
+                            join_as_teacher.setText("Join as a teacher");
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         DatabaseReference referenceALLGroup = FirebaseDatabase.getInstance().getReference().
                 child("Groups").child("All_GRPs").child(groupPushId);
 
@@ -476,32 +508,10 @@ public class Discover_Item extends AppCompatActivity {
         final String userName = currentUser.getDisplayName();
         final String userEmail = currentUser.getEmail();
 
+        DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(userID).child(groupPushId).child(classPushId);
         DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(groupPushId).child("groupTeacherJoiningReqs");
         DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(userID);
-
-        refjoiningReq.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                long noofQuesinCategory = snapshot.getChildrenCount() + 1;
-                String pushLong = "Joining B Reqno_" + noofQuesinCategory;
-
-                if (JoinStatus.equals("TeacherJoin")) {
-                    Class_Group userAddComment = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq_Teacher", classPushId);
-                    refjoiningReq.child(pushLong).setValue(userAddComment);
-                    refacceptingReq.child(pushLong).setValue(userAddComment);
-                    showToastTeacher();
-                }
-
-
-                showGrpClassList.notifyDataSetChanged();
-
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
+        DatabaseReference grpJoiningReqs = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classPushId).child("groupJoiningReqs");
 
         DatabaseReference userNotiCheck = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(userID).child(groupPushId).child(classPushId);
         userNotiCheck.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -517,19 +527,37 @@ public class Discover_Item extends AppCompatActivity {
                             Toast.makeText(Discover_Item.this, "Your request has been approved", Toast.LENGTH_SHORT).show();
                         }
                         if (snapshot.child("joiningStatus").getValue().equals("Reject")) {
-                            Toast.makeText(Discover_Item.this, "Dosen't Exists", Toast.LENGTH_SHORT).show();
+
+                            refjoiningReq.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    long noofQuesinCategory = snapshot.getChildrenCount() + 1;
+                                    String pushLong = "Joining B Reqno_" + noofQuesinCategory;
+
+                                    if (JoinStatus.equals("TeacherJoin")) {
+                                        Class_Group userAddComment = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq_Teacher", classPushId);
+                                        refjoiningReq.child(pushLong).setValue(userAddComment);
+                                        refacceptingReq.child(pushLong).setValue(userAddComment);
+                                        userNoti.child("notificationPushId").setValue(pushLong);
+                                        userNoti.child("joiningStatus").setValue("req_sent");
+                                        showToastTeacher();
+                                    }
 
 
-                            FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                            final String userID = currentUser.getUid();
-                            final String userName = currentUser.getDisplayName();
-                            final String userEmail = currentUser.getEmail();
-                            final Uri userPhoto = currentUser.getPhotoUrl();
-                            DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(userID);
+                                    showGrpClassList.notifyDataSetChanged();
 
-                            DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(userID).child(groupPushId).child(classPushId);
 
-                            DatabaseReference grpJoiningReqs = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classPushId).child("groupJoiningReqs");
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                }
+                            });
+
+
+
+
+
 
                             grpJoiningReqs.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -562,16 +590,34 @@ public class Discover_Item extends AppCompatActivity {
 
                 } else {
 
-                    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                    final String userID = currentUser.getUid();
-                    final String userName = currentUser.getDisplayName();
-                    final String userEmail = currentUser.getEmail();
-                    final Uri userPhoto = currentUser.getPhotoUrl();
-                    DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(userID);
 
-                    DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(userID).child(groupPushId).child(classPushId);
+                    refjoiningReq.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            long noofQuesinCategory = snapshot.getChildrenCount() + 1;
+                            String pushLong = "Joining B Reqno_" + noofQuesinCategory;
 
-                    DatabaseReference grpJoiningReqs = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classPushId).child("groupJoiningReqs");
+                            if (JoinStatus.equals("TeacherJoin")) {
+                                Class_Group userAddComment = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq_Teacher", classPushId);
+                                refjoiningReq.child(pushLong).setValue(userAddComment);
+                                refacceptingReq.child(pushLong).setValue(userAddComment);
+                                userNoti.child("notificationPushId").setValue(pushLong);
+                                userNoti.child("joiningStatus").setValue("req_sent");
+                                userNoti.child("notificationPushId").setValue(pushLong);
+                                userNoti.child("joiningStatus").setValue("req_sent");
+                                showToastTeacher();
+                            }
+
+
+                            showGrpClassList.notifyDataSetChanged();
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
 
                     grpJoiningReqs.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override

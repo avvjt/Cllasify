@@ -1,5 +1,6 @@
 package com.cllasify.cllasify.Home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 
 public class Teacher_Joining_Reqs extends Fragment {
 
@@ -37,9 +39,9 @@ public class Teacher_Joining_Reqs extends Fragment {
     List<Class_Group> listGroupSTitle;
     DatabaseReference refSearchShowGroup;
     RecyclerView rv_StudentJoiningNotification;
-    Calendar calenderCC=Calendar.getInstance();
-    SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
-    String dateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
+    Calendar calenderCC = Calendar.getInstance();
+    SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+    String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
     Class_Group userSubsGroupClass;
 
     final String[] groupPushId = new String[1];
@@ -53,25 +55,31 @@ public class Teacher_Joining_Reqs extends Fragment {
         View view = inflater.inflate(R.layout.fragment_student__joining__reqs, container, false);
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        assert currentUser != null;
         final String userID = currentUser.getUid();
 
         DatabaseReference chkJoinedORAddGRP = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
         chkJoinedORAddGRP.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                subjectUniPushId[0] = snapshot.child("subjectUniPushId").getValue().toString().trim();
-                groupPushId[0] = snapshot.child("clickedGroupPushId").getValue().toString().trim();
-                uniPushClassId[0] = snapshot.child("uniPushClassId").getValue().toString().trim();
-
+                if (snapshot.child("subjectUniPushId").exists()) {
+                    subjectUniPushId[0] = Objects.requireNonNull(snapshot.child("subjectUniPushId").getValue()).toString().trim();
+                }
+                if (snapshot.child("clickedGroupPushId").exists()) {
+                    groupPushId[0] = Objects.requireNonNull(snapshot.child("clickedGroupPushId").getValue()).toString().trim();
+                }
+                if (snapshot.child("uniPushClassId").exists()) {
+                    uniPushClassId[0] = Objects.requireNonNull(snapshot.child("uniPushClassId").getValue()).toString().trim();
+                }
                 refSearchShowGroup = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(groupPushId[0]).child("groupTeacherJoiningReqs");
 
                 refSearchShowGroup.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.getChildrenCount()>0) {
+                        if (snapshot.getChildrenCount() > 0) {
                             showEAllGroupSearchRV(uniPushClassId[0]);
-                        }else{
-                           // Toast.makeText(getActivity(), "No notifications available at this moment", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Toast.makeText(getActivity(), "No notifications available at this moment", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -89,7 +97,7 @@ public class Teacher_Joining_Reqs extends Fragment {
 
         rv_StudentJoiningNotification = view.findViewById(R.id.rv_StudentJoiningNotification);
         rv_StudentJoiningNotification.setLayoutManager(new LinearLayoutManager(getActivity()));
-        listGroupSTitle=new ArrayList<>();
+        listGroupSTitle = new ArrayList<>();
         showAllGroupAdaptor = new Adaptor_Notify(getActivity(), listGroupSTitle);
         rv_StudentJoiningNotification.setAdapter(showAllGroupAdaptor);
 
@@ -108,9 +116,9 @@ public class Teacher_Joining_Reqs extends Fragment {
 
             @Override
             public void rejectNotify(String reqUserID, String currUserId, String groupName, String userName, String classPushId, String groupPushId, String notifyCategory, String notPushId) {
-                if (notifyCategory.equals("Group_JoiningReq_Teacher")){
+                if (notifyCategory.equals("Group_JoiningReq_Teacher")) {
                     DatabaseReference refSubs_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId).child(classPushId).child("SubGroup_SubsList");
-                    userSubsGroupClass = new Class_Group(dateTimeCC,userName, reqUserID, currUserId, groupName,classPushId,"false","Off");
+                    userSubsGroupClass = new Class_Group(dateTimeCC, userName, reqUserID, currUserId, groupName, classPushId, "false", "Off");
                     refSubs_J_Group.child(reqUserID).setValue(userSubsGroupClass);
 
                     DatabaseReference refrejuserNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(groupPushId).child("groupTeacherJoiningReqs").child(notPushId);
@@ -124,9 +132,9 @@ public class Teacher_Joining_Reqs extends Fragment {
             }
 
             @Override
-            public void acceptNotify(String reqUserID, String currUserId, String groupName, String userName, String classPushId, String groupPushId, String notifyCategory, String notPushId,String classUni) {
+            public void acceptNotify(String reqUserID, String currUserId, String groupName, String userName, String classPushId, String groupPushId, String notifyCategory, String notPushId, String classUni) {
 
-                if(notifyCategory.equals("Group_JoiningReq_Teacher")) {
+                if (notifyCategory.equals("Group_JoiningReq_Teacher")) {
                     DatabaseReference refSubs_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId).child(classPushId).child("SubGroup_SubsList");
                     DatabaseReference refAll_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("User_Subscribed_Groups");
 
@@ -191,7 +199,7 @@ public class Teacher_Joining_Reqs extends Fragment {
                             String push = "joining_No" + noofGroupinCategory;
 
                             Calendar calenderCC = Calendar.getInstance();
-                            SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+                            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
                             String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
                             userSubsGroupClass = new Class_Group(dateTimeCC, userName, reqUserID, currUserId, noofGroupinCategory, groupName, classPushId, "Class Member", "On");
                             refSubs_J_Group.child(reqUserID).setValue(userSubsGroupClass);
@@ -212,7 +220,6 @@ public class Teacher_Joining_Reqs extends Fragment {
                     });
 
 
-
                 }
 
 
@@ -221,12 +228,13 @@ public class Teacher_Joining_Reqs extends Fragment {
 
 
         ChildEventListener childEventListener = new ChildEventListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.getChildrenCount()>0) {
+                if (dataSnapshot.getChildrenCount() > 0) {
                     Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
                     assert class_userDashBoard != null;
-                    String groupjoinStatus=class_userDashBoard.getGrpJoiningStatus();
+                    String groupjoinStatus = class_userDashBoard.getGrpJoiningStatus();
 //                    Toast.makeText(getActivity(), "status"+groupjoinStatus, Toast.LENGTH_SHORT).show();
 //                    if ((!groupjoinStatus.equals("Approve")) && (!groupjoinStatus.equals("Reject"))) {
                     listGroupSTitle.add(class_userDashBoard);
