@@ -145,7 +145,7 @@ public class Create_Class extends AppCompatActivity {
                 refuserAllGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_All_Group").child(userID).child(push);
                 refuserPersonalGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Private_Group").child(userID).child(push);
                 refuserPublicGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Public_Group").child(userID).child(push);
-                addedOrJoinedGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID).child(push).child("addedOrJoined");
+                addedOrJoinedGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID).child(push);
 
                 userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, GroupName, "Public", noofGroupinCategory);
                 userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, GroupName, "Public", noofGroupinCategory);
@@ -156,7 +156,8 @@ public class Create_Class extends AppCompatActivity {
                 refAllGroup.setValue(userAddGroupClass);
                 refGroupSubsList.setValue(userSubsGroupClass);
                 refuserAllGroup.setValue(userAddGroupClass);
-                addedOrJoinedGroup.setValue("Added");
+                addedOrJoinedGroup.child("addedOrJoined").setValue("Added");
+                addedOrJoinedGroup.child("dateTime").setValue(dateTimeCC);
 
                 saveClassGroup(GroupName, push, classGroupName);
 

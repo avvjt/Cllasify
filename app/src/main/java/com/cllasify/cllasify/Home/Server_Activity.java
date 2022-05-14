@@ -312,9 +312,9 @@ public class Server_Activity extends AppCompatActivity {
 
 
         //setting up Adapter
-        showGroupAdaptor = new Adaptor_QueryGroup(this, list_GroupTitle);
-        showUserPrivateGroupAdaptor = new Adaptor_QueryGroup(this, list_UserPrivateGroupTitle);
-        showUserPublicGroupAdaptor = new Adaptor_QueryGroup(this, list_UserPublicGroupTitle);
+//        showGroupAdaptor = new Adaptor_QueryGroup(this, list_GroupTitle);
+//        showUserPrivateGroupAdaptor = new Adaptor_QueryGroup(this, list_UserPrivateGroupTitle);
+//        showUserPublicGroupAdaptor = new Adaptor_QueryGroup(this, list_UserPublicGroupTitle);
         showChatDashAdaptor = new Adaptor_ShowGroup(this, list_ChatDashboard);
         showOtherUserPublicGroupAdaptor = new Adaptor_QueryGroup(this, list_OtherUserPublicGroupTitle);
 
@@ -342,7 +342,7 @@ public class Server_Activity extends AppCompatActivity {
 
         show_FriendAdaptor = new Adaptor_Friends(this, list_Friend);
         showChatListDashAdaptor = new Adaptor_Friends(this, list_ChatListDashboard);
-        rv_UserPublicGroupTitle.setAdapter(showUserPublicGroupAdaptor);
+//        rv_UserPublicGroupTitle.setAdapter(showUserPublicGroupAdaptor);
         rv_OtherPublicGroupTitle.setAdapter(showOtherUserPublicGroupAdaptor);
 
 
@@ -387,6 +387,14 @@ public class Server_Activity extends AppCompatActivity {
                 final String[] subjectUniPushId = new String[1];
                 final String[] clickedGroupName = new String[1];
 
+                if (flag == true) {
+                    FragmentManager manager = getSupportFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    manager.getBackStackEntryCount();
+                    transaction.remove(doubtFragment);
+                    transaction.commit();
+                    flag = false;
+                }
 
                 DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
 
@@ -1560,7 +1568,6 @@ public class Server_Activity extends AppCompatActivity {
 
 
         DatabaseReference userJoinedOrAddServer = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID);
-        list_OtherUserPublicGroupTitle.clear();
         userJoinedOrAddServer.orderByChild("dateTime").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -1576,6 +1583,7 @@ public class Server_Activity extends AppCompatActivity {
                             DatabaseReference databaseReferenceCHKADMIN = FirebaseDatabase.getInstance().getReference()
                                     .child("Groups").child("Check_Group_Admins").child(UserAddedOrJoinedGrpPUSHIDS).child("classAdminList");
 
+                            list_OtherUserPublicGroupTitle.clear();
                             databaseReferenceCHKADMIN.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -1590,6 +1598,7 @@ public class Server_Activity extends AppCompatActivity {
                                                 if (newSnap.exists() && adminUserId.equals(currentUser.getUid())) {
                                                     Log.i("SBO", dataSnapshot1.child("userId").getValue().toString());
                                                     list_OtherUserPublicGroupTitle.add(userQuestionsAdded);
+//                                                    showOtherUserPublicGroupAdaptor.setmDatalistNew(list_OtherUserPublicGroupTitle);
                                                     showOtherUserPublicGroupAdaptor.notifyDataSetChanged();
                                                 }
 
@@ -1613,7 +1622,6 @@ public class Server_Activity extends AppCompatActivity {
 
                         } else {
                             DatabaseReference databaseReferenceGetUserJoinedClass = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class").child(UserAddedOrJoinedGrpPUSHIDS);
-
                             list_OtherUserPublicGroupTitle.clear();
                             databaseReferenceGetUserJoinedClass.addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -1629,6 +1637,7 @@ public class Server_Activity extends AppCompatActivity {
                                                     if (check.equals("Class Member")) {
                                                         Class_Group userQuestions = otherSnap.getValue(Class_Group.class);
                                                         list_OtherUserPublicGroupTitle.add(userQuestions);
+//                                                        showOtherUserPublicGroupAdaptor.setmDatalistNew(list_OtherUserPublicGroupTitle);
                                                         showOtherUserPublicGroupAdaptor.notifyDataSetChanged();
 
                                                     }
@@ -1667,10 +1676,6 @@ public class Server_Activity extends AppCompatActivity {
         });
 
         showOtherUserPublicGroupAdaptor.setOnItemClickListener(new Adaptor_QueryGroup.OnItemClickListener() {
-            @Override
-            public void addChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID) {
-
-            }
 
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
@@ -1918,12 +1923,6 @@ public class Server_Activity extends AppCompatActivity {
                     }
                 });
 
-
-            }
-
-
-            @Override
-            public void showll_Group(int position, String groupName, String groupPushId, String groupUserID) {
 
             }
 
@@ -2303,12 +2302,12 @@ public class Server_Activity extends AppCompatActivity {
 
                             }
                         }).setNegativeButton("No",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
                 AlertDialog alert = alertdialogbuilder.create();
                 alert.show();
             }

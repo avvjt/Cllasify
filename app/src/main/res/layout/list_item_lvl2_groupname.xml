@@ -36,44 +36,45 @@
             android:paddingEnd="15dp"
             android:textAllCaps="true"
             android:textColor="@color/text_color"
-            android:textSize="15sp"
-            app:drawableStartCompat="@drawable/ic_hashtag_public"
-            app:drawableTint="@color/purple" />
+            android:textSize="15sp" />
 
 
     </RelativeLayout>
 
-
-    <RelativeLayout
-        android:id="@+id/drops"
-        android:layout_width="40dp"
-        android:layout_marginTop="5dp"
-        android:layout_height="wrap_content">
-
-
-        <ImageButton
-            android:id="@+id/dropDownBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <RelativeLayout
+            android:id="@+id/drops"
+            android:layout_width="40dp"
+            android:layout_marginTop="5dp"
             android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:visibility="gone"
-            android:layout_margin="5dp"
-            android:background="@color/transparent"
-            android:padding="5dp"
-            android:src="@drawable/drop_down" />
+            android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/dropUpBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true"
-            android:layout_margin="5dp"
-            android:background="@color/transparent"
-            android:padding="5dp"
-            android:src="@drawable/drop_up" />
-    </RelativeLayout>
+
+            <ImageButton
+                android:id="@+id/dropDownBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                android:layout_margin="5dp"
+                android:background="@color/transparent"
+                android:padding="5dp"
+                android:src="@drawable/drop_down" />
+
+            <ImageButton
+                android:id="@+id/dropUpBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/transparent"
+                android:padding="5dp"
+                android:src="@drawable/drop_up" />
+        </RelativeLayout>
 
     </LinearLayout>
 

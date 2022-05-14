@@ -144,8 +144,9 @@
                 <!-- Friends Section -->
                 <LinearLayout
                     android:id="@+id/friendsSection"
-                    android:layout_width="150dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingEnd="15dp"
                     android:layout_toEndOf="@+id/groupRVs">
 
 
@@ -386,10 +387,9 @@
             android:visibility="gone">
 
             <!-- End Panel scrollview   -->
-            <ScrollView
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:scrollbarSize="1dp">
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:id="@+id/endPanelLinearLayout"
@@ -616,7 +616,8 @@
                     <!--Exam and result button ; don't need-->
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone" >
 
                         <Button
                             android:id="@+id/btn_lteachexam"
@@ -625,8 +626,7 @@
                             android:fontFamily="@font/inter_semibold"
                             android:text="Exam"
                             android:textColor="@color/text_color"
-                            android:textSize="16sp"
-                            android:visibility="gone" />
+                            android:textSize="16sp"/>
 
                         <Button
                             android:id="@+id/btn_lteachresult"
@@ -635,15 +635,14 @@
                             android:fontFamily="@font/inter_semibold"
                             android:text="Result"
                             android:textColor="@color/text_color"
-                            android:textSize="16sp"
-                            android:visibility="gone" />
+                            android:textSize="16sp"/>
 
 
                     </RelativeLayout>
 
                 </LinearLayout>
 
-            </ScrollView>
+            </androidx.core.widget.NestedScrollView>
 
         </RelativeLayout>
 

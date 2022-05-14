@@ -4,6 +4,7 @@ import static com.cllasify.cllasify.Profile.AccountSetting_Activity.getDefaults;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -72,9 +73,59 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
         Log.d(TAG, "onBindViewHolder: Adapter Class: " + parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName());
 
         Class_Group_Names class_group_names = parentItemArrayListClassName.get(holder.getAdapterPosition());
-        /*
 
-         */
+/*
+        Drawable img = context.getResources().getDrawable(R.drawable.drop_up);
+        Drawable imgDown = context.getResources().getDrawable(R.drawable.drop_down);
+        img.setBounds(0, 0, 60, 60);
+
+        final boolean[] classDropDownClicked = {true};
+
+        Log.d("BTNSTATE", "onBindViewHolder: " + classDropDownClicked[0]);
+
+
+        if (classDropDownClicked[0]) {
+            holder.classGroupName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+                    classDropDownClicked[0] = false;
+                    holder.classGroupName.setCompoundDrawables(null, null, imgDown, null);
+                    holder.subjectList.setVisibility(View.VISIBLE);
+
+                    Log.d("POSS", "Class position : " + class_group_names.getClassName());
+                    onAddSubjectClickListener.onClassClickListener(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(), class_group_names.getUniPushClassId());
+
+                    Log.d("BTNSTATEDown", "onBindViewHolder: " + classDropDownClicked[0]);
+
+
+                }
+            });
+
+        }else {
+            holder.classGroupName.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+//                Toast.makeText(context, "Clicked on Class", Toast.LENGTH_SHORT).show();
+
+
+                    classDropDownClicked[0] = true;
+                    holder.classGroupName.setCompoundDrawables(null, null, img, null);
+                    holder.subjectList.setVisibility(View.GONE);
+
+                    Log.d("POSS", "Class position : " + class_group_names.getClassName());
+                    onAddSubjectClickListener.onClassClickListener(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(), class_group_names.getUniPushClassId());
+
+
+                    Log.d("BTNSTATEUp", "onBindViewHolder: " + classDropDownClicked[0]);
+
+
+                }
+            });
+        }
+*/
+
 
         holder.classGroupName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +135,7 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
                 onAddSubjectClickListener.onClassClickListener(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(), class_group_names.getUniPushClassId());
             }
         });
+
 
         holder.dropUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +154,8 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
                 holder.dropUpBtn.setVisibility(View.VISIBLE);
             }
         });
+
+
 /*
         holder.classGroupName.setOnClickListener(new View.OnClickListener() {
             @Override

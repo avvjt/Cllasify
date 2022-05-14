@@ -32,17 +32,9 @@ public class Adaptor_QueryGroup extends RecyclerView.Adapter<Adaptor_QueryGroup.
     private OnItemClickListener mListener;
 
     public interface  OnItemClickListener{
-
-
-        void addChildGroupAdaptor(int position, String groupName,String groupPushId, String groupUserID);
-
         void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID,String groupCategory);
-        void showll_Group(int position, String groupName,String groupPushId, String groupUserID);
-
-
-
-
     }
+
     public void setOnItemClickListener(OnItemClickListener listener){
         mListener=listener;
     }
@@ -51,6 +43,14 @@ public class Adaptor_QueryGroup extends RecyclerView.Adapter<Adaptor_QueryGroup.
         this.context = context;
         this.mDatalistNew = mDatalistNew;
     }
+
+    //    public Adaptor_QueryGroup(Context context) {
+//        this.context = context;
+//    }
+//
+//    public void setmDatalistNew(List<Class_Group> mDatalistNew) {
+//        this.mDatalistNew = mDatalistNew;
+//    }
 
     @NonNull
     @Override

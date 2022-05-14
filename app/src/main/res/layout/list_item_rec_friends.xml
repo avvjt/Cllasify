@@ -3,7 +3,6 @@
     android:id="@+id/ll_ShowGroup"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/page_color"
     android:padding="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
