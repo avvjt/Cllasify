@@ -56,7 +56,6 @@ public class Notification_Activity extends AppCompatActivity {
     ChipNavigationBar chipNavigationBar;
 
     ProgressBar progressBar;
-
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(Notification_Activity.this, Server_Activity.class);
@@ -234,6 +233,7 @@ public class Notification_Activity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     Class_Student_Details class_student_details = new Class_Student_Details(true, reqUserID, userName);
+                                    refAllGRPsTeacherJoin.child(groupPushId).child("dateTime").setValue(dateTimeCC);
                                     refAllGRPsTeacherJoin.child(groupPushId).child("addedOrJoined").setValue("TeacherJoin");
                                 }
 
