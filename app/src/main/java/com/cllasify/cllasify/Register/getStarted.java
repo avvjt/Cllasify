@@ -230,13 +230,25 @@ public class getStarted extends AppCompatActivity {
                         // Get new FCM registration token
                         String token = task.getResult();
                         DatabaseReference refUserRegister = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
-                        refUserRegister.child("Name").setValue(Name);
-                        refUserRegister.child("userEmailId").setValue(userEmailID);
-                        refUserRegister.child("userId").setValue(userID);
-                        refUserRegister.child("dateTime").setValue(udateTimeCC);
-                        refUserRegister.child("userStatus").setValue("Online");
-                        refUserRegister.child("token").setValue(token);
-                        refUserRegister.child("profilePic").setValue(userPhoto.toString());
+                        refUserRegister.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (!(snapshot.exists())) {
+                                    refUserRegister.child("Name").setValue(Name);
+                                    refUserRegister.child("userEmailId").setValue(userEmailID);
+                                    refUserRegister.child("userId").setValue(userID);
+                                    refUserRegister.child("dateTime").setValue(udateTimeCC);
+                                    refUserRegister.child("userStatus").setValue("Online");
+                                    refUserRegister.child("token").setValue(token);
+                                    refUserRegister.child("profilePic").setValue(userPhoto.toString());
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
 
                         showToast();
 
