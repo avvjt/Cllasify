@@ -78,7 +78,7 @@ public class Adaptor_Attendance extends RecyclerView.Adapter<Adaptor_Attendance.
                     holder.tv_UserName.setText(snapshot.child("Name").getValue().toString());
                 }
                 if (snapshot.child("uniqueUserName").exists()) {
-                    holder.tv_unique_userName.setText(snapshot.child("uniqueUserName").getValue().toString());
+//                    holder.tv_unique_userName.setText(snapshot.child("uniqueUserName").getValue().toString());
                 }
                 if (snapshot.child("profilePic").exists()) {
                     String profilePicUrl = snapshot.child("profilePic").getValue().toString();

@@ -75,11 +75,181 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         Class_Group class_GroupDetails = mDatalistNew.get(position);
 
+        String GroupName = class_GroupDetails.getGroupName();
+        String userName = class_GroupDetails.getUserName();
+        String reqDate = class_GroupDetails.getDateTime();
+        String subServer = class_GroupDetails.getSubGroupName();
+        String inviteStatus = class_GroupDetails.getGrpJoiningStatus();
+        String NotifyCategory = class_GroupDetails.getNotifyCategory();
+
+        firebaseAuth = FirebaseAuth.getInstance();
+        currentUser = firebaseAuth.getCurrentUser();
+        userID = currentUser.getUid();
+
         String reqUserID = class_GroupDetails.userId;
         DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(reqUserID);
         refUserProfPic.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+
+                //Setting name
+                if (NotifyCategory.equals("Friend_Request")) {
+
+                    if (inviteStatus.equals("Approve")) {
+
+                        if (snapshot.child("Name").exists()) {
+                            String userNameRealtime = snapshot.child("Name").getValue().toString();
+                            holder.username.setText(userNameRealtime);
+                            holder.tv_Groupinvite.setText("User " + userNameRealtime + " request for Add you as a friend has been approved");
+                        }
+                        holder.tv_ReqDate.setVisibility(View.GONE);
+                        holder.ll_groupdetails.setVisibility(View.GONE);
+                    } else if (inviteStatus.equals("Reject")) {
+
+                        if (snapshot.child("Name").exists()) {
+                            String userNameRealtime = snapshot.child("Name").getValue().toString();
+                            holder.username.setText(userNameRealtime);
+                            holder.tv_Groupinvite.setText("User " + userNameRealtime + " request for Add you as a friend has been rejected");
+                        }
+                        holder.ll_groupdetails.setVisibility(View.GONE);
+                        holder.tv_ReqDate.setVisibility(View.GONE);
+
+                    } else {
+
+                        holder.ll_groupdetails.setVisibility(View.VISIBLE);
+                        if (GroupName.isEmpty()) {
+                            holder.tv_Groupinvite.setVisibility(View.GONE);
+                        } else {
+                            if (snapshot.child("Name").exists()) {
+                                String userNameRealtime = snapshot.child("Name").getValue().toString();
+                                holder.username.setText(userNameRealtime);
+                                holder.tv_Groupinvite.setText("User " + userNameRealtime + " wants to add you as a Friend");
+                            }
+
+                        }
+                        if (GroupName.isEmpty()) {
+                            holder.tv_ReqDate.setVisibility(View.GONE);
+                        } else {
+                            holder.tv_ReqDate.setText("Requested on : " + reqDate);
+                        }
+                    }
+                }
+
+
+                DatabaseReference servName = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+                servName.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot01) {
+                        if (snapshot01.getChildrenCount() > 0) {
+
+                            FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
+                            assert mUser != null;
+                            String userId = mUser.getUid();
+                            Log.d("NOTI00", "onBindViewHolder: yessssssss!!!!!" + NotifyCategory);
+
+
+
+
+                            if (NotifyCategory.equals("Group_JoiningReq_Teacher")) {
+
+                                if (inviteStatus.equals("Approve")) {
+                                    if (snapshot.child("Name").exists()) {
+                                        String userNameRealtime = snapshot.child("Name").getValue().toString();
+                                        holder.username.setText(userNameRealtime);
+                                    }
+
+                                    holder.tv_ReqDate.setVisibility(View.GONE);
+                                    holder.tv_Groupinvite.setText(GroupName+" joining has been approved");
+                                    holder.ll_groupdetails.setVisibility(View.GONE);
+                                } else if (inviteStatus.equals("Reject")) {
+                                    if (snapshot.child("Name").exists()) {
+                                        String userNameRealtime = snapshot.child("Name").getValue().toString();
+                                        holder.username.setText(userNameRealtime);
+                                    }
+                                    holder.ll_groupdetails.setVisibility(View.GONE);
+                                    holder.tv_ReqDate.setVisibility(View.GONE);
+                                    holder.tv_Groupinvite.setText(GroupName+" joining has been rejected");
+                                } else {
+
+                                    holder.ll_groupdetails.setVisibility(View.VISIBLE);
+                                    if (GroupName.isEmpty()) {
+                                        holder.tv_Groupinvite.setVisibility(View.GONE);
+                                    } else {
+                                        if (snapshot.child("Name").exists()) {
+                                            String userNameRealtime = snapshot.child("Name").getValue().toString();
+                                            holder.username.setText(userNameRealtime);
+                                        }
+                                        holder.tv_Groupinvite.setText("Wants to join");
+
+                                    }
+                                    if (GroupName.isEmpty()) {
+                                        holder.tv_ReqDate.setVisibility(View.GONE);
+                                    } else {
+                                        holder.tv_ReqDate.setText("Requested on : " + reqDate);
+                                    }
+                                }
+                            }
+                            if (NotifyCategory.equals("Group_JoiningReq")) {
+
+                                if (inviteStatus.equals("Approve")) {
+                                    holder.tv_Groupinvite.setText(GroupName+" joining has been approved");
+                                    holder.ll_groupdetails.setVisibility(View.GONE);
+                                    holder.tv_ReqDate.setVisibility(View.GONE);
+                                    if (snapshot.child("Name").exists()) {
+                                        String userNameRealtime = snapshot.child("Name").getValue().toString();
+                                        holder.username.setText(userNameRealtime);
+                                    }
+
+                                } else if (inviteStatus.equals("Reject")) {
+                                    holder.ll_groupdetails.setVisibility(View.GONE);
+                                    holder.tv_ReqDate.setVisibility(View.GONE);
+                                    if (snapshot.child("Name").exists()) {
+                                        String userNameRealtime = snapshot.child("Name").getValue().toString();
+                                        holder.username.setText(userNameRealtime);
+                                    }
+                                    holder.tv_Groupinvite.setText(GroupName+" joining has been rejected");
+                                } else {
+
+                                    holder.ll_groupdetails.setVisibility(View.VISIBLE);
+                                    if (GroupName.isEmpty()) {
+                                        holder.tv_Groupinvite.setVisibility(View.GONE);
+                                    } else {
+                                        if (snapshot.child("Name").exists()) {
+                                            String userNameRealtime = snapshot.child("Name").getValue().toString();
+                                            holder.username.setText(userNameRealtime);
+                                        }
+                                        holder.tv_Groupinvite.setText("Wants to join");
+
+                                    }
+                                    if (GroupName.isEmpty()) {
+                                        holder.tv_ReqDate.setVisibility(View.GONE);
+                                    } else {
+                                        holder.tv_ReqDate.setText("Requested on : " + reqDate);
+                                    }
+                                }
+                            }
+
+
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+
+
+
+
+
+
+
                 if (snapshot.child("profilePic").exists()) {
                     String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                     Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
@@ -95,181 +265,9 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
             }
         });
 
-        String GroupName = class_GroupDetails.getGroupName();
-        String userName = class_GroupDetails.getUserName();
-        String reqDate = class_GroupDetails.getDateTime();
-        String subServer = class_GroupDetails.getSubGroupName();
-        String inviteStatus = class_GroupDetails.getGrpJoiningStatus();
-        String NotifyCategory = class_GroupDetails.getNotifyCategory();
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        currentUser = firebaseAuth.getCurrentUser();
-        userID = currentUser.getUid();
-
-        if (NotifyCategory.equals("Friend_Request")) {
-
-            if (inviteStatus.equals("Approve")) {
-                holder.username.setText(userName);
-                holder.tv_Groupinvite.setText("User " + userName + " request for Add you as a friend has been approved");
-                holder.tv_ReqDate.setVisibility(View.GONE);
-                holder.ll_groupdetails.setVisibility(View.GONE);
-            } else if (inviteStatus.equals("Reject")) {
-                holder.username.setText(userName);
-                holder.ll_groupdetails.setVisibility(View.GONE);
-                holder.tv_ReqDate.setVisibility(View.GONE);
-                holder.tv_Groupinvite.setText("User " + userName + " request for Add you as a friend has been rejected");
-            } else {
-
-                holder.ll_groupdetails.setVisibility(View.VISIBLE);
-                if (GroupName.isEmpty()) {
-                    holder.tv_Groupinvite.setVisibility(View.GONE);
-                } else {
-                    holder.username.setText(userName);
-                    holder.tv_Groupinvite.setText("User " + userName + " wants to add you as a Friend");
-                }
-                if (GroupName.isEmpty()) {
-                    holder.tv_ReqDate.setVisibility(View.GONE);
-                } else {
-                    holder.tv_ReqDate.setText("Requested on : " + reqDate);
-                }
-            }
-        }
-
-
-        DatabaseReference servName = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
-        servName.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount() > 0) {
-
-                        FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-                        assert mUser != null;
-                        String userId = mUser.getUid();
-                        Log.d("NOTI00", "onBindViewHolder: yessssssss!!!!!" + NotifyCategory);
-                        if (NotifyCategory.equals("Group_JoiningReq_Teacher")) {
-
-                            if (inviteStatus.equals("Approve")) {
-                                holder.username.setText(userName);
-                                holder.tv_ReqDate.setVisibility(View.GONE);
-                                holder.tv_Groupinvite.setText(GroupName+" joining has been approved");
-                                holder.ll_groupdetails.setVisibility(View.GONE);
-                            } else if (inviteStatus.equals("Reject")) {
-                                holder.username.setText(userName);
-                                holder.ll_groupdetails.setVisibility(View.GONE);
-                                holder.tv_ReqDate.setVisibility(View.GONE);
-                                holder.tv_Groupinvite.setText(GroupName+" joining has been rejected");
-                            } else {
-
-                                holder.ll_groupdetails.setVisibility(View.VISIBLE);
-                                if (GroupName.isEmpty()) {
-                                    holder.tv_Groupinvite.setVisibility(View.GONE);
-                                } else {
-                                    holder.username.setText(userName);
-                                    holder.tv_Groupinvite.setText("Wants to join");
-
-                                }
-                                if (GroupName.isEmpty()) {
-                                    holder.tv_ReqDate.setVisibility(View.GONE);
-                                } else {
-                                    holder.tv_ReqDate.setText("Requested on : " + reqDate);
-                                }
-                            }
-                        }
-                        if (NotifyCategory.equals("Group_JoiningReq")) {
-
-                            if (inviteStatus.equals("Approve")) {
-                                holder.tv_Groupinvite.setText(GroupName+" joining has been approved");
-                                holder.ll_groupdetails.setVisibility(View.GONE);
-                                holder.tv_ReqDate.setVisibility(View.GONE);
-                                holder.username.setText(userName);
-
-                            } else if (inviteStatus.equals("Reject")) {
-                                holder.ll_groupdetails.setVisibility(View.GONE);
-                                holder.tv_ReqDate.setVisibility(View.GONE);
-                                holder.username.setText(userName);
-                                holder.tv_Groupinvite.setText(GroupName+" joining has been rejected");
-                            } else {
-
-                                holder.ll_groupdetails.setVisibility(View.VISIBLE);
-                                if (GroupName.isEmpty()) {
-                                    holder.tv_Groupinvite.setVisibility(View.GONE);
-                                } else {
-                                    holder.username.setText(userName);
-                                    holder.tv_Groupinvite.setText("Wants to join");
-
-                                }
-                                if (GroupName.isEmpty()) {
-                                    holder.tv_ReqDate.setVisibility(View.GONE);
-                                } else {
-                                    holder.tv_ReqDate.setText("Requested on : " + reqDate);
-                                }
-                            }
-                        }
-                    if (NotifyCategory.equals("Friend_Request")) {
-
-                        if (inviteStatus.equals("Approve")) {
-                            holder.username.setText(userName);
-                            holder.tv_Groupinvite.setText("Follow request has been approved");
-                            holder.tv_ReqDate.setVisibility(View.GONE);
-                            holder.ll_groupdetails.setVisibility(View.GONE);
-                        } else if (inviteStatus.equals("Reject")) {
-                            holder.username.setText(userName);
-                            holder.ll_groupdetails.setVisibility(View.GONE);
-                            holder.tv_ReqDate.setVisibility(View.GONE);
-                            holder.tv_Groupinvite.setText("Follow request has been rejected");
-                        } else {
-                            holder.ll_groupdetails.setVisibility(View.VISIBLE);
-                            if (GroupName.isEmpty()) {
-                                holder.tv_Groupinvite.setVisibility(View.GONE);
-                            } else {
-                                holder.username.setText(userName);
-                                holder.tv_Groupinvite.setText("Follow request");
-                            }
-                            if (GroupName.isEmpty()) {
-                                holder.tv_ReqDate.setVisibility(View.GONE);
-                            } else {
-                                holder.tv_ReqDate.setText("Requested on : " + reqDate);
-                            }
-                        }
-                    }
-                        else if (NotifyCategory.equals("Follow_Request")) {
-
-                            if (inviteStatus.equals("Approve")) {
-                                holder.tv_Groupinvite.setText("Follow request has been approved");
-                                holder.tv_ReqDate.setVisibility(View.GONE);
-                                holder.ll_groupdetails.setVisibility(View.GONE);
-                                holder.username.setText(userName);
-                            } else if (inviteStatus.equals("Reject")) {
-                                holder.username.setText(userName);
-                                holder.ll_groupdetails.setVisibility(View.GONE);
-                                holder.tv_ReqDate.setVisibility(View.GONE);
-                                holder.tv_Groupinvite.setText("Follow request has been rejected");
-                            } else {
-                                holder.ll_groupdetails.setVisibility(View.VISIBLE);
-                                if (GroupName.isEmpty()) {
-                                    holder.tv_Groupinvite.setVisibility(View.GONE);
-                                } else {
-                                    holder.username.setText(userName);
-                                    holder.tv_Groupinvite.setText("Follow request");
-                                }
-                                if (GroupName.isEmpty()) {
-                                    holder.tv_ReqDate.setVisibility(View.GONE);
-                                } else {
-                                    holder.tv_ReqDate.setText("Requested on : " + reqDate);
-                                }
-                            }
-                        }
 
 
 
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
     }
 

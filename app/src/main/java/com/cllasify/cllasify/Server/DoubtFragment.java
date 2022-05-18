@@ -135,7 +135,7 @@ public class DoubtFragment extends Fragment {
         btn_Back = view.findViewById(R.id.btn_Back);
         btn_menu = view.findViewById(R.id.btn_menu);
 
-        Fragment doubtFragment=this;
+        Fragment doubtFragment = this;
 
 
         list_DoubtAnswer = new ArrayList<>();
@@ -159,18 +159,26 @@ public class DoubtFragment extends Fragment {
                     doubtCreatorName = snapshot.child("DoubtTemps").child("doubtCreatorName").getValue(String.class);
                     doubtCreatorId = snapshot.child("DoubtTemps").child("doubtCreatorId").getValue(String.class);
 
-                    byName.setText("Asked by - " + doubtCreatorName);
 
                     DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(doubtCreatorId);
                     refUserProfPic.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.child("Name").exists()) {
+                                String userName = snapshot.child("Name").getValue().toString();
+                                byName.setText("Asked by - " + userName);
+
+                            }
                             if (snapshot.child("profilePic").exists()) {
-                                String profilePicUrl = snapshot.child("profilePic").getValue().toString();
-                                Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
-                                Glide.with(DoubtFragment.this).load(profilePicUrl).into(ib_AnsUserProfile);
+                                if (!getActivity().isFinishing()) {
+                                    String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                                    Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
+                                    Glide.with(DoubtFragment.this).load(profilePicUrl).into(ib_AnsUserProfile);
+                                }
                             } else {
-                                Glide.with(DoubtFragment.this).load(R.drawable.maharaji).into(ib_AnsUserProfile);
+                                if (!getActivity().isFinishing()) {
+                                    Glide.with(DoubtFragment.this).load(R.drawable.maharaji).into(ib_AnsUserProfile);
+                                }
                             }
                         }
 

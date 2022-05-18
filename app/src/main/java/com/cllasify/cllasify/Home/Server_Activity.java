@@ -849,6 +849,7 @@ public class Server_Activity extends AppCompatActivity {
         }
 
 
+        assert groupPushId != null;
         DatabaseReference refGetGRPName = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId);
         refGetGRPName.addValueEventListener(new ValueEventListener() {
             @Override
@@ -1583,13 +1584,12 @@ public class Server_Activity extends AppCompatActivity {
                             DatabaseReference databaseReferenceCHKADMIN = FirebaseDatabase.getInstance().getReference()
                                     .child("Groups").child("Check_Group_Admins").child(UserAddedOrJoinedGrpPUSHIDS).child("classAdminList");
 
-                            list_OtherUserPublicGroupTitle.clear();
-                            databaseReferenceCHKADMIN.addValueEventListener(new ValueEventListener() {
+                            databaseReferenceCHKADMIN.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
                                         String adminUserId = dataSnapshot1.child("userId").getValue().toString();
-                                        refOtherUserPublicGroup.child(UserAddedOrJoinedGrpPUSHIDS).addValueEventListener(new ValueEventListener() {
+                                        refOtherUserPublicGroup.child(UserAddedOrJoinedGrpPUSHIDS).addListenerForSingleValueEvent(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot newSnap) {
 
@@ -1622,8 +1622,7 @@ public class Server_Activity extends AppCompatActivity {
 
                         } else {
                             DatabaseReference databaseReferenceGetUserJoinedClass = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class").child(UserAddedOrJoinedGrpPUSHIDS);
-                            list_OtherUserPublicGroupTitle.clear();
-                            databaseReferenceGetUserJoinedClass.addValueEventListener(new ValueEventListener() {
+                            databaseReferenceGetUserJoinedClass.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot01) {
                                     if (snapshot01.child(userID).child("classUniPushId").exists()) {
@@ -2107,6 +2106,10 @@ public class Server_Activity extends AppCompatActivity {
         refUserStatusProfPic.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("Name").exists()) {
+                    String userName = snapshot.child("Name").getValue().toString();
+                    tv_Name.setText(userName);
+                }
                 if (snapshot.child("profilePic").exists()) {
                     String profilePic = snapshot.child("profilePic").getValue().toString();
                     if (!(Server_Activity.this).isFinishing()) {
@@ -2131,7 +2134,6 @@ public class Server_Activity extends AppCompatActivity {
         final String userEmail = currentUser.getEmail();
         final Uri userPhoto = currentUser.getPhotoUrl();
 
-        tv_Name.setText(memberUserName);
 
         DatabaseReference checkFRNDReq = FirebaseDatabase.getInstance().getReference().child("Users").child("checkUserFriendReq").child(userID).child(memberUserId).child("reqStatus");
 

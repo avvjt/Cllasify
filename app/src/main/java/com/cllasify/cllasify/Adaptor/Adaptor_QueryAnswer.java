@@ -117,6 +117,10 @@ public class Adaptor_QueryAnswer extends RecyclerView.Adapter<Adaptor_QueryAnswe
         refUserProfPic.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("Name").exists()) {
+                    String userName = snapshot.child("Name").getValue().toString();
+                    holder.tv_UserName.setText(userName);
+                }
                 if (snapshot.child("profilePic").exists()) {
                     String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                     Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
@@ -133,7 +137,7 @@ public class Adaptor_QueryAnswer extends RecyclerView.Adapter<Adaptor_QueryAnswe
         });
 
         holder.examQues_tv.setText(userAnswers);
-        holder.tv_UserName.setText(answerUserName);
+
 //        DatabaseReference refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(databaseUserId);
 //        refUserStatus.addValueEventListener(new ValueEventListener() {
 //            @Override

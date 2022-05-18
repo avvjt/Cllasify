@@ -84,8 +84,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         if (chat != null) {
             holder.show_message.setText(chat.get(position).getGroupSubGroupComb());
 
-            holder.tv_UserName.setText(chat.get(position).getUserId());
-
             Class_Group class_GroupDetails = chat.get(position);
 
             String reqUserID = class_GroupDetails.position;
@@ -129,6 +127,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             refUserProfPic.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.child("Name").exists()) {
+                        String userName = snapshot.child("Name").getValue().toString();
+                        holder.tv_UserName.setText(userName);
+                    }
                     if (snapshot.child("profilePic").exists()) {
                         String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                         Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.prof_pics_chat_doubt);

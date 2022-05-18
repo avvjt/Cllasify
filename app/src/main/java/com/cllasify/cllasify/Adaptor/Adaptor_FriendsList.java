@@ -76,6 +76,10 @@ public class Adaptor_FriendsList extends RecyclerView.Adapter<Adaptor_FriendsLis
         refUserProfPic.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("Name").exists()) {
+                    String userNameRealtime = snapshot.child("Name").getValue().toString();
+                    holder.userName.setText(userNameRealtime);
+                }
                 if (snapshot.child("profilePic").exists()) {
                     String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                     Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
@@ -91,7 +95,7 @@ public class Adaptor_FriendsList extends RecyclerView.Adapter<Adaptor_FriendsLis
             }
         });
 
-        holder.userName.setText(friendName);
+
 
         String userID = SharePref.getDataFromPref(Constant.USER_ID);
 
