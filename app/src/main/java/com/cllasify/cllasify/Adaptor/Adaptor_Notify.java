@@ -322,8 +322,10 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                                     "\ngroupPushId: " + groupPushId + "\nnotifyReq: " + notifyReq );
 
                             ll_groupdetails.setVisibility(View.GONE);
-                            DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(reqUserID).child(groupPushId).child(classUni);
-                            userNoti.child("joiningStatus").setValue("Reject");
+                            if(reqUserID != null && groupPushId != null && classUni != null){
+                                DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(reqUserID).child(groupPushId).child(classUni);
+                                userNoti.child("joiningStatus").setValue("Reject");
+                            }
 
 
 //                            tv_Groupinvite.setText("User " + userName + " request to join Sub-class : " + classPushid + " of server " + groupName + " has been approved");
@@ -368,9 +370,11 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                             addedOrJoinedGroups.child("dateTime").setValue(dateTimeCC);
                             addedOrJoinedGroups.child("addedOrJoined").setValue("StudentJoin");
 
-                            DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(reqUserID).child(groupPushId).child(classUni);
+                            if(reqUserID != null && groupPushId != null && classUni != null){
+                                DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(reqUserID).child(groupPushId).child(classUni);
 
-                            userNoti.child("joiningStatus").setValue("Approve");
+                                userNoti.child("joiningStatus").setValue("Approve");
+                            }
 
 
                             Log.d("ACCEPTTT", "acceptNotify: "+reqUserID+groupPushId);
