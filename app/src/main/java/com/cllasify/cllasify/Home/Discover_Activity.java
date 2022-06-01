@@ -1,11 +1,14 @@
 package com.cllasify.cllasify.Home;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -47,6 +50,7 @@ import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.MySingleton;
 import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
@@ -68,6 +72,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Discover_Activity extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
     Adaptor_SearchGroup showAllGroupAdaptor;
     Adaptor_ShowGrpMember showAllJoinUserAdaptor;
     Adaptor_JoinGroupReq showSubChild_Adaptor;
@@ -154,6 +160,10 @@ public class Discover_Activity extends AppCompatActivity {
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_discover);
 
+
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
         Toolbar toolbar = findViewById(R.id.searchToolBar);
         setSupportActionBar(toolbar);
 
@@ -235,6 +245,12 @@ public class Discover_Activity extends AppCompatActivity {
 
 //        showAllGroupSearch("All_Universal_Group");
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void filterList(String text) {

@@ -1,11 +1,14 @@
 package com.cllasify.cllasify.Home;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +37,7 @@ import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpClass;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -50,6 +54,8 @@ import java.util.Calendar;
 import java.util.List;
 
 public class Discover_Item extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
 
     /*
     RecyclerView recyclerView;
@@ -103,6 +109,9 @@ public class Discover_Item extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_discover_item);
+
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 /*
         recyclerView = findViewById(R.id.class_items_rv);
         linearLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -391,6 +400,12 @@ public class Discover_Item extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     // BottomDialog for admission request

@@ -2,8 +2,10 @@ package com.cllasify.cllasify.Server;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,6 +14,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,6 +54,7 @@ import com.cllasify.cllasify.Home.Create_Subject;
 import com.cllasify.cllasify.Home.Server_Activity;
 import com.cllasify.cllasify.Home.Students_Subjects;
 import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.SwipeToDeleteCallback;
 import com.cllasify.cllasify.Utility.SharePref;
@@ -73,6 +77,8 @@ import java.util.List;
 import java.util.Locale;
 
 public class Attendance_Activity extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
 
     String remarks = null;
     List<Class_Student_Details> listGrpMemberList, mDatalistNew;
@@ -127,6 +133,9 @@ public class Attendance_Activity extends AppCompatActivity {
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.attendance_activity);
 
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
         showToast();
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -174,6 +183,12 @@ public class Attendance_Activity extends AppCompatActivity {
         show_GrpMemberList(groupPushId, subGroupPushId);
         initSwipe(groupPushId, subGroupPushId);
 //        enableSwipeToDeleteAndUndo();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
 

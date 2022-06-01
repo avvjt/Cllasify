@@ -1,9 +1,12 @@
 package com.cllasify.cllasify.Home;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +27,7 @@ import com.cllasify.cllasify.Adaptor.Adaptor_Notify;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,6 +45,9 @@ import java.util.Calendar;
 import java.util.List;
 
 public class Notification_Activity extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
+
     BottomNavigationView bottom_nav;
     Adaptor_Notify showAllGroupAdaptor;
     List<Class_Group> listGroupSTitle;
@@ -85,6 +92,10 @@ public class Notification_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_notification2);
+
+
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
 
         bottom_nav = findViewById(R.id.bottom_nav);
@@ -146,6 +157,13 @@ public class Notification_Activity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+    }
+
 
 
     private void showEAllGroupSearchRV() {

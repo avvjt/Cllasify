@@ -1,9 +1,12 @@
 package com.cllasify.cllasify.Home;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +27,7 @@ import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.Constant;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Server.Attendance_Activity;
+import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.SharePref;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -37,6 +41,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Students_Subjects extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
 
     String currUserID;
     RecyclerView rv_showStudents, rv_ShowSubject, rv_showTeachers;
@@ -80,6 +86,9 @@ public class Students_Subjects extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_students_subjects);
+
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         currUserID = SharePref.getDataFromPref(Constant.USER_ID);
 
@@ -262,6 +271,12 @@ public class Students_Subjects extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void delSubject(String groupPushId, String classPos, String subjectUniPush) {

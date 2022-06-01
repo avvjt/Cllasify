@@ -3,9 +3,12 @@ package com.cllasify.cllasify.Home;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +25,7 @@ import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Server_Setting_Specifics;
+import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,6 +40,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Create_Subject extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
 
     FirebaseAuth firebaseAuth;
     FirebaseUser currentUser;
@@ -79,6 +85,10 @@ public class Create_Subject extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_create_subject);
+
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -141,6 +151,12 @@ public class Create_Subject extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     //Toast for server icon click command

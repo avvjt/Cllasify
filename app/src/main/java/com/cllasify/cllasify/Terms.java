@@ -2,16 +2,22 @@ package com.cllasify.cllasify;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
 import com.cllasify.cllasify.Profile.AccountSetting_Activity;
+import com.cllasify.cllasify.Service.NetworkBroadcast;
 
 public class Terms extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
 
     ImageButton btn_back;
 
@@ -37,6 +43,9 @@ public class Terms extends AppCompatActivity {
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_terms);
 
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
         btn_back = findViewById(R.id.btn_Back);
 
         btn_back.setOnClickListener(new View.OnClickListener() {
@@ -50,4 +59,12 @@ public class Terms extends AppCompatActivity {
             }
         });
     }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+    }
+
 }

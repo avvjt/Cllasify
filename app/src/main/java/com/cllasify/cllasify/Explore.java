@@ -2,12 +2,19 @@ package com.cllasify.cllasify;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 
+import com.cllasify.cllasify.Service.NetworkBroadcast;
+
 public class Explore extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
 
 
     public void checkDarkLightDefaultStatusBar() {
@@ -33,5 +40,16 @@ public class Explore extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_explore);
+
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+    }
+
 }

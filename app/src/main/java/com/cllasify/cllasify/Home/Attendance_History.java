@@ -7,9 +7,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -18,6 +21,7 @@ import android.widget.TextView;
 import com.cllasify.cllasify.Adaptor.Adaptor_Attendance;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +32,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Attendance_History extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
 
     String currUserId,groupPushId,subGroupPushId,classPushId,currentDate;
     List<Class_Group> list_showAttend;
@@ -56,6 +62,10 @@ public class Attendance_History extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_attendance_history);
+
+
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         currentDate = getIntent().getStringExtra("currentDate");
         groupPushId = getIntent().getStringExtra("groupPushId");
@@ -112,4 +122,11 @@ public class Attendance_History extends AppCompatActivity {
         };
         refChildGroup1.orderByChild("userName").addChildEventListener(childEventListenerAttend);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+    }
+
 }

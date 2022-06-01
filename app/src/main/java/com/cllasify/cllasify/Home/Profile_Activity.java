@@ -1,9 +1,12 @@
 package com.cllasify.cllasify.Home;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,6 +33,7 @@ import com.cllasify.cllasify.Profile.AccountSetting_Activity;
 import com.cllasify.cllasify.Profile.ProfileSetting_Activity;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Register.getStarted;
+import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.admanager.AdManagerAdRequest;
 import com.google.android.gms.ads.admanager.AdManagerInterstitialAd;
@@ -50,6 +54,8 @@ import org.w3c.dom.Text;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Profile_Activity extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
 
     CircleImageView prof_pic;
     BottomNavigationView bottom_nav;
@@ -98,6 +104,10 @@ public class Profile_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.profile_activity);
+
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
 
 
         AdManagerAdRequest adRequest = new AdManagerAdRequest.Builder().build();
@@ -228,6 +238,12 @@ public class Profile_Activity extends AppCompatActivity {
             startActivity(new Intent(this, getStarted.class));
         }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void showProfile() {

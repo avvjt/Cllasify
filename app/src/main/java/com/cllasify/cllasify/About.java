@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.animation.LayoutTransition;
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
@@ -13,7 +16,12 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cllasify.cllasify.Service.NetworkBroadcast;
+
 public class About extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
+
     LinearLayout cardView , cardView1;
     LinearLayout ll_details , ll_details1;
     LinearLayout Layout , Layout1 ;
@@ -41,6 +49,9 @@ public class About extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_about);
+
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         cardView = findViewById(R.id.cardView);
         cardView1 = findViewById(R.id.cardView1);
@@ -71,4 +82,11 @@ public class About extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
+    }
+
 }

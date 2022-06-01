@@ -1,7 +1,10 @@
 package com.cllasify.cllasify.Home;
 
+import android.content.BroadcastReceiver;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +24,7 @@ import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMemberEditRollNumberList;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -36,6 +40,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Edit_RollNumber extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
+
 
     List<Class_Student_Details> listGrpMemberList, mDatalistNew, listGrpRoll;
     List<Class_Group> list_showAttend;
@@ -75,6 +82,9 @@ public class Edit_RollNumber extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_edit_roll_number);
+
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -132,6 +142,12 @@ public class Edit_RollNumber extends AppCompatActivity {
         show_GrpRollList(groupPushId, uniClassPush);
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void show_GrpMemberList(String groupPushId, String subGroupPushId) {

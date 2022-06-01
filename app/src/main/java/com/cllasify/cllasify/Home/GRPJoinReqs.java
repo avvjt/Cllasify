@@ -8,9 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +26,7 @@ import com.cllasify.cllasify.Adaptor.JoiningReqVPAdapter;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,6 +43,9 @@ import java.util.Calendar;
 import java.util.List;
 
 public class GRPJoinReqs extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
+
 
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -74,6 +81,9 @@ public class GRPJoinReqs extends AppCompatActivity {
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_grpjoin_reqs);
 
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
         tabLayout = findViewById(R.id.reqTabLayout);
         viewPager = findViewById(R.id.view_Pager);
         btn_back = findViewById(R.id.btn_Back);
@@ -94,6 +104,12 @@ public class GRPJoinReqs extends AppCompatActivity {
 
         viewPager.setAdapter(joiningReqVPAdapter);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
 }

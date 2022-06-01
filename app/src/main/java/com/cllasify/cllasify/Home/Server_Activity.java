@@ -1,11 +1,14 @@
 package com.cllasify.cllasify.Home;
 
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -58,6 +61,7 @@ import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Register.getStarted;
 import com.cllasify.cllasify.Server.Attendance_Activity;
 import com.cllasify.cllasify.Server.DoubtFragment;
+import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.SharePref;
 import com.discord.panels.OverlappingPanelsLayout;
@@ -94,6 +98,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class Server_Activity extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
 
 
     //Database References
@@ -1085,6 +1091,9 @@ public class Server_Activity extends AppCompatActivity {
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_server);
 
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
         SharePref sharePref = new SharePref(this);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
@@ -1395,6 +1404,12 @@ public class Server_Activity extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     private void checkDarkLightDefault() {

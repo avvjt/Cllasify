@@ -2,13 +2,16 @@ package com.cllasify.cllasify.Profile;
 
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -38,6 +41,7 @@ import com.cllasify.cllasify.Home.Profile_Activity;
 import com.cllasify.cllasify.Privacy;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Register.getStarted;
+import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.cllasify.cllasify.Terms;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -57,6 +61,9 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AccountSetting_Activity extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
+
 
 
     Button btn_Submit, btn_Cancel;
@@ -112,6 +119,10 @@ public class AccountSetting_Activity extends AppCompatActivity {
         checkDarkLightDefaultStatusBar();
         checkDarkLightDefault();
         setContentView(R.layout.account_setting_activity);
+
+
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         btn_Back=findViewById(R.id.btn_Back);
         tv_SignOut =findViewById(R.id.tv_SignOut);
@@ -372,6 +383,12 @@ public class AccountSetting_Activity extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     public static void setDefaults(String key, String value, Context context) {

@@ -2,10 +2,13 @@ package com.cllasify.cllasify.Register;
 
 import static com.cllasify.cllasify.Profile.AccountSetting_Activity.getDefaults;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +28,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import com.cllasify.cllasify.Constant;
 import com.cllasify.cllasify.Home.Server_Activity;
 import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
@@ -53,6 +57,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class getStarted extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
+
 
     GoogleSignInClient googleSignInClient;
     Button btn_SignIn;
@@ -109,6 +116,9 @@ public class getStarted extends AppCompatActivity {
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_get_started);
 
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
         progressBar = findViewById(R.id.SignInProgress);
 
         //initialize() AdMob
@@ -147,6 +157,12 @@ public class getStarted extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
     @Override

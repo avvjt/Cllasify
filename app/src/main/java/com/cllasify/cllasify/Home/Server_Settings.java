@@ -1,10 +1,13 @@
 package com.cllasify.cllasify.Home;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +31,7 @@ import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.Profile.AccountSetting_Activity;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Server_Setting_Specifics;
+import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -43,6 +47,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Server_Settings extends AppCompatActivity {
+
+    private BroadcastReceiver broadcastReceiver;
+
 
     DatabaseReference refGroupClassList, getTempData;
     String currUserId;
@@ -96,6 +103,9 @@ public class Server_Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_server_settings);
+
+        broadcastReceiver = new NetworkBroadcast();
+        registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
@@ -389,6 +399,12 @@ public class Server_Settings extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(broadcastReceiver);
     }
 
 
