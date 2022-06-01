@@ -2,6 +2,8 @@ package com.cllasify.cllasify.Server;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -134,6 +136,35 @@ public class DoubtFragment extends Fragment {
 
         btn_Back = view.findViewById(R.id.btn_Back);
         btn_menu = view.findViewById(R.id.btn_menu);
+
+        ib_submitDoubtAns.setEnabled(false);
+
+
+        et_DoubtAns.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                String c = String.valueOf(s);
+
+                if (c.trim().isEmpty()) {
+                    ib_submitDoubtAns.setEnabled(false);
+                    ib_submitDoubtAns.setImageResource(R.drawable.ic_send_disable);
+                } else {
+                    ib_submitDoubtAns.setEnabled(true);
+                    ib_submitDoubtAns.setImageResource(R.drawable.ic_send_24);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         Fragment doubtFragment = this;
 

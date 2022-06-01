@@ -1,7 +1,5 @@
 package com.cllasify.cllasify.Home;
 
-import static android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS;
-
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -32,11 +29,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -75,8 +70,6 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.bottomsheet.BottomSheetDialog;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
@@ -1447,13 +1440,39 @@ public class Server_Activity extends AppCompatActivity {
         bottomSheetDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         bottomSheetDialog.setCancelable(true);
         bottomSheetDialog.setCanceledOnTouchOutside(true);
-        bottomSheetDialog.setContentView(R.layout.btmdialog_adddoubt);
+        bottomSheetDialog.setContentView(R.layout.bottomsheet_doubt);
         bottomSheetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         Button btn_Cancel = bottomSheetDialog.findViewById(R.id.btn_Cancel);
         Button btn_Submit = bottomSheetDialog.findViewById(R.id.btn_Submit);
         EditText et_AddTopic = bottomSheetDialog.findViewById(R.id.et_AddTopic);
         EditText et_AddDoubt = bottomSheetDialog.findViewById(R.id.et_AddDoubt);
+
+        et_AddDoubt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                String c = String.valueOf(s);
+
+                if (c.trim().isEmpty() && et_AddTopic != null && et_AddDoubt != null) {
+                    btn_Submit.setEnabled(false);
+                    btn_Submit.setTextColor(getResources().getColor(R.color.iconColor));
+                } else {
+                    btn_Submit.setEnabled(true);
+                    btn_Submit.setTextColor(getResources().getColor(R.color.iconPrimaryColor));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         userID = currentUser.getUid();

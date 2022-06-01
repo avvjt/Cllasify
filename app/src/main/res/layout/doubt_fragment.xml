@@ -297,13 +297,13 @@
             android:focusable="true"
             android:hint="@string/hint_edittext_doubt"
             android:imeOptions="actionDone"
-            android:textCursorDrawable="@drawable/cursor_color"
             android:importantForAutofill="no"
             android:inputType="textCapSentences|textMultiLine"
             android:paddingStart="20dp"
             android:paddingEnd="50dp"
             android:textColor="@color/text_color"
-            android:textColorHint="@color/text_background_color"/>
+            android:textColorHint="@color/text_background_color"
+            android:textCursorDrawable="@drawable/cursor_color" />
 
 
         <ImageButton
@@ -315,7 +315,7 @@
             android:layout_marginEnd="10dp"
             android:background="@color/transparent"
             android:elevation="10dp"
-            android:src="@drawable/ic_send_24"
+            android:src="@drawable/ic_send_disable"
             android:visibility="visible" />
 
     </RelativeLayout>
