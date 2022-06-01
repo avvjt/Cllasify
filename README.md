@@ -1,2 +1,2 @@
 # Cllasify
-## Every has been done
+## Everything has been done
