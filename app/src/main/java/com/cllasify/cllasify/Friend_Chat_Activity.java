@@ -86,6 +86,7 @@ public class Friend_Chat_Activity extends Fragment {
 
         swipe_left = v.findViewById(R.id.swipe_left);
         swipe_right = v.findViewById(R.id.swipe_right);
+        TextView friendNameTv = v.findViewById(R.id.tv_friend_name);
 
 
         swipe_right.setOnClickListener(new View.OnClickListener() {
@@ -147,6 +148,10 @@ public class Friend_Chat_Activity extends Fragment {
         refUserProfPic.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("Name").exists()) {
+                    String userName = snapshot.child("Name").getValue().toString();
+                    friendNameTv.setText(userName);
+                }
                 if (snapshot.child("profilePic").exists()) {
                     String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                     Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
@@ -230,7 +235,6 @@ public class Friend_Chat_Activity extends Fragment {
 
         Toolbar toolbar = v.findViewById(R.id.toolbar);
         Log.d(TAG, "onCreate: friend name ->" + friendName);
-        TextView friendNameTv = v.findViewById(R.id.tv_friend_name);
 
         friendNameTv.setText(friendName);
 

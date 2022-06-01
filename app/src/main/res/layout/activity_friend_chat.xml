@@ -81,11 +81,11 @@
                 android:layout_centerInParent="true"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/friendImg"
-                android:textAllCaps="false"
-                android:text="Username"
                 android:fontFamily="@font/inter_medium"
+                android:text="Username"
+                android:textAllCaps="false"
                 android:textColor="@color/text_color"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
         </RelativeLayout>
         <View
