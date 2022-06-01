@@ -323,7 +323,7 @@
                         <EditText
                             android:id="@+id/et_ctext"
                             android:layout_width="match_parent"
-                            android:layout_height="45dp"
+                            android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="8dp"
                             android:layout_marginEnd="10dp"
@@ -336,8 +336,10 @@
                             android:imeOptions="actionDone"
                             android:importantForAutofill="no"
                             android:inputType="textCapSentences|textMultiLine"
-                            android:paddingStart="20dp"
-                            android:paddingEnd="20dp"
+                            android:paddingStart="30dp"
+                            android:paddingEnd="30dp"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
                             android:textColor="@color/text_color"
                             android:textColorHint="@color/text_background_color" />
 

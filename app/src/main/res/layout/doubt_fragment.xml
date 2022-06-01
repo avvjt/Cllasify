@@ -292,18 +292,20 @@
         <EditText
             android:id="@+id/et_DoubtAns"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/doubt_input_background"
             android:focusable="true"
-            android:hint="@string/hint_edittext_doubt"
+            android:hint="@string/hint_edittext"
             android:imeOptions="actionDone"
             android:importantForAutofill="no"
             android:inputType="textCapSentences|textMultiLine"
-            android:paddingStart="20dp"
-            android:paddingEnd="50dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="60dp"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
             android:textColor="@color/text_color"
             android:textColorHint="@color/text_background_color"
-            android:textCursorDrawable="@drawable/cursor_color" />
+            android:textCursorDrawable="@drawable/cursor_color"/>
 
 
         <ImageButton
