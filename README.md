@@ -1,2 +1,2 @@
 # Cllasify
-## Every thing done just improving few parts
+## Everything has been done
