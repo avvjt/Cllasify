@@ -11,11 +11,21 @@
         <item name="colorOnSecondary">@color/text_white</item>
         <!--Enable window content transitions for sharedAnimation-->
         <item name="android:windowContentTransitions">true</item>
+        <!--Activity transitions-->
+        <item name="android:windowAnimationStyle">@style/ActivityAnimation</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/page_color</item>
         <!-- Customize your theme here. -->
     </style>
 
+
+    <!--Set all animation files for activity transitions-->
+    <style name="ActivityAnimation" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
 
     <!-- Ripple effect color select -->
     <style name="SelectableItemTheme">
