@@ -78,7 +78,8 @@
                         android:layout_marginStart="20dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="20dp" />
+                        android:layout_marginBottom="20dp"
+                        android:transitionName="pic_shared" />
 
                 <ProgressBar
                     android:id="@+id/progBar"
@@ -108,7 +109,8 @@
                         android:gravity="bottom"
                         android:text="@string/name"
                         android:textColor="@color/text_color"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        android:transitionName="name_shared"/>
 
                     <TextView
                         android:id="@+id/tv_ChangeProfileImage"

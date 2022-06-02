@@ -87,6 +87,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.remoteconfig.internal.Code;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -393,6 +394,15 @@ public class Server_Activity extends AppCompatActivity {
                     transaction.remove(doubtFragment);
                     transaction.commit();
                     flag = false;
+                }
+
+                if (flagFriend == true) {
+                    FragmentManager manager = getSupportFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    manager.getBackStackEntryCount();
+                    transaction.remove(friendChatFragment);
+                    transaction.commit();
+                    flagFriend = false;
                 }
 
                 DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
@@ -1289,6 +1299,8 @@ public class Server_Activity extends AppCompatActivity {
 //                            ll_AddJoinGrp.setVisibility(View.GONE);
                         if (flagFriend == false) {
 
+                            flagFriend = true;
+                        }
                             friendChatFragment = new Friend_Chat_Activity();
                             getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.center_panel, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
@@ -1297,8 +1309,7 @@ public class Server_Activity extends AppCompatActivity {
                             bundle.putString("name", friendName);
                             bundle.putString("receiverUid", friendUserId);
                             friendChatFragment.setArguments(bundle);
-                            flagFriend = true;
-                        }
+
                     }
                 });
 

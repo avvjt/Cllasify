@@ -1,5 +1,6 @@
 package com.cllasify.cllasify.Home;
 
+import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -182,18 +184,14 @@ public class Profile_Activity extends AppCompatActivity {
             ib_Settings.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-//                    Fragment fragment = null;
-//                    FragmentTransaction transaction;
-//                    fragment = new AccountSettingFragment();
-//                    transaction = getFragmentManager().beginTransaction();
-//                    transaction.replace(R.id.fragment_container, fragment, "AccountSettingFragment");
-//                    transaction.addToBackStack("AccountSettingFragment");
-//                    transaction.commit();
+
+                    Pair[] pair = new Pair[2];
+                    pair[0] = new Pair<View,String>(prof_pic , "pic_shared");
+                    pair[1] = new Pair<View,String>(tv_Name , "name_shared");
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Profile_Activity.this, pair);
 
                     Intent i = new Intent(Profile_Activity.this, AccountSetting_Activity.class);
-                    startActivity(i);
-                    Profile_Activity.this.overridePendingTransition(0, 0);
-//                    ((Activity) getActivity()).overridePendingTransition(0, 0);
+                    startActivity(i, options.toBundle());
 
                 }
             });

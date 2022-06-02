@@ -1007,11 +1007,16 @@
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/drawable/bg_bottomsheet.xml" value="0.1965" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/drawable/ic_send_disable.xml" value="0.1875" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/drawable/selector_subject.xml" value="0.142" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/account_setting_activity.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_discover.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_discover_item.xml" value="0.22" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_friend_chat.xml" value="0.22" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_notification2.xml" value="0.2" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_profile_setting.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_server.xml" value="0.22" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_server_setting_specifics.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_server_settings.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_server_view.xml" value="0.1" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/bottomsheet_bio.xml" value="0.22" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/bottomsheet_doubt.xml" value="0.2" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/bottomsheet_internet.xml" value="0.33" />
@@ -1020,10 +1025,13 @@
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/doubt_fragment.xml" value="0.2" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/fragment_chat.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/fragment_user_friends.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/list_group_searchview.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/list_item_childgroup.xml" value="0.286231884057971" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/list_item_doubt.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/list_item_group_member.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/list_item_group_member_serv.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/list_item_rec_friends.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/profile_activity.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Classify-demoo-master/Classify-demoo-master/app/src/main/res/drawable/ic_baseline_message_24.xml" value="0.240625" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Classify-demoo-master/Classify-demoo-master/app/src/main/res/layout/activity_discover.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Classify-demoo-master/Classify-demoo-master/app/src/main/res/layout/activity_friend_chat.xml" value="0.22" />

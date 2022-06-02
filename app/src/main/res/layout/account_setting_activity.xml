@@ -79,7 +79,8 @@
                         android:id="@+id/prof_pic"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
-                        android:layout_margin="20dp" />
+                        android:layout_margin="20dp"
+                        android:transitionName="pic_shared"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -100,7 +101,8 @@
                                 android:gravity="center_horizontal"
                                 android:text="@string/name"
                                 android:textColor="@color/text_color"
-                                android:textSize="18sp" />
+                                android:textSize="18sp"
+                                android:transitionName="name_shared"/>
 
                             <TextView
                                 android:id="@+id/tv_ProfileSetting"

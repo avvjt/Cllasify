@@ -1,5 +1,6 @@
 package com.cllasify.cllasify.Profile;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
@@ -16,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -223,9 +225,14 @@ public class AccountSetting_Activity extends AppCompatActivity {
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Pair[] pair = new Pair[2];
+                pair[0] = new Pair<View,String>(prof_pic , "pic_shared");
+                pair[1] = new Pair<View,String>(tv_User_Name , "name_shared");
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(AccountSetting_Activity.this, pair);
+
                 Intent i = new Intent(AccountSetting_Activity.this, Profile_Activity.class);
-                startActivity(i);
-                (AccountSetting_Activity.this).overridePendingTransition(0, 0);
+                startActivity(i, options.toBundle());
 
             }
         });
@@ -233,9 +240,14 @@ public class AccountSetting_Activity extends AppCompatActivity {
         ll_profileSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Pair[] pair = new Pair[2];
+                pair[0] = new Pair<View,String>(prof_pic , "pic_shared");
+                pair[1] = new Pair<View,String>(tv_User_Name , "name_shared");
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(AccountSetting_Activity.this, pair);
+
                 Intent i = new Intent(AccountSetting_Activity.this, ProfileSetting_Activity.class);
-                startActivity(i);
-                (AccountSetting_Activity.this).overridePendingTransition(0, 0);
+                startActivity(i, options.toBundle());
 
             }
         });

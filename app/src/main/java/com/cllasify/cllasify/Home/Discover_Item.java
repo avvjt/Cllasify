@@ -1,5 +1,6 @@
 package com.cllasify.cllasify.Home;
 
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
@@ -12,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,7 @@ import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpClass;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Group_Names;
+import com.cllasify.cllasify.Profile.AccountSetting_Activity;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -69,7 +72,7 @@ public class Discover_Item extends AppCompatActivity {
     Calendar calenderCC = Calendar.getInstance();
     SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
     String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-    TextView schBio, schoolEmail;
+    TextView schBio, schoolEmail, tv_ServerName, numbStudents, numbTeachers;
     Button join_as_teacher;
     ImageView schoolLogoImg, btn_Back;
     String serverEmail;
@@ -130,18 +133,32 @@ public class Discover_Item extends AppCompatActivity {
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Discover_Item.this, Discover_Activity.class);
-                startActivity(intent);
+
+                /*Pair[] pair = new Pair[2];
+                pair[0] = new Pair<View,String>(schoolLogoImg , "pic_shared");
+                pair[1] = new Pair<View,String>(tv_ServerName , "name_shared");
+                pair[2] = new Pair<View,String>(studentCount , "student_no_shared");
+                pair[3] = new Pair<View,String>(teacherCount , "teacher_no_shared");
+                pair[4] = new Pair<View,String>(numbStudents , "student_shared");
+                pair[4] = new Pair<View,String>(numbTeachers , "teacher_shared");
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Discover_Item.this, pair);*/
+
+                Intent i = new Intent(Discover_Item.this, Discover_Activity.class);
+                startActivity(i/*, options.toBundle()*/);
             }
         });
         Button btn_Share = findViewById(R.id.btn_Share);
-        TextView tv_ServerName = findViewById(R.id.schoolName);
+        tv_ServerName = findViewById(R.id.schoolName);
         RecyclerView rv_ShowClass = findViewById(R.id.rv_ShowClass);
         join_as_teacher = findViewById(R.id.join_as_teacher);
         schoolLogoImg = findViewById(R.id.schoolLogoImg);
 
         studentCount = findViewById(R.id.numbStudentsInt);
         teacherCount = findViewById(R.id.numbTeachersInt);
+
+        numbStudents = findViewById(R.id.numbStudents);
+        numbTeachers = findViewById(R.id.numbTeachers);
 
         emailLayout = findViewById(R.id.ll_email);
         bioLayout = findViewById(R.id.ll_bio);

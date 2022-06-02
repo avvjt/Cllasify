@@ -1,6 +1,7 @@
 package com.cllasify.cllasify.Profile;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
@@ -16,6 +17,7 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.Home.Profile_Activity;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -153,13 +156,14 @@ public class ProfileSetting_Activity extends AppCompatActivity {
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-//                transaction.replace(R.id.fragment_container, new AccountSettingFragment());
-//                //transaction.addToBackStack(null);
-//                transaction.commit();
+
+                Pair[] pair = new Pair[2];
+                pair[0] = new Pair<View,String>(prof_pic , "pic_shared");
+                pair[1] = new Pair<View,String>(tv_Name , "name_shared");
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(ProfileSetting_Activity.this, pair);
+
                 Intent i = new Intent(ProfileSetting_Activity.this, AccountSetting_Activity.class);
-                startActivity(i);
-                (ProfileSetting_Activity.this).overridePendingTransition(0, 0);
+                startActivity(i, options.toBundle());
 
             }
         });
@@ -281,9 +285,15 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                     }
                     if (snapshot.child("profilePic").exists()) {
                         String profilePic = snapshot.child("profilePic").getValue().toString();
-                        if (!(ProfileSetting_Activity.this).isFinishing()) {
-                            Glide.with(ProfileSetting_Activity.this).load(profilePic).into(prof_pic);
+
+                        if (profilePic != null) {
+                            if (!(ProfileSetting_Activity.this).isFinishing()) {
+                                Glide.with(ProfileSetting_Activity.this).load(profilePic).into(prof_pic);
+                            } else {
+                                Glide.with(ProfileSetting_Activity.this).load(R.drawable.maharaji).into(prof_pic);
+                            }
                         }
+
                     } else {
                         if (!(ProfileSetting_Activity.this).isFinishing()) {
                             Glide.with(ProfileSetting_Activity.this).load(R.drawable.maharaji).into(prof_pic);
@@ -715,7 +725,13 @@ public class ProfileSetting_Activity extends AppCompatActivity {
                             Log.d("PROFPIC", "onSuccess: " + uri);
                             DatabaseReference refSaveProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
                             refSaveProfPic.child("profilePic").setValue(uri.toString());
-                            Glide.with(ProfileSetting_Activity.this).load(uri).into(prof_pic);
+                            if (uri != null) {
+                                if (!(ProfileSetting_Activity.this).isFinishing()) {
+                                    Glide.with(ProfileSetting_Activity.this).load(uri).into(prof_pic);
+                                } else {
+                                    Glide.with(ProfileSetting_Activity.this).load(R.drawable.maharaji).into(prof_pic);
+                                }
+                            }
                             progBar.setVisibility(View.GONE);
 
                             showToast();

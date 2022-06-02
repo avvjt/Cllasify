@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -54,7 +55,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
     ImageButton doneBtn, btn_Back;
     DatabaseReference databaseReference;
 
-    CircleImageView serverImage;
+    ImageView serverImage;
     TextView changeServerImage;
     Button serverDelete;
 
@@ -229,7 +230,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                finishAfterTransition();
             }
         });
 

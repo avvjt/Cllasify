@@ -1,5 +1,6 @@
 package com.cllasify.cllasify.Home;
 
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
@@ -10,6 +11,7 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +31,7 @@ import com.cllasify.cllasify.Adaptor.Adaptor_Server_Setting_Items;
 import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.Profile.AccountSetting_Activity;
+import com.cllasify.cllasify.Profile.ProfileSetting_Activity;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Server_Setting_Specifics;
 import com.cllasify.cllasify.Service.NetworkBroadcast;
@@ -169,11 +172,14 @@ public class Server_Settings extends AppCompatActivity {
             serverSettingProfile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Server_Settings.this,schoolLogoImg,"pic_shared");
+
                     Intent intent = new Intent(Server_Settings.this, Server_Setting_Specifics.class);
                     intent.putExtra("currUserId", currUserId);
                     intent.putExtra("groupPushId", groupPushId);
 
-                    startActivity(intent);
+                    startActivity(intent, options.toBundle());
                 }
             });
         }

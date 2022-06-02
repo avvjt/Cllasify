@@ -86,7 +86,8 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/explore_icon_background"
-                        android:src="@drawable/ic_logotext" />
+                        android:src="@drawable/ic_logotext"
+                        android:transitionName="pic_shared"/>
 
                 </androidx.cardview.widget.CardView>
 

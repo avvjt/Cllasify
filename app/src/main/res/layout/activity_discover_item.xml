@@ -76,7 +76,8 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/explore_icon_background"
-                        android:src="@drawable/ic_logotext" />
+                        android:src="@drawable/ic_logotext"
+                        android:transitionName="pic_shared"/>
 
                 </androidx.cardview.widget.CardView>
 
@@ -90,7 +91,8 @@
                     android:layout_marginStart="20dp"
                     android:textColor="@color/text_color"
                     android:textSize="19sp"
-                    android:layout_gravity="center_vertical"/>
+                    android:layout_gravity="center_vertical"
+                    android:transitionName="name_shared"/>
 
             </LinearLayout>
 
@@ -181,7 +183,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:textColor="@color/text_background_color"
-                        android:textSize="15sp" />
+                        android:textSize="15sp"
+                        android:transitionName="student_no_shared"/>
 
                     <TextView
                         android:id="@+id/numbStudents"
@@ -191,7 +194,8 @@
                         android:textColor="@color/text_background_color"
                         android:textSize="15sp"
                         android:layout_marginStart="10dp"
-                        android:fontFamily="@font/inter_regular" />
+                        android:fontFamily="@font/inter_regular"
+                        android:transitionName="student_shared"/>
 
                     <View
                         android:layout_width="5dp"
@@ -206,7 +210,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:textSize="15sp"
-                        android:textColor="@color/text_background_color"/>
+                        android:textColor="@color/text_background_color"
+                        android:transitionName="teacher_no_shared"/>
 
                     <TextView
                         android:id="@+id/numbTeachers"
@@ -216,7 +221,8 @@
                         android:textColor="@color/text_background_color"
                         android:textSize="15sp"
                         android:layout_marginStart="10dp"
-                        android:fontFamily="@font/inter_regular" />
+                        android:fontFamily="@font/inter_regular"
+                        android:transitionName="teacher_shared"/>
 
 
                 </LinearLayout>
