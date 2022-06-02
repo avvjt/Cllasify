@@ -55,9 +55,7 @@ public class Privacy extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(Privacy.this, AccountSetting_Activity.class);
-                startActivity(i);
-                (Privacy.this).overridePendingTransition(0, 0);
+                finishAfterTransition();
 
             }
         });

@@ -9,7 +9,7 @@
     android:visibility="visible"
     tools:context=".Home.Server_Settings">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
@@ -29,7 +29,7 @@
             android:layout_height="46dp"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
-            android:contentDescription="TODO"
+            android:layout_alignParentStart="true"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
@@ -39,14 +39,14 @@
         <ImageButton
             android:id="@+id/serverSettingProfile"
             style="@style/SelectableItemBackgroundBorderless"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="300dp"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:src="@drawable/ic_settings_24"
-            app:tint="@color/iconPrimaryColor" />
+            app:tint="@color/iconPrimaryColor"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <ScrollView
         android:id="@+id/noti_layout"

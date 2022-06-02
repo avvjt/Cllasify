@@ -1,6 +1,7 @@
 package com.cllasify.cllasify.Home;
 
 import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -58,6 +60,7 @@ public class Edit_RollNumber extends AppCompatActivity {
 
     String groupPushId, uniClassPush;
     Button done;
+    ImageButton btn_Back;
 
     public void checkDarkLightDefaultStatusBar() {
         switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
@@ -92,6 +95,16 @@ public class Edit_RollNumber extends AppCompatActivity {
         currUserId = currentUser.getUid();
 
         done = findViewById(R.id.btn_done);
+        btn_Back = findViewById(R.id.btn_Back);
+
+        btn_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                finishAfterTransition();
+
+            }
+        });
 
         if (getIntent().hasExtra("groupPushId") && getIntent().hasExtra("uniClassPush")) {
             groupPushId = getIntent().getStringExtra("groupPushId");

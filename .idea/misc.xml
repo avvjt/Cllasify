@@ -1005,18 +1005,27 @@
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/toast_teacher_req.xml" value="0.25" />
         <entry key="..\:/Users/abhib/StudioProjects/Cllasify/app/src/main/res/layout/toast_thisis_you.xml" value="0.2164855072463768" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/drawable/bg_bottomsheet.xml" value="0.1965" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/drawable/explore_icon_background.xml" value="0.1965" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/drawable/ic_send_disable.xml" value="0.1875" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/drawable/selector_subject.xml" value="0.142" />
-        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/account_setting_activity.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/account_setting_activity.xml" value="0.33" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_attendance_history.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_create_server.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_discover.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_discover_item.xml" value="0.22" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_edit_roll_number.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_explore.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_friend_chat.xml" value="0.22" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_notification.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_notification2.xml" value="0.2" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_privacy.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_profile_setting.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_server.xml" value="0.22" />
-        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_server_setting_specifics.xml" value="0.15552178318135765" />
-        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_server_settings.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_server_setting_specifics.xml" value="0.25" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_server_settings.xml" value="0.25" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_server_view.xml" value="0.1" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/activity_terms.xml" value="0.15552178318135765" />
+        <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/attendance_activity.xml" value="0.15552178318135765" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/bottomsheet_bio.xml" value="0.22" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/bottomsheet_doubt.xml" value="0.2" />
         <entry key="..\:/Users/avvji/Projects/Cllasify/app/src/main/res/layout/bottomsheet_internet.xml" value="0.33" />

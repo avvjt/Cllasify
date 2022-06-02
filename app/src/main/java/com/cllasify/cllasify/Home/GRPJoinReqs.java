@@ -53,8 +53,7 @@ public class GRPJoinReqs extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(GRPJoinReqs.this,Server_Activity.class);
-        startActivity(intent);
+        finishAfterTransition();
     }
 
     public void checkDarkLightDefaultStatusBar() {

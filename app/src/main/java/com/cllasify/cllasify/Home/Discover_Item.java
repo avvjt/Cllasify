@@ -50,6 +50,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.remoteconfig.internal.Code;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -100,10 +101,7 @@ public class Discover_Item extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
-        Intent intent = new Intent(Discover_Item.this, Discover_Activity.class);
-        startActivity(intent);
+        finishAfterTransition();
 
     }
 
@@ -134,6 +132,10 @@ public class Discover_Item extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                finishAfterTransition();
+
+                /*Code shared animation*/
+
                 /*Pair[] pair = new Pair[2];
                 pair[0] = new Pair<View,String>(schoolLogoImg , "pic_shared");
                 pair[1] = new Pair<View,String>(tv_ServerName , "name_shared");
@@ -142,10 +144,10 @@ public class Discover_Item extends AppCompatActivity {
                 pair[4] = new Pair<View,String>(numbStudents , "student_shared");
                 pair[4] = new Pair<View,String>(numbTeachers , "teacher_shared");
 
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Discover_Item.this, pair);*/
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Discover_Item.this, pair);
 
                 Intent i = new Intent(Discover_Item.this, Discover_Activity.class);
-                startActivity(i/*, options.toBundle()*/);
+                startActivity(i, options.toBundle());*/
             }
         });
         Button btn_Share = findViewById(R.id.btn_Share);

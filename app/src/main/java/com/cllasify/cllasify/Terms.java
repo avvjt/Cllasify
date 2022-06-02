@@ -52,9 +52,7 @@ public class Terms extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent i = new Intent(Terms.this, AccountSetting_Activity.class);
-                startActivity(i);
-                (Terms.this).overridePendingTransition(0, 0);
+                finishAfterTransition();
 
             }
         });

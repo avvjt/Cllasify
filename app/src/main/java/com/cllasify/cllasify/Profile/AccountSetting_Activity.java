@@ -257,7 +257,6 @@ public class AccountSetting_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(AccountSetting_Activity.this, Privacy.class);
                 startActivity(i);
-                (AccountSetting_Activity.this).overridePendingTransition(0, 0);
 
             }
         });
@@ -267,7 +266,6 @@ public class AccountSetting_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent i = new Intent(AccountSetting_Activity.this, Terms.class);
                 startActivity(i);
-                (AccountSetting_Activity.this).overridePendingTransition(0, 0);
 
             }
         });

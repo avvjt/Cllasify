@@ -79,8 +79,7 @@ public class Server_Settings extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(Server_Settings.this, Server_Activity.class);
-        startActivity(intent);
+        finishAfterTransition();
     }
 
     public void checkDarkLightDefaultStatusBar() {
