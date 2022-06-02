@@ -545,7 +545,8 @@
                             android:layout_marginTop="20dp"
                             android:nestedScrollingEnabled="false"
                             android:visibility="gone"
-                            app:fastScrollEnabled="false" />
+                            app:fastScrollEnabled="false"
+                            android:layoutAnimation="@anim/layout_fall_down"/>
 
                     </LinearLayout>
 
@@ -576,7 +577,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="20dp"
                             android:nestedScrollingEnabled="false"
-                            app:fastScrollEnabled="false" />
+                            app:fastScrollEnabled="false"
+                            android:layoutAnimation="@anim/layout_fall_down"/>
 
                     </LinearLayout>
 
@@ -612,7 +614,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="20dp"
                             android:nestedScrollingEnabled="false"
-                            app:fastScrollEnabled="false" />
+                            app:fastScrollEnabled="false"
+                            android:layoutAnimation="@anim/layout_fall_down"/>
 
                     </LinearLayout>
 

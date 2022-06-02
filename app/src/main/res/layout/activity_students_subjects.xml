@@ -82,7 +82,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:nestedScrollingEnabled="false"
-                    app:fastScrollEnabled="false"/>
+                    app:fastScrollEnabled="false"
+                    android:layoutAnimation="@anim/layout_fall_down"/>
 
                 <Button
                     android:id="@+id/addNewSubject"

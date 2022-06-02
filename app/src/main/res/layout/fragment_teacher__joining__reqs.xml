@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Home.Teacher_Joining_Reqs"
-    android:background="@color/page_color">
+    android:background="@color/page_color"
+    tools:context=".Home.Teacher_Joining_Reqs">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_TeacherJoiningNotification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_TeacherJoiningNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layoutAnimation="@anim/layout_from_right" />
 
 
 </FrameLayout>

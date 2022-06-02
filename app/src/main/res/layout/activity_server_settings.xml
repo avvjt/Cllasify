@@ -237,7 +237,8 @@
                 android:id="@+id/rv_ShowClass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15sp" />
+                android:layout_marginTop="15sp"
+                android:layoutAnimation="@anim/layout_fall_down"/>
 
             <!--Create class button -->
             <LinearLayout

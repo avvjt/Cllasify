@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:visibility="visible"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/page_color"
+    android:orientation="vertical"
+    android:visibility="visible"
     tools:context=".Home.Discover_Item">
 
     <LinearLayout
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
+        android:background="@color/page_background_color"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:background="@color/page_background_color"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,20 +29,20 @@
             android:layout_height="46dp"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
+            android:contentDescription="TODO"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
             app:tint="@color/iconSecondaryColor"
-            android:contentDescription="TODO"
             tools:ignore="RtlSymmetry" />
 
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/noti_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/action_bar"
-        android:id="@+id/noti_layout">
+        app:layout_constraintTop_toBottomOf="@id/action_bar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -60,10 +60,10 @@
                     android:id="@+id/btn_Share"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:visibility="gone"
                     android:layout_marginStart="200dp"
                     android:background="@color/transparent"
-                    android:drawableEnd="@drawable/ic_share" />
+                    android:drawableEnd="@drawable/ic_share"
+                    android:visibility="gone" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/schoolLogo"
@@ -77,7 +77,7 @@
                         android:layout_height="40dp"
                         android:background="@drawable/explore_icon_background"
                         android:src="@drawable/ic_logotext"
-                        android:transitionName="pic_shared"/>
+                        android:transitionName="pic_shared" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -85,22 +85,22 @@
                     android:id="@+id/schoolName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
                     android:fontFamily="@font/inter_semibold"
                     android:maxLines="2"
                     android:text="Kalyani sikshayatan school"
-                    android:layout_marginStart="20dp"
                     android:textColor="@color/text_color"
                     android:textSize="19sp"
-                    android:layout_gravity="center_vertical"
-                    android:transitionName="name_shared"/>
+                    android:transitionName="name_shared" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:background="@color/page_background_color">
+                android:background="@color/page_background_color"
+                android:orientation="vertical">
 
                 <!--Ya ky chiz hai? again server name option ku diahai-->
 
@@ -111,25 +111,25 @@
                     android:textColor="@color/text_color"
                     android:textSize="19dp"
                     android:textStyle="bold"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/ll_bio"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/schoolBio"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="17sp"
                         android:paddingStart="20dp"
                         android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
                         android:paddingEnd="5dp"
-                        android:textColor="@color/text_color" />
+                        android:paddingBottom="5dp"
+                        android:textColor="@color/text_color"
+                        android:textSize="17sp" />
 
                 </LinearLayout>
 
@@ -137,26 +137,26 @@
                     android:id="@+id/ll_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
                     android:orientation="horizontal"
-                    android:visibility="gone"
-                    android:paddingTop="5dp">
+                    android:paddingTop="5dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
+                        android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_mail_16"
-                        app:tint="@color/iconColor"
-                        android:layout_gravity="center_vertical"/>
+                        app:tint="@color/iconColor" />
 
                     <TextView
                         android:id="@+id/schoolEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="17sp"
                         android:layout_marginStart="10dp"
-                        android:textColor="@color/text_color" />
+                        android:textColor="@color/text_color"
+                        android:textSize="17sp" />
 
                 </LinearLayout>
 
@@ -164,18 +164,18 @@
                     android:id="@+id/tv_GroupStatus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
                     android:orientation="horizontal"
+                    android:paddingStart="20dp"
                     android:paddingTop="10dp"
+                    android:paddingEnd="20dp"
                     android:paddingBottom="10dp">
 
                     <ImageView
                         android:layout_width="16dp"
                         android:layout_height="16dp"
+                        android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_person_16"
-                        app:tint="@color/iconColor"
-                        android:layout_gravity="center_vertical"/>
+                        app:tint="@color/iconColor" />
 
                     <TextView
                         android:id="@+id/numbStudentsInt"
@@ -184,45 +184,45 @@
                         android:layout_marginStart="10dp"
                         android:textColor="@color/text_background_color"
                         android:textSize="15sp"
-                        android:transitionName="student_no_shared"/>
+                        android:transitionName="student_no_shared" />
 
                     <TextView
                         android:id="@+id/numbStudents"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/inter_regular"
                         android:text="Students"
                         android:textColor="@color/text_background_color"
                         android:textSize="15sp"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/inter_regular"
-                        android:transitionName="student_shared"/>
+                        android:transitionName="student_shared" />
 
                     <View
                         android:layout_width="5dp"
                         android:layout_height="5dp"
-                        android:background="@drawable/ic_dot"
                         android:layout_gravity="center"
-                        android:layout_marginStart="10dp"/>
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/ic_dot" />
 
                     <TextView
                         android:id="@+id/numbTeachersInt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:textSize="15sp"
                         android:textColor="@color/text_background_color"
-                        android:transitionName="teacher_no_shared"/>
+                        android:textSize="15sp"
+                        android:transitionName="teacher_no_shared" />
 
                     <TextView
                         android:id="@+id/numbTeachers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:fontFamily="@font/inter_regular"
                         android:text="Teachers"
                         android:textColor="@color/text_background_color"
                         android:textSize="15sp"
-                        android:layout_marginStart="10dp"
-                        android:fontFamily="@font/inter_regular"
-                        android:transitionName="teacher_shared"/>
+                        android:transitionName="teacher_shared" />
 
 
                 </LinearLayout>
@@ -233,11 +233,11 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="20dp"
                     android:background="@drawable/jojn_teacher_btn"
+                    android:fontFamily="@font/inter_semibold"
                     android:text="Join as a teacher"
                     android:textAllCaps="false"
-                    android:fontFamily="@font/inter_semibold"
                     android:textColor="@color/text_color"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
