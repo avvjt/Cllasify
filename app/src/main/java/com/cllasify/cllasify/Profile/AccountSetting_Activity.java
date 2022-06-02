@@ -40,6 +40,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Constant;
 import com.cllasify.cllasify.Home.Profile_Activity;
+import com.cllasify.cllasify.Home.Server_Activity;
 import com.cllasify.cllasify.Privacy;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Register.getStarted;
@@ -95,6 +96,18 @@ public class AccountSetting_Activity extends AppCompatActivity {
     TextView tv_notiConfig, tv_Feedback;
     LinearLayout ll_profileSetting;
     CircleImageView prof_pic;
+
+    @Override
+    public void onBackPressed() {
+        Pair[] pair = new Pair[2];
+        pair[0] = new Pair<View,String>(prof_pic , "pic_shared");
+        pair[1] = new Pair<View,String>(tv_User_Name , "name_shared");
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(AccountSetting_Activity.this, pair);
+
+        Intent i = new Intent(AccountSetting_Activity.this, Profile_Activity.class);
+        startActivity(i, options.toBundle());
+
+    }
 
 
     public void checkDarkLightDefaultStatusBar() {
