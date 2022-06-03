@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +40,8 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
     List<Class_Group_Names> class_group_namesList;
     private OnItemClickListener mListener;
     String uniPush;
+
+    int lastPosition = -1;
 
     public interface OnItemClickListener {
 
@@ -77,6 +81,10 @@ public class Adapter_TopicList_Serv extends RecyclerView.Adapter<Adapter_TopicLi
     @Override
     public void onBindViewHolder(@NonNull Adapter_TopicList_Serv.ViewHolder holder, int position) {
         holder.subjectTopic.setText(subjectDetailsModelList.get(position).getSubjectName());
+
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.item_fall_down);
+        holder.itemView.startAnimation(animation);
+        lastPosition = holder.getAdapterPosition();
 
     }
 

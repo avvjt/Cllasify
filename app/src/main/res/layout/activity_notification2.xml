@@ -53,7 +53,8 @@
         android:layout_below="@id/action_bar"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:background="@color/page_color">
+        android:background="@color/page_color"
+        android:scrollbarSize="1dp">
 
 
         <androidx.recyclerview.widget.RecyclerView

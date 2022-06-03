@@ -8,6 +8,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,6 +43,8 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
     DatabaseReference refUserFollowing;
     boolean subsClick = false;
     private OnItemClickListener mListener;
+
+    int lastPosition = -1;
 
     public void removeItem(int position) {
         mDatalistNew.remove(position);
@@ -96,6 +100,10 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
 
         String userName = Answers.getUserName();
         String userID = Answers.getUserId();
+
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.item_fall_down);
+        holder.itemView.startAnimation(animation);
+        lastPosition = holder.getAdapterPosition();
 
         DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
         refUserProfPic.addValueEventListener(new ValueEventListener() {

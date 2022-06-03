@@ -6,6 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,6 +35,7 @@ public class Adaptor_Attendance extends RecyclerView.Adapter<Adaptor_Attendance.
     private List<Class_Group> mDatalistNew;
     ProgressDialog notifyPB;
     private OnItemClickListener mListener;
+    int lastPosition = -1;
 
     public interface  OnItemClickListener{
 
@@ -68,6 +71,10 @@ public class Adaptor_Attendance extends RecyclerView.Adapter<Adaptor_Attendance.
         String studentName=Answers.getUserName();
         String attendStatus=Answers.getGrpJoiningStatus();
         String memberUserId = Answers.getUserId();
+
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.item_fall_down);
+        holder.itemView.startAnimation(animation);
+        lastPosition = holder.getAdapterPosition();
 
 
         DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(memberUserId);

@@ -55,7 +55,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/action_bar"
-        android:layout_above="@id/ll_bottom_send">
+        android:layout_above="@id/ll_bottom_send"
+        android:scrollbarSize="0dp">
 
 
         <RelativeLayout

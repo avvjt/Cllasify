@@ -47,7 +47,7 @@
     </LinearLayout>
 
     <!--Scrollview for both recyclerview parallel scrolling-->
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/btn_done"
@@ -66,7 +66,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:nestedScrollingEnabled="false"
-                app:fastScrollEnabled="false"/>
+                app:fastScrollEnabled="false"
+                android:layoutAnimation="@anim/layout_from_right"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_rollNumberStudentList"
@@ -74,10 +75,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:nestedScrollingEnabled="false"
-                app:fastScrollEnabled="false"/>
+                app:fastScrollEnabled="false"
+                android:layoutAnimation="@anim/layout_from_right"/>
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <!--Save button-->
     <Button

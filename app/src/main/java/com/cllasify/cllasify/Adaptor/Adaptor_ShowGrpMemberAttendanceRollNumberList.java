@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -41,6 +43,8 @@ public class Adaptor_ShowGrpMemberAttendanceRollNumberList extends RecyclerView.
     DatabaseReference refUserFollowing;
     boolean subsClick=true;
     private OnItemClickListener mListener;
+
+    int lastPosition = -1;
 
     public void removeItem(int position) {
         mDatalistNew.remove(position);
@@ -96,6 +100,10 @@ public class Adaptor_ShowGrpMemberAttendanceRollNumberList extends RecyclerView.
 
         String userName = Answers.getUserName();
         String userID = Answers.getUserId();
+
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.item_fall_down);
+        holder.itemView.startAnimation(animation);
+        lastPosition = holder.getAdapterPosition();
 
 
         holder.rollNumber.setText(String.valueOf(position+1));

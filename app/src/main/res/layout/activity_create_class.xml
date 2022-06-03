@@ -47,7 +47,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/action_bar">
+        app:layout_constraintTop_toBottomOf="@id/action_bar"
+        android:scrollbarSize="1dp">
 
         <RelativeLayout
             android:layout_width="match_parent"

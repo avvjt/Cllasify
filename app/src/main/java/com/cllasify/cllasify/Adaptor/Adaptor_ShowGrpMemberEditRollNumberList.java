@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -41,6 +43,8 @@ public class Adaptor_ShowGrpMemberEditRollNumberList extends RecyclerView.Adapte
     DatabaseReference refUserFollowing;
     boolean subsClick=true;
     private OnItemClickListener mListener;
+
+    int lastPosition = -1;
 
     public void removeItem(int position) {
         mDatalistNew.remove(position);
@@ -89,6 +93,9 @@ public class Adaptor_ShowGrpMemberEditRollNumberList extends RecyclerView.Adapte
 
         Log.d("CHKADMIN", "onBindViewHolder: "+mDatalistNew.get(position).isAdmin());
 
+        Animation animation = AnimationUtils.loadAnimation(context, R.anim.item_fall_down);
+        holder.itemView.startAnimation(animation);
+        lastPosition = holder.getAdapterPosition();
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_Group"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="65dp"
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:background="@color/page_color">
@@ -11,10 +11,12 @@
         android:id="@+id/rollNumbers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
         android:layout_marginStart="5dp"
         android:text="5"
-        android:layout_marginBottom="10dp"
         android:textColor="@color/text_color"
         android:textSize="18sp"/>
 
