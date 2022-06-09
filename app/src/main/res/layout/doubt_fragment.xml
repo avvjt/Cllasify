@@ -54,8 +54,8 @@
         android:id="@+id/ll_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/action_bar"
         android:layout_above="@id/ll_bottom_send"
+        android:layout_below="@id/action_bar"
         android:scrollbarSize="0dp">
 
 
@@ -278,48 +278,50 @@
 
 
     <!--Chat box sending message layout-->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/ll_bottom_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/doubt_input_background"
         android:orientation="horizontal"
         android:visibility="visible">
 
+
         <EditText
             android:id="@+id/et_DoubtAns"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/doubt_input_background"
+            android:layout_weight="2"
+            android:background="@color/transparent"
             android:focusable="true"
             android:hint="@string/hint_edittext"
             android:imeOptions="actionDone"
             android:importantForAutofill="no"
             android:inputType="textCapSentences|textMultiLine"
             android:paddingStart="30dp"
+            android:paddingTop="12dp"
             android:paddingEnd="60dp"
             android:paddingBottom="12dp"
-            android:paddingTop="12dp"
             android:textColor="@color/text_color"
-            android:textColorHint="@color/text_background_color"
-            android:textCursorDrawable="@drawable/cursor_color"/>
-
+            android:textCursorDrawable="@drawable/cursor_color" />
 
         <ImageButton
             android:id="@+id/ib_submitDoubtAns"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_alignParentEnd="true"
+            android:layout_gravity="bottom"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
             android:background="@color/transparent"
             android:elevation="10dp"
             android:src="@drawable/ic_send_disable"
             android:visibility="visible" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
 </RelativeLayout>

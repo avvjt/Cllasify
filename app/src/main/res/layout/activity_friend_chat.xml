@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,7 +8,8 @@
     android:elevation="5dp"
     android:background="@color/page_color"
     android:clickable="true"
-    tools:context=".Friend_Chat_Activity">
+    tools:context=".Friend_Chat_Activity"
+    android:focusable="true">
 
     <!--Two action bar in a same layout-->
     <RelativeLayout
@@ -102,42 +103,41 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:paddingStart="10dp"
         android:paddingEnd="1dp"
-        app:layout_constraintTop_toBottomOf="@id/twoLayoutHolder"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/ll_FrndP_btm_send" />
+        android:layout_below="@+id/twoLayoutHolder"
+        android:layout_above="@+id/ll_FrndP_btm_send"/>
 
     <!--Chat box sending message layout-->
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/ll_FrndP_btm_send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
 
 
         <EditText
             android:id="@+id/et_FrndP_text"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="2"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/chat_input_background"
-            android:layout_toStartOf="@id/ib_FrndP_csubmit"
             android:focusable="true"
             android:hint="@string/hint_edittext"
             android:imeOptions="actionDone"
             android:importantForAutofill="no"
             android:inputType="textCapSentences|textMultiLine"
+            android:maxHeight="140dp"
             android:paddingStart="30dp"
-            android:paddingEnd="30dp"
             android:paddingTop="10dp"
+            android:paddingEnd="30dp"
             android:paddingBottom="10dp"
             android:textColor="@color/text_color"
             android:textColorHint="@color/text_background_color"
@@ -147,15 +147,16 @@
             android:id="@+id/ib_FrndP_csubmit"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_gravity="bottom"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="10dp"
             android:background="@color/transparent"
             android:elevation="2dp"
             android:src="@drawable/ic_send_disable"
             android:visibility="visible" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

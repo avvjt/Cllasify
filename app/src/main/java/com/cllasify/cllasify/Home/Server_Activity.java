@@ -38,6 +38,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -92,6 +93,7 @@ import com.google.firebase.remoteconfig.internal.Code;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -141,7 +143,7 @@ public class Server_Activity extends AppCompatActivity {
 
 
     //Relative Layouts
-    RelativeLayout ll_bottom_send;
+    LinearLayout ll_bottom_send;
 
     //Linear Layouts
     LinearLayout onlyAdminLayout, groupSection, ll_AddJoinGrp, ll_ChatDoubtDashboard,
@@ -1135,6 +1137,38 @@ public class Server_Activity extends AppCompatActivity {
 
             init();
 
+            DatabaseReference dbSaveGroupPosition = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID);
+
+            ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.DOWN | ItemTouchHelper.UP, 0) {
+                @Override
+                public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                    int fromPosition = viewHolder.getAdapterPosition();
+                    int toPosition = target.getAdapterPosition();
+//                Toast.makeText(Edit_RollNumber.this, "From" + fromPosition + "gggto" + toPosition, Toast.LENGTH_SHORT).show();
+                    //  Log.d("POSS", "from position: "+listGrpMemberList.get(fromPosition).getUserId());
+                    Log.d("POSS", "to Position: "+toPosition);
+                    Collections.swap(list_OtherUserPublicGroupTitle, fromPosition, toPosition);
+                    showOtherUserPublicGroupAdaptor.notifyItemMoved(fromPosition, toPosition);
+
+                    for (int i = 0;i < list_OtherUserPublicGroupTitle.size();i++){
+                        Log.d("POSS", "Members position: "+i+" = "+list_OtherUserPublicGroupTitle.get(i).getPosition());
+                        dbSaveGroupPosition.child(list_OtherUserPublicGroupTitle.get(i).getPosition()).child("grpPosition").setValue(i);
+                    }
+
+                    return true;
+                }
+
+                @Override
+                public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+
+                }
+            };
+
+
+
+            ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
+            itemTouchHelper.attachToRecyclerView(rv_OtherPublicGroupTitle);
+
 
             swipe_left.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1516,9 +1550,13 @@ public class Server_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 String addTopic = et_AddTopic.getText().toString().trim();
                 String addDoubt = et_AddDoubt.getText().toString().trim();
-                if (addTopic.isEmpty() && addDoubt.isEmpty()) {
+                if(addDoubt.isEmpty()){
                     Toast.makeText(Server_Activity.this, "Enter text", Toast.LENGTH_SHORT).show();
-                } else {
+                }
+                if (addTopic.isEmpty()) {
+                    Toast.makeText(Server_Activity.this, "Enter text", Toast.LENGTH_SHORT).show();
+                }
+                if(!addDoubt.isEmpty() && !addTopic.isEmpty()){
                     DatabaseReference allDoubtReference = FirebaseDatabase.getInstance().getReference().
                             child("Groups").child("Doubt").child(groupPushId).child(subGroupPushId).child(groupClassSubjects).child("All_Doubt");
                     allDoubtReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -1614,7 +1652,7 @@ public class Server_Activity extends AppCompatActivity {
 
 
         DatabaseReference userJoinedOrAddServer = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID);
-        userJoinedOrAddServer.orderByChild("dateTime").addListenerForSingleValueEvent(new ValueEventListener() {
+        userJoinedOrAddServer.orderByChild("grpPosition").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {

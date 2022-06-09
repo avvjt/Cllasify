@@ -312,18 +312,19 @@
                         android:paddingEnd="1dp" />
 
                     <!--Chat box sending message layout-->
-                    <RelativeLayout
+                    <LinearLayout
                         android:id="@+id/ll_bottom_send"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginStart="20dp"
+                        android:layout_marginStart="15dp"
                         android:orientation="horizontal"
                         android:visibility="gone">
 
                         <EditText
                             android:id="@+id/et_ctext"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
+                            android:layout_weight="2"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_marginTop="8dp"
@@ -332,25 +333,27 @@
                             android:layout_toStartOf="@+id/sendDoubt"
                             android:background="@drawable/chat_input_background"
                             android:focusable="true"
-                            android:textCursorDrawable="@drawable/cursor_color"
                             android:hint="@string/hint_edittext"
                             android:imeOptions="actionDone"
                             android:importantForAutofill="no"
                             android:inputType="textCapSentences|textMultiLine"
+                            android:maxHeight="140dp"
                             android:paddingStart="30dp"
-                            android:paddingEnd="30dp"
                             android:paddingTop="10dp"
+                            android:paddingEnd="30dp"
                             android:paddingBottom="10dp"
                             android:textColor="@color/text_color"
-                            android:textColorHint="@color/text_background_color" />
+                            android:textColorHint="@color/text_background_color"
+                            android:textCursorDrawable="@drawable/cursor_color" />
 
                         <RelativeLayout
                             android:id="@+id/sendDoubt"
                             style="@style/SelectableItemBackgroundBorderless"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
+                            android:layout_gravity="bottom"
                             android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
                             android:layout_marginEnd="10dp">
 
                             <ImageButton
@@ -372,7 +375,7 @@
 
                         </RelativeLayout>
 
-                    </RelativeLayout>
+                    </LinearLayout>
 
                 </RelativeLayout>
 
