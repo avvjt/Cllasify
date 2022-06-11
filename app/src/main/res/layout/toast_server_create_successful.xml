@@ -19,7 +19,7 @@
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:paddingBottom="12dp"
-        android:text="Click the icon server created successfully"
+        android:text="@string/server_create_toast"
         android:textAlignment="center"
         android:textColor="@color/text_color"
         android:textSize="14sp"

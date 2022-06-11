@@ -29,9 +29,11 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:paddingStart="10dp"
+            android:paddingEnd="1dp"
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
-            app:tint="@color/iconSecondaryColor" />
+            app:tint="@color/iconSecondaryColor"
+            android:contentDescription="@string/server_contentDescription" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,7 +41,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="80dp"
             android:fontFamily="@font/inter_semibold"
-            android:text="Create server"
+            android:text="@string/create_server"
             android:textColor="@color/text_color"
             android:textSize="20sp" />
     </LinearLayout>
@@ -51,78 +53,79 @@
         android:scrollbarSize="1dp">
 
 
-            <LinearLayout
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ll_creategroup"
+            android:orientation="vertical"
+            android:layout_marginTop="150dp">
+
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/ll_creategroup"
-                android:orientation="vertical"
-                android:layout_marginTop="150dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:id="@+id/tv_title3"
-                    android:text="Setup a server for your school"
-                    android:textColor="@color/text_color"
-                    android:fontFamily="@font/inter_semibold"
-                    android:textAlignment="center"/>
+                android:textSize="20sp"
+                android:id="@+id/tv_title3"
+                android:text="@string/setup_server"
+                android:textColor="@color/text_color"
+                android:fontFamily="@font/inter_semibold"
+                android:textAlignment="center"/>
 
 
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Server name"
-                    android:textColor="@color/text_background_color"
-                    android:textSize="16sp"
-                    android:textAlignment="center"
-                    android:layout_marginTop="50dp"
-                    app:layout_constraintBottom_toTopOf="@+id/Edittext"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/server_name"
+                android:textColor="@color/text_background_color"
+                android:textSize="16sp"
+                android:textAlignment="center"
+                android:layout_marginTop="50dp"
+                app:layout_constraintBottom_toTopOf="@+id/Edittext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <EditText
-                    android:id="@+id/et_GroupName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="@color/iconPrimaryColor"
-                    android:hint="@string/hint_crateServer"
-                    android:textColor="@color/text_color"
-                    android:textColorHint="@color/iconColor"
-                    android:textSize="18sp"
-                    android:textCursorDrawable="@drawable/cursor_color"
-                    android:inputType="textCapSentences|textMultiLine"
-                    android:gravity="center_horizontal"
-                    android:layout_margin="20dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+            <EditText
+                android:id="@+id/et_GroupName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/iconPrimaryColor"
+                android:hint="@string/hint_crateServer"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/iconColor"
+                android:textSize="18sp"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:inputType="textCapSentences|textMultiLine"
+                android:gravity="center_horizontal"
+                android:layout_margin="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:importantForAutofill="no" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="* The name of you education Institutions like schools...."
-                    android:textSize="13sp"
-                    android:textColor="@color/text_background_color"
-                    android:fontFamily="@font/inter_regular"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="@string/create_server_dec"
+                android:textSize="13sp"
+                android:textColor="@color/text_background_color"
+                android:fontFamily="@font/inter_regular"/>
 
 
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="50dp"
-                    android:background="@drawable/button_small_big"
-                    android:layout_gravity="center"
-                    android:textColor="@color/btn_text_white"
-                    android:text="Create Server"
-                    android:id="@+id/btn_CreateGroup" />
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="50dp"
+                android:background="@drawable/button_small_big"
+                android:layout_gravity="center"
+                android:textColor="@color/btn_text_white"
+                android:text="@string/create_server"
+                android:id="@+id/btn_CreateGroup" />
 
-            </LinearLayout>
+        </LinearLayout>
 
     </ScrollView>
 </LinearLayout>

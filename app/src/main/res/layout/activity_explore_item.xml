@@ -29,7 +29,7 @@
             android:layout_height="46dp"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
-            android:contentDescription="TODO"
+            android:contentDescription="@string/explore_contentDescription"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
@@ -78,7 +78,8 @@
                         android:layout_height="40dp"
                         android:background="@drawable/explore_icon_background"
                         android:src="@drawable/ic_logotext"
-                        android:transitionName="pic_shared" />
+                        android:transitionName="pic_shared"
+                        android:contentDescription="@string/explore_contentDescription" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -90,7 +91,7 @@
                     android:layout_marginStart="20dp"
                     android:fontFamily="@font/inter_semibold"
                     android:maxLines="2"
-                    android:text="Kalyani sikshayatan school"
+                    android:text="@string/demo_school_name"
                     android:textColor="@color/text_color"
                     android:textSize="19sp"
                     android:transitionName="name_shared" />
@@ -110,7 +111,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/text_color"
-                    android:textSize="19dp"
+                    android:textSize="19sp"
                     android:textStyle="bold"
                     android:visibility="gone" />
 
@@ -149,7 +150,8 @@
                         android:layout_height="16dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_mail_16"
-                        app:tint="@color/iconColor" />
+                        app:tint="@color/iconColor"
+                        android:contentDescription="@string/explore_contentDescription" />
 
                     <TextView
                         android:id="@+id/schoolEmail"
@@ -176,7 +178,8 @@
                         android:layout_height="16dp"
                         android:layout_gravity="center_vertical"
                         android:src="@drawable/ic_person_16"
-                        app:tint="@color/iconColor" />
+                        app:tint="@color/iconColor"
+                        android:contentDescription="@string/explore_contentDescription" />
 
                     <TextView
                         android:id="@+id/numbStudentsInt"
@@ -193,7 +196,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/inter_regular"
-                        android:text="Students"
+                        android:text="@string/students"
                         android:textColor="@color/text_background_color"
                         android:textSize="15sp"
                         android:transitionName="student_shared" />
@@ -220,7 +223,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/inter_regular"
-                        android:text="Teachers"
+                        android:text="@string/teachers"
                         android:textColor="@color/text_background_color"
                         android:textSize="15sp"
                         android:transitionName="teacher_shared" />
@@ -235,17 +238,17 @@
                     android:layout_margin="20dp"
                     android:background="@drawable/jojn_teacher_btn"
                     android:fontFamily="@font/inter_semibold"
-                    android:text="Join as a teacher"
+                    android:text="@string/join_teacher"
                     android:textAllCaps="false"
                     android:textColor="@color/text_color"
                     android:textSize="18sp" />
 
             </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_ShowClass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_ShowClass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
 

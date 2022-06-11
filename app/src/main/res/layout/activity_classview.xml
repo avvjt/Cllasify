@@ -29,10 +29,12 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:paddingStart="10dp"
+            android:paddingEnd="1dp"
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
             app:tint="@color/iconSecondaryColor"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            android:contentDescription="@string/classview_contentDescription" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,7 +42,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/inter_semibold"
-            android:text="Classview"
+            android:text="@string/classview"
             android:textColor="@color/text_color"
             android:textSize="20sp" />
     </LinearLayout>
@@ -71,7 +73,7 @@
                     android:id="@+id/subjectListText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Subjects list"
+                    android:text="@string/subject_list"
                     android:textColor="@color/text_color"
                     android:fontFamily="@font/inter_medium"
                     android:textSize="16sp"/>
@@ -94,7 +96,7 @@
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/iconPrimaryColor"
                     android:fontFamily="@font/inter_medium"
-                    android:text="Create subject"
+                    android:text="@string/classview_create_subject"
                     android:letterSpacing="0.01"
                     android:textAlignment="textStart"
                     android:textAllCaps="false"
@@ -119,7 +121,7 @@
                     android:id="@+id/adminListText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Teachers list"
+                    android:text="@string/teachers_list"
                     android:textColor="@color/text_color"
                     android:fontFamily="@font/inter_medium"
                     android:textSize="16sp"/>
@@ -149,7 +151,7 @@
                     android:id="@+id/studentListText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Students list"
+                    android:text="@string/students_list"
                     android:textColor="@color/text_color"
                     android:fontFamily="@font/inter_medium"
                     android:textSize="16sp"/>

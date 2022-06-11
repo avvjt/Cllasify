@@ -26,7 +26,6 @@ import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember_Serv;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.Constant;
 import com.cllasify.cllasify.R;
-import com.cllasify.cllasify.Server.Attendance_Activity;
 import com.cllasify.cllasify.Service.NetworkBroadcast;
 import com.cllasify.cllasify.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.SharePref;
@@ -85,7 +84,7 @@ public class Students_Subjects extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
-        setContentView(R.layout.activity_students_subjects);
+        setContentView(R.layout.activity_classview);
 
         broadcastReceiver = new NetworkBroadcast();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -299,7 +298,7 @@ public class Students_Subjects extends AppCompatActivity {
     private void renameSub(String groupPushId, String classUniPushId, String classPosition, String subjectName) {
 
 
-        View customAlertDialog = LayoutInflater.from(Students_Subjects.this).inflate(R.layout.dialog_rename_subject, null, false);
+        View customAlertDialog = LayoutInflater.from(Students_Subjects.this).inflate(R.layout.popup_rename_subject, null, false);
         AlertDialog.Builder builder = new AlertDialog.Builder(Students_Subjects.this);
         EditText et_SubjectName = customAlertDialog.findViewById(R.id.et_SubjectName);
         Button btn_nextAddTopic = customAlertDialog.findViewById(R.id.btn_nextAddTopic);

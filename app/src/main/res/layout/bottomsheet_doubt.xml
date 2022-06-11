@@ -21,7 +21,8 @@
         android:textSize="15sp"
         android:maxLines="2"
         android:textCursorDrawable="@drawable/cursor_color"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:importantForAutofill="no" />
 
 
     <EditText
@@ -38,7 +39,8 @@
         android:textCursorDrawable="@drawable/cursor_color"
         android:padding="10dp"
         android:layout_marginTop="10dp"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:importantForAutofill="no" />
 
 
     <LinearLayout
@@ -53,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_Cancel"
-            android:text="Discard"
+            android:text="@string/discard"
             android:textColor="@color/iconPrimaryColor"
             android:background="@color/transparent"
             android:layout_marginStart="150dp"/>
@@ -63,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btn_Submit"
-            android:text="crate"
+            android:text="@string/create"
             android:textColor="@color/iconColor"
             android:background="@color/transparent"
             android:layout_marginStart="20dp"/>

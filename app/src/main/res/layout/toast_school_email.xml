@@ -19,7 +19,7 @@
         android:paddingEnd="10dp"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        android:text="The school has not added its email yet"
+        android:text="@string/add_email"
         android:textAlignment="center"
         android:textColor="@color/text_color"
         android:textSize="14sp"

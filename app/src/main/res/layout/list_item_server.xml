@@ -20,7 +20,8 @@
             android:layout_height="200dp"
             android:scaleType="centerCrop"
             android:src="@drawable/school_bg"
-            android:elevation="5dp"/>
+            android:elevation="5dp"
+            android:contentDescription="@string/item_contentDescription" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,12 +32,13 @@
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:src="@drawable/ic_explore"
-                app:tint="@color/iconColor" />
+                app:tint="@color/iconColor"
+                android:contentDescription="@string/item_contentDescription" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_background_color"
-                android:text="Based on your profile location"
+                android:text="@string/based_location"
                 android:fontFamily="@font/inter_regular"
                 android:layout_marginStart="10dp"/>
 
@@ -51,14 +53,15 @@
             android:layout_marginEnd="20dp">
 
 
-                <ImageView
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:src="@drawable/ic_logotext"
-                    android:id="@+id/schoolLogoImg"
-                    android:elevation="2dp"
-                    android:background="@drawable/explore_icon_background"
-                    android:transitionName="pic_shared"/>
+            <ImageView
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:src="@drawable/ic_logotext"
+                android:id="@+id/schoolLogoImg"
+                android:elevation="2dp"
+                android:background="@drawable/explore_icon_background"
+                android:transitionName="pic_shared"
+                android:contentDescription="@string/item_contentDescription" />
 
 
             <TextView
@@ -68,7 +71,6 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/inter_semibold"
                 android:maxLines="2"
-                android:text="Kalyani sikshayatan high school"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="15dp"
                 android:textColor="@color/text_color"
@@ -94,7 +96,8 @@
                 android:layout_height="16dp"
                 android:src="@drawable/ic_person_16"
                 app:tint="@color/iconColor"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/item_contentDescription" />
 
             <TextView
                 android:id="@+id/numbStudentsInt"
@@ -109,7 +112,7 @@
                 android:id="@+id/numbStudents"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Students"
+                android:text="@string/item_students"
                 android:textColor="@color/text_background_color"
                 android:textSize="15sp"
                 android:layout_marginStart="10dp"
@@ -136,7 +139,7 @@
                 android:id="@+id/numbTeachers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Teachers"
+                android:text="@string/item_teachers"
                 android:textColor="@color/text_background_color"
                 android:textSize="15sp"
                 android:layout_marginStart="10dp"

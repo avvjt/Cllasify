@@ -56,7 +56,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="115dp"
                     android:fontFamily="serif"
-                    android:text="@string/cllasify"
+                    android:text="@string/started_cllasify"
                     android:textColor="@color/text_color"
                     android:textSize="30sp" />
             </LinearLayout>
@@ -68,7 +68,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="100dp"
                 android:fontFamily="@font/inter_regular"
-                android:text="@string/explore"
+                android:text="@string/started_explore"
                 android:textAllCaps="false"
                 android:textColor="@color/text_background_color"
                 android:textSize="35sp" />
@@ -100,7 +100,7 @@
                 android:background="@drawable/custom_btn"
                 android:letterSpacing="0.15"
                 android:padding="22dp"
-                android:text="@string/signingoogle"
+                android:text="@string/signInGoogle"
                 android:textAllCaps="false"
                 android:textColor="@color/btn_text_white"
                 android:textSize="13sp"

@@ -31,9 +31,11 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:paddingStart="10dp"
+            android:paddingEnd="1dp"
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
-            app:tint="@color/iconSecondaryColor" />
+            app:tint="@color/iconSecondaryColor"
+            android:contentDescription="@string/attends_contentDescription" />
 
         <TextView
             android:id="@+id/tv_titleAttendance"
@@ -42,7 +44,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
             android:fontFamily="@font/inter_semibold"
-            android:text="Take attendance"
+            android:text="@string/take_attendance"
             android:textColor="@color/text_color"
             android:textSize="18sp"/>
 
@@ -53,7 +55,8 @@
             android:src="@drawable/menu_attendance"
             android:background="@color/transparent"
             android:spinnerMode="dropdown"
-            android:layout_marginStart="140dp"/>
+            android:layout_marginStart="140dp"
+            android:contentDescription="@string/attends_contentDescription" />
     </LinearLayout>
 
     <!--2 Useless textview-->

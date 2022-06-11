@@ -28,7 +28,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Change your name"
+                android:text="@string/set_name"
                 android:id="@+id/editTitle"
                 android:fontFamily="@font/inter_semibold"
                 android:textSize="18sp"
@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/btn_submit"
-                    android:text="@string/save"
+                    android:text="@string/name_save"
                     android:textColor="@color/iconPrimaryColor"
                     android:background="@color/transparent"
                     android:layout_marginStart="100dp"/>
@@ -56,7 +56,7 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name"
+            android:text="@string/sheet_name"
             android:textColor="@color/text_color"
             android:textSize="14sp"
             android:layout_marginStart="4dp"
@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/iconPrimaryColor"
-            android:hint="@string/hint_name"
+            android:hint="@string/name_hint"
             android:textColor="@color/text_color"
             android:textColorHint="@color/iconColor"
             android:textSize="18sp"
@@ -79,13 +79,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:importantForAutofill="no" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="* Help people discover your account by using the name that you'r known by ( either your full name or nikename )"
+            android:text="@string/name_warning"
             android:textSize="13sp"
             android:textColor="@color/text_background_color"
             android:fontFamily="@font/inter_regular"/>

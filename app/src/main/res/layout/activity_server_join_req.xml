@@ -30,9 +30,11 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:paddingStart="10dp"
+            android:paddingEnd="1dp"
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
-            app:tint="@color/iconSecondaryColor" />
+            app:tint="@color/iconSecondaryColor"
+            android:contentDescription="@string/req_contentDescription" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,7 +42,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/inter_semibold"
-            android:text="Server request"
+            android:text="@string/servers_req"
             android:textColor="@color/text_color"
             android:textSize="20sp"/>
     </LinearLayout>
@@ -57,12 +59,12 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Student"/>
+            android:text="@string/req_student"/>
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Teacher" />
+            android:text="@string/req_teacher" />
 
 
     </com.google.android.material.tabs.TabLayout>
@@ -70,8 +72,7 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/view_Pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/reqTabLayout"/>
+        android:layout_height="match_parent" />
 
 
 

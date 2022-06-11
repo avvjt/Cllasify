@@ -57,7 +57,8 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginStart="2dp"
                         android:scaleType="center"
-                        android:src="@drawable/ic_baseline_message_24" />
+                        android:src="@drawable/ic_baseline_message_24"
+                        android:contentDescription="@string/servers_contentDescription" />
 
                 </RelativeLayout>
 
@@ -94,7 +95,6 @@
                     android:id="@+id/groupRVs"
                     android:layout_width="80dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="3"
                     android:orientation="vertical">
 
                     <!--Public server (Useless)-->
@@ -138,7 +138,8 @@
                         android:layout_marginTop="10dp"
                         android:layout_marginStart="2dp"
                         android:scaleType="center"
-                        android:src="@drawable/ic_plus_16" />
+                        android:src="@drawable/ic_plus_16"
+                        android:contentDescription="@string/servers_contentDescription" />
 
                 </LinearLayout>
 
@@ -148,6 +149,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingEnd="15dp"
+                    android:paddingStart="1dp"
                     android:layout_toEndOf="@+id/groupRVs">
 
 
@@ -212,7 +214,7 @@
                     android:background="@drawable/button_gradient"
                     android:fontFamily="@font/inter_medium"
                     android:letterSpacing="0.1"
-                    android:text="Create server"
+                    android:text="@string/servers_create_server"
                     android:textColor="@color/btn_text_white"
                     android:textSize="20sp" />
 
@@ -224,7 +226,7 @@
                     android:background="@drawable/button_gradient"
                     android:fontFamily="@font/inter_medium"
                     android:letterSpacing="0.1"
-                    android:text="Join server"
+                    android:text="@string/join_server"
                     android:textColor="@color/btn_text_white"
                     android:textSize="20sp" />
             </LinearLayout>
@@ -264,7 +266,8 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="10dp"
                             android:src="@drawable/ic_swipe_menux"
-                            app:tint="@color/iconSecondaryColor" />
+                            app:tint="@color/iconSecondaryColor"
+                            android:contentDescription="@string/servers_contentDescription" />
 
                         <TextView
                             android:id="@+id/subjectName"
@@ -288,7 +291,8 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
                             android:src="@drawable/ic_swipe_menu"
-                            app:tint="@color/iconSecondaryColor" />
+                            app:tint="@color/iconSecondaryColor"
+                            android:contentDescription="@string/servers_contentDescription" />
                     </RelativeLayout>
 
 
@@ -333,7 +337,7 @@
                             android:layout_toStartOf="@+id/sendDoubt"
                             android:background="@drawable/chat_input_background"
                             android:focusable="true"
-                            android:hint="@string/hint_edittext"
+                            android:hint="@string/hint_server_edittext"
                             android:imeOptions="actionDone"
                             android:importantForAutofill="no"
                             android:inputType="textCapSentences|textMultiLine"
@@ -362,7 +366,8 @@
                                 android:layout_height="35dp"
                                 android:background="@color/transparent"
                                 android:elevation="2dp"
-                                android:src="@drawable/ic_question_24" />
+                                android:src="@drawable/ic_question_24"
+                                android:contentDescription="@string/servers_contentDescription" />
 
                             <ImageButton
                                 android:id="@+id/ib_csubmit"
@@ -371,7 +376,8 @@
                                 android:background="@color/transparent"
                                 android:elevation="2dp"
                                 android:src="@drawable/ic_send_24"
-                                android:visibility="gone" />
+                                android:visibility="gone"
+                                android:contentDescription="@string/servers_contentDescription" />
 
                         </RelativeLayout>
 
@@ -421,7 +427,7 @@
                             android:layout_marginBottom="10dp"
                             android:fontFamily="@font/inter_semibold"
                             android:padding="10dp"
-                            android:text="Favorite"
+                            android:text="@string/favorite"
                             android:textColor="@color/text_color"
                             android:textSize="15sp" />
 
@@ -441,14 +447,15 @@
                                 android:background="@drawable/background_server_setting"
                                 android:padding="7dp"
                                 android:src="@drawable/ic_settings_24"
-                                app:tint="@color/white_constant" />
+                                app:tint="@color/white_constant"
+                                android:contentDescription="@string/servers_contentDescription" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
                                 android:fontFamily="@font/inter_regular"
-                                android:text="Server setting"
+                                android:text="@string/server_setting"
                                 android:textColor="@color/text_color"
                                 android:textSize="16sp" />
 
@@ -470,14 +477,15 @@
                                 android:background="@drawable/backgroud_attendances"
                                 android:padding="7dp"
                                 android:src="@drawable/ic_edit"
-                                app:tint="@color/white_constant" />
+                                app:tint="@color/white_constant"
+                                android:contentDescription="@string/servers_contentDescription" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
                                 android:fontFamily="@font/inter_regular"
-                                android:text="Attendance"
+                                android:text="@string/server_attendance"
                                 android:textColor="@color/text_color"
                                 android:textSize="16sp" />
 
@@ -499,14 +507,15 @@
                                 android:background="@drawable/backgroud_notification"
                                 android:padding="7dp"
                                 android:src="@drawable/ic_menu_notifications"
-                                app:tint="@color/white_constant" />
+                                app:tint="@color/white_constant"
+                                android:contentDescription="@string/servers_contentDescription" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
                                 android:fontFamily="@font/inter_regular"
-                                android:text="Notification"
+                                android:text="@string/server_notification"
                                 android:textColor="@color/text_color"
                                 android:textSize="16sp" />
 
@@ -535,7 +544,7 @@
                             android:fontFamily="@font/inter_semibold"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
-                            android:text="Friends"
+                            android:text="@string/server_friends"
                             android:textColor="@color/text_color"
                             android:textSize="15sp"
                             android:visibility="gone" />
@@ -568,7 +577,7 @@
                             android:fontFamily="@font/inter_semibold"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
-                            android:text="Teachers"
+                            android:text="@string/server_teachers"
                             android:textColor="@color/text_color"
                             android:textSize="15sp"
                             android:visibility="gone" />
@@ -605,7 +614,7 @@
                             android:fontFamily="@font/inter_semibold"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
-                            android:text="Students"
+                            android:text="@string/server_students"
                             android:textColor="@color/text_color"
                             android:textSize="15sp"
                             android:visibility="gone" />
@@ -633,7 +642,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/inter_semibold"
-                            android:text="Exam"
+                            android:text="@string/exam"
                             android:textColor="@color/text_color"
                             android:textSize="16sp"/>
 
@@ -642,7 +651,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/inter_semibold"
-                            android:text="Result"
+                            android:text="@string/result"
                             android:textColor="@color/text_color"
                             android:textSize="16sp"/>
 

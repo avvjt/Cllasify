@@ -29,7 +29,7 @@
             android:layout_height="46dp"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
-            android:contentDescription="TODO"
+            android:contentDescription="@string/specifics_contentDescription"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
@@ -43,7 +43,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/inter_semibold"
-            android:text="Server profile settings"
+            android:text="@string/server_profile_settings"
             android:textColor="@color/text_color"
             android:textSize="18sp" />
 
@@ -54,7 +54,8 @@
             android:layout_marginStart="80dp"
             android:background="@color/transparent"
             android:src="@drawable/done"
-            app:tint="@color/iconPrimaryColor" />
+            app:tint="@color/iconPrimaryColor"
+            android:contentDescription="@string/specifics_contentDescription" />
 
     </LinearLayout>
 
@@ -95,7 +96,8 @@
                             android:layout_height="120dp"
                             android:src="@drawable/ic_logotext"
                             android:background="@drawable/explore_icon_background"
-                            android:transitionName="pic_shared" />
+                            android:transitionName="pic_shared"
+                            android:contentDescription="@string/specifics_contentDescription" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -142,7 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="Server name"
+                    android:text="@string/specifics_server_name"
                     android:textColor="@color/text_color"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toTopOf="@+id/Edittext"
@@ -164,7 +166,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/edit_serverBio"
@@ -172,7 +175,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="20dp"
-                    android:text="Server Description"
+                    android:text="@string/server_des"
                     android:textColor="@color/text_color"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toTopOf="@+id/Edittext"
@@ -194,7 +197,8 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:id="@+id/edit_serverEmail"
@@ -202,7 +206,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:layout_marginTop="20dp"
-                    android:text="Server email"
+                    android:text="@string/server_email"
                     android:textColor="@color/text_color"
                     android:textSize="14sp"
                     app:layout_constraintBottom_toTopOf="@+id/Edittext"
@@ -216,7 +220,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/iconPrimaryColor"
                     android:hint="@string/hint_serverEmail"
-                    android:inputType="textCapSentences|textMultiLine"
+                    android:inputType="textEmailAddress|textCapSentences|textMultiLine"
                     android:textColor="@color/text_color"
                     android:textColorHint="@color/iconColor"
                     android:textCursorDrawable="@drawable/cursor_color"
@@ -224,14 +228,15 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/inter_regular"
-                    android:text="* If you don't set the email then no one will be able to                           take admission"
+                    android:text="@string/server_email_des"
                     android:textColor="@color/text_background_color"
                     android:textSize="13sp" />
 
@@ -254,7 +259,7 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/class_background"
                     android:fontFamily="@font/inter_medium"
-                    android:text="Delete server"
+                    android:text="@string/delete_server"
                     android:textAllCaps="false"
                     android:textColor="@color/text_color"
                     android:textSize="16sp" />
@@ -267,7 +272,7 @@
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="10dp"
                     android:fontFamily="@font/inter_regular"
-                    android:text="* After deleting the server, that members who are joined in it will also be deleted automaticlly you can never recover them"
+                    android:text="@string/delete_server_des"
                     android:textColor="@color/text_background_color"
                     android:textSize="13sp" />
             </LinearLayout>

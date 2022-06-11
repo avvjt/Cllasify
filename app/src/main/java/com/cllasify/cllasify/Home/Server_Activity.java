@@ -26,7 +26,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -88,7 +87,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.remoteconfig.internal.Code;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -2150,7 +2148,7 @@ public class Server_Activity extends AppCompatActivity {
         btmSheetUserProfile.requestWindowFeature(Window.FEATURE_NO_TITLE);
         btmSheetUserProfile.setCancelable(true);
         btmSheetUserProfile.setCanceledOnTouchOutside(true);
-        btmSheetUserProfile.setContentView(R.layout.btmdialog_profileothers);
+        btmSheetUserProfile.setContentView(R.layout.bottomsheet_profileothers);
         btmSheetUserProfile.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 

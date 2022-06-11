@@ -35,7 +35,8 @@
                 android:background="@color/transparent"
                 android:src="@drawable/ic_share"
                 android:visibility="visible"
-                app:tint="@color/black" />
+                app:tint="@color/black"
+                android:contentDescription="@string/others_contentDescription" />
 
             <ImageButton
                 android:id="@+id/btn_Settings"
@@ -45,7 +46,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="20dp"
                 android:src="@drawable/menu_xxx"
-                app:tint="@color/black" />
+                app:tint="@color/black"
+                android:contentDescription="@string/others_contentDescription" />
 
 
         </RelativeLayout>
@@ -80,7 +82,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/inter_medium"
-                android:text="@string/name"
+                android:text="@string/others_name"
                 android:textColor="@color/text_color"
                 android:textSize="18sp" />
 
@@ -126,7 +128,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_solid_message"
                     android:elevation="2dp"
-                    android:text="Message"
+                    android:text="@string/message"
                     android:textColor="@color/black_constant" />
 
                 <Button
@@ -140,7 +142,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_solid_unfollow"
                     android:elevation="2dp"
-                    android:text="Unfollow"
+                    android:text="@string/unfollow"
                     android:textColor="@color/black" />
 
             </LinearLayout>
@@ -155,7 +157,7 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/button_solid_message"
                 android:elevation="2dp"
-                android:text="Follow"
+                android:text="@string/follow"
                 android:textColor="@color/black_constant"
                 android:visibility="gone" />
 
@@ -180,7 +182,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_regular"
-            android:text="Username: "
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -202,7 +203,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_regular"
-            android:text="Category"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -212,7 +212,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/open_sans_light"
-            android:text="(Click to Add)"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -254,7 +253,7 @@
         <LinearLayout
             android:id="@+id/ll_bio"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -262,7 +261,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/open_sans_regular"
-                android:text="Bio: "
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -286,7 +284,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:fontFamily="@font/open_sans_regular"
-            android:text="Institution: "
             android:textColor="@color/black"
             android:textSize="16sp"
             android:visibility="gone"/>
@@ -313,7 +310,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/open_sans_regular"
-            android:text="Location: "
             android:textColor="@color/black"
             android:textSize="16sp"
             android:visibility="gone"/>
@@ -337,12 +333,11 @@
 
         <Button
             android:id="@+id/btn_SentFrndReq"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/cust_rounded_corner"
-            android:text="Send Friend Request"
             android:visibility="gone" />
 
     </LinearLayout>
@@ -350,11 +345,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/unfollowAndMessage"
         android:layout_marginStart="25dp"
         android:layout_marginTop="25dp"
         android:layout_marginBottom="15dp"
-        android:text="Connections"
         android:textAllCaps="true"
         android:visibility="gone" />
     <!--Followers layout-->
@@ -367,6 +360,7 @@
         android:textSize="16sp"
         android:textStyle="bold"
         android:visibility="gone" />
+
     <!--Mutual server and friend layout-->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
