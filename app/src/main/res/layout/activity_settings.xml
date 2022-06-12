@@ -53,7 +53,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/free_acc"
                     android:fontFamily="@font/open_sans_bold"
                     android:textColor="@color/black"
                     android:textAlignment="center"
@@ -67,7 +66,6 @@
                     android:layout_gravity="center"
                     android:textColor="@color/white"
                     android:id="@+id/btn_Premium"
-                    android:text="@string/go_premium"
                     android:layout_marginTop="20dp"
                     android:textSize="16sp"/>
 
@@ -101,7 +99,6 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/account_settings"
                             android:id="@+id/tv_User_Email"
                             android:textColor="@color/black"
                             android:textSize="16sp"
@@ -184,7 +181,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/set_status"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:textColor="@color/black"
@@ -194,7 +190,6 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/online"
                         android:layout_marginStart="20dp"
                         android:layout_marginEnd="20dp"
                         android:layout_marginTop="5dp"
@@ -249,7 +244,6 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/open_source"
                             android:layout_marginTop="20dp"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"

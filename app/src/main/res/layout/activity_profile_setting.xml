@@ -167,8 +167,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:paddingTop="10dp"
                         android:fontFamily="@font/inter_regular"
+                        android:paddingTop="10dp"
                         android:text="@string/username"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
@@ -397,7 +397,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_bold"
-                        android:text="@string/account_manage"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:visibility="gone" />
@@ -417,7 +416,6 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="20dp"
                         android:fontFamily="@font/open_sans_bold"
-                        android:text="@string/delete_acc"
                         android:textColor="@color/purple_700"
                         android:textSize="20sp" />
 

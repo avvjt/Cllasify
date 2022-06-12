@@ -18,7 +18,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/set_status"
         android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/page_black"/>
@@ -30,7 +29,6 @@
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
             android:checked="true"
             android:layout_marginTop="20dp"
-            android:text="@string/online"
             android:textColor="@color/page_black"
             android:textSize="18sp" />
 
@@ -40,7 +38,6 @@
             android:layout_height="wrap_content"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
             android:checked="false"
-            android:text="@string/busy"
             android:textColor="@color/page_black"
             android:textSize="18sp"
             android:layout_marginTop="20dp"/>
@@ -51,7 +48,6 @@
             android:layout_height="wrap_content"
             android:checkMark="?android:attr/listChoiceIndicatorMultiple"
             android:checked="false"
-            android:text="@string/invisible"
             android:textColor="@color/page_black"
             android:textSize="18sp"
             android:layout_marginTop="20dp"/>
@@ -60,7 +56,6 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/friends_see"
             android:textColor="@color/black"
             android:textSize="16sp" />
 

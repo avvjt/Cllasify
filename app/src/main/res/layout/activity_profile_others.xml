@@ -71,7 +71,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/username"
                         android:id="@+id/tv_User_Email"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -99,7 +98,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/institution"
                         android:layout_marginStart="20dp"
                         android:textColor="@color/black"
                         android:textSize="18sp"
@@ -133,7 +131,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/followers"
                         android:textColor="@color/page_black"
                         android:textSize="16sp"
                         android:layout_marginStart="5dp"/>
@@ -157,7 +154,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/following"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:layout_marginStart="5dp"/>
@@ -182,7 +178,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="@string/mutual_servers"
                     android:paddingStart="30dp"
                     android:textSize="18sp"
                     android:textColor="@color/black"
@@ -195,7 +190,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:text="@string/mutual_friends"
                     android:paddingStart="30dp"
                     android:textSize="18sp"
                     android:textColor="@color/black"

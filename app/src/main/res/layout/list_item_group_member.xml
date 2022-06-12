@@ -92,7 +92,6 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/text_background_color"
                 android:fontFamily="@font/inter_medium"
-                android:text="@string/online_status"
                 android:textSize="14sp"
                 android:layout_marginStart="10dp"
                 android:gravity="center_vertical"

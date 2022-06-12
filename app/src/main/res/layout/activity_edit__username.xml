@@ -32,7 +32,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:text="@string/username"
             android:textColor="@color/black"
             android:textSize="25sp"
             android:textStyle="bold" />
@@ -46,7 +45,6 @@
             android:backgroundTint="@color/text_light_black"
             android:layout_gravity="center"
             android:textStyle="bold"
-            android:text="@string/save"
             android:textSize="12sp" />
     </LinearLayout>
 
@@ -59,7 +57,6 @@
         <EditText
             android:layout_width="230dp"
             android:layout_height="wrap_content"
-            android:hint="@string/username"
             android:layout_marginStart="20dp"/>
         <ImageButton
             android:layout_width="wrap_content"
@@ -70,8 +67,7 @@
             android:backgroundTint="@color/white"/>
         <EditText
             android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/tag"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

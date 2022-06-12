@@ -32,7 +32,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/account"
             android:textSize="22sp"
             android:layout_marginStart="100dp"
             android:textColor="@color/black"
@@ -217,7 +216,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/institution"
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:layout_gravity="center"
@@ -227,7 +225,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/institution"
                     android:textSize="20sp"
                     android:id="@+id/tv_Institution"
                     android:textColor="@color/black"
@@ -314,7 +311,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/phone"
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:layout_gravity="center"
@@ -352,7 +348,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/change_password"
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:layout_gravity="center"
@@ -377,7 +372,6 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/account_manage"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:fontFamily="@font/open_sans_bold"/>
@@ -392,7 +386,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/disable_acc"
                     android:textSize="20sp"
                     android:textColor="@color/black"
                     android:layout_marginStart="20dp"
@@ -410,7 +403,6 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/delete_acc"
                     android:textSize="20sp"
                     android:textColor="@color/purple_700"
                     android:layout_marginStart="20dp"

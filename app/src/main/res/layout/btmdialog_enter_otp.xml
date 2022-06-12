@@ -37,7 +37,6 @@
                 android:textSize="18sp"
                 android:textColor="@color/page_black"
                 android:textStyle="bold"
-                android:text="@string/enter_otp"
                 android:layout_gravity="center" />
 
 
@@ -75,14 +74,12 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:textColor="@color/page_black"
-        android:text="@string/sent_otp"
         android:onClick="WhyNeeded"
         android:textSize="14sp"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/send"/>
+            android:layout_gravity="center"/>
 
     </LinearLayout>

@@ -383,7 +383,6 @@
                 android:layout_height="50dp"
                 android:fontFamily="@font/open_sans_regular"
                 android:gravity="center_vertical"
-                android:text="@string/mutual_servers"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:drawableEndCompat="@drawable/ic_right_arrow" />
@@ -393,7 +392,6 @@
                 android:layout_height="50dp"
                 android:fontFamily="@font/open_sans_regular"
                 android:gravity="center_vertical"
-                android:text="@string/mutual_friends"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:drawableEndCompat="@drawable/ic_right_arrow" />

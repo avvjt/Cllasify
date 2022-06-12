@@ -17,7 +17,6 @@
             android:textSize="24sp"
             android:layout_alignParentTop="true"
             style="@style/TextAppearance.AppCompat.Subhead"
-            android:text="@string/comment"
             android:id="@+id/tv_askQuesTitle"
             android:textColor="@color/page_black"/>
     <View
@@ -39,7 +38,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         app:boxCollapsedPaddingTop="4dp"
-        android:hint="@string/ask_question"
         android:layout_weight="4"
         app:hintTextColor="@color/text_light_black"
         android:textColor="@color/page_black"
@@ -64,8 +62,7 @@
         android:layout_weight="1"
         android:layout_gravity="center_vertical"
         style="@style/TextAppearance.AppCompat.Title"
-        android:textSize="20sp"
-        android:text="@string/add" />
+        android:textSize="20sp" />
     </LinearLayout>
 
 </RelativeLayout>

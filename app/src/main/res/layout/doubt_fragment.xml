@@ -242,7 +242,6 @@
                             android:layout_weight="1"
                             android:gravity="start"
                             android:padding="2dp"
-                            android:text="@string/asked_on"
                             android:textStyle="italic" />
 
                         <TextView
@@ -251,7 +250,6 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="2dp"
-                            android:text="@string/please_answer"
                             android:textStyle="bold" />
 
                         <TextView
@@ -259,7 +257,6 @@
                             style="@style/TextAppearance.AppCompat.Body1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/view_answer"
                             android:padding="2dp" />
 
                     </LinearLayout>

@@ -31,7 +31,6 @@
                 android:textSize="18sp"
                 android:textColor="@color/page_black"
                 android:textStyle="bold"
-                android:text="@string/enter_phoneno"
                 android:layout_gravity="center" />
 
 
@@ -49,7 +48,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:hint="@string/phone"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         app:counterEnabled="true"
         app:counterMaxLength="10"
@@ -73,13 +71,11 @@
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textColor="@color/page_black"
-        android:text="@string/why_needed"
         android:onClick="WhyNeeded" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/send"/>
+            android:layout_gravity="center"/>
 
     </LinearLayout>

@@ -89,7 +89,6 @@
                             android:layout_gravity="center_vertical"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
-                            android:text="@string/account"
                             android:textColor="@color/black"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -112,7 +111,6 @@
                             android:layout_gravity="center_vertical"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
-                            android:text="@string/account"
                             android:textColor="@color/black"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -142,7 +140,6 @@
                             android:layout_gravity="center_vertical"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
-                            android:text="@string/account"
                             android:textColor="@color/black"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -165,7 +162,6 @@
                             android:layout_gravity="center_vertical"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
-                            android:text="@string/account"
                             android:textColor="@color/black"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -194,7 +190,6 @@
                             android:layout_gravity="center_vertical"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
-                            android:text="@string/account"
                             android:textColor="@color/black"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -217,7 +212,6 @@
                             android:layout_gravity="center_vertical"
                             android:paddingStart="10dp"
                             android:paddingEnd="10dp"
-                            android:text="@string/account"
                             android:textColor="@color/black"
                             android:textSize="18sp" />
                     </LinearLayout>
