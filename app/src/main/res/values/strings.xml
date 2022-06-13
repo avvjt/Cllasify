@@ -68,7 +68,7 @@
     <string name="create_subject">Create subject</string>
     <string name="setup_subject">Create subject for your class</string>
     <string name="skip">Skip</string>
-    <string name="subject_name">Server name</string>
+    <string name="subject_name">subject name</string>
     <string name="hint_crateSubject"><font size="15">Type here...</font> </string>
     <string name="create_subject_dec">* It will create a subject in the class, if you skip you can create subject from the server setting page</string>
     <string name="subject_contentDescription">TODO</string>
