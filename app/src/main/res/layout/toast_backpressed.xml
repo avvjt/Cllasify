@@ -19,7 +19,7 @@
         android:paddingEnd="10dp"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        android:text="Please click on skip or next to continue"
+        android:text="@string/back_pressed"
         android:textAlignment="center"
         android:textColor="@color/text_color"
         android:textSize="14sp"

@@ -16,17 +16,20 @@
             android:textSize="20sp"
             android:padding="8dp"
             android:id="@+id/tv_AddClassTitle"
-            android:text="Rename class"
+            android:text="@string/rename_subject"
             android:fontFamily="@font/inter_semibold"
             android:textColor="@color/text_color"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:hint="Rename Class Name"
-            android:id="@+id/et_ClassName"
+            android:textColor="@color/text_color"
+            android:fontFamily="@font/inter_regular"
+            android:hint="@string/hint_subject_name"
             android:textCursorDrawable="@drawable/cursor_color"
-            android:inputType="textCapSentences|textMultiLine"/>
+            android:id="@+id/et_SubjectName"
+            android:inputType="textCapSentences|textMultiLine"
+            android:importantForAutofill="no" />
 
         <Button
             android:layout_width="match_parent"
@@ -35,7 +38,7 @@
             android:background="@drawable/button_gradient"
             android:layout_gravity="center"
             android:textColor="@color/btn_text_white"
-            android:text="@string/next"
+            android:text="@string/rename_next"
             android:layout_marginTop="10dp"
             android:id="@+id/btn_nextAddTopic"/>
 

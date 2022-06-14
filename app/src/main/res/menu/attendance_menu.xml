@@ -4,11 +4,11 @@
     <item
         android:id="@+id/Recent_attendance"
         android:icon="@android:drawable/ic_menu_preferences"
-        android:title="Recent attendance"/>
+        android:title="@string/recent_attendance"/>
 
 
     <item
         android:id="@+id/Attendance_history"
         android:icon="@android:drawable/ic_menu_help"
-        android:title="Attendance history" />
+        android:title="@string/attendance_history" />
 </menu>

@@ -29,9 +29,11 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:paddingStart="10dp"
+            android:paddingEnd="1dp"
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
-            app:tint="@color/iconSecondaryColor" />
+            app:tint="@color/iconSecondaryColor"
+            android:contentDescription="@string/roll_contentDescription" />
 
         <TextView
             android:id="@+id/tv_titleAttendance"
@@ -40,7 +42,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="20dp"
             android:fontFamily="@font/inter_semibold"
-            android:text="Roll numbers"
+            android:text="@string/roll_numbers"
             android:textColor="@color/text_color"
             android:textSize="18sp" />
 
@@ -93,7 +95,7 @@
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/button_solid_message"
-        android:text="Save"
+        android:text="@string/roll_save"
         android:textColor="@color/black_constant" />
 
 </RelativeLayout>

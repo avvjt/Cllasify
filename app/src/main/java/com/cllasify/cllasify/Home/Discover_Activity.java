@@ -1,6 +1,5 @@
 package com.cllasify.cllasify.Home;
 
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,10 +15,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -158,7 +155,7 @@ public class Discover_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
-        setContentView(R.layout.activity_discover);
+        setContentView(R.layout.activity_explore);
 
 
         broadcastReceiver = new NetworkBroadcast();
@@ -806,7 +803,7 @@ public class Discover_Activity extends AppCompatActivity {
 
         BottomSheetDialog btmSheetUserProfile=new BottomSheetDialog(Discover_Activity.this);
         btmSheetUserProfile.setCancelable(true);
-        btmSheetUserProfile.setContentView(R.layout.btmdialog_profileothers);
+        btmSheetUserProfile.setContentView(R.layout.bottomsheet_profileothers);
         DatabaseReference refUserStatus,refUserFollowers,refUserFollowing;
 
 

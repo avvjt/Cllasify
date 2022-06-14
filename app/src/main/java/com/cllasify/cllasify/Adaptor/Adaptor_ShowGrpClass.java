@@ -16,8 +16,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class_Group_Names;
-import com.cllasify.cllasify.Home.Discover_Activity;
-import com.cllasify.cllasify.Home.Discover_Item;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -61,7 +59,7 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View rootview = LayoutInflater.from(context).inflate(R.layout.list_group_class, parent, false);
+        View rootview = LayoutInflater.from(context).inflate(R.layout.list_server_class, parent, false);
         return new MyViewHolder(rootview);
     }
 

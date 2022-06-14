@@ -28,7 +28,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Change your bio"
+                android:text="@string/bio_change"
                 android:id="@+id/editTitle"
                 android:fontFamily="@font/inter_semibold"
                 android:textSize="18sp"
@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/btn_submit"
-                    android:text="@string/save"
+                    android:text="@string/bio_save"
                     android:textColor="@color/iconPrimaryColor"
                     android:background="@color/transparent"
                     android:layout_marginStart="100dp"/>
@@ -56,7 +56,7 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bio"
+            android:text="@string/sheet_bio"
             android:textColor="@color/text_color"
             android:textSize="14sp"
             android:layout_marginStart="4dp"
@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/iconPrimaryColor"
-            android:hint="@string/hint_name"
+            android:hint="@string/bio_hint"
             android:textColor="@color/text_color"
             android:textColorHint="@color/iconColor"
             android:textSize="18sp"
@@ -80,13 +80,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:maxLines="2"/>
+            android:maxLines="2"
+            android:importantForAutofill="no" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="* You can set your bio maximum 2 lines"
+            android:text="@string/bio_warning"
             android:textSize="13sp"
             android:textColor="@color/text_background_color"
             android:fontFamily="@font/inter_regular"/>

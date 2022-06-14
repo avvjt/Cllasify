@@ -37,7 +37,6 @@
                 android:background="@drawable/button_gradient_small"
                 android:layout_gravity="center"
                 android:textColor="@color/white"
-                android:text="@string/join_group"
                 android:layout_marginTop="10dp"/>
             <Button
                 android:layout_width="130dp"
@@ -45,7 +44,6 @@
                 android:background="@drawable/button_gradient_small"
                 android:layout_gravity="center"
                 android:textColor="@color/white"
-                android:text="@string/admission"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="50dp"/>
 

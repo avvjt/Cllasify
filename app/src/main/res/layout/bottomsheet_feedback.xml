@@ -28,7 +28,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Send feedback"
+                android:text="@string/send_feedback"
                 android:id="@+id/editTitle"
                 android:fontFamily="@font/inter_semibold"
                 android:textSize="18sp"
@@ -56,7 +56,7 @@
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Feedback"
+            android:text="@string/feedback"
             android:textColor="@color/text_color"
             android:textSize="14sp"
             android:layout_marginStart="4dp"
@@ -79,13 +79,14 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            android:importantForAutofill="no" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:text="* We will redirect to the gmail for sending feedback               Thanks for your feedback :)"
+            android:text="@string/feedback_warning"
             android:textSize="13sp"
             android:textColor="@color/text_background_color"
             android:fontFamily="@font/inter_regular"/>

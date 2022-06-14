@@ -35,7 +35,7 @@
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
             app:tint="@color/iconSecondaryColor"
-            android:contentDescription="TODO"
+            android:contentDescription="@string/attend_contentDescription"
             tools:ignore="RtlSymmetry" />
 
         <TextView
@@ -48,6 +48,7 @@
             android:textColor="@color/text_color"
             android:textSize="18sp"
             android:paddingStart="10dp"
+            android:paddingEnd="1dp"
             android:paddingTop="10dp"
             android:id="@+id/tv_titleAttendance"/>
     </LinearLayout>

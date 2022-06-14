@@ -54,7 +54,6 @@
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="start"
-        android:text="@string/questions"
         style="@style/TextAppearance.AppCompat.Subhead"
         android:textColor="@color/page_black"/>
     <TextView
@@ -66,7 +65,6 @@
         android:layout_margin="4dp"
         android:textSize="20sp"
         android:gravity="start"
-        android:text="@string/category"
         style="@style/TextAppearance.AppCompat.Subhead"
         android:textColor="@color/page_black"/>
     <androidx.appcompat.widget.SearchView

@@ -16,7 +16,8 @@
         android:textColor="@color/text_color"
         android:textAlignment="center"
         android:paddingTop="20dp"
-        android:paddingEnd="20dp"/>
+        android:paddingEnd="20dp"
+        android:paddingStart="1dp"/>
 
 
 

@@ -33,6 +33,6 @@ public class Notification extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
-        setContentView(R.layout.activity_notification);
+        setContentView(R.layout.activity_notification_setting);
     }
 }

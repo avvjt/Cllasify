@@ -28,9 +28,11 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:paddingStart="10dp"
+            android:paddingEnd="1dp"
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
-            app:tint="@color/iconSecondaryColor" />
+            app:tint="@color/iconSecondaryColor"
+            android:contentDescription="@string/setting_contentDescription" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,7 +40,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/inter_semibold"
-            android:text="Profile settings"
+            android:text="@string/profile_settings"
             android:textColor="@color/text_color"
             android:textSize="20sp" />
     </LinearLayout>
@@ -82,16 +84,16 @@
                         android:layout_marginBottom="20dp"
                         android:transitionName="pic_shared" />
 
-                <ProgressBar
-                    android:id="@+id/progBar"
-                    android:visibility="gone"
-                    android:layout_centerInParent="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:elevation="5dp"
-                    android:indeterminate="true"
-                    android:indeterminateTintMode="src_atop"
-                    android:indeterminateTint="@color/purple"/>
+                    <ProgressBar
+                        android:id="@+id/progBar"
+                        android:visibility="gone"
+                        android:layout_centerInParent="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="5dp"
+                        android:indeterminate="true"
+                        android:indeterminateTintMode="src_atop"
+                        android:indeterminateTint="@color/purple"/>
 
                 </RelativeLayout>
 
@@ -108,7 +110,7 @@
                         android:layout_weight="1"
                         android:fontFamily="@font/inter_semibold"
                         android:gravity="bottom"
-                        android:text="@string/name"
+                        android:text="@string/profile_settings_name"
                         android:textColor="@color/text_color"
                         android:textSize="18sp"
                         android:transitionName="name_shared"/>
@@ -142,9 +144,10 @@
                     android:layout_marginTop="5dp"
                     android:fontFamily="@font/inter_medium"
                     android:paddingStart="20dp"
+                    android:paddingEnd="1dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="5dp"
-                    android:text="Account Information"
+                    android:text="@string/account_info"
                     android:textColor="@color/text_background_color"
                     android:textSize="17sp" />
 
@@ -164,8 +167,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
-                        android:paddingTop="10dp"
                         android:fontFamily="@font/inter_regular"
+                        android:paddingTop="10dp"
                         android:text="@string/username"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
@@ -178,7 +181,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_toEndOf="@+id/userName"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Add"
+                        android:text="@string/setting_add"
                         android:drawablePadding="10dp"
                         android:paddingTop="10dp"
                         android:textAlignment="textEnd"
@@ -216,7 +219,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Add"
+                        android:text="@string/setting_add"
                         android:drawablePadding="10dp"
                         android:paddingTop="10dp"
                         android:textAlignment="textEnd"
@@ -254,7 +257,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Add"
+                        android:text="@string/setting_add"
                         android:drawablePadding="10dp"
                         android:paddingTop="10dp"
                         android:textAlignment="textEnd"
@@ -280,7 +283,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/inter_regular"
-                        android:text="Institution"
+                        android:text="@string/setting_institution"
                         android:paddingTop="10dp"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
@@ -292,7 +295,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Add"
+                        android:text="@string/setting_add"
                         android:drawablePadding="10dp"
                         android:paddingTop="10dp"
                         android:textAlignment="textEnd"
@@ -318,7 +321,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:fontFamily="@font/inter_regular"
-                        android:text="Bio"
+                        android:text="@string/bio"
                         android:paddingTop="10dp"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
@@ -330,7 +333,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/inter_medium"
-                        android:text="Add"
+                        android:text="@string/setting_add"
                         android:drawablePadding="10dp"
                         android:paddingTop="10dp"
                         android:textAlignment="textEnd"
@@ -372,8 +375,9 @@
                         android:gravity="end"
                         android:textAlignment="textEnd"
                         android:paddingTop="10dp"
-                        android:text="Add"
+                        android:text="@string/setting_add"
                         android:paddingEnd="46dp"
+                        android:paddingStart="1dp"
                         android:textColor="@color/text_background_color"
                         android:textSize="16sp"
                         android:layout_marginStart="10dp"/>
@@ -393,7 +397,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/open_sans_bold"
-                        android:text="@string/account_manage"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:visibility="gone" />
@@ -413,7 +416,6 @@
                         android:layout_gravity="center"
                         android:layout_marginStart="20dp"
                         android:fontFamily="@font/open_sans_bold"
-                        android:text="@string/delete_acc"
                         android:textColor="@color/purple_700"
                         android:textSize="20sp" />
 

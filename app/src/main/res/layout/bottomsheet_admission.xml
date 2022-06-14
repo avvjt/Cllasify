@@ -17,7 +17,7 @@
             android:id="@+id/serverName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Exparimental school"
+            android:text="@string/sheet_server"
             android:textSize="19sp"
             android:textColor="@color/text_color"
             android:fontFamily="@font/inter_semibold"
@@ -29,7 +29,7 @@
             android:id="@+id/classNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Experimental school - Class Xi"
+            android:text="@string/sheet_server_class"
             android:textColor="@color/text_color"
             android:textSize="16sp"
             android:layout_marginTop="20dp"
@@ -47,7 +47,7 @@
                 android:id="@+id/tv_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Full name"
+                android:text="@string/full_name"
                 android:textColor="@color/text_color"
                 android:textSize="14sp"
                 android:layout_marginStart="4dp"
@@ -70,7 +70,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:importantForAutofill="no" />
 
         </LinearLayout>
 
@@ -87,7 +88,7 @@
                 android:id="@+id/tv_phoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Phone number"
+                android:text="@string/phone_number"
                 android:textColor="@color/text_color"
                 android:textSize="14sp"
                 android:layout_marginStart="4dp"
@@ -110,7 +111,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:importantForAutofill="no" />
 
         </LinearLayout>
 
@@ -127,7 +129,7 @@
                 android:id="@+id/tv_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Your Address"
+                android:text="@string/address"
                 android:textColor="@color/text_color"
                 android:textSize="14sp"
                 android:layout_marginStart="4dp"
@@ -150,7 +152,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:importantForAutofill="no" />
 
         </LinearLayout>
 
@@ -170,8 +173,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="150dp"
                 android:background="@color/transparent"
-                android:text="Discard"
-                android:textColor="@color/iconPrimaryColor" />
+                android:text="@string/admission_discard"
+                android:textColor="@color/iconPrimaryColor"
+                style="?android:attr/buttonBarButtonStyle" />
 
 
             <Button
@@ -180,8 +184,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:background="@color/transparent"
-                android:text="crate"
-                android:textColor="@color/iconPrimaryColor" />
+                android:text="@string/admission_crate"
+                android:textColor="@color/iconPrimaryColor"
+                style="?android:attr/buttonBarButtonStyle" />
         </LinearLayout>
 
     </LinearLayout>

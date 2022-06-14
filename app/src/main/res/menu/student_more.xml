@@ -4,17 +4,17 @@
     <item
         android:id="@+id/action_remove_student"
         android:icon="@android:drawable/ic_menu_preferences"
-        android:title="Remove student"/>
+        android:title="@string/remove_student"/>
 
 
     <item
         android:id="@+id/action_make_admin"
         android:icon="@android:drawable/ic_menu_help"
-        android:title="Make admin" />
+        android:title="@string/make_admin" />
 
     <item
         android:id="@+id/action_remove_admin"
         android:icon="@android:drawable/ic_menu_help"
-        android:title="Remove admin" />
+        android:title="@string/remove_admin" />
 
 </menu>

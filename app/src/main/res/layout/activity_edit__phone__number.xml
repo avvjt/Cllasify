@@ -42,7 +42,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/enter_phoneno"
             android:fontFamily="@font/open_sans_bold"
             android:textSize="22sp"
             android:textColor="@color/black"
@@ -52,7 +51,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/receive_msg"
             android:textSize="18sp"
             android:textColor="@color/black"
             android:gravity="center"
@@ -68,12 +66,10 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:hint="@string/country_code"
                 android:textSize="14sp"/>
             <androidx.appcompat.widget.AppCompatEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/PhoneNo"
                 android:textSize="14sp"
                 android:layout_marginStart="10dp"
                 android:textAlignment="center"/>

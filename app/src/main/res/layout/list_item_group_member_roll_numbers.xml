@@ -106,7 +106,6 @@
                 android:layout_marginStart="10dp"
                 android:fontFamily="@font/inter_medium"
                 android:gravity="center_vertical"
-                android:text="@string/online_status"
                 android:textColor="@color/text_background_color"
                 android:textSize="14sp" />
 

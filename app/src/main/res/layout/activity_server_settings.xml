@@ -34,7 +34,8 @@
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
             app:tint="@color/iconSecondaryColor"
-            tools:ignore="RtlSymmetry" />
+            tools:ignore="RtlSymmetry"
+            android:contentDescription="@string/settings_contentDescription" />
 
         <ImageButton
             android:id="@+id/serverSettingProfile"
@@ -44,7 +45,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="20dp"
             android:src="@drawable/ic_settings_24"
-            app:tint="@color/iconPrimaryColor"/>
+            app:tint="@color/iconPrimaryColor"
+            android:contentDescription="@string/settings_contentDescription" />
 
     </RelativeLayout>
 
@@ -86,8 +88,9 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/explore_icon_background"
+                        android:contentDescription="@string/settings_contentDescription"
                         android:src="@drawable/ic_logotext"
-                        android:transitionName="pic_shared"/>
+                        android:transitionName="pic_shared" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -125,8 +128,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingStart="20dp"
-                        android:paddingEnd="20dp"
                         android:paddingTop="10dp"
+                        android:paddingEnd="20dp"
                         android:paddingBottom="10dp"
                         android:textColor="@color/text_color"
                         android:textSize="17sp" />
@@ -147,6 +150,7 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/settings_contentDescription"
                         android:src="@drawable/ic_mail_16"
                         app:tint="@color/iconColor" />
 
@@ -174,6 +178,7 @@
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:layout_gravity="center_vertical"
+                        android:contentDescription="@string/settings_contentDescription"
                         android:src="@drawable/ic_person_16"
                         app:tint="@color/iconColor" />
 
@@ -191,7 +196,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/inter_regular"
-                        android:text="Students"
+                        android:text="@string/setting_students"
                         android:textColor="@color/text_background_color"
                         android:textSize="15sp" />
 
@@ -216,7 +221,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:fontFamily="@font/inter_regular"
-                        android:text="Teachers"
+                        android:text="@string/setting_teachers"
                         android:textColor="@color/text_background_color"
                         android:textSize="15sp" />
 
@@ -224,8 +229,8 @@
                 </LinearLayout>
 
 
-
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -238,18 +243,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15sp"
-                android:layoutAnimation="@anim/layout_fall_down"/>
+                android:layoutAnimation="@anim/layout_fall_down" />
 
             <!--Create class button -->
             <LinearLayout
+                style="@style/SelectableItemBackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="20dp"
                 android:layout_marginBottom="20dp"
-                style="@style/SelectableItemBackground">
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/addNewClass"
@@ -260,16 +265,14 @@
                     android:drawablePadding="10dp"
                     android:drawableTint="@color/iconPrimaryColor"
                     android:fontFamily="@font/inter_medium"
-                    android:text="Create class"
                     android:letterSpacing="0.01"
+                    android:text="@string/setting_create_class"
                     android:textAlignment="textStart"
                     android:textAllCaps="false"
                     android:textColor="@color/text_color"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp" />
 
             </LinearLayout>
-
 
 
         </LinearLayout>

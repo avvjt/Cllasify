@@ -29,9 +29,11 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:paddingStart="10dp"
+            android:paddingEnd="1dp"
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
-            app:tint="@color/iconSecondaryColor" />
+            app:tint="@color/iconSecondaryColor"
+            android:contentDescription="@string/class_contentDescription" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,7 +41,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="80dp"
             android:fontFamily="@font/inter_semibold"
-            android:text="Create class"
+            android:text="@string/create_class"
             android:textColor="@color/text_color"
             android:textSize="20sp" />
     </LinearLayout>
@@ -52,7 +54,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
 
             <ProgressBar
@@ -79,7 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_semibold"
-                    android:text="Create a class for your server"
+                    android:text="@string/create_class_title"
                     android:textAlignment="center"
                     android:textColor="@color/text_color"
                     android:textSize="20sp"/>
@@ -90,7 +92,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:text="Class name"
+                    android:text="@string/class_name"
                     android:textAlignment="center"
                     android:textColor="@color/text_background_color"
                     android:textSize="16sp"
@@ -106,7 +108,7 @@
                     android:layout_margin="20dp"
                     android:backgroundTint="@color/iconPrimaryColor"
                     android:gravity="center_horizontal"
-                    android:hint="@string/hint_crateServer"
+                    android:hint="@string/hint_crateClass"
                     android:textCursorDrawable="@drawable/cursor_color"
                     android:textColor="@color/text_color"
                     android:textColorHint="@color/iconColor"
@@ -115,13 +117,14 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:importantForAutofill="no" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_regular"
-                    android:text="* It will create a new class in the server"
+                    android:text="@string/create_class_dec"
                     android:textAlignment="center"
                     android:textColor="@color/text_background_color"
                     android:textSize="13sp"/>
@@ -136,7 +139,7 @@
                     android:layout_marginTop="30dp"
                     android:layout_marginEnd="50dp"
                     android:background="@drawable/button_small_big"
-                    android:text="Create Class"
+                    android:text="@string/create_class"
                     android:textColor="@color/btn_text_white" />
 
             </LinearLayout>

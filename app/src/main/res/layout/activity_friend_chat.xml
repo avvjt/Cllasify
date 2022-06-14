@@ -41,7 +41,8 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:src="@drawable/ic_swipe_menux"
-                app:tint="@color/iconSecondaryColor" />
+                app:tint="@color/iconSecondaryColor"
+                android:contentDescription="@string/friend_contentDescription" />
 
             <ImageButton
                 android:id="@+id/swipe_right"
@@ -51,7 +52,8 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="300dp"
                 android:src="@drawable/ic_swipe_menu"
-                app:tint="@color/iconSecondaryColor" />
+                app:tint="@color/iconSecondaryColor"
+                android:contentDescription="@string/friend_contentDescription" />
         </LinearLayout>
 
         <RelativeLayout
@@ -83,7 +85,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/friendImg"
                 android:fontFamily="@font/inter_medium"
-                android:text="Username"
+                android:text="@string/demo_username"
                 android:textAllCaps="false"
                 android:textColor="@color/text_color"
                 android:textSize="16sp" />
@@ -154,7 +156,8 @@
             android:background="@color/transparent"
             android:elevation="2dp"
             android:src="@drawable/ic_send_disable"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:contentDescription="@string/friend_contentDescription" />
 
     </LinearLayout>
 

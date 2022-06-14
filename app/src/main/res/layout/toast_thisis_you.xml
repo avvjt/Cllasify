@@ -19,7 +19,7 @@
         android:paddingTop="12dp"
         android:paddingEnd="40dp"
         android:paddingBottom="12dp"
-        android:text="This is you"
+        android:text="@string/this_is_you"
         android:textAlignment="center"
         android:textColor="@color/text_color"
         android:textSize="14sp"

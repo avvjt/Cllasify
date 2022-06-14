@@ -38,7 +38,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/iconPrimaryColor"
-            android:hint="@string/hint_name"
             android:textColor="@color/text_color"
             android:textColorHint="@color/iconColor"
             android:textSize="18sp"

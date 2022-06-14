@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
-            android:text="No connection"
+            android:text="@string/no_connection"
             android:textColor="@color/text_color"
             android:textSize="18sp"
             android:layout_marginTop="10dp"/>
@@ -36,7 +36,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="15dp"
             android:fontFamily="@font/inter_medium"
-            android:text="Looks like you're offline"
+            android:text="@string/looks_like_offline"
             android:textColor="@color/text_background_color"
             android:textSize="16sp" />
 
@@ -48,7 +48,7 @@
             android:layout_gravity="end"
             android:layout_marginTop="20dp"
             android:background="@color/transparent"
-            android:text="Connect"
+            android:text="@string/connect"
             android:textColor="@color/iconPrimaryColor" />
 
     </LinearLayout>

@@ -4,11 +4,11 @@
 
     <item
         android:id="@+id/btn_SuspendStatus"
-        android:title="Suspend Status"
+        android:title="@string/suspend"
         app:cnb_iconColor="@color/purple"/>
     <item
         android:id="@+id/btn_FeesStatus"
-        android:title="Fees Status"
+        android:title="@string/fees"
         app:cnb_iconColor="@color/purple"/>
 
 </menu>

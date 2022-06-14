@@ -3,7 +3,6 @@ package com.cllasify.cllasify.Home;
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
@@ -11,7 +10,6 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -30,8 +28,6 @@ import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adaptor.Adaptor_Server_Setting_Items;
 import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.Class_Student_Details;
-import com.cllasify.cllasify.Profile.AccountSetting_Activity;
-import com.cllasify.cllasify.Profile.ProfileSetting_Activity;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Server_Setting_Specifics;
 import com.cllasify.cllasify.Service.NetworkBroadcast;
@@ -368,7 +364,7 @@ public class Server_Settings extends AppCompatActivity {
                         @Override
                         public void onClassRenameBtn(String className, String groupPushId, String uniClassPushId) {
 
-                            View customAlertDialog = LayoutInflater.from(Server_Settings.this).inflate(R.layout.dialog_rename_class, null, false);
+                            View customAlertDialog = LayoutInflater.from(Server_Settings.this).inflate(R.layout.popup_rename_class, null, false);
                             AlertDialog.Builder builder = new AlertDialog.Builder(Server_Settings.this);
                             EditText et_ClassName = customAlertDialog.findViewById(R.id.et_ClassName);
                             Button btn_nextAddTopic = customAlertDialog.findViewById(R.id.btn_nextAddTopic);

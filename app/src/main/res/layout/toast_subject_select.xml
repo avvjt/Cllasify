@@ -19,7 +19,7 @@
         android:paddingEnd="20dp"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        android:text="Please select a subject to continue"
+        android:text="@string/subject_select"
         android:textAlignment="center"
         android:textColor="@color/text_color"
         android:textSize="14sp"

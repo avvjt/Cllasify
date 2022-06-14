@@ -35,7 +35,7 @@ public class Adapter_Discover_Item extends RecyclerView.Adapter<Adapter_Discover
     @NonNull
     @Override
     public Adapter_Discover_Item.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.discover_class_item, parent, false));
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.item_discover_class, parent, false));
     }
 
     @Override

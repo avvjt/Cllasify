@@ -79,7 +79,6 @@
             android:background="@drawable/button_gradient_small"
             android:layout_gravity="center"
             android:textColor="@color/white"
-            android:text="@string/cancel"
             android:layout_marginTop="10dp"
             android:id="@+id/btn_Cancel"/>
         <Button

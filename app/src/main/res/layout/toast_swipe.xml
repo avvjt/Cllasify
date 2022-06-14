@@ -19,7 +19,7 @@
         android:paddingEnd="40dp"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        android:text="Swipe to open side panel"
+        android:text="@string/swipe"
         android:textAlignment="center"
         android:textColor="@color/text_color"
         android:textSize="14sp"

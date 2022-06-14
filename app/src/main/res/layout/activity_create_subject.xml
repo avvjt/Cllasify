@@ -29,10 +29,12 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:paddingStart="10dp"
+            android:paddingEnd="1dp"
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
             app:tint="@color/iconColor"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:contentDescription="@string/subject_contentDescription" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -40,13 +42,13 @@
             android:layout_gravity="center"
             android:layout_marginStart="130dp"
             android:fontFamily="@font/inter_semibold"
-            android:text="Create subject"
+            android:text="@string/create_subject"
             android:textColor="@color/text_color"
             android:textSize="20sp" />
 
         <Button
             android:id="@+id/skipBtn"
-            android:text="Skip"
+            android:text="@string/skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/iconPrimaryColor"
@@ -73,7 +75,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:id="@+id/tv_AddClassTitle"
-                android:text="Create subject for your class"
+                android:text="@string/setup_subject"
                 android:textColor="@color/text_color"
                 android:fontFamily="@font/inter_semibold"
                 android:textAlignment="center"/>
@@ -84,7 +86,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Subject name"
+                android:text="@string/subject_name"
                 android:textColor="@color/text_background_color"
                 android:textSize="16sp"
                 android:textAlignment="center"
@@ -99,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/iconPrimaryColor"
-                android:hint="@string/hint_crateServer"
+                android:hint="@string/hint_crateSubject"
                 android:textCursorDrawable="@drawable/cursor_color"
                 android:textColor="@color/text_color"
                 android:textColorHint="@color/iconColor"
@@ -110,7 +112,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent"
+                android:importantForAutofill="no" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -118,7 +121,7 @@
                 android:textAlignment="center"
                 android:layout_marginStart="30dp"
                 android:layout_marginEnd="30dp"
-                android:text="* It will create a subject in the class, if you skip you can create subject from the server setting page"
+                android:text="@string/create_subject_dec"
                 android:textSize="13sp"
                 android:id="@+id/tv_title2"
                 android:textColor="@color/text_background_color"
@@ -134,7 +137,7 @@
                 android:background="@drawable/button_small_big"
                 android:layout_gravity="center"
                 android:textColor="@color/btn_text_white"
-                android:text="Create subject"
+                android:text="@string/create_subject"
                 android:id="@+id/btn_CreateTopic" />
 
         </LinearLayout>
