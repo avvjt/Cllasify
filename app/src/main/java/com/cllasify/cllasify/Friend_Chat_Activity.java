@@ -1,7 +1,12 @@
 package com.cllasify.cllasify;
 
+import android.app.Dialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,20 +15,25 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adaptor.Adaptor_Friend_Chat;
-import com.cllasify.cllasify.Class.Class_Group;
+import com.cllasify.cllasify.swipeToReply.MessageSwipeController;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -63,7 +73,16 @@ public class Friend_Chat_Activity extends Fragment {
     EditText messageTxtFriend;
     CircleImageView friendImg;
 
-    boolean found;
+    FirebaseAuth firebaseAuth;
+    FirebaseUser currentUser;
+    Uri userPhoto;
+    String userID, userEmailID, userName;
+
+
+    RelativeLayout moreOptions, fragment_friend;
+    LinearLayout chatOption;
+
+    boolean found, clickedItem;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -78,7 +97,6 @@ public class Friend_Chat_Activity extends Fragment {
 
         View v = inflater.inflate(R.layout.activity_friend_chat, container, false);
 
-
         recyclerView = v.findViewById(R.id.recyclerView);
         ib_FrndP_csubmit = v.findViewById(R.id.ib_FrndP_csubmit);
         messageTxtFriend = v.findViewById(R.id.et_FrndP_text);
@@ -87,6 +105,8 @@ public class Friend_Chat_Activity extends Fragment {
         swipe_left = v.findViewById(R.id.swipe_left);
         swipe_right = v.findViewById(R.id.swipe_right);
         TextView friendNameTv = v.findViewById(R.id.tv_friend_name);
+
+        chatOption = v.findViewById(R.id.ll_FrndP_btm_send);
 
 
         swipe_right.setOnClickListener(new View.OnClickListener() {
@@ -144,6 +164,137 @@ public class Friend_Chat_Activity extends Fragment {
         senderRoom = senderUid + receiverUid;
         receiverRoom = receiverUid + senderUid;
 
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+
+            firebaseAuth = FirebaseAuth.getInstance();
+            currentUser = firebaseAuth.getCurrentUser();
+            assert currentUser != null;
+            userID = currentUser.getUid();
+
+            final Dialog dialog = new Dialog(getActivity());
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setCancelable(true);
+            dialog.setCanceledOnTouchOutside(true);
+
+
+            adaptor_friend_chat.setLongClickListener(new Adaptor_Friend_Chat.OnItemLongClickListener() {
+                @Override
+                public void getPosition(int position, String senderUserId, String receiverUserId, String messageId, String text) {
+                    dialog.show();
+
+                    if (senderUserId.equals(userID)) {
+
+                        Log.d("USERID", "getPosition: " + senderUserId);
+                        Log.d("USERID", "messageId: " + messageId);
+
+                        dialog.setContentView(R.layout.more_chat_options);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                        dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+
+                        Button copyBtn = dialog.findViewById(R.id.copy_button);
+                        copyBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                dialog.dismiss();
+
+                                ClipboardManager clipboardManager = (ClipboardManager) getActivity().getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                                ClipData data = (ClipData) ClipData.newPlainText("text", text);
+                                clipboardManager.setPrimaryClip(data);
+
+                            }
+                        });
+
+                        Button unsend = dialog.findViewById(R.id.unsend_button);
+                        unsend.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                dialog.dismiss();
+
+                                adaptor_friend_chat.removeItem(position);
+
+                                DatabaseReference firebaseDatabaseUnsendMSG = FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child("messages");
+
+                                firebaseDatabaseUnsendMSG.child(messageId).removeValue();
+
+                                DatabaseReference firebaseDatabaseUnsendMSGReceiver = FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child("messages");
+
+                                firebaseDatabaseUnsendMSGReceiver.child(receiverUserId).removeValue();
+
+
+
+                            }
+                        });
+
+                        Button reply = dialog.findViewById(R.id.reply_button);
+                        reply.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        });
+
+                    }
+                    else {
+                        Log.d("USERID", "getPosition: " + senderUserId);
+                        Log.d("USERID", "messageId: " + messageId);
+
+                        dialog.setContentView(R.layout.more_chat_options_others);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                        dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+
+                        Button copyBtn = dialog.findViewById(R.id.copy_button);
+                        copyBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                dialog.dismiss();
+
+                                ClipboardManager clipboardManager = (ClipboardManager) getActivity().getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                                ClipData data = (ClipData) ClipData.newPlainText("text", text);
+                                clipboardManager.setPrimaryClip(data);
+
+                            }
+                        });
+
+                        Button report = dialog.findViewById(R.id.report_button);
+                        report.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        });
+
+                        Button reply = dialog.findViewById(R.id.reply_button);
+                        reply.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        });
+
+
+                    }
+                }
+
+
+
+            });
+
+
+        }
+
+
+
+
         DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(receiverUid);
         refUserProfPic.addValueEventListener(new ValueEventListener() {
             @Override
@@ -156,7 +307,7 @@ public class Friend_Chat_Activity extends Fragment {
                     String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                     Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
                     Glide.with(Friend_Chat_Activity.this).load(profilePicUrl).into(friendImg);
-                }else{
+                } else {
                     Glide.with(Friend_Chat_Activity.this).load(R.drawable.maharaji).into(friendImg);
                 }
             }
@@ -167,7 +318,6 @@ public class Friend_Chat_Activity extends Fragment {
             }
         });
 
-        //my
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         assert currentUser != null;
@@ -280,30 +430,39 @@ public class Friend_Chat_Activity extends Fragment {
             @Override
             public void onClick(View view) {
                 String messageText = messageTxtFriend.getText().toString();
+                String messagePushIdSender = FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child("messages").push().toString();
+                String messagePushIdReceiver = FirebaseDatabase.getInstance().getReference().child("chats").child(receiverRoom).child("messages").push().toString();
+
+                String pushSplitSender[] = messagePushIdSender.split("/");
+                String pushSplitReceiver[] = messagePushIdReceiver.split("/");
+
+                Log.d(TAG, "onClick: " + pushSplitSender[6]);
+                Log.d(TAG, "onClick: " + pushSplitReceiver[6]);
+
 
                 Date date = new Date();
-                Class_Single_Friend messages = new Class_Single_Friend(messageText, senderUid, date.getTime());
+                Class_Single_Friend messages = new Class_Single_Friend(pushSplitSender[6],pushSplitReceiver[6], messageText, senderUid, date.getTime());
 //                Class_Group userAddGroupClass = new Class_Group(String.valueOf(date.getTime()), userName, senderUid, "nope", "classPosition[0]", messageText, "chat", "subjectUniPushId[0]", "push", 0);
                 messageTxtFriend.setText("");
                 firebaseDatabase.getReference().child("chats")
                         .child(senderRoom)
                         .child("messages")
-                        .push()
+                        .child(pushSplitSender[6])
                         .setValue(messages).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        firebaseDatabase.getReference().child("chats")
-                                .child(receiverRoom)
-                                .child("messages")
-                                .push()
-                                .setValue(messages).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
+                                firebaseDatabase.getReference().child("chats")
+                                        .child(receiverRoom)
+                                        .child("messages")
+                                        .child(pushSplitReceiver[6])
+                                        .setValue(messages).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
 
+                                            }
+                                        });
                             }
                         });
-                    }
-                });
 
             }
         });
@@ -313,15 +472,15 @@ public class Friend_Chat_Activity extends Fragment {
 
     }
 
-        public void showToast() {
-            LayoutInflater inflater = getLayoutInflater();
-            View layout = inflater.inflate(R.layout.toast_swipe, null);
-            Toast toast = new Toast(getActivity().getApplicationContext());
-            toast.setGravity(Gravity.BOTTOM, 0, 100);
-            toast.setDuration(Toast.LENGTH_SHORT);
-            toast.setView(layout);
-            toast.show();
-        }
+    public void showToast() {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.toast_swipe, null);
+        Toast toast = new Toast(getActivity().getApplicationContext());
+        toast.setGravity(Gravity.BOTTOM, 0, 100);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(layout);
+        toast.show();
+    }
 
 
 

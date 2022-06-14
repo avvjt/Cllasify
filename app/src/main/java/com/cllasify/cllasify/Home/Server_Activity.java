@@ -144,6 +144,7 @@ public class Server_Activity extends AppCompatActivity {
 
     //Relative Layouts
     LinearLayout ll_bottom_send;
+    RelativeLayout friendToolBar;
 
     //Linear Layouts
     LinearLayout onlyAdminLayout, groupSection, ll_AddJoinGrp, ll_ChatDoubtDashboard,
@@ -222,6 +223,7 @@ public class Server_Activity extends AppCompatActivity {
         adminListText = findViewById(R.id.adminListText);
         FriendListText = findViewById(R.id.FriendListText);
         FriendListTextt = findViewById(R.id.FriendListTextt);
+        friendToolBar = findViewById(R.id.friendToolBar);
 
         endPanelAllFriendsRecyclerView = findViewById(R.id.endPanelAllFriendsRecyclerView);
 
@@ -388,6 +390,9 @@ public class Server_Activity extends AppCompatActivity {
                 final String[] uniPushClassId = new String[1];
                 final String[] subjectUniPushId = new String[1];
                 final String[] clickedGroupName = new String[1];
+
+                friendToolBar.setVisibility(View.GONE);
+                textViewSubjectName.setVisibility(View.VISIBLE);
 
                 if (flag == true) {
                     FragmentManager manager = getSupportFragmentManager();
@@ -1146,12 +1151,12 @@ public class Server_Activity extends AppCompatActivity {
                     int toPosition = target.getAdapterPosition();
 //                Toast.makeText(Edit_RollNumber.this, "From" + fromPosition + "gggto" + toPosition, Toast.LENGTH_SHORT).show();
                     //  Log.d("POSS", "from position: "+listGrpMemberList.get(fromPosition).getUserId());
-                    Log.d("POSS", "to Position: "+toPosition);
+                    Log.d("POSS", "to Position: " + toPosition);
                     Collections.swap(list_OtherUserPublicGroupTitle, fromPosition, toPosition);
                     showOtherUserPublicGroupAdaptor.notifyItemMoved(fromPosition, toPosition);
 
-                    for (int i = 0;i < list_OtherUserPublicGroupTitle.size();i++){
-                        Log.d("POSS", "Members position: "+i+" = "+list_OtherUserPublicGroupTitle.get(i).getPosition());
+                    for (int i = 0; i < list_OtherUserPublicGroupTitle.size(); i++) {
+                        Log.d("POSS", "Members position: " + i + " = " + list_OtherUserPublicGroupTitle.get(i).getPosition());
                         dbSaveGroupPosition.child(list_OtherUserPublicGroupTitle.get(i).getPosition()).child("grpPosition").setValue(i);
                     }
 
@@ -1163,7 +1168,6 @@ public class Server_Activity extends AppCompatActivity {
 
                 }
             };
-
 
 
             ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleCallback);
@@ -1335,14 +1339,46 @@ public class Server_Activity extends AppCompatActivity {
 
                             flagFriend = true;
                         }
-                            friendChatFragment = new Friend_Chat_Activity();
-                            getSupportFragmentManager().beginTransaction()
-                                    .replace(R.id.center_panel, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
+                        friendChatFragment = new Friend_Chat_Activity();
+                        getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.below_toolbar, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
 
-                            Bundle bundle = new Bundle();
-                            bundle.putString("name", friendName);
-                            bundle.putString("receiverUid", friendUserId);
-                            friendChatFragment.setArguments(bundle);
+                        friendToolBar.setVisibility(View.VISIBLE);
+                        textViewSubjectName.setVisibility(View.GONE);
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("name", friendName);
+                        bundle.putString("receiverUid", friendUserId);
+                        friendChatFragment.setArguments(bundle);
+
+                        TextView friendNameTv = findViewById(R.id.tv_friend_name);
+                        friendNameTv.setText(friendName);
+
+                        CircleImageView friendImg = findViewById(R.id.friendImg);
+
+                        DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(friendUserId);
+                        refUserProfPic.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.child("Name").exists()) {
+                                    String userName = snapshot.child("Name").getValue().toString();
+                                    friendNameTv.setText(userName);
+                                }
+                                if (snapshot.child("profilePic").exists()) {
+                                    String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                                    Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
+                                    Glide.with(Server_Activity.this).load(profilePicUrl).into(friendImg);
+                                } else {
+                                    Glide.with(Server_Activity.this).load(R.drawable.maharaji).into(friendImg);
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
 
                     }
                 });
@@ -1550,13 +1586,13 @@ public class Server_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 String addTopic = et_AddTopic.getText().toString().trim();
                 String addDoubt = et_AddDoubt.getText().toString().trim();
-                if(addDoubt.isEmpty()){
+                if (addDoubt.isEmpty()) {
                     Toast.makeText(Server_Activity.this, "Enter text", Toast.LENGTH_SHORT).show();
                 }
                 if (addTopic.isEmpty()) {
                     Toast.makeText(Server_Activity.this, "Enter text", Toast.LENGTH_SHORT).show();
                 }
-                if(!addDoubt.isEmpty() && !addTopic.isEmpty()){
+                if (!addDoubt.isEmpty() && !addTopic.isEmpty()) {
                     DatabaseReference allDoubtReference = FirebaseDatabase.getInstance().getReference().
                             child("Groups").child("Doubt").child(groupPushId).child(subGroupPushId).child(groupClassSubjects).child("All_Doubt");
                     allDoubtReference.addListenerForSingleValueEvent(new ValueEventListener() {

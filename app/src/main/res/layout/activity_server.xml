@@ -278,6 +278,40 @@
                             android:textColor="@color/text_color"
                             android:textSize="16sp" />
 
+                        <RelativeLayout
+                            android:id="@+id/friendToolBar"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentTop="true"
+                            android:visibility="gone"
+                            android:layout_marginTop="2dp">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/friendImg"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerInParent="true"
+                                android:layout_marginStart="70dp"
+                                android:background="@android:color/transparent"
+                                android:paddingTop="2dp"
+                                android:src="@drawable/ic_account_24" />
+
+                            <TextView
+                                android:id="@+id/tv_friend_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:layout_marginStart="10dp"
+                                android:layout_toEndOf="@+id/friendImg"
+                                android:fontFamily="@font/inter_medium"
+                                android:text="Username"
+                                android:textAllCaps="false"
+                                android:textColor="@color/text_color"
+                                android:textSize="16sp" />
+
+                        </RelativeLayout>
+
                         <ImageButton
                             android:id="@+id/swipe_right"
                             style="@style/SelectableItemBackgroundBorderless"
@@ -299,6 +333,13 @@
                         android:background="@color/view_divider"
                         android:elevation="1dp" />
 
+                    <RelativeLayout
+                        android:id="@+id/below_toolbar"
+                        android:layout_below="@id/action_bar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+
 
                     <!--Chat showing RecyclerView-->
 
@@ -307,7 +348,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_above="@+id/ll_bottom_send"
-                        android:layout_below="@id/action_bar"
                         android:paddingStart="10dp"
                         android:paddingEnd="1dp" />
 
@@ -376,6 +416,8 @@
                         </RelativeLayout>
 
                     </LinearLayout>
+
+                    </RelativeLayout>
 
                 </RelativeLayout>
 

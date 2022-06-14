@@ -5,8 +5,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,6 +40,15 @@ public class Adaptor_Friend_Chat extends RecyclerView.Adapter<Adaptor_Friend_Cha
     private static final String TAG = "Message Adapter";
     private final Context context;
     private List<Class_Single_Friend> chat = new ArrayList<>();
+    private OnItemLongClickListener longClickListener;
+
+    public interface OnItemLongClickListener {
+        void getPosition(int position,String senderUserId,String receiverUserId,String messageId,String text);
+    }
+
+    public void setLongClickListener(OnItemLongClickListener longClickListener) {
+        this.longClickListener = longClickListener;
+    }
 
     public Adaptor_Friend_Chat(Context context) {
         this.context = context;
@@ -74,6 +85,13 @@ public class Adaptor_Friend_Chat extends RecyclerView.Adapter<Adaptor_Friend_Cha
         return chat.size();
     }
 
+
+
+    public void removeItem(int position) {
+        chat.remove(position);
+        notifyItemRemoved(position);
+    }
+
     @Override
     public int getItemViewType(int position) {
         if (chat.get(position).getSenderId().equals(SharePref.getDataFromPref(Constant.USER_ID))) {
@@ -89,7 +107,17 @@ public class Adaptor_Friend_Chat extends RecyclerView.Adapter<Adaptor_Friend_Cha
             super(itemView);
             show_message = itemView.findViewById(R.id.tv_MyMessage);
 
+            show_message.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
 
+                    Log.d("USERIDADAPTER", "messageId: " + chat.get(getAdapterPosition()).getMessageIdSender());
+
+                    longClickListener.getPosition(getAdapterPosition(),chat.get(getAdapterPosition()).getSenderId(),chat.get(getAdapterPosition()).getMessageIdReceiver(),chat.get(getAdapterPosition()).getMessageIdSender(),show_message.getText().toString());
+
+                    return false;
+                }
+            });
 
         }
     }
