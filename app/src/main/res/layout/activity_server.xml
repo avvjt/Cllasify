@@ -362,8 +362,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_marginStart="15dp"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
+                        android:orientation="horizontal">
 
                         <EditText
                             android:id="@+id/et_ctext"
@@ -401,13 +400,23 @@
                             android:layout_marginEnd="10dp">
 
                             <ImageButton
+                                android:id="@+id/ib_pdf_btn"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:background="@color/transparent"
+                                android:contentDescription="@string/servers_contentDescription"
+                                android:elevation="2dp"
+                                android:src="@drawable/pdf_pic" />
+
+                            <ImageButton
                                 android:id="@+id/ib_doubtSubmit"
                                 android:layout_width="35dp"
                                 android:layout_height="35dp"
                                 android:background="@color/transparent"
+                                android:layout_toEndOf="@+id/ib_pdf_btn"
+                                android:contentDescription="@string/servers_contentDescription"
                                 android:elevation="2dp"
-                                android:src="@drawable/ic_question_24"
-                                android:contentDescription="@string/servers_contentDescription" />
+                                android:src="@drawable/ic_question_24" />
 
                             <ImageButton
                                 android:id="@+id/ib_csubmit"

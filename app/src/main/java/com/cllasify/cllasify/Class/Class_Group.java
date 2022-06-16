@@ -14,6 +14,7 @@ public class Class_Group {
     public String ansUserName;
     public String cmntAnsUserName;
     public String grpJoiningStatus;
+    public String doc_Name;
 
     public String userId;
     public String adminUserId;
@@ -121,7 +122,7 @@ public class Class_Group {
         this.userPhone = userPhone;
     }
 
-    public Class_Group(String dateTime, String userId, String position, String groupName, String subGroupName, String groupSubGroupComb, String msgCategory, String subGroupPushId, String doubtUniPushId, int msgPosition) {
+    public Class_Group(String dateTime, String userId, String position, String groupName, String subGroupName, String groupSubGroupComb, String msgCategory, String subGroupPushId, String doubtUniPushId, int msgPosition,String doc_Name) {
         this.dateTime = dateTime;
         this.userId = userId;
         this.position = position;
@@ -132,6 +133,15 @@ public class Class_Group {
         this.msgPosition = msgPosition;
         this.subGroupPushId = subGroupPushId;
         this.doubtUniPushId = doubtUniPushId;
+        this.doc_Name = doc_Name;
+    }
+
+    public String getDoc_Name() {
+        return doc_Name;
+    }
+
+    public void setDoc_Name(String doc_Name) {
+        this.doc_Name = doc_Name;
     }
 
     public Class_Group(String dateTime, String userName, String userId, String position, String groupName, String groupCategory, long groupno) {

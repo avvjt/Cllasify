@@ -1,17 +1,24 @@
 package com.cllasify.cllasify.Home;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.OpenableColumns;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -26,6 +33,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +42,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -72,6 +81,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
@@ -87,7 +98,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -154,7 +170,7 @@ public class Server_Activity extends AppCompatActivity {
     Button btn_cAddGroup, btn_cJoinGroup, btn_lTeachResult, btn_lTeachExam;
 
     //Image Buttons
-    ImageButton ib_cattach, ib_csubmit, ib_doubtSubmit, ImageViewRecentChat, ib_FrndP_csubmit, swipe_left, swipe_right;
+    ImageButton ib_cattach, ib_csubmit, ib_doubtSubmit, ImageViewRecentChat, ib_FrndP_csubmit, swipe_left, swipe_right, ib_pdf_btn;
 
 
     TabLayout tabLayout, tabL_ChatView;
@@ -201,6 +217,7 @@ public class Server_Activity extends AppCompatActivity {
     private boolean onScreen;
     boolean flag = false;
     boolean flagFriend = false;
+    private Uri fileUri;
 
     void init() {
 
@@ -350,6 +367,7 @@ public class Server_Activity extends AppCompatActivity {
 
         ib_csubmit = findViewById(R.id.ib_csubmit);
         ib_doubtSubmit = findViewById(R.id.ib_doubtSubmit);
+        ib_pdf_btn = findViewById(R.id.ib_pdf_btn);
 
         swipe_left = findViewById(R.id.swipe_left);
         swipe_right = findViewById(R.id.swipe_right);
@@ -422,11 +440,11 @@ public class Server_Activity extends AppCompatActivity {
                                     serverName[0] = snapshot.child("serverName").getValue().toString().trim();
                                 }
                                 subjectUniPushId[0] = snapshot.child("subjectUniPushId").getValue().toString().trim();
+                                uniPushClassId[0] = snapshot.child("uniPushClassId").getValue().toString().trim();
+                                groupPushId[0] = snapshot.child("clickedGroupPushId").getValue().toString().trim();
                                 classPosition[0] = snapshot.child("classPosition").getValue().toString().trim();
                                 className[0] = snapshot.child("clickedClassName").getValue().toString().trim();
                                 subjectName[0] = snapshot.child("clickedSubjectName").getValue().toString().trim();
-                                groupPushId[0] = snapshot.child("clickedGroupPushId").getValue().toString().trim();
-                                uniPushClassId[0] = snapshot.child("uniPushClassId").getValue().toString().trim();
                                 clickedGroupName[0] = snapshot.child("clickedGroupName").getValue().toString().trim();
 
                                 ib_servSettings.setEnabled(true);
@@ -538,6 +556,28 @@ public class Server_Activity extends AppCompatActivity {
         rv_ChatDashboard.setLayoutManager(linearLayout);
         rv_ChatDashboard.setAdapter(messageAdapter);
 
+        messageAdapter.setOnDownloadClickListener(new MessageAdapter.onDownloadClickListener() {
+            @Override
+            public void onDownloadClick(String path) {
+                if (ActivityCompat.checkSelfPermission(Server_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(Server_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(Server_Activity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    // this will request for permission when permission is not true
+                } else {
+                    // Download code here
+                    DownloadManager.Request request = new DownloadManager.Request(Uri.parse(path));
+                    request.setTitle(path);
+                    request.setMimeType("applcation/pdf");
+                    request.allowScanningByMediaScanner();
+                    request.setAllowedOverMetered(true);
+                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, path);
+                    DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                    dm.enqueue(request);
+                }
+            }
+
+        });
+
         messageAdapter.setOnDoubtClickListener((doubtQuestion, groupPush, groupClassPush, groupSubjectPush, doubtQuestionPush, userId, userName) -> {
             DatabaseReference putTempDoubt = FirebaseDatabase.getInstance().getReference().child("Groups");
             putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("groupPushId").setValue(groupPush);
@@ -575,7 +615,7 @@ public class Server_Activity extends AppCompatActivity {
                         Calendar calenderCC = Calendar.getInstance();
                         SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
                         String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-                        userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId[0], classPosition[0], subGroupMsg, "chat", subjectUniPushId[0], push, 0);
+                        userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId[0], classPosition[0], subGroupMsg, "chat", subjectUniPushId[0], push, 0, "");
                         reference.push().setValue(userAddGroupClass);
                     }
 
@@ -1070,6 +1110,14 @@ public class Server_Activity extends AppCompatActivity {
 
     }
 
+    private void sendPdf() {
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setType("application/pdf");
+        startActivityForResult(Intent.createChooser(intent, "Select PDF File"), 438);
+
+    }
 
     @Override
     protected void onResume() {
@@ -1139,6 +1187,13 @@ public class Server_Activity extends AppCompatActivity {
             });
 
             init();
+
+            ib_pdf_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendPdf();
+                }
+            });
 
             DatabaseReference dbSaveGroupPosition = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(userID);
 
@@ -1606,7 +1661,7 @@ public class Server_Activity extends AppCompatActivity {
 
                             allDoubtReference.child(push).setValue(userAddGroupClass);
 
-                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, subGroupPushId, addDoubt, "doubt", groupClassSubjects, push, 0);
+                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, subGroupPushId, addDoubt, "doubt", groupClassSubjects, push, 0, "");
                             reference.push().setValue(userAddGroupClass);
 //                            Toast.makeText(Server_Activity.this, "Doubt Successfully Added", Toast.LENGTH_SHORT).show();
                         }
@@ -2531,12 +2586,42 @@ public class Server_Activity extends AppCompatActivity {
     /*
         Google SignIn Result
      */
+    @SuppressLint("Range")
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         Toast.makeText(this, "on activity result called", Toast.LENGTH_SHORT).show();
 
-        if (requestCode == 100) {
+
+        if (requestCode == 438 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            fileUri = data.getData();
+
+            // Get the Uri of the selected file
+            Uri uri = data.getData();
+            String uriString = uri.toString();
+            File myFile = new File(uriString);
+            String path = myFile.getAbsolutePath();
+            String displayName = null;
+
+            if (uriString.startsWith("content://")) {
+                Cursor cursor = null;
+                try {
+                    cursor = getContentResolver().query(uri, null, null, null, null);
+                    if (cursor != null && cursor.moveToFirst()) {
+                        displayName = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+                    }
+                } finally {
+                    cursor.close();
+                }
+            } else if (uriString.startsWith("file://")) {
+                displayName = myFile.getName();
+            }
+            setDocumentInFB(fileUri, displayName);
+
+
+        } else if (requestCode == 100) {
 //            Toast.makeText(this, "100", Toast.LENGTH_SHORT).show();
 
             Task<GoogleSignInAccount> signInAccountTask = GoogleSignIn
@@ -2571,6 +2656,87 @@ public class Server_Activity extends AppCompatActivity {
             Toast.makeText(this, "wrong request code", Toast.LENGTH_SHORT).show();
 
         }
+
+
+    }
+
+    private void setDocumentInFB(Uri fileUri, String fileName) {
+
+
+        DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+        refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String subjectUniPushId = snapshot.child("subjectUniPushId").getValue().toString().trim();
+                String uniPushClassId = snapshot.child("uniPushClassId").getValue().toString().trim();
+                String groupPushId = snapshot.child("clickedGroupPushId").getValue().toString().trim();
+
+                DatabaseReference allDocumentReference = FirebaseDatabase.getInstance().getReference().
+                        child("Groups").child("Documents").child(groupPushId).child(uniPushClassId).child(subjectUniPushId).child("All_Document");
+
+                String fileUriPath = fileUri.toString();
+
+                String[] onlyPath = fileUriPath.split("%");
+
+
+                String pushValue[] = allDocumentReference.push().toString().split("/");
+
+                String push = pushValue[9];
+
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Document Files");
+                String userMsgKeyRef = allDocumentReference.child(onlyPath[1]).push().getKey();
+                StorageReference filePath = storageReference.child(userMsgKeyRef + "." + "pdf");
+
+                filePath.putFile(fileUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+                        if (task.isComplete()) {
+
+                            storageReference.child(userMsgKeyRef + "." + "pdf").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Log.d(TAG, "onClick: " + uri);
+                                    userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, groupPushId, uniPushClassId, subjectUniPushId, uri.toString(), fileName);
+                                    allDocumentReference.child(push).setValue(userAddGroupClass);
+                                    userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, uniPushClassId, uri.toString(), "pdf", subjectUniPushId, push, 0, fileName);
+                                    reference.push().setValue(userAddGroupClass);
+
+                                    Toast.makeText(Server_Activity.this, "Document sending successful", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+
+                        }
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(Server_Activity.this, "Document sending failed", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+
+                        double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+
+                        Toast.makeText(Server_Activity.this, "Document sending: " + progress, Toast.LENGTH_SHORT).show();
+
+
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     /*
