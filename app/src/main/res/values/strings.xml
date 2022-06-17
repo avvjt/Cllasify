@@ -552,6 +552,8 @@
 
     <string name="rename_subjects">Rename Subject</string>
     <string name="delete_subject">Delete Subject</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 

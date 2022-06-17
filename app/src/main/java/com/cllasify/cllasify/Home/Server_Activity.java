@@ -60,6 +60,7 @@ import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
 import com.cllasify.cllasify.Class.Class_Group;
+import com.cllasify.cllasify.Class.WebView_Fragment;
 import com.cllasify.cllasify.Class_Group_Names;
 import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.Constant;
@@ -201,6 +202,7 @@ public class Server_Activity extends AppCompatActivity {
     FragmentManager fragmentManager;
     DoubtFragment doubtFragment;
     Friend_Chat_Activity friendChatFragment;
+    WebView_Fragment webView_fragment;
 
 
     //Right Panel Class and Sub-class
@@ -217,6 +219,7 @@ public class Server_Activity extends AppCompatActivity {
     private boolean onScreen;
     boolean flag = false;
     boolean flagFriend = false;
+    boolean pdf_flag = false;
     private Uri fileUri;
 
     void init() {
@@ -428,6 +431,15 @@ public class Server_Activity extends AppCompatActivity {
                     flagFriend = false;
                 }
 
+                if (pdf_flag == true) {
+                    FragmentManager manager = getSupportFragmentManager();
+                    FragmentTransaction transaction = manager.beginTransaction();
+                    manager.getBackStackEntryCount();
+                    transaction.remove(webView_fragment);
+                    transaction.commit();
+                    pdf_flag = false;
+                }
+
                 DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
 
                 refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -559,6 +571,22 @@ public class Server_Activity extends AppCompatActivity {
         messageAdapter.setOnDownloadClickListener(new MessageAdapter.onDownloadClickListener() {
             @Override
             public void onDownloadClick(String path) {
+
+                webView_fragment = new WebView_Fragment();
+                if (!pdf_flag) {
+                    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("path", path);
+
+                    Log.d("BUNDLESTRING", "onDownloadClick: "+path);
+                    webView_fragment.setArguments(bundle);
+                    getFragmentManager().getBackStackEntryCount();
+                    transaction.replace(R.id.below_toolbar, webView_fragment, "FirstFragment");
+                    transaction.commit();
+                    pdf_flag = true;
+                }
+            }
+                /*
                 if (ActivityCompat.checkSelfPermission(Server_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(Server_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(Server_Activity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                     // this will request for permission when permission is not true
@@ -575,7 +603,7 @@ public class Server_Activity extends AppCompatActivity {
                     dm.enqueue(request);
                 }
             }
-
+*/
         });
 
         messageAdapter.setOnDoubtClickListener((doubtQuestion, groupPush, groupClassPush, groupSubjectPush, doubtQuestionPush, userId, userName) -> {
@@ -1352,14 +1380,18 @@ public class Server_Activity extends AppCompatActivity {
              */
 
             //add server option clicked(+)
-            imageViewAddPanelAddGroup.setOnClickListener(view -> {
+            imageViewAddPanelAddGroup.setOnClickListener(view ->
+
+            {
                 Intent intent = new Intent(Server_Activity.this, Create_Server.class);
                 startActivity(intent);
             });
 
             chatListDashboard();
 
-            ImageViewRecentChat.setOnClickListener(view -> {
+            ImageViewRecentChat.setOnClickListener(view ->
+
+            {
 
                 tv_GroupMember.setVisibility(View.GONE);
                 adminListText.setVisibility(View.GONE);
@@ -1438,53 +1470,57 @@ public class Server_Activity extends AppCompatActivity {
 
             });
 
-            refShowUserJoinedGroup.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                            Log.d("JOINEDGRP", "onDataChange: " + dataSnapshot1.getKey());
-                            String chkUserID = dataSnapshot1.getKey();
-                            if (chkUserID.equals(userID)) {
+            refShowUserJoinedGroup.addValueEventListener(new
+
+                                                                 ValueEventListener() {
+                                                                     @Override
+                                                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                                                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                                                                 Log.d("JOINEDGRP", "onDataChange: " + dataSnapshot1.getKey());
+                                                                                 String chkUserID = dataSnapshot1.getKey();
+                                                                                 if (chkUserID.equals(userID)) {
 //                                ll_AddJoinGrp.setVisibility(View.GONE);
-                                if (getIntent().hasExtra("notOpen")) {
-                                    Log.d("JOINEDGRP", "onDataChange: No panel");
-                                } else {
-                                    overlappingPanels.openStartPanel();
-                                }
-                            }
-                        }
-                    }
-                }
+                                                                                     if (getIntent().hasExtra("notOpen")) {
+                                                                                         Log.d("JOINEDGRP", "onDataChange: No panel");
+                                                                                     } else {
+                                                                                         overlappingPanels.openStartPanel();
+                                                                                     }
+                                                                                 }
+                                                                             }
+                                                                         }
+                                                                     }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+                                                                     @Override
+                                                                     public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            });
+                                                                     }
+                                                                 });
 
-            refShowUserAllGroup.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.getChildrenCount() > 0) {
+            refShowUserAllGroup.addValueEventListener(new
+
+                                                              ValueEventListener() {
+                                                                  @Override
+                                                                  public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                      if (snapshot.getChildrenCount() > 0) {
 //                        ll_AddJoinGrp.setVisibility(View.GONE);
-                        if (getIntent().hasExtra("notOpen")) {
-                            Log.d("JOINEDGRP", "onDataChange: No panel");
-                        } else {
-                            overlappingPanels.openStartPanel();
-                        }
+                                                                          if (getIntent().hasExtra("notOpen")) {
+                                                                              Log.d("JOINEDGRP", "onDataChange: No panel");
+                                                                          } else {
+                                                                              overlappingPanels.openStartPanel();
+                                                                          }
 
-                    }
-                    if (snapshot.getChildrenCount() < 0) {
+                                                                      }
+                                                                      if (snapshot.getChildrenCount() < 0) {
 //                        Toast.makeText(Server_Activity.this, "Please create Group using left swipe", Toast.LENGTH_SHORT).show();
 //                        ll_AddJoinGrp.setVisibility(View.VISIBLE);
-                    }
-                }
+                                                                      }
+                                                                  }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                }
-            });
+                                                                  @Override
+                                                                  public void onCancelled(@NonNull DatabaseError error) {
+                                                                  }
+                                                              });
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -1492,14 +1528,29 @@ public class Server_Activity extends AppCompatActivity {
             /*
                 Center Panel
              */
-            ib_cattach = findViewById(R.id.ib_cattach);
-            ib_csubmit = findViewById(R.id.ib_csubmit);
-            et_ctext = findViewById(R.id.et_ctext);
+            ib_cattach =
 
-            btn_cAddGroup = findViewById(R.id.btn_caddgroup);
-            btn_cJoinGroup = findViewById(R.id.btn_cjoingroup);
+                    findViewById(R.id.ib_cattach);
 
-            ll_bottom_send = findViewById(R.id.ll_bottom_send);
+            ib_csubmit =
+
+                    findViewById(R.id.ib_csubmit);
+
+            et_ctext =
+
+                    findViewById(R.id.et_ctext);
+
+            btn_cAddGroup =
+
+                    findViewById(R.id.btn_caddgroup);
+
+            btn_cJoinGroup =
+
+                    findViewById(R.id.btn_cjoingroup);
+
+            ll_bottom_send =
+
+                    findViewById(R.id.ll_bottom_send);
 
 
             btn_cJoinGroup.setOnClickListener(new View.OnClickListener() {
@@ -2677,7 +2728,9 @@ public class Server_Activity extends AppCompatActivity {
 
                 String fileUriPath = fileUri.toString();
 
-                String[] onlyPath = fileUriPath.split("%");
+                String onlyPath = fileUriPath.substring(0, fileUriPath.indexOf("/"));
+
+                Log.d("ONLYPATH", "onDataChange: "+onlyPath);
 
 
                 String pushValue[] = allDocumentReference.push().toString().split("/");
@@ -2685,12 +2738,14 @@ public class Server_Activity extends AppCompatActivity {
                 String push = pushValue[9];
 
                 StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("Document Files");
-                String userMsgKeyRef = allDocumentReference.child(onlyPath[1]).push().getKey();
+                String userMsgKeyRef = allDocumentReference.child(onlyPath).push().getKey();
                 StorageReference filePath = storageReference.child(userMsgKeyRef + "." + "pdf");
 
                 filePath.putFile(fileUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+//                        messageAdapter.setProgVal(1);
 
                         if (task.isComplete()) {
 
@@ -2715,10 +2770,13 @@ public class Server_Activity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(Server_Activity.this, "Document sending failed", Toast.LENGTH_SHORT).show();
+//                        messageAdapter.setProgVal(2);
                     }
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
                     @Override
                     public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+
+//                        messageAdapter.setProgVal(3);
 
                         double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
 
@@ -2833,6 +2891,13 @@ public class Server_Activity extends AppCompatActivity {
             transaction.remove(doubtFragment);
             transaction.commit();
             flag = false;
+        } else if (pdf_flag == true) {
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            manager.getBackStackEntryCount();
+            transaction.remove(webView_fragment);
+            transaction.commit();
+            pdf_flag = false;
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 Server_Activity.this.finishAffinity();

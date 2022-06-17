@@ -1,15 +1,6 @@
 package com.cllasify.cllasify;
 
-import static android.content.Context.DOWNLOAD_SERVICE;
-
-import android.Manifest;
-import android.app.DownloadManager;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,16 +11,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Class.Class_Group;
-import com.cllasify.cllasify.Home.Server_Activity;
 import com.cllasify.cllasify.Utility.SharePref;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -37,13 +23,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 
 import org.jetbrains.annotations.NotNull;
-import org.w3c.dom.Text;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +37,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public static final int MSG_TYPE_RIGHT = 1;
     public static final int MSG_TYPE_DOUBT = 3;
     public static final int MSG_TYPE_DOCUMENT = 4;
+    int progVal;
 
     private static final String TAG = "Message Adapter";
     private final Context context;
@@ -66,7 +49,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     FirebaseUser currentUser;
     onDownloadClickListener onDownloadClickListener;
 
-    public interface onDownloadClickListener{
+
+    public void setProgVal(int progVal) {
+        this.progVal = progVal;
+    }
+
+    public interface onDownloadClickListener {
         void onDownloadClick(String path);
     }
 
@@ -81,7 +69,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public void setOnDoubtClickListener(MessageAdapter.onDoubtClickListener onDoubtClickListener) {
         this.onDoubtClickListener = onDoubtClickListener;
     }
-
 
 
     public MessageAdapter(Context context) {
@@ -121,6 +108,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
 
+        Log.d("DOCPROG", "onBindViewHolder: " + progVal);
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
@@ -140,30 +128,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                         @Override
                         public void onClick(View v) {
 
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setDataAndType(Uri.parse(chat.get(position).getGroupSubGroupComb()), "application/pdf");
-                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                            Intent newIntent = Intent.createChooser(intent, "Open File");
-                            try {
-                                newIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                context.startActivity(newIntent);
-                            } catch (ActivityNotFoundException e) {
-                                Log.d(TAG, "onClick: " + e.toString());
-                            }
+                            onDownloadClickListener.onDownloadClick(chat.get(position).getGroupSubGroupComb());
 
                         }
                     });
-
-                    if (holder.download_btn != null) {
-
-                        holder.download_btn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                onDownloadClickListener.onDownloadClick(chat.get(position).getGroupSubGroupComb());
-                            }
-                        });
-
-                    }
 
 
                     if (chat.get(position).getPosition().equals(userID)) {

@@ -6,12 +6,12 @@
         <type value="RUNNING_DEVICE_TARGET" />
         <deviceKey>
           <Key>
-            <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\Sohel\.android\avd\Oreo_check.avd" />
+            <type value="SERIAL_NUMBER" />
+            <value value="192.168.0.101:5555" />
           </Key>
         </deviceKey>
       </Target>
     </runningDeviceTargetSelectedWithDropDown>
-    <timeTargetWasSelectedWithDropDown value="2022-06-16T12:36:16.019592900Z" />
+    <timeTargetWasSelectedWithDropDown value="2022-06-17T06:57:24.125604600Z" />
   </component>
 </project>
