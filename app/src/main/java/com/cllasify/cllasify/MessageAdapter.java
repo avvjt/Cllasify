@@ -36,7 +36,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public static final int MSG_TYPE_LEFT = 0;
     public static final int MSG_TYPE_RIGHT = 1;
     public static final int MSG_TYPE_DOUBT = 3;
-    public static final int MSG_TYPE_DOCUMENT = 4;
+    public static final int MSG_TYPE_DOCUMENT_RIGHT = 4;
+    public static final int MSG_TYPE_DOCUMENT_LEFT = 5;
+
     int progVal;
 
     private static final String TAG = "Message Adapter";
@@ -93,8 +95,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         if (viewType == MSG_TYPE_DOUBT) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_doubt, parent, false);
             return new ViewHolder(view);
-        } else if (viewType == MSG_TYPE_DOCUMENT) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_pdf, parent, false);
+        } else if (viewType == MSG_TYPE_DOCUMENT_LEFT) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_pdf_left, parent, false);
+            return new ViewHolder(view);
+        } else if (viewType == MSG_TYPE_DOCUMENT_RIGHT) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_pdf_right, parent, false);
             return new ViewHolder(view);
         } else if (viewType == MSG_TYPE_RIGHT) {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item_right, parent, false);
@@ -230,8 +235,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     public int getItemViewType(int position) {
         if (chat.get(position).getMsgCategory().equals("doubt")) {
             return MSG_TYPE_DOUBT;
-        } else if (chat.get(position).getMsgCategory().equals("pdf")) {
-            return MSG_TYPE_DOCUMENT;
+        } else if (chat.get(position).getMsgCategory().equals("pdf") && chat.get(position).getPosition().equals(SharePref.getDataFromPref(Constant.USER_ID))) {
+            return MSG_TYPE_DOCUMENT_RIGHT;
+        } else if (chat.get(position).getMsgCategory().equals("pdf") && !(chat.get(position).getPosition().equals(SharePref.getDataFromPref(Constant.USER_ID)))) {
+            return MSG_TYPE_DOCUMENT_LEFT;
         } else if (chat.get(position).getPosition().equals(SharePref.getDataFromPref(Constant.USER_ID))) {
             return MSG_TYPE_RIGHT;
         } else

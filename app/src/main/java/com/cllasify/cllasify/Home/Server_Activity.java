@@ -578,7 +578,7 @@ public class Server_Activity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString("path", path);
 
-                    Log.d("BUNDLESTRING", "onDownloadClick: "+path);
+                    Log.d("BUNDLESTRING", "onDownloadClick: " + path);
                     webView_fragment.setArguments(bundle);
                     getFragmentManager().getBackStackEntryCount();
                     transaction.replace(R.id.below_toolbar, webView_fragment, "FirstFragment");
@@ -1470,57 +1470,53 @@ public class Server_Activity extends AppCompatActivity {
 
             });
 
-            refShowUserJoinedGroup.addValueEventListener(new
-
-                                                                 ValueEventListener() {
-                                                                     @Override
-                                                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                                                             for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                                                                 Log.d("JOINEDGRP", "onDataChange: " + dataSnapshot1.getKey());
-                                                                                 String chkUserID = dataSnapshot1.getKey();
-                                                                                 if (chkUserID.equals(userID)) {
+            refShowUserJoinedGroup.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                            Log.d("JOINEDGRP", "onDataChange: " + dataSnapshot1.getKey());
+                            String chkUserID = dataSnapshot1.getKey();
+                            if (chkUserID.equals(userID)) {
 //                                ll_AddJoinGrp.setVisibility(View.GONE);
-                                                                                     if (getIntent().hasExtra("notOpen")) {
-                                                                                         Log.d("JOINEDGRP", "onDataChange: No panel");
-                                                                                     } else {
-                                                                                         overlappingPanels.openStartPanel();
-                                                                                     }
-                                                                                 }
-                                                                             }
-                                                                         }
-                                                                     }
+                                if (getIntent().hasExtra("notOpen")) {
+                                    Log.d("JOINEDGRP", "onDataChange: No panel");
+                                } else {
+                                    overlappingPanels.openStartPanel();
+                                }
+                            }
+                        }
+                    }
+                }
 
-                                                                     @Override
-                                                                     public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-                                                                     }
-                                                                 });
+                }
+            });
 
-            refShowUserAllGroup.addValueEventListener(new
-
-                                                              ValueEventListener() {
-                                                                  @Override
-                                                                  public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                                      if (snapshot.getChildrenCount() > 0) {
+            refShowUserAllGroup.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.getChildrenCount() > 0) {
 //                        ll_AddJoinGrp.setVisibility(View.GONE);
-                                                                          if (getIntent().hasExtra("notOpen")) {
-                                                                              Log.d("JOINEDGRP", "onDataChange: No panel");
-                                                                          } else {
-                                                                              overlappingPanels.openStartPanel();
-                                                                          }
+                        if (getIntent().hasExtra("notOpen")) {
+                            Log.d("JOINEDGRP", "onDataChange: No panel");
+                        } else {
+                            overlappingPanels.openStartPanel();
+                        }
 
-                                                                      }
-                                                                      if (snapshot.getChildrenCount() < 0) {
+                    }
+                    if (snapshot.getChildrenCount() < 0) {
 //                        Toast.makeText(Server_Activity.this, "Please create Group using left swipe", Toast.LENGTH_SHORT).show();
 //                        ll_AddJoinGrp.setVisibility(View.VISIBLE);
-                                                                      }
-                                                                  }
+                    }
+                }
 
-                                                                  @Override
-                                                                  public void onCancelled(@NonNull DatabaseError error) {
-                                                                  }
-                                                              });
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                }
+            });
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
@@ -2404,16 +2400,17 @@ public class Server_Activity extends AppCompatActivity {
                 overlappingPanels.closePanels();
                 if (flagFriend == false) {
 
-                    friendChatFragment = new Friend_Chat_Activity();
-                    getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.center_panel, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString("name", memberUserName);
-                    bundle.putString("receiverUid", memberUserId);
-                    friendChatFragment.setArguments(bundle);
                     flagFriend = true;
                 }
+
+                friendChatFragment = new Friend_Chat_Activity();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.below_toolbar, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
+
+                Bundle bundle = new Bundle();
+                bundle.putString("name", memberUserName);
+                bundle.putString("receiverUid", memberUserId);
+                friendChatFragment.setArguments(bundle);
 
             }
         });
@@ -2730,7 +2727,7 @@ public class Server_Activity extends AppCompatActivity {
 
                 String onlyPath = fileUriPath.substring(0, fileUriPath.indexOf("/"));
 
-                Log.d("ONLYPATH", "onDataChange: "+onlyPath);
+                Log.d("ONLYPATH", "onDataChange: " + onlyPath);
 
 
                 String pushValue[] = allDocumentReference.push().toString().split("/");
