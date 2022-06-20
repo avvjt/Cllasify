@@ -1400,12 +1400,18 @@
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify-master/app/src/main/res/menu/groupmemberdetails.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/abc_ic_search.xml" value="0.23" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/bg_bottomsheet.xml" value="0.23" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/button_gradient.xml" value="0.18" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/button_stroke.xml" value="0.18" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/cursor_color.xml" value="0.18" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/dialog_bg.xml" value="0.1965" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/ic_add.xml" value="0.1965" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/ic_circle.xml" value="0.1965" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/ic_edit.xml" value="0.23" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/ic_left_back.xml" value="0.23" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/ic_right_arrow.xml" value="0.23" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/ic_round_right.xml" value="0.23" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/ic_send_24.xml" value="0.23" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/previous_btn.xml" value="0.18" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/selector_subject.xml" value="0.23" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/server_settings.xml" value="0.386" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/splash_background.xml" value="0.1965" />
@@ -1427,6 +1433,7 @@
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_grpjoin_reqs.xml" value="0.18" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_notification.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_notification2.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_pdf_view.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_profile_setting.xml" value="0.33" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_server.xml" value="0.33" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_server_setting_specifics.xml" value="0.33" />
@@ -1464,7 +1471,7 @@
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/fragment_home.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/fragment_student__joining__reqs.xml" value="0.33" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/fragment_teacher__joining__reqs.xml" value="0.209375" />
-        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/fragment_web_view_.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/fragment_web_view_.xml" value="0.22" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/join_group_fragment.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/list_attendanceh.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/list_group_class.xml" value="0.25" />

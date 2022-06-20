@@ -51,7 +51,6 @@
     <string name="class_contentDescription">TODO</string>
 
 
-
     <!--Activity create server-->
 
     <string name="create_server">Create server</string>
@@ -60,7 +59,6 @@
     <string name="hint_crateServer"><font size="15">Type here...</font> </string>
     <string name="create_server_dec">* The name of you education Institutions like schools....</string>
     <string name="server_contentDescription">TODO</string>
-
 
 
     <!--Activity create subject-->
@@ -72,7 +70,6 @@
     <string name="hint_crateSubject"><font size="15">Type here...</font> </string>
     <string name="create_subject_dec">* It will create a subject in the class, if you skip you can create subject from the server setting page</string>
     <string name="subject_contentDescription">TODO</string>
-
 
 
     <!--Activity edit roll number-->
@@ -90,7 +87,6 @@
     <string name="users">#Users</string>
 
 
-
     <!--Activity explore item-->
 
     <string name="explore_contentDescription">TODO</string>
@@ -100,13 +96,11 @@
     <string name="join_teacher">Join as a teacher</string>
 
 
-
     <!--Activity friend chat-->
 
     <string name="friend_contentDescription">TODO</string>
     <string name="demo_username">Username</string>
     <string name="hint_edittext"><font size="17">Message...</font> </string>
-
 
 
     <!--Activity get started-->
@@ -117,12 +111,9 @@
     <string name="signInGoogle">Sign In with Google</string>
 
 
-
-
     <!--Activity notification-->
 
     <string name="notification">Notification</string>
-
 
 
     <!--Activity notification settings-->
@@ -137,11 +128,9 @@
     <string name="mentions">Mentions</string>
 
 
-
     <!--Activity premium-->
 
     <string name="premium">Premium</string>
-
 
 
     <!--Activity privacy-->
@@ -185,7 +174,6 @@
     <string name="contact_us">Contact Us</string>
     <string name="contact_us_1">If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at</string>
     <string name="cllasify_gmail">Cllasify@gmail.com</string>
-
 
 
     <!--Activity profile setting-->
@@ -240,14 +228,12 @@
     <string name="delete_server_des">* After deleting the server, that members who are joined in it will also be deleted automatically you can never recover them</string>
 
 
-
     <!--Activity server settings-->
 
     <string name="settings_contentDescription">TODO</string>
     <string name="setting_students">Students</string>
     <string name="setting_teachers">Teachers</string>
     <string name="setting_create_class">Create class</string>
-
 
 
     <!--Activity classView-->
@@ -258,7 +244,6 @@
     <string name="classview_create_subject">Create subject</string>
     <string name="teachers_list">Teachers list</string>
     <string name="students_list">Students list</string>
-
 
 
     <!--Activity terms-->
@@ -288,7 +273,6 @@
     <string name="terms_cllasify_gmail">Cllasify@gmail.com</string>
 
 
-
     <!--Attendance activity-->
 
     <string name="attends_contentDescription">TODO</string>
@@ -299,7 +283,6 @@
 
     <string name="attend_cancel">Cancel</string>
     <string name="attend_okay">Okay</string>
-
 
 
     <!--BottomSheet bio-->
@@ -368,7 +351,6 @@
     <string name="follow_system">Follow system</string>
     <string name="light">Light</string>
     <string name="dark">Dark</string>
-
 
 
     <!--BottomSheet username-->
@@ -490,21 +472,16 @@
     <string name="profile_dp">Profile photo updated successfully</string>
 
 
-
     <!--Doubt fragment-->
     <string name="doubt_contentDescription">TODO</string>
     <string name="asked_by">Asked by</string>
     <string name="hint_doubt_fragments"><font size="17">Message...</font> </string>
 
 
-
-
-
     <!--Attendance menu-->
 
     <string name="recent_attendance">Recent attendance</string>
     <string name="attendance_history">Attendance history</string>
-
 
 
     <!--Bottom nav menu-->
@@ -514,12 +491,10 @@
     <string name="tab_notification">Notification</string>
 
 
-
     <!--Class more-->
     <string name="delete_class">Delete Class</string>
     <string name="edit_class">Edit Class</string>
     <string name="edit_roll">Edit RollNumbers</string>
-
 
 
     <!--Disc search-->
@@ -539,7 +514,6 @@
     <string name="restrict">Restrict</string>
 
 
-
     <!--Profile menu-->
 
     <string name="remove_student">Remove student</string>
@@ -547,24 +521,15 @@
     <string name="remove_admin">Remove admin</string>
 
 
-
     <!--Subject more-->
 
     <string name="rename_subjects">Rename Subject</string>
     <string name="delete_subject">Delete Subject</string>
-<!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
-
-
-
     <!---All java files related strings-->           <!--File name wise -->
-
-
-
-
-
 
 
 </resources>

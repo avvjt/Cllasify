@@ -57,7 +57,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
     public interface onDownloadClickListener {
-        void onDownloadClick(String path);
+        void onDownloadClick(String path,String doc_name);
     }
 
     public void setOnDownloadClickListener(MessageAdapter.onDownloadClickListener onDownloadClickListener) {
@@ -133,7 +133,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                         @Override
                         public void onClick(View v) {
 
-                            onDownloadClickListener.onDownloadClick(chat.get(position).getGroupSubGroupComb());
+                            onDownloadClickListener.onDownloadClick(chat.get(position).getGroupSubGroupComb(),chat.get(position).getDoc_Name());
 
                         }
                     });

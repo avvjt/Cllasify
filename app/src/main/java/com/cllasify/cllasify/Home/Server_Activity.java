@@ -211,6 +211,7 @@ public class Server_Activity extends AppCompatActivity {
     //SwipeRefreshLayout
     SwipeRefreshLayout swipeRefreshLayout;
 
+    String displayName;
 
     //Chat_Activity
     private static final String TAG = "ChatActivity";
@@ -570,15 +571,13 @@ public class Server_Activity extends AppCompatActivity {
 
         messageAdapter.setOnDownloadClickListener(new MessageAdapter.onDownloadClickListener() {
             @Override
-            public void onDownloadClick(String path) {
-
+            public void onDownloadClick(String path, String doc_name) {
                 webView_fragment = new WebView_Fragment();
                 if (!pdf_flag) {
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     Bundle bundle = new Bundle();
                     bundle.putString("path", path);
-
-                    Log.d("BUNDLESTRING", "onDownloadClick: " + path);
+                    bundle.putString("docName", doc_name);
                     webView_fragment.setArguments(bundle);
                     getFragmentManager().getBackStackEntryCount();
                     transaction.replace(R.id.below_toolbar, webView_fragment, "FirstFragment");
@@ -586,24 +585,6 @@ public class Server_Activity extends AppCompatActivity {
                     pdf_flag = true;
                 }
             }
-                /*
-                if (ActivityCompat.checkSelfPermission(Server_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(Server_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(Server_Activity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                    // this will request for permission when permission is not true
-                } else {
-                    // Download code here
-                    DownloadManager.Request request = new DownloadManager.Request(Uri.parse(path));
-                    request.setTitle(path);
-                    request.setMimeType("applcation/pdf");
-                    request.allowScanningByMediaScanner();
-                    request.setAllowedOverMetered(true);
-                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, path);
-                    DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-                    dm.enqueue(request);
-                }
-            }
-*/
         });
 
         messageAdapter.setOnDoubtClickListener((doubtQuestion, groupPush, groupClassPush, groupSubjectPush, doubtQuestionPush, userId, userName) -> {
@@ -2651,7 +2632,7 @@ public class Server_Activity extends AppCompatActivity {
             String uriString = uri.toString();
             File myFile = new File(uriString);
             String path = myFile.getAbsolutePath();
-            String displayName = null;
+            displayName = null;
 
             if (uriString.startsWith("content://")) {
                 Cursor cursor = null;
@@ -2667,6 +2648,8 @@ public class Server_Activity extends AppCompatActivity {
                 displayName = myFile.getName();
             }
             setDocumentInFB(fileUri, displayName);
+
+            Log.d("BUNDLESTRING", "onDownloadClick: " + displayName);
 
 
         } else if (requestCode == 100) {

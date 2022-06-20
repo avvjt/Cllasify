@@ -110,7 +110,7 @@ dependencies {
 
     implementation "android.arch.lifecycle:extensions:1.1.1"
 
-
+    implementation 'es.voghdev.pdfviewpager:library:1.1.2'
 
 }
 apply plugin: 'com.google.gms.google-services'
