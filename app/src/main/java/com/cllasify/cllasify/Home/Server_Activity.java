@@ -5,6 +5,9 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -59,6 +62,7 @@ import com.cllasify.cllasify.Adaptor.Adaptor_FriendsList;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
+import com.cllasify.cllasify.Class.Blur_Report;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class.WebView_Fragment;
 import com.cllasify.cllasify.Class_Group_Names;
@@ -621,11 +625,17 @@ public class Server_Activity extends AppCompatActivity {
                         long noofGroupinCategory = snapshot.getChildrenCount() + 1;
                         String push = "mszno_" + noofGroupinCategory + "_" + snapshot.getChildrenCount();
 
+                        String messagePush = reference.push().toString();
+                        String[] f = messagePush.split("/");
+                        String messagePushId = f[f.length - 1];
+                        Log.d("messagePushId", "onDataChange: " + messagePush);
+                        Log.d("messagePushId01", "onDataChange: " + f[f.length - 1]);
+
                         Calendar calenderCC = Calendar.getInstance();
                         SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
                         String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-                        userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId[0], classPosition[0], subGroupMsg, "chat", subjectUniPushId[0], push, 0, "");
-                        reference.push().setValue(userAddGroupClass);
+                        userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId[0], classPosition[0], subGroupMsg, "chat", subjectUniPushId[0], messagePushId, "", "");
+                        reference.child(messagePushId).setValue(userAddGroupClass);
                     }
 
                     @Override
@@ -685,6 +695,218 @@ public class Server_Activity extends AppCompatActivity {
         }
 
 
+        messageAdapter.setOnMessageClickListener(new MessageAdapter.onMessageClickListener() {
+            @Override
+            public void onMessageClick(int position, Class_Group chat) {
+
+                final Dialog dialog = new Dialog(Server_Activity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(true);
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.setContentView(R.layout.more_chat_options);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                dialog.getWindow().setGravity(Gravity.BOTTOM);
+                dialog.create();
+
+                DatabaseReference firebaseDatabaseUnsendMSG = FirebaseDatabase.getInstance().getReference()
+                        .child("Groups").child("Chat_Message").child(groupPushId).child(classUniPushId).child(subjectUniPushId);
+
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+
+
+                    if (chat.getPosition().equals(userID)) {
+
+                        dialog.show();
+
+
+                        Log.d("USERID", "getPosition: " + chat.getPosition());
+                        Log.d("USERID", "messageId: " + chat.getSubGroupPushId());
+
+
+                        Button copyBtn = dialog.findViewById(R.id.copy_button);
+                        copyBtn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                dialog.dismiss();
+
+                                ClipboardManager clipboardManager = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                                ClipData data = (ClipData) ClipData.newPlainText("text", chat.getGroupSubGroupComb().toString());
+                                clipboardManager.setPrimaryClip(data);
+
+                            }
+                        });
+
+                        Button unsend = dialog.findViewById(R.id.unsend_button);
+                        unsend.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                dialog.dismiss();
+
+                                firebaseDatabaseUnsendMSG.child(chat.getDoubtUniPushId()).removeValue();
+                                messageAdapter.removeItem(position);
+
+/*
+                                        DatabaseReference firebaseDatabaseUnsendMSG = FirebaseDatabase.getInstance().getReference().child("Groups").child("Chat_Message").child(chat.get(getAdapterPosition()).getGroupName());
+
+                                        firebaseDatabaseUnsendMSG.child(chat.get(getAdapterPosition()).getMessageIdSender()).removeValue();
+                                        removeItem(getAdapterPosition());
+*/
+                            }
+                        });
+
+                        Button reply = dialog.findViewById(R.id.reply_button);
+                        reply.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        });
+
+                    } else {
+
+
+                        boolean isUser = false;
+                        Log.d("REPOCHK", "onDataChange: " + chat.getReportUsers());
+                        String[] ru = chat.getReportUsers().split("&");
+                        Log.d("REPOCHK", "onDataChange: " + ru.length);
+                        for (int i = 0; i < ru.length; i++) {
+                            Log.d("REPOCHK", "onDataChange: " + ru[i].equals(userID));
+                            if (ru[i].equals(userID)) {
+                                isUser = true;
+                            }
+                        }
+                        if (ru.length == 5) {
+                            firebaseDatabaseUnsendMSG.child(chat.getDoubtUniPushId()).child("groupSubGroupComb").setValue("This message is reported");
+                        }
+                        Log.d("REPOCHK", "onDataChange: REPORT CHECK" + ru.length);
+
+                        if (chat.getGroupSubGroupComb().trim().equals("This message is reported") || isUser == true || ru.length == 5) {
+
+
+                            Toast.makeText(getApplicationContext(), "This message is reported", Toast.LENGTH_SHORT).show();
+
+                        } else {
+
+                            dialog.show();
+
+                            Log.d("NOTREPORTED", "getPosition: " + chat.getGroupSubGroupComb());
+
+                            dialog.setContentView(R.layout.more_chat_options_others);
+                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                            dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+
+                            Button copyBtn = dialog.findViewById(R.id.copy_button);
+                            copyBtn.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    dialog.dismiss();
+
+                                    ClipboardManager clipboardManager = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                                    ClipData data = (ClipData) ClipData.newPlainText("text", chat.getGroupSubGroupComb().toString());
+                                    clipboardManager.setPrimaryClip(data);
+
+                                }
+                            });
+
+                            Button report = dialog.findViewById(R.id.report_button);
+                            report.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    dialog.dismiss();
+
+                                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                            String repoUsers = snapshot.child(chat.getDoubtUniPushId()).child("reportUsers").getValue().toString().trim();
+                                            Log.d("REPOCHK", "onDataChange: " + repoUsers);
+
+
+                                            String[] ru = repoUsers.split("&");
+                                            Log.d("REPOCHK", "onDataChange: " + ru.length);
+                                            for (int i = 0; i < ru.length; i++) {
+                                                Log.d("REPOCHK", "onDataChange: " + ru[i]);
+                                            }
+
+                                            if (repoUsers.equals("")) {
+                                                firebaseDatabaseUnsendMSG.child(chat.getDoubtUniPushId()).child("reportUsers").setValue(userID + "&");
+                                            } else {
+                                                firebaseDatabaseUnsendMSG.child(chat.getDoubtUniPushId()).child("reportUsers").setValue(repoUsers + userID + "&");
+                                            }
+                                            messageAdapter.notifyItemChanged(position);
+                                            messageAdapter.notifyDataSetChanged();
+
+//
+//                                            firebaseDatabaseUnsendMSG.child(chat.getDoubtUniPushId()).child("reportUsers").setValue("2aBFaV4H7XOGwg8JnOBiSXF5zvf2&");
+
+
+/*
+                                            if ((snapshot.child(chat.getDoubtUniPushId()).child("reportUser1").getValue().toString().equals(""))
+                                                    && (snapshot.child(chat.getDoubtUniPushId()).child("reportUser2").getValue().toString() != "")
+                                                    && (snapshot.child(chat.getDoubtUniPushId()).child("reportUser2").getValue().toString() != "")) {
+                                                reference.child(chat.getDoubtUniPushId()).child("reportUser1").setValue(userID);
+                                            }
+                                            if (snapshot.child(chat.getDoubtUniPushId()).child("reportUser2").getValue().toString().equals("")) {
+                                                reference.child(chat.getDoubtUniPushId()).child("reportUser2").setValue(userID);
+                                            }
+                                            if (snapshot.child(chat.getDoubtUniPushId()).child("reportUser3").getValue().toString().equals("")) {
+                                                reference.child(chat.getDoubtUniPushId()).child("reportUser3").setValue(userID);
+                                            }
+*/
+
+                                            /*
+                                            chats.get(position).setBlur_report(blur_report);
+                                            messageAdapter.setList(chats);
+                                            messageAdapter.notifyItemChanged(position);
+                                            messageAdapter.notifyDataSetChanged();
+                                            */
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+
+//                                    DatabaseReference firebaseDatabaseUnsendMSG = FirebaseDatabase.getInstance().getReference().child("Groups").child("Chat_Message").child(groupPushId);
+//
+//                                    firebaseDatabaseUnsendMSG.child(classUniPushId).child(subjectUniPushId).child(chat.getDoubtUniPushId()).child("reportUserCheck")
+//                                            .child(userID).setValue(blur_report);
+
+                                }
+                            });
+
+                            Button reply = dialog.findViewById(R.id.reply_button);
+                            reply.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                }
+                            });
+                        }
+                    }
+
+                }
+
+
+                Log.d("USERIDADAPTER", "messageId: " + chat.getSubGroupPushId());
+
+
+            }
+        });
+
+
         if (subjectUniPushId != null && classUniPushId != null && groupPushId != null) {
             showDoubt(groupPushId, classUniPushId, subjectUniPushId);
         }
@@ -711,186 +933,188 @@ public class Server_Activity extends AppCompatActivity {
 
         DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID).child("clickedGroupPushId");
 
-        databaseReferenceTemp.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                parentItemArrayListClassName.clear();
-                String groupPushId = String.valueOf(snapshot.getValue());
+        databaseReferenceTemp.addValueEventListener(new
 
-                DatabaseReference databaseReferenceAdminShow = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList").child(userID);
-                databaseReferenceAdminShow.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        Log.d("CHKADMINCLASS", "onDataChange: " + snapshot.child("admin").getValue());
-                        if (Objects.equals(snapshot.child("admin").getValue(), true)) {
-                            checkAdmmmmin(true);
-                            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
-                            databaseReference.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    Log.d(TAG, "showChildGroupAdaptor: Clicked" + snapshot.getKey());
-                                    parentItemArrayListClassName.clear();
-                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                                            ValueEventListener() {
+                                                                @Override
+                                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                    parentItemArrayListClassName.clear();
+                                                                    String groupPushId = String.valueOf(snapshot.getValue());
+
+                                                                    DatabaseReference databaseReferenceAdminShow = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList").child(userID);
+                                                                    databaseReferenceAdminShow.addValueEventListener(new ValueEventListener() {
+                                                                        @Override
+                                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                            Log.d("CHKADMINCLASS", "onDataChange: " + snapshot.child("admin").getValue());
+                                                                            if (Objects.equals(snapshot.child("admin").getValue(), true)) {
+                                                                                checkAdmmmmin(true);
+                                                                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
+                                                                                databaseReference.addValueEventListener(new ValueEventListener() {
+                                                                                    @Override
+                                                                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                                        Log.d(TAG, "showChildGroupAdaptor: Clicked" + snapshot.getKey());
+                                                                                        parentItemArrayListClassName.clear();
+                                                                                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 //                                        Log.d(TAG, "showChildGroupAdaptor: ClickedDS" + dataSnapshot.child("className").getValue().toString());
 
-                                        if (dataSnapshot.getChildrenCount() > 0) {
-                                            ib_servSettings.setVisibility(View.VISIBLE);
-                                        }
+                                                                                            if (dataSnapshot.getChildrenCount() > 0) {
+                                                                                                ib_servSettings.setVisibility(View.VISIBLE);
+                                                                                            }
 
-                                        Class_Group_Names class_group_names = new Class_Group_Names();
-                                        class_group_names.setGroupPushId(groupPushId);
-                                        class_group_names.setClassName(dataSnapshot.child("className").getValue(String.class));
-                                        class_group_names.setClassBio(dataSnapshot.child("classBio").getValue(String.class));
-                                        class_group_names.setUniPushClassId(dataSnapshot.child("classUniPushId").getValue(String.class));
+                                                                                            Class_Group_Names class_group_names = new Class_Group_Names();
+                                                                                            class_group_names.setGroupPushId(groupPushId);
+                                                                                            class_group_names.setClassName(dataSnapshot.child("className").getValue(String.class));
+                                                                                            class_group_names.setClassBio(dataSnapshot.child("classBio").getValue(String.class));
+                                                                                            class_group_names.setUniPushClassId(dataSnapshot.child("classUniPushId").getValue(String.class));
 
-                                        Log.d("JOIN", "onClick: " + groupPushId);
+                                                                                            Log.d("JOIN", "onClick: " + groupPushId);
 
-                                        List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
+                                                                                            List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
 
-                                        for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classSubjectData").getChildren()) {
-                                            Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
-                                            Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
-                                            Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
-                                            subjectDetailsModelList.add(object);
+                                                                                            for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classSubjectData").getChildren()) {
+                                                                                                Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                                                                                Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
+                                                                                                Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
+                                                                                                subjectDetailsModelList.add(object);
 
-                                        }
+                                                                                            }
 
-                                        class_group_names.setChildItemList(subjectDetailsModelList);
-
-
-                                        List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
-
-                                        for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classStudentList").getChildren()) {
-                                            Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
-                                            Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
-                                            Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
-                                            class_student_detailsList.add(class_student_details);
-
-                                        }
-
-                                        class_group_names.setClass_student_detailsList(class_student_detailsList);
+                                                                                            class_group_names.setChildItemList(subjectDetailsModelList);
 
 
-                                        parentItemArrayListClassName.add(class_group_names);
-                                    }
-                                    adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
-                                    adapter_classGroup.notifyDataSetChanged();
-                                }
+                                                                                            List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
 
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
+                                                                                            for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classStudentList").getChildren()) {
+                                                                                                Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                                                                                Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
+                                                                                                Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
+                                                                                                class_student_detailsList.add(class_student_details);
 
-                                }
-                            });
-                        } else {
+                                                                                            }
+
+                                                                                            class_group_names.setClass_student_detailsList(class_student_detailsList);
+
+
+                                                                                            parentItemArrayListClassName.add(class_group_names);
+                                                                                        }
+                                                                                        adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
+                                                                                        adapter_classGroup.notifyDataSetChanged();
+                                                                                    }
+
+                                                                                    @Override
+                                                                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                                    }
+                                                                                });
+                                                                            } else {
 //                            Toast.makeText(Server_Activity.this, "You are an admin", Toast.LENGTH_SHORT).show();
-                        }
+                                                                            }
 
-                    }
+                                                                        }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                                                                        @Override
+                                                                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
+                                                                        }
+                                                                    });
 
-                DatabaseReference databaseReferenceGrpClass = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class").child(groupPushId).child(userID).child("classUniPushId");
+                                                                    DatabaseReference databaseReferenceGrpClass = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class").child(groupPushId).child(userID).child("classUniPushId");
 
-                databaseReferenceGrpClass.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                    databaseReferenceGrpClass.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                        @Override
+                                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                        String classUniPush = String.valueOf(snapshot.getValue());
+                                                                            String classUniPush = String.valueOf(snapshot.getValue());
 
-                        DatabaseReference databaseReferenceStudent = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPush);
+                                                                            DatabaseReference databaseReferenceStudent = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPush);
 
-                        databaseReferenceStudent.child("classStudentList").child(userID).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                            databaseReferenceStudent.child("classStudentList").child(userID).child("admin").addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                                @Override
+                                                                                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                                Log.d("CHKADMIN", "onDataChange: " + snapshot.exists());
-                                if (Objects.equals(snapshot.getValue(), false)) {
-                                    checkAdmmmmin(false);
-                                    databaseReferenceStudent.addListenerForSingleValueEvent(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                            parentItemArrayListClassName.clear();
-                                            Log.d("OTH", "class Name: " + snapshot.child("className").getValue());
+                                                                                    Log.d("CHKADMIN", "onDataChange: " + snapshot.exists());
+                                                                                    if (Objects.equals(snapshot.getValue(), false)) {
+                                                                                        checkAdmmmmin(false);
+                                                                                        databaseReferenceStudent.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                                                            @Override
+                                                                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                                                parentItemArrayListClassName.clear();
+                                                                                                Log.d("OTH", "class Name: " + snapshot.child("className").getValue());
 
-                                            Class_Group_Names class_group_names = new Class_Group_Names();
-                                            class_group_names.setGroupPushId(groupPushId);
-                                            class_group_names.setClassName(snapshot.child("className").getValue(String.class));
-                                            class_group_names.setClassBio(snapshot.child("classBio").getValue(String.class));
-                                            class_group_names.setUniPushClassId(snapshot.child("classUniPushId").getValue(String.class));
+                                                                                                Class_Group_Names class_group_names = new Class_Group_Names();
+                                                                                                class_group_names.setGroupPushId(groupPushId);
+                                                                                                class_group_names.setClassName(snapshot.child("className").getValue(String.class));
+                                                                                                class_group_names.setClassBio(snapshot.child("classBio").getValue(String.class));
+                                                                                                class_group_names.setUniPushClassId(snapshot.child("classUniPushId").getValue(String.class));
 
-                                            Log.d("JOIN", "onClick: " + groupPushId);
+                                                                                                Log.d("JOIN", "onClick: " + groupPushId);
 
-                                            List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
+                                                                                                List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
 
-                                            for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
-                                                Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
-                                                Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
-                                                Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
-                                                subjectDetailsModelList.add(object);
-                                            }
+                                                                                                for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
+                                                                                                    Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                                                                                    Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
+                                                                                                    Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
+                                                                                                    subjectDetailsModelList.add(object);
+                                                                                                }
 
-                                            class_group_names.setChildItemList(subjectDetailsModelList);
-
-
-                                            List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
-
-                                            for (DataSnapshot dataSnapshot1 : snapshot.child("classStudentList").getChildren()) {
-                                                Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
-                                                Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
-                                                Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
-                                                class_student_detailsList.add(class_student_details);
-
-                                            }
-
-                                            class_group_names.setClass_student_detailsList(class_student_detailsList);
+                                                                                                class_group_names.setChildItemList(subjectDetailsModelList);
 
 
-                                            parentItemArrayListClassName.add(class_group_names);
+                                                                                                List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
 
-                                            adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
-                                            adapter_classGroup.notifyDataSetChanged();
-                                        }
+                                                                                                for (DataSnapshot dataSnapshot1 : snapshot.child("classStudentList").getChildren()) {
+                                                                                                    Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                                                                                    Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
+                                                                                                    Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
+                                                                                                    class_student_detailsList.add(class_student_details);
 
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError error) {
+                                                                                                }
 
-                                        }
-                                    });
+                                                                                                class_group_names.setClass_student_detailsList(class_student_detailsList);
 
-                                } else {
+
+                                                                                                parentItemArrayListClassName.add(class_group_names);
+
+                                                                                                adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
+                                                                                                adapter_classGroup.notifyDataSetChanged();
+                                                                                            }
+
+                                                                                            @Override
+                                                                                            public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                                            }
+                                                                                        });
+
+                                                                                    } else {
 //                                    Toast.makeText(Server_Activity.this, "You are not admin", Toast.LENGTH_SHORT).show();
-                                }
-                            }
+                                                                                    }
+                                                                                }
 
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                                                                                @Override
+                                                                                public void onCancelled(@NonNull DatabaseError error) {
 
-                            }
-                        });
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                                                                                }
+                                                                            });
 
 
-            }
+                                                                        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                                                                        @Override
+                                                                        public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                                                                        }
+                                                                    });
+
+
+                                                                }
+
+                                                                @Override
+                                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                }
+                                                            });
 
 
         if (subjectUniPushId != null) {
@@ -914,49 +1138,80 @@ public class Server_Activity extends AppCompatActivity {
 
         assert groupPushId != null;
         DatabaseReference refGetGRPName = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId);
-        refGetGRPName.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child("groupName").exists()) {
-                    textViewGroupName.setText(snapshot.child("groupName").getValue().toString());
+        refGetGRPName.addValueEventListener(new
+
+                                                    ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                            if (snapshot.child("groupName").exists()) {
+                                                                textViewGroupName.setText(snapshot.child("groupName").getValue().toString());
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+
+
+        reference = FirebaseDatabase.getInstance().
+
+                getReference().
+
+                child("Groups").
+
+                child("Chat_Message").
+
+                child(groupPushId).
+
+                child(classUniPushId).
+
+                child(subjectUniPushId);
+
+        readLiveMessageListener = new
+
+                ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        chats.clear();
+                        Log.d(TAG, "onDataChange: " + snapshot.getChildrenCount());
+                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                            Log.d("DOUBTCHK", "onDataChange: " + postSnapshot.getValue());
+
+                            Class_Group class_userDashBoard = postSnapshot.getValue(Class_Group.class);
+                            chats.add(class_userDashBoard);
+                        }
+                        messageAdapter.setList(chats);
+                        messageAdapter.notifyDataSetChanged();
+                        rv_ChatDashboard.smoothScrollToPosition(Objects.requireNonNull(rv_ChatDashboard.getAdapter()).getItemCount());
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
                 }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-        reference = FirebaseDatabase.getInstance().getReference().child("Groups").child("Chat_Message").child(groupPushId).child(classUniPushId).child(subjectUniPushId);
-
-        readLiveMessageListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                chats.clear();
-                Log.d(TAG, "onDataChange: " + snapshot.getChildrenCount());
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    Log.d("DOUBTCHK", "onDataChange: " + postSnapshot.getValue());
-
-                    Class_Group class_userDashBoard = postSnapshot.getValue(Class_Group.class);
-                    chats.add(class_userDashBoard);
-                }
-                messageAdapter.setList(chats);
-                messageAdapter.notifyDataSetChanged();
-                rv_ChatDashboard.smoothScrollToPosition(Objects.requireNonNull(rv_ChatDashboard.getAdapter()).getItemCount());
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
+        ;
 
         reference.addValueEventListener(readLiveMessageListener);
 
-        allDoubtReference = FirebaseDatabase.getInstance().getReference().
-                child("Groups").child("Doubt").child(groupPushId).child(classUniPushId).child(subjectUniPushId).child("All_Doubt");
+        allDoubtReference = FirebaseDatabase.getInstance().
+
+                getReference().
+
+                child("Groups").
+
+                child("Doubt").
+
+                child(groupPushId).
+
+                child(classUniPushId).
+
+                child(subjectUniPushId).
+
+                child("All_Doubt");
 
         if (allDoubtReference != null) {
             readLiveDoubtListener = new ValueEventListener() {
@@ -988,106 +1243,137 @@ public class Server_Activity extends AppCompatActivity {
 
         }
 
-        refClassTeacherList = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList");
+        refClassTeacherList = FirebaseDatabase.getInstance().
+
+                getReference().
+
+                child("Groups").
+
+                child("Check_Group_Admins").
+
+                child(groupPushId).
+
+                child("classAdminList");
         listGrpTeacherList.clear();
-        refClassTeacherList.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Class_Student_Details class_teacher_details = snapshot.getValue(Class_Student_Details.class);
-                listGrpTeacherList.add(class_teacher_details);
+        refClassTeacherList.addChildEventListener(new
+
+                                                          ChildEventListener() {
+                                                              @Override
+                                                              public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                                  Class_Student_Details class_teacher_details = snapshot.getValue(Class_Student_Details.class);
+                                                                  listGrpTeacherList.add(class_teacher_details);
 
 
-                rv_GrpTeacherList.setAdapter(showGrpTeacherList);
-                showGrpTeacherList.notifyDataSetChanged();
-            }
+                                                                  rv_GrpTeacherList.setAdapter(showGrpTeacherList);
+                                                                  showGrpTeacherList.notifyDataSetChanged();
+                                                              }
 
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                              @Override
+                                                              public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String
+                                                                      previousChildName) {
 
-            }
+                                                              }
 
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                                                              @Override
+                                                              public void onChildRemoved(@NonNull DataSnapshot snapshot) {
 
-            }
+                                                              }
 
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                                                              @Override
+                                                              public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
-            }
+                                                              }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                                                              @Override
+                                                              public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                                                              }
+                                                          });
 
         DatabaseReference refGrpTeacherList = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId);
-        refGrpTeacherList.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChild("classAdminList")) {
-                    Log.d("STUCHK", "onSUBS: yes");
-                    rv_GrpTeacherList.setVisibility(View.VISIBLE);
-                    adminListText.setVisibility(View.VISIBLE);
-                } else {
-                    Log.d("STUCHK", "onSUBS: nooo");
-                    rv_GrpTeacherList.setVisibility(View.GONE);
-                    adminListText.setVisibility(View.GONE);
-                }
-            }
+        refGrpTeacherList.addListenerForSingleValueEvent(new
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                                                                 ValueEventListener() {
+                                                                     @Override
+                                                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                         if (snapshot.hasChild("classAdminList")) {
+                                                                             Log.d("STUCHK", "onSUBS: yes");
+                                                                             rv_GrpTeacherList.setVisibility(View.VISIBLE);
+                                                                             adminListText.setVisibility(View.VISIBLE);
+                                                                         } else {
+                                                                             Log.d("STUCHK", "onSUBS: nooo");
+                                                                             rv_GrpTeacherList.setVisibility(View.GONE);
+                                                                             adminListText.setVisibility(View.GONE);
+                                                                         }
+                                                                     }
 
-            }
-        });
+                                                                     @Override
+                                                                     public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                     }
+                                                                 });
 
 
         Log.d(TAG, "onSUBS: " + classUniPushId);
 
         DatabaseReference refGrpMembers = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPushId);
-        refGrpMembers.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.hasChild("classStudentList")) {
-                    Log.d("STUCHK", "onSUBS: yes");
-                    rv_GrpMemberList.setVisibility(View.VISIBLE);
-                    tv_GroupMember.setVisibility(View.VISIBLE);
-                } else {
-                    Log.d("STUCHK", "onSUBS: nooo");
-                    rv_GrpMemberList.setVisibility(View.GONE);
-                    tv_GroupMember.setVisibility(View.GONE);
-                }
-            }
+        refGrpMembers.addListenerForSingleValueEvent(new
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                                                             ValueEventListener() {
+                                                                 @Override
+                                                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                                     if (snapshot.hasChild("classStudentList")) {
+                                                                         Log.d("STUCHK", "onSUBS: yes");
+                                                                         rv_GrpMemberList.setVisibility(View.VISIBLE);
+                                                                         tv_GroupMember.setVisibility(View.VISIBLE);
+                                                                     } else {
+                                                                         Log.d("STUCHK", "onSUBS: nooo");
+                                                                         rv_GrpMemberList.setVisibility(View.GONE);
+                                                                         tv_GroupMember.setVisibility(View.GONE);
+                                                                     }
+                                                                 }
 
-            }
-        });
+                                                                 @Override
+                                                                 public void onCancelled(@NonNull DatabaseError error) {
+
+                                                                 }
+                                                             });
 
 
-        refGrpMemberList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPushId).child("classStudentList");
+        refGrpMemberList = FirebaseDatabase.getInstance().
 
-        refGrpMemberList.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listGrpMemberList.clear();
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    Class_Student_Details class_student_details = snapshot.getValue(Class_Student_Details.class);
-                    listGrpMemberList.add(class_student_details);
+                getReference().
 
-                    rv_GrpMemberList.setAdapter(showGrpMemberList);
-                    showGrpMemberList.notifyDataSetChanged();
-                }
-            }
+                child("Groups").
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                child("All_GRPs").
 
-            }
-        });
+                child(groupPushId).
+
+                child(classUniPushId).
+
+                child("classStudentList");
+
+        refGrpMemberList.addValueEventListener(new
+
+                                                       ValueEventListener() {
+                                                           @Override
+                                                           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                               listGrpMemberList.clear();
+                                                               for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                                   Class_Student_Details class_student_details = snapshot.getValue(Class_Student_Details.class);
+                                                                   listGrpMemberList.add(class_student_details);
+
+                                                                   rv_GrpMemberList.setAdapter(showGrpMemberList);
+                                                                   showGrpMemberList.notifyDataSetChanged();
+                                                               }
+                                                           }
+
+                                                           @Override
+                                                           public void onCancelled(@NonNull DatabaseError error) {
+
+                                                           }
+                                                       });
 
         adapter_all_friends.setOnItemClickListener(new Adapter_All_Friends.OnItemClickListener() {
             @Override
@@ -1100,12 +1386,14 @@ public class Server_Activity extends AppCompatActivity {
         //Endpanel
         showGrpMemberList.setOnItemClickListener(new Adaptor_ShowGrpMember.OnItemClickListener() {
             @Override
-            public void AddFrndDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId) {
+            public void AddFrndDialog(String adminGroupID, String adminEmailID, String
+                    adminUserName, String pushId) {
                 sentInvitation(adminGroupID, adminUserName, "AddFriend");
             }
 
             @Override
-            public void FollowFriendDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId) {
+            public void FollowFriendDialog(String adminGroupID, String adminEmailID, String
+                    adminUserName, String pushId) {
                 sentInvitation(adminGroupID, adminUserName, "FollowFriend");
             }
 
@@ -1689,7 +1977,7 @@ public class Server_Activity extends AppCompatActivity {
 
                             allDoubtReference.child(push).setValue(userAddGroupClass);
 
-                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, subGroupPushId, addDoubt, "doubt", groupClassSubjects, push, 0, "");
+                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, subGroupPushId, addDoubt, "doubt", groupClassSubjects, push, "", "");
                             reference.push().setValue(userAddGroupClass);
 //                            Toast.makeText(Server_Activity.this, "Doubt Successfully Added", Toast.LENGTH_SHORT).show();
                         }
@@ -2735,7 +3023,7 @@ public class Server_Activity extends AppCompatActivity {
                                     Log.d(TAG, "onClick: " + uri);
                                     userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, groupPushId, uniPushClassId, subjectUniPushId, uri.toString(), fileName);
                                     allDocumentReference.child(push).setValue(userAddGroupClass);
-                                    userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, uniPushClassId, uri.toString(), "pdf", subjectUniPushId, push, 0, fileName);
+                                    userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, uniPushClassId, uri.toString(), "pdf", subjectUniPushId, push, fileName, "");
                                     reference.push().setValue(userAddGroupClass);
 
                                     Toast.makeText(Server_Activity.this, "Document sending successful", Toast.LENGTH_SHORT).show();

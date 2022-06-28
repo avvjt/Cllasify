@@ -15,6 +15,7 @@ public class Class_Group {
     public String cmntAnsUserName;
     public String grpJoiningStatus;
     public String doc_Name;
+    public String reportUsers;
 
     public String userId;
     public String adminUserId;
@@ -63,6 +64,15 @@ public class Class_Group {
         this.userName = userName;
         this.userId = userId;
         this.groupName = groupName;
+    }
+
+
+    public String getReportUsers() {
+        return reportUsers;
+    }
+
+    public void setReportUsers(String reportUsers) {
+        this.reportUsers = reportUsers;
     }
 
     public String getDoubtUniPushId() {
@@ -122,7 +132,7 @@ public class Class_Group {
         this.userPhone = userPhone;
     }
 
-    public Class_Group(String dateTime, String userId, String position, String groupName, String subGroupName, String groupSubGroupComb, String msgCategory, String subGroupPushId, String doubtUniPushId, int msgPosition,String doc_Name) {
+    public Class_Group(String dateTime, String userId, String position, String groupName, String subGroupName, String groupSubGroupComb, String msgCategory, String subGroupPushId, String doubtUniPushId, String doc_Name, String reportUsers) {
         this.dateTime = dateTime;
         this.userId = userId;
         this.position = position;
@@ -130,10 +140,10 @@ public class Class_Group {
         this.subGroupName = subGroupName;
         this.groupSubGroupComb = groupSubGroupComb;
         this.msgCategory = msgCategory;
-        this.msgPosition = msgPosition;
         this.subGroupPushId = subGroupPushId;
         this.doubtUniPushId = doubtUniPushId;
         this.doc_Name = doc_Name;
+        this.reportUsers = reportUsers;
     }
 
     public String getDoc_Name() {
@@ -228,7 +238,7 @@ public class Class_Group {
         this.notifyCategory = notifyCategory;
     }
 
-    public Class_Group(String dateTime, String userName, String grpJoiningStatus, String userId, String adminUserId, String userEmailId, String position, String groupName, String groupPositionId, String subGroupName, String notifyCategory,String classUniPushId) {
+    public Class_Group(String dateTime, String userName, String grpJoiningStatus, String userId, String adminUserId, String userEmailId, String position, String groupName, String groupPositionId, String subGroupName, String notifyCategory, String classUniPushId) {
         this.dateTime = dateTime;
         this.userName = userName;
         this.grpJoiningStatus = grpJoiningStatus;
@@ -241,20 +251,6 @@ public class Class_Group {
         this.subGroupName = subGroupName;
         this.notifyCategory = notifyCategory;
         this.classUniPushId = classUniPushId;
-    }
-
-    public Class_Group(String dateTime, String userName, String grpJoiningStatus, String userId, String adminUserId, String userEmailId, String position, String groupName, String groupPositionId, String subGroupName, String notifyCategory) {
-        this.dateTime = dateTime;
-        this.userName = userName;
-        this.grpJoiningStatus = grpJoiningStatus;
-        this.userId = userId;
-        this.adminUserId = adminUserId;
-        this.userEmailId = userEmailId;
-        this.position = position;
-        this.groupName = groupName;
-        this.groupPositionId = groupPositionId;
-        this.subGroupName = subGroupName;
-        this.notifyCategory = notifyCategory;
     }
 
     public String getDateTime() {
@@ -344,6 +340,7 @@ public class Class_Group {
     public void setQuesCombined(String quesCombined) {
         this.quesCombined = quesCombined;
     }
+
     public String getGroupName() {
         return groupName;
     }

@@ -43,7 +43,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class Adaptor_Friend_Chat extends RecyclerView.Adapter<Adaptor_Friend_Chat.ViewHolder> {
+public class  Adaptor_Friend_Chat extends RecyclerView.Adapter<Adaptor_Friend_Chat.ViewHolder> {
 
     public static final int MSG_TYPE_LEFT = 0;
     public static final int MSG_TYPE_RIGHT = 1;
@@ -127,7 +127,7 @@ public class Adaptor_Friend_Chat extends RecyclerView.Adapter<Adaptor_Friend_Cha
     @Override
     public int getItemViewType(int position) {
 
-        Log.d("USERID", "getItemViewType: "+chat.get(position).getSenderId());
+        Log.d("USERID", "getItemViewType: " + chat.get(position).getSenderId());
 
         if (chat.get(position).getSenderId() != null && chat.get(position).getSenderId().equals(userID)) {
             return MSG_TYPE_RIGHT;
@@ -161,13 +161,14 @@ public class Adaptor_Friend_Chat extends RecyclerView.Adapter<Adaptor_Friend_Cha
                     dialog.getWindow().setGravity(Gravity.BOTTOM);
 
 
-                    dialog.show();
 
                     if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
 
-
                         if (chat.get(getAdapterPosition()).getSenderId().equals(userID)) {
+
+                            dialog.show();
+
 
                             Log.d("USERID", "getPosition: " + chat.get(getAdapterPosition()).getSenderId());
                             Log.d("USERID", "messageId: " + chat.get(getAdapterPosition()).getMessageIdSender());
@@ -220,51 +221,61 @@ public class Adaptor_Friend_Chat extends RecyclerView.Adapter<Adaptor_Friend_Cha
 //                            Log.d("USERID", "getPosition: " + senderUserId);
 //                            Log.d("USERID", "messageId: " + messageId);
 
-                            dialog.setContentView(R.layout.more_chat_options_others);
-                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
-                            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                            dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-                            dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+                            if (chat.get(getAdapterPosition()).getMessage().trim().equals("This message is reported")) {
 
 
-                            Button copyBtn = dialog.findViewById(R.id.copy_button);
-                            copyBtn.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
+                                Toast.makeText(context, "You reported this message", Toast.LENGTH_SHORT).show();
 
-                                    dialog.dismiss();
+                            } else {
 
-                                    ClipboardManager clipboardManager = (ClipboardManager) context.getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                                    ClipData data = (ClipData) ClipData.newPlainText("text", show_message.getText().toString());
-                                    clipboardManager.setPrimaryClip(data);
+                                dialog.show();
 
-                                }
-                            });
+                                Log.d("NOTREPORTED", "getPosition: " + chat.get(getAdapterPosition()).getMessage());
 
-                            Button report = dialog.findViewById(R.id.report_button);
-                            report.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                    dialog.dismiss();
-
-                                    DatabaseReference firebaseDatabaseUnsendMSG = FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child("messages");
-
-                                    firebaseDatabaseUnsendMSG.child(chat.get(getAdapterPosition()).getMessageIdReceiver()).child("message").setValue("This message is reported");
-                                }
-                            });
-
-                            Button reply = dialog.findViewById(R.id.reply_button);
-                            reply.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-
-                                }
-                            });
+                                dialog.setContentView(R.layout.more_chat_options_others);
+                                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+                                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                                dialog.getWindow().setGravity(Gravity.BOTTOM);
 
 
+                                Button copyBtn = dialog.findViewById(R.id.copy_button);
+                                copyBtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        dialog.dismiss();
+
+                                        ClipboardManager clipboardManager = (ClipboardManager) context.getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                                        ClipData data = (ClipData) ClipData.newPlainText("text", show_message.getText().toString());
+                                        clipboardManager.setPrimaryClip(data);
+
+                                    }
+                                });
+
+                                Button report = dialog.findViewById(R.id.report_button);
+                                report.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        dialog.dismiss();
+
+                                        DatabaseReference firebaseDatabaseUnsendMSG = FirebaseDatabase.getInstance().getReference().child("chats").child(senderRoom).child("messages");
+
+                                        firebaseDatabaseUnsendMSG.child(chat.get(getAdapterPosition()).getMessageIdReceiver()).child("message").setValue("This message is reported");
+                                    }
+                                });
+
+                                Button reply = dialog.findViewById(R.id.reply_button);
+                                reply.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                    }
+                                });
+                            }
                         }
-
 
                     }
 

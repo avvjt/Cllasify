@@ -129,7 +129,7 @@ public class WebView_Fragment extends Fragment implements DownloadFile.Listener 
 
         if (url != null && destinationPath != null) {
 
-            pdfPagerAdapter = new PDFPagerAdapter(getContext(), FileUtil.extractFileNameFromURL(url));
+            pdfPagerAdapter = new PDFPagerAdapter(getActivity(), FileUtil.extractFileNameFromURL(url));
             remotePDFViewPager.setAdapter(pdfPagerAdapter);
             updateLayout();
             progressBar.setVisibility(View.GONE);

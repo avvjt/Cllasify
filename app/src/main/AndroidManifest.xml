@@ -19,6 +19,8 @@
     <uses-permission android:name="android.Manifest.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+
     <uses-feature
         android:name="android.hardware.location.gps"
         android:required="false" />
@@ -36,7 +38,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
         <activity
-            android:name=".PDF_View"
+            android:name=".PDF_Viewer.PDF_View"
             android:exported="false" />
         <activity
             android:name=".About"

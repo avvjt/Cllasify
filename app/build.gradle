@@ -112,6 +112,9 @@ dependencies {
 
     implementation 'es.voghdev.pdfviewpager:library:1.1.2'
 
+    //BlurView
+    implementation 'com.github.jgabrielfreitas:BlurImageView:1.0.1'
+
 }
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'

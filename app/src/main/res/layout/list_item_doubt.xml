@@ -38,7 +38,7 @@
                     android:id="@+id/prof_pics_chat_doubt"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/maharaji"/>
+                    android:src="@drawable/maharaji" />
 
                 <TextView
                     android:id="@+id/tv_UserName"
