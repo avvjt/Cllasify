@@ -21,6 +21,7 @@
             android:layout_marginStart="100dp"
             android:layout_marginEnd="10dp"
             android:autoLink="web"
+            android:textColorLink="@color/grey"
             android:background="@drawable/sent_message_background"
             android:elevation="1dp"
             android:fontFamily="@font/inter_regular"

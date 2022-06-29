@@ -362,6 +362,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentBottom="true"
                         android:layout_marginStart="15dp"
+                        android:visibility="gone"
                         android:orientation="horizontal">
 
                         <EditText

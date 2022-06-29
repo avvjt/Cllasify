@@ -10,10 +10,17 @@ import android.graphics.BitmapFactory;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Color;
 import android.graphics.MaskFilter;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.URLSpan;
+import android.text.util.Linkify;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -37,6 +44,8 @@ import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Home.Server_Activity;
 import com.cllasify.cllasify.Utility.SharePref;
+import com.cllasify.cllasify.Utility.StringUtil;
+import com.cllasify.cllasify.Utility.TextViewUtils;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -214,6 +223,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                         }
 
                         if (chat.get(pos).getGroupSubGroupComb().trim().equals("This message is reported")) {
+
+                            holder.show_message.setTypeface(null, Typeface.ITALIC);
+
                             holder.show_message.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
                             holder.show_message.getPaint().setMaskFilter(null);
                         }
@@ -221,7 +233,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                             if (chat.get(pos).getGroupSubGroupComb().trim().equals("This message is reported")) {
                                 holder.show_message.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
                                 holder.show_message.getPaint().setMaskFilter(null);
-                            }else{
+                            } else {
                                 holder.show_message.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {

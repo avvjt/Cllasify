@@ -406,6 +406,8 @@ public class Server_Activity extends AppCompatActivity {
             @Override
             public void onSubClick(int classUniPosition, String clickedClassName, String uniClassPushId) {
 
+                et_ctext.getText().clear();
+
                 final String[] serverName = new String[1];
                 final String[] className = new String[1];
                 final String[] subjectName = new String[1];
