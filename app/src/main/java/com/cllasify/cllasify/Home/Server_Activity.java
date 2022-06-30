@@ -31,6 +31,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.webkit.CookieManager;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -696,6 +698,64 @@ public class Server_Activity extends AppCompatActivity {
             });
         }
 
+        messageAdapter.setOnPDFClickListener(new MessageAdapter.onPDFClickListener() {
+            @Override
+            public void onPDFClick(int position, String path) {
+
+
+                final Dialog dialog = new Dialog(Server_Activity.this);
+                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                dialog.setCancelable(true);
+                dialog.setCanceledOnTouchOutside(true);
+                dialog.setContentView(R.layout.more_pdf_options);
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                dialog.getWindow().setGravity(Gravity.BOTTOM);
+                dialog.create();
+
+                DatabaseReference firebaseDatabaseUnsendMSG = FirebaseDatabase.getInstance().getReference()
+                        .child("Groups").child("Chat_Message").child(groupPushId).child(classUniPushId).child(subjectUniPushId);
+
+
+                Button reply = dialog.findViewById(R.id.reply_button);
+                reply.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
+
+                Button download = dialog.findViewById(R.id.download_btn);
+                download.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (ActivityCompat.checkSelfPermission(Server_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(Server_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            ActivityCompat.requestPermissions(Server_Activity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                            // this will request for permission when permission is not true
+                        } else {
+                            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(path));
+                            String title = URLUtil.guessFileName(path, null, null);
+                            request.setTitle(title);
+                            request.setDescription(" Downloading File please wait ..... ");
+                            String cookie = CookieManager.getInstance().getCookie(path);
+                            request.addRequestHeader("cookie", cookie);
+                            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title);
+                            DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                            downloadManager.enqueue(request);
+                            Toast.makeText(Server_Activity.this, " Downloading Started . ", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+
+
+
+            }
+        });
 
         messageAdapter.setOnMessageClickListener(new MessageAdapter.onMessageClickListener() {
             @Override

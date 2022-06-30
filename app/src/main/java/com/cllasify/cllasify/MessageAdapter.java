@@ -82,6 +82,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     FirebaseUser currentUser;
     onDownloadClickListener onDownloadClickListener;
     onMessageClickListener onMessageClickListener;
+    onPDFClickListener onPDFClickListener;
+
+    public interface onPDFClickListener {
+        void onPDFClick(int position, String path);
+    }
+
     public int position;
 
     public int getPosition() {
@@ -94,6 +100,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
     public interface onMessageClickListener {
         void onMessageClick(int position, Class_Group chat);
+    }
+
+    public void setOnPDFClickListener(MessageAdapter.onPDFClickListener onPDFClickListener) {
+        this.onPDFClickListener = onPDFClickListener;
     }
 
     public void setOnMessageClickListener(MessageAdapter.onMessageClickListener onMessageClickListener) {
@@ -365,6 +375,16 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             pdf_file = itemView.findViewById(R.id.pdf_file);
             ll_Doubt = itemView.findViewById(R.id.ll_Doubt);
             download_btn = itemView.findViewById(R.id.download_btn);
+
+            if (pdf_file != null) {
+                pdf_file.setOnLongClickListener(new View.OnLongClickListener() {
+                    @Override
+                    public boolean onLongClick(View view) {
+                        onPDFClickListener.onPDFClick(getAdapterPosition(), chat.get(getAdapterPosition()).getGroupSubGroupComb());
+                        return true;
+                    }
+                });
+            }
 
             if (show_message != null) {
                 show_message.setOnLongClickListener(new View.OnLongClickListener() {
