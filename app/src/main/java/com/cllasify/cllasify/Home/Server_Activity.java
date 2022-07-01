@@ -713,6 +713,7 @@ public class Server_Activity extends AppCompatActivity {
                 dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
                 dialog.getWindow().setGravity(Gravity.BOTTOM);
                 dialog.create();
+                dialog.show();
 
                 DatabaseReference firebaseDatabaseUnsendMSG = FirebaseDatabase.getInstance().getReference()
                         .child("Groups").child("Chat_Message").child(groupPushId).child(classUniPushId).child(subjectUniPushId);
@@ -731,6 +732,8 @@ public class Server_Activity extends AppCompatActivity {
                 download.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+
+                        dialog.dismiss();
 
                         if (ActivityCompat.checkSelfPermission(Server_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(Server_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                             ActivityCompat.requestPermissions(Server_Activity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
@@ -751,7 +754,6 @@ public class Server_Activity extends AppCompatActivity {
 
                     }
                 });
-
 
 
             }

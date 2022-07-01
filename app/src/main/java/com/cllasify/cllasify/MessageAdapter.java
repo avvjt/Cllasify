@@ -190,6 +190,14 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                 }
                 if (holder.pdf_file != null) {
 
+                    holder.pdf_file.setOnLongClickListener(new View.OnLongClickListener() {
+                        @Override
+                        public boolean onLongClick(View view) {
+                            onPDFClickListener.onPDFClick(pos, chat.get(pos).getGroupSubGroupComb());
+                            return true;
+                        }
+                    });
+
                     holder.pdf_file.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -232,15 +240,26 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                             }
                         }
 
+                        Log.d("ISREPO", "onBindViewHolder: YES"+chat.get(pos).getGroupSubGroupComb().trim().equals("This message is reported"));
+
+
                         if (chat.get(pos).getGroupSubGroupComb().trim().equals("This message is reported")) {
+
 
                             holder.show_message.setTypeface(null, Typeface.ITALIC);
 
                             holder.show_message.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
                             holder.show_message.getPaint().setMaskFilter(null);
+                        } else {
+                            Log.d(TAG, "onBindViewHolder: ");
                         }
                         if ((ru.length >= 3 && ru.length < 5) || isUser == true) {
                             if (chat.get(pos).getGroupSubGroupComb().trim().equals("This message is reported")) {
+
+                                Log.d("ISREPO", "onBindViewHolder: YES 1");
+
+                                holder.show_message.setTypeface(null, Typeface.ITALIC);
+
                                 holder.show_message.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
                                 holder.show_message.getPaint().setMaskFilter(null);
                             } else {
@@ -376,15 +395,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             ll_Doubt = itemView.findViewById(R.id.ll_Doubt);
             download_btn = itemView.findViewById(R.id.download_btn);
 
-            if (pdf_file != null) {
-                pdf_file.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-                        onPDFClickListener.onPDFClick(getAdapterPosition(), chat.get(getAdapterPosition()).getGroupSubGroupComb());
-                        return true;
-                    }
-                });
-            }
 
             if (show_message != null) {
                 show_message.setOnLongClickListener(new View.OnLongClickListener() {

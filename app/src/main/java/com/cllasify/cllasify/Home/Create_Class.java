@@ -24,6 +24,7 @@ import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Server_Setting_Specifics;
 import com.cllasify.cllasify.Service.NetworkBroadcast;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,9 +32,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Create_Class extends AppCompatActivity {
 
@@ -52,6 +58,7 @@ public class Create_Class extends AppCompatActivity {
     Class_Group userAddGroupClass, userSubsGroupClass;
     ProgressBar progressBar;
     ImageButton btn_Back;
+    StorageReference storageReference;
 
 
     public void checkDarkLightDefaultStatusBar() {
@@ -80,6 +87,7 @@ public class Create_Class extends AppCompatActivity {
 
         broadcastReceiver = new NetworkBroadcast();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
@@ -166,6 +174,28 @@ public class Create_Class extends AppCompatActivity {
                 userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, GroupName, "Public", noofGroupinCategory);
                 userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, GroupName, "Public", noofGroupinCategory);
                 userSubsGroupClass = new Class_Group(dateTimeCC, userName, userID, userID, GroupName, push, "Admin", "Online");
+
+
+//                DatabaseReference refSaveServerProfPic = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId);
+//                refSaveServerProfPic.child("serverProfilePic").setValue(uri.toString());
+
+                ///Random DP/1.jpg
+                String[] strArr = {"1", "2", "3", "4", "5"};
+                Random rand = new Random();
+                int res = rand.nextInt(strArr.length);
+
+                storageReference = FirebaseStorage.getInstance().getReference();
+
+                final StorageReference fileRef = storageReference.child("Random DP/" + strArr[res] + ".jpg");
+
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Log.d("RANDOMPIC", "onDataChange: " + uri);
+                        DatabaseReference refSaveServerProfPic = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(push);
+                        refSaveServerProfPic.child("serverProfilePic").setValue(uri.toString());
+                    }
+                });
 
 
                 refuserPublicGroup.setValue(userAddGroupClass);
