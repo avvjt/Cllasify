@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -46,6 +47,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -88,6 +91,11 @@ public class Friend_Chat_Activity extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    private void checkTypingStatus(String userID, String status) {
+        DatabaseReference setStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID).child("userStatus");
+        setStatus.setValue(status);
     }
 
     @Override
@@ -167,7 +175,51 @@ public class Friend_Chat_Activity extends Fragment {
         adaptor_friend_chat.setReceiverUserId(receiverUid);
         recyclerView.setAdapter(adaptor_friend_chat);
 
+        long delay = 1000;
+        final long[] last_text_edit = {0};
+        Handler handler = new Handler();
 
+        Runnable input_finish_checker = new Runnable() {
+            public void run() {
+                if (System.currentTimeMillis() > (last_text_edit[0] + delay - 500)) {
+                    checkTypingStatus(senderUid, "online");
+                }
+            }
+        };
+
+        messageTxtFriend.addTextChangedListener(new TextWatcher() {
+
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                Log.d("TYPECHK", "beforeTextChanged: " + charSequence);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                Log.d("TYPECHK", "onTextChanged: " + charSequence);
+
+
+                if (charSequence.toString().trim().length() == 0) {
+                    checkTypingStatus(senderUid, "online");
+                } else {
+                    checkTypingStatus(senderUid, receiverUid);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                Log.d("TYPECHK", "afterTextChanged: " + editable);
+                if (editable.length() > 0) {
+                    last_text_edit[0] = System.currentTimeMillis();
+                    handler.postDelayed(input_finish_checker, delay);
+                } else {
+
+                }
+
+            }
+        });
 
 
         DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(receiverUid);
@@ -316,7 +368,7 @@ public class Friend_Chat_Activity extends Fragment {
 
 
                 Date date = new Date();
-                Class_Single_Friend messages = new Class_Single_Friend(pushSplitSender[6],pushSplitReceiver[6], messageText, senderUid, date.getTime());
+                Class_Single_Friend messages = new Class_Single_Friend(pushSplitSender[6], pushSplitReceiver[6], messageText, senderUid, date.getTime());
 //                Class_Group userAddGroupClass = new Class_Group(String.valueOf(date.getTime()), userName, senderUid, "nope", "classPosition[0]", messageText, "chat", "subjectUniPushId[0]", "push", 0);
                 messageTxtFriend.setText("");
                 firebaseDatabase.getReference().child("chats")

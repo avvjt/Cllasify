@@ -111,11 +111,13 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -650,6 +652,26 @@ public class Server_Activity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void checkOnlineStatus(String status) {
+        DatabaseReference setStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID).child("userStatus");
+        setStatus.setValue(status);
+    }
+
+
+    @Override
+    protected void onStart() {
+        checkOnlineStatus("online");
+        super.onStart();
+    }
+
+    @Override
+    protected void onPause() {
+
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        checkOnlineStatus(timestamp);
+        super.onPause();
     }
 
     private void memVis(boolean b) {
@@ -1482,6 +1504,8 @@ public class Server_Activity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+
+        checkOnlineStatus("online");
         super.onResume();
         if (onScreen) {
             reference.addValueEventListener(readLiveMessageListener);
@@ -1751,6 +1775,38 @@ public class Server_Activity extends AppCompatActivity {
                     public void onFriendClick(String friendName, String friendUserId) {
 
                         overlappingPanels.closePanels();
+
+
+                        DatabaseReference getUserStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(friendUserId);
+                        getUserStatus.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                TextView friend_online_status = findViewById(R.id.tv_friend_online_status);
+
+                                String friendStatus = snapshot.child("userStatus").getValue().toString();
+
+                                if (friendStatus.equals("online")) {
+                                    friend_online_status.setText("online");
+                                } else if (friendStatus.equals(userID)) {
+
+                                    Log.d("TYPIng", "TYPING");
+
+                                    friend_online_status.setText("typing...");
+                                } else {
+                                    SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("hh:mm a");
+                                    String dateTimeCC = simpleDateFormatCC.format(Long.parseLong(friendStatus));
+                                    friend_online_status.setText("Last seen today at " + dateTimeCC);
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
 
 //                            ll_AddJoinGrp.setVisibility(View.GONE);
                         if (flagFriend == false) {

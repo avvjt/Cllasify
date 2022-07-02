@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -23,6 +24,7 @@ import com.cllasify.cllasify.Class_Student_Details;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +41,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
     private List<Class_Student_Details> mDatalistNew;
     ProgressDialog notifyPB;
     DatabaseReference refUserFollowing;
-    boolean subsClick=false;
+    boolean subsClick = false;
     private OnItemClickListener mListener;
 
     public void removeItem(int position) {
@@ -56,16 +58,18 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
         return mDatalistNew;
     }
 
-    public interface  OnItemClickListener{
+    public interface OnItemClickListener {
 
         void AddFrndDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId);
+
         void FollowFriendDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId);
 
 
-        void MemberProfile(String memberUserId,String memberUserName);
+        void MemberProfile(String memberUserId, String memberUserName);
     }
-    public void setOnItemClickListener(OnItemClickListener listener){
-        mListener=listener;
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
     }
 
     public Adaptor_ShowGrpMember(Context context, List<Class_Student_Details> mDatalistNew) {
@@ -77,7 +81,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View rootview = LayoutInflater.from(context).inflate(R.layout.list_item_group_member, parent, false);
-        return new  MyViewHolder(rootview);
+        return new MyViewHolder(rootview);
     }
 
 
@@ -94,8 +98,65 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
         String userName = Answers.getUserName();
         String userID = Answers.getUserId();
 
-        Log.d("MEMLIST", "onBindViewHolder: "+userID);
+        Log.d("GRPMEMBERS", "Name: " + userName + "\tId: " + userID);
 
+        DatabaseReference userFriends = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(currUserID);
+        userFriends.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                if (userID.equals(snapshot.getKey())) {
+
+                    DatabaseReference userFriends = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(snapshot.getKey());
+                    userFriends.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Log.d("USERFRIENDSSTATUS", "Status: "+snapshot.child("userStatus").getValue().toString());
+                            if (snapshot.child("userStatus").getValue().toString().trim().equals("online")) {
+                                holder.civ_UserProfilePic.setBorderColor(context.getColor(R.color.splash_end));
+                                holder.civ_UserProfilePic.setBorderWidth(5);
+                            } else {
+                                holder.civ_UserProfilePic.setBorderColor(context.getColor(R.color.transparent));
+                                holder.civ_UserProfilePic.setPadding(2, 2, 2, 2);
+                                holder.civ_UserProfilePic.setBorderWidth(5);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+
+//                    Log.d("USERFRIENDS", "Friend" + "\tMember Id: " + userID + "\tFriend Id: " + snapshot.getKey() + "\tPosition: " + position);
+
+
+                } else {
+                    Log.d("USERFRIENDS", "Not Friend");
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
@@ -145,7 +206,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
             }
         });
 */
-            refUserFollowing = FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(currUserID);
+        refUserFollowing = FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(currUserID);
 //
 //        holder.ib_followFrnd.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -204,33 +265,33 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView tv_GroupTitle,tv_unique_userName;
+        TextView tv_GroupTitle, tv_unique_userName;
         LinearLayout ll_Group;
 
         Class_Group class_Group;
         Boolean clicked;
         DatabaseReference refLike;
 
-        ImageButton ib_followFrnd,ib_AddFrnd,ib_SubMenu;
+        ImageButton ib_followFrnd, ib_AddFrnd, ib_SubMenu;
         CircleImageView civ_UserProfilePic;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             tv_unique_userName = itemView.findViewById(R.id.tv_unique_userName);
-            tv_GroupTitle =itemView.findViewById(R.id.tv_classGroupTitle);
-            ib_followFrnd =itemView.findViewById(R.id.ib_followFrnd);
-            ib_AddFrnd =itemView.findViewById(R.id.ib_AddFrnd);
-            ib_SubMenu =itemView.findViewById(R.id.ib_SubMenu);
-            ll_Group =itemView.findViewById(R.id.ll_Group);
+            tv_GroupTitle = itemView.findViewById(R.id.tv_classGroupTitle);
+            ib_followFrnd = itemView.findViewById(R.id.ib_followFrnd);
+            ib_AddFrnd = itemView.findViewById(R.id.ib_AddFrnd);
+            ib_SubMenu = itemView.findViewById(R.id.ib_SubMenu);
+            ll_Group = itemView.findViewById(R.id.ll_Group);
 
-            civ_UserProfilePic =itemView.findViewById(R.id.civ_UserProfilePic);
+            civ_UserProfilePic = itemView.findViewById(R.id.civ_UserProfilePic);
 
 
             FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
             FirebaseUser currentUser = firebaseAuth.getCurrentUser();
             assert currentUser != null;
-            String currUserID=currentUser.getUid();
+            String currUserID = currentUser.getUid();
 /*
             ib_AddFrnd.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -279,15 +340,15 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
                     if (mListener != null) {
                         int position = getAdapterPosition();
                         Class_Student_Details user = mDatalistNew.get(getAdapterPosition());
-                        String memberUserId=user.userId;
-                        String memberUserName=user.userName;
+                        String memberUserId = user.userId;
+                        String memberUserName = user.userName;
 
                         if (!currUserID.equals(memberUserId)) {
                             if (position != RecyclerView.NO_POSITION) {
 //                                String adminUserName=user.userName;
 
 
-                                mListener.MemberProfile(memberUserId,memberUserName);
+                                mListener.MemberProfile(memberUserId, memberUserName);
                                 //mListener.dislikeAns();
                             }
                         } else {
@@ -300,13 +361,13 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
             ib_SubMenu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    PopupMenu popupMenu=new PopupMenu(context,view);
+                    PopupMenu popupMenu = new PopupMenu(context, view);
                     popupMenu.inflate(R.menu.groupmemberdetails);
                     popupMenu.show();
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem menuItem) {
-                            switch(menuItem.getItemId()){
+                            switch (menuItem.getItemId()) {
                                 case R.id.btn_FeesStatus:
 
                                     break;

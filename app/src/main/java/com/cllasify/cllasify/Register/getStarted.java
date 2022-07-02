@@ -254,7 +254,7 @@ public class getStarted extends AppCompatActivity {
                                     refUserRegister.child("userEmailId").setValue(userEmailID);
                                     refUserRegister.child("userId").setValue(userID);
                                     refUserRegister.child("dateTime").setValue(udateTimeCC);
-                                    refUserRegister.child("userStatus").setValue("Online");
+                                    refUserRegister.child("userStatus").setValue("");
                                     refUserRegister.child("token").setValue(token);
                                     refUserRegister.child("profilePic").setValue(userPhoto.toString());
                                 }
