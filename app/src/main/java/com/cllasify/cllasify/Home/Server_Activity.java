@@ -1789,11 +1789,11 @@ public class Server_Activity extends AppCompatActivity {
                                 if (friendStatus.equals("online")) {
                                     friend_online_status.setText("online");
                                 } else if (friendStatus.equals(userID)) {
-
-                                    Log.d("TYPIng", "TYPING");
-
                                     friend_online_status.setText("typing...");
-                                } else {
+                                } else if(friendStatus.equals("")){
+                                    friend_online_status.setText("Offline");
+                                }
+                                else {
                                     SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("hh:mm a");
                                     String dateTimeCC = simpleDateFormatCC.format(Long.parseLong(friendStatus));
                                     friend_online_status.setText("Last seen today at " + dateTimeCC);
