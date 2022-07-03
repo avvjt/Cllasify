@@ -74,7 +74,10 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Timer;
@@ -163,6 +166,39 @@ public class Friend_Chat_Activity extends Fragment {
         TextView friendNameTv = v.findViewById(R.id.tv_friend_name);
 
         chatOption = v.findViewById(R.id.ll_FrndP_btm_send);
+
+        //3 July 2022
+
+        SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("yyyy-MM-dd  hh:mm a");
+        String dateTimeCC = simpleDateFormatCC.format(Long.parseLong("1656837274321"));
+
+        final String stringDate = dateTimeCC;
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date date = null;
+        try {
+            date = inputFormat.parse(stringDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Calendar calendarDate = Calendar.getInstance();
+        calendarDate.setTime(date);
+
+        Calendar midnight = Calendar.getInstance();
+        midnight.set(Calendar.HOUR_OF_DAY, 0);
+        midnight.set(Calendar.MINUTE, 0);
+        midnight.set(Calendar.SECOND, 0);
+        midnight.set(Calendar.MILLISECOND, 0);
+
+        if (calendarDate.compareTo(midnight) >= 0) {
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            Log.d("DATECOMP", "Time format: " + timeFormat.format(date));
+        } else {
+            SimpleDateFormat dateTimeForm = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            Log.d("DATECOMP", "Date format: " + dateTimeForm.format(date));
+
+        }
 
 
         swipe_right.setOnClickListener(new View.OnClickListener() {

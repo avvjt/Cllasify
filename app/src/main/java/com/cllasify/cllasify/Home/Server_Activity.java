@@ -113,10 +113,12 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
@@ -1805,9 +1807,43 @@ public class Server_Activity extends AppCompatActivity {
                                 } else if (friendStatus.equals("")) {
                                     friend_online_status.setText("Offline");
                                 } else {
-                                    SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("hh:mm a");
+
+                                    SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("yyyy-MM-dd  hh:mm a");
                                     String dateTimeCC = simpleDateFormatCC.format(Long.parseLong(friendStatus));
-                                    friend_online_status.setText("Last seen today at " + dateTimeCC);
+
+                                    final String stringDate = dateTimeCC;
+
+                                    SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+                                    Date date = null;
+                                    try {
+                                        date = inputFormat.parse(stringDate);
+
+                                        Calendar calendarDate = Calendar.getInstance();
+                                        calendarDate.setTime(date);
+
+                                        Calendar midnight = Calendar.getInstance();
+                                        midnight.set(Calendar.HOUR_OF_DAY, 0);
+                                        midnight.set(Calendar.MINUTE, 0);
+                                        midnight.set(Calendar.SECOND, 0);
+                                        midnight.set(Calendar.MILLISECOND, 0);
+
+
+                                        if (calendarDate.compareTo(midnight) >= 0) {
+
+                                            DateFormat dateFormat = new SimpleDateFormat("hh:mm aa");
+                                            String dateString = dateFormat.format(Long.parseLong(friendStatus)).toString();
+                                            friend_online_status.setText("Last seen today at " + dateString);
+
+                                        } else {
+                                            SimpleDateFormat dateTimeForm = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                                            Log.d("DATECOMP", "Date format: " + dateTimeForm.format(date));
+                                            friend_online_status.setText("Last seen recently");
+                                        }
+
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+
 
                                 }
                             }
