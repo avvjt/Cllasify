@@ -117,7 +117,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                androidx.appcompat.app.AlertDialog.Builder alertdialogbuilder = new androidx.appcompat.app.AlertDialog.Builder(Server_Setting_Specifics.this , R.style.AlertDialogCustom);
+                androidx.appcompat.app.AlertDialog.Builder alertdialogbuilder = new androidx.appcompat.app.AlertDialog.Builder(Server_Setting_Specifics.this, R.style.AlertDialogCustom);
                 alertdialogbuilder.setTitle("Please confirm !!!")
                         .setMessage("Do you want to delete the Server?")
                         .setCancelable(false)
@@ -127,12 +127,12 @@ public class Server_Setting_Specifics extends AppCompatActivity {
                                 deleteSpecificServer(groupPushId, currUserId);
                             }
                         }).setNegativeButton("No",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        });
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
                 androidx.appcompat.app.AlertDialog alert = alertdialogbuilder.create();
                 alert.show();
 
@@ -233,13 +233,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Server_Setting_Specifics.this,serverImage,"pic_shared");
-                Intent intent = new Intent(Server_Setting_Specifics.this, Server_Settings.class);
-
-                intent.putExtra("currUserId", currUserId);
-                intent.putExtra("groupPushId", groupPushId);
-
-                startActivity(intent, options.toBundle());
+                onBackPressed();
             }
         });
 
@@ -304,11 +298,11 @@ public class Server_Setting_Specifics extends AppCompatActivity {
 
     }
 
-    public void showToast(){
+    public void showToast() {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.toast_server_dp,  (ViewGroup) findViewById(R.id.toast));
+        View layout = inflater.inflate(R.layout.toast_server_dp, (ViewGroup) findViewById(R.id.toast));
         Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.BOTTOM,0,100);
+        toast.setGravity(Gravity.BOTTOM, 0, 100);
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();

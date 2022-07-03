@@ -73,11 +73,6 @@ public class Server_Settings extends AppCompatActivity {
 
     TextView studentCount, teacherCount;
 
-    @Override
-    public void onBackPressed() {
-        finishAfterTransition();
-    }
-
     public void checkDarkLightDefaultStatusBar() {
         switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
 
@@ -139,7 +134,7 @@ public class Server_Settings extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                onBackPressed();
             }
         });
 

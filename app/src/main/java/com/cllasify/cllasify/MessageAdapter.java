@@ -38,6 +38,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -185,10 +186,42 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             userID = currentUser.getUid();
 
             if (chat != null) {
+
+
+                Class_Group class_GroupDetails = chat.get(position);
+
+                String reqUserID = class_GroupDetails.position;
+
                 if (holder.tv_pdfName != null) {
                     holder.tv_pdfName.setText(chat.get(pos).getDoc_Name());
                 }
+
                 if (holder.pdf_file != null) {
+
+                    if (holder.rec_pdf_profPic != null) {
+                        holder.rec_pdf_profPic.setVisibility(View.VISIBLE);
+
+
+                        DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(reqUserID);
+                        refUserProfPic.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.child("profilePic").exists()) {
+                                    String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                                    Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
+                                    Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.rec_pdf_profPic);
+                                }
+//                            else {
+//                                Glide.with(context.getApplicationContext()).load(R.drawable.maharaji).into(holder.rec_pdf_profPic);
+//                            }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
 
                     holder.pdf_file.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
@@ -205,20 +238,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                         }
                     });
 
-
-                    if (chat.get(position).getPosition().equals(userID)) {
-
-                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.pdf_file.getLayoutParams();
-                        params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
-
-                        holder.pdf_file.setLayoutParams(params);
-                    } else {
-                        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) holder.pdf_file.getLayoutParams();
-                        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-
-                        holder.pdf_file.setLayoutParams(params);
-                    }
                 }
+
 
                 if (holder.show_message != null) {
 
@@ -240,25 +261,17 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                             }
                         }
 
-                        Log.d("ISREPO", "onBindViewHolder: YES"+chat.get(pos).getGroupSubGroupComb().trim().equals("This message is reported"));
+                        Log.d("ISREPO", "onBindViewHolder: YES" + chat.get(pos).getGroupSubGroupComb().trim().equals("This message is reported"));
 
 
-                        if (chat.get(pos).getGroupSubGroupComb().trim().equals("This message is reported")) {
 
-
-                            holder.show_message.setTypeface(null, Typeface.ITALIC);
-
-                            holder.show_message.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-                            holder.show_message.getPaint().setMaskFilter(null);
-                        } else {
-                            Log.d(TAG, "onBindViewHolder: ");
-                        }
                         if ((ru.length >= 3 && ru.length < 5) || isUser == true) {
                             if (chat.get(pos).getGroupSubGroupComb().trim().equals("This message is reported")) {
 
                                 Log.d("ISREPO", "onBindViewHolder: YES 1");
 
-                                holder.show_message.setTypeface(null, Typeface.ITALIC);
+                                Typeface typeface = ResourcesCompat.getFont(context, R.font.inter_bold_italic);
+                                holder.show_message.setTypeface(typeface);
 
                                 holder.show_message.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
                                 holder.show_message.getPaint().setMaskFilter(null);
@@ -268,6 +281,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                                     public void onClick(View view) {
                                         holder.show_message.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
                                         holder.show_message.getPaint().setMaskFilter(null);
+                                        Typeface typeface = ResourcesCompat.getFont(context, R.font.inter_regular);
+                                        holder.show_message.setTypeface(typeface);
+
                                     }
                                 });
                                 if (Build.VERSION.SDK_INT >= 11) {
@@ -282,6 +298,24 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                         } else {
                             holder.show_message.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
                             holder.show_message.getPaint().setMaskFilter(null);
+
+                            if (chat.get(pos).getGroupSubGroupComb().trim().equals("This message is reported")) {
+
+
+
+                                Typeface typeface = ResourcesCompat.getFont(context, R.font.inter_bold_italic);
+                                holder.show_message.setTypeface(typeface);
+
+                                holder.show_message.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+                                holder.show_message.getPaint().setMaskFilter(null);
+                            } else {
+                                Log.d(TAG, "onBindViewHolder: ");
+
+
+                                Typeface typeface = ResourcesCompat.getFont(context, R.font.inter_regular);
+                                holder.show_message.setTypeface(typeface);
+
+                            }
                         }
                     }
 
@@ -382,6 +416,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         CircleImageView prof_pics_chat_doubt, download_btn;
         TextView tv_UserName, tv_topicTitle, tv_AnswerCount, tv_pdfName;
         CardView pdf_file;
+        CircleImageView rec_pdf_profPic;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
@@ -394,6 +429,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             pdf_file = itemView.findViewById(R.id.pdf_file);
             ll_Doubt = itemView.findViewById(R.id.ll_Doubt);
             download_btn = itemView.findViewById(R.id.download_btn);
+            rec_pdf_profPic = itemView.findViewById(R.id.prof_pic_pdf);
 
 
             if (show_message != null) {

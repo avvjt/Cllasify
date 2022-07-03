@@ -2,15 +2,18 @@ package com.cllasify.cllasify;
 
 public class Class_Single_Friend {
 
-    String messageIdSender,messageIdReceiver,message, senderId;
+    String messageIdSender, messageIdReceiver, message, senderId, msgCategory, pdfUrl;
     long timestamp;
 
-    public Class_Single_Friend(String messageIdSender, String messageIdReceiver, String message, String senderId, long timestamp) {
+
+    public Class_Single_Friend(String messageIdSender, String messageIdReceiver, String message, String senderId, long timestamp, String msgCategory, String pdfUrl) {
         this.messageIdSender = messageIdSender;
         this.messageIdReceiver = messageIdReceiver;
         this.message = message;
         this.senderId = senderId;
         this.timestamp = timestamp;
+        this.msgCategory = msgCategory;
+        this.pdfUrl = pdfUrl;
     }
 
     public Class_Single_Friend(String message, String senderId, long timestamp) {
@@ -22,6 +25,21 @@ public class Class_Single_Friend {
     public Class_Single_Friend() {
     }
 
+    public String getPdfUrl() {
+        return pdfUrl;
+    }
+
+    public void setPdfUrl(String pdfUrl) {
+        this.pdfUrl = pdfUrl;
+    }
+
+    public String getMsgCategory() {
+        return msgCategory;
+    }
+
+    public void setMsgCategory(String msgCategory) {
+        this.msgCategory = msgCategory;
+    }
 
     public String getMessageIdSender() {
         return messageIdSender;

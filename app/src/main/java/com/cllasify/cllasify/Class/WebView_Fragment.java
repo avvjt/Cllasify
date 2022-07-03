@@ -28,6 +28,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cllasify.cllasify.Friend_Chat_Activity;
 import com.cllasify.cllasify.R;
 
 import java.io.UnsupportedEncodingException;
@@ -61,6 +62,7 @@ public class WebView_Fragment extends Fragment implements DownloadFile.Listener 
     private TextView totalPageNumber, currentPage, docName;
 
     ImageButton back_btn, btn_download;
+    private Friend_Chat_Activity friendChatFragment;
 
     public int getTotalPage() {
         return totalPage;
@@ -92,8 +94,29 @@ public class WebView_Fragment extends Fragment implements DownloadFile.Listener 
 
         docName.setText(documentName);
 
-        back_btn.setOnClickListener(view1 -> getActivity().onBackPressed());
+        String friendName = getArguments().getString("name");
+        String receiverUid = getArguments().getString("receiverUid");
 
+        String type = getArguments().getString("type");
+
+        if (type.equals("activity")) {
+            back_btn.setOnClickListener(view1 -> getActivity().onBackPressed());
+        } else {
+
+            back_btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    friendChatFragment = new Friend_Chat_Activity();
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.below_toolbar, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("name", friendName);
+                    bundle.putString("receiverUid", receiverUid);
+                    friendChatFragment.setArguments(bundle);
+                }
+            });
+        }
         btn_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -73,6 +73,7 @@ import com.cllasify.cllasify.Constant;
 import com.cllasify.cllasify.Friend_Chat_Activity;
 import com.cllasify.cllasify.FriendsListClass;
 import com.cllasify.cllasify.MessageAdapter;
+import com.cllasify.cllasify.PDFBACK.OnBackPressedListener;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Register.getStarted;
 import com.cllasify.cllasify.Server.Attendance_Activity;
@@ -230,6 +231,12 @@ public class Server_Activity extends AppCompatActivity {
     boolean flagFriend = false;
     boolean pdf_flag = false;
     private Uri fileUri;
+
+    protected OnBackPressedListener onBackPressedListener;
+
+    public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
+        this.onBackPressedListener = onBackPressedListener;
+    }
 
     void init() {
 
@@ -588,6 +595,7 @@ public class Server_Activity extends AppCompatActivity {
                     Bundle bundle = new Bundle();
                     bundle.putString("path", path);
                     bundle.putString("docName", doc_name);
+                    bundle.putString("type", "activity");
                     webView_fragment.setArguments(bundle);
                     getFragmentManager().getBackStackEntryCount();
                     transaction.replace(R.id.below_toolbar, webView_fragment, "FirstFragment");
@@ -1656,9 +1664,13 @@ public class Server_Activity extends AppCompatActivity {
 
                     if (c.trim().isEmpty()) {
                         ib_doubtSubmit.setVisibility(View.VISIBLE);
+                        ib_pdf_btn.setVisibility(View.VISIBLE);
+
                         ib_csubmit.setVisibility(View.GONE);
                     } else {
                         ib_doubtSubmit.setVisibility(View.GONE);
+                        ib_pdf_btn.setVisibility(View.GONE);
+
                         ib_csubmit.setVisibility(View.VISIBLE);
                     }
                 }
@@ -1790,10 +1802,9 @@ public class Server_Activity extends AppCompatActivity {
                                     friend_online_status.setText("online");
                                 } else if (friendStatus.equals(userID)) {
                                     friend_online_status.setText("typing...");
-                                } else if(friendStatus.equals("")){
+                                } else if (friendStatus.equals("")) {
                                     friend_online_status.setText("Offline");
-                                }
-                                else {
+                                } else {
                                     SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("hh:mm a");
                                     String dateTimeCC = simpleDateFormatCC.format(Long.parseLong(friendStatus));
                                     friend_online_status.setText("Last seen today at " + dateTimeCC);
@@ -1839,11 +1850,15 @@ public class Server_Activity extends AppCompatActivity {
                                     friendNameTv.setText(userName);
                                 }
                                 if (snapshot.child("profilePic").exists()) {
-                                    String profilePicUrl = snapshot.child("profilePic").getValue().toString();
-                                    Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
-                                    Glide.with(Server_Activity.this).load(profilePicUrl).into(friendImg);
+                                    if (!(Server_Activity.this).isFinishing()) {
+                                        String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                                        Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
+                                        Glide.with(Server_Activity.this).load(profilePicUrl).into(friendImg);
+                                    }
                                 } else {
-                                    Glide.with(Server_Activity.this).load(R.drawable.maharaji).into(friendImg);
+                                    if (!(Server_Activity.this).isFinishing()) {
+                                        Glide.with(Server_Activity.this).load(R.drawable.maharaji).into(friendImg);
+                                    }
                                 }
                             }
 
@@ -2315,6 +2330,12 @@ public class Server_Activity extends AppCompatActivity {
                     flagFriend = false;
                 }
 
+                friendToolBar.setVisibility(View.GONE);
+                textViewSubjectName.setVisibility(View.VISIBLE);
+
+                if (friendChatFragment != null) {
+                    getSupportFragmentManager().beginTransaction().remove(friendChatFragment).commit();
+                }
                 tv_GroupMember.setVisibility(View.VISIBLE);
                 adminListText.setVisibility(View.VISIBLE);
                 rv_GrpTeacherList.setVisibility(View.VISIBLE);
@@ -2785,7 +2806,46 @@ public class Server_Activity extends AppCompatActivity {
 
                 btmSheetUserProfile.dismiss();
 
-//                ll_AddJoinGrp.setVisibility(View.GONE);
+                DatabaseReference setTempData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+                setTempData.child("friendName").setValue(memberUserName);
+                setTempData.child("friendUserId").setValue(memberUserId);
+
+                TextView friendNameTv = findViewById(R.id.tv_friend_name);
+                friendNameTv.setText(memberUserName);
+
+                CircleImageView friendImg = findViewById(R.id.friendImg);
+
+                DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(memberUserId);
+                refUserProfPic.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.child("Name").exists()) {
+                            String userName = snapshot.child("Name").getValue().toString();
+                            friendNameTv.setText(userName);
+                        }
+                        if (snapshot.child("profilePic").exists()) {
+                            if (!(Server_Activity.this).isFinishing()) {
+                                String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                                Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
+                                Glide.with(Server_Activity.this).load(profilePicUrl).into(friendImg);
+                            }
+                        } else {
+                            if (!(Server_Activity.this).isFinishing()) {
+                                Glide.with(Server_Activity.this).load(R.drawable.maharaji).into(friendImg);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                friendToolBar.setVisibility(View.VISIBLE);
+                textViewSubjectName.setVisibility(View.GONE);
+
+
                 overlappingPanels.closePanels();
                 if (flagFriend == false) {
 
@@ -3272,6 +3332,8 @@ public class Server_Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
+        Toast.makeText(this, "BACK", Toast.LENGTH_SHORT).show();
+
         if (flag == true) {
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
@@ -3292,7 +3354,14 @@ public class Server_Activity extends AppCompatActivity {
             } else {
                 Server_Activity.this.finish();
             }
+            if (onBackPressedListener != null) {
+                onBackPressedListener.doBack();
+            } else {
+                super.onBackPressed();
+            }
         }
+
+
     }
 
 }
