@@ -215,8 +215,6 @@ public class Friend_Chat_Activity extends Fragment {
             }
         });
 
-        ib_FrndP_csubmit.setEnabled(false);
-
         ib_pdf_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

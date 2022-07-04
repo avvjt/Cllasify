@@ -118,7 +118,7 @@ public class ProfileSetting_Activity extends AppCompatActivity {
 
         root = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
 //        DatabaseReference root=FirebaseDatabase.getInstance().getReference().child("Users").child(userID);
-        storageReference = FirebaseStorage.getInstance().getReference().child(userID);
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         progBar = findViewById(R.id.progBar);
 

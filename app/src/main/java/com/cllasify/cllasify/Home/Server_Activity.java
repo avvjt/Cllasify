@@ -665,8 +665,21 @@ public class Server_Activity extends AppCompatActivity {
     }
 
     private void checkOnlineStatus(String status) {
-        DatabaseReference setStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID).child("userStatus");
-        setStatus.setValue(status);
+        DatabaseReference setStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+        setStatus.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("userStatus").exists()) {
+                    setStatus.child("userStatus").setValue(status);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
 
@@ -3310,7 +3323,7 @@ public class Server_Activity extends AppCompatActivity {
                         refUserRegister.child("UserId").setValue(userID);
                         refUserRegister.child("DateTime").setValue(updateTimeCC);
                         refUserRegister.child("Category").setValue("Student");
-                        refUserRegister.child("userStatus").setValue("Online");
+                        refUserRegister.child("userStatus").setValue("");
                         refUserRegister.child("token").setValue(token);
                         Toast.makeText(Server_Activity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     }
