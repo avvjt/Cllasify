@@ -1052,15 +1052,16 @@ public class Discover_Activity extends AppCompatActivity {
                     case R.id.bottom_nav_home:
 //                        fragment = new HomeFragment();
 //                        tag = "home";
-                        startActivity(new Intent(Discover_Activity.this, Server_Activity.class));
-                        Discover_Activity.this.overridePendingTransition(0, 0);
+                        Intent intent = new Intent(Discover_Activity.this, Server_Activity.class);
+                        intent.putExtra("panelState", "close");
+                        startActivity(intent);
 
                         break;
                     case R.id.bottom_nav_discover:
 //                          fragment = new FeedFragment();
 //                        fragment = new JoinGroupFragment();
 //                        tag = "joingroup";
-                        startActivity(new Intent(Discover_Activity.this,Discover_Activity.class));
+//                        startActivity(new Intent(Discover_Activity.this,Discover_Activity.class));
                         Discover_Activity.this.overridePendingTransition(0, 0);
 
                         break;

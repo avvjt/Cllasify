@@ -21,6 +21,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.OpenableColumns;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -48,6 +49,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -64,6 +66,7 @@ import com.cllasify.cllasify.Adaptor.Adaptor_FriendsList;
 import com.cllasify.cllasify.Adaptor.Adaptor_QueryGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGroup;
 import com.cllasify.cllasify.Adaptor.Adaptor_ShowGrpMember;
+import com.cllasify.cllasify.BlankFragment;
 import com.cllasify.cllasify.Class.Blur_Report;
 import com.cllasify.cllasify.Class.Class_Group;
 import com.cllasify.cllasify.Class.WebView_Fragment;
@@ -122,6 +125,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -1562,6 +1567,21 @@ public class Server_Activity extends AppCompatActivity {
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_server);
 
+        RelativeLayout splashScreen = findViewById(R.id.splash);
+
+        int color = R.color.transparent;
+
+        if (getIntent().hasExtra("panelState")) {
+            splashScreen.setForeground(new ColorDrawable(ContextCompat.getColor(Server_Activity.this, color)));
+        }
+        if (getIntent().hasExtra("splash")) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    splashScreen.setForeground(new ColorDrawable(ContextCompat.getColor(Server_Activity.this, color)));
+                }
+            }, 2500);
+        }
         broadcastReceiver = new NetworkBroadcast();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
@@ -1595,6 +1615,7 @@ public class Server_Activity extends AppCompatActivity {
             });
 
             init();
+
 
             ib_pdf_btn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1902,11 +1923,11 @@ public class Server_Activity extends AppCompatActivity {
                                     if (!(Server_Activity.this).isFinishing()) {
                                         String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                                         Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
-                                        Glide.with(Server_Activity.this).load(profilePicUrl).into(friendImg);
+                                        Glide.with(getApplicationContext()).load(profilePicUrl).into(friendImg);
                                     }
                                 } else {
                                     if (!(Server_Activity.this).isFinishing()) {
-                                        Glide.with(Server_Activity.this).load(R.drawable.maharaji).into(friendImg);
+                                        Glide.with(getApplicationContext()).load(R.drawable.maharaji).into(friendImg);
                                     }
                                 }
                             }
@@ -1931,9 +1952,13 @@ public class Server_Activity extends AppCompatActivity {
                             Log.d("JOINEDGRP", "onDataChange: " + dataSnapshot1.getKey());
                             String chkUserID = dataSnapshot1.getKey();
                             if (chkUserID.equals(userID)) {
-//                                ll_AddJoinGrp.setVisibility(View.GONE);
-                                if (getIntent().hasExtra("notOpen")) {
-                                    Log.d("JOINEDGRP", "onDataChange: No panel");
+                                if (getIntent().hasExtra("panelState")) {
+                                    Toast.makeText(Server_Activity.this, "" + getIntent().getStringExtra("panelState"), Toast.LENGTH_SHORT).show();
+
+                                    if (getIntent().getStringExtra("panelState").equals("close")) {
+                                        Log.d("JOINEDGRP", "onDataChange: No panel");
+                                        overlappingPanels.closePanels();
+                                    }
                                 } else {
                                     overlappingPanels.openStartPanel();
                                 }
@@ -1952,17 +1977,16 @@ public class Server_Activity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getChildrenCount() > 0) {
-//                        ll_AddJoinGrp.setVisibility(View.GONE);
-                        if (getIntent().hasExtra("notOpen")) {
-                            Log.d("JOINEDGRP", "onDataChange: No panel");
+                        if (getIntent().hasExtra("panelState")) {
+                            Toast.makeText(Server_Activity.this, "" + getIntent().getStringExtra("panelState"), Toast.LENGTH_SHORT).show();
+                            if (getIntent().getStringExtra("panelState").equals("close")) {
+                                Log.d("JOINEDGRP", "onDataChange: No panel");
+                                overlappingPanels.closePanels();
+                            }
                         } else {
                             overlappingPanels.openStartPanel();
                         }
 
-                    }
-                    if (snapshot.getChildrenCount() < 0) {
-//                        Toast.makeText(Server_Activity.this, "Please create Group using left swipe", Toast.LENGTH_SHORT).show();
-//                        ll_AddJoinGrp.setVisibility(View.VISIBLE);
                     }
                 }
 
@@ -3344,9 +3368,13 @@ public class Server_Activity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.bottom_nav_home:
-                        startActivity(new Intent(Server_Activity.this, Server_Activity.class));
+                        overlappingPanels.closePanels();
+                        /*
+                        Intent intent = new Intent(Server_Activity.this, Server_Activity.class);
+                        intent.putExtra("panelState", "close");
+                        startActivity(intent);
                         Server_Activity.this.overridePendingTransition(0, 0);
-
+*/
                         break;
                     case R.id.bottom_nav_discover:
 

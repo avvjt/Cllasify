@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/splash"
+    android:foreground="@drawable/splash_screen"
     tools:context=".Home.Server_Activity">
 
     <!--swipeRefreshLayout we don't need as of now-->
@@ -52,13 +54,13 @@
                         android:id="@+id/ib_FrndsList"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:background="@drawable/round_icon_background"
-                        android:elevation="2dp"
-                        android:layout_marginTop="10dp"
                         android:layout_marginStart="2dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/round_icon_background"
+                        android:contentDescription="@string/servers_contentDescription"
+                        android:elevation="2dp"
                         android:scaleType="center"
-                        android:src="@drawable/ic_baseline_message_24"
-                        android:contentDescription="@string/servers_contentDescription" />
+                        android:src="@drawable/ic_baseline_message_24" />
 
                 </RelativeLayout>
 
@@ -68,6 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:layout_marginTop="20dp"
                     android:layout_toEndOf="@+id/cardRecChatIMG"
                     android:ellipsize="end"
                     android:fontFamily="@font/inter_semibold"
@@ -75,7 +78,6 @@
                     android:paddingStart="30dp"
                     android:paddingEnd="10dp"
                     android:paddingBottom="10dp"
-                    android:layout_marginTop="20dp"
                     android:textAlignment="textStart"
                     android:textColor="@color/text_color"
                     android:textSize="16sp" />
@@ -132,14 +134,14 @@
                         android:id="@+id/addNewTopicButton"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
-                        android:padding="3dp"
-                        android:background="@drawable/round_icon_background"
-                        android:elevation="2dp"
-                        android:layout_marginTop="10dp"
                         android:layout_marginStart="2dp"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/round_icon_background"
+                        android:contentDescription="@string/servers_contentDescription"
+                        android:elevation="2dp"
+                        android:padding="3dp"
                         android:scaleType="center"
-                        android:src="@drawable/ic_plus_16"
-                        android:contentDescription="@string/servers_contentDescription" />
+                        android:src="@drawable/ic_plus_16" />
 
                 </LinearLayout>
 
@@ -148,17 +150,17 @@
                     android:id="@+id/friendsSection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingEnd="15dp"
+                    android:layout_toEndOf="@+id/groupRVs"
                     android:paddingStart="1dp"
-                    android:layout_toEndOf="@+id/groupRVs">
+                    android:paddingEnd="15dp">
 
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerViewFriendsNameList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:elevation="5dp"
-                        android:layout_marginBottom="32dp"/>
+                        android:layout_marginBottom="32dp"
+                        android:elevation="5dp" />
 
 
                 </LinearLayout>
@@ -176,7 +178,7 @@
                         android:id="@+id/recyclerViewClassList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="32dp"/>
+                        android:layout_marginBottom="32dp" />
 
                 </LinearLayout>
 
@@ -265,9 +267,9 @@
                             android:layout_alignParentStart="true"
                             android:layout_gravity="center"
                             android:layout_marginStart="10dp"
+                            android:contentDescription="@string/servers_contentDescription"
                             android:src="@drawable/ic_swipe_menux"
-                            app:tint="@color/iconSecondaryColor"
-                            android:contentDescription="@string/servers_contentDescription" />
+                            app:tint="@color/iconSecondaryColor" />
 
                         <TextView
                             android:id="@+id/subjectName"
@@ -286,8 +288,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentTop="true"
-                            android:visibility="gone"
-                            android:layout_marginTop="2dp">
+                            android:layout_marginTop="2dp"
+                            android:visibility="gone">
 
                             <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/friendImg"
@@ -305,8 +307,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_centerInParent="true"
                                 android:layout_marginStart="10dp"
-                                android:orientation="vertical"
-                                android:layout_toEndOf="@+id/friendImg">
+                                android:layout_toEndOf="@+id/friendImg"
+                                android:orientation="vertical">
 
                                 <TextView
                                     android:id="@+id/tv_friend_name"
@@ -331,7 +333,6 @@
                             </LinearLayout>
 
 
-
                         </RelativeLayout>
 
                         <ImageButton
@@ -343,9 +344,9 @@
                             android:layout_gravity="center"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
+                            android:contentDescription="@string/servers_contentDescription"
                             android:src="@drawable/ic_swipe_menu"
-                            app:tint="@color/iconSecondaryColor"
-                            android:contentDescription="@string/servers_contentDescription" />
+                            app:tint="@color/iconSecondaryColor" />
                     </RelativeLayout>
 
 
@@ -358,100 +359,99 @@
 
                     <RelativeLayout
                         android:id="@+id/below_toolbar"
-                        android:layout_below="@id/action_bar"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content">
-
-
-
-                    <!--Chat showing RecyclerView-->
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_ChatDashboard"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:layout_above="@+id/ll_bottom_send"
-                        android:paddingStart="10dp"
-                        android:paddingEnd="1dp" />
-
-                    <!--Chat box sending message layout-->
-                    <LinearLayout
-                        android:id="@+id/ll_bottom_send"
-                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginStart="15dp"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
+                        android:layout_below="@id/action_bar">
 
-                        <EditText
-                            android:id="@+id/et_ctext"
-                            android:layout_width="0dp"
-                            android:layout_weight="2"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginTop="8dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="8dp"
-                            android:layout_toStartOf="@+id/sendDoubt"
-                            android:background="@drawable/chat_input_background"
-                            android:focusable="true"
-                            android:hint="@string/hint_server_edittext"
-                            android:imeOptions="actionDone"
-                            android:importantForAutofill="no"
-                            android:inputType="textCapSentences|textMultiLine"
-                            android:maxHeight="140dp"
-                            android:paddingStart="30dp"
-                            android:paddingTop="10dp"
-                            android:paddingEnd="30dp"
-                            android:paddingBottom="10dp"
-                            android:textColor="@color/text_color"
-                            android:textColorHint="@color/text_background_color"
-                            android:textCursorDrawable="@drawable/cursor_color" />
 
-                        <RelativeLayout
-                            android:id="@+id/sendDoubt"
-                            style="@style/SelectableItemBackgroundBorderless"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
+                        <!--Chat showing RecyclerView-->
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_ChatDashboard"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_above="@+id/ll_bottom_send"
                             android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginEnd="10dp">
+                            android:paddingStart="10dp"
+                            android:paddingEnd="1dp" />
 
-                            <ImageButton
-                                android:id="@+id/ib_pdf_btn"
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
-                                android:background="@color/transparent"
-                                android:contentDescription="@string/servers_contentDescription"
-                                android:elevation="2dp"
-                                android:src="@drawable/pdf_pic" />
+                        <!--Chat box sending message layout-->
+                        <LinearLayout
+                            android:id="@+id/ll_bottom_send"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginStart="15dp"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
-                            <ImageButton
-                                android:id="@+id/ib_doubtSubmit"
-                                android:layout_width="35dp"
-                                android:layout_height="35dp"
-                                android:background="@color/transparent"
-                                android:layout_toEndOf="@+id/ib_pdf_btn"
-                                android:contentDescription="@string/servers_contentDescription"
-                                android:elevation="2dp"
-                                android:src="@drawable/ic_question_24" />
+                            <EditText
+                                android:id="@+id/et_ctext"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_toStartOf="@+id/sendDoubt"
+                                android:layout_weight="2"
+                                android:background="@drawable/chat_input_background"
+                                android:focusable="true"
+                                android:hint="@string/hint_server_edittext"
+                                android:imeOptions="actionDone"
+                                android:importantForAutofill="no"
+                                android:inputType="textCapSentences|textMultiLine"
+                                android:maxHeight="140dp"
+                                android:paddingStart="30dp"
+                                android:paddingTop="10dp"
+                                android:paddingEnd="30dp"
+                                android:paddingBottom="10dp"
+                                android:textColor="@color/text_color"
+                                android:textColorHint="@color/text_background_color"
+                                android:textCursorDrawable="@drawable/cursor_color" />
 
-                            <ImageButton
-                                android:id="@+id/ib_csubmit"
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:background="@color/transparent"
-                                android:elevation="2dp"
-                                android:src="@drawable/ic_send_24"
-                                android:visibility="gone"
-                                android:contentDescription="@string/servers_contentDescription" />
+                            <RelativeLayout
+                                android:id="@+id/sendDoubt"
+                                style="@style/SelectableItemBackgroundBorderless"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginBottom="10dp">
 
-                        </RelativeLayout>
+                                <ImageButton
+                                    android:id="@+id/ib_pdf_btn"
+                                    android:layout_width="35dp"
+                                    android:layout_height="35dp"
+                                    android:background="@color/transparent"
+                                    android:contentDescription="@string/servers_contentDescription"
+                                    android:elevation="2dp"
+                                    android:src="@drawable/pdf_pic" />
 
-                    </LinearLayout>
+                                <ImageButton
+                                    android:id="@+id/ib_doubtSubmit"
+                                    android:layout_width="35dp"
+                                    android:layout_height="35dp"
+                                    android:layout_toEndOf="@+id/ib_pdf_btn"
+                                    android:background="@color/transparent"
+                                    android:contentDescription="@string/servers_contentDescription"
+                                    android:elevation="2dp"
+                                    android:src="@drawable/ic_question_24" />
+
+                                <ImageButton
+                                    android:id="@+id/ib_csubmit"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:background="@color/transparent"
+                                    android:contentDescription="@string/servers_contentDescription"
+                                    android:elevation="2dp"
+                                    android:src="@drawable/ic_send_24"
+                                    android:visibility="gone" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
 
                     </RelativeLayout>
 
@@ -517,10 +517,10 @@
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:background="@drawable/background_server_setting"
+                                android:contentDescription="@string/servers_contentDescription"
                                 android:padding="7dp"
                                 android:src="@drawable/ic_settings_24"
-                                app:tint="@color/white_constant"
-                                android:contentDescription="@string/servers_contentDescription" />
+                                app:tint="@color/white_constant" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -547,10 +547,10 @@
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:background="@drawable/backgroud_attendances"
+                                android:contentDescription="@string/servers_contentDescription"
                                 android:padding="7dp"
                                 android:src="@drawable/ic_edit"
-                                app:tint="@color/white_constant"
-                                android:contentDescription="@string/servers_contentDescription" />
+                                app:tint="@color/white_constant" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -577,10 +577,10 @@
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
                                 android:background="@drawable/backgroud_notification"
+                                android:contentDescription="@string/servers_contentDescription"
                                 android:padding="7dp"
                                 android:src="@drawable/ic_menu_notifications"
-                                app:tint="@color/white_constant"
-                                android:contentDescription="@string/servers_contentDescription" />
+                                app:tint="@color/white_constant" />
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -627,10 +627,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="20dp"
+                            android:layoutAnimation="@anim/layout_fall_down"
                             android:nestedScrollingEnabled="false"
                             android:visibility="gone"
-                            app:fastScrollEnabled="false"
-                            android:layoutAnimation="@anim/layout_fall_down"/>
+                            app:fastScrollEnabled="false" />
 
                     </LinearLayout>
 
@@ -660,9 +660,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="20dp"
+                            android:layoutAnimation="@anim/layout_fall_down"
                             android:nestedScrollingEnabled="false"
-                            app:fastScrollEnabled="false"
-                            android:layoutAnimation="@anim/layout_fall_down"/>
+                            app:fastScrollEnabled="false" />
 
                     </LinearLayout>
 
@@ -697,9 +697,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="20dp"
+                            android:layoutAnimation="@anim/layout_fall_down"
                             android:nestedScrollingEnabled="false"
-                            app:fastScrollEnabled="false"
-                            android:layoutAnimation="@anim/layout_fall_down"/>
+                            app:fastScrollEnabled="false" />
 
                     </LinearLayout>
 
@@ -707,7 +707,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone" >
+                        android:visibility="gone">
 
                         <Button
                             android:id="@+id/btn_lteachexam"
@@ -716,7 +716,7 @@
                             android:fontFamily="@font/inter_semibold"
                             android:text="@string/exam"
                             android:textColor="@color/text_color"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                         <Button
                             android:id="@+id/btn_lteachresult"
@@ -725,7 +725,7 @@
                             android:fontFamily="@font/inter_semibold"
                             android:text="@string/result"
                             android:textColor="@color/text_color"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
 
                     </RelativeLayout>

@@ -269,6 +269,7 @@ public class getStarted extends AppCompatActivity {
                         showToast();
 
                         Intent intent = new Intent(getStarted.this, Server_Activity.class);
+                        intent.putExtra("splash", "stop");
                         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
                     }
@@ -293,6 +294,7 @@ public class getStarted extends AppCompatActivity {
         if (user != null) {
 
             Intent intent = new Intent(getStarted.this, Server_Activity.class);
+            intent.putExtra("splash", "stop");
             intent.putExtra("Check", "appRestart");
             startActivity(intent);
             getStarted.this.overridePendingTransition(0, 0);

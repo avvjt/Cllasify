@@ -91,7 +91,7 @@ public class Profile_Activity extends AppCompatActivity {
                 break;
 
             case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 // edited here
                 getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
 
@@ -109,7 +109,6 @@ public class Profile_Activity extends AppCompatActivity {
 
         broadcastReceiver = new NetworkBroadcast();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-
 
 
         AdManagerAdRequest adRequest = new AdManagerAdRequest.Builder().build();
@@ -173,7 +172,6 @@ public class Profile_Activity extends AppCompatActivity {
             ll_UserName = findViewById(R.id.ll_UserName);
 
 
-
             tv_CountFollowers = findViewById(R.id.tv_CountFollowers);
             tv_CountFollowing = findViewById(R.id.tv_CountFollowing);
 
@@ -186,8 +184,8 @@ public class Profile_Activity extends AppCompatActivity {
                 public void onClick(View view) {
 
                     Pair[] pair = new Pair[2];
-                    pair[0] = new Pair<View,String>(prof_pic , "pic_shared");
-                    pair[1] = new Pair<View,String>(tv_Name , "name_shared");
+                    pair[0] = new Pair<View, String>(prof_pic, "pic_shared");
+                    pair[1] = new Pair<View, String>(tv_Name, "name_shared");
                     ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Profile_Activity.this, pair);
 
                     Intent i = new Intent(Profile_Activity.this, AccountSetting_Activity.class);
@@ -218,7 +216,7 @@ public class Profile_Activity extends AppCompatActivity {
             refUserName.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.child("Name").exists()){
+                    if (snapshot.child("Name").exists()) {
                         tv_Name.setText(snapshot.child("Name").getValue().toString());
                     }
                 }
@@ -252,9 +250,9 @@ public class Profile_Activity extends AppCompatActivity {
                 if (snapshot.getChildrenCount() > 0) {
                     if (snapshot.child("Bio").exists()) {
                         String bio = snapshot.child("Bio").getValue().toString();
-                        if(bio.isEmpty()){
+                        if (bio.isEmpty()) {
                             ll_bio.setVisibility(View.GONE);
-                        }else{
+                        } else {
                             ll_bio.setVisibility(View.VISIBLE);
                             tv_UserBio.setText(bio);
                         }
@@ -266,9 +264,9 @@ public class Profile_Activity extends AppCompatActivity {
 
                     if (snapshot.child("Insitution").exists()) {
                         String insitution = snapshot.child("Insitution").getValue().toString();
-                        if(insitution.isEmpty()){
+                        if (insitution.isEmpty()) {
                             ll_Institution.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             ll_Institution.setVisibility(View.VISIBLE);
                             tv_UserInstitute.setText(insitution);
                         }
@@ -291,10 +289,9 @@ public class Profile_Activity extends AppCompatActivity {
                     }
                     if (snapshot.child("Location").exists()) {
                         String Location = snapshot.child("Location").getValue().toString();
-                        if(Location.isEmpty()){
+                        if (Location.isEmpty()) {
                             ll_location.setVisibility(View.GONE);
-                        }
-                        else {
+                        } else {
                             ll_location.setVisibility(View.VISIBLE);
                             tv_UserLocation.setText(Location);
                         }
@@ -303,12 +300,12 @@ public class Profile_Activity extends AppCompatActivity {
                         ll_location.setVisibility(View.GONE);
 
                     }
-                    if (snapshot.child("profilePic").exists()){
-                        String profilePic=snapshot.child("profilePic").getValue().toString();
+                    if (snapshot.child("profilePic").exists()) {
+                        String profilePic = snapshot.child("profilePic").getValue().toString();
                         if (!(Profile_Activity.this).isFinishing()) {
                             Glide.with(getApplicationContext()).load(profilePic).into(prof_pic);
                         }
-                    }else{
+                    } else {
                         if (!(Profile_Activity.this).isFinishing()) {
                             Glide.with(getApplicationContext()).load(R.drawable.maharaji).into(prof_pic);
                         }
@@ -328,11 +325,10 @@ public class Profile_Activity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.getChildrenCount() > 0) {
                     long count = snapshot.getChildrenCount();
-                    if(count < 2) {
+                    if (count < 2) {
                         tv_CountFollowers.setText(" Following - " + (int) count);
-                    }
-                    else{
-                        tv_CountFollowers.setText( " Following - " + (int) count);
+                    } else {
+                        tv_CountFollowers.setText(" Following - " + (int) count);
                     }
                     notifyPB.dismiss();
                 } else {
@@ -376,8 +372,9 @@ public class Profile_Activity extends AppCompatActivity {
 
                 switch (item.getItemId()) {
                     case R.id.bottom_nav_home:
-                        startActivity(new Intent(Profile_Activity.this, Server_Activity.class));
-                        Profile_Activity.this.overridePendingTransition(0, 0);
+                        Intent intent = new Intent(Profile_Activity.this, Server_Activity.class);
+                        intent.putExtra("panelState", "close");
+                        startActivity(intent);
 
                         break;
                     case R.id.bottom_nav_discover:
@@ -391,7 +388,7 @@ public class Profile_Activity extends AppCompatActivity {
 
                         break;
                     case R.id.bottom_nav_profile:
-                        startActivity(new Intent(Profile_Activity.this, Profile_Activity.class));
+//                        startActivity(new Intent(Profile_Activity.this, Profile_Activity.class));
                         Profile_Activity.this.overridePendingTransition(0, 0);
 
                         break;

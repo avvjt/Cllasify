@@ -578,7 +578,9 @@ public class Notification_Activity extends AppCompatActivity {
                     case R.id.bottom_nav_home:
 //                        fragment = new HomeFragment();
 //                        tag = "home";
-                        startActivity(new Intent(Notification_Activity.this, Server_Activity.class));
+                        Intent intent = new Intent(Notification_Activity.this, Server_Activity.class);
+                        intent.putExtra("panelState", "close");
+                        startActivity(intent);
                         break;
                     case R.id.bottom_nav_discover:
 //                          fragment = new FeedFragment();
