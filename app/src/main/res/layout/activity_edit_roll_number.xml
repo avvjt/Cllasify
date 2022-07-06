@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/page_color"
-    tools:context=".Home.Edit_RollNumber">
+    tools:context=".Activities.Server.Edit_RollNumber">
 
     <!--Action bar-->
     <LinearLayout

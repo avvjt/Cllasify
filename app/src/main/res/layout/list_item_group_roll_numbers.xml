@@ -16,7 +16,6 @@
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:layout_marginStart="5dp"
-        android:text="5"
         android:textColor="@color/text_color"
         android:textSize="18sp"/>
 

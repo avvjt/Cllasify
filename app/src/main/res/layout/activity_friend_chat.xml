@@ -8,7 +8,7 @@
     android:clickable="true"
     android:elevation="5dp"
     android:focusable="true"
-    tools:context=".Friend_Chat_Activity">
+    tools:context=".Fragments.Friend_Chat_Activity">
 
     <!--Two action bar in a same layout-->
     <RelativeLayout

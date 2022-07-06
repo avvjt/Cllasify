@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/page_color"
     android:orientation="vertical"
-    tools:context=".Server.Attendance_Activity">
+    tools:context=".Activities.Attendance_Activity">
 
     <!-- TODO: Update blank fragment layout -->
 

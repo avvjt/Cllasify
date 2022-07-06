@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/page_background_color"
     android:orientation="vertical"
-    tools:context=".Server_Setting_Specifics">
+    tools:context=".Activities.Server.Server_Setting_Specifics">
 
 
     <LinearLayout

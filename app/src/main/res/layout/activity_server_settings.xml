@@ -7,7 +7,7 @@
     android:background="@color/page_background_color"
     android:orientation="vertical"
     android:visibility="visible"
-    tools:context=".Home.Server_Settings">
+    tools:context=".Activities.Server.Server_Settings">
 
     <RelativeLayout
         android:id="@+id/action_bar"

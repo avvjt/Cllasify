@@ -38,187 +38,106 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
         <activity
-            android:name=".PDF_Viewer.PDF_View"
-            android:exported="false" />
-        <activity
-            android:name=".About"
+            android:name=".Activities.Settings.About"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Terms"
+            android:name=".Activities.Settings.Terms"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Privacy"
+            android:name=".Activities.Settings.Privacy"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Home.Create_Subject"
+            android:name=".Activities.Server.Create_Subject"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Home.Create_Class"
+            android:name=".Activities.Server.Create_Class"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Home.Create_Server"
+            android:name=".Activities.Server.Create_Server"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Home.Attendance_History"
+            android:name=".Activities.Attendance_History"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".TestLocation"
-            android:exported="false"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".MyBottomSheetFragment"
-            android:exported="false"
-            tools:ignore="Instantiatable" />
-        <activity
-            android:name=".Home.GRPJoinReqs"
+            android:name=".Activities.Server.GRPJoinReqs"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Home.Students_Subjects"
+            android:name=".Activities.Server.Students_Subjects"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Server_Setting_Specifics"
+            android:name=".Activities.Server.Server_Setting_Specifics"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Home.Edit_RollNumber"
+            android:name=".Activities.Server.Edit_RollNumber"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Home.Server_Settings"
+            android:name=".Activities.Server.Server_Settings"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Friend_Chat_Activity"
+            android:name=".Fragments.Friend_Chat_Activity"
             android:exported="false"
             tools:ignore="Instantiatable" />
         <activity
-            android:name=".Home.Discover_Item"
+            android:name=".Activities.Discover_Item"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Profile.AccountSetting_Activity"
+            android:name=".Activities.Profile.AccountSetting_Activity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Home.Notification_Activity"
+            android:name=".Activities.Notification_Activity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Home.Profile_Activity"
+            android:name=".Activities.Profile.Profile_Activity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Home.Discover_Activity"
+            android:name=".Activities.Discover_Activity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Home.Server_Activity"
+            android:name=".Activities.Server.Server_Activity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity"></activity>
         <activity
-            android:name=".Profile.ProfileSetting_Activity"
+            android:name=".Activities.Profile.ProfileSetting_Activity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Explore"
+            android:name=".Activities.Attendance_Activity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
+            android:name=".Activities.getStarted"
             android:exported="true"
             android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".ServerView"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".ClassView"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".ProfileMine.Settings"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".Server.Attendance_Activity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".ProfileMine.Notification"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".ProfileMine.Premium"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".Register.VerifyNumber"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".ProfileMine.UnderAccountSettings.Change_password"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".ProfileMine.UnderAccountSettings.Edit_Phone_Number"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".ProfileMine.UnderAccountSettings.Edit_Email"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".ProfileMine.UnderAccountSettings.Edit_Username"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".ProfileMine.ProfileOthers"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".Feed.User_Question"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".Register.Phone_Login"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".Feed.Landing_Feed_Answer"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".Feed.Landing_Feed"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".NestedRecyclerview.TestFirebaseActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".Register.getStarted"
-            android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/SplashScreen"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -231,16 +150,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDDq851TO1DznZVgMsCbdPRvLcu5pvhlwo" />
 
-        <service
-            android:name=".MyFirebaseMessagingService"
-            android:exported="false"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" /> <!-- Sample Ad Manager app ID: ca-app-pub-3940256099942544~3347511713 -->
@@ -249,7 +158,7 @@
             android:value="ca-app-pub-3940256099942544~3347511713" />
 
         <receiver
-            android:name=".Service.NetworkBroadcast"
+            android:name=".Utility.NetworkBroadcast"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

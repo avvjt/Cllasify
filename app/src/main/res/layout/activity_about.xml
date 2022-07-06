@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/page_background_color"
     android:orientation="vertical"
-    tools:context=".About">
+    tools:context=".Activities.Settings.About">
 
     <LinearLayout
         android:id="@+id/action_bar"

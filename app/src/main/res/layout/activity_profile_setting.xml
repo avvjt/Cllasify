@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/page_background_color"
-    tools:context=".Profile.ProfileSetting_Activity">
+    tools:context=".Activities.Profile.ProfileSetting_Activity">
 
     <LinearLayout
         android:id="@+id/action_bar"
@@ -256,10 +256,10 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="10dp"
-                        android:fontFamily="@font/inter_medium"
-                        android:text="@string/setting_add"
                         android:drawablePadding="10dp"
+                        android:fontFamily="@font/inter_medium"
                         android:paddingTop="10dp"
+                        android:text="@string/setting_add"
                         android:textAlignment="textEnd"
                         android:textColor="@color/text_background_color"
                         android:textSize="16sp"

@@ -7,7 +7,7 @@
     android:background="@color/page_color"
     android:clickable="true"
     android:focusable="true"
-    tools:context=".Class.WebView_Fragment">
+    tools:context=".Fragments.WebView_Fragment">
 
     <RelativeLayout
         android:id="@+id/action_bar"

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/page_color"
-    tools:context=".Home.Teacher_Joining_Reqs">
+    tools:context=".Fragments.Teacher_Joining_Reqs">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_TeacherJoiningNotification"
