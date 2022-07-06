@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/splash"
-    android:foreground="@drawable/splash_screen"
     tools:context=".Activities.Server.Server_Activity">
 
     <!--swipeRefreshLayout we don't need as of now-->
