@@ -110,6 +110,7 @@ public class getStarted extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.Theme_Cllasify);
         checkDarkLightDefault();
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_get_started);
@@ -212,7 +213,7 @@ public class getStarted extends AppCompatActivity {
             }
 
         } else {
-            Toast.makeText(getStarted.this, "Wrong Request Code", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getStarted.this, "Wrong Request Code", Toast.LENGTH_SHORT).show();
 
         }
     }

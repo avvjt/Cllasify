@@ -127,7 +127,7 @@ public class Student_Joining_Reqs extends Fragment {
                     refrejuserNotify.child("grpJoiningStatus").setValue("Reject");
                     refrejadminNotify.child("grpJoiningStatus").setValue("Reject");
 
-                    Toast.makeText(getActivity(), "Group request from " + userName + "has been Rejected", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getActivity(), "Group request from " + userName + "has been Rejected", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -188,7 +188,7 @@ public class Student_Joining_Reqs extends Fragment {
                             refAccUserNotify.child("grpJoiningStatus").setValue("Approve");
                             refAccAdminNotify.child("grpJoiningStatus").setValue("Approve");
 
-                            Toast.makeText(getActivity(), "Group request from " + userName + "has been Approved", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getActivity(), "Group request from " + userName + "has been Approved", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override

@@ -24,8 +24,8 @@
             style="@style/SelectableItemBackgroundBorderless"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_centerInParent="true"
             android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:contentDescription="@string/servers_contentDescription"
@@ -37,6 +37,7 @@
             android:id="@+id/doc_name"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_marginStart="30dp"
             android:layout_marginTop="10dp"
@@ -44,7 +45,6 @@
             android:ellipsize="end"
             android:fontFamily="@font/inter_bold"
             android:maxLines="2"
-            android:layout_centerInParent="true"
             android:textColor="@color/text_color"
             android:textSize="16sp" />
 
@@ -173,7 +173,7 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/previous_btn"
             android:padding="15dp"
-            android:src="@drawable/ic_right_arrow" />
+            android:src="@drawable/ic_right_black" />
 
     </LinearLayout>
 

@@ -460,7 +460,7 @@ public class Discover_Item extends AppCompatActivity {
                     et_name.setError("Enter name");
                 }
                 if (et_phoneNumber.getText().toString().isEmpty()) {
-                    Toast.makeText(Discover_Item.this, "Enter phoneNumber", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(Discover_Item.this, "Enter phoneNumber", Toast.LENGTH_SHORT).show();
                     et_phoneNumber.setError("Enter phoneNumber");
                 }
                 if (et_address.getText().toString().isEmpty()) {

@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
@@ -85,29 +86,7 @@ public class WebView_Fragment extends Fragment implements DownloadFile.Listener 
 
         docName.setText(documentName);
 
-        String friendName = getArguments().getString("name");
-        String receiverUid = getArguments().getString("receiverUid");
 
-        String type = getArguments().getString("type");
-
-        if (type.equals("activity")) {
-            back_btn.setOnClickListener(view1 -> getActivity().onBackPressed());
-        } else {
-
-            back_btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    friendChatFragment = new Friend_Chat_Activity();
-                    getActivity().getSupportFragmentManager().beginTransaction()
-                            .replace(R.id.below_toolbar, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
-
-                    Bundle bundle = new Bundle();
-                    bundle.putString("name", friendName);
-                    bundle.putString("receiverUid", receiverUid);
-                    friendChatFragment.setArguments(bundle);
-                }
-            });
-        }
         btn_download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -142,6 +121,31 @@ public class WebView_Fragment extends Fragment implements DownloadFile.Listener 
     public void onSuccess(String url, String destinationPath) {
 
         if (url != null && destinationPath != null) {
+
+            String friendName = getArguments().getString("name");
+            String receiverUid = getArguments().getString("receiverUid");
+
+            String type = getArguments().getString("type");
+
+            if (type.equals("activity")) {
+                back_btn.setOnClickListener(view1 -> getActivity().onBackPressed());
+            }
+            if (type.equals("fragment")) {
+
+                back_btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        friendChatFragment = new Friend_Chat_Activity();
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.below_friend_toolbar, friendChatFragment).addToBackStack(friendChatFragment.getClass().getSimpleName()).commit();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString("name", friendName);
+                        bundle.putString("receiverUid", receiverUid);
+                        friendChatFragment.setArguments(bundle);
+                    }
+                });
+            }
 
             pdfPagerAdapter = new PDFPagerAdapter(getActivity(), FileUtil.extractFileNameFromURL(url));
             remotePDFViewPager.setAdapter(pdfPagerAdapter);

@@ -708,7 +708,7 @@ public class Discover_Activity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Discover_Activity.this, "Request error", Toast.LENGTH_LONG).show();
+//                        Toast.makeText(Discover_Activity.this, "Request error", Toast.LENGTH_LONG).show();
 //                        Log.i(TAG, "onErrorResponse: Didn't work");
                     }
                 }){

@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -23,6 +24,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.provider.OpenableColumns;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -931,7 +933,7 @@ public class Server_Activity extends AppCompatActivity {
                             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title);
                             DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
                             downloadManager.enqueue(request);
-                            Toast.makeText(Server_Activity.this, " Downloading Started . ", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Server_Activity.this, " Downloading Started . ", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -1508,7 +1510,7 @@ public class Server_Activity extends AppCompatActivity {
         }
     }
 
-    private void checkLoading(){
+    private void checkLoading() {
         DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID).child("clickedGroupPushId");
 
         Window window = getWindow();
@@ -1582,7 +1584,7 @@ public class Server_Activity extends AppCompatActivity {
 
                                         parentItemArrayListClassName.add(class_group_names);
                                     }
-                                    Toast.makeText(Server_Activity.this, "Joined GRPS", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(Server_Activity.this, "Joined GRPS", Toast.LENGTH_SHORT).show();
 
                                     splashScreen.setForeground(new ColorDrawable(ContextCompat.getColor(Server_Activity.this, color)));
                                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -1668,7 +1670,7 @@ public class Server_Activity extends AppCompatActivity {
 
 
                                             parentItemArrayListClassName.add(class_group_names);
-                                            Toast.makeText(Server_Activity.this, "Added GRPS", Toast.LENGTH_SHORT).show();
+//                                            Toast.makeText(Server_Activity.this, "Added GRPS", Toast.LENGTH_SHORT).show();
 
                                             splashScreen.setForeground(new ColorDrawable(ContextCompat.getColor(Server_Activity.this, color)));
                                             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -1763,6 +1765,7 @@ public class Server_Activity extends AppCompatActivity {
                 splashScreen.setForeground(new ColorDrawable(ContextCompat.getColor(Server_Activity.this, color)));
                 window.setStatusBarColor(getResources().getColor(android.R.color.transparent));
                 window.setNavigationBarColor(getResources().getColor(android.R.color.transparent));
+                window.setBackgroundDrawable(background2);
                 window.setBackgroundDrawable(background2);
             } else {
 
@@ -2549,7 +2552,6 @@ public class Server_Activity extends AppCompatActivity {
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
 
-
                 btn_joinNotification.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -3335,7 +3337,7 @@ public class Server_Activity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        Toast.makeText(this, "on activity result called", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "on activity result called", Toast.LENGTH_SHORT).show();
 
 
         if (requestCode == 438 && resultCode == RESULT_OK && data != null && data.getData() != null) {
@@ -3386,7 +3388,7 @@ public class Server_Activity extends AppCompatActivity {
                                     submitLoginData();
 
                                 } else {
-                                    Toast.makeText(Server_Activity.this, "Authentication Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(Server_Activity.this, "Authentication Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -3399,7 +3401,7 @@ public class Server_Activity extends AppCompatActivity {
             }
 
         } else {
-            Toast.makeText(this, "wrong request code", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "wrong request code", Toast.LENGTH_SHORT).show();
 
         }
 
@@ -3583,7 +3585,7 @@ public class Server_Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        Toast.makeText(this, "BACK", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "BACK", Toast.LENGTH_SHORT).show();
 
         if (flag == true) {
             FragmentManager manager = getSupportFragmentManager();

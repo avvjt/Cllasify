@@ -332,7 +332,7 @@ public class Friend_Chat_Activity extends Fragment {
                             request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title);
                             DownloadManager downloadManager = (DownloadManager) getActivity().getApplicationContext().getSystemService(Context.DOWNLOAD_SERVICE);
                             downloadManager.enqueue(request);
-                            Toast.makeText(getActivity().getApplicationContext(), " Downloading Started . ", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getActivity().getApplicationContext(), " Downloading Started . ", Toast.LENGTH_SHORT).show();
                         }
 
                     }
