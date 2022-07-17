@@ -27,6 +27,8 @@ import android.widget.Toast;
 import com.cllasify.cllasify.Fragments.Friend_Chat_Activity;
 import com.cllasify.cllasify.R;
 
+import java.util.Objects;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.voghdev.pdfviewpager.library.RemotePDFViewPager;
 import es.voghdev.pdfviewpager.library.adapter.PDFPagerAdapter;
@@ -51,7 +53,7 @@ public class WebView_Fragment extends Fragment implements DownloadFile.Listener 
 
     private int pageNumber = 0;
 
-    private TextView totalPageNumber, currentPage, docName;
+    private TextView totalPageNumber, currentPage, docName, imp_messge;
 
     ImageButton back_btn, btn_download;
     private Friend_Chat_Activity friendChatFragment;
@@ -83,6 +85,7 @@ public class WebView_Fragment extends Fragment implements DownloadFile.Listener 
         back_btn = view.findViewById(R.id.back_btn);
         btn_download = view.findViewById(R.id.btn_download);
         docName = view.findViewById(R.id.doc_name);
+        imp_messge = view.findViewById(R.id.imp_messge);
 
         docName.setText(documentName);
 
@@ -151,6 +154,7 @@ public class WebView_Fragment extends Fragment implements DownloadFile.Listener 
             remotePDFViewPager.setAdapter(pdfPagerAdapter);
             updateLayout();
             progressBar.setVisibility(View.GONE);
+            imp_messge.setVisibility(View.GONE);
             setTotalPage(remotePDFViewPager.getAdapter().getCount());
 
             Log.d("TAG", "onPageSelected: " + remotePDFViewPager.getAdapter().getCount());

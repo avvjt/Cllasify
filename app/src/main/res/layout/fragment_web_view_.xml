@@ -85,8 +85,24 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/imp_messge"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone" />
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:text="WARNING: Please don't press back button untill the document is fully loaded"
+        android:gravity="center"
+        android:layout_below="@+id/progressBar"
+        android:ellipsize="end"
+        android:fontFamily="@font/inter_bold_italic"
+        android:maxLines="3"
+        android:textColor="@color/text_color"
+        android:textSize="16sp" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
