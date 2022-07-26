@@ -655,6 +655,19 @@ public class Server_Activity extends AppCompatActivity {
         super.onPause();
     }
 
+    @Override
+    protected void onResume() {
+
+        checkOnlineStatus("online");
+        super.onResume();
+        if (onScreen) {
+            reference.addValueEventListener(readLiveMessageListener);
+            allDoubtReference.addValueEventListener(readLiveDoubtListener);
+
+            onScreen = false;
+        }
+    }
+
     private void memVis(boolean b) {
         if (b == true) {
             rightPanelMems.setVisibility(View.VISIBLE);
@@ -892,7 +905,8 @@ public class Server_Activity extends AppCompatActivity {
                 dialog.setCancelable(true);
                 dialog.setCanceledOnTouchOutside(true);
                 dialog.setContentView(R.layout.more_pdf_options);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(getApplicationContext(), R.color.more_ops)));
+
                 dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
                 dialog.getWindow().setGravity(Gravity.BOTTOM);
@@ -952,7 +966,8 @@ public class Server_Activity extends AppCompatActivity {
                 dialog.setCancelable(true);
                 dialog.setCanceledOnTouchOutside(true);
                 dialog.setContentView(R.layout.more_chat_options);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(getApplicationContext(), R.color.more_ops)));
+
                 dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
                 dialog.getWindow().setGravity(Gravity.BOTTOM);
@@ -1044,7 +1059,9 @@ public class Server_Activity extends AppCompatActivity {
                             Log.d("NOTREPORTED", "getPosition: " + chat.getGroupSubGroupComb());
 
                             dialog.setContentView(R.layout.more_chat_options_others);
-                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(getApplicationContext(), R.color.more_ops)));
+
+
                             dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                             dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
                             dialog.getWindow().setGravity(Gravity.BOTTOM);
@@ -1479,18 +1496,7 @@ public class Server_Activity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
 
-        checkOnlineStatus("online");
-        super.onResume();
-        if (onScreen) {
-            reference.addValueEventListener(readLiveMessageListener);
-            allDoubtReference.addValueEventListener(readLiveDoubtListener);
-
-            onScreen = false;
-        }
-    }
 
     public void checkDarkLightDefaultStatusBar() {
         switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
@@ -2103,11 +2109,11 @@ public class Server_Activity extends AppCompatActivity {
                                     if (!(Server_Activity.this).isFinishing()) {
                                         String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                                         Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
-                                        Glide.with(getApplicationContext()).load(profilePicUrl).into(friendImg);
+                                        Glide.with(Server_Activity.this).load(profilePicUrl).into(friendImg);
                                     }
                                 } else {
                                     if (!(Server_Activity.this).isFinishing()) {
-                                        Glide.with(getApplicationContext()).load(R.drawable.maharaji).into(friendImg);
+                                        Glide.with(Server_Activity.this).load(R.drawable.maharaji).into(friendImg);
                                     }
                                 }
                             }
@@ -2133,7 +2139,7 @@ public class Server_Activity extends AppCompatActivity {
                             String chkUserID = dataSnapshot1.getKey();
                             if (chkUserID.equals(userID)) {
                                 if (getIntent().hasExtra("panelState")) {
-                                    Toast.makeText(Server_Activity.this, "" + getIntent().getStringExtra("panelState"), Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(Server_Activity.this, "" + getIntent().getStringExtra("panelState"), Toast.LENGTH_SHORT).show();
 
                                     if (getIntent().getStringExtra("panelState").equals("close")) {
                                         Log.d("JOINEDGRP", "onDataChange: No panel");
@@ -2158,7 +2164,7 @@ public class Server_Activity extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.getChildrenCount() > 0) {
                         if (getIntent().hasExtra("panelState")) {
-                            Toast.makeText(Server_Activity.this, "" + getIntent().getStringExtra("panelState"), Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Server_Activity.this, "" + getIntent().getStringExtra("panelState"), Toast.LENGTH_SHORT).show();
                             if (getIntent().getStringExtra("panelState").equals("close")) {
                                 Log.d("JOINEDGRP", "onDataChange: No panel");
                                 overlappingPanels.closePanels();
@@ -2991,11 +2997,11 @@ public class Server_Activity extends AppCompatActivity {
                 if (snapshot.child("profilePic").exists()) {
                     String profilePic = snapshot.child("profilePic").getValue().toString();
                     if (!(Server_Activity.this).isFinishing()) {
-                        Glide.with(getApplicationContext()).load(profilePic).into(prof_pic_BtmSheet);
+                        Glide.with(Server_Activity.this).load(profilePic).into(prof_pic_BtmSheet);
                     }
                 } else {
                     if (!(Server_Activity.this).isFinishing()) {
-                        Glide.with(getApplicationContext()).load(R.drawable.maharaji).into(prof_pic_BtmSheet);
+                        Glide.with(Server_Activity.this).load(R.drawable.maharaji).into(prof_pic_BtmSheet);
                     }
                 }
             }
@@ -3255,58 +3261,39 @@ public class Server_Activity extends AppCompatActivity {
                     req = "Follow";
                     notifyStatus = "Follow_Request";
                 }
-                AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(Server_Activity.this);
+
+
+                DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(adminGroupID);
+                DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(userID);
+
+                Log.d("Friend", "Admin Id: \t" + adminUserName + "\nUser Id: \t" + userName);
+
                 String finalNotifyStatus = notifyStatus;
-                alertdialogbuilder.setTitle("Please confirm !!!")
-                        .setMessage("Do you want to send " + req + " request to" + adminUserName + "?")
-                        .setCancelable(false)
-                        .setPositiveButton("Yes",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-
-                                        DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(adminGroupID);
-                                        DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(userID);
-
-                                        Log.d("Friend", "Admin Id: \t" + adminUserName + "\nUser Id: \t" + userName);
-
-                                        refjoiningReq.addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                refjoiningReq.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 
-                                                long noOfQuesInCategory = snapshot.getChildrenCount() + 1;
-                                                String push = "Joining ReqNo_" + noOfQuesInCategory;
+                        long noOfQuesInCategory = snapshot.getChildrenCount() + 1;
+                        String push = "Joining ReqNo_" + noOfQuesInCategory;
 //                                        Class_Group  userAddComment= new Class_Group(dateTimeCC,userName,userID,adminGroupID, userEmail,adminEmailID,"req_sent", finalNotifyStatus);
-                                                Class_Group userAdd = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, push, "groupName", "groupPushId", finalNotifyStatus);
-                                                refjoiningReq.child(push).setValue(userAdd);
-                                                refacceptingReq.child(push).setValue(userAdd);
+                        Class_Group userAdd = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, push, "groupName", "groupPushId", finalNotifyStatus);
+                        refjoiningReq.child(push).setValue(userAdd);
+                        refacceptingReq.child(push).setValue(userAdd);
 
-                                                DatabaseReference checkFRNDReq = FirebaseDatabase.getInstance().getReference().child("Users").child("checkUserFriendReq").child(userID).child(adminGroupID);
-                                                checkFRNDReq.child("reqStatus").setValue("Requested");
+                        DatabaseReference checkFRNDReq = FirebaseDatabase.getInstance().getReference().child("Users").child("checkUserFriendReq").child(userID).child(adminGroupID);
+                        checkFRNDReq.child("reqStatus").setValue("Requested");
 
-                                                btn_FollowFrnd.setText("Requested");
-                                                btn_FollowFrnd.setEnabled(false);
+                        btn_FollowFrnd.setText("Requested");
+                        btn_FollowFrnd.setEnabled(false);
 
-                                            }
+                    }
 
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-                                            }
-                                        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
 
-
-                                    }
-                                })
-                        .setNegativeButton("No",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
-                                    }
-                                });
-                AlertDialog alert = alertdialogbuilder.create();
-                alert.show();
 
                 Log.d("FRIEND", "friend's name: " + memberUserName + "\n friend's userId: " + memberUserId);
 
@@ -3455,7 +3442,7 @@ public class Server_Activity extends AppCompatActivity {
                                     userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, uniPushClassId, uri.toString(), "pdf", subjectUniPushId, push, fileName, "");
                                     reference.push().setValue(userAddGroupClass);
 
-                                    Toast.makeText(Server_Activity.this, "Document sending successful", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(Server_Activity.this, "Document sending successful", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -3477,7 +3464,7 @@ public class Server_Activity extends AppCompatActivity {
 
                         double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
 
-                        Toast.makeText(Server_Activity.this, "Document sending: " + progress, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Server_Activity.this, "Document sending: " + progress, Toast.LENGTH_SHORT).show();
 
 
                     }

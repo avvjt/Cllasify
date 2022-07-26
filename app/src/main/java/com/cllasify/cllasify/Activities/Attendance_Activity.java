@@ -35,6 +35,7 @@ import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.cllasify.cllasify.Adapters.Adaptor_Attendance;
 import com.cllasify.cllasify.Adapters.Adaptor_ShowGrpMemberAttendanceRollNumberList;
 import com.cllasify.cllasify.ModelClasses.Class_Group;
@@ -109,6 +110,50 @@ public class Attendance_Activity extends AppCompatActivity {
         }
     }
 
+    private void checkOnlineStatus(String status) {
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = currentUser.getUid();
+
+        DatabaseReference setStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+        setStatus.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("userStatus").exists()) {
+                    setStatus.child("userStatus").setValue(status);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        checkOnlineStatus("online");
+        super.onStart();
+    }
+
+    @Override
+    protected void onPause() {
+
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        checkOnlineStatus(timestamp);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+
+        checkOnlineStatus("online");
+        super.onResume();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,7 +187,6 @@ public class Attendance_Activity extends AppCompatActivity {
         tv_subGroupName.setText(subGroupPushId);
 
         myCalendar = Calendar.getInstance();
-
 
 
         btn_Back.setOnClickListener(new View.OnClickListener() {
@@ -202,10 +246,12 @@ public class Attendance_Activity extends AppCompatActivity {
             public boolean onMenuItemClick(MenuItem item) {
 
                 switch (item.getItemId()) {
-                    case R.id.Recent_attendance: recent_attendance();
-                    break;
-                    case R.id.Attendance_history: calenderDialog();
-                    break;
+                    case R.id.Recent_attendance:
+                        recent_attendance();
+                        break;
+                    case R.id.Attendance_history:
+                        calenderDialog();
+                        break;
 
 
                 }

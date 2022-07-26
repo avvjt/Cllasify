@@ -52,6 +52,11 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp">
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/schoolLogo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="5dp">
 
             <ImageView
                 android:layout_width="45dp"
@@ -64,6 +69,7 @@
                 android:transitionName="pic_shared"
                 android:contentDescription="@string/item_contentDescription" />
 
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:id="@+id/tv_groupname"

@@ -62,6 +62,7 @@ public class Notification_Activity extends AppCompatActivity {
     ChipNavigationBar chipNavigationBar;
 
     ProgressBar progressBar;
+
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(Notification_Activity.this, Server_Activity.class);
@@ -84,6 +85,43 @@ public class Notification_Activity extends AppCompatActivity {
 
 
         }
+    }
+
+    private void checkOnlineStatus(String status) {
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = currentUser.getUid();
+
+        DatabaseReference setStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+        setStatus.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("userStatus").exists()) {
+                    setStatus.child("userStatus").setValue(status);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        checkOnlineStatus("online");
+        super.onStart();
+    }
+
+    @Override
+    protected void onPause() {
+
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        checkOnlineStatus(timestamp);
+        super.onPause();
     }
 
     @Override
@@ -163,7 +201,6 @@ public class Notification_Activity extends AppCompatActivity {
     }
 
 
-
     private void showEAllGroupSearchRV() {
 //        listGroupSTitle=new ArrayList<>();
 
@@ -200,9 +237,6 @@ public class Notification_Activity extends AppCompatActivity {
 
                     //Toast.makeText(Notification_Activity.this, "Group request from " + userName + "has been Rejected", Toast.LENGTH_SHORT).show();
                 } else if (notifyCategory.equals("Friend_Request")) {
-                    DatabaseReference refSubs_J_Group = FirebaseDatabase.getInstance().getReference().child("Users").child("Friends").child(reqUserID);
-                    userSubsGroupClass = new Class_Group(dateTimeCC, userName, reqUserID, currUserId, groupName, notPushId, "false", "Off");
-                    refSubs_J_Group.child(currUserId).setValue(userSubsGroupClass);
 
                     DatabaseReference refrejuserNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(currUserId).child(notPushId);
                     DatabaseReference refrejadminNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(reqUserID).child(notPushId);
@@ -215,9 +249,6 @@ public class Notification_Activity extends AppCompatActivity {
                     //Toast.makeText(Notification_Activity.this, "Friend request from " + userName + "has been Rejected", Toast.LENGTH_SHORT).show();
 
                 } else if (notifyCategory.equals("Follow_Request")) {
-                    DatabaseReference refSubs_J_Group = FirebaseDatabase.getInstance().getReference().child("Users").child("Follow").child(reqUserID);
-                    userSubsGroupClass = new Class_Group(dateTimeCC, userName, reqUserID, currUserId, groupName, notPushId, "false", "Off");
-                    refSubs_J_Group.child(currUserId).setValue(userSubsGroupClass);
 
                     DatabaseReference refrejuserNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(currUserId).child(notPushId);
                     DatabaseReference refrejadminNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(reqUserID).child(notPushId);
@@ -305,25 +336,6 @@ public class Notification_Activity extends AppCompatActivity {
                                 }
                             });
 
-
-
-
-
-                                        /*
-                                        refAllGRPs.child(classPosition).child("classStudentList").addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                refAllGRPs.child(classPosition).child("classStudentList").child(String.valueOf(snapshot.getChildrenCount())).child("userName").setValue(userName);
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError error) {
-
-                                            }
-                                        });
-                                        */
-
-
                         }
 
                         @Override
@@ -352,7 +364,6 @@ public class Notification_Activity extends AppCompatActivity {
                             refAccUserNotify.child("grpJoiningStatus").setValue("Approve");
                             refAccAdminNotify.child("grpJoiningStatus").setValue("Approve");
 
-                            //Toast.makeText(Notification_Activity.this, "Group request from " + userName + "has been Approved", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -517,54 +528,13 @@ public class Notification_Activity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         };
-        //refAdmin.addChildEventListener(childEventListener);
 
-        refSearchShowGroup.addChildEventListener(childEventListener);
-//
-//        refSearchShowGroup.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//            }
-//        });
+        refSearchShowGroup.orderByChild("dateTime").addChildEventListener(childEventListener);
+
 
     }
 
     private void bottomMenu() {
-//        chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(int i) {
-//                Fragment fragment = null;
-//                switch (i) {
-//                    case R.id.bottom_nav_home:
-//                        fragment = new HomeFragment();
-//                        tag="home";
-//                        break;
-//                    case R.id.bottom_nav_feed:
-////                        fragment = new FeedFragment();
-//                        fragment = new FeedFragment();
-//                        tag="feed";
-//                        break;
-//                    case R.id.bottom_nav_notification:
-//                        fragment = new NotificationFragment();
-//                        tag="notify";
-//                        break;
-//                    case R.id.bottom_nav_profile:
-//                        fragment = new ProfileFragment();
-//                        tag="profile";
-//                        break;
-//                }
-//                FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.fragment_container,fragment,tag);
-//                transaction.addToBackStack(tag);
-//                transaction.commit();
-//
-//            }
-//        });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_nav);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -601,11 +571,6 @@ public class Notification_Activity extends AppCompatActivity {
 
                         break;
                 }
-//                FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
-//                transaction.replace(R.id.fragment_container,fragment,tag);
-//                transaction.addToBackStack(tag);
-//                transaction.commit();
-
 
                 return true;
             }

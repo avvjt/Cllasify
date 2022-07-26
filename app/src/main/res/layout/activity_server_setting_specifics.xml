@@ -22,40 +22,54 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <ImageButton
-            android:id="@+id/btn_Back"
-            style="@style/SelectableItemBackgroundBorderless"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/specifics_contentDescription"
-            android:paddingStart="10dp"
-            android:paddingTop="10dp"
-            android:src="@drawable/ic_arrow_left_24"
-            app:tint="@color/iconSecondaryColor"
-            tools:ignore="RtlSymmetry" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_servProfile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:fontFamily="@font/inter_semibold"
-            android:text="@string/server_profile_settings"
-            android:textColor="@color/text_color"
-            android:textSize="18sp" />
 
-        <ImageButton
-            android:id="@+id/doneBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="80dp"
-            android:background="@color/transparent"
-            android:src="@drawable/done"
-            app:tint="@color/iconPrimaryColor"
-            android:contentDescription="@string/specifics_contentDescription" />
+            <ImageButton
+                android:id="@+id/btn_Back"
+                style="@style/SelectableItemBackgroundBorderless"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:contentDescription="@string/specifics_contentDescription"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:src="@drawable/ic_arrow_left_24"
+                app:tint="@color/iconSecondaryColor"
+                tools:ignore="RtlSymmetry" />
+
+            <TextView
+                android:id="@+id/tv_servProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/btn_Back"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/server_profile_settings"
+                android:textColor="@color/text_color"
+                android:textSize="18sp" />
+
+            <ImageButton
+                android:id="@+id/doneBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="80dp"
+                android:layout_marginEnd="20dp"
+                android:background="@color/transparent"
+                android:contentDescription="@string/specifics_contentDescription"
+                android:src="@drawable/done"
+                app:tint="@color/iconPrimaryColor" />
+
+        </RelativeLayout>
 
     </LinearLayout>
 
@@ -94,11 +108,11 @@
                             android:id="@+id/serverImage"
                             android:layout_width="120dp"
                             android:layout_height="120dp"
-                            android:src="@drawable/ic_logotext"
-                            android:scaleType="centerCrop"
                             android:background="@drawable/explore_icon_background"
-                            android:transitionName="pic_shared"
-                            android:contentDescription="@string/specifics_contentDescription" />
+                            android:contentDescription="@string/specifics_contentDescription"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ic_logotext"
+                            android:transitionName="pic_shared" />
 
                     </androidx.cardview.widget.CardView>
 
@@ -159,6 +173,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/iconPrimaryColor"
                     android:hint="@string/hint_serverName"
+                    android:importantForAutofill="no"
                     android:inputType="textCapSentences|textMultiLine"
                     android:textColor="@color/text_color"
                     android:textColorHint="@color/iconColor"
@@ -167,8 +182,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:importantForAutofill="no" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/edit_serverBio"
@@ -190,6 +204,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/iconPrimaryColor"
                     android:hint="@string/hint_serverDescription"
+                    android:importantForAutofill="no"
                     android:inputType="textCapSentences|textMultiLine"
                     android:textColor="@color/text_color"
                     android:textColorHint="@color/iconColor"
@@ -198,8 +213,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:importantForAutofill="no" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/edit_serverEmail"
@@ -221,6 +235,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/iconPrimaryColor"
                     android:hint="@string/hint_serverEmail"
+                    android:importantForAutofill="no"
                     android:inputType="textEmailAddress|textCapSentences|textMultiLine"
                     android:textColor="@color/text_color"
                     android:textColorHint="@color/iconColor"
@@ -229,8 +244,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:importantForAutofill="no" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:layout_width="match_parent"

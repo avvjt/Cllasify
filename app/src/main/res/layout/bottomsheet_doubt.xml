@@ -1,73 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_bottomsheet"
     android:orientation="vertical"
-    android:padding="30dp">
+    android:padding="25dp">
 
 
     <EditText
         android:id="@+id/et_AddTopic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_doubt_title"
-        android:textColor="@color/text_color"
-        android:textColorHint="@color/iconColor"
-        android:inputType="textCapSentences|textMultiLine"
         android:background="@null"
         android:focusable="true"
-        android:textSize="15sp"
+        android:fontFamily="@font/inter_medium"
+        android:hint="@string/hint_doubt_title"
+        android:textSize="16sp"
+        android:importantForAutofill="no"
+        android:inputType="textCapSentences|textMultiLine"
         android:maxLines="2"
-        android:textCursorDrawable="@drawable/cursor_color"
         android:padding="10dp"
-        android:importantForAutofill="no" />
+        android:textColor="@color/text_color"
+        android:textColorHint="@color/iconColor"
+        android:textCursorDrawable="@drawable/cursor_color" />
 
 
     <EditText
         android:id="@+id/et_AddDoubt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/hint_doubt"
-        android:maxLines="5"
-        android:inputType="textCapSentences|textMultiLine"
-        android:textColor="@color/text_color"
-        android:textColorHint="@color/iconColor"
+        android:layout_below="@+id/et_AddTopic"
+        android:layout_marginTop="10dp"
         android:background="@null"
         android:focusable="true"
-        android:textCursorDrawable="@drawable/cursor_color"
+        android:hint="@string/hint_doubt"
+        android:importantForAutofill="no"
+        android:fontFamily="@font/inter_medium"
+        android:inputType="textCapSentences|textMultiLine"
+        android:maxLines="5"
         android:padding="10dp"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp"
-        android:importantForAutofill="no" />
+        android:textColor="@color/text_color"
+        android:textColorHint="@color/iconColor"
+        android:textCursorDrawable="@drawable/cursor_color"
+        android:textSize="16sp" />
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_below="@+id/et_AddDoubt"
+        android:layout_marginTop="20dp"
+        android:gravity="end"
+        android:layout_alignParentEnd="true"
         android:orientation="horizontal"
-        android:visibility="visible"
-        android:layout_marginTop="20dp">
+        android:visibility="visible">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/btn_Cancel"
-            android:text="@string/discard"
-            android:textColor="@color/iconPrimaryColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@+id/btn_Submit"
             android:background="@color/transparent"
-            android:layout_marginStart="150dp"/>
+            android:fontFamily="@font/inter_medium"
+            android:text="@string/discard"
+            android:textColor="@color/iconPrimaryColor" />
 
 
         <Button
+            android:id="@+id/btn_Submit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_Submit"
-            android:text="@string/create"
-            android:textColor="@color/iconColor"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:fontFamily="@font/inter_medium"
             android:background="@color/transparent"
-            android:layout_marginStart="20dp"/>
-    </LinearLayout>
-</LinearLayout>
+            android:text="@string/create"
+            android:textColor="@color/iconColor" />
+    </RelativeLayout>
+</RelativeLayout>

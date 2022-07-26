@@ -29,14 +29,14 @@
             android:layout_centerInParent="true"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="100dp"
-            android:autoLink="web"
-            android:textColorLink="@color/grey"
             android:layout_toEndOf="@id/prof_pics_chat_doubt"
+            android:autoLink="web"
             android:background="@drawable/received_message_background"
             android:elevation="1dp"
             android:fontFamily="@font/inter_regular"
             android:padding="12dp"
             android:textColor="@color/text_color"
+            android:textColorLink="@color/grey"
             android:textSize="15sp" />
 
         <TextView

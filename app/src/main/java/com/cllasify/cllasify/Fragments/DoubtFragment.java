@@ -1,5 +1,6 @@
 package com.cllasify.cllasify.Fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -151,18 +152,22 @@ public class DoubtFragment extends Fragment {
                                 byName.setText("Asked by - " + userName);
 
                             }
-                            if (snapshot.child("profilePic").exists()) {
-                                if (!getActivity().isFinishing()) {
+                            Activity activity = getActivity();
+                            if (activity != null) {
+
+                                if (snapshot.child("profilePic").exists()) {
                                     String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                                     Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
-                                    Glide.with(getActivity().getApplicationContext()).load(profilePicUrl).into(ib_AnsUserProfile);
+                                    Glide.with(requireActivity()).load(profilePicUrl).into(ib_AnsUserProfile);
+
+                                } else {
+                                    Glide.with(requireActivity()).load(R.drawable.maharaji).into(ib_AnsUserProfile);
                                 }
-                            } else {
-                                if (!getActivity().isFinishing()) {
-                                    Glide.with(getActivity().getApplicationContext()).load(R.drawable.maharaji).into(ib_AnsUserProfile);
-                                }
+
                             }
+
                         }
+
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {

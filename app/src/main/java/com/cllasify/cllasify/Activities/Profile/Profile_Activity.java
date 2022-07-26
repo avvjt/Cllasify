@@ -1,8 +1,10 @@
 package com.cllasify.cllasify.Activities.Profile;
 
+import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
@@ -90,6 +92,43 @@ public class Profile_Activity extends AppCompatActivity {
 
 
         }
+    }
+
+    private void checkOnlineStatus(String status) {
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String userID = currentUser.getUid();
+
+        DatabaseReference setStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+        setStatus.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.child("userStatus").exists()) {
+                    setStatus.child("userStatus").setValue(status);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        checkOnlineStatus("online");
+        super.onStart();
+    }
+
+    @Override
+    protected void onPause() {
+
+        String timestamp = String.valueOf(System.currentTimeMillis());
+        checkOnlineStatus(timestamp);
+        super.onPause();
     }
 
     @Override
@@ -291,6 +330,8 @@ public class Profile_Activity extends AppCompatActivity {
                         ll_location.setVisibility(View.GONE);
 
                     }
+
+
                     if (snapshot.child("profilePic").exists()) {
                         String profilePic = snapshot.child("profilePic").getValue().toString();
                         if (!(Profile_Activity.this).isFinishing()) {
@@ -300,7 +341,10 @@ public class Profile_Activity extends AppCompatActivity {
                         if (!(Profile_Activity.this).isFinishing()) {
                             Glide.with(getApplicationContext()).load(R.drawable.maharaji).into(prof_pic);
                         }
+
+
                     }
+
 
                 }
             }
