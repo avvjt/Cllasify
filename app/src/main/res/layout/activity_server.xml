@@ -2,9 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/splash"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/splash"
     tools:context=".Activities.Server.Server_Activity">
 
     <!--swipeRefreshLayout we don't need as of now-->
@@ -365,24 +365,36 @@
 
                         <!--Chat showing RecyclerView-->
 
+                        <!--Chat box sending message layout-->
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_ChatDashboard"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_above="@+id/ll_bottom_send"
+                            android:layout_alignParentEnd="true"
                             android:layout_marginTop="10dp"
+                            android:layout_marginEnd="0dp"
                             android:paddingStart="10dp"
                             android:paddingEnd="1dp" />
 
-                        <!--Chat box sending message layout-->
+
+                        <ProgressBar
+                            android:id="@+id/uploadProgress"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:visibility="gone"
+                            android:progressDrawable="@drawable/custom_progress_bg"
+                            android:layout_above="@+id/ll_bottom_send"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+
                         <LinearLayout
                             android:id="@+id/ll_bottom_send"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_marginStart="15dp"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
+                            android:visibility="gone"
+                            android:orientation="horizontal">
 
                             <EditText
                                 android:id="@+id/et_ctext"
@@ -414,34 +426,38 @@
                                 style="@style/SelectableItemBackgroundBorderless"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginEnd="10dp"
-                                android:layout_marginBottom="10dp">
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="10dp">
+
+
+                                <TextView
+                                    android:id="@+id/percentage"
+                                    android:layout_width="45dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerInParent="true"
+                                    android:layout_marginTop="25dp"
+                                    android:fontFamily="@font/inter_bold"
+                                    android:gravity="center"
+                                    android:text="0%"
+                                    android:textColor="@color/black"
+                                    android:visibility="gone" />
 
                                 <ImageButton
                                     android:id="@+id/ib_pdf_btn"
                                     android:layout_width="35dp"
                                     android:layout_height="35dp"
+                                    android:layout_centerInParent="true"
+                                    android:layout_marginTop="25dp"
                                     android:background="@color/transparent"
                                     android:contentDescription="@string/servers_contentDescription"
                                     android:elevation="2dp"
                                     android:src="@drawable/pdf_pic" />
 
                                 <ImageButton
-                                    android:id="@+id/ib_doubtSubmit"
-                                    android:layout_width="35dp"
-                                    android:layout_height="35dp"
-                                    android:layout_toEndOf="@+id/ib_pdf_btn"
-                                    android:background="@color/transparent"
-                                    android:contentDescription="@string/servers_contentDescription"
-                                    android:elevation="2dp"
-                                    android:src="@drawable/ic_question_24" />
-
-                                <ImageButton
                                     android:id="@+id/ib_csubmit"
                                     android:layout_width="40dp"
                                     android:layout_height="40dp"
+                                    android:layout_centerInParent="true"
                                     android:background="@color/transparent"
                                     android:contentDescription="@string/servers_contentDescription"
                                     android:elevation="2dp"
@@ -449,6 +465,18 @@
                                     android:visibility="gone" />
 
                             </RelativeLayout>
+
+
+                            <ImageButton
+                                android:id="@+id/ib_doubtSubmit"
+                                android:layout_width="35dp"
+                                android:layout_height="35dp"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginEnd="10dp"
+                                android:background="@color/transparent"
+                                android:contentDescription="@string/servers_contentDescription"
+                                android:elevation="2dp"
+                                android:src="@drawable/ic_question_24" />
 
                         </LinearLayout>
 

@@ -47,6 +47,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -200,6 +201,9 @@ public class Server_Activity extends AppCompatActivity {
     TextView tv_GroupMember, adminListText, FriendListTextt;
     FirebaseDatabase refFriendList;
 
+    private int currentProgress = 0;
+    private ProgressBar uploadProgressBar;
+
     String GroupCategory;
     GoogleSignInClient googleSignInClient;
     Calendar calenderCC = Calendar.getInstance();
@@ -217,7 +221,7 @@ public class Server_Activity extends AppCompatActivity {
     EditText et_FrndP_text, et_ctext;
     TextView tv_UserPublicTitle, tv_OtherTitle,
             textViewGroupName,
-            tv_FrndP_Title, textViewSubjectName;
+            tv_FrndP_Title, textViewSubjectName, uploadPercentage;
 
 
     FragmentManager fragmentManager;
@@ -298,7 +302,7 @@ public class Server_Activity extends AppCompatActivity {
         swipe_right = findViewById(R.id.swipe_right);
         rv_GrpTeacherList = findViewById(R.id.adminList);
         rv_GrpMemberList = findViewById(R.id.rv_GrpMemberList);
-
+        uploadProgressBar = findViewById(R.id.uploadProgress);
 
         //List initialization
         friendsListClasses = new ArrayList<>();
@@ -1069,7 +1073,6 @@ public class Server_Activity extends AppCompatActivity {
                             dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
 
-
                             dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                             dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
                             dialog.getWindow().setGravity(Gravity.BOTTOM);
@@ -1734,7 +1737,6 @@ public class Server_Activity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_Cllasify);
@@ -1893,6 +1895,11 @@ public class Server_Activity extends AppCompatActivity {
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
 
                     String c = String.valueOf(s);
+
+                    if (count > 0) {
+                        uploadPercentage.setVisibility(View.GONE);
+                        ib_csubmit.setVisibility(View.VISIBLE);
+                    }
 
                     if (c.trim().isEmpty()) {
                         ib_doubtSubmit.setVisibility(View.VISIBLE);
@@ -2197,6 +2204,8 @@ public class Server_Activity extends AppCompatActivity {
             /*
                 Center Panel
              */
+
+            uploadPercentage = findViewById(R.id.percentage);
 
             ib_csubmit =
 
@@ -3498,7 +3507,10 @@ public class Server_Activity extends AppCompatActivity {
                                     userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, uniPushClassId, uri.toString(), "pdf", subjectUniPushId, push, fileName, "");
                                     reference.push().setValue(userAddGroupClass);
 
-//                                    Toast.makeText(Server_Activity.this, "Document sending successful", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Server_Activity.this, "Document uploading successful", Toast.LENGTH_SHORT).show();
+                                    uploadPercentage.setVisibility(View.GONE);
+                                    ib_pdf_btn.setVisibility(View.VISIBLE);
+                                    uploadProgressBar.setVisibility(View.GONE);
                                 }
                             });
 
@@ -3518,7 +3530,21 @@ public class Server_Activity extends AppCompatActivity {
 
 //                        messageAdapter.setProgVal(3);
 
+                        currentProgress = 10;
+
+                        uploadProgressBar.setVisibility(View.VISIBLE);
+                        uploadPercentage.setVisibility(View.VISIBLE);
+                        ib_pdf_btn.setVisibility(View.GONE);
                         double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+
+                        int uploadProg = Math.toIntExact(Math.round(progress));
+
+//                        currentProgress = ;
+
+                        uploadProgressBar.setProgress(uploadProg);
+                        uploadProgressBar.setMax(100);
+
+                        uploadPercentage.setText(uploadProg + "%");
 
 //                        Toast.makeText(Server_Activity.this, "Document sending: " + progress, Toast.LENGTH_SHORT).show();
 

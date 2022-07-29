@@ -31,6 +31,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -110,6 +111,9 @@ public class Friend_Chat_Activity extends Fragment {
     Uri userPhoto;
     String userID, userEmailID, userName;
 
+    private int currentProgress = 0;
+    private ProgressBar uploadProgressBar;
+    TextView uploadPercentage;
 
     RelativeLayout moreOptions, fragment_friend;
     LinearLayout chatOption;
@@ -156,6 +160,9 @@ public class Friend_Chat_Activity extends Fragment {
         messageTxtFriend = v.findViewById(R.id.et_FrndP_text);
         friendImg = v.findViewById(R.id.friendImg);
         ib_pdf_btn = v.findViewById(R.id.ib_pdf_btn);
+
+        uploadProgressBar = v.findViewById(R.id.uploadProgress);
+        uploadPercentage = v.findViewById(R.id.percentage);
 
         swipe_left = v.findViewById(R.id.swipe_left);
         swipe_right = v.findViewById(R.id.swipe_right);
@@ -689,6 +696,10 @@ public class Friend_Chat_Activity extends Fragment {
                                             });
 
 //                                    Toast.makeText(getActivity().getApplicationContext(), "Document sending successful", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Document uploading successful", Toast.LENGTH_SHORT).show();
+                                    uploadPercentage.setVisibility(View.GONE);
+                                    ib_pdf_btn.setVisibility(View.VISIBLE);
+                                    uploadProgressBar.setVisibility(View.GONE);
                                 }
                             });
 
@@ -708,9 +719,23 @@ public class Friend_Chat_Activity extends Fragment {
 
 //                        messageAdapter.setProgVal(3);
 
+                        currentProgress = 10;
+
+                        uploadProgressBar.setVisibility(View.VISIBLE);
+                        uploadPercentage.setVisibility(View.VISIBLE);
+                        ib_pdf_btn.setVisibility(View.GONE);
                         double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
 
-//                        Toast.makeText(getActivity().getApplicationContext(), "Document sending: " + progress, Toast.LENGTH_SHORT).show();
+                        int uploadProg = Math.toIntExact(Math.round(progress));
+
+//                        currentProgress = ;
+
+                        uploadProgressBar.setProgress(uploadProg);
+                        uploadProgressBar.setMax(100);
+
+                        uploadPercentage.setText(uploadProg + "%");
+
+//                        Toast.makeText(Server_Activity.this, "Document sending: " + progress, Toast.LENGTH_SHORT).show();
 
 
                     }
