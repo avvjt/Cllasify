@@ -910,7 +910,8 @@ public class Server_Activity extends AppCompatActivity {
                 dialog.setCancelable(true);
                 dialog.setCanceledOnTouchOutside(true);
                 dialog.setContentView(R.layout.more_pdf_options);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(getApplicationContext(), R.color.more_ops)));
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
 
                 dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
@@ -971,7 +972,8 @@ public class Server_Activity extends AppCompatActivity {
                 dialog.setCancelable(true);
                 dialog.setCanceledOnTouchOutside(true);
                 dialog.setContentView(R.layout.more_chat_options);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(getApplicationContext(), R.color.more_ops)));
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
 
                 dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                 dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
@@ -1064,7 +1066,8 @@ public class Server_Activity extends AppCompatActivity {
                             Log.d("NOTREPORTED", "getPosition: " + chat.getGroupSubGroupComb());
 
                             dialog.setContentView(R.layout.more_chat_options_others);
-                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(getApplicationContext(), R.color.more_ops)));
+                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
 
 
                             dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
