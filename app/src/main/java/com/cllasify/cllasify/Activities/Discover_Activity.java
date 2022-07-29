@@ -51,6 +51,7 @@ import com.cllasify.cllasify.Activities.Server.Server_Activity;
 import com.cllasify.cllasify.Utility.NetworkBroadcast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -74,12 +75,12 @@ public class Discover_Activity extends AppCompatActivity {
     private BroadcastReceiver broadcastReceiver;
     Adaptor_SearchGroup showAllGroupAdaptor;
     Adaptor_ShowGrpMember showAllJoinUserAdaptor;
-    List<Class_Group> listAllGroupStatus,list_SubChild,list_AllJoinUser;
-    DatabaseReference refSearchShowGroup,refChildGroup;
-    RecyclerView rv_AllJoinGroup,rv_AllJoinUser;
-    Calendar calenderCC=Calendar.getInstance();
-    SimpleDateFormat simpleDateFormatCC= new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
-    String dateTimeCC=simpleDateFormatCC.format(calenderCC.getTime());
+    List<Class_Group> listAllGroupStatus, list_SubChild, list_AllJoinUser;
+    DatabaseReference refSearchShowGroup, refChildGroup;
+    RecyclerView rv_AllJoinGroup, rv_AllJoinUser;
+    Calendar calenderCC = Calendar.getInstance();
+    SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+    String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
 
     DatabaseReference refGroupClassList;
 
@@ -148,7 +149,7 @@ public class Discover_Activity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.disc_search,menu);
+        getMenuInflater().inflate(R.menu.disc_search, menu);
 
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) menuItem.getActionView();
@@ -178,7 +179,7 @@ public class Discover_Activity extends AppCompatActivity {
                 break;
 
             case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 // edited here
                 getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
 
@@ -215,9 +216,10 @@ public class Discover_Activity extends AppCompatActivity {
                     showAllGroupSearch("All_Universal_Group");
                 } else {
                     progressBar.setVisibility(View.GONE);
-                  //  Toast.makeText(Discover_Activity.this, "No Groups available at this moment", Toast.LENGTH_SHORT).show();
+                    //  Toast.makeText(Discover_Activity.this, "No Groups available at this moment", Toast.LENGTH_SHORT).show();
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -225,20 +227,20 @@ public class Discover_Activity extends AppCompatActivity {
 
 
         bottomMenu();
-        rv_AllJoinGroup =findViewById(R.id.rv_AllJoinGroup);
-        rv_AllJoinUser =findViewById(R.id.rv_AllJoinUser);
+        rv_AllJoinGroup = findViewById(R.id.rv_AllJoinGroup);
+        rv_AllJoinUser = findViewById(R.id.rv_AllJoinUser);
 
-        btn_Users =findViewById(R.id.btn_Users);
-        btn_School =findViewById(R.id.btn_School);
-        btn_Group =findViewById(R.id.btn_Group);
+        btn_Users = findViewById(R.id.btn_Users);
+        btn_School = findViewById(R.id.btn_School);
+        btn_Group = findViewById(R.id.btn_Group);
 
         progressBar = findViewById(R.id.progBar);
 
         rv_AllJoinGroup.setLayoutManager(new LinearLayoutManager(this));
         rv_AllJoinUser.setLayoutManager(new LinearLayoutManager(this));
 
-        listAllGroupStatus =new ArrayList<>();
-        list_AllJoinUser =new ArrayList<>();
+        listAllGroupStatus = new ArrayList<>();
+        list_AllJoinUser = new ArrayList<>();
         showAllGroupAdaptor = new Adaptor_SearchGroup(this, listAllGroupStatus);
 //        showAllJoinUserAdaptor = new Adaptor_ShowGrpMember(this, list_AllJoinUser);
 
@@ -246,7 +248,7 @@ public class Discover_Activity extends AppCompatActivity {
         rv_AllJoinUser.setAdapter(showAllJoinUserAdaptor);
 
 
-        refSearchShowGroup = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child( "All_Universal_Group" );
+        refSearchShowGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group");
 
         btn_Users.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,27 +256,25 @@ public class Discover_Activity extends AppCompatActivity {
                 rv_AllJoinGroup.setVisibility(View.GONE);
                 rv_AllJoinUser.setVisibility(View.VISIBLE);
                 DatabaseReference refGroupReqCount = FirebaseDatabase.getInstance().getReference().
-                        child( "Users" ).child( "Registration" );
+                        child("Users").child("Registration");
                 refGroupReqCount.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if (snapshot.getChildrenCount()>0) {
+                        if (snapshot.getChildrenCount() > 0) {
                             showEAllGroupUser("Registration");
-                        }else{
+                        } else {
                             progressBar.setVisibility(View.GONE);
-                         //   Toast.makeText(Discover_Activity.this, "No Groups available at this moment", Toast.LENGTH_SHORT).show();
+                            //   Toast.makeText(Discover_Activity.this, "No Groups available at this moment", Toast.LENGTH_SHORT).show();
 
                         }
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
                     }
                 });
             }
         });
-
-
-
 
 
 //        showAllGroupSearch("All_Universal_Group");
@@ -288,40 +288,38 @@ public class Discover_Activity extends AppCompatActivity {
     }
 
     private void filterList(String text) {
-            List<Class_Group> filterList = new ArrayList<>();
-            for (Class_Group items : listAllGroupStatus) {
-                if (items.getGroupName().toLowerCase().contains(text.toLowerCase())) {
-                    filterList.add(items);
-                }
+        List<Class_Group> filterList = new ArrayList<>();
+        for (Class_Group items : listAllGroupStatus) {
+            if (items.getGroupName().toLowerCase().contains(text.toLowerCase())) {
+                filterList.add(items);
             }
-            showAllGroupAdaptor.filtterList(filterList);
-
         }
+        showAllGroupAdaptor.filtterList(filterList);
 
+    }
 
 
     private void showEAllGroupUser(String registration) {
 
         DatabaseReference refGroupRegistration = FirebaseDatabase.getInstance().getReference().
-                child( "Users" ).child( "Registration" );
-
+                child("Users").child("Registration");
 
 
         showAllJoinUserAdaptor.setOnItemClickListener(new Adaptor_ShowGrpMember.OnItemClickListener() {
             @Override
             public void AddFrndDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId) {
-                sentUserInvitation(adminGroupID,adminEmailID,adminUserName, "AddFrnd");
+                sentUserInvitation(adminGroupID, adminEmailID, adminUserName, "AddFrnd");
 //            showBtmDialogClass();
             }
 
             @Override
             public void FollowFriendDialog(String adminGroupID, String adminEmailID, String adminUserName, String pushId) {
-                sentUserInvitation(adminGroupID,adminEmailID,adminUserName, "FollowFrnd");
+                sentUserInvitation(adminGroupID, adminEmailID, adminUserName, "FollowFrnd");
             }
 
             @Override
-            public void MemberProfile(String memberUserId,String memberUserName) {
-                showBtmDialogUserProfile(memberUserId,memberUserName);
+            public void MemberProfile(String memberUserId, String memberUserName) {
+                showBtmDialogUserProfile(memberUserId, memberUserName);
 
             }
 
@@ -335,10 +333,10 @@ public class Discover_Activity extends AppCompatActivity {
         ChildEventListener childEventListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if (dataSnapshot.getChildrenCount()>0) {
+                if (dataSnapshot.getChildrenCount() > 0) {
                     Class_Group class_userDashBoard = dataSnapshot.getValue(Class_Group.class);
-                    String databaseUserId=class_userDashBoard.getUserId();
-                    String groupCategory=class_userDashBoard.getGroupCategory();
+                    String databaseUserId = class_userDashBoard.getUserId();
+                    String groupCategory = class_userDashBoard.getGroupCategory();
 //                        if (!currUserId.equals(databaseUserId) && groupCategory.equals("Public")){
 
                     list_AllJoinUser.add(class_userDashBoard);
@@ -347,7 +345,7 @@ public class Discover_Activity extends AppCompatActivity {
 //                        }
 
                 } else {
-                   // Toast.makeText(Discover_Activity.this, "No Groups available at this moment", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(Discover_Activity.this, "No Groups available at this moment", Toast.LENGTH_SHORT).show();
 
 //                    notifyPB.dismiss();
                 }
@@ -376,7 +374,7 @@ public class Discover_Activity extends AppCompatActivity {
 
     }
 
-    private void showBtmDialogClass(String adminGroupID,String groupName,String groupPushId) {
+    private void showBtmDialogClass(String adminGroupID, String groupName, String groupPushId) {
 
         DatabaseReference checkAdmin = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList");
 
@@ -391,9 +389,18 @@ public class Discover_Activity extends AppCompatActivity {
                     checkJoined.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.exists()){
-                                showToast();
-                            }else{
+                            if (snapshot.exists()) {
+                                View parentLayout = findViewById(android.R.id.content);
+                                Snackbar snackbar;
+                                snackbar = Snackbar.make(parentLayout, R.string.already_join, Snackbar.LENGTH_SHORT);
+                                View snackBarView = snackbar.getView();
+                                TextView textView = snackBarView.findViewById(com.google.android.material.R.id.snackbar_text);
+                                textView.setPadding(5,10,5,5);
+                                textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_joined, 0, 0, 0);
+                                textView.setCompoundDrawablePadding(getResources().getDimensionPixelOffset(R.dimen.chip_horizontal_padding));
+                                snackBarView.setBackgroundColor(Color.BLACK);
+                                snackbar.show();
+                            } else {
                                 Intent intent = new Intent(getApplicationContext(), Discover_Item.class);
                                 intent.putExtra("groupName", groupName);
                                 intent.putExtra("groupPushId", groupPushId);
@@ -432,23 +439,20 @@ public class Discover_Activity extends AppCompatActivity {
     }
 
 
-
-
-
-    private void showBottmDialogClass(String adminGroupID,String groupName,String groupPushId) {
+    private void showBottmDialogClass(String adminGroupID, String groupName, String groupPushId) {
         Adaptor_ShowGrpClass showGrpClassList;
         List<Class_Group_Names> listGrpClassList;
         DatabaseReference refGroupClassList;
 
-        BottomSheetDialog bottomSheetDialoglogin=new BottomSheetDialog(Discover_Activity.this);
+        BottomSheetDialog bottomSheetDialoglogin = new BottomSheetDialog(Discover_Activity.this);
 //        bottomSheetDialoglogin.setCancelable(false);
         bottomSheetDialoglogin.setContentView(R.layout.btmdialog_serverview);
 
-        Button btn_Share=bottomSheetDialoglogin.findViewById(R.id.btn_Share);
-        ImageView iv_ServerDP=bottomSheetDialoglogin.findViewById(R.id.iv_ServerDP);
-        TextView tv_ServerName=bottomSheetDialoglogin.findViewById(R.id.tv_ServerName);
-        TextView tv_ServerBio=bottomSheetDialoglogin.findViewById(R.id.tv_ServerBio);
-        RecyclerView rv_ShowClass=bottomSheetDialoglogin.findViewById(R.id.rv_ShowClass);
+        Button btn_Share = bottomSheetDialoglogin.findViewById(R.id.btn_Share);
+        ImageView iv_ServerDP = bottomSheetDialoglogin.findViewById(R.id.iv_ServerDP);
+        TextView tv_ServerName = bottomSheetDialoglogin.findViewById(R.id.tv_ServerName);
+        TextView tv_ServerBio = bottomSheetDialoglogin.findViewById(R.id.tv_ServerBio);
+        RecyclerView rv_ShowClass = bottomSheetDialoglogin.findViewById(R.id.rv_ShowClass);
 
 
         tv_ServerName.setText(groupName);
@@ -458,14 +462,14 @@ public class Discover_Activity extends AppCompatActivity {
         showGrpClassList = new Adaptor_ShowGrpClass(Discover_Activity.this, listGrpClassList);
         rv_ShowClass.setAdapter(showGrpClassList);
 
-        refGroupClassList = FirebaseDatabase.getInstance().getReference().child( "Groups" ).child("All_Sub_Group").child(groupPushId);
+        refGroupClassList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId);
         listGrpClassList.clear();
 
         showGrpClassList.setOnItemClickListener(new Adaptor_ShowGrpClass.OnItemClickListener() {
 
             @Override
             public void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId, String classPushId, String classReqPosition) {
-                sentGroupJoinInvitation(adminGroupID,adminUserName,groupName,groupPushId,subGroupName);
+                sentGroupJoinInvitation(adminGroupID, adminUserName, groupName, groupPushId, subGroupName);
 
             }
 
@@ -581,7 +585,7 @@ public class Discover_Activity extends AppCompatActivity {
                         showAllGroupAdaptor.notifyDataSetChanged();
 
                     } else {
-                     //   Toast.makeText(Discover_Activity.this, "No group yet created", Toast.LENGTH_SHORT).show();
+                        //   Toast.makeText(Discover_Activity.this, "No group yet created", Toast.LENGTH_SHORT).show();
                         progressBar.setVisibility(View.GONE);
 
                     }
@@ -594,7 +598,8 @@ public class Discover_Activity extends AppCompatActivity {
             }
         });
     }
-    private void sentGroupJoinInvitation(String adminGroupID,String adminUserName, String groupName, String groupPushId,String subGroupName) {
+
+    private void sentGroupJoinInvitation(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName) {
 
         AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(Discover_Activity.this, R.style.AlertDialogCustom);
         alertdialogbuilder.setTitle("Please confirm !!!")
@@ -609,19 +614,20 @@ public class Discover_Activity extends AppCompatActivity {
                                 final String userName = currentUser.getDisplayName();
                                 final String userEmail = currentUser.getEmail();
                                 final Uri userPhoto = currentUser.getPhotoUrl();
-                                DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child( "Notification" ).child("Received_Req").child(adminGroupID);
-                                DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child( "Notification" ).child("Submit_Req").child(userID);
+                                DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(adminGroupID);
+                                DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(userID);
 
                                 refjoiningReq.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        long noofQuesinCategory=snapshot.getChildrenCount()+1;
-                                        String pushLong="Joining Reqno_"+noofQuesinCategory;
+                                        long noofQuesinCategory = snapshot.getChildrenCount() + 1;
+                                        String pushLong = "Joining Reqno_" + noofQuesinCategory;
 
-                                        Class_Group  userAddComment= new Class_Group(dateTimeCC, userName, "req_sent",userID,adminGroupID, userEmail, pushLong, groupName,groupPushId,subGroupName,"Group_JoiningReq");
+                                        Class_Group userAddComment = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq");
                                         refjoiningReq.child(pushLong).setValue(userAddComment);
                                         refacceptingReq.child(pushLong).setValue(userAddComment);
                                     }
+
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
                                     }
@@ -657,21 +663,21 @@ public class Discover_Activity extends AppCompatActivity {
 
     }
 
-    private void sentUserInvitation(String adminGroupID,String adminEmailID,String adminUserName, String Code) {
+    private void sentUserInvitation(String adminGroupID, String adminEmailID, String adminUserName, String Code) {
 
-        String req = null,notifyStatus=null;
-        if (Code.equals("AddFrnd")){
-            req="Friend";
-            notifyStatus="Friend_Request";
-        }else if (Code.equals("FollowFrnd")){
-            req="Follow";
-            notifyStatus="Follow_Request";
+        String req = null, notifyStatus = null;
+        if (Code.equals("AddFrnd")) {
+            req = "Friend";
+            notifyStatus = "Friend_Request";
+        } else if (Code.equals("FollowFrnd")) {
+            req = "Follow";
+            notifyStatus = "Follow_Request";
         }
 
         AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(Discover_Activity.this);
         String finalNotifyStatus = notifyStatus;
         alertdialogbuilder.setTitle("Please confirm !!!")
-                .setMessage("Do you want to send "+req+" request to"+adminUserName+"?")
+                .setMessage("Do you want to send " + req + " request to" + adminUserName + "?")
                 .setCancelable(false)
                 .setPositiveButton("Yes",
                         new DialogInterface.OnClickListener() {
@@ -682,19 +688,20 @@ public class Discover_Activity extends AppCompatActivity {
                                 final String userName = currentUser.getDisplayName();
                                 final String userEmail = currentUser.getEmail();
                                 final Uri userPhoto = currentUser.getPhotoUrl();
-                                DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child( "Notification" ).child("Received_Req").child(adminGroupID);
-                                DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child( "Notification" ).child("Submit_Req").child(userID);
+                                DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(adminGroupID);
+                                DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(userID);
 
                                 refjoiningReq.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        long noofQuesinCategory=snapshot.getChildrenCount()+1;
-                                        String pushLong="Joining Reqno_"+noofQuesinCategory;
+                                        long noofQuesinCategory = snapshot.getChildrenCount() + 1;
+                                        String pushLong = "Joining Reqno_" + noofQuesinCategory;
 //                                        Class_Group  userAddComment= new Class_Group(dateTimeCC,userName,userID,adminGroupID, userEmail,adminEmailID,"req_sent", finalNotifyStatus);
-                                        Class_Group  userAdd= new Class_Group(dateTimeCC, userName, "req_sent",userID,adminGroupID, userEmail, pushLong, "groupName","groupPushId",finalNotifyStatus);
+                                        Class_Group userAdd = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, pushLong, "groupName", "groupPushId", finalNotifyStatus);
                                         refjoiningReq.child(pushLong).setValue(userAdd);
                                         refacceptingReq.child(pushLong).setValue(userAdd);
                                     }
+
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
                                     }
@@ -748,7 +755,7 @@ public class Discover_Activity extends AppCompatActivity {
 //                        Toast.makeText(Discover_Activity.this, "Request error", Toast.LENGTH_LONG).show();
 //                        Log.i(TAG, "onErrorResponse: Didn't work");
                     }
-                }){
+                }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
@@ -762,14 +769,14 @@ public class Discover_Activity extends AppCompatActivity {
 
     private void showBtmDialogUserProfile(String memberUserId, String memberUserName) {
 
-        BottomSheetDialog btmSheetUserProfile=new BottomSheetDialog(Discover_Activity.this);
+        BottomSheetDialog btmSheetUserProfile = new BottomSheetDialog(Discover_Activity.this);
         btmSheetUserProfile.setCancelable(true);
         btmSheetUserProfile.setContentView(R.layout.bottomsheet_profileothers);
-        DatabaseReference refUserStatus,refUserFollowers,refUserFollowing;
+        DatabaseReference refUserStatus, refUserFollowers, refUserFollowing;
 
 
-        Button btn_SentFrndReq=btmSheetUserProfile.findViewById(R.id.btn_SentFrndReq);
-        Button btn_FollowFrnd=btmSheetUserProfile.findViewById(R.id.btn_FollowFrnd);
+        Button btn_SentFrndReq = btmSheetUserProfile.findViewById(R.id.btn_SentFrndReq);
+        Button btn_FollowFrnd = btmSheetUserProfile.findViewById(R.id.btn_FollowFrnd);
 
         TextView tv_UserName = btmSheetUserProfile.findViewById(R.id.tv_UserName);
         TextView tv_Name = btmSheetUserProfile.findViewById(R.id.tv_Name);
@@ -794,87 +801,89 @@ public class Discover_Activity extends AppCompatActivity {
 
         tv_Name.setText(memberUserName);
 
-        refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(memberUserId);
+        refUserStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(memberUserId);
         refUserStatus.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount()>0){
-                    if (snapshot.child("Bio").exists()){
-                        String bio=snapshot.child("Bio").getValue().toString();
+                if (snapshot.getChildrenCount() > 0) {
+                    if (snapshot.child("Bio").exists()) {
+                        String bio = snapshot.child("Bio").getValue().toString();
                         ll_bio.setVisibility(View.VISIBLE);
                         tv_UserBio.setText(bio);
-                    }else{
+                    } else {
                         ll_bio.setVisibility(View.GONE);
                     }
 
-                    if (snapshot.child("Insitution").exists()){
-                        String bio=snapshot.child("Insitution").getValue().toString();
+                    if (snapshot.child("Insitution").exists()) {
+                        String bio = snapshot.child("Insitution").getValue().toString();
                         ll_Institution.setVisibility(View.VISIBLE);
                         tv_UserInstitute.setText(bio);
-                    }else{
+                    } else {
                         ll_Institution.setVisibility(View.GONE);
                     }
 
-                    if (snapshot.child("NickName").exists()){
-                        String UserName=snapshot.child("NickName").getValue().toString();
+                    if (snapshot.child("NickName").exists()) {
+                        String UserName = snapshot.child("NickName").getValue().toString();
                         tv_UserUserName.setVisibility(View.VISIBLE);
                         tv_UserUserName.setText(UserName);
                         ll_UserName.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         ll_UserName.setVisibility(View.GONE);
                     }
-                    if (snapshot.child("Location").exists()){
+                    if (snapshot.child("Location").exists()) {
                         ll_location.setVisibility(View.VISIBLE);
-                        String Location=snapshot.child("Location").getValue().toString();
+                        String Location = snapshot.child("Location").getValue().toString();
                         tv_UserLocation.setText(Location);
-                    }else{
+                    } else {
                         ll_location.setVisibility(View.GONE);
                     }
 
-                    if (snapshot.child("Category").exists()){
+                    if (snapshot.child("Category").exists()) {
                         tv_addCategory.setVisibility(View.GONE);
-                        String Category=snapshot.child("Category").getValue().toString();
+                        String Category = snapshot.child("Category").getValue().toString();
                         tv_UserCategory.setVisibility(View.VISIBLE);
                         tv_UserCategory.setText(Category);
-                    }else{
+                    } else {
                         tv_addCategory.setVisibility(View.VISIBLE);
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
 
-        refUserFollowers= FirebaseDatabase.getInstance().getReference().child("Users").child("Followers").child(memberUserId);
+        refUserFollowers = FirebaseDatabase.getInstance().getReference().child("Users").child("Followers").child(memberUserId);
         refUserFollowers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount()>0){
-                    long count=snapshot.getChildrenCount();
-                    tv_CountFollowers.setText((int) count+" Followers");
-                }
-                else{
+                if (snapshot.getChildrenCount() > 0) {
+                    long count = snapshot.getChildrenCount();
+                    tv_CountFollowers.setText((int) count + " Followers");
+                } else {
                     tv_CountFollowers.setText("No Followers");
 
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
 
-        refUserFollowing= FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(memberUserId);
+        refUserFollowing = FirebaseDatabase.getInstance().getReference().child("Users").child("Following").child(memberUserId);
         refUserFollowing.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount()>0){
-                    long count=snapshot.getChildrenCount();
-                    tv_CountFollowing.setText((int) count+" Following");
-                }else {
+                if (snapshot.getChildrenCount() > 0) {
+                    long count = snapshot.getChildrenCount();
+                    tv_CountFollowing.setText((int) count + " Following");
+                } else {
                     tv_CountFollowing.setText("No Following");
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -884,7 +893,7 @@ public class Discover_Activity extends AppCompatActivity {
         btn_FollowFrnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sentInvitation(memberUserId,memberUserName,"AddFrnd");
+                sentInvitation(memberUserId, memberUserName, "AddFrnd");
 
             }
         });
@@ -892,26 +901,27 @@ public class Discover_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                sentInvitation(memberUserId,memberUserName, "FollowFrnd");
+                sentInvitation(memberUserId, memberUserName, "FollowFrnd");
             }
         });
 
         btmSheetUserProfile.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         btmSheetUserProfile.show();
     }
-    private void sentInvitation(String adminGroupID,String adminUserName, String Code) {
-        String req = null,notifyStatus=null;
-        if (Code.equals("AddFrnd")){
-            req="Friend";
-            notifyStatus="Friend_Request";
-        }else if (Code.equals("FollowFrnd")){
-            req="Follow";
-            notifyStatus="Follow_Request";
+
+    private void sentInvitation(String adminGroupID, String adminUserName, String Code) {
+        String req = null, notifyStatus = null;
+        if (Code.equals("AddFrnd")) {
+            req = "Friend";
+            notifyStatus = "Friend_Request";
+        } else if (Code.equals("FollowFrnd")) {
+            req = "Follow";
+            notifyStatus = "Follow_Request";
         }
         AlertDialog.Builder alertdialogbuilder = new AlertDialog.Builder(Discover_Activity.this);
         String finalNotifyStatus = notifyStatus;
         alertdialogbuilder.setTitle("Please confirm !!!")
-                .setMessage("Do you want to send "+req+" request to"+adminUserName+"?")
+                .setMessage("Do you want to send " + req + " request to" + adminUserName + "?")
                 .setCancelable(false)
                 .setPositiveButton("Yes",
                         new DialogInterface.OnClickListener() {
@@ -922,19 +932,20 @@ public class Discover_Activity extends AppCompatActivity {
                                 final String userName = currentUser.getDisplayName();
                                 final String userEmail = currentUser.getEmail();
                                 final Uri userPhoto = currentUser.getPhotoUrl();
-                                DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child( "Notification" ).child("Received_Req").child(adminGroupID);
-                                DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child( "Notification" ).child("Submit_Req").child(userID);
+                                DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(adminGroupID);
+                                DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(userID);
 
                                 refjoiningReq.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        long noofQuesinCategory=snapshot.getChildrenCount()+1;
-                                        String push="Joining Reqno_"+noofQuesinCategory;
+                                        long noofQuesinCategory = snapshot.getChildrenCount() + 1;
+                                        String push = "Joining Reqno_" + noofQuesinCategory;
 //                                        Class_Group  userAddComment= new Class_Group(dateTimeCC,userName,userID,adminGroupID, userEmail,adminEmailID,"req_sent", finalNotifyStatus);
-                                        Class_Group  userAdd= new Class_Group(dateTimeCC, userName, "req_sent",userID,adminGroupID, userEmail, push, "groupName","groupPushId",finalNotifyStatus);
+                                        Class_Group userAdd = new Class_Group(dateTimeCC, userName, "req_sent", userID, adminGroupID, userEmail, push, "groupName", "groupPushId", finalNotifyStatus);
                                         refjoiningReq.child(push).setValue(userAdd);
                                         refacceptingReq.child(push).setValue(userAdd);
                                     }
+
                                     @Override
                                     public void onCancelled(@NonNull DatabaseError error) {
                                     }

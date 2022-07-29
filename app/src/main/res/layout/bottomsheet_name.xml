@@ -19,7 +19,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -32,23 +32,22 @@
                 android:id="@+id/editTitle"
                 android:fontFamily="@font/inter_semibold"
                 android:textSize="18sp"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/text_color"/>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/SelectableItemBackground">
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/btn_submit"
                     android:text="@string/name_save"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
                     android:textColor="@color/iconPrimaryColor"
                     android:background="@color/transparent"
                     android:layout_marginStart="100dp"/>
-            </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
 
 
 

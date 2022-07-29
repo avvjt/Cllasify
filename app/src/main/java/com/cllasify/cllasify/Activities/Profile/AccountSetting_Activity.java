@@ -64,7 +64,6 @@ public class AccountSetting_Activity extends AppCompatActivity {
     private BroadcastReceiver broadcastReceiver;
 
 
-
     Button btn_Submit, btn_Cancel;
     ImageView btn_Back;
     TextView tv_SignOut, tv_setTheme, tv_User_Name, tv_privacy, tv_terms, tv_rateUs;
@@ -96,8 +95,8 @@ public class AccountSetting_Activity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         Pair[] pair = new Pair[2];
-        pair[0] = new Pair<View,String>(prof_pic , "pic_shared");
-        pair[1] = new Pair<View,String>(tv_User_Name , "name_shared");
+        pair[0] = new Pair<View, String>(prof_pic, "pic_shared");
+        pair[1] = new Pair<View, String>(tv_User_Name, "name_shared");
         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(AccountSetting_Activity.this, pair);
 
         Intent i = new Intent(AccountSetting_Activity.this, Profile_Activity.class);
@@ -114,7 +113,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
                 break;
 
             case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 // edited here
                 getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
 
@@ -172,25 +171,25 @@ public class AccountSetting_Activity extends AppCompatActivity {
         broadcastReceiver = new NetworkBroadcast();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
-        btn_Back=findViewById(R.id.btn_Back);
-        tv_SignOut =findViewById(R.id.tv_SignOut);
-        tv_User_Name =findViewById(R.id.tv_User_Name);
+        btn_Back = findViewById(R.id.btn_Back);
+        tv_SignOut = findViewById(R.id.tv_SignOut);
+        tv_User_Name = findViewById(R.id.tv_User_Name);
         tv_rateUs = findViewById(R.id.tv_rateUs);
         prof_pic = findViewById(R.id.prof_pic);
 
 //        spinnerUserStatus=view.findViewById(R.id.spinnerUserStatus);
 //        allNotifySwitch=view.findViewById(R.id.allNotifySwitch);
-        tv_notiConfig=findViewById(R.id.tv_notiConfig);
-        tv_setTheme=findViewById(R.id.tv_setTheme);
-        tv_Feedback=findViewById(R.id.tv_Feedback);
+        tv_notiConfig = findViewById(R.id.tv_notiConfig);
+        tv_setTheme = findViewById(R.id.tv_setTheme);
+        tv_Feedback = findViewById(R.id.tv_Feedback);
 
-        tv_notiConfig =findViewById(R.id.tv_notiConfig);
-        builder  = new AlertDialog.Builder(this);
+        tv_notiConfig = findViewById(R.id.tv_notiConfig);
+        builder = new AlertDialog.Builder(this);
 
-        btn_Submit=findViewById(R.id.btn_Submit);
-        btn_Cancel=findViewById(R.id.btn_Cancel);
+        btn_Submit = findViewById(R.id.btn_Submit);
+        btn_Cancel = findViewById(R.id.btn_Cancel);
 
-        rg_Theme=findViewById(R.id.rg_Theme);
+        rg_Theme = findViewById(R.id.rg_Theme);
 
         ll_profileSetting = findViewById(R.id.ll_profileSetting);
         tv_privacy = findViewById(R.id.tv_privacyPolicy);
@@ -203,16 +202,12 @@ public class AccountSetting_Activity extends AppCompatActivity {
 //        userPhoto = currentUser.getPhotoUrl();
 
 
-
-
-
-
         refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
 
         refUserProfPic.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child("Name").exists()){
+                if (snapshot.child("Name").exists()) {
                     tv_User_Name.setText(snapshot.child("Name").getValue().toString());
                 }
             }
@@ -227,12 +222,12 @@ public class AccountSetting_Activity extends AppCompatActivity {
         refUserProfPic.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child("profilePic").exists()){
-                    String profilePic=snapshot.child("profilePic").getValue().toString();
+                if (snapshot.child("profilePic").exists()) {
+                    String profilePic = snapshot.child("profilePic").getValue().toString();
                     if (!(AccountSetting_Activity.this).isFinishing()) {
                         Glide.with(getApplicationContext()).load(profilePic).into(prof_pic);
                     }
-                }else{
+                } else {
                     if (!(AccountSetting_Activity.this).isFinishing()) {
                         Glide.with(getApplicationContext()).load(R.drawable.maharaji).into(prof_pic);
                     }
@@ -244,7 +239,6 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
             }
         });
-
 
 
         //RateUs in playStore
@@ -273,8 +267,8 @@ public class AccountSetting_Activity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Pair[] pair = new Pair[2];
-                pair[0] = new Pair<View,String>(prof_pic , "pic_shared");
-                pair[1] = new Pair<View,String>(tv_User_Name , "name_shared");
+                pair[0] = new Pair<View, String>(prof_pic, "pic_shared");
+                pair[1] = new Pair<View, String>(tv_User_Name, "name_shared");
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(AccountSetting_Activity.this, pair);
 
                 Intent i = new Intent(AccountSetting_Activity.this, Profile_Activity.class);
@@ -288,8 +282,8 @@ public class AccountSetting_Activity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Pair[] pair = new Pair[2];
-                pair[0] = new Pair<View,String>(prof_pic , "pic_shared");
-                pair[1] = new Pair<View,String>(tv_User_Name , "name_shared");
+                pair[0] = new Pair<View, String>(prof_pic, "pic_shared");
+                pair[1] = new Pair<View, String>(tv_User_Name, "name_shared");
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(AccountSetting_Activity.this, pair);
 
                 Intent i = new Intent(AccountSetting_Activity.this, ProfileSetting_Activity.class);
@@ -325,8 +319,6 @@ public class AccountSetting_Activity extends AppCompatActivity {
         });
 
 
-
-
         tv_setTheme.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -343,7 +335,6 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
             }
         });
-
 
 
         //
@@ -364,7 +355,6 @@ public class AccountSetting_Activity extends AppCompatActivity {
 //                }
 //            }
 //        });
-
 
 
 //        ArrayAdapter<String> adapterSex = new ArrayAdapter<String>(getContext(), android.
@@ -400,15 +390,15 @@ public class AccountSetting_Activity extends AppCompatActivity {
             public void onClick(View view) {
 
 
-                 builder.setTitle("Sign out")
+                builder.setTitle("Sign out")
                         .setMessage("Do you want to logout?")
                         .setCancelable(true)
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
 
-                                HashMap<String,Object> map= new HashMap<>();
-                                map.put("token","");
+                                HashMap<String, Object> map = new HashMap<>();
+                                map.put("token", "");
 
                                 FirebaseDatabase.getInstance().getReference()
                                         .child("Admin").child("Login Status").child(userID).updateChildren(map)
@@ -432,7 +422,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
                                 dialogInterface.cancel();
                             }
                         })
-                         .show();
+                        .show();
 
 
             }
@@ -572,19 +562,24 @@ public class AccountSetting_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String feedback = et_NewDetails.getText().toString().trim();
-                String to = "cllasify@gmail.com";
-                String subject = "A feedback for Cllasify App";
-                String gmailPackage = "com.google.android.gm";
 
-                Intent email = new Intent(Intent.ACTION_SEND);
-                email.setPackage(gmailPackage);
-                email.putExtra(Intent.EXTRA_EMAIL, new String[]{to});
-                email.putExtra(Intent.EXTRA_SUBJECT, subject);
-                email.putExtra(Intent.EXTRA_TEXT, feedback);
-                email.setType("message/rfc822");
-                startActivity(Intent.createChooser(email, "Choose an Email client :"));
+                if (feedback.equals("")) {
+                    et_NewDetails.setError("Don't keep this field empty");
+                } else {
 
-                dialog.dismiss();
+                    String to = "cllasify@gmail.com";
+                    String subject = "A feedback for Cllasify App";
+                    String gmailPackage = "com.google.android.gm";
+
+                    Intent email = new Intent(Intent.ACTION_SEND);
+                    email.setPackage(gmailPackage);
+                    email.putExtra(Intent.EXTRA_EMAIL, new String[]{to});
+                    email.putExtra(Intent.EXTRA_SUBJECT, subject);
+                    email.putExtra(Intent.EXTRA_TEXT, feedback);
+                    email.setType("message/rfc822");
+                    startActivity(Intent.createChooser(email, "Choose an Email client :"));
+                    dialog.dismiss();
+                }
             }
         });
         btn_Cancel.setOnClickListener(new View.OnClickListener() {
@@ -612,38 +607,41 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
         SwitchMaterial sw_Direct = bottomSheetDialoglogin.findViewById(R.id.sw_Direct);
         SwitchMaterial sw_Mention = bottomSheetDialoglogin.findViewById(R.id.sw_Mention);
-        SwitchMaterial sw_Server=bottomSheetDialoglogin.findViewById(R.id.sw_Server);
+        SwitchMaterial sw_Server = bottomSheetDialoglogin.findViewById(R.id.sw_Server);
 
 
-        refUserStatus= FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+        refUserStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
         refUserStatus.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getChildrenCount()>0){
-                    if (snapshot.child("Direct_Notify").exists()){
-                        String Direct_Notify=snapshot.child("Direct_Notify").getValue().toString();
-                        if (Direct_Notify.equals(true)){
+                if (snapshot.getChildrenCount() > 0) {
+                    if (snapshot.child("Direct_Notify").exists()) {
+                        String Direct_Notify = snapshot.child("Direct_Notify").getValue().toString();
+                        if (Direct_Notify.equals(true)) {
                             sw_Direct.setChecked(true);
-                        }else{
+                        } else {
                             sw_Direct.setChecked(false);
                         }
-                    }if (snapshot.child("Server_Notify").exists()){
-                        String Server_Notify=snapshot.child("Server_Notify").getValue().toString();
-                        if (Server_Notify.equals(true)){
+                    }
+                    if (snapshot.child("Server_Notify").exists()) {
+                        String Server_Notify = snapshot.child("Server_Notify").getValue().toString();
+                        if (Server_Notify.equals(true)) {
                             sw_Server.setChecked(true);
-                        }else{
+                        } else {
                             sw_Server.setChecked(false);
                         }
-                    }if (snapshot.child("Mention_Notify").exists()){
-                        String Mention_Notify=snapshot.child("Mention_Notify").getValue().toString();
-                        if (Mention_Notify.equals(true)){
+                    }
+                    if (snapshot.child("Mention_Notify").exists()) {
+                        String Mention_Notify = snapshot.child("Mention_Notify").getValue().toString();
+                        if (Mention_Notify.equals(true)) {
                             sw_Mention.setChecked(true);
-                        }else{
+                        } else {
                             sw_Mention.setChecked(false);
                         }
                     }
                 }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
@@ -651,10 +649,9 @@ public class AccountSetting_Activity extends AppCompatActivity {
         sw_Direct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sw_Direct.isChecked()){
+                if (sw_Direct.isChecked()) {
                     refUserStatus.child("Direct_Notify").setValue(false);
-                }
-                else{
+                } else {
                     refUserStatus.child("Direct_Notify").setValue(true);
                 }
             }
@@ -662,9 +659,9 @@ public class AccountSetting_Activity extends AppCompatActivity {
         sw_Mention.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sw_Direct.isChecked()){
+                if (sw_Direct.isChecked()) {
                     refUserStatus.child("Mention_Notify").setValue(false);
-                }else{
+                } else {
                     refUserStatus.child("Mention_Notify").setValue(true);
                 }
             }
@@ -672,9 +669,9 @@ public class AccountSetting_Activity extends AppCompatActivity {
         sw_Server.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (sw_Direct.isChecked()){
+                if (sw_Direct.isChecked()) {
                     refUserStatus.child("Server_Notify").setValue(true);
-                }else{
+                } else {
                     refUserStatus.child("Server_Notify").setValue(false);
                 }
             }

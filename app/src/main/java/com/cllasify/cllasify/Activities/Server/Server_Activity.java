@@ -19,6 +19,10 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
+import android.net.NetworkInfo;
+import android.net.NetworkRequest;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -657,6 +661,7 @@ public class Server_Activity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+//        checkConnectivity();
 
         checkOnlineStatus("online");
         super.onResume();
@@ -1497,7 +1502,6 @@ public class Server_Activity extends AppCompatActivity {
     }
 
 
-
     public void checkDarkLightDefaultStatusBar() {
         switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
 
@@ -1726,12 +1730,15 @@ public class Server_Activity extends AppCompatActivity {
         });
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_Cllasify);
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_server);
+
 
         init();
 /*
@@ -2304,31 +2311,77 @@ public class Server_Activity extends AppCompatActivity {
         EditText et_AddTopic = bottomSheetDialog.findViewById(R.id.et_AddTopic);
         EditText et_AddDoubt = bottomSheetDialog.findViewById(R.id.et_AddDoubt);
 
-        et_AddDoubt.addTextChangedListener(new TextWatcher() {
+        et_AddTopic.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String cs = String.valueOf(charSequence);
 
-                String c = String.valueOf(s);
+                if (cs.trim().isEmpty()) {
 
-                if (c.trim().isEmpty() && et_AddTopic != null && et_AddDoubt != null) {
                     btn_Submit.setEnabled(false);
                     btn_Submit.setTextColor(getResources().getColor(R.color.iconColor));
                 } else {
-                    btn_Submit.setEnabled(true);
-                    btn_Submit.setTextColor(getResources().getColor(R.color.iconPrimaryColor));
+                    if (et_AddTopic.getText().toString().trim().isEmpty() || et_AddDoubt.getText().toString().trim().isEmpty()) {
+                        btn_Submit.setEnabled(false);
+                        btn_Submit.setTextColor(getResources().getColor(R.color.iconColor));
+                    }
+                    if (!(et_AddTopic.getText().toString().trim().isEmpty()) && !(et_AddDoubt.getText().toString().trim().isEmpty())) {
+                        btn_Submit.setEnabled(true);
+                        btn_Submit.setTextColor(getResources().getColor(R.color.iconPrimaryColor));
+                    }
                 }
+
+                et_AddDoubt.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                        String c = String.valueOf(s);
+
+                        Log.d("TEXTCHANGE", "onTopic: " + i2);
+                        Log.d("TEXTCHANGE", "onDoubt: " + count);
+
+                        if (c.trim().isEmpty()) {
+                            btn_Submit.setEnabled(false);
+                            btn_Submit.setTextColor(getResources().getColor(R.color.iconColor));
+                        } else {
+                            if (et_AddTopic.getText().toString().trim().isEmpty() || et_AddDoubt.getText().toString().trim().isEmpty()) {
+                                btn_Submit.setEnabled(false);
+                                btn_Submit.setTextColor(getResources().getColor(R.color.iconColor));
+                            }
+                            if (!(et_AddTopic.getText().toString().trim().isEmpty()) && !(et_AddDoubt.getText().toString().trim().isEmpty())) {
+                                btn_Submit.setEnabled(true);
+                                btn_Submit.setTextColor(getResources().getColor(R.color.iconPrimaryColor));
+                            }
+                        }
+
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+
+
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable editable) {
 
             }
         });
+
 
         FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
         userID = currentUser.getUid();

@@ -1,17 +1,21 @@
 package com.cllasify.cllasify.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.Activities.Discover_Item;
 import com.cllasify.cllasify.ModelClasses.Class_Group;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -84,7 +88,7 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
                 if (snapshot.exists()) {
                     Glide.with(context.getApplicationContext()).load(snapshot.getValue()).into(holder.schoolLogoImg);
                     Glide.with(context.getApplicationContext()).load(snapshot.getValue()).into(holder.schImg);
-                }else{
+                } else {
                     Glide.with(context.getApplicationContext()).load(R.drawable.ic_logotext).into(holder.schoolLogoImg);
                     Glide.with(context.getApplicationContext()).load(R.drawable.school_bg).into(holder.schImg);
                 }
@@ -105,7 +109,7 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 int totalSize = 0;
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     totalSize += dataSnapshot.child("classStudentList").getChildrenCount();
                 }
 
@@ -201,8 +205,6 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
 
                             }
                         });
-
-
 
 
                     }

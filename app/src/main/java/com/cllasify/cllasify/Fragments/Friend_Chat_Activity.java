@@ -688,7 +688,7 @@ public class Friend_Chat_Activity extends Fragment {
                                                 }
                                             });
 
-                                    Toast.makeText(getActivity().getApplicationContext(), "Document sending successful", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getActivity().getApplicationContext(), "Document sending successful", Toast.LENGTH_SHORT).show();
                                 }
                             });
 
@@ -699,7 +699,7 @@ public class Friend_Chat_Activity extends Fragment {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(getActivity().getApplicationContext(), "Document sending failed", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity().getApplicationContext(), "Document sending failed", Toast.LENGTH_SHORT).show();
 //                        messageAdapter.setProgVal(2);
                     }
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -710,7 +710,7 @@ public class Friend_Chat_Activity extends Fragment {
 
                         double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
 
-                        Toast.makeText(getActivity().getApplicationContext(), "Document sending: " + progress, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getActivity().getApplicationContext(), "Document sending: " + progress, Toast.LENGTH_SHORT).show();
 
 
                     }
