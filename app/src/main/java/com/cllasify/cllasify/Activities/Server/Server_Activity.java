@@ -95,6 +95,8 @@ import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.SharePref;
 import com.discord.panels.OverlappingPanelsLayout;
 import com.discord.panels.PanelState;
+import com.facebook.shimmer.Shimmer;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -248,12 +250,17 @@ public class Server_Activity extends AppCompatActivity {
     private Uri fileUri;
 
     protected OnBackPressedListener onBackPressedListener;
+    private ShimmerFrameLayout shimmer_effect;
 
     public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
         this.onBackPressedListener = onBackPressedListener;
     }
 
     void init() {
+
+        shimmer_effect = findViewById(R.id.shimmer_effect);
+
+        shimmer_effect.startShimmer();
 
         //Find view by id
         overlappingPanels = findViewById(R.id.overlapping_panels);
@@ -1265,6 +1272,11 @@ public class Server_Activity extends AppCompatActivity {
                 ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        shimmer_effect.stopShimmer();
+                        shimmer_effect.setVisibility(View.GONE);
+                        rv_ChatDashboard.setVisibility(View.VISIBLE);
+
                         chats.clear();
                         Log.d(TAG, "onDataChange: " + snapshot.getChildrenCount());
                         for (DataSnapshot postSnapshot : snapshot.getChildren()) {
@@ -3507,7 +3519,7 @@ public class Server_Activity extends AppCompatActivity {
                                     userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, uniPushClassId, uri.toString(), "pdf", subjectUniPushId, push, fileName, "");
                                     reference.push().setValue(userAddGroupClass);
 
-                                    Toast.makeText(Server_Activity.this, "Document uploading successful", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(Server_Activity.this, "Document uploading successful", Toast.LENGTH_SHORT).show();
                                     uploadPercentage.setVisibility(View.GONE);
                                     ib_pdf_btn.setVisibility(View.VISIBLE);
                                     uploadProgressBar.setVisibility(View.GONE);
@@ -3521,7 +3533,7 @@ public class Server_Activity extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Server_Activity.this, "Document sending failed", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(Server_Activity.this, "Document sending failed", Toast.LENGTH_SHORT).show();
 //                        messageAdapter.setProgVal(2);
                     }
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {

@@ -5,7 +5,8 @@
 
         <shape android:shape="rectangle">
 
-            <solid android:color="#9F75DB"/>
+            <corners android:radius="5dp"/>
+            <solid android:color="#9F75DB" />
 
         </shape>
 
@@ -13,10 +14,15 @@
 
     <item android:id="@+id/progress">
 
-        <scale android:scaleWidth="100%" >
+        <scale android:scaleWidth="100%">
+
 
             <shape android:shape="rectangle">
-                <solid android:color="#6A2DC2" />
+                <corners android:radius="5dp"/>
+
+                <gradient
+                    android:endColor="@color/splash_end"
+                    android:startColor="@color/splash_start" />
             </shape>
 
         </scale>

@@ -363,6 +363,26 @@
                         android:layout_below="@id/action_bar">
 
 
+                        <com.facebook.shimmer.ShimmerFrameLayout
+                            android:id="@+id/shimmer_effect"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <include layout="@layout/shimmer_item"/>
+                                <include layout="@layout/shimmer_item"/>
+                                <include layout="@layout/shimmer_item"/>
+                                <include layout="@layout/shimmer_item"/>
+
+                            </LinearLayout>
+
+                        </com.facebook.shimmer.ShimmerFrameLayout>
+
+
                         <!--Chat showing RecyclerView-->
 
                         <!--Chat box sending message layout-->
@@ -370,6 +390,7 @@
                             android:id="@+id/rv_ChatDashboard"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
+                            android:visibility="gone"
                             android:layout_above="@+id/ll_bottom_send"
                             android:layout_alignParentEnd="true"
                             android:layout_marginTop="10dp"
@@ -381,7 +402,7 @@
                         <ProgressBar
                             android:id="@+id/uploadProgress"
                             android:layout_width="match_parent"
-                            android:layout_height="10dp"
+                            android:layout_height="5dp"
                             android:visibility="gone"
                             android:progressDrawable="@drawable/custom_progress_bg"
                             android:layout_above="@+id/ll_bottom_send"

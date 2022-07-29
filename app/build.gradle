@@ -115,6 +115,9 @@ dependencies {
     //BlurView
     implementation 'com.github.jgabrielfreitas:BlurImageView:1.0.1'
 
+    //Shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
 }
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'

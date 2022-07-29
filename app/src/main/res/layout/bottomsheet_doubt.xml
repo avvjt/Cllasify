@@ -11,38 +11,36 @@
         android:id="@+id/et_AddTopic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@null"
-        android:focusable="true"
-        android:fontFamily="@font/inter_medium"
         android:hint="@string/hint_doubt_title"
-        android:textSize="16sp"
-        android:importantForAutofill="no"
-        android:inputType="textCapSentences|textMultiLine"
-        android:maxLines="2"
-        android:padding="10dp"
         android:textColor="@color/text_color"
         android:textColorHint="@color/iconColor"
-        android:textCursorDrawable="@drawable/cursor_color" />
+        android:inputType="textCapSentences|textMultiLine"
+        android:background="@null"
+        android:focusable="true"
+        android:textSize="15sp"
+        android:maxLines="2"
+        android:textCursorDrawable="@drawable/cursor_color"
+        android:padding="10dp"
+        android:importantForAutofill="no" />
 
 
     <EditText
         android:id="@+id/et_AddDoubt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/et_AddTopic"
-        android:layout_marginTop="10dp"
-        android:background="@null"
-        android:focusable="true"
         android:hint="@string/hint_doubt"
-        android:importantForAutofill="no"
-        android:fontFamily="@font/inter_medium"
-        android:inputType="textCapSentences|textMultiLine"
         android:maxLines="5"
-        android:padding="10dp"
+        android:inputType="textCapSentences|textMultiLine"
         android:textColor="@color/text_color"
         android:textColorHint="@color/iconColor"
+        android:layout_below="@+id/et_AddTopic"
+        android:background="@null"
+        android:focusable="true"
         android:textCursorDrawable="@drawable/cursor_color"
-        android:textSize="16sp" />
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:importantForAutofill="no" />
 
 
     <RelativeLayout

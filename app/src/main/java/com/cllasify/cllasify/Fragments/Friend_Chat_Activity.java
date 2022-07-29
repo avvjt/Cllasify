@@ -696,7 +696,7 @@ public class Friend_Chat_Activity extends Fragment {
                                             });
 
 //                                    Toast.makeText(getActivity().getApplicationContext(), "Document sending successful", Toast.LENGTH_SHORT).show();
-                                    Toast.makeText(getActivity(), "Document uploading successful", Toast.LENGTH_SHORT).show();
+//                                    Toast.makeText(getActivity(), "Document uploading successful", Toast.LENGTH_SHORT).show();
                                     uploadPercentage.setVisibility(View.GONE);
                                     ib_pdf_btn.setVisibility(View.VISIBLE);
                                     uploadProgressBar.setVisibility(View.GONE);

@@ -50,7 +50,7 @@
     <color name="selected">#7033C1</color>
 
 
-
+    <color name="shimmer_color">#BFBDBD</color>
 
     <color name="light_black">#1C1B1B</color>
     <color name="page_black">#000000</color>
