@@ -98,7 +98,11 @@ public class WebView_Fragment extends Fragment implements DownloadFile.Listener 
                 if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
                     // this will request for permission when permission is not true
+                    Toast.makeText(getActivity().getApplicationContext(), "Downloading01 ", Toast.LENGTH_SHORT).show();
                 } else {
+
+                    Toast.makeText(getActivity().getApplicationContext(), "Downloading", Toast.LENGTH_SHORT).show();
+
                     DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
                     String title = URLUtil.guessFileName(url, null, null);
                     request.setTitle(title);
