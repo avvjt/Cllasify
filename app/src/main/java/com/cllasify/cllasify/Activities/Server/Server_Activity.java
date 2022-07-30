@@ -250,7 +250,7 @@ public class Server_Activity extends AppCompatActivity {
     private Uri fileUri;
 
     protected OnBackPressedListener onBackPressedListener;
-    private ShimmerFrameLayout shimmer_effect;
+    private ShimmerFrameLayout shimmer_effect,shimmer_effect_class;
 
     public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
         this.onBackPressedListener = onBackPressedListener;
@@ -261,6 +261,11 @@ public class Server_Activity extends AppCompatActivity {
         shimmer_effect = findViewById(R.id.shimmer_effect);
 
         shimmer_effect.startShimmer();
+
+        shimmer_effect_class = findViewById(R.id.shimmer_effect_class);
+
+        shimmer_effect_class.startShimmer();
+
 
         //Find view by id
         overlappingPanels = findViewById(R.id.overlapping_panels);
@@ -747,6 +752,11 @@ public class Server_Activity extends AppCompatActivity {
                                             List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
 
                                             for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classSubjectData").getChildren()) {
+
+                                                shimmer_effect_class.stopShimmer();
+                                                shimmer_effect_class.setVisibility(View.GONE);
+                                                recyclerViewClassList.setVisibility(View.VISIBLE);
+
                                                 Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
                                                 Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
                                                 Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
@@ -826,6 +836,11 @@ public class Server_Activity extends AppCompatActivity {
                                                 List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
 
                                                 for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
+
+                                                    shimmer_effect_class.stopShimmer();
+                                                    shimmer_effect_class.setVisibility(View.GONE);
+                                                    recyclerViewClassList.setVisibility(View.VISIBLE);
+
                                                     Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
                                                     Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
                                                     Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
@@ -1587,6 +1602,11 @@ public class Server_Activity extends AppCompatActivity {
                                         List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
 
                                         for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classSubjectData").getChildren()) {
+
+                                            shimmer_effect_class.stopShimmer();
+                                            shimmer_effect_class.setVisibility(View.GONE);
+                                            recyclerViewClassList.setVisibility(View.VISIBLE);
+
                                             Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
                                             Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
                                             Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
@@ -1675,6 +1695,11 @@ public class Server_Activity extends AppCompatActivity {
                                             List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
 
                                             for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
+
+                                                shimmer_effect_class.stopShimmer();
+                                                shimmer_effect_class.setVisibility(View.GONE);
+                                                recyclerViewClassList.setVisibility(View.VISIBLE);
+
                                                 Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
                                                 Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
                                                 Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
@@ -1814,9 +1839,11 @@ public class Server_Activity extends AppCompatActivity {
                     if (snapshot.exists()) {
                         Log.d("CHKJOINEDORADDGRP", "onDataChange: available");
                         ll_AddJoinGrp.setVisibility(View.GONE);
+                        shimmer_effect.setVisibility(View.VISIBLE);
                     } else {
                         Log.d("CHKJOINEDORADDGRP", "onDataChange: Not available");
                         ll_AddJoinGrp.setVisibility(View.VISIBLE);
+                        shimmer_effect.setVisibility(View.GONE);
                     }
                 }
 
@@ -2635,6 +2662,10 @@ public class Server_Activity extends AppCompatActivity {
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
 
+                shimmer_effect_class.startShimmer();
+                shimmer_effect_class.setVisibility(View.VISIBLE);
+                recyclerViewClassList.setVisibility(View.GONE);
+
                 btn_joinNotification.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -2758,6 +2789,11 @@ public class Server_Activity extends AppCompatActivity {
                                                     List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
 
                                                     for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
+
+                                                        shimmer_effect_class.stopShimmer();
+                                                        shimmer_effect_class.setVisibility(View.GONE);
+                                                        recyclerViewClassList.setVisibility(View.VISIBLE);
+
                                                         Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
                                                         Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
                                                         Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
@@ -2820,6 +2856,11 @@ public class Server_Activity extends AppCompatActivity {
                                                         List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
 
                                                         for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classSubjectData").getChildren()) {
+
+                                                            shimmer_effect_class.stopShimmer();
+                                                            shimmer_effect_class.setVisibility(View.GONE);
+                                                            recyclerViewClassList.setVisibility(View.VISIBLE);
+
                                                             Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
                                                             Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
                                                             Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());

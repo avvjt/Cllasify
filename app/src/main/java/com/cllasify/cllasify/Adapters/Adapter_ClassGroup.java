@@ -183,7 +183,6 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
             adapter_topicList.setOnSubjectClickListener(new Adapter_TopicList.onSubjectClickListener() {
                 @Override
                 public void onSubjectClick() {
-                    Log.d(TAG, "onSubjectClick: " + holder.getAdapterPosition());
 
                     if (parentItemArrayListClassName != null) {
 
