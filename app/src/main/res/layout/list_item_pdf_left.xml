@@ -12,7 +12,6 @@
         android:layout_gravity="center"
         android:background="@android:color/transparent"
         android:elevation="1dp"
-        android:visibility="gone"
         android:src="@drawable/ic_account_24" />
 
     <androidx.cardview.widget.CardView

@@ -184,14 +184,14 @@ public class Adapter_ClassGroup extends RecyclerView.Adapter<Adapter_ClassGroup.
                 @Override
                 public void onSubjectClick() {
 
-                    if (parentItemArrayListClassName != null) {
+                    if (parentItemArrayListClassName.size() != 0) {
+                            onAddSubjectClickListener.onSubClick(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(), class_group_names.getUniPushClassId());
 
-                        onAddSubjectClickListener.onSubClick(holder.getAdapterPosition(), parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName(), class_group_names.getUniPushClassId());
-                    }
                     DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
                     refSaveCurrentData.child("classPosition").setValue(holder.getAdapterPosition());
                     refSaveCurrentData.child("clickedClassName").setValue(parentItemArrayListClassName.get(holder.getAdapterPosition()).getClassName());
                     refSaveCurrentData.child("uniPushClassId").setValue(class_group_names.getUniPushClassId());
+                    }
 
 
                 }

@@ -43,7 +43,7 @@ public class Adapter_TopicList extends RecyclerView.Adapter<Adapter_TopicList.Vi
         this.context = context;
     }
 
-    public interface onSubjectClickListener{
+    public interface onSubjectClickListener {
         void onSubjectClick();
     }
 
@@ -144,8 +144,9 @@ public class Adapter_TopicList extends RecyclerView.Adapter<Adapter_TopicList.Vi
                             setTempData.child("subjectPosition").setValue(position);
                             setTempData.child("clickedSubjectName").setValue(subjectName);
                             setTempData.child("subjectUniPushId").setValue(subjectUniPush);
-
-                            onSubjectClickListener.onSubjectClick();
+                            if (subjectDetailsModelList.size() != 0) {
+                                onSubjectClickListener.onSubjectClick();
+                            }
                         }
                     }
                 }

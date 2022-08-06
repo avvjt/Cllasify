@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -174,26 +175,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                     if (holder.rec_pdf_profPic != null) {
                         holder.rec_pdf_profPic.setVisibility(View.VISIBLE);
 
+                        Glide.with(context.getApplicationContext()).load(chat.get(pos).getReportUsers()).into(holder.rec_pdf_profPic);
 
-                        DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(reqUserID);
-                        refUserProfPic.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                if (snapshot.child("profilePic").exists()) {
-                                    String profilePicUrl = snapshot.child("profilePic").getValue().toString();
-                                    Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
-                                    Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.rec_pdf_profPic);
-                                }
-//                            else {
-//                                Glide.with(context.getApplicationContext()).load(R.drawable.maharaji).into(holder.rec_pdf_profPic);
-//                            }
-                            }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-
-                            }
-                        });
                     }
 
                     holder.pdf_file.setOnLongClickListener(new View.OnLongClickListener() {
@@ -216,7 +200,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
                 if (holder.show_message != null) {
 
-
                     holder.show_message.setText(chat.get(position).getGroupSubGroupComb());
                     boolean isUser = false;
 
@@ -235,7 +218,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                         }
 
                         Log.d("ISREPO", "onBindViewHolder: YES" + chat.get(pos).getGroupSubGroupComb().trim().equals("This message is reported"));
-
 
 
                         if ((ru.length >= 3 && ru.length < 5) || isUser == true) {
@@ -273,7 +255,6 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                             holder.show_message.getPaint().setMaskFilter(null);
 
                             if (chat.get(pos).getGroupSubGroupComb().trim().equals("This message is reported")) {
-
 
 
                                 Typeface typeface = ResourcesCompat.getFont(context, R.font.inter_bold_italic);
@@ -336,30 +317,12 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
         }
 
         if (holder.prof_pics_chat_doubt != null) {
+
+
             DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(reqUserID);
-            refUserProfPic.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.child("Name").exists()) {
-                        String userName = snapshot.child("Name").getValue().toString();
-                        if (holder.tv_UserName != null) {
-                            holder.tv_UserName.setText(userName);
-                        }
-                    }
+            //chat.get(pos).getReportUsers()
+            Glide.with(context.getApplicationContext()).load(chat.get(pos).getDoc_Name()).into(holder.prof_pics_chat_doubt);
 
-                    if (snapshot.child("profilePic").exists()) {
-                        String profilePicUrl = snapshot.child("profilePic").getValue().toString();
-                        Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.prof_pics_chat_doubt);
-                    } else {
-                        Glide.with(context.getApplicationContext()).load(R.drawable.maharaji).into(holder.prof_pics_chat_doubt);
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
         }
     }
 

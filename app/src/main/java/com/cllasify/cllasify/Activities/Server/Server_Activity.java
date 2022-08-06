@@ -250,7 +250,7 @@ public class Server_Activity extends AppCompatActivity {
     private Uri fileUri;
 
     protected OnBackPressedListener onBackPressedListener;
-    private ShimmerFrameLayout shimmer_effect,shimmer_effect_class;
+    private ShimmerFrameLayout shimmer_effect;
 
     public void setOnBackPressedListener(OnBackPressedListener onBackPressedListener) {
         this.onBackPressedListener = onBackPressedListener;
@@ -262,9 +262,6 @@ public class Server_Activity extends AppCompatActivity {
 
         shimmer_effect.startShimmer();
 
-        shimmer_effect_class = findViewById(R.id.shimmer_effect_class);
-
-        shimmer_effect_class.startShimmer();
 
 
         //Find view by id
@@ -629,8 +626,22 @@ public class Server_Activity extends AppCompatActivity {
                         Calendar calenderCC = Calendar.getInstance();
                         SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
                         String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
-                        userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId[0], classPosition[0], subGroupMsg, "chat", subjectUniPushId[0], messagePushId, "", "");
-                        reference.child(messagePushId).setValue(userAddGroupClass);
+                        DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+                        refUserProfPic.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                                userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId[0], classPosition[0], subGroupMsg, "chat", subjectUniPushId[0], messagePushId, profilePicUrl, "");
+                                reference.child(messagePushId).setValue(userAddGroupClass);
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
                     }
 
                     @Override
@@ -753,8 +764,6 @@ public class Server_Activity extends AppCompatActivity {
 
                                             for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classSubjectData").getChildren()) {
 
-                                                shimmer_effect_class.stopShimmer();
-                                                shimmer_effect_class.setVisibility(View.GONE);
                                                 recyclerViewClassList.setVisibility(View.VISIBLE);
 
                                                 Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
@@ -837,8 +846,6 @@ public class Server_Activity extends AppCompatActivity {
 
                                                 for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
 
-                                                    shimmer_effect_class.stopShimmer();
-                                                    shimmer_effect_class.setVisibility(View.GONE);
                                                     recyclerViewClassList.setVisibility(View.VISIBLE);
 
                                                     Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
@@ -1268,50 +1275,33 @@ public class Server_Activity extends AppCompatActivity {
                                                     });
 
 
-        reference = FirebaseDatabase.getInstance().
+        reference = FirebaseDatabase.getInstance().getReference().child("Groups").child("Chat_Message").child(groupPushId).child(classUniPushId).child(subjectUniPushId);
+        readLiveMessageListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                getReference().
+                shimmer_effect.stopShimmer();
+                shimmer_effect.setVisibility(View.GONE);
+                rv_ChatDashboard.setVisibility(View.VISIBLE);
 
-                child("Groups").
+                chats.clear();
+                Log.d(TAG, "onDataChange: " + snapshot.getChildrenCount());
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    Log.d("DOUBTCHK", "onDataChange: " + postSnapshot.getValue());
 
-                child("Chat_Message").
-
-                child(groupPushId).
-
-                child(classUniPushId).
-
-                child(subjectUniPushId);
-
-        readLiveMessageListener = new
-
-                ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                        shimmer_effect.stopShimmer();
-                        shimmer_effect.setVisibility(View.GONE);
-                        rv_ChatDashboard.setVisibility(View.VISIBLE);
-
-                        chats.clear();
-                        Log.d(TAG, "onDataChange: " + snapshot.getChildrenCount());
-                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                            Log.d("DOUBTCHK", "onDataChange: " + postSnapshot.getValue());
-
-                            Class_Group class_userDashBoard = postSnapshot.getValue(Class_Group.class);
-                            chats.add(class_userDashBoard);
-                        }
-                        messageAdapter.setList(chats);
-                        messageAdapter.notifyDataSetChanged();
-                        rv_ChatDashboard.smoothScrollToPosition(Objects.requireNonNull(rv_ChatDashboard.getAdapter()).getItemCount());
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
+                    Class_Group class_userDashBoard = postSnapshot.getValue(Class_Group.class);
+                    chats.add(class_userDashBoard);
                 }
+                messageAdapter.setList(chats);
+                messageAdapter.notifyDataSetChanged();
+                rv_ChatDashboard.smoothScrollToPosition(Objects.requireNonNull(rv_ChatDashboard.getAdapter()).getItemCount());
+            }
 
-        ;
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
 
         reference.addValueEventListener(readLiveMessageListener);
 
@@ -1603,8 +1593,6 @@ public class Server_Activity extends AppCompatActivity {
 
                                         for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classSubjectData").getChildren()) {
 
-                                            shimmer_effect_class.stopShimmer();
-                                            shimmer_effect_class.setVisibility(View.GONE);
                                             recyclerViewClassList.setVisibility(View.VISIBLE);
 
                                             Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
@@ -1696,8 +1684,6 @@ public class Server_Activity extends AppCompatActivity {
 
                                             for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
 
-                                                shimmer_effect_class.stopShimmer();
-                                                shimmer_effect_class.setVisibility(View.GONE);
                                                 recyclerViewClassList.setVisibility(View.VISIBLE);
 
                                                 Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
@@ -1836,6 +1822,8 @@ public class Server_Activity extends AppCompatActivity {
             chkJoinedORAddGRP.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
                     if (snapshot.exists()) {
                         Log.d("CHKJOINEDORADDGRP", "onDataChange: available");
                         ll_AddJoinGrp.setVisibility(View.GONE);
@@ -1906,6 +1894,8 @@ public class Server_Activity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
+//                    messageAdapter.notifyDataSetChanged();
+
                     overlappingPanels.openEndPanel();
                 }
             });
@@ -1972,6 +1962,7 @@ public class Server_Activity extends AppCompatActivity {
                     }
                     if (words[3].startsWith("PanelState$Closed")) {
                         Log.d("SCROLLCHANGESPLIT", "onScrollChange: " + (words[3]));
+//                        messageAdapter.notifyDataSetChanged();
                         bottomNavigationView.setVisibility(View.GONE);
                     }
                 }
@@ -2472,8 +2463,22 @@ public class Server_Activity extends AppCompatActivity {
 
                             allDoubtReference.child(push).setValue(userAddGroupClass);
 
-                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, subGroupPushId, addDoubt, "doubt", groupClassSubjects, push, "", "");
-                            reference.push().setValue(userAddGroupClass);
+                            DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+                            refUserProfPic.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                                    userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, subGroupPushId, addDoubt, "doubt", groupClassSubjects, push, profilePicUrl, "");
+                                    reference.push().setValue(userAddGroupClass);
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
 //                            Toast.makeText(Server_Activity.this, "Doubt Successfully Added", Toast.LENGTH_SHORT).show();
                         }
 
@@ -2662,8 +2667,6 @@ public class Server_Activity extends AppCompatActivity {
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
 
-                shimmer_effect_class.startShimmer();
-                shimmer_effect_class.setVisibility(View.VISIBLE);
                 recyclerViewClassList.setVisibility(View.GONE);
 
                 btn_joinNotification.setOnClickListener(new View.OnClickListener() {
@@ -2790,8 +2793,6 @@ public class Server_Activity extends AppCompatActivity {
 
                                                     for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
 
-                                                        shimmer_effect_class.stopShimmer();
-                                                        shimmer_effect_class.setVisibility(View.GONE);
                                                         recyclerViewClassList.setVisibility(View.VISIBLE);
 
                                                         Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
@@ -2857,8 +2858,6 @@ public class Server_Activity extends AppCompatActivity {
 
                                                         for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classSubjectData").getChildren()) {
 
-                                                            shimmer_effect_class.stopShimmer();
-                                                            shimmer_effect_class.setVisibility(View.GONE);
                                                             recyclerViewClassList.setVisibility(View.VISIBLE);
 
                                                             Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
@@ -3551,19 +3550,35 @@ public class Server_Activity extends AppCompatActivity {
 
                         if (task.isComplete()) {
 
-                            storageReference.child(userMsgKeyRef + "." + "pdf").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+                            refUserProfPic.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
-                                public void onSuccess(Uri uri) {
-                                    Log.d(TAG, "onClick: " + uri);
-                                    userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, groupPushId, uniPushClassId, subjectUniPushId, uri.toString(), fileName);
-                                    allDocumentReference.child(push).setValue(userAddGroupClass);
-                                    userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, uniPushClassId, uri.toString(), "pdf", subjectUniPushId, push, fileName, "");
-                                    reference.push().setValue(userAddGroupClass);
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+
+                                    storageReference.child(userMsgKeyRef + "." + "pdf").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                        @Override
+                                        public void onSuccess(Uri uri) {
+                                            Log.d(TAG, "onClick: " + userPhoto);
+                                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, groupPushId, uniPushClassId, subjectUniPushId, uri.toString(), fileName);
+                                            allDocumentReference.child(push).setValue(userAddGroupClass);
+                                            userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, uniPushClassId, uri.toString(), "pdf", subjectUniPushId, push, fileName, profilePicUrl);
+                                            reference.push().setValue(userAddGroupClass);
 
 //                                    Toast.makeText(Server_Activity.this, "Document uploading successful", Toast.LENGTH_SHORT).show();
-                                    uploadPercentage.setVisibility(View.GONE);
-                                    ib_pdf_btn.setVisibility(View.VISIBLE);
-                                    uploadProgressBar.setVisibility(View.GONE);
+                                            uploadPercentage.setVisibility(View.GONE);
+                                            ib_pdf_btn.setVisibility(View.VISIBLE);
+                                            uploadProgressBar.setVisibility(View.GONE);
+                                        }
+                                    });
+
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
                                 }
                             });
 
