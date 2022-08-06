@@ -40,10 +40,10 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
             android:layout_marginStart="130dp"
             android:fontFamily="@font/inter_semibold"
-            android:layout_centerInParent="true"
             android:text="@string/create_subject"
             android:textColor="@color/text_color"
             android:textSize="20sp" />

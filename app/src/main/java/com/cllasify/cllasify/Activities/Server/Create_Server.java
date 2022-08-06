@@ -28,6 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.regex.Pattern;
+
 public class Create_Server extends AppCompatActivity {
 
     private BroadcastReceiver broadcastReceiver;
@@ -128,12 +130,15 @@ public class Create_Server extends AppCompatActivity {
             public void onClick(View view) {
 
                 String GroupName = et_GroupName.getText().toString().trim();
+                Pattern regex = Pattern.compile("[$&+,:;=\\\\?@#|/'<>.^*()%!-]");
 
                 if (GroupName.isEmpty()) {
                     Toast.makeText(Create_Server.this, "Enter Group Name", Toast.LENGTH_SHORT).show();
                     et_GroupName.setError("Enter Group Name");
                 }
-                else {
+                if (regex.matcher(GroupName).find()) {
+                    et_GroupName.setError("Entered text must not contain special characters");
+                }else {
                     Intent intent = new Intent(Create_Server.this,Create_Class.class);
                     intent.putExtra("GroupName",GroupName);
                     startActivity(intent);

@@ -38,6 +38,7 @@ import com.google.firebase.storage.StorageReference;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 public class Create_Class extends AppCompatActivity {
 
@@ -148,9 +149,17 @@ public class Create_Class extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String classGroupName = et_ClassName.getText().toString().trim();
+
+                Pattern regex = Pattern.compile("[$&+,:;=\\\\?@#|/'<>.^*()%!-]");
+
+
                 if (classGroupName.isEmpty()) {
+                    //must not contain '.', '#', '$', '[', or ']'
 //                    Toast.makeText(Create_Class.this, "Enter All Details", Toast.LENGTH_SHORT).show();
                     et_ClassName.setError("Enter Class Name");
+                }
+                if (regex.matcher(classGroupName).find()) {
+                    et_ClassName.setError("Entered text must not contain '.', '#', '$', '[', or ']'");
                 } else {
 
                     btn_nextAddTopic.setClickable(false);
