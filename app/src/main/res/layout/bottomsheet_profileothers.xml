@@ -118,6 +118,20 @@
                 android:visibility="gone">
 
                 <Button
+                    android:id="@+id/btn_unfollow"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_solid_unfollow"
+                    android:elevation="2dp"
+                    android:text="@string/unfollow"
+                    android:textColor="@color/black" />
+
+                <Button
                     android:id="@+id/btn_message"
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -131,19 +145,6 @@
                     android:text="@string/message"
                     android:textColor="@color/black_constant" />
 
-                <Button
-                    android:id="@+id/btn_unfollow"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_solid_unfollow"
-                    android:elevation="2dp"
-                    android:text="@string/unfollow"
-                    android:textColor="@color/black" />
 
             </LinearLayout>
 
