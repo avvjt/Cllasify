@@ -1,12 +1,15 @@
 package com.cllasify.cllasify.Fragments;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +27,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adapters.Adaptor_QueryAnswer;
 import com.cllasify.cllasify.ModelClasses.Class_Answer;
+import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Utility.Constant;
+import com.cllasify.cllasify.Utility.SharePref;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -44,7 +51,7 @@ public class DoubtFragment extends Fragment {
     FirebaseAuth firebaseAuth;
     String currUserId, currUserName, currUserEmail;
 
-    String groupPushId, groupClassPushId, groupClassSubjectPushId, doubtQuestionPushId, doubtCreatorName, doubtCreatorId;
+    String groupPushId, groupClassPushId, groupClassSubjectPushId, doubtQuestionPushId, doubtCreatorName, doubtCreatorId, doubtMSGId;
     TextView tv_DoubtGroupName, tv_DoubtGroupClass, tv_Name, byName;
 
 
@@ -141,7 +148,54 @@ public class DoubtFragment extends Fragment {
                     doubtQuestionPushId = snapshot.child("DoubtTemps").child("doubtQuestionPushId").getValue(String.class);
                     doubtCreatorName = snapshot.child("DoubtTemps").child("doubtCreatorName").getValue(String.class);
                     doubtCreatorId = snapshot.child("DoubtTemps").child("doubtCreatorId").getValue(String.class);
+                    doubtMSGId = snapshot.child("DoubtTemps").child("doubtMSGId").getValue(String.class);
 
+
+                    if (doubtCreatorId.equals(currUserId)) {
+                        btn_menu.setVisibility(View.VISIBLE);
+
+                        DatabaseReference firebaseDatabaseUnsendMSG = FirebaseDatabase.getInstance().getReference()
+                                .child("Groups").child("Chat_Message").child(groupPushId).child(groupClassPushId)
+                                .child(groupClassSubjectPushId).child(doubtMSGId);
+
+                        DatabaseReference firebaseDatabaseUnsendDoubt = FirebaseDatabase.getInstance().getReference()
+                                .child("Groups").child("Doubt").child(groupPushId).child(groupClassPushId).child(groupClassSubjectPushId);
+
+                        final PopupMenu dropDownMenu = new PopupMenu(requireContext(), btn_menu);
+
+                        final Menu menu = dropDownMenu.getMenu();
+
+                        dropDownMenu.getMenuInflater().inflate(R.menu.doubt_more, menu);
+
+                        dropDownMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem item) {
+                                switch (item.toString()) {
+
+                                    case "Delete Doubt":
+                                        requireActivity().onBackPressed();
+                                        Toast.makeText(requireContext(), "Delete", Toast.LENGTH_SHORT).show();
+
+                                        firebaseDatabaseUnsendMSG.removeValue();
+                                        firebaseDatabaseUnsendDoubt.child("All_Doubt").child(doubtQuestionPushId).removeValue();
+                                        firebaseDatabaseUnsendDoubt.child("Topic").child(doubtQuestionPushId).removeValue();
+                                        break;
+
+
+                                }
+                                return false;
+                            }
+                        });
+
+                        btn_menu.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dropDownMenu.show();
+                            }
+                        });
+
+
+                    }
 
                     DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(doubtCreatorId);
                     refUserProfPic.addValueEventListener(new ValueEventListener() {
@@ -245,13 +299,6 @@ public class DoubtFragment extends Fragment {
                         public void onClick(View view) {
                             requireActivity().onBackPressed();
 
-                        }
-                    });
-
-                    btn_menu.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Toast.makeText(getActivity(), "In process doubt features", Toast.LENGTH_SHORT).show();
                         }
                     });
 

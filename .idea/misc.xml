@@ -1419,6 +1419,7 @@
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/ic_round_arrow_forward_ios_24.xml" value="0.1" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/ic_round_right.xml" value="0.23" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/ic_send_24.xml" value="0.23" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/more.xml" value="0.1" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/pdf_pic.xml" value="0.1345" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/previous_btn.xml" value="0.18" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/drawable/received_message_background.xml" value="0.1345" />
@@ -1434,8 +1435,8 @@
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_attendance_history.xml" value="0.1" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_change_password.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_class_view.xml" value="0.33" />
-        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_create_class.xml" value="0.25" />
-        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_create_server.xml" value="0.25" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_create_class.xml" value="0.16" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_create_server.xml" value="0.16" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_create_subject.xml" value="0.25" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_dark_light.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_dashboard.xml" value="0.20277777777777778" />
@@ -1457,7 +1458,7 @@
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_profile_setting.xml" value="0.2" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_server.xml" value="0.22" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_server_join_req.xml" value="0.2234375" />
-        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_server_setting_specifics.xml" value="0.33" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_server_setting_specifics.xml" value="0.22" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_server_settings.xml" value="0.16" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_server_view.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/activity_students_subjects.xml" value="0.25" />
@@ -1536,7 +1537,8 @@
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/more_chat_options.xml" value="0.25" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/more_chat_options_others.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/more_ops.xml" value="0.33" />
-        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/more_pdf_options.xml" value="0.2234375" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/more_pdf_options.xml" value="0.2" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/more_pdf_options_other.xml" value="0.203125" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/phone_login_activity.xml" value="0.18" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/popup_logout.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/popup_theme.xml" value="0.2234375" />
@@ -1558,6 +1560,7 @@
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/layout/user_question_activity.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/menu/disc_search.xml" value="0.33" />
+        <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/menu/doubt_more.xml" value="0.25" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/menu/groupmemberdetails.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/menu/profile_manu.xml" value="0.2234375" />
         <entry key="..\:/Users/sohel/AndroidStudioProjects/Cllasify/app/src/main/res/menu/student_more.xml" value="0.2234375" />

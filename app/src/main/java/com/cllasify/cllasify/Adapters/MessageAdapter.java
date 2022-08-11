@@ -60,7 +60,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     onPDFClickListener onPDFClickListener;
 
     public interface onPDFClickListener {
-        void onPDFClick(int position, String path);
+        void onPDFClick(int position, String path, Class_Group chat);
     }
 
     public int position;
@@ -98,7 +98,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
     }
 
     public interface onDoubtClickListener {
-        void onDoubtClick(String doubtQuestion, String groupPush, String groupClassPush, String groupSubjectPush, String doubtQuestionPush, String userId, String userName);
+        void onDoubtClick(String doubtQuestion, String groupPush, String groupClassPush, String groupSubjectPush, String doubtQuestionPush, String userId, String userName, String doubtMSGId);
     }
 
     public void setOnDoubtClickListener(MessageAdapter.onDoubtClickListener onDoubtClickListener) {
@@ -183,7 +183,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                     holder.pdf_file.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View view) {
-                            onPDFClickListener.onPDFClick(pos, chat.get(pos).getGroupSubGroupComb());
+                            onPDFClickListener.onPDFClick(pos, chat.get(pos).getGroupSubGroupComb(), chat.get(pos));
                             return true;
                         }
                     });
@@ -321,6 +321,30 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
             DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(reqUserID);
             //chat.get(pos).getReportUsers()
+            refUserProfPic.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.child("Name").exists()) {
+                        String userName = snapshot.child("Name").getValue().toString();
+                        if (holder.tv_UserName != null) {
+                            holder.tv_UserName.setText(userName);
+                        }
+                    }
+
+                    if (snapshot.child("profilePic").exists()) {
+                        String profilePicUrl = snapshot.child("profilePic").getValue().toString();
+                        Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.prof_pics_chat_doubt);
+                    } else {
+                        Glide.with(context.getApplicationContext()).load(R.drawable.maharaji).into(holder.prof_pics_chat_doubt);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
             Glide.with(context.getApplicationContext()).load(chat.get(pos).getDoc_Name()).into(holder.prof_pics_chat_doubt);
 
         }
@@ -402,8 +426,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
                                     String doubtQuestionPush = user.getDoubtUniPushId();
                                     String userId = user.getPosition();
                                     String userName = user.getUserId();
+                                    String doubtMSGId = user.getReportUsers();
 
-                                    onDoubtClickListener.onDoubtClick(doubtQuestion, groupPush, groupClassPush, groupSubjectPush, doubtQuestionPush, userId, userName);
+                                    onDoubtClickListener.onDoubtClick(doubtQuestion, groupPush, groupClassPush, groupSubjectPush, doubtQuestionPush, userId, userName, doubtMSGId);
                                 }
 
                             }

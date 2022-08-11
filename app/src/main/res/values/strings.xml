@@ -527,6 +527,7 @@
     <string name="delete_subject">Delete Subject</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="delete_doubt">Delete Doubt</string>
 
 
     <!---All java files related strings-->           <!--File name wise -->

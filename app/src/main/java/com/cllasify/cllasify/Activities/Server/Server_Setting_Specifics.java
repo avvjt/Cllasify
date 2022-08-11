@@ -44,6 +44,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.Objects;
+
 public class Server_Setting_Specifics extends AppCompatActivity {
 
     private BroadcastReceiver broadcastReceiver;
@@ -352,7 +354,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Log.d("CHLDELSERV", "onDataChange: " + dataSnapshot.getKey());
-                    databaseReferenceServDel.child("UserAddedOrJoinedGrp").child(dataSnapshot.getKey()).child(groupPushId).child("addedOrJoined").setValue(null);
+                    databaseReferenceServDel.child("UserAddedOrJoinedGrp").child(Objects.requireNonNull(dataSnapshot.getKey())).child(groupPushId).setValue(null);
                 }
             }
 
@@ -368,6 +370,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
         databaseReferenceServDel.child("User_Public_Group").child(userID).child(groupPushId).removeValue();
         databaseReferenceServDel.child("Chat_Message").child(groupPushId).removeValue();
         databaseReferenceServDel.child("Doubt").child(groupPushId).removeValue();
+        databaseReferenceServDel.child("Documents").child(groupPushId).removeValue();
         databaseReferenceServDel.child("Temp").child(userID).child("clickedClassName").removeValue();
         databaseReferenceServDel.child("Temp").child(userID).child("clickedGroupName").removeValue();
         databaseReferenceServDel.child("Temp").child(userID).child("clickedGroupPushId").removeValue();
@@ -376,6 +379,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
 
 
         Intent intent = new Intent(Server_Setting_Specifics.this, Server_Activity.class);
+        intent.putExtra("stateShimmering","stop");
         startActivity(intent);
 
 

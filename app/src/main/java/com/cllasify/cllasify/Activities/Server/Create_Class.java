@@ -158,7 +158,7 @@ public class Create_Class extends AppCompatActivity {
 //                    Toast.makeText(Create_Class.this, "Enter All Details", Toast.LENGTH_SHORT).show();
                     et_ClassName.setError("Enter Class Name");
                 }
-                if (regex.matcher(classGroupName).find()) {
+                else if (regex.matcher(classGroupName).find()) {
                     et_ClassName.setError("Entered text must not contain '.', '#', '$', '[', or ']'");
                 } else {
 

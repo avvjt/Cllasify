@@ -133,10 +133,9 @@ public class Create_Server extends AppCompatActivity {
                 Pattern regex = Pattern.compile("[$&+,:;=\\\\?@#|/'<>.^*()%!-]");
 
                 if (GroupName.isEmpty()) {
-                    Toast.makeText(Create_Server.this, "Enter Group Name", Toast.LENGTH_SHORT).show();
                     et_GroupName.setError("Enter Group Name");
                 }
-                if (regex.matcher(GroupName).find()) {
+                else if (regex.matcher(GroupName).find()) {
                     et_GroupName.setError("Entered text must not contain special characters");
                 }else {
                     Intent intent = new Intent(Create_Server.this,Create_Class.class);

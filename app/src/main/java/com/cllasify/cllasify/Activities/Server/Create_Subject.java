@@ -160,6 +160,7 @@ public class Create_Subject extends AppCompatActivity {
                     finish();
                 } else {
                     Intent intent = new Intent(Create_Subject.this, Server_Activity.class);
+                    intent.putExtra("stateShimmering","stop");
                     startActivity(intent);
                 }
             }
@@ -180,6 +181,7 @@ public class Create_Subject extends AppCompatActivity {
                         finish();
                     } else {
                         Intent intent = new Intent(Create_Subject.this, Server_Activity.class);
+                        intent.putExtra("stateShimmering","stop");
                         startActivity(intent);
                     }
 

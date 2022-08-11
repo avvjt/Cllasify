@@ -252,9 +252,15 @@ public class Server_Activity extends AppCompatActivity {
 
         shimmer_effect = findViewById(R.id.shimmer_effect);
 
-        shimmer_effect.startShimmer();
+        if (getIntent().hasExtra("stateShimmering")) {
 
+            Toast.makeText(this, "Hs Shimmering", Toast.LENGTH_SHORT).show();
 
+            shimmer_effect.setVisibility(View.GONE);
+            shimmer_effect.stopShimmer();
+        } else {
+            shimmer_effect.startShimmer();
+        }
 
         //Find view by id
         overlappingPanels = findViewById(R.id.overlapping_panels);
@@ -575,7 +581,7 @@ public class Server_Activity extends AppCompatActivity {
             }
         });
 
-        messageAdapter.setOnDoubtClickListener((doubtQuestion, groupPush, groupClassPush, groupSubjectPush, doubtQuestionPush, userId, userName) -> {
+        messageAdapter.setOnDoubtClickListener((doubtQuestion, groupPush, groupClassPush, groupSubjectPush, doubtQuestionPush, userId, userName, doubtMSGId) -> {
             DatabaseReference putTempDoubt = FirebaseDatabase.getInstance().getReference().child("Groups");
             putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("groupPushId").setValue(groupPush);
             putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("groupClassPushId").setValue(groupClassPush);
@@ -583,9 +589,12 @@ public class Server_Activity extends AppCompatActivity {
             putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("doubtQuestionPushId").setValue(doubtQuestionPush);
             putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("doubtCreatorName").setValue(userName);
             putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("doubtCreatorId").setValue(userId);
+            putTempDoubt.child("Temp").child(userID).child("DoubtTemps").child("doubtMSGId").setValue(doubtMSGId);
 
 
             if (!flag) {
+//                Bundle bundle = new Bundle();
+//                bundle.putString("edttext", "From Activity");
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                 getFragmentManager().getBackStackEntryCount();
                 transaction.replace(R.id.rl_ChatDashboard, doubtFragment, "FirstFragment");
@@ -927,62 +936,131 @@ public class Server_Activity extends AppCompatActivity {
 
         messageAdapter.setOnPDFClickListener(new MessageAdapter.onPDFClickListener() {
             @Override
-            public void onPDFClick(int position, String path) {
+            public void onPDFClick(int position, String path, Class_Group chat) {
 
 
                 final Dialog dialog = new Dialog(Server_Activity.this);
                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                 dialog.setCancelable(true);
                 dialog.setCanceledOnTouchOutside(true);
-                dialog.setContentView(R.layout.more_pdf_options);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-
-                dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
-                dialog.getWindow().setGravity(Gravity.BOTTOM);
                 dialog.create();
-                dialog.show();
 
                 DatabaseReference firebaseDatabaseUnsendMSG = FirebaseDatabase.getInstance().getReference()
                         .child("Groups").child("Chat_Message").child(groupPushId).child(classUniPushId).child(subjectUniPushId);
 
+                DatabaseReference firebaseDatabaseUnsendMSGDoc = FirebaseDatabase.getInstance().getReference()
+                        .child("Groups").child("Documents").child(groupPushId).child(classUniPushId).child(subjectUniPushId).child("All_Document");
 
-                Button reply = dialog.findViewById(R.id.reply_button);
-                reply.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                    }
-                });
+                if (FirebaseAuth.getInstance().getCurrentUser() != null) {
 
 
-                Button download = dialog.findViewById(R.id.download_btn);
-                download.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+                    if (chat.getPosition().equals(userID)) {
 
-                        dialog.dismiss();
+                        dialog.show();
 
-                        if (ActivityCompat.checkSelfPermission(Server_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(Server_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                            ActivityCompat.requestPermissions(Server_Activity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                            // this will request for permission when permission is not true
-                        } else {
-                            DownloadManager.Request request = new DownloadManager.Request(Uri.parse(path));
-                            String title = URLUtil.guessFileName(path, null, null);
-                            request.setTitle(title);
-                            request.setDescription(" Downloading File please wait ..... ");
-                            String cookie = CookieManager.getInstance().getCookie(path);
-                            request.addRequestHeader("cookie", cookie);
-                            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title);
-                            DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-                            downloadManager.enqueue(request);
+                        dialog.setContentView(R.layout.more_pdf_options);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                        dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+                        Button unsend = dialog.findViewById(R.id.unsend_button);
+                        unsend.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                                dialog.dismiss();
+
+                                firebaseDatabaseUnsendMSG.child(chat.getDoubtUniPushId()).removeValue();
+                                firebaseDatabaseUnsendMSGDoc.child(chat.getDoubtUniPushId()).removeValue();
+                                messageAdapter.removeItem(position);
+                            }
+                        });
+
+                        Button reply = dialog.findViewById(R.id.reply_button);
+                        reply.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        });
+
+
+                        Button download = dialog.findViewById(R.id.download_btn);
+                        download.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                dialog.dismiss();
+
+                                if (ActivityCompat.checkSelfPermission(Server_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(Server_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                    ActivityCompat.requestPermissions(Server_Activity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                                    // this will request for permission when permission is not true
+                                } else {
+                                    DownloadManager.Request request = new DownloadManager.Request(Uri.parse(path));
+                                    String title = URLUtil.guessFileName(path, null, null);
+                                    request.setTitle(title);
+                                    request.setDescription(" Downloading File please wait ..... ");
+                                    String cookie = CookieManager.getInstance().getCookie(path);
+                                    request.addRequestHeader("cookie", cookie);
+                                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title);
+                                    DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                                    downloadManager.enqueue(request);
 //                            Toast.makeText(Server_Activity.this, " Downloading Started . ", Toast.LENGTH_SHORT).show();
-                        }
+                                }
 
+                            }
+                        });
+
+                    } else {
+
+                        dialog.show();
+
+                        dialog.setContentView(R.layout.more_pdf_options_other);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                        dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                        dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+                        Button reply = dialog.findViewById(R.id.reply_button);
+                        reply.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                            }
+                        });
+
+
+                        Button download = dialog.findViewById(R.id.download_btn);
+                        download.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+
+                                dialog.dismiss();
+
+                                if (ActivityCompat.checkSelfPermission(Server_Activity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(Server_Activity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                                    ActivityCompat.requestPermissions(Server_Activity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                                    // this will request for permission when permission is not true
+                                } else {
+                                    DownloadManager.Request request = new DownloadManager.Request(Uri.parse(path));
+                                    String title = URLUtil.guessFileName(path, null, null);
+                                    request.setTitle(title);
+                                    request.setDescription(" Downloading File please wait ..... ");
+                                    String cookie = CookieManager.getInstance().getCookie(path);
+                                    request.addRequestHeader("cookie", cookie);
+                                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title);
+                                    DownloadManager downloadManager = (DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+                                    downloadManager.enqueue(request);
+//                            Toast.makeText(Server_Activity.this, " Downloading Started . ", Toast.LENGTH_SHORT).show();
+                                }
+
+                            }
+                        });
                     }
-                });
+                }
 
 
             }
@@ -1752,7 +1830,6 @@ public class Server_Activity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_Cllasify);
@@ -1820,7 +1897,7 @@ public class Server_Activity extends AppCompatActivity {
                     if (snapshot.exists()) {
                         Log.d("CHKJOINEDORADDGRP", "onDataChange: available");
                         ll_AddJoinGrp.setVisibility(View.GONE);
-                        shimmer_effect.setVisibility(View.VISIBLE);
+//                        shimmer_effect.setVisibility(View.VISIBLE);
                     } else {
                         Log.d("CHKJOINEDORADDGRP", "onDataChange: Not available");
                         ll_AddJoinGrp.setVisibility(View.VISIBLE);
@@ -2443,6 +2520,11 @@ public class Server_Activity extends AppCompatActivity {
                 if (!addDoubt.isEmpty() && !addTopic.isEmpty()) {
                     DatabaseReference allDoubtReference = FirebaseDatabase.getInstance().getReference().
                             child("Groups").child("Doubt").child(groupPushId).child(subGroupPushId).child(groupClassSubjects).child("All_Doubt");
+
+                    String pushValue[] = reference.push().toString().split("/");
+
+                    Log.d("DOUBTVL", "onClick: " + pushValue[8]);
+
                     allDoubtReference.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -2461,8 +2543,8 @@ public class Server_Activity extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     String profilePicUrl = snapshot.child("profilePic").getValue().toString();
-                                    userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, subGroupPushId, addDoubt, "doubt", groupClassSubjects, push, profilePicUrl, "");
-                                    reference.push().setValue(userAddGroupClass);
+                                    userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, subGroupPushId, addDoubt, "doubt", groupClassSubjects, push, profilePicUrl, pushValue[8]);
+                                    reference.child(pushValue[8]).setValue(userAddGroupClass);
 
                                 }
 
@@ -2660,6 +2742,8 @@ public class Server_Activity extends AppCompatActivity {
             @Override
             public void showChildGroupAdaptor(int position, String groupName, String groupPushId, String groupUserID, String groupCategory) {
 
+                shimmer_effect.stopShimmer();
+                shimmer_effect.setVisibility(View.GONE);
                 recyclerViewClassList.setVisibility(View.GONE);
 
                 btn_joinNotification.setOnClickListener(new View.OnClickListener() {
@@ -3557,7 +3641,7 @@ public class Server_Activity extends AppCompatActivity {
                                             userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, push, groupPushId, uniPushClassId, subjectUniPushId, uri.toString(), fileName);
                                             allDocumentReference.child(push).setValue(userAddGroupClass);
                                             userAddGroupClass = new Class_Group(dateTimeCC, userName, userID, groupPushId, uniPushClassId, uri.toString(), "pdf", subjectUniPushId, push, fileName, profilePicUrl);
-                                            reference.push().setValue(userAddGroupClass);
+                                            reference.child(push).setValue(userAddGroupClass);
 
 //                                    Toast.makeText(Server_Activity.this, "Document uploading successful", Toast.LENGTH_SHORT).show();
                                             uploadPercentage.setVisibility(View.GONE);
@@ -3660,7 +3744,6 @@ public class Server_Activity extends AppCompatActivity {
                 });
 
     }
-
 
 
     /*
