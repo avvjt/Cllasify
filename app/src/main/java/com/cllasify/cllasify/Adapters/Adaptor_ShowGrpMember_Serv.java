@@ -204,7 +204,7 @@ public class Adaptor_ShowGrpMember_Serv extends RecyclerView.Adapter<Adaptor_Sho
                                     int studPos = getAdapterPosition();
                                     Class_Student_Details class_student_details = mDatalistNew.get(studPos);
                                     String groupPushId = String.valueOf(snapshot.child("clickedGroupPushId").getValue());
-                                    String classUniPushId = String.valueOf(snapshot.child("clickedStudentUniPushClassId").getValue());
+                                    String classUniPushId = String.valueOf(snapshot.child("uniPushClassId").getValue());
                                     String studentUniPush = class_student_details.getUserId();
                                     String studentName = class_student_details.getUserName();
 

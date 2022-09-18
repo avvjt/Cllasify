@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cllasify.cllasify.Activities.Fees_Structure;
 import com.cllasify.cllasify.ModelClasses.Class_Group_Names;
 import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
 import com.cllasify.cllasify.Utility.Constant;
@@ -332,19 +333,19 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
     private void delStudent(String groupPushId, String classUniPushId, String studentUserId) {
         FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
                 .child(groupPushId).child(classUniPushId).child("classStudentList").child(studentUserId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
+                    @Override
+                    public void onSuccess(Void unused) {
 
-            }
-        });
+                    }
+                });
 
         FirebaseDatabase.getInstance().getReference().child("Groups").child("All_User_Group_Class")
                 .child(groupPushId).child(studentUserId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void unused) {
+                    @Override
+                    public void onSuccess(Void unused) {
 
-            }
-        });
+                    }
+                });
 
     }
 
@@ -394,12 +395,12 @@ public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_S
                                                 notifyItemRemoved(position);
                                             }
                                         }).setNegativeButton("No",
-                                        new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                dialog.cancel();
-                                            }
-                                        });
+                                                new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        dialog.cancel();
+                                                    }
+                                                });
                                 androidx.appcompat.app.AlertDialog alert = alertdialogbuilder.create();
                                 alert.show();
 

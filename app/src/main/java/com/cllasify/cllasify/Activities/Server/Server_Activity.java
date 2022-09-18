@@ -63,6 +63,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Activities.Attendance_Activity;
 import com.cllasify.cllasify.Activities.Discover_Activity;
+import com.cllasify.cllasify.Activities.Fees_Structure;
 import com.cllasify.cllasify.Activities.Notification_Activity;
 import com.cllasify.cllasify.Activities.Profile.Profile_Activity;
 import com.cllasify.cllasify.Adapters.Adapter_All_Friends;
@@ -180,7 +181,7 @@ public class Server_Activity extends AppCompatActivity {
     //Linear Layouts
     LinearLayout onlyAdminLayout, groupSection, ll_AddJoinGrp, ll_ChatDoubtDashboard,
             endPanelLinearLayout, friendSection, rightPanelMems, rightPanelMember,
-            ib_servSettings, btn_lteachattend, FriendListText, btn_joinNotification;
+            ib_servSettings, btn_lteachattend, FriendListText, btn_joinNotification, btn_lteachFees;
 
 
     //Buttons
@@ -254,7 +255,7 @@ public class Server_Activity extends AppCompatActivity {
 
         if (getIntent().hasExtra("stateShimmering")) {
 
-            Toast.makeText(this, "Hs Shimmering", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "Hs Shimmering", Toast.LENGTH_SHORT).show();
 
             shimmer_effect.setVisibility(View.GONE);
             shimmer_effect.stopShimmer();
@@ -290,6 +291,8 @@ public class Server_Activity extends AppCompatActivity {
         tv_OtherTitle = findViewById(R.id.tv_OtherTitle);
         ib_FrndP_csubmit = findViewById(R.id.ib_FrndP_csubmit);
         btn_lteachattend = findViewById(R.id.btn_lteachattend);
+        btn_lteachFees = findViewById(R.id.btn_feesStructure);
+
         btn_lTeachExam = findViewById(R.id.btn_lteachexam);
         btn_lTeachResult = findViewById(R.id.btn_lteachresult);
         rvFriendsList = findViewById(R.id.recyclerViewFriendsNameList);
@@ -756,7 +759,7 @@ public class Server_Activity extends AppCompatActivity {
                                             Class_Group_Names class_group_names = new Class_Group_Names();
                                             class_group_names.setGroupPushId(groupPushId);
                                             class_group_names.setClassName(dataSnapshot.child("className").getValue(String.class));
-                                            class_group_names.setClassBio(dataSnapshot.child("classBio").getValue(String.class));
+                                            class_group_names.setClassFees(dataSnapshot.child("classFees").getValue(String.class));
                                             class_group_names.setUniPushClassId(dataSnapshot.child("classUniPushId").getValue(String.class));
 
                                             Log.d("JOIN", "onClick: " + groupPushId);
@@ -838,7 +841,7 @@ public class Server_Activity extends AppCompatActivity {
                                                 Class_Group_Names class_group_names = new Class_Group_Names();
                                                 class_group_names.setGroupPushId(groupPushId);
                                                 class_group_names.setClassName(snapshot.child("className").getValue(String.class));
-                                                class_group_names.setClassBio(snapshot.child("classBio").getValue(String.class));
+                                                class_group_names.setClassFees(snapshot.child("classFees").getValue(String.class));
                                                 class_group_names.setUniPushClassId(snapshot.child("classUniPushId").getValue(String.class));
 
                                                 Log.d("JOIN", "onClick: " + groupPushId);
@@ -915,6 +918,42 @@ public class Server_Activity extends AppCompatActivity {
 
             btn_joinNotification.setEnabled(true);
             btn_lteachattend.setEnabled(true);
+            btn_lteachFees.setEnabled(true);
+
+            btn_lteachFees.setOnClickListener(view -> {
+
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("ServerUpiId");
+
+
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if (snapshot.exists()) {
+
+                            String upiId = snapshot.getValue().toString().trim();
+
+                            if (snapshot.exists() && !(upiId.isEmpty())) {
+                                Intent intent = new Intent(Server_Activity.this, Fees_Structure.class);
+                                intent.putExtra("uniGroupPushId", groupPushId);
+                                intent.putExtra("uniClassPushId", classUniPushId);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(Server_Activity.this, "Please set your UPI ID in the Server Profile Settings", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(Server_Activity.this, "Please set your UPI ID in the Server Profile Settings", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
+            });
 
             btn_lteachattend.setOnClickListener(view -> {
 
@@ -1654,7 +1693,7 @@ public class Server_Activity extends AppCompatActivity {
                                         Class_Group_Names class_group_names = new Class_Group_Names();
                                         class_group_names.setGroupPushId(groupPushId);
                                         class_group_names.setClassName(dataSnapshot.child("className").getValue(String.class));
-                                        class_group_names.setClassBio(dataSnapshot.child("classBio").getValue(String.class));
+                                        class_group_names.setClassFees(dataSnapshot.child("classFees").getValue(String.class));
                                         class_group_names.setUniPushClassId(dataSnapshot.child("classUniPushId").getValue(String.class));
 
                                         Log.d("JOIN", "onClick: " + groupPushId);
@@ -1745,7 +1784,7 @@ public class Server_Activity extends AppCompatActivity {
                                             Class_Group_Names class_group_names = new Class_Group_Names();
                                             class_group_names.setGroupPushId(groupPushId);
                                             class_group_names.setClassName(snapshot.child("className").getValue(String.class));
-                                            class_group_names.setClassBio(snapshot.child("classBio").getValue(String.class));
+                                            class_group_names.setClassFees(snapshot.child("classFees").getValue(String.class));
                                             class_group_names.setUniPushClassId(snapshot.child("classUniPushId").getValue(String.class));
 
                                             Log.d("JOIN", "onClick: " + groupPushId);
@@ -2761,6 +2800,13 @@ public class Server_Activity extends AppCompatActivity {
                         btn_lteachattend.setEnabled(false);
                     }
                 });
+                btn_lteachFees.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showToast();
+                        btn_lteachFees.setEnabled(false);
+                    }
+                });
 
                 memVis(false);
 
@@ -2861,7 +2907,7 @@ public class Server_Activity extends AppCompatActivity {
                                                     Class_Group_Names class_group_names = new Class_Group_Names();
                                                     class_group_names.setGroupPushId(groupPushId);
                                                     class_group_names.setClassName(snapshot.child("className").getValue(String.class));
-                                                    class_group_names.setClassBio(snapshot.child("classBio").getValue(String.class));
+                                                    class_group_names.setClassFees(snapshot.child("classFees").getValue(String.class));
                                                     class_group_names.setUniPushClassId(snapshot.child("classUniPushId").getValue(String.class));
 
                                                     Log.d("JOIN", "onClick: " + groupPushId);
@@ -2926,7 +2972,7 @@ public class Server_Activity extends AppCompatActivity {
                                                         Class_Group_Names class_group_names = new Class_Group_Names();
                                                         class_group_names.setGroupPushId(groupPushId);
                                                         class_group_names.setClassName(dataSnapshot.child("className").getValue(String.class));
-                                                        class_group_names.setClassBio(dataSnapshot.child("classBio").getValue(String.class));
+                                                        class_group_names.setClassFees(dataSnapshot.child("classFees").getValue(String.class));
                                                         class_group_names.setUniPushClassId(dataSnapshot.child("classUniPushId").getValue(String.class));
 
                                                         Log.d("JOIN", "onClick: " + groupPushId);

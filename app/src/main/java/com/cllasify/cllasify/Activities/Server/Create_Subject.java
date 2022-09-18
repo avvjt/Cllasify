@@ -245,7 +245,7 @@ public class Create_Subject extends AppCompatActivity {
                             Class_Group_Names class_group_names = new Class_Group_Names();
                             class_group_names.setGroupPushId(groupPushId);
                             class_group_names.setClassName(dataSnapshot.child("className").getValue(String.class));
-                            class_group_names.setClassBio(dataSnapshot.child("classBio").getValue(String.class));
+                            class_group_names.setClassFees(dataSnapshot.child("classFees").getValue(String.class));
                             class_group_names.setUniPushClassId(dataSnapshot.child("classUniPushId").getValue(String.class));
 
 

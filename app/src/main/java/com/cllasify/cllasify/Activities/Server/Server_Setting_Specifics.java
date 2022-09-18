@@ -50,7 +50,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
 
     private BroadcastReceiver broadcastReceiver;
 
-    EditText et_ServerName, et_schoolBio, et_schoolEmail;
+    EditText et_ServerName, et_schoolBio, et_schoolEmail, et_serverUpiId;
     DatabaseReference getTempData;
     String currUserId;
     String groupPushId;
@@ -132,6 +132,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
         et_ServerName = findViewById(R.id.et_ServerName);
         et_schoolBio = findViewById(R.id.et_schoolBio);
         et_schoolEmail = findViewById(R.id.et_schoolEmail);
+        et_serverUpiId = findViewById(R.id.et_serverUpiId);
         doneBtn = findViewById(R.id.doneBtn);
         btn_Back = findViewById(R.id.btn_Back);
         serverDelete = findViewById(R.id.deleteBtn);
@@ -217,6 +218,17 @@ public class Server_Setting_Specifics extends AppCompatActivity {
 
                     }
                 });
+                databaseReference.child("All_Universal_Group").child(clickedGrpPushId).child("ServerUpiId").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        et_serverUpiId.setText(snapshot.getValue(String.class));
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
                 databaseReference.child("All_Universal_Group").child(clickedGrpPushId).child("ServerEmail").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -245,10 +257,12 @@ public class Server_Setting_Specifics extends AppCompatActivity {
                         final String serverName = et_ServerName.getText().toString().trim();
                         final String serverBio = et_schoolBio.getText().toString().trim();
                         final String serverEmail = et_schoolEmail.getText().toString().trim();
+                        final String serverUpiId = et_serverUpiId.getText().toString().trim();
 
                         databaseReference.child("All_Universal_Group").child(clickedGrpPushId).child("ServerBio").setValue(serverBio);
                         databaseReference.child("All_Universal_Group").child(clickedGrpPushId).child("ServerEmail").setValue(serverEmail);
                         databaseReference.child("All_Universal_Group").child(clickedGrpPushId).child("groupName").setValue(serverName);
+                        databaseReference.child("All_Universal_Group").child(clickedGrpPushId).child("ServerUpiId").setValue(serverUpiId);
                         databaseReference.child("All_Universal_Group").child(clickedGrpPushId).child("User_Subscribed_Groups").child(currUserId).child("groupName").setValue(serverName);
                         databaseReference.child("User_All_Group").child(currUserId).child(clickedGrpPushId).child("groupName").setValue(serverName);
                         databaseReference.child("User_Public_Group").child(currUserId).child(clickedGrpPushId).child("groupName").setValue(serverName);
@@ -379,7 +393,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
 
 
         Intent intent = new Intent(Server_Setting_Specifics.this, Server_Activity.class);
-        intent.putExtra("stateShimmering","stop");
+        intent.putExtra("stateShimmering", "stop");
         startActivity(intent);
 
 

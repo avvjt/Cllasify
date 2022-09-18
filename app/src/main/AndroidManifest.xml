@@ -31,6 +31,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
         <activity
+            android:name=".Activities.Fees_Structure"
+            android:screenOrientation="portrait"
+            android:exported="false" />
+        <activity
             android:name=".Activities.Settings.About"
             android:exported="false"
             android:screenOrientation="portrait"
@@ -58,8 +62,8 @@
         <activity
             android:name=".Activities.Server.Create_Server"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".Activities.Attendance_History"
@@ -144,7 +148,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDDq851TO1DznZVgMsCbdPRvLcu5pvhlwo" />
-
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" /> <!-- Sample Ad Manager app ID: ca-app-pub-3940256099942544~3347511713 -->

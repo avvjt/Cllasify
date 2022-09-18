@@ -149,7 +149,7 @@ public class Student_Joining_Reqs extends Fragment {
                             refAllGRPs.child(classUni).child("classStudentList").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    Class_Student_Details class_student_details = new Class_Student_Details(false, reqUserID, userName);
+                                    Class_Student_Details class_student_details = new Class_Student_Details(false, reqUserID, userName, "unpaid", "unpaid");
                                     refAllGRPs.child(classUni).child("classStudentList").child(reqUserID).setValue(class_student_details);
                                 }
 

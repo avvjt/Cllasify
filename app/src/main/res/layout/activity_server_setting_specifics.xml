@@ -246,6 +246,38 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+
+                <TextView
+                    android:id="@+id/edit_serverUpiId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="20dp"
+                    android:text="Server Upi id"
+                    android:textColor="@color/text_color"
+                    android:textSize="14sp"
+                    app:layout_constraintBottom_toTopOf="@+id/Edittext"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <EditText
+                    android:id="@+id/et_serverUpiId"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/iconPrimaryColor"
+                    android:hint="Server Upi id"
+                    android:importantForAutofill="no"
+                    android:inputType="textEmailAddress|textCapSentences|textMultiLine"
+                    android:textColor="@color/text_color"
+                    android:textColorHint="@color/iconColor"
+                    android:textCursorDrawable="@drawable/cursor_color"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

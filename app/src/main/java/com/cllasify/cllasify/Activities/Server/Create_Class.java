@@ -157,8 +157,7 @@ public class Create_Class extends AppCompatActivity {
                     //must not contain '.', '#', '$', '[', or ']'
 //                    Toast.makeText(Create_Class.this, "Enter All Details", Toast.LENGTH_SHORT).show();
                     et_ClassName.setError("Enter Class Name");
-                }
-                else if (regex.matcher(classGroupName).find()) {
+                } else if (regex.matcher(classGroupName).find()) {
                     et_ClassName.setError("Entered text must not contain '.', '#', '$', '[', or ']'");
                 } else {
 
@@ -292,7 +291,7 @@ public class Create_Class extends AppCompatActivity {
                                 String[] push01 = String.valueOf(testDatabaseReference.child(groupPushId).push()).split("/");
 
                                 testDatabaseReference.child(groupPushId).child(push01[6]).child("className").setValue(sbChildGroupName);
-//                                testDatabaseReference.child(groupPushId).child(push01[6]).child("classBio").setValue(" ");
+                                testDatabaseReference.child(groupPushId).child(push01[6]).child("classFees").setValue("₹0");
                                 testDatabaseReference.child(groupPushId).child(push01[6]).child("classUniPushId").setValue(push01[6]);
                                 testDatabaseReference.child(groupPushId).child(push01[6]).child("groupPushId").setValue(groupPushId);
                                 testDatabaseReference.child(groupPushId).child(push01[6]).child("classStudentList").addListenerForSingleValueEvent(new ValueEventListener() {
