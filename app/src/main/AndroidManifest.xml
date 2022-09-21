@@ -31,9 +31,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
         <activity
-            android:name=".Activities.Fees_Structure"
-            android:screenOrientation="portrait"
+            android:name=".Activities.Student_Fees_Pay"
             android:exported="false" />
+        <activity
+            android:name=".Activities.Fees_Structure"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.Settings.About"
             android:exported="false"

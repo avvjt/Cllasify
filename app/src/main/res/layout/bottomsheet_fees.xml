@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:paddingBottom="20dp"
         android:orientation="vertical"
+        android:paddingBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -22,8 +22,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="30dp">
+            android:layout_marginBottom="30dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/editTitle"
@@ -37,28 +37,27 @@
                 android:textColor="@color/text_color"
                 android:textSize="18sp" />
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/btn_submit"
-                    android:text="@string/name_save"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerInParent="true"
-                    android:textColor="@color/iconPrimaryColor"
-                    android:background="@color/transparent"
-                    android:layout_marginStart="100dp"/>
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="100dp"
+                android:background="@color/transparent"
+                android:text="@string/name_save"
+                android:textColor="@color/iconPrimaryColor" />
         </RelativeLayout>
-
 
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
             android:text="@string/sheet_name"
             android:textColor="@color/text_color"
             android:textSize="14sp"
-            android:layout_marginStart="4dp"
             app:layout_constraintBottom_toTopOf="@+id/Edittext"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -70,36 +69,37 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/iconPrimaryColor"
             android:hint="@string/name_hint"
-            android:textColor="@color/text_color"
+            android:importantForAutofill="no"
             android:inputType="number"
+            android:maxLength="4"
+            android:textColor="@color/text_color"
             android:textColorHint="@color/iconColor"
-            android:textSize="18sp"
             android:textCursorDrawable="@drawable/cursor_color"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:importantForAutofill="no" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
+            android:fontFamily="@font/inter_regular"
             android:text="@string/name_warning"
-            android:textSize="13sp"
             android:textColor="@color/text_background_color"
-            android:fontFamily="@font/inter_regular"/>
+            android:textSize="13sp" />
 
         <Button
             android:id="@+id/btn_cancel"
             android:layout_width="0dp"
-            android:visibility="gone"
             android:layout_height="0dp"
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:background="@android:color/black"
             android:textAllCaps="false"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:visibility="gone" />
 
     </LinearLayout>
 </LinearLayout>

@@ -66,6 +66,7 @@ import com.cllasify.cllasify.Activities.Discover_Activity;
 import com.cllasify.cllasify.Activities.Fees_Structure;
 import com.cllasify.cllasify.Activities.Notification_Activity;
 import com.cllasify.cllasify.Activities.Profile.Profile_Activity;
+import com.cllasify.cllasify.Activities.Student_Fees_Pay;
 import com.cllasify.cllasify.Adapters.Adapter_All_Friends;
 import com.cllasify.cllasify.Adapters.Adapter_ClassGroup;
 import com.cllasify.cllasify.Adapters.Adaptor_FriendsList;
@@ -127,6 +128,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -181,7 +183,7 @@ public class Server_Activity extends AppCompatActivity {
     //Linear Layouts
     LinearLayout onlyAdminLayout, groupSection, ll_AddJoinGrp, ll_ChatDoubtDashboard,
             endPanelLinearLayout, friendSection, rightPanelMems, rightPanelMember,
-            ib_servSettings, btn_lteachattend, FriendListText, btn_joinNotification, btn_lteachFees;
+            ib_servSettings, btn_lteachattend, FriendListText, btn_joinNotification, btn_lteachFees, btn_studentFees;
 
 
     //Buttons
@@ -272,6 +274,7 @@ public class Server_Activity extends AppCompatActivity {
         rightPanelMember = findViewById(R.id.rightPanelMember);
         swipeRefreshLayout = findViewById(R.id.refreshLayout);
         onlyAdminLayout = findViewById(R.id.onlyAdminLayout);
+        btn_studentFees = findViewById(R.id.btn_studentFees);
         btn_joinNotification = findViewById(R.id.btn_joinNotification);
         bottomNavigationView = this.findViewById(R.id.bottom_nav);
         rv_UserPublicGroupTitle = findViewById(R.id.rv_UserPublicGroupTitle);
@@ -720,8 +723,10 @@ public class Server_Activity extends AppCompatActivity {
         Log.d("ADMMMM", "is admin : " + checking);
         if (checking) {
             onlyAdminLayout.setVisibility(View.VISIBLE);
+            btn_studentFees.setVisibility(View.GONE);
         } else {
             onlyAdminLayout.setVisibility(View.GONE);
+            btn_studentFees.setVisibility(View.VISIBLE);
         }
     }
 
@@ -970,6 +975,73 @@ public class Server_Activity extends AppCompatActivity {
                 intent.putExtra("subGroupPushId", classUniPushId);
                 intent.putExtra("classPushId", subjectUniPushId);
                 startActivity(intent);
+            });
+            btn_studentFees.setOnClickListener(v -> {
+
+
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("ServerUpiId");
+
+
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if (snapshot.exists()) {
+
+                            String upiId = snapshot.getValue().toString().trim();
+
+                            if (snapshot.exists() && !(upiId.isEmpty())) {
+
+
+                                DatabaseReference dbReference = FirebaseDatabase.getInstance().getReference()
+                                        .child("Groups").child("All_GRPs").child(groupPushId).child(classUniPushId).child("classStudentList").child(userID).child("annualFees");
+
+                                dbReference.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                        if (snapshot.exists()) {
+
+                                            String feesStat = snapshot.getValue().toString().trim();
+
+                                            if (feesStat.equals("Paid Offline") || feesStat.equals("Paid")) {
+                                                Toast.makeText(Server_Activity.this, "Already " + feesStat, Toast.LENGTH_SHORT).show();
+                                            }
+                                            if (feesStat.equals("unpaid")) {
+                                                Intent intent = new Intent(Server_Activity.this, Student_Fees_Pay.class);
+                                                intent.putExtra("uniGroupPushId", groupPushId);
+                                                intent.putExtra("uniClassPushId", classUniPushId);
+                                                startActivity(intent);
+                                            }
+
+
+                                        } else {
+                                            Toast.makeText(Server_Activity.this, "Something went wrong!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+
+                            } else {
+                                Toast.makeText(Server_Activity.this, "Please ask your teacher to setup UPI ID in the Server Profile Settings", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(Server_Activity.this, "Please ask your teacher to setup UPI ID in the Server Profile Settings", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
             });
         }
 
@@ -2148,6 +2220,7 @@ public class Server_Activity extends AppCompatActivity {
                 rv_GrpMemberList.setVisibility(View.GONE);
                 friendSection.setVisibility(View.VISIBLE);
                 onlyAdminLayout.setVisibility(View.GONE);
+                btn_studentFees.setVisibility(View.GONE);
 
                 imageViewAddPanelAddGroup.setVisibility(View.GONE);
                 endPanelAllFriendsRecyclerView.setVisibility(View.VISIBLE);
@@ -2784,6 +2857,14 @@ public class Server_Activity extends AppCompatActivity {
                 shimmer_effect.stopShimmer();
                 shimmer_effect.setVisibility(View.GONE);
                 recyclerViewClassList.setVisibility(View.GONE);
+
+                btn_studentFees.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showToast();
+                        btn_studentFees.setEnabled(false);
+                    }
+                });
 
                 btn_joinNotification.setOnClickListener(new View.OnClickListener() {
                     @Override

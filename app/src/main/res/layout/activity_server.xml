@@ -672,12 +672,45 @@
 
                         </LinearLayout>
 
+
+
                     </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/view_divider" />
+
+                    <LinearLayout
+                        android:id="@+id/btn_studentFees"
+                        style="@style/SelectableItemBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone"
+                        android:padding="30dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@drawable/custom_progress_bg"
+                            android:contentDescription="@string/servers_contentDescription"
+                            android:padding="7dp"
+                            android:src="@drawable/ic_empty_calendar_icon_12dp"
+                            app:tint="@color/white_constant" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:fontFamily="@font/inter_regular"
+                            android:text="Pay Fees"
+                            android:textColor="@color/text_color"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
 
                     <!--Friends list recyclerview use in recent chat right panel-->
                     <LinearLayout

@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -39,7 +40,8 @@ public class GRPJoinReqs extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        finishAfterTransition();
+        Intent intent = new Intent(GRPJoinReqs.this, Server_Activity.class);
+        startActivity(intent);
     }
 
     public void checkDarkLightDefaultStatusBar() {
@@ -50,7 +52,7 @@ public class GRPJoinReqs extends AppCompatActivity {
                 break;
 
             case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 // edited here
                 getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
 
@@ -113,7 +115,8 @@ public class GRPJoinReqs extends AppCompatActivity {
         btn_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Intent intent = new Intent(GRPJoinReqs.this, Server_Activity.class);
+                startActivity(intent);
             }
         });
 
@@ -121,8 +124,8 @@ public class GRPJoinReqs extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
 
         JoiningReqVPAdapter joiningReqVPAdapter = new JoiningReqVPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        joiningReqVPAdapter.addFragment(new Student_Joining_Reqs(),"Students");
-        joiningReqVPAdapter.addFragment(new Teacher_Joining_Reqs(),"Teachers");
+        joiningReqVPAdapter.addFragment(new Student_Joining_Reqs(), "Students");
+        joiningReqVPAdapter.addFragment(new Teacher_Joining_Reqs(), "Teachers");
 
         viewPager.setAdapter(joiningReqVPAdapter);
 
