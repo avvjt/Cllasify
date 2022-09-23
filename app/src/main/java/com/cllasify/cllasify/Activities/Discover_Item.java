@@ -19,17 +19,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adapters.Adaptor_ShowGrpClass;
+import com.cllasify.cllasify.ModelClasses.Class_Admission;
 import com.cllasify.cllasify.ModelClasses.Class_Group;
 import com.cllasify.cllasify.ModelClasses.Class_Group_Names;
 import com.cllasify.cllasify.R;
@@ -71,6 +74,8 @@ public class Discover_Item extends AppCompatActivity {
     LinearLayout emailLayout;
     LinearLayout bioLayout;
     TextView studentCount, teacherCount;
+    String userID, userName, userEmail;
+    FirebaseUser currentUser;
 
     public void checkDarkLightDefaultStatusBar() {
         switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
@@ -140,6 +145,12 @@ public class Discover_Item extends AppCompatActivity {
         checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_explore_item);
 
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        userID = currentUser.getUid();
+        userName = currentUser.getDisplayName();
+        userEmail = currentUser.getEmail();
+
+
         broadcastReceiver = new NetworkBroadcast();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 /*
@@ -204,10 +215,6 @@ public class Discover_Item extends AppCompatActivity {
         String groupName = getIntent().getStringExtra("groupName");
         String groupPushId = getIntent().getStringExtra("groupPushId");
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String userID = currentUser.getUid();
-        final String userName = currentUser.getDisplayName();
-        final String userEmail = currentUser.getEmail();
 
         DatabaseReference userNotiCheck = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(userID).child(groupPushId).child("classPushId");
 
@@ -327,14 +334,8 @@ public class Discover_Item extends AppCompatActivity {
         showGrpClassList.setOnItemClickListener(new Adaptor_ShowGrpClass.OnItemClickListener() {
 
             @Override
-            public void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId, String classPushId, String classReqPosition) {
-                sentGroupJoinInvitation(adminGroupID, adminUserName, groupName, groupPushId, subGroupName, classPushId, "StudentJoin");
-
-            }
-
-            @Override
-            public void admissionClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String adminEmailId) {
-                sentAdmissionRequest(adminGroupID, adminUserName, groupName, groupPushId, subGroupName, adminEmailId);
+            public void joinAndAdmission(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId, String classPushId, String classReqPosition) {
+                joinAdmissionBS(adminGroupID, adminUserName, groupName, groupPushId, subGroupName, pushId, classPushId, classReqPosition);
             }
 
 
@@ -448,6 +449,93 @@ public class Discover_Item extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void joinAdmissionBS(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId, String classPushId, String classReqPosition) {
+
+        Dialog bottomSheetDialog = new Dialog(this);
+        bottomSheetDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        bottomSheetDialog.setCancelable(true);
+        bottomSheetDialog.setCanceledOnTouchOutside(true);
+        bottomSheetDialog.setContentView(R.layout.bottomsheet_join_admission);
+        bottomSheetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        Button btn_join = bottomSheetDialog.findViewById(R.id.btn_join);
+        Button btn_Admission = bottomSheetDialog.findViewById(R.id.btn_Admission);
+        NestedScrollView ll_Admission = bottomSheetDialog.findViewById(R.id.ll_admission);
+
+        btn_join.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sentGroupJoinInvitation(adminGroupID, adminUserName, groupName, groupPushId, "className", classPushId, "StudentJoin");
+            }
+        });
+
+        btn_Admission.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Discover_Item.this, Admission_Structure.class);
+                intent.putExtra("userID", userID);
+                intent.putExtra("groupPushId", groupPushId);
+                intent.putExtra("classPushId", classPushId);
+                intent.putExtra("dateTimeCC", dateTimeCC);
+                intent.putExtra("adminGroupID", adminGroupID);
+                intent.putExtra("userEmail", userEmail);
+                intent.putExtra("subGroupName", subGroupName);
+                intent.putExtra("userName", userName);
+                intent.putExtra("groupName", groupName);
+
+                startActivity(intent);
+//                sentGroupJoinInvitation(adminGroupID, adminUserName, groupName, groupPushId, "className", classPushId, "StudentAdmission");
+            }
+        });
+
+        DatabaseReference userNotiCheck = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(userID).child(groupPushId).child(classPushId);
+
+        userNotiCheck.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                if (snapshot.exists()) {
+                    if (snapshot.child("joiningStatus").exists()) {
+                        if (snapshot.child("joiningStatus").getValue().equals("admission_req_sent")) {
+                            btn_Admission.setText("In Progress");
+//                            join_as_teacher.setEnabled(false);
+                            btn_Admission.setEnabled(false);
+                        }
+                        if (snapshot.child("joiningStatus").getValue().equals("req_sent")) {
+                            btn_join.setText("Requested");
+//                            join_as_teacher.setEnabled(false);
+//                            btn_Admission.setEnabled(false);
+                        }
+                        if (snapshot.child("joiningStatus").getValue().equals("Approve")) {
+                            btn_join.setText("Joined");
+//                            join_as_teacher.setEnabled(false);
+//                            btn_Admission.setEnabled(false);
+
+                        }
+                        if (snapshot.child("joiningStatus").getValue().equals("Reject")) {
+                            btn_join.setText("Join");
+//                            join_as_teacher.setEnabled(true);
+//                            btn_Admission.setEnabled(true);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        bottomSheetDialog.show();
+        bottomSheetDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        bottomSheetDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+        bottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+        moveTaskToBack(false);
 
     }
 
@@ -567,11 +655,6 @@ public class Discover_Item extends AppCompatActivity {
         Log.d("JOINTT", "adminGroupID: " + adminGroupID + "\nsubGroupName: " + subGroupName +
                 "\nadminUserName: " + adminUserName + "\ngroupName: " + groupName + "\ngroupPushId: " + groupPushId);
 
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        final String userID = currentUser.getUid();
-        final String userName = currentUser.getDisplayName();
-        final String userEmail = currentUser.getEmail();
-
         DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(userID).child(groupPushId).child(classPushId);
         DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(groupPushId).child("groupTeacherJoiningReqs");
         DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(userID);
@@ -585,12 +668,12 @@ public class Discover_Item extends AppCompatActivity {
                 if (snapshot.exists()) {
                     if (snapshot.child("joiningStatus").exists()) {
                         if (snapshot.child("joiningStatus").getValue().equals("req_sent")) {
-                            Toast.makeText(Discover_Item.this, "Your request has been sent please wait...", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Discover_Item.this, "Your joining request has been sent please wait...", Toast.LENGTH_SHORT).show();
                         }
                         if (snapshot.child("joiningStatus").getValue().equals("Approve")) {
-                            Toast.makeText(Discover_Item.this, "Your request has been approved", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(Discover_Item.this, "Your joining request has been approved", Toast.LENGTH_SHORT).show();
                         }
-                        if (snapshot.child("joiningStatus").getValue().equals("Reject")) {
+                        if (snapshot.child("joiningStatus").getValue().equals("Reject") || (snapshot.child("joiningStatus").getValue().equals("admission_req_sent"))) {
 
                             refjoiningReq.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -606,9 +689,6 @@ public class Discover_Item extends AppCompatActivity {
                                         userNoti.child("joiningStatus").setValue("req_sent");
                                         showToastTeacher();
                                     }
-
-
-                                    showGrpClassList.notifyDataSetChanged();
 
 
                                 }
@@ -633,9 +713,6 @@ public class Discover_Item extends AppCompatActivity {
                                         userNoti.child("joiningStatus").setValue("req_sent");
                                         showToastStudent();
                                     }
-
-
-                                    showGrpClassList.notifyDataSetChanged();
 
 
                                 }
@@ -669,9 +746,6 @@ public class Discover_Item extends AppCompatActivity {
                             }
 
 
-                            showGrpClassList.notifyDataSetChanged();
-
-
                         }
 
                         @Override
@@ -693,11 +767,6 @@ public class Discover_Item extends AppCompatActivity {
                                 userNoti.child("joiningStatus").setValue("req_sent");
                                 showToastStudent();
                             }
-
-
-                            showGrpClassList.notifyDataSetChanged();
-
-
                         }
 
                         @Override

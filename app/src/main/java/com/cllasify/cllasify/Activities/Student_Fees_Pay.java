@@ -23,6 +23,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,7 @@ public class Student_Fees_Pay extends AppCompatActivity implements PaymentResult
     TextView fees_ammount;
     DatabaseReference databaseReference;
     Button payButton;
+    ProgressBar fees_prog;
 
     private AlertDialog.Builder alertDialogBuilder;
     private static final String TAG = Student_Fees_Pay.class.getSimpleName();
@@ -110,7 +112,11 @@ public class Student_Fees_Pay extends AppCompatActivity implements PaymentResult
                             payButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    startPayment(String.valueOf(feesAmt), uniGrpPushId, className, userName);
+                                    if (feesAmt == 0) {
+                                        Toast.makeText(Student_Fees_Pay.this, "Invalid Fees Amount", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        startPayment(String.valueOf(feesAmt), uniGrpPushId, className, userName);
+                                    }
                                 }
                             });
 
@@ -203,38 +209,27 @@ public class Student_Fees_Pay extends AppCompatActivity implements PaymentResult
 
     @Override
     public void onPaymentSuccess(String s, PaymentData paymentData) {
-        try {
-
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups");
-
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                    currUserID = SharePref.getDataFromPref(Constant.USER_ID);
-
-                    String grpPush = snapshot.child("Temp").child(currUserID).child("clickedGroupPushId").getValue().toString().trim();
-                    String classPush = snapshot.child("Temp").child(currUserID).child("uniPushClassId").getValue().toString().trim();
-
-                    Toast.makeText(Student_Fees_Pay.this, "Paid Successfully", Toast.LENGTH_SHORT).show();
-
-                    databaseReference.child("All_GRPs").child(grpPush).child(classPush)
-                            .child("classStudentList").child(currUserID).child("annualFees").setValue("Paid");
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
 
 
-            alertDialogBuilder.setMessage("Payment Successful :\nPayment ID: " + s + "\nPayment Data: " + paymentData.getData());
-            alertDialogBuilder.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        String uniGrpPushId = getIntent().getStringExtra("uniGroupPushId");
+        String uniClassPushId = getIntent().getStringExtra("uniClassPushId");
+
+
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups");
+
+        databaseReference.child("All_GRPs").child(uniGrpPushId).child(uniClassPushId)
+                .child("classStudentList").child(currUserID).child("annualFees").setValue("Paid");
+
+        Toast.makeText(Student_Fees_Pay.this, "Paid Successfully", Toast.LENGTH_SHORT).show();
+
+        alertDialogBuilder.setMessage("Payment Successful :\nPayment ID: " + s + "\nPayment Data: " + paymentData.getData());
+        alertDialogBuilder.show();
+
+        fees_prog = findViewById(R.id.fees_prog);
+
+        fees_prog.setVisibility(View.VISIBLE);
+        onBackPressed();
+
     }
 
     @Override

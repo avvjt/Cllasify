@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.cllasify.cllasify.Adapters.JoiningReqVPAdapter;
+import com.cllasify.cllasify.Fragments.Admission_Joining_Reqs;
 import com.cllasify.cllasify.Fragments.Student_Joining_Reqs;
 import com.cllasify.cllasify.Fragments.Teacher_Joining_Reqs;
 import com.cllasify.cllasify.R;
@@ -126,6 +127,8 @@ public class GRPJoinReqs extends AppCompatActivity {
         JoiningReqVPAdapter joiningReqVPAdapter = new JoiningReqVPAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
         joiningReqVPAdapter.addFragment(new Student_Joining_Reqs(), "Students");
         joiningReqVPAdapter.addFragment(new Teacher_Joining_Reqs(), "Teachers");
+        joiningReqVPAdapter.addFragment(new Admission_Joining_Reqs(), "Admission");
+
 
         viewPager.setAdapter(joiningReqVPAdapter);
 

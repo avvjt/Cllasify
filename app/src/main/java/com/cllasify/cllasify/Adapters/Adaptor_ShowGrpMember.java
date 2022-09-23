@@ -110,7 +110,7 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
                     userFriends.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Log.d("USERFRIENDSSTATUS", "Status: "+snapshot.child("userStatus").getValue().toString());
+                            Log.d("USERFRIENDSSTATUS", "Status: " + snapshot.child("userStatus").getValue().toString());
                             if (snapshot.child("userStatus").getValue().toString().trim().equals("online")) {
                                 holder.civ_UserProfilePic.setBorderColor(context.getColor(R.color.splash_end));
                                 holder.civ_UserProfilePic.setBorderWidth(5);
@@ -126,7 +126,6 @@ public class Adaptor_ShowGrpMember extends RecyclerView.Adapter<Adaptor_ShowGrpM
 
                         }
                     });
-
 
 
 //                    Log.d("USERFRIENDS", "Friend" + "\tMember Id: " + userID + "\tFriend Id: " + snapshot.getKey() + "\tPosition: " + position);

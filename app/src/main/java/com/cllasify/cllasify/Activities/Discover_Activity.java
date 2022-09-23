@@ -465,22 +465,6 @@ public class Discover_Activity extends AppCompatActivity {
         refGroupClassList = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId);
         listGrpClassList.clear();
 
-        showGrpClassList.setOnItemClickListener(new Adaptor_ShowGrpClass.OnItemClickListener() {
-
-            @Override
-            public void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId, String classPushId, String classReqPosition) {
-                sentGroupJoinInvitation(adminGroupID, adminUserName, groupName, groupPushId, subGroupName);
-
-            }
-
-            @Override
-            public void admissionClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String adminEmailId) {
-
-            }
-
-
-        });
-
         refGroupClassList.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {

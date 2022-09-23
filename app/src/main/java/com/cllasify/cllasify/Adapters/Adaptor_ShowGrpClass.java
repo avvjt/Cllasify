@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,9 +42,12 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
     String currUserID;
 
     public interface OnItemClickListener {
+        /*
         void JoinGroupClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId, String classPushId, String classReqPosition);
 
         void admissionClass(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String adminEmailId);
+*/
+        void joinAndAdmission(String adminGroupID, String adminUserName, String groupName, String groupPushId, String subGroupName, String pushId, String classPushId, String classReqPosition);
 
     }
 
@@ -80,32 +84,7 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
         String classPushId = Answers.getUniPushClassId();
         String groupPushId = Answers.getGroupPushId();
 
-        DatabaseReference userNotiCheck = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(currUserID).child(groupPushId).child(classPushId);
 
-        userNotiCheck.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                if (snapshot.exists()) {
-                    if (snapshot.child("joiningStatus").exists()) {
-                        if (snapshot.child("joiningStatus").getValue().equals("req_sent")) {
-                            holder.btn_ClassJoin.setText("Requested");
-                        }
-                        if (snapshot.child("joiningStatus").getValue().equals("Approve")) {
-                            holder.btn_ClassJoin.setText("Joined");
-                        }
-                        if (snapshot.child("joiningStatus").getValue().equals("Reject")) {
-                            holder.btn_ClassJoin.setText("Join");
-                        }
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
         holder.tv_ClassTitle.setText(groupClassName);
@@ -123,6 +102,7 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
         Class_Group class_Group;
         Boolean clicked;
         DatabaseReference refLike;
+        RelativeLayout joining_rl;
 
         TextView tv_ClassTitle;
         Button btn_ClassAdmission, btn_ClassJoin;
@@ -134,6 +114,7 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
             tv_ClassTitle = itemView.findViewById(R.id.tv_ClassTitle);
             btn_ClassAdmission = itemView.findViewById(R.id.btn_ClassAdmission);
             btn_ClassJoin = itemView.findViewById(R.id.btn_ClassJoin);
+            joining_rl = itemView.findViewById(R.id.joining_rl);
 
 
             firebaseAuth = FirebaseAuth.getInstance();
@@ -141,6 +122,70 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
             assert currentUser != null;
             currUserID = currentUser.getUid();
 
+            joining_rl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+                    assert currentUser != null;
+                    String userID = currentUser.getUid();
+
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        Class_Group_Names classGroupNames = mDatalistNew.get(position);
+                        String className = classGroupNames.getClassName();
+
+
+                        DatabaseReference databaseReferenceGetPush = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+                        databaseReferenceGetPush.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String groupPushId = snapshot.child("clickedJoinSearchGroup").getValue().toString();
+
+
+                                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group")
+                                        .child(groupPushId);
+
+                                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        String adminGroupID = snapshot.child("userId").getValue().toString();
+                                        String adminUserName = snapshot.child("userName").getValue().toString();
+                                        String groupName = snapshot.child("groupName").getValue().toString();
+
+                                        Log.d("JOIN", "adminGroupID: " + adminGroupID + "\nsubGroupName: " + className +
+                                                "\nadminUserName: " + adminUserName + "\ngroupName: " + groupName + "\ngroupPushId: " + groupPushId + "\nClass position: " + position);
+
+                                        String classReqPosition = String.valueOf(position);
+                                        String classUniPush = classGroupNames.getUniPushClassId();
+
+                                        if (!(classUniPush.equals("null"))) {
+                                            Log.d("GRPPush", "Class Uni Group Push Id is: " + classUniPush);
+                                            mListener.joinAndAdmission(adminGroupID, adminUserName, groupName, groupPushId, className, "pushId", classUniPush, classReqPosition);
+                                        } else {
+                                            Log.d("GRPPush", "Class Uni Group Push Id is: null");
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                }
+
+            });
+
+/*
             btn_ClassAdmission.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -273,7 +318,7 @@ public class Adaptor_ShowGrpClass extends RecyclerView.Adapter<Adaptor_ShowGrpCl
                     }
                 }
             });
-
+*/
 
         }
 

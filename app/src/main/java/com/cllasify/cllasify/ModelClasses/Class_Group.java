@@ -16,6 +16,7 @@ public class Class_Group {
     public String grpJoiningStatus;
     public String doc_Name;
     public String reportUsers;
+    public Class_Admission class_admission;
 
     public String userId;
     public String adminUserId;
@@ -236,6 +237,22 @@ public class Class_Group {
         this.groupName = groupName;
         this.groupPositionId = groupPositionId;
         this.notifyCategory = notifyCategory;
+    }
+
+    public Class_Group(Class_Admission class_admission,String dateTime, String userName, String grpJoiningStatus, String userId, String adminUserId, String userEmailId, String position, String groupName, String groupPositionId, String subGroupName, String notifyCategory, String classUniPushId) {
+        this.class_admission = class_admission;
+        this.dateTime = dateTime;
+        this.userName = userName;
+        this.grpJoiningStatus = grpJoiningStatus;
+        this.userId = userId;
+        this.adminUserId = adminUserId;
+        this.userEmailId = userEmailId;
+        this.position = position;
+        this.groupName = groupName;
+        this.groupPositionId = groupPositionId;
+        this.subGroupName = subGroupName;
+        this.notifyCategory = notifyCategory;
+        this.classUniPushId = classUniPushId;
     }
 
     public Class_Group(String dateTime, String userName, String grpJoiningStatus, String userId, String adminUserId, String userEmailId, String position, String groupName, String groupPositionId, String subGroupName, String notifyCategory, String classUniPushId) {

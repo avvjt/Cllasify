@@ -240,8 +240,8 @@ public class Create_Subject extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                            Log.d("TAG", "showChildGroupAdaptor: ClickedDDS" + dataSnapshot.getKey());
-                            Log.d("TAG", "showChildGroupAdaptor: ClickedDS" + dataSnapshot.child("className").getValue().toString());
+//                            Log.d("TAG", "showChildGroupAdaptor: ClickedDDS" + dataSnapshot.getKey());
+//                            Log.d("TAG", "showChildGroupAdaptor: ClickedDS" + dataSnapshot.child("className").getValue().toString());
                             Class_Group_Names class_group_names = new Class_Group_Names();
                             class_group_names.setGroupPushId(groupPushId);
                             class_group_names.setClassName(dataSnapshot.child("className").getValue(String.class));

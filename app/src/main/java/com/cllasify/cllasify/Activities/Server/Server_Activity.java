@@ -3044,7 +3044,7 @@ public class Server_Activity extends AppCompatActivity {
                                                     Log.d(TAG, "showChildGroupAdaptor: Clicked" + snapshot.getKey());
                                                     parentItemArrayListClassName.clear();
                                                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                                        Log.d(TAG, "showChildGroupAdaptor: ClickedDS" + dataSnapshot.child("className").getValue().toString());
+//                                                        Log.d(TAG, "showChildGroupAdaptor: ClickedDS" + dataSnapshot.child("className").getValue().toString());
 
                                                         if (dataSnapshot.getChildrenCount() > 0) {
                                                             ib_servSettings.setVisibility(View.VISIBLE);
