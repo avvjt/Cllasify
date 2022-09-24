@@ -142,7 +142,7 @@ public class Discover_Item extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkDarkLightDefaultStatusBar();
+//        checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_explore_item);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -153,18 +153,6 @@ public class Discover_Item extends AppCompatActivity {
 
         broadcastReceiver = new NetworkBroadcast();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-/*
-        recyclerView = findViewById(R.id.class_items_rv);
-        linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        adapter_discover_item = new Adapter_Discover_Item(getApplicationContext());
-
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter_discover_item);
-*/
-
-
-//        ImageView iv_ServerDP= findViewById(R.id.iv_ServerDP);
-//        TextView tv_ServerBio= findViewById(R.id.tv_ServerBio);
 
         btn_Back = findViewById(R.id.btn_Back);
 
@@ -174,23 +162,9 @@ public class Discover_Item extends AppCompatActivity {
 
                 Intent intent = new Intent(Discover_Item.this, Discover_Activity.class);
                 startActivity(intent);
-
-                /*Code shared animation*/
-
-                /*Pair[] pair = new Pair[2];
-                pair[0] = new Pair<View,String>(schoolLogoImg , "pic_shared");
-                pair[1] = new Pair<View,String>(tv_ServerName , "name_shared");
-                pair[2] = new Pair<View,String>(studentCount , "student_no_shared");
-                pair[3] = new Pair<View,String>(teacherCount , "teacher_no_shared");
-                pair[4] = new Pair<View,String>(numbStudents , "student_shared");
-                pair[4] = new Pair<View,String>(numbTeachers , "teacher_shared");
-
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Discover_Item.this, pair);
-
-                Intent i = new Intent(Discover_Item.this, Discover_Activity.class);
-                startActivity(i, options.toBundle());*/
             }
         });
+
         Button btn_Share = findViewById(R.id.btn_Share);
         tv_ServerName = findViewById(R.id.schoolName);
         RecyclerView rv_ShowClass = findViewById(R.id.rv_ShowClass);
@@ -344,11 +318,6 @@ public class Discover_Item extends AppCompatActivity {
         refGroupClassList.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-//                String value=snapshot.getValue(String.class);
-//                Toast.makeText(getContext(), "c"+value, Toast.LENGTH_SHORT).show();
-////                arrayList.add(value);fatten
-////                arrayAdapter=new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,arrayList);
-////                listView.setAdapter(arrayAdapter);
 
                 Class_Group_Names class_userDashBoard = snapshot.getValue(Class_Group_Names.class);
                 Log.d("CLLGRP", "onChildAdded: " + snapshot.child("classUniPushId"));
@@ -380,6 +349,7 @@ public class Discover_Item extends AppCompatActivity {
 
             }
         });
+
 
         join_as_teacher.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -478,7 +448,7 @@ public class Discover_Item extends AppCompatActivity {
 
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classPushId);
 
-                databaseReference.addValueEventListener(new ValueEventListener() {
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if (!(snapshot.child("admissionFees").getValue().toString().equals("₹0"))) {
@@ -509,7 +479,6 @@ public class Discover_Item extends AppCompatActivity {
                 });
 
 
-//                sentGroupJoinInvitation(adminGroupID, adminUserName, groupName, groupPushId, "className", classPushId, "StudentAdmission");
             }
         });
 

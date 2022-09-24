@@ -378,7 +378,7 @@ public class Discover_Activity extends AppCompatActivity {
 
         DatabaseReference checkAdmin = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId).child("classAdminList");
 
-        checkAdmin.addValueEventListener(new ValueEventListener() {
+        checkAdmin.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
@@ -395,7 +395,7 @@ public class Discover_Activity extends AppCompatActivity {
                                 snackbar = Snackbar.make(parentLayout, R.string.already_join, Snackbar.LENGTH_SHORT);
                                 View snackBarView = snackbar.getView();
                                 TextView textView = snackBarView.findViewById(com.google.android.material.R.id.snackbar_text);
-                                textView.setPadding(5,10,5,5);
+                                textView.setPadding(5, 10, 5, 5);
                                 textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_joined, 0, 0, 0);
                                 textView.setCompoundDrawablePadding(getResources().getDimensionPixelOffset(R.dimen.chip_horizontal_padding));
                                 snackBarView.setBackgroundColor(Color.BLACK);
@@ -406,6 +406,8 @@ public class Discover_Activity extends AppCompatActivity {
                                 intent.putExtra("groupPushId", groupPushId);
                                 Log.d("Grouup", "GroupName: " + groupName + "\n" + "GroupPushId: " + groupPushId);
                                 startActivity(intent);
+
+
                             }
                         }
 
