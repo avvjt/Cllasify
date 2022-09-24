@@ -475,18 +475,40 @@ public class Discover_Item extends AppCompatActivity {
         btn_Admission.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(Discover_Item.this, Admission_Structure.class);
-                intent.putExtra("userID", userID);
-                intent.putExtra("groupPushId", groupPushId);
-                intent.putExtra("classPushId", classPushId);
-                intent.putExtra("dateTimeCC", dateTimeCC);
-                intent.putExtra("adminGroupID", adminGroupID);
-                intent.putExtra("userEmail", userEmail);
-                intent.putExtra("subGroupName", subGroupName);
-                intent.putExtra("userName", userName);
-                intent.putExtra("groupName", groupName);
 
-                startActivity(intent);
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classPushId);
+
+                databaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (!(snapshot.child("admissionFees").getValue().toString().equals("₹0"))) {
+
+                            Intent intent = new Intent(Discover_Item.this, Admission_Structure.class);
+                            intent.putExtra("userID", userID);
+                            intent.putExtra("admissionFee", snapshot.child("admissionFees").getValue().toString());
+                            intent.putExtra("groupPushId", groupPushId);
+                            intent.putExtra("classPushId", classPushId);
+                            intent.putExtra("dateTimeCC", dateTimeCC);
+                            intent.putExtra("adminGroupID", adminGroupID);
+                            intent.putExtra("userEmail", userEmail);
+                            intent.putExtra("subGroupName", subGroupName);
+                            intent.putExtra("userName", userName);
+                            intent.putExtra("groupName", groupName);
+
+                            startActivity(intent);
+
+                        } else {
+                            Toast.makeText(Discover_Item.this, "Admission Fee haven't set yet", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+
 //                sentGroupJoinInvitation(adminGroupID, adminUserName, groupName, groupPushId, "className", classPushId, "StudentAdmission");
             }
         });

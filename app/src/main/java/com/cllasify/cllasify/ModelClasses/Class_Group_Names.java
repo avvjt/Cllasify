@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Class_Group_Names {
 
-    private String className, groupPushId, classFees;
+    private String className, groupPushId, classFees, admissionFees;
     private List<Subject_Details_Model> childItemList;
     private String uniPushClassId;
     private List<Class_Student_Details> class_student_detailsList;
@@ -12,11 +12,11 @@ public class Class_Group_Names {
     public Class_Group_Names() {
     }
 
-
-    public Class_Group_Names(String className, String groupPushId, String classBio, List<Subject_Details_Model> childItemList, String uniPushClassId, List<Class_Student_Details> class_student_detailsList) {
+    public Class_Group_Names(String className, String groupPushId, String classFees, String admissionFees, List<Subject_Details_Model> childItemList, String uniPushClassId, List<Class_Student_Details> class_student_detailsList) {
         this.className = className;
         this.groupPushId = groupPushId;
-        this.classFees = classBio;
+        this.classFees = classFees;
+        this.admissionFees = admissionFees;
         this.childItemList = childItemList;
         this.uniPushClassId = uniPushClassId;
         this.class_student_detailsList = class_student_detailsList;
@@ -70,4 +70,11 @@ public class Class_Group_Names {
         this.classFees = classFees;
     }
 
+    public String getAdmissionFees() {
+        return admissionFees;
+    }
+
+    public void setAdmissionFees(String admissionFees) {
+        this.admissionFees = admissionFees;
+    }
 }

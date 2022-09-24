@@ -51,7 +51,7 @@ public class Fees_Structure extends AppCompatActivity {
     String currUserID;
     RecyclerView rv_showStudents;
     TextView tv_studentList;
-    Button btn_setFees;
+    Button btn_setFees, btn_setAdmissionFees;
     ImageButton btn_Back;
     DatabaseReference databaseReference;
 
@@ -81,6 +81,8 @@ public class Fees_Structure extends AppCompatActivity {
         */
 
         btn_setFees = findViewById(R.id.btn_setFees);
+        btn_setAdmissionFees = findViewById(R.id.btn_setAdmissionFees);
+
         tv_studentList = findViewById(R.id.studentListText);
         rv_showStudents = findViewById(R.id.studentList);
         listGrpMemberList = new ArrayList<>();
@@ -160,6 +162,70 @@ public class Fees_Structure extends AppCompatActivity {
                 }
             });
 
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.child("admissionFees").exists()) {
+                        if (!(snapshot.child("admissionFees").getValue().toString().isEmpty())) {
+                            btn_setAdmissionFees.setText(snapshot.child("admissionFees").getValue().toString());
+
+                            btn_setAdmissionFees.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    final Dialog dialog = new Dialog(Fees_Structure.this);
+                                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                    dialog.setCancelable(true);
+                                    dialog.setCanceledOnTouchOutside(true);
+                                    dialog.setContentView(R.layout.bottomsheet_admission_fees);
+                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                                    Button btn_Cancel = dialog.findViewById(R.id.btn_cancel);
+                                    EditText et_NewFees = dialog.findViewById(R.id.et_NewFees);
+                                    Button btn_Submit = dialog.findViewById(R.id.btn_submit);
+                                    et_NewFees.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                    et_NewFees.setHint(snapshot.child("admissionFees").getValue().toString());
+
+                                    btn_Submit.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+
+                                            String newFees = et_NewFees.getText().toString().trim();
+                                            if (newFees.isEmpty() || newFees.equals("0")) {
+                                                et_NewFees.setError("Please enter a valid value");
+
+                                            } else {
+                                                et_NewFees.getText().toString().trim();
+                                                databaseReference.child("admissionFees").setValue("₹" + newFees);
+                                                dialog.dismiss();
+                                            }
+
+                                        }
+                                    });
+                                    btn_Cancel.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            dialog.dismiss();
+                                        }
+                                    });
+
+                                    dialog.show();
+                                    dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                    dialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                                    dialog.getWindow().setGravity(Gravity.BOTTOM);
+
+                                    moveTaskToBack(false);
+                                }
+                            });
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
             Log.d("UNICLASS", "onCreate: " + uniClassPushId);
 
@@ -230,71 +296,6 @@ public class Fees_Structure extends AppCompatActivity {
 
             });
 
-
-/*
-            DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
-            databaseReference.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    listGrpMemberList.clear();
-                    Log.d(TAG, "showChildGroupAdaptor: Clicked" + snapshot.getKey());
-                    parentItemArrayListClassName.clear();
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        Log.d(TAG, "showChildGroupAdaptor: ClickedDS" + dataSnapshot.child("className").getValue().toString());
-
-                        if (dataSnapshot.getChildrenCount() > 0) {
-                            ib_servSettings.setVisibility(View.VISIBLE);
-                        }
-
-                        Class_Group_Names class_group_names = new Class_Group_Names();
-                        class_group_names.setGroupPushId(groupPushId);
-                        class_group_names.setClassName(dataSnapshot.child("className").getValue(String.class));
-                        class_group_names.setClassFees(dataSnapshot.child("classFees").getValue(String.class));
-                        class_group_names.setUniPushClassId(dataSnapshot.child("classUniPushId").getValue(String.class));
-
-                        Log.d("JOIN", "onClick: " + groupPushId);
-
-                        List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
-
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classSubjectData").getChildren()) {
-
-                            recyclerViewClassList.setVisibility(View.VISIBLE);
-
-                            Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
-                            Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
-                            Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
-                            subjectDetailsModelList.add(object);
-
-                        }
-
-                        class_group_names.setChildItemList(subjectDetailsModelList);
-
-
-                        List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
-
-                        for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classStudentList").getChildren()) {
-                            Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
-                            Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
-                            Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
-                            class_student_detailsList.add(class_student_details);
-
-                        }
-
-                        class_group_names.setClass_student_detailsList(class_student_detailsList);
-
-
-                        parentItemArrayListClassName.add(class_group_names);
-                    }
-                    adapter_classGroup.setParentItemArrayListClassName(parentItemArrayListClassName);
-                    adapter_classGroup.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-*/
 
         }
 

@@ -49,7 +49,7 @@ import java.util.Locale;
 
 public class Admission_Structure extends AppCompatActivity implements PaymentResultWithDataListener, ExternalWalletListener {
 
-    String userID, groupPushId, classPushId, dateTimeCC, adminGroupID, userEmail, subGroupName, userName, groupName;
+    String userID, admissionFee, groupPushId, classPushId, dateTimeCC, adminGroupID, userEmail, subGroupName, userName, groupName;
     Button pay_btn;
     ImageView attachment_btn;
     private Uri fileUri;
@@ -84,6 +84,7 @@ public class Admission_Structure extends AppCompatActivity implements PaymentRes
         percentage = findViewById(R.id.percentage);
 
         userID = getIntent().getStringExtra("userID");
+        admissionFee = getIntent().getStringExtra("admissionFee");
         groupPushId = getIntent().getStringExtra("groupPushId");
         classPushId = getIntent().getStringExtra("classPushId");
         dateTimeCC = getIntent().getStringExtra("dateTimeCC");
@@ -108,8 +109,11 @@ public class Admission_Structure extends AppCompatActivity implements PaymentRes
                     Toast.makeText(Admission_Structure.this, "Please fill up the above details" + name_et.getText().toString().length(), Toast.LENGTH_SHORT).show();
 
                 } else {
+                    String[] amt = admissionFee.split("₹");
 
-                    startPayment("100", groupPushId, subGroupName, userName);
+                    String amount = amt[1];
+                    long feesAmt = (Long.parseLong(amount) * 100);
+                    startPayment(String.valueOf(feesAmt), groupPushId, subGroupName, userName);
 
                 }
 

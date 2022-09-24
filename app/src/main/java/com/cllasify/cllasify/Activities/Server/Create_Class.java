@@ -292,6 +292,7 @@ public class Create_Class extends AppCompatActivity {
 
                                 testDatabaseReference.child(groupPushId).child(push01[6]).child("className").setValue(sbChildGroupName);
                                 testDatabaseReference.child(groupPushId).child(push01[6]).child("classFees").setValue("₹0");
+                                testDatabaseReference.child(groupPushId).child(push01[6]).child("admissionFees").setValue("₹0");
                                 testDatabaseReference.child(groupPushId).child(push01[6]).child("classUniPushId").setValue(push01[6]);
                                 testDatabaseReference.child(groupPushId).child(push01[6]).child("groupPushId").setValue(groupPushId);
                                 testDatabaseReference.child(groupPushId).child(push01[6]).child("classStudentList").addListenerForSingleValueEvent(new ValueEventListener() {
