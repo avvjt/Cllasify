@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_color"
+    android:clickable="true"
+    android:focusable="true"
+    tools:context=".Fragments.WebView_Fragment">
+
+    <RelativeLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/page_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <ImageButton
+            android:id="@+id/back_btn"
+            style="@style/SelectableItemBackgroundBorderless"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:contentDescription="@string/servers_contentDescription"
+            android:src="@drawable/ic_left_back"
+            app:tint="@color/iconSecondaryColor" />
+
+
+        <TextView
+            android:id="@+id/doc_name"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/back_btn"
+            android:ellipsize="end"
+            android:fontFamily="@font/inter_bold"
+            android:maxLines="2"
+            android:textColor="@color/text_color"
+            android:textSize="16sp" />
+
+        <ImageButton
+            android:id="@+id/btn_download"
+            style="@style/SelectableItemBackgroundBorderless"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="10dp"
+            android:padding="5dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_download_16"
+            app:tint="@color/iconSecondaryColor" />
+
+    </RelativeLayout>
+
+
+    <es.voghdev.pdfviewpager.library.PDFViewPager
+        android:id="@+id/pdfViewPager"
+        android:layout_below="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/pdf_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/action_bar"
+        android:layout_marginBottom="50dp"
+        android:background="@color/white"
+        android:orientation="horizontal" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/imp_messge"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:text="WARNING: Please don't press back button untill the document is fully loaded"
+        android:gravity="center"
+        android:layout_below="@+id/progressBar"
+        android:ellipsize="end"
+        android:fontFamily="@font/inter_bold_italic"
+        android:maxLines="3"
+        android:textColor="@color/text_color"
+        android:textSize="16sp" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        app:cardBackgroundColor="@color/black"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:cardMaxElevation="12dp"
+        app:cardPreventCornerOverlap="true"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:paddingStart="10dp"
+                android:textColor="@color/white"
+                android:text="Page: " />
+
+            <TextView
+                android:id="@+id/currentPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:text="1"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:paddingStart="10dp"
+                android:textColor="@color/white"
+                android:text="/ " />
+
+            <TextView
+                android:id="@+id/totalPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:paddingStart="5dp"
+                android:paddingEnd="10dp"
+                android:text="0"
+                android:textColor="@color/white" />
+
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/previous_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/previous_btn"
+            android:padding="15dp"
+            android:src="@drawable/ic_left_back" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/next_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/previous_btn"
+            android:padding="15dp"
+            android:src="@drawable/ic_right_black" />
+
+    </LinearLayout>
+
+</RelativeLayout>

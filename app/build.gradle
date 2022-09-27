@@ -123,6 +123,7 @@ dependencies {
     //Razorpay
     implementation 'com.razorpay:checkout:1.6.24'
 
+
 }
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'

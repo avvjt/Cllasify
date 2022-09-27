@@ -388,7 +388,7 @@ public class Admission_Structure extends AppCompatActivity implements PaymentRes
                 Class_Admission class_admission = new Class_Admission(name_et.getText().toString(), dob_et.getText().toString(), father_name_et.getText().toString(),
                         mother_name_et.getText().toString(), address_et.getText().toString(), phone_et.getText().toString(),
                         religion_et.getText().toString(), cast_et.getText().toString(), dateTimeCC, fileUrl);
-                Class_Group userAddComment = new Class_Group(class_admission, dateTimeCC, userName, "admission_req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_JoiningReq", classPushId);
+                Class_Group userAddComment = new Class_Group(class_admission, dateTimeCC, userName, "admission_req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_AdmissionReq", classPushId);
                 grpJoiningReqs.child(pushLong).setValue(userAddComment);
                 refacceptingReq.child(pushLong).setValue(userAddComment);
                 userNoti.child("notificationPushId").setValue(pushLong);
@@ -399,6 +399,8 @@ public class Admission_Structure extends AppCompatActivity implements PaymentRes
             public void onCancelled(@NonNull DatabaseError error) {
             }
         });
+
+        onBackPressed();
 
 
     }

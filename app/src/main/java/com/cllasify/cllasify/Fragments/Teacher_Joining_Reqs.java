@@ -1,6 +1,9 @@
 package com.cllasify.cllasify.Fragments;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,11 +12,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
 
 import com.cllasify.cllasify.Adapters.Adaptor_Notify;
+import com.cllasify.cllasify.ModelClasses.Class_Admission;
 import com.cllasify.cllasify.ModelClasses.Class_Group;
 import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
 import com.cllasify.cllasify.R;
@@ -95,7 +102,10 @@ public class Teacher_Joining_Reqs extends Fragment {
         });
 
         rv_StudentJoiningNotification = view.findViewById(R.id.rv_StudentJoiningNotification);
-        rv_StudentJoiningNotification.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setReverseLayout(true);
+//        linearLayoutManager.setStackFromEnd(true);
+        rv_StudentJoiningNotification.setLayoutManager(linearLayoutManager);
         listGroupSTitle = new ArrayList<>();
         showAllGroupAdaptor = new Adaptor_Notify(getActivity(), listGroupSTitle);
         rv_StudentJoiningNotification.setAdapter(showAllGroupAdaptor);
@@ -223,6 +233,166 @@ public class Teacher_Joining_Reqs extends Fragment {
 
 
             }
+
+            @Override
+            public void reqClick(String reqUserID, String currUserId, String groupName, String userName, String notPushId, String classUniPushId, String groupPushId, String notifyReq, String classPushid, String pushid, String grpJoiningStatus) {
+                Dialog bottomSheetDialog = new Dialog(getActivity());
+                bottomSheetDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                bottomSheetDialog.setCancelable(true);
+                bottomSheetDialog.setCanceledOnTouchOutside(true);
+                bottomSheetDialog.setContentView(R.layout.bottomsheet_accept_reject);
+                bottomSheetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                Button btn_accept = bottomSheetDialog.findViewById(R.id.btn_accept);
+                Button btn_reject = bottomSheetDialog.findViewById(R.id.btn_reject);
+
+                btn_accept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        DatabaseReference refAllGRPs = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId);
+
+
+                        DatabaseReference saveUserGroupClassRef = FirebaseDatabase.getInstance().getReference().child("Groups")
+                                .child("All_User_Group_Class").child(groupPushId).child(reqUserID).child("classUniPushId");
+                        saveUserGroupClassRef.setValue(classUniPushId);
+
+                        DatabaseReference addedOrJoinedGroups = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(reqUserID).child(groupPushId);
+                        addedOrJoinedGroups.child("dateTime").setValue(dateTimeCC);
+                        addedOrJoinedGroups.child("addedOrJoined").setValue("StudentJoin");
+
+                        if (reqUserID != null && groupPushId != null && classUniPushId != null) {
+
+                            DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(reqUserID).child(groupPushId).child(classUniPushId);
+                            userNoti.child("joiningStatus").setValue("Approve");
+                        }
+
+                        DatabaseReference refSubs_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId).child(classUniPushId).child("SubGroup_SubsList");
+                        DatabaseReference refAll_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId).child("User_Subscribed_Groups");
+
+                        DatabaseReference refAllGRPsTeacherJoin = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(reqUserID);
+                        refAllGRPsTeacherJoin.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                                refAllGRPsTeacherJoin.child(groupPushId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        refAllGRPsTeacherJoin.child(groupPushId).child("addedOrJoined").setValue("TeacherJoin");
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+                        DatabaseReference refAllTGRPs = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId);
+                        refAllTGRPs.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                                refAllTGRPs.child("classAdminList").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        Class_Student_Details class_student_details = new Class_Student_Details(true, reqUserID, userName);
+                                        refAllTGRPs.child("classAdminList").child(reqUserID).setValue(class_student_details);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
+                        refSubs_J_Group.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                long noofGroupinCategory = snapshot.getChildrenCount() + 1;
+                                String push = "joining_No" + noofGroupinCategory;
+
+                                Calendar calenderCC = Calendar.getInstance();
+                                @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+                                String dateTimeCC = simpleDateFormatCC.format(calenderCC.getTime());
+                                userSubsGroupClass = new Class_Group(dateTimeCC, userName, reqUserID, currUserId, noofGroupinCategory, groupName, classUniPushId, "Class Member", "On");
+                                refSubs_J_Group.child(reqUserID).setValue(userSubsGroupClass);
+                                refAll_J_Group.child(reqUserID).setValue(userSubsGroupClass);
+
+                                DatabaseReference refAccUserNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(groupPushId).child("groupTeacherJoiningReqs").child(notPushId);
+                                DatabaseReference refAccAdminNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(reqUserID).child(notPushId);
+
+                                refAccUserNotify.child("grpJoiningStatus").setValue("Approve");
+                                refAccAdminNotify.child("grpJoiningStatus").setValue("Approve");
+
+//                            Toast.makeText(getActivity(), "Group request from "+userName+"has been Approved", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+
+                        showAllGroupAdaptor.notifyDataSetChanged();
+                        bottomSheetDialog.dismiss();
+                    }
+                });
+
+                btn_reject.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (reqUserID != null && groupPushId != null && classUniPushId != null) {
+                            DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(reqUserID).child(groupPushId).child(classUniPushId);
+                            userNoti.child("joiningStatus").setValue("Reject");
+                        }
+
+
+                        DatabaseReference refSubs_J_Group = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Sub_Group").child(groupPushId).child(classUniPushId).child("SubGroup_SubsList");
+                        userSubsGroupClass = new Class_Group(dateTimeCC, userName, reqUserID, currUserId, groupName, classUniPushId, "false", "Off");
+                        refSubs_J_Group.child(reqUserID).setValue(userSubsGroupClass);
+
+                        DatabaseReference refrejuserNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(groupPushId).child("groupTeacherJoiningReqs").child(notPushId);
+                        DatabaseReference refrejadminNotify = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(reqUserID).child(notPushId);
+                        refrejuserNotify.child("grpJoiningStatus").setValue("Reject");
+                        refrejadminNotify.child("grpJoiningStatus").setValue("Reject");
+
+
+                        showAllGroupAdaptor.notifyDataSetChanged();
+                        bottomSheetDialog.dismiss();
+                    }
+                });
+
+                bottomSheetDialog.show();
+                bottomSheetDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                bottomSheetDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                bottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
+            }
+
+            @Override
+            public void reqAdmissionClick(Class_Admission class_admission, String reqUserID, String currUserId, String groupName, String userName, String notPushId, String classUniPushId, String groupPushId, String notifyReq, String classPushid, String pushid) {
+
+            }
+
+
+
         });
 
 

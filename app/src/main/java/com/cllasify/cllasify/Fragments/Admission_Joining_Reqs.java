@@ -1,17 +1,30 @@
 package com.cllasify.cllasify.Fragments;
 
+import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cllasify.cllasify.Activities.WebViewActivity;
 import com.cllasify.cllasify.Adapters.Adaptor_Notify;
+import com.cllasify.cllasify.ModelClasses.Class_Admission;
 import com.cllasify.cllasify.ModelClasses.Class_Group;
 import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
 import com.cllasify.cllasify.R;
@@ -24,6 +37,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -94,7 +108,10 @@ public class Admission_Joining_Reqs extends Fragment {
         });
 
         rv_StudentJoiningNotification = view.findViewById(R.id.rv_StudentJoiningNotification);
-        rv_StudentJoiningNotification.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setReverseLayout(true);
+//        linearLayoutManager.setStackFromEnd(true);
+        rv_StudentJoiningNotification.setLayoutManager(linearLayoutManager);
         listGroupSTitle = new ArrayList<>();
         showAllGroupAdaptor = new Adaptor_Notify(getActivity(), listGroupSTitle);
         rv_StudentJoiningNotification.setAdapter(showAllGroupAdaptor);
@@ -196,6 +213,161 @@ public class Admission_Joining_Reqs extends Fragment {
 
 
                 }
+
+
+            }
+
+            @Override
+            public void reqClick(String reqUserID, String currUserId, String groupName, String userName, String notPushId, String classUniPushId, String groupPushId, String notifyReq, String classPushid, String pushid, String grpJoiningStatus) {
+
+            }
+
+
+            @Override
+            public void reqAdmissionClick(Class_Admission class_admission, String reqUserID, String currUserId, String groupName, String userName, String notPushId, String classUniPushId, String groupPushId, String notifyReq, String classPushid, String pushid) {
+
+                Dialog bottomSheetDialog = new Dialog(getActivity());
+                bottomSheetDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                bottomSheetDialog.setCancelable(true);
+                bottomSheetDialog.setCanceledOnTouchOutside(true);
+                bottomSheetDialog.setContentView(R.layout.bottomsheet_admission_accept_reject);
+                bottomSheetDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+                Button btn_accept = bottomSheetDialog.findViewById(R.id.btn_accept);
+                Button btn_reject = bottomSheetDialog.findViewById(R.id.btn_reject);
+                RelativeLayout btn_pdf = bottomSheetDialog.findViewById(R.id.document);
+
+
+                TextView name, dob, father_name, mother_name, address, phone, religion, cast, date;
+
+                date = bottomSheetDialog.findViewById(R.id.date);
+                name = bottomSheetDialog.findViewById(R.id.name);
+                dob = bottomSheetDialog.findViewById(R.id.dob);
+                father_name = bottomSheetDialog.findViewById(R.id.father_name);
+                mother_name = bottomSheetDialog.findViewById(R.id.mother_name);
+                address = bottomSheetDialog.findViewById(R.id.address);
+                phone = bottomSheetDialog.findViewById(R.id.phone);
+                religion = bottomSheetDialog.findViewById(R.id.religion);
+                cast = bottomSheetDialog.findViewById(R.id.cast);
+
+                date.setText(class_admission.getDate());
+                name.setText(class_admission.getName());
+                dob.setText(class_admission.getDob());
+                father_name.setText(class_admission.getFather());
+                mother_name.setText(class_admission.getMother());
+                address.setText(class_admission.getAddress());
+                phone.setText(class_admission.getPhone());
+                religion.setText(class_admission.getReligion());
+                cast.setText(class_admission.getCast());
+
+                btn_accept.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        if (reqUserID != null && groupPushId != null && classUniPushId != null) {
+
+                            DatabaseReference grpJoiningReqs = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPushId).child("groupAdmissionReqs").child(notPushId);
+                            grpJoiningReqs.child("grpJoiningStatus").setValue("Approve");
+                        }
+
+                        DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(reqUserID);
+                        DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(currUserId);
+
+                        refjoiningReq.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                                long noOfQuesInCategory = snapshot.getChildrenCount() + 1;
+                                String push = "Admission_Response_" + noOfQuesInCategory;
+//                                        Class_Group  userAddComment= new Class_Group(dateTimeCC,userName,userID,adminGroupID, userEmail,adminEmailID,"req_sent", finalNotifyStatus);
+                                Class_Group userAdd = new Class_Group(dateTimeCC, userName, "req_sent", currUserId, reqUserID, "", "AdmissionResponse", "", "", "AdmissionAccepted");
+                                refjoiningReq.child(push).setValue(userAdd);
+                                refacceptingReq.child(push).setValue(userAdd);
+
+                                btn_accept.setText("Sent");
+                                btn_accept.setEnabled(false);
+
+                                bottomSheetDialog.dismiss();
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+
+
+                    }
+                });
+
+                btn_reject.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (reqUserID != null && groupPushId != null && classUniPushId != null) {
+                            DatabaseReference grpJoiningReqs = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPushId).child("groupAdmissionReqs").child(notPushId);
+                            grpJoiningReqs.child("grpJoiningStatus").setValue("Reject");
+                        }
+
+
+                        DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(reqUserID);
+                        DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(currUserId);
+
+                        refjoiningReq.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                                long noOfQuesInCategory = snapshot.getChildrenCount() + 1;
+                                String push = "Admission_Response_" + noOfQuesInCategory;
+//                                        Class_Group  userAddComment= new Class_Group(dateTimeCC,userName,userID,adminGroupID, userEmail,adminEmailID,"req_sent", finalNotifyStatus);
+                                Class_Group userAdd = new Class_Group(dateTimeCC, userName, "req_sent", currUserId, reqUserID, "", "AdmissionResponse", "", "", "AdmissionRejected");
+                                refjoiningReq.child(push).setValue(userAdd);
+                                refacceptingReq.child(push).setValue(userAdd);
+
+                                btn_reject.setText("Sent");
+                                btn_reject.setEnabled(false);
+
+                                bottomSheetDialog.dismiss();
+
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
+
+                    }
+                });
+
+                btn_pdf.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                        intent.putExtra("pdfUrl", class_admission.getFileUrl());
+                        startActivity(intent);
+
+/*
+                        WebView_Fragment webView_fragment = new WebView_Fragment();
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("path", class_admission.getFileUrl());
+                        bundle.putString("docName", "Result.pdf");
+                        bundle.putString("type", "activity");
+                        webView_fragment.setArguments(bundle);
+                        getFragmentManager().getBackStackEntryCount();
+                        transaction.replace(R.id.friendNoti, webView_fragment, "FirstFragment");
+                        transaction.commit();
+                        */
+                    }
+                });
+
+
+                bottomSheetDialog.show();
+                bottomSheetDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                bottomSheetDialog.getWindow().getAttributes().windowAnimations = R.style.DialogAnimation;
+                bottomSheetDialog.getWindow().setGravity(Gravity.BOTTOM);
 
 
             }

@@ -5,13 +5,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.ModelClasses.Class_Admission;
 import com.cllasify.cllasify.ModelClasses.Class_Group;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,6 +54,10 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
 
         void acceptNotify(String reqUserID, String currUserId, String groupName, String userName, String classPushId, String groupPushId, String notifyCategory, String notPushId, String classUniPush);
 
+        void reqClick(String reqUserID, String currUserId, String groupName, String userName, String notPushId, String classUniPushId, String groupPushId, String notifyReq, String classPushid, String pushid, String grpJoiningStatus);
+
+        void reqAdmissionClick(Class_Admission class_admission, String reqUserID, String currUserId, String groupName, String userName, String notPushId, String classUniPushId, String groupPushId, String notifyReq, String classPushid, String pushid);
+
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -80,9 +88,13 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
         String inviteStatus = class_GroupDetails.getGrpJoiningStatus();
         String NotifyCategory = class_GroupDetails.getNotifyCategory();
 
+
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
         userID = currentUser.getUid();
+
+        holder.tv_ReqDate.setText(reqDate);
+
 
         String reqUserID = class_GroupDetails.userId;
         DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(reqUserID);
@@ -91,32 +103,40 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 
-
                 //Setting name
                 if (NotifyCategory.equals("Friend_Request")) {
 
+
+
                     if (inviteStatus.equals("Approve")) {
+
+                        holder.btn_Status.setText("Approved");
+
 
                         if (snapshot.child("Name").exists()) {
                             String userNameRealtime = snapshot.child("Name").getValue().toString();
                             holder.username.setText(userNameRealtime);
                             holder.tv_Groupinvite.setText("User " + userNameRealtime + " request for Add you as a friend has been approved");
                         }
-                        holder.tv_ReqDate.setVisibility(View.GONE);
-                        holder.ll_groupdetails.setVisibility(View.GONE);
+//                        holder.tv_ReqDate.setVisibility(View.GONE);
+//                        holder.ll_groupdetails.setVisibility(View.GONE);
                     } else if (inviteStatus.equals("Reject")) {
+                        holder.btn_Status.setText("Rejected");
+
 
                         if (snapshot.child("Name").exists()) {
                             String userNameRealtime = snapshot.child("Name").getValue().toString();
                             holder.username.setText(userNameRealtime);
                             holder.tv_Groupinvite.setText("User " + userNameRealtime + " request for Add you as a friend has been rejected");
                         }
-                        holder.ll_groupdetails.setVisibility(View.GONE);
-                        holder.tv_ReqDate.setVisibility(View.GONE);
+//                        holder.ll_groupdetails.setVisibility(View.GONE);
+//                        holder.tv_ReqDate.setVisibility(View.GONE);
 
                     } else {
+                        holder.btn_Status.setText("Pending");
 
-                        holder.ll_groupdetails.setVisibility(View.VISIBLE);
+
+//                        holder.ll_groupdetails.setVisibility(View.VISIBLE);
                         if (GroupName.isEmpty()) {
                             holder.tv_Groupinvite.setVisibility(View.GONE);
                         } else {
@@ -128,9 +148,8 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
 
                         }
                         if (GroupName.isEmpty()) {
-                            holder.tv_ReqDate.setVisibility(View.GONE);
+//                            holder.tv_ReqDate.setVisibility(View.GONE);
                         } else {
-                            holder.tv_ReqDate.setText("Requested on : " + reqDate);
                         }
                     }
                 }
@@ -150,28 +169,61 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
 
 
 
+                            if (NotifyCategory.equals("AdmissionAccepted")) {
+
+                                holder.btn_Status.setText("Accepted");
+
+                                if (snapshot.child("Name").exists()) {
+                                    String userNameRealtime = snapshot.child("Name").getValue().toString();
+                                    holder.username.setText(userNameRealtime);
+                                }
+
+                            }
+
+                            if (NotifyCategory.equals("AdmissionRejected")) {
+
+                                    holder.btn_Status.setText("Rejected");
+
+                                if (snapshot.child("Name").exists()) {
+                                    String userNameRealtime = snapshot.child("Name").getValue().toString();
+                                    holder.username.setText(userNameRealtime);
+                                }
+                            }
+
+
                             if (NotifyCategory.equals("Group_JoiningReq_Teacher")) {
 
                                 if (inviteStatus.equals("Approve")) {
+
+                                    holder.btn_Status.setText("Approved");
+
+
                                     if (snapshot.child("Name").exists()) {
                                         String userNameRealtime = snapshot.child("Name").getValue().toString();
                                         holder.username.setText(userNameRealtime);
                                     }
 
-                                    holder.tv_ReqDate.setVisibility(View.GONE);
-                                    holder.tv_Groupinvite.setText(GroupName+" joining has been approved");
-                                    holder.ll_groupdetails.setVisibility(View.GONE);
+//                                    holder.tv_ReqDate.setVisibility(View.GONE);
+                                    holder.tv_Groupinvite.setText(GroupName + " joining has been approved");
+//                                    holder.ll_groupdetails.setVisibility(View.GONE);
                                 } else if (inviteStatus.equals("Reject")) {
+
+                                    holder.btn_Status.setText("Rejected");
+
+
                                     if (snapshot.child("Name").exists()) {
                                         String userNameRealtime = snapshot.child("Name").getValue().toString();
                                         holder.username.setText(userNameRealtime);
                                     }
-                                    holder.ll_groupdetails.setVisibility(View.GONE);
-                                    holder.tv_ReqDate.setVisibility(View.GONE);
-                                    holder.tv_Groupinvite.setText(GroupName+" joining has been rejected");
+//                                    holder.ll_groupdetails.setVisibility(View.GONE);
+//                                    holder.tv_ReqDate.setVisibility(View.GONE);
+                                    holder.tv_Groupinvite.setText(GroupName + " joining has been rejected");
                                 } else {
 
-                                    holder.ll_groupdetails.setVisibility(View.VISIBLE);
+                                    holder.btn_Status.setText("Pending");
+
+
+//                                    holder.ll_groupdetails.setVisibility(View.VISIBLE);
                                     if (GroupName.isEmpty()) {
                                         holder.tv_Groupinvite.setVisibility(View.GONE);
                                     } else {
@@ -183,34 +235,46 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
 
                                     }
                                     if (GroupName.isEmpty()) {
-                                        holder.tv_ReqDate.setVisibility(View.GONE);
+//                                        holder.tv_ReqDate.setVisibility(View.GONE);
                                     } else {
-                                        holder.tv_ReqDate.setText("Requested on : " + reqDate);
+//                                        holder.tv_ReqDate.setText("Requested on : " + reqDate);
                                     }
                                 }
                             }
                             if (NotifyCategory.equals("Group_JoiningReq")) {
 
                                 if (inviteStatus.equals("Approve")) {
-                                    holder.tv_Groupinvite.setText(GroupName+" joining has been approved");
-                                    holder.ll_groupdetails.setVisibility(View.GONE);
-                                    holder.tv_ReqDate.setVisibility(View.GONE);
+
+                                    holder.btn_Status.setText("Approved");
+
+
+                                    holder.tv_Groupinvite.setText(GroupName + " joining has been approved");
+//                                    holder.ll_groupdetails.setVisibility(View.GONE);
+//                                    holder.tv_ReqDate.setVisibility(View.GONE);
                                     if (snapshot.child("Name").exists()) {
                                         String userNameRealtime = snapshot.child("Name").getValue().toString();
                                         holder.username.setText(userNameRealtime);
                                     }
 
                                 } else if (inviteStatus.equals("Reject")) {
-                                    holder.ll_groupdetails.setVisibility(View.GONE);
-                                    holder.tv_ReqDate.setVisibility(View.GONE);
+
+                                    holder.btn_Status.setText("Rejected");
+
+
+//                                    holder.ll_groupdetails.setVisibility(View.GONE);
+//                                    holder.tv_ReqDate.setVisibility(View.GONE);
                                     if (snapshot.child("Name").exists()) {
                                         String userNameRealtime = snapshot.child("Name").getValue().toString();
                                         holder.username.setText(userNameRealtime);
                                     }
-                                    holder.tv_Groupinvite.setText(GroupName+" joining has been rejected");
+                                    holder.tv_Groupinvite.setText(GroupName + " joining has been rejected");
                                 } else {
 
-                                    holder.ll_groupdetails.setVisibility(View.VISIBLE);
+
+                                    holder.btn_Status.setText("Pending");
+
+
+//                                    holder.ll_groupdetails.setVisibility(View.VISIBLE);
                                     if (GroupName.isEmpty()) {
                                         holder.tv_Groupinvite.setVisibility(View.GONE);
                                     } else {
@@ -222,13 +286,58 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
 
                                     }
                                     if (GroupName.isEmpty()) {
-                                        holder.tv_ReqDate.setVisibility(View.GONE);
+//                                        holder.tv_ReqDate.setVisibility(View.GONE);
                                     } else {
-                                        holder.tv_ReqDate.setText("Requested on : " + reqDate);
+//                                        holder.tv_ReqDate.setText("Requested on : " + reqDate);
                                     }
                                 }
                             }
+                            if (NotifyCategory.equals("Group_AdmissionReq")) {
 
+
+                                if (inviteStatus.equals("Approve")) {
+
+                                    holder.btn_Status.setText("Approved");
+
+                                    holder.tv_Groupinvite.setText(GroupName + " joining has been approved");
+//                                    holder.ll_groupdetails.setVisibility(View.GONE);
+//                                    holder.tv_ReqDate.setVisibility(View.GONE);
+                                    if (snapshot.child("Name").exists()) {
+                                        String userNameRealtime = snapshot.child("Name").getValue().toString();
+                                        holder.username.setText(userNameRealtime);
+                                    }
+
+                                } else if (inviteStatus.equals("Reject")) {
+                                    holder.btn_Status.setText("Rejected");
+
+                                    //                                    holder.ll_groupdetails.setVisibility(View.GONE);
+//                                    holder.tv_ReqDate.setVisibility(View.GONE);
+                                    if (snapshot.child("Name").exists()) {
+                                        String userNameRealtime = snapshot.child("Name").getValue().toString();
+                                        holder.username.setText(userNameRealtime);
+                                    }
+                                    holder.tv_Groupinvite.setText(GroupName + " joining has been rejected");
+                                } else {
+                                    holder.btn_Status.setText("Pending");
+
+//                                    holder.ll_groupdetails.setVisibility(View.VISIBLE);
+                                    if (GroupName.isEmpty()) {
+                                        holder.tv_Groupinvite.setVisibility(View.GONE);
+                                    } else {
+                                        if (snapshot.child("Name").exists()) {
+                                            String userNameRealtime = snapshot.child("Name").getValue().toString();
+                                            holder.username.setText(userNameRealtime);
+                                        }
+                                        holder.tv_Groupinvite.setText("Wants to join");
+
+                                    }
+                                    if (GroupName.isEmpty()) {
+//                                        holder.tv_ReqDate.setVisibility(View.GONE);
+                                    } else {
+//                                        holder.tv_ReqDate.setText("Requested on : " + reqDate);
+                                    }
+                                }
+                            }
 
 
                         }
@@ -241,18 +350,11 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                 });
 
 
-
-
-
-
-
-
-
                 if (snapshot.child("profilePic").exists()) {
                     String profilePicUrl = snapshot.child("profilePic").getValue().toString();
                     Log.d("TSTNOTIFY", "MyViewHolder: " + profilePicUrl);
                     Glide.with(context.getApplicationContext()).load(profilePicUrl).into(holder.profilePic);
-                }else{
+                } else {
                     Glide.with(context.getApplicationContext()).load(R.drawable.maharaji).into(holder.profilePic);
                 }
             }
@@ -262,9 +364,6 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
 
             }
         });
-
-
-
 
 
     }
@@ -280,114 +379,262 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
         TextView tv_Groupinvite, tv_approve, tv_reject, tv_ReqDate, username;
         LinearLayout ll_groupdetails;
         CircleImageView profilePic;
+        RelativeLayout req_layout;
+        Button btn_Status;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             tv_Groupinvite = itemView.findViewById(R.id.tv_Groupinvite);
-            tv_approve = itemView.findViewById(R.id.tv_approve);
-            tv_reject = itemView.findViewById(R.id.tv_reject);
             tv_ReqDate = itemView.findViewById(R.id.tv_ReqDate);
             ll_groupdetails = itemView.findViewById(R.id.ll_groupdetails);
             profilePic = itemView.findViewById(R.id.profilePicture);
             username = itemView.findViewById(R.id.username);
+            req_layout = itemView.findViewById(R.id.req_layout);
+            btn_Status = itemView.findViewById(R.id.btn_Status);
 
-
-            tv_reject.setOnClickListener(new View.OnClickListener() {
+            req_layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (mListener != null) {
                         int position = getAdapterPosition();
+
                         Class_Group user = mDatalistNew.get(getAdapterPosition());
-                        String reqUserID = user.userId;
-                        String currUserId = user.adminUserId;
-                        String groupName = user.groupName;
-                        String userName = user.userName;
-                        String pushid = user.subGroupName;
-                        String notPushId = user.position;
-                        String groupPushId = user.groupPositionId;
-                        String notifyReq = user.notifyCategory;
-                        String classUni = user.classUniPushId;
-
-                        ll_groupdetails.setVisibility(View.GONE);
-
-                        if (position != RecyclerView.NO_POSITION) {
-//                            DatabaseReference refSubsGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups").child(groupName);
-//                            refSubsGroup.child(reqUserID).setValue(false);
-
-                            Log.d("REJECT", "onClick: " + "reqUserID: " + reqUserID + "\ncurrUserId: " + currUserId +
-                                    "\ngroupName: " + groupName + "\nuserName: " + userName + "\nnotPushId: " + notPushId + "\nclassPushid: "+ user.classUniPushId+
-                                    "\ngroupPushId: " + groupPushId + "\nnotifyReq: " + notifyReq );
-
-                            ll_groupdetails.setVisibility(View.GONE);
-                            if(reqUserID != null && groupPushId != null && classUni != null){
-                                DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(reqUserID).child(groupPushId).child(classUni);
-                                userNoti.child("joiningStatus").setValue("Reject");
-                            }
-
-
-//                            tv_Groupinvite.setText("User " + userName + " request to join Sub-class : " + classPushid + " of server " + groupName + " has been approved");
-
-                            mListener.rejectNotify(reqUserID, currUserId, groupName, userName, pushid, groupPushId, notifyReq, notPushId);
-                            tv_approve.setEnabled(false);
-                        }
-                    }
-                }
-            });
-            tv_approve.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    if (mListener != null) {
-                        int position = getAdapterPosition();
-                        Class_Group user = mDatalistNew.get(getAdapterPosition());
+                        Class_Admission class_admission = user.class_admission;
                         String reqUserID = user.userId;
                         String currUserId = user.adminUserId;
                         String groupName = user.groupName;
                         String userName = user.userName;
                         String notPushId = user.getPosition();
                         String classPushid = user.subGroupName;
+                        String pushid = user.subGroupName;
                         String groupPushId = user.groupPositionId;
                         String notifyReq = user.notifyCategory;
                         String classUni = user.classUniPushId;
-
-
-                        Log.d("APPROVE", "onClick: " + "reqUserID: " + reqUserID + "\ncurrUserId: " + currUserId +
-                                "\ngroupName: " + groupName + "\nuserName: " + userName + "\nnotPushId: " + notPushId + "\nclassPushid: " + classPushid +
-                                "\ngroupPushId: " + groupPushId + "\nnotifyReq: " + notifyReq + "\nclassUni: " + classUni);
+                        String grpJoiningStatus = user.notifyCategory;
 
                         if (position != RecyclerView.NO_POSITION) {
-//                            DatabaseReference refSubsGroup = FirebaseDatabase.getInstance().getReference().child("Groups").child("User_Subscribed_Groups").child(groupName);
-//                            refSubsGroup.child(reqUserID).setValue(false);
-                            Log.d("USSERR", "onClick: " + userName);
-                            DatabaseReference saveUserGroupClassRef = FirebaseDatabase.getInstance().getReference().child("Groups")
-                                    .child("All_User_Group_Class").child(groupPushId).child(reqUserID).child("classUniPushId");
-                            saveUserGroupClassRef.setValue(classUni);
 
-                            DatabaseReference addedOrJoinedGroups = FirebaseDatabase.getInstance().getReference().child("Groups").child("UserAddedOrJoinedGrp").child(reqUserID).child(groupPushId);
-                            addedOrJoinedGroups.child("dateTime").setValue(dateTimeCC);
-                            addedOrJoinedGroups.child("addedOrJoined").setValue("StudentJoin");
+                            if (reqUserID != null && notifyReq != null) {
 
-                            if(reqUserID != null && groupPushId != null && classUni != null){
-                                DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(reqUserID).child(groupPushId).child(classUni);
 
-                                userNoti.child("joiningStatus").setValue("Approve");
+                                if (notifyReq.equals("AdmissionAccepted")) {
+
+                                    Log.d("ReqCLICK", "onClick: " + "\nnotifyReq: " + notifyReq);
+
+
+                                    DatabaseReference refAccUserNotifyFriend = FirebaseDatabase.getInstance().getReference().
+                                            child("Notification").child("Received_Req").child(userID).child(notPushId);
+
+                                    refAccUserNotifyFriend.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                            mListener.reqClick(reqUserID, currUserId, groupName, userName, notPushId, user.classUniPushId, groupPushId, notifyReq, classPushid, pushid, grpJoiningStatus);
+
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+                                }
+                                if (notifyReq.equals("AdmissionRejected")) {
+
+
+                                    DatabaseReference refAccUserNotifyFriend = FirebaseDatabase.getInstance().getReference().
+                                            child("Notification").child("Received_Req").child(userID).child(notPushId);
+
+                                    refAccUserNotifyFriend.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                            mListener.reqClick(reqUserID, currUserId, groupName, userName, notPushId, user.classUniPushId, groupPushId, notifyReq, classPushid, pushid, grpJoiningStatus);
+
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+                                }
+
+
+                                if (notifyReq.equals("Friend_Request")) {
+
+
+                                    DatabaseReference refAccUserNotifyFriend = FirebaseDatabase.getInstance().getReference().
+                                            child("Notification").child("Received_Req").child(userID).child(notPushId);
+
+                                    refAccUserNotifyFriend.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.child("grpJoiningStatus").getValue().toString().equals("Approve")) {
+
+                                                btn_Status.setText("Approved");
+
+
+                                                Toast.makeText(context.getApplicationContext(), "Already approved", Toast.LENGTH_SHORT).show();
+                                            } else if (snapshot.child("grpJoiningStatus").getValue().toString().equals("Reject")) {
+
+                                                btn_Status.setText("Rejected");
+
+                                                Toast.makeText(context.getApplicationContext(), "Rejected", Toast.LENGTH_SHORT).show();
+                                            } else {
+
+                                                btn_Status.setText("Pending");
+
+                                                mListener.reqClick(reqUserID, currUserId, groupName, userName, notPushId, user.classUniPushId, groupPushId, notifyReq, classPushid, pushid, grpJoiningStatus);
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+                                }
+
                             }
 
+                            if (reqUserID != null && groupPushId != null && classUni != null) {
 
-                            Log.d("ACCEPTTT", "acceptNotify: "+reqUserID+groupPushId);
 
-                            mListener.acceptNotify(reqUserID, currUserId, groupName, userName, classPushid, groupPushId, notifyReq, notPushId, classUni);
+                                if (notifyReq.equals("Group_AdmissionReq")) {
 
-                            ll_groupdetails.setVisibility(View.GONE);
-//                            tv_Groupinvite.setText("User " + userName + " request to join Sub-class : " + classPushid + " of server " + groupName + " has been approved");
+                                    Log.d("ReqCLICK", "onClick: " + class_admission.getName() + "\ngrpJoiningStatus: " + user.grpJoiningStatus + "\nreqUserID: " + reqUserID + "\ncurrUserId: " + currUserId +
+                                            "\ngroupName: " + groupName + "\nuserName: " + userName + "\nnotPushId: " + notPushId + "\nclassUniPushId: " + user.classUniPushId +
+                                            "\ngroupPushId: " + groupPushId + "\nnotifyReq: " + notifyReq + "\nclassPushid: " + classPushid + "\npushid: " + pushid);
 
-                            tv_reject.setEnabled(false);
+                                    DatabaseReference refAccUserNotify = FirebaseDatabase.getInstance().getReference().
+                                            child("Groups").child("All_GRPs").child(groupPushId).child(user.classUniPushId).child("groupAdmissionReqs").child(notPushId);
 
+                                    refAccUserNotify.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                                            if (snapshot.child("grpJoiningStatus").getValue().toString().equals("Approve")) {
+
+                                                btn_Status.setText("Approved");
+
+                                                Toast.makeText(context.getApplicationContext(), "Already approved", Toast.LENGTH_SHORT).show();
+                                            } else if (snapshot.child("grpJoiningStatus").getValue().toString().equals("Reject")) {
+
+                                                btn_Status.setText("Rejected");
+
+
+                                                Toast.makeText(context.getApplicationContext(), "Rejected", Toast.LENGTH_SHORT).show();
+                                            } else {
+
+                                                btn_Status.setText("Pending");
+
+
+                                                mListener.reqAdmissionClick(class_admission, reqUserID, currUserId, groupName, userName, notPushId, user.classUniPushId, groupPushId, notifyReq, classPushid, pushid);
+
+                                            }
+
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                }
+
+                                if (notifyReq.equals("Group_JoiningReq")) {
+
+                                    DatabaseReference refAccUserNotify = FirebaseDatabase.getInstance().getReference().
+                                            child("Groups").child("All_GRPs").child(groupPushId).child(user.classUniPushId).child("groupJoiningReqs").child(notPushId);
+
+                                    refAccUserNotify.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.child("grpJoiningStatus").getValue().toString().equals("Approve")) {
+
+                                                btn_Status.setText("Approved");
+
+
+                                                Toast.makeText(context.getApplicationContext(), "Already approved", Toast.LENGTH_SHORT).show();
+                                            } else if (snapshot.child("grpJoiningStatus").getValue().toString().equals("Reject")) {
+
+                                                btn_Status.setText("Rejected");
+
+
+                                                Toast.makeText(context.getApplicationContext(), "Rejected", Toast.LENGTH_SHORT).show();
+                                            } else {
+
+                                                btn_Status.setText("Pending");
+
+
+                                                mListener.reqClick(reqUserID, currUserId, groupName, userName, notPushId, user.classUniPushId, groupPushId, notifyReq, classPushid, pushid, grpJoiningStatus);
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                }
+                                if (notifyReq.equals("Group_JoiningReq_Teacher")) {
+                                    DatabaseReference refAccUserNotifyTeacher = FirebaseDatabase.getInstance().getReference().
+                                            child("Notification").child("Received_Req").child(groupPushId).child("groupTeacherJoiningReqs").child(notPushId);
+
+                                    refAccUserNotifyTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.child("grpJoiningStatus").getValue().toString().equals("Approve")) {
+
+                                                btn_Status.setText("Approved");
+
+
+                                                Toast.makeText(context.getApplicationContext(), "Already approved", Toast.LENGTH_SHORT).show();
+                                            } else if (snapshot.child("grpJoiningStatus").getValue().toString().equals("Reject")) {
+
+                                                btn_Status.setText("Rejected");
+
+
+                                                Toast.makeText(context.getApplicationContext(), "Rejected", Toast.LENGTH_SHORT).show();
+                                            } else {
+
+                                                btn_Status.setText("Pending");
+
+
+                                                mListener.reqClick(reqUserID, currUserId, groupName, userName, notPushId, user.classUniPushId, groupPushId, notifyReq, classPushid, pushid, grpJoiningStatus);
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+                                }
+
+                            }
                         }
                     }
                 }
             });
+
+
         }
     }
 }
+
+
+

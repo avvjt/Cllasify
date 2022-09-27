@@ -439,6 +439,7 @@ public class Discover_Item extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sentGroupJoinInvitation(adminGroupID, adminUserName, groupName, groupPushId, "className", classPushId, "StudentJoin");
+                bottomSheetDialog.dismiss();
             }
         });
 

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/page_color"
+    android:id="@+id/friendNoti"
     tools:context=".Fragments.Student_Joining_Reqs">
 
     <androidx.recyclerview.widget.RecyclerView
