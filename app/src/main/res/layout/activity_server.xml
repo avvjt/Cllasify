@@ -642,7 +642,7 @@
 
                         </LinearLayout>
 
-                        <!--notifications option-->
+                        <!--Fees Structure option-->
                         <LinearLayout
                             android:id="@+id/btn_feesStructure"
                             style="@style/SelectableItemBackground"
@@ -655,10 +655,10 @@
                             <ImageView
                                 android:layout_width="32dp"
                                 android:layout_height="32dp"
-                                android:background="@drawable/cust_red_corner"
+                                android:background="@drawable/backgroud_fees"
                                 android:contentDescription="@string/servers_contentDescription"
                                 android:padding="7dp"
-                                android:src="@drawable/ic_dynamic_feed_24"
+                                android:src="@drawable/ic_fees"
                                 app:tint="@color/white_constant" />
 
                             <TextView
@@ -666,7 +666,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="15dp"
                                 android:fontFamily="@font/inter_regular"
-                                android:text="Fees Structure"
+                                android:text="@string/fees_structure"
                                 android:textColor="@color/text_color"
                                 android:textSize="16sp" />
 

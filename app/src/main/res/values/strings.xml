@@ -197,6 +197,7 @@
     <string name="server_setting">Server setting</string>
     <string name="server_attendance">Attendance</string>
     <string name="server_notification">Notification</string>
+    <string name="fees_structure">Fees Structure</string>
     <string name="server_friends">Friends</string>
     <string name="server_teachers">Teachers</string>
     <string name="server_students">Students</string>
