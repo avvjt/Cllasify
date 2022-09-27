@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cllasify.cllasify.Activities.WebViewActivity;
 import com.cllasify.cllasify.Fragments.Friend_Chat_Activity;
 import com.cllasify.cllasify.R;
 
@@ -152,49 +153,55 @@ public class WebView_Fragment extends Fragment implements DownloadFile.Listener 
             }
             Activity activity = getActivity();
             if (activity != null) {
-                pdfPagerAdapter = new PDFPagerAdapter(requireActivity(), FileUtil.extractFileNameFromURL(url));
-                remotePDFViewPager.setAdapter(pdfPagerAdapter);
-                updateLayout();
-                progressBar.setVisibility(View.GONE);
-                imp_messge.setVisibility(View.GONE);
-                setTotalPage(remotePDFViewPager.getAdapter().getCount());
-                Log.d("TAG", "onPageSelected: " + remotePDFViewPager.getAdapter().getCount());
+                try {
+                    pdfPagerAdapter = new PDFPagerAdapter(requireActivity(), FileUtil.extractFileNameFromURL(url));
+                    remotePDFViewPager.setAdapter(pdfPagerAdapter);
+                    updateLayout();
+                    progressBar.setVisibility(View.GONE);
+                    imp_messge.setVisibility(View.GONE);
+                    setTotalPage(remotePDFViewPager.getAdapter().getCount());
+                    Log.d("TAG", "onPageSelected: " + remotePDFViewPager.getAdapter().getCount());
 
-                nextPageBtn.setOnClickListener(view -> {
-                    if (pageNumber == getTotalPage() - 1) {
-                        nextPageBtn.setEnabled(false);
-                    } else {
-                        nextPageBtn.setEnabled(true);
-                        remotePDFViewPager.setCurrentItem(pageNumber += 1);
-                    }
-                    if (pageNumber > 0) {
-                        previousPageBtn.setEnabled(true);
-                    }
-                    Log.d("CURRPAGE", "Next: " + pageNumber);
+                    nextPageBtn.setOnClickListener(view -> {
+                        if (pageNumber == getTotalPage() - 1) {
+                            nextPageBtn.setEnabled(false);
+                        } else {
+                            nextPageBtn.setEnabled(true);
+                            remotePDFViewPager.setCurrentItem(pageNumber += 1);
+                        }
+                        if (pageNumber > 0) {
+                            previousPageBtn.setEnabled(true);
+                        }
+                        Log.d("CURRPAGE", "Next: " + pageNumber);
 
-                    currentPage.setText("" + (pageNumber + 1));
+                        currentPage.setText("" + (pageNumber + 1));
 
 
-                });
+                    });
 
-                previousPageBtn.setOnClickListener(view -> {
-                    if (pageNumber == 0) {
-                        previousPageBtn.setEnabled(false);
-                    } else {
-                        previousPageBtn.setEnabled(true);
-                        remotePDFViewPager.setCurrentItem(pageNumber -= 1);
-                    }
-                    if (pageNumber < getTotalPage() - 1) {
-                        nextPageBtn.setEnabled(true);
-                    }
-                    Log.d("CURRPAGE", "Previous: " + pageNumber);
+                    previousPageBtn.setOnClickListener(view -> {
+                        if (pageNumber == 0) {
+                            previousPageBtn.setEnabled(false);
+                        } else {
+                            previousPageBtn.setEnabled(true);
+                            remotePDFViewPager.setCurrentItem(pageNumber -= 1);
+                        }
+                        if (pageNumber < getTotalPage() - 1) {
+                            nextPageBtn.setEnabled(true);
+                        }
+                        Log.d("CURRPAGE", "Previous: " + pageNumber);
 
-                    currentPage.setText("" + (pageNumber + 1));
+                        currentPage.setText("" + (pageNumber + 1));
 
-                });
+                    });
 
-                Log.d("CURRPAGE", "Total Page: " + getTotalPage());
-                totalPageNumber.setText("" + getTotalPage());
+                    Log.d("CURRPAGE", "Total Page: " + getTotalPage());
+                    totalPageNumber.setText("" + getTotalPage());
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), "This pdf is password protected, Please download it to open", Toast.LENGTH_SHORT).show();
+                    Log.d("PDFF", "onSuccess: " + e);
+                    //Do nothing
+                }
             }
         }
 
