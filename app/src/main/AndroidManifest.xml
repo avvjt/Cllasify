@@ -31,6 +31,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
         <activity
+            android:name=".Activities.Show_Notice"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Create_Notice"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Notice"
+            android:exported="false" />
+        <activity
             android:name=".Activities.WebViewActivity"
             android:exported="false" />
         <activity

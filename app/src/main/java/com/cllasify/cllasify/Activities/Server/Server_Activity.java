@@ -64,6 +64,7 @@ import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Activities.Attendance_Activity;
 import com.cllasify.cllasify.Activities.Discover_Activity;
 import com.cllasify.cllasify.Activities.Fees_Structure;
+import com.cllasify.cllasify.Activities.Notice;
 import com.cllasify.cllasify.Activities.Notification_Activity;
 import com.cllasify.cllasify.Activities.Profile.Profile_Activity;
 import com.cllasify.cllasify.Activities.Student_Fees_Pay;
@@ -128,7 +129,6 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -183,7 +183,7 @@ public class Server_Activity extends AppCompatActivity {
     //Linear Layouts
     LinearLayout onlyAdminLayout, groupSection, ll_AddJoinGrp, ll_ChatDoubtDashboard,
             endPanelLinearLayout, friendSection, rightPanelMems, rightPanelMember,
-            ib_servSettings, btn_lteachattend, FriendListText, btn_joinNotification, btn_lteachFees, btn_studentFees;
+            ib_servSettings, btn_lteachattend, FriendListText, btn_joinNotification, btn_lteachFees, btn_lnotice, btn_studentFees;
 
 
     //Buttons
@@ -295,6 +295,7 @@ public class Server_Activity extends AppCompatActivity {
         ib_FrndP_csubmit = findViewById(R.id.ib_FrndP_csubmit);
         btn_lteachattend = findViewById(R.id.btn_lteachattend);
         btn_lteachFees = findViewById(R.id.btn_feesStructure);
+        btn_lnotice = findViewById(R.id.btn_notice);
 
         btn_lTeachExam = findViewById(R.id.btn_lteachexam);
         btn_lTeachResult = findViewById(R.id.btn_lteachresult);
@@ -927,6 +928,18 @@ public class Server_Activity extends AppCompatActivity {
             btn_joinNotification.setEnabled(true);
             btn_lteachattend.setEnabled(true);
             btn_lteachFees.setEnabled(true);
+            btn_lnotice.setEnabled(true);
+
+            btn_lnotice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Server_Activity.this, Notice.class);
+                    intent.putExtra("groupPushId",groupPushId);
+                    intent.putExtra("classUniPushId",classUniPushId);
+                    intent.putExtra("subjectUniPushId",subjectUniPushId);
+                    startActivity(intent);
+                }
+            });
 
             btn_lteachFees.setOnClickListener(view -> {
 
@@ -2891,6 +2904,13 @@ public class Server_Activity extends AppCompatActivity {
                     public void onClick(View v) {
                         showToast();
                         btn_lteachFees.setEnabled(false);
+                    }
+                });
+                btn_lnotice.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showToast();
+                        btn_lnotice.setEnabled(false);
                     }
                 });
 

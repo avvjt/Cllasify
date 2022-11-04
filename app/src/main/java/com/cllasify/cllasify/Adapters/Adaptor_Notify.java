@@ -107,7 +107,6 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                 if (NotifyCategory.equals("Friend_Request")) {
 
 
-
                     if (inviteStatus.equals("Approve")) {
 
                         holder.btn_Status.setText("Approved");
@@ -165,8 +164,6 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                             assert mUser != null;
                             String userId = mUser.getUid();
                             Log.d("NOTI00", "onBindViewHolder: yessssssss!!!!!" + NotifyCategory);
-
-
 
 
                             if (NotifyCategory.equals("AdmissionAccepted")) {

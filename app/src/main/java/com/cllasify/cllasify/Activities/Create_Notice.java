@@ -5,29 +5,31 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.OpenableColumns;
+import android.text.TextUtils;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cllasify.cllasify.ModelClasses.Class_Admission;
-import com.cllasify.cllasify.ModelClasses.Class_Group;
+import com.cllasify.cllasify.ModelClasses.Class_Notice;
 import com.cllasify.cllasify.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,26 +39,23 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.razorpay.Checkout;
-import com.razorpay.ExternalWalletListener;
-import com.razorpay.PaymentData;
-import com.razorpay.PaymentResultWithDataListener;
-
-import org.json.JSONObject;
 
 import java.io.File;
-import java.util.Locale;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
-public class Admission_Structure extends AppCompatActivity implements PaymentResultWithDataListener, ExternalWalletListener {
+public class Create_Notice extends AppCompatActivity {
 
-    String userID, admissionFee, groupPushId, classPushId, dateTimeCC, adminGroupID, userEmail, subGroupName, userName, groupName;
-    Button pay_btn;
-    ImageView attachment_btn;
+    FloatingActionButton doneNotesBtn;
+    String groupPushId, classUniPushId, subjectUniPushId, userID;
+    EditText notesTitle, noticeData;
+    String title, notes;
+    DatabaseReference firebaseDBNotice;
+    Button uploadAttachmentsBtn;
+    FirebaseUser currentUser;
     private Uri fileUri;
     String displayName;
-    EditText name_et, dob_et, father_name_et, mother_name_et, address_et, phone_et, religion_et, cast_et;
-    String name_tv, dob_tv, father_name_tv, mother_name_tv, address_tv, phone_tv, religion_tv, cast_tv;
-
     RelativeLayout document, progress_layout;
     String fileUrl;
     boolean fileAdded;
@@ -67,64 +66,64 @@ public class Admission_Structure extends AppCompatActivity implements PaymentRes
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admission_structure);
+        setContentView(R.layout.activity_create_notice);
 
-        name_et = findViewById(R.id.name_et);
-        dob_et = findViewById(R.id.dob_et);
-        father_name_et = findViewById(R.id.father_name_et);
-        mother_name_et = findViewById(R.id.mother_name_et);
-        address_et = findViewById(R.id.address_et);
-        phone_et = findViewById(R.id.phone_et);
-        religion_et = findViewById(R.id.religion_et);
-        cast_et = findViewById(R.id.cast_et);
+        doneNotesBtn = findViewById(R.id.doneNotesBtn);
+        notesTitle = findViewById(R.id.notesTitle);
+        noticeData = findViewById(R.id.noticeData);
 
         document = findViewById(R.id.document);
         progress_layout = findViewById(R.id.progress_layout);
         uploadProgress = findViewById(R.id.uploadProgress);
         percentage = findViewById(R.id.percentage);
+        uploadAttachmentsBtn = findViewById(R.id.uploadAttachmentsBtn);
 
-        userID = getIntent().getStringExtra("userID");
-        admissionFee = getIntent().getStringExtra("admissionFee");
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        userID = currentUser.getUid();
         groupPushId = getIntent().getStringExtra("groupPushId");
-        classPushId = getIntent().getStringExtra("classPushId");
-        dateTimeCC = getIntent().getStringExtra("dateTimeCC");
-        adminGroupID = getIntent().getStringExtra("adminGroupID");
-        userEmail = getIntent().getStringExtra("userEmail");
-        subGroupName = getIntent().getStringExtra("subGroupName");
-        userName = getIntent().getStringExtra("userName");
-        groupName = getIntent().getStringExtra("groupName");
+        classUniPushId = getIntent().getStringExtra("classUniPushId");
+        subjectUniPushId = getIntent().getStringExtra("subjectUniPushId");
 
-        pay_btn = findViewById(R.id.pay_btn);
-        attachment_btn = findViewById(R.id.attachment_btn);
+        Date date = new Date();
+        CharSequence sequence = DateFormat.format("MMMM d,yyyy", date.getTime());
 
+        firebaseDBNotice = FirebaseDatabase.getInstance().getReference()
+                .child("Groups").child("Notice").child(groupPushId).child(classUniPushId).child(subjectUniPushId).child("All_Notice");
 
-        pay_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                if (name_et.getText().toString().length() == 0 || dob_et.getText().toString().length() == 0 || father_name_et.getText().toString().length() == 0
-                        || mother_name_et.getText().toString().trim().length() == 0 || address_et.getText().toString().trim().length() == 0 ||
-                        phone_et.getText().toString().trim().length() == 0 || religion_et.getText().toString().trim().length() == 0 ||
-                        cast_et.getText().toString().trim().length() == 0 || fileAdded == false) {
-                    Toast.makeText(Admission_Structure.this, "Please fill up the above details" + name_et.getText().toString().length(), Toast.LENGTH_SHORT).show();
-
-                } else {
-                    String[] amt = admissionFee.split("₹");
-
-                    String amount = amt[1];
-                    long feesAmt = (Long.parseLong(amount) * 100);
-                    startPayment(String.valueOf(feesAmt), groupPushId, subGroupName, userName);
-
-                }
-
-
-            }
-        });
-
-        attachment_btn.setOnClickListener(new View.OnClickListener() {
+        uploadAttachmentsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendPdf();
+            }
+        });
+
+        doneNotesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String noticePush = firebaseDBNotice.push().toString();
+                String[] f = noticePush.split("/");
+                String noticePushId = f[f.length - 1];
+                Log.d("noticePushId", "onDataChange: " + noticePushId);
+
+
+                if (TextUtils.isEmpty(notesTitle.getText())) {
+                    notesTitle.setError("This field is mandatory");
+                }
+                if (TextUtils.isEmpty(noticeData.getText())) {
+                    noticeData.setError("This field is mandatory");
+
+                } else {
+
+                    title = notesTitle.getText().toString();
+                    notes = noticeData.getText().toString();
+
+                    Class_Notice class_notice = new Class_Notice(title, notes, sequence.toString(), noticePushId, fileUrl);
+                    firebaseDBNotice.child(noticePushId).setValue(class_notice);
+                    onBackPressed();
+                }
+
+
             }
         });
 
@@ -212,7 +211,6 @@ public class Admission_Structure extends AppCompatActivity implements PaymentRes
                     @Override
                     public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
 
-//                        messageAdapter.setProgVal(1);
 
                         if (task.isComplete()) {
 
@@ -227,7 +225,8 @@ public class Admission_Structure extends AppCompatActivity implements PaymentRes
                                         @Override
                                         public void onSuccess(Uri uri) {
 
-                                            Toast.makeText(Admission_Structure.this, "Document sending sucess", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Create_Notice.this, "Document sending sucess", Toast.LENGTH_SHORT).show();
+
                                             progress_layout.setVisibility(View.GONE);
                                             fileUrl = uri.toString();
                                             fileAdded = true;
@@ -251,7 +250,7 @@ public class Admission_Structure extends AppCompatActivity implements PaymentRes
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Admission_Structure.this, "Document sending failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Create_Notice.this, "Document sending failed", Toast.LENGTH_SHORT).show();
 //                        messageAdapter.setProgVal(2);
                     }
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -293,106 +292,5 @@ public class Admission_Structure extends AppCompatActivity implements PaymentRes
 
     }
 
-    public void startPayment(String amount, String groupPushId, String className, String userName) {
 
-        final Activity activity = this;
-
-        final Checkout co = new Checkout();
-        co.setFullScreenDisable(true);
-        co.setKeyID("rzp_live_O91TyhivEf7J5v");
-
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group").child(groupPushId);
-
-
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                if (snapshot.exists()) {
-                    try {
-
-                        String groupName = snapshot.child("groupName").getValue().toString().trim();
-                        String groupPic = snapshot.child("serverProfilePic").getValue().toString().trim();
-
-
-                        JSONObject options = new JSONObject();
-                        options.put("name", groupName);
-                        options.put("description", "Admission fees paid by " + userName + " for " + className + " of " + groupName);//set server name,class & student name here
-                        options.put("currency", "INR");
-                        options.put("amount", amount);
-
-                        co.open(activity, options);
-
-                    } catch (Exception e) {
-                        Toast.makeText(activity, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-
-
-            /*
-            JSONObject preFill = new JSONObject();
-            preFill.put("email", "test@razorpay.com");
-            preFill.put("contact", "9876543210");
-            options.put("prefill", preFill);
-            */
-
-
-    }
-
-
-    @Override
-    public void onExternalWalletSelected(String s, PaymentData paymentData) {
-
-    }
-
-    @Override
-    public void onPaymentSuccess(String s, PaymentData paymentData) {
-
-        DatabaseReference userNoti = FirebaseDatabase.getInstance().getReference().child("Notification").child("User_Notifications").child(userID).child(groupPushId).child(classPushId);
-        DatabaseReference refjoiningReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Received_Req").child(groupPushId).child("groupTeacherJoiningReqs");
-        DatabaseReference refacceptingReq = FirebaseDatabase.getInstance().getReference().child("Notification").child("Submit_Req").child(userID);
-        DatabaseReference grpJoiningReqs = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classPushId).child("groupAdmissionReqs");
-
-        grpJoiningReqs.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                long noofQuesinCategory = snapshot.getChildrenCount() + 1;
-                String pushLong = "Joining B Reqno_" + noofQuesinCategory;
-
-                Class_Admission class_admission = new Class_Admission(name_et.getText().toString(), dob_et.getText().toString(), father_name_et.getText().toString(),
-                        mother_name_et.getText().toString(), address_et.getText().toString(), phone_et.getText().toString(),
-                        religion_et.getText().toString(), cast_et.getText().toString(), dateTimeCC, fileUrl);
-                Class_Group userAddComment = new Class_Group(class_admission, dateTimeCC, userName, "admission_req_sent", userID, adminGroupID, userEmail, pushLong, groupName, groupPushId, subGroupName, "Group_AdmissionReq", classPushId);
-                grpJoiningReqs.child(pushLong).setValue(userAddComment);
-                refacceptingReq.child(pushLong).setValue(userAddComment);
-                userNoti.child("notificationPushId").setValue(pushLong);
-                userNoti.child("joiningStatus").setValue("admission_req_sent");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        });
-
-        onBackPressed();
-
-
-    }
-
-    @Override
-    public void onPaymentError(int i, String s, PaymentData paymentData) {
-
-    }
 }

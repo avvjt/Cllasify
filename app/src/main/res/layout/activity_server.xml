@@ -711,6 +711,44 @@
 
                     </LinearLayout>
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/view_divider" />
+
+                    <LinearLayout
+                        android:id="@+id/btn_notice"
+                        style="@style/SelectableItemBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="30dp">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:background="@drawable/cust_red_corner"
+                            android:contentDescription="@string/servers_contentDescription"
+                            android:padding="7dp"
+                            android:src="@drawable/button_solid_unfollow"
+                            app:tint="@color/white_constant" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:fontFamily="@font/inter_regular"
+                            android:text="Notice"
+                            android:textColor="@color/text_color"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/view_divider" />
 
                     <!--Friends list recyclerview use in recent chat right panel-->
                     <LinearLayout
