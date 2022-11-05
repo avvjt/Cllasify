@@ -16,10 +16,14 @@ import com.cllasify.cllasify.Activities.Server.Create_Class;
 import com.cllasify.cllasify.Activities.Server.Server_Activity;
 import com.cllasify.cllasify.Adapters.Adaptor_ShowGrpMember_Fees;
 import com.cllasify.cllasify.Adapters.NotesAdapter;
+import com.cllasify.cllasify.ModelClasses.Class_Group_Names;
 import com.cllasify.cllasify.ModelClasses.Class_Notice;
 import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
+import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,15 +32,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Notice extends AppCompatActivity {
 
     FloatingActionButton newNoticeBtn;
     DatabaseReference firebaseDBNotice;
-    String groupPushId, classUniPushId, subjectUniPushId;
+    String groupPushId, classUniPushId, subjectUniPushId, userID;
     RecyclerView noticeRv;
     RelativeLayout emptll;
-
+    FirebaseUser currentUser;
 
     NotesAdapter notesAdapter;
     List<Class_Notice> noticeList;
@@ -57,10 +62,36 @@ public class Notice extends AppCompatActivity {
         noticeRv = findViewById(R.id.noticeRv);
         emptll = findViewById(R.id.empty_views);
 
+        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        userID = currentUser.getUid();
+
+        DatabaseReference databaseReferenceStudent = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPushId);
+
+        databaseReferenceStudent.child("classStudentList").child(userID).child("admin").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Log.d("CHKADMIN", "onDataChange: " + snapshot.getRef());
+
+                if (Objects.equals(snapshot.getValue(), false)) {
+                    newNoticeBtn.setVisibility(View.GONE);
+
+                } else {
+                    newNoticeBtn.setVisibility(View.VISIBLE);
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         noticeList = new ArrayList<>();
         notesAdapter = new NotesAdapter(Notice.this);
         noticeRv.setLayoutManager(new LinearLayoutManager(Notice.this));
-
 
 
         firebaseDBNotice.addValueEventListener(new ValueEventListener() {
@@ -68,7 +99,7 @@ public class Notice extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 
-                if (snapshot.exists()){
+                if (snapshot.exists()) {
                     noticeRv.setVisibility(View.VISIBLE);
                     emptll.setVisibility(View.GONE);
                 } else {
@@ -107,7 +138,6 @@ public class Notice extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
 
     }

@@ -20,19 +20,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:textSize="18dp"
-            android:text="Seems like you haven't add any notice yet" />
+            android:text="Seems like no notice haven't added yet"
+            android:textSize="18dp" />
 
-        <TextView
-            android:id="@+id/empty_subtitle_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/empty_title_text"
-            android:layout_centerHorizontal="true"
-            android:paddingTop="8dp"
-            android:text="Add some notice to continue"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:textSize="15dp" />
     </RelativeLayout>
 
 
