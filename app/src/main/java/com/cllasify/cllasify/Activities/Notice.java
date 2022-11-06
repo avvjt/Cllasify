@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -65,18 +67,49 @@ public class Notice extends AppCompatActivity {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         userID = currentUser.getUid();
 
+        SwipeHelper swipeHelper = new SwipeHelper(this, noticeRv) {
+            @Override
+            public void instantiateUnderlayButton(RecyclerView.ViewHolder viewHolder, List<UnderlayButton> underlayButtons) {
+                underlayButtons.add(new SwipeHelper.UnderlayButton(
+                        "Delete",
+                        0,
+                        Color.parseColor("#FF6200EE"),
+                        new SwipeHelper.UnderlayButtonClickListener() {
+                            @Override
+                            public void onClick(int pos) {
+                                // TODO: onDelete
+                            }
+                        }
+                ));
+
+                underlayButtons.add(new SwipeHelper.UnderlayButton(
+                        "Edit",
+                        0,
+                        Color.parseColor("#333333"),
+                        new SwipeHelper.UnderlayButtonClickListener() {
+                            @Override
+                            public void onClick(int pos) {
+                                // TODO: OnTransfer
+                            }
+                        }
+                ));
+            }
+        };
+
         DatabaseReference databaseReferenceStudent = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(groupPushId).child(classUniPushId);
 
         databaseReferenceStudent.child("classStudentList").child(userID).child("admin").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Log.d("CHKADMIN", "onDataChange: " + snapshot.getRef());
+                Log.d("CHKADMIN", "onDataChange: " + snapshot.getValue());
 
                 if (Objects.equals(snapshot.getValue(), false)) {
                     newNoticeBtn.setVisibility(View.GONE);
+                    swipeHelper.dettachSwipe();
 
                 } else {
                     newNoticeBtn.setVisibility(View.VISIBLE);
+                    swipeHelper.attachSwipe();
                 }
 
 
