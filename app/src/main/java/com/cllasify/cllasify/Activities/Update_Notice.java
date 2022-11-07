@@ -1,9 +1,5 @@
 package com.cllasify.cllasify.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
@@ -20,6 +16,10 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.cllasify.cllasify.ModelClasses.Class_Notice;
 import com.cllasify.cllasify.R;
@@ -41,16 +41,14 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
-public class Create_Notice extends AppCompatActivity {
+public class Update_Notice extends AppCompatActivity {
 
     FloatingActionButton doneNotesBtn;
     String groupPushId, classUniPushId, subjectUniPushId, userID;
     EditText notesTitle, noticeData;
-    String title, notes;
+    //    String title, notes;
     DatabaseReference firebaseDBNotice;
     Button uploadAttachmentsBtn;
     FirebaseUser currentUser;
@@ -63,10 +61,14 @@ public class Create_Notice extends AppCompatActivity {
     TextView percentage;
     private int currentProgress = 0;
 
+
+    String title, notes, date, docs, key;
+    RelativeLayout pdfFile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_notice);
+        setContentView(R.layout.activity_update_notice);
 
         doneNotesBtn = findViewById(R.id.doneNotesBtn);
         notesTitle = findViewById(R.id.notesTitle);
@@ -78,12 +80,22 @@ public class Create_Notice extends AppCompatActivity {
         percentage = findViewById(R.id.percentage);
         uploadAttachmentsBtn = findViewById(R.id.uploadAttachmentsBtn);
 
+
+        title = getIntent().getStringExtra("title");
+        notes = getIntent().getStringExtra("notes");
+        date = getIntent().getStringExtra("date");
+        docs = getIntent().getStringExtra("docs");
+        key = getIntent().getStringExtra("key");
+
+        notesTitle.setText(title);
+        noticeData.setText(notes);
+        fileUrl = docs;
+
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         userID = currentUser.getUid();
         groupPushId = getIntent().getStringExtra("groupPushId");
         classUniPushId = getIntent().getStringExtra("classUniPushId");
         subjectUniPushId = getIntent().getStringExtra("subjectUniPushId");
-        fileUrl = "null";
 
         Date date = new Date();
         CharSequence sequence = DateFormat.format("MMMM d,yyyy", date.getTime());
@@ -98,14 +110,15 @@ public class Create_Notice extends AppCompatActivity {
             }
         });
 
+        if (!docs.equals("null")) {
+            document.setVisibility(View.VISIBLE);
+        } else {
+            document.setVisibility(View.GONE);
+        }
+
         doneNotesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                String noticePush = firebaseDBNotice.push().toString();
-                String[] f = noticePush.split("/");
-                String noticePushId = f[f.length - 1];
-                Log.d("noticePushId", "onDataChange: " + noticePushId);
 
 
                 if (TextUtils.isEmpty(notesTitle.getText())) {
@@ -119,8 +132,8 @@ public class Create_Notice extends AppCompatActivity {
                     title = notesTitle.getText().toString();
                     notes = noticeData.getText().toString();
 
-                    Class_Notice class_notice = new Class_Notice(title, notes, sequence.toString(), noticePushId, fileUrl);
-                    firebaseDBNotice.child(noticePushId).setValue(class_notice);
+                    Class_Notice class_notice = new Class_Notice(title, notes, sequence.toString(), key, fileUrl);
+                    firebaseDBNotice.child(key).setValue(class_notice);
                     onBackPressed();
                 }
 
@@ -226,7 +239,7 @@ public class Create_Notice extends AppCompatActivity {
                                         @Override
                                         public void onSuccess(Uri uri) {
 
-                                            Toast.makeText(Create_Notice.this, "Document sending sucess", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Update_Notice.this, "Document sending sucess", Toast.LENGTH_SHORT).show();
 
                                             progress_layout.setVisibility(View.GONE);
                                             fileUrl = uri.toString();
@@ -251,7 +264,7 @@ public class Create_Notice extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(Create_Notice.this, "Document sending failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Update_Notice.this, "Document sending failed", Toast.LENGTH_SHORT).show();
 //                        messageAdapter.setProgVal(2);
                     }
                 }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {

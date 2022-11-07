@@ -8,32 +8,25 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:id="@+id/notice"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/notesDate"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="16dp"
-                android:padding="15dp" />
-
-
-            <TextView
+            <EditText
                 android:id="@+id/notesTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
+                android:background="@android:color/transparent"
+                android:hint="Title..."
                 android:padding="15dp" />
 
 
-            <TextView
-                android:id="@+id/notesData"
+            <EditText
+                android:id="@+id/noticeData"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="16dp"
@@ -42,15 +35,67 @@
                 android:layout_marginBottom="100dp"
                 android:background="@android:color/transparent"
                 android:gravity="start"
+                android:hint="Notes..."
                 android:padding="15dp" />
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/progress_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/notice"
+            android:visibility="gone"
+            android:layout_margin="20dp">
+
+            <ProgressBar
+                android:id="@+id/uploadProgress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:progressDrawable="@drawable/custom_progress_bg" />
+
+            <TextView
+                android:id="@+id/percentage"
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="25dp"
+                android:fontFamily="@font/inter_bold"
+                android:gravity="center"
+                android:text="0%"
+                android:textColor="@color/black" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_below="@id/progress_layout">
+
+            <Button
+                android:id="@+id/uploadAttachmentsBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:padding="15dp"
+                android:text="Upload attachments"
+                android:textAllCaps="false" />
 
             <RelativeLayout
                 android:id="@+id/document"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/attachment_btn"
+                android:layout_alignParentBottom="true"
                 android:layout_centerInParent="true"
-                android:layout_margin="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@id/uploadAttachmentsBtn"
                 android:background="@drawable/background_doubt"
                 android:orientation="horizontal"
                 android:padding="20dp"
@@ -92,8 +137,22 @@
             </RelativeLayout>
 
 
-        </LinearLayout>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/doneNotesBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginStart="26dp"
+                android:layout_marginTop="26dp"
+                android:layout_marginEnd="26dp"
+                android:layout_marginBottom="26dp"
+                android:src="@drawable/ic_tick_mark" />
 
+
+        </RelativeLayout>
     </RelativeLayout>
+
 
 </ScrollView>

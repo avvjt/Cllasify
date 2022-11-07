@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.cllasify.cllasify.Activities.Server.Create_Class;
 import com.cllasify.cllasify.Activities.Server.Server_Activity;
@@ -23,6 +24,7 @@ import com.cllasify.cllasify.ModelClasses.Class_Notice;
 import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -77,7 +79,12 @@ public class Notice extends AppCompatActivity {
                         new SwipeHelper.UnderlayButtonClickListener() {
                             @Override
                             public void onClick(int pos) {
-                                // TODO: onDelete
+                                firebaseDBNotice.child(noticeList.get(pos).getKey()).setValue(null).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(Notice.this, "Item successfully removed", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         }
                 ));
@@ -89,7 +96,20 @@ public class Notice extends AppCompatActivity {
                         new SwipeHelper.UnderlayButtonClickListener() {
                             @Override
                             public void onClick(int pos) {
-                                // TODO: OnTransfer
+
+                                Toast.makeText(Notice.this, "" + noticeList.get(pos).getKey(), Toast.LENGTH_SHORT).show();
+
+
+                                Intent intent = new Intent(Notice.this, Update_Notice.class);
+                                intent.putExtra("groupPushId", groupPushId);
+                                intent.putExtra("classUniPushId", classUniPushId);
+                                intent.putExtra("subjectUniPushId", subjectUniPushId);
+                                intent.putExtra("title", noticeList.get(pos).title);
+                                intent.putExtra("notes", noticeList.get(pos).description);
+                                intent.putExtra("date", noticeList.get(pos).date);
+                                intent.putExtra("docs", noticeList.get(pos).docs);
+                                intent.putExtra("key", noticeList.get(pos).key);
+                                startActivity(intent);
                             }
                         }
                 ));
