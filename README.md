@@ -1,2 +1,2 @@
 # Cllasify
-## Website and Video left
+## Last release before approval
