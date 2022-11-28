@@ -124,6 +124,7 @@ dependencies {
     //Razorpay
     implementation 'com.razorpay:checkout:1.6.24'
 
+    implementation 'com.github.Dimezis:BlurView:version-2.0.3'
 
 }
 apply plugin: 'com.google.gms.google-services'

@@ -1,160 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_list_group_search"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginBottom="15dp"
-    android:background="@color/page_color">
+    android:layout_marginBottom="5dp"
+    android:background="@color/page_color"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/ll_groupdetails"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/schoolLogo"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="220dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+
+        app:cardCornerRadius="10dp">
 
         <ImageView
             android:id="@+id/schImg"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="center"
-            android:src="@drawable/school_bg"
-            android:elevation="5dp"
-            android:contentDescription="@string/item_contentDescription" />
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/school_bg"
+            android:elevation="2dp"
+            android:scaleType="centerCrop" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_groupname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/schoolLogo"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="20dp"
+        android:elevation="2dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/youtube_sans_dark_extrabold"
+        android:maxLines="2"
+        android:text="Experimental school"
+        android:textColor="@color/text_white"
+        android:textSize="25sp"
+        android:transitionName="name_shared" />
+
+    <LinearLayout
+        android:id="@+id/tv_GroupStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_groupname"
+        android:elevation="2dp"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingTop="5dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="10dp">
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/item_contentDescription"
+            android:src="@drawable/ic_person_16"
+            app:tint="@color/text_white" />
+
+        <TextView
+            android:id="@+id/numbStudentsInt"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dp"
-            android:layout_marginStart="10dp">
-            <ImageView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:src="@drawable/ic_explore"
-                app:tint="@color/iconColor"
-                android:contentDescription="@string/item_contentDescription" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_background_color"
-                android:text="@string/based_location"
-                android:fontFamily="@font/inter_regular"
-                android:layout_marginStart="10dp"/>
+            android:layout_marginStart="10dp"
+            android:textColor="@color/text_white"
+            android:textSize="15sp"
+            android:transitionName="student_no_shared" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/shortDescription"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/numbStudents"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp">
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/item_students"
+            android:textColor="@color/text_white"
+            android:textSize="15sp"
+            android:transitionName="student_shared" />
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/schoolLogo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="5dp">
+        <View
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/ic_dot" />
 
-            <ImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:src="@drawable/ic_logotext"
-                android:id="@+id/schoolLogoImg"
-                android:scaleType="centerCrop"
-                android:elevation="2dp"
-                android:background="@drawable/explore_icon_background"
-                android:transitionName="pic_shared"
-                android:contentDescription="@string/item_contentDescription" />
-
-            </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:id="@+id/tv_groupname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:fontFamily="@font/inter_semibold"
-                android:maxLines="2"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="15dp"
-                android:textColor="@color/text_color"
-                android:textSize="18sp"
-                android:transitionName="name_shared"/>
-
-        </LinearLayout>
-
-        <!--Extra things-->
-
-        <LinearLayout
-            android:id="@+id/tv_GroupStatus"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/numbTeachersInt"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="25dp"
-            android:paddingEnd="20dp"
-            android:orientation="horizontal"
-            android:paddingTop="5dp"
-            android:paddingBottom="10dp">
+            android:layout_marginStart="10dp"
+            android:textColor="@color/text_white"
+            android:textSize="15sp"
+            android:transitionName="teacher_no_shared" />
 
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/ic_person_16"
-                app:tint="@color/iconColor"
-                android:layout_gravity="center_vertical"
-                android:contentDescription="@string/item_contentDescription" />
-
-            <TextView
-                android:id="@+id/numbStudentsInt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:textSize="15sp"
-                android:textColor="@color/text_background_color"
-                android:transitionName="student_no_shared"/>
-
-            <TextView
-                android:id="@+id/numbStudents"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/item_students"
-                android:textColor="@color/text_background_color"
-                android:textSize="15sp"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/inter_regular"
-                android:transitionName="student_shared"/>
-
-            <View
-                android:layout_width="5dp"
-                android:layout_height="5dp"
-                android:background="@drawable/ic_dot"
-                android:layout_gravity="center"
-                android:layout_marginStart="10dp"/>
-
-            <TextView
-                android:id="@+id/numbTeachersInt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:textSize="15sp"
-                android:textColor="@color/text_background_color"
-                android:transitionName="teacher_no_shared"/>
-
-            <TextView
-                android:id="@+id/numbTeachers"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/item_teachers"
-                android:textColor="@color/text_background_color"
-                android:textSize="15sp"
-                android:layout_marginStart="10dp"
-                android:fontFamily="@font/inter_regular"
-                android:transitionName="teacher_shared"/>
+        <TextView
+            android:id="@+id/numbTeachers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="@string/item_teachers"
+            android:textColor="@color/text_white"
+            android:textSize="15sp"
+            android:transitionName="teacher_shared" />
 
 
-        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 
+    <ImageView
+        android:id="@+id/schoolLogoImg"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:contentDescription="@string/item_contentDescription"
+        android:scaleType="centerCrop"
+        android:src="@drawable/school_bg" />
+
+    <eightbitlab.com.blurview.BlurView
+        android:id="@+id/blurView"
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        app:blurOverlayColor="#00FFFFFF" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:contentDescription="@string/item_contentDescription"
+            android:src="@drawable/ic_explore"
+            app:tint="@color/iconColor" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/inter_regular"
+            android:text="@string/based_location"
+            android:textColor="@color/text_background_color" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,13 +1,16 @@
 package com.cllasify.cllasify.Adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.Activities.Discover_Activity;
 import com.cllasify.cllasify.Activities.Discover_Item;
 import com.cllasify.cllasify.ModelClasses.Class_Group;
 import com.cllasify.cllasify.R;
@@ -27,6 +31,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
+
+import eightbitlab.com.blurview.BlurView;
+import eightbitlab.com.blurview.RenderScriptBlur;
 
 public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGroup.MyViewHolder> {
 
@@ -64,6 +71,19 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
+
+
+        float radius = 25f;
+
+        View decorView = ((Discover_Activity) context).getWindow().getDecorView();
+        ViewGroup rootView = (ViewGroup) decorView.findViewById(android.R.id.content);
+
+        Drawable windowBackground = decorView.getBackground();
+
+        holder.blurLayout.setupWith(rootView, new RenderScriptBlur(context))
+                .setFrameClearDrawable(windowBackground) // Optional
+                .setBlurRadius(radius);
+
         Class_Group class_GroupDetails = mDatalistNew.get(position);
 
         String groupName = class_GroupDetails.getGroupName();
@@ -150,12 +170,16 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
     class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tv_groupname;
-        LinearLayout ll_list_group_search;
+        RelativeLayout ll_list_group_search;
         TextView numbStudents, numbTeachers;
         ImageView schoolLogoImg, schImg;
 
+        BlurView blurLayout;
+
         public MyViewHolder(View itemView) {
             super(itemView);
+
+            blurLayout = itemView.findViewById(R.id.blurView);
 
             tv_groupname = itemView.findViewById(R.id.tv_groupname);
             ll_list_group_search = itemView.findViewById(R.id.ll_list_group_search);
