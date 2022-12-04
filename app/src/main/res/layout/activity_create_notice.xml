@@ -2,12 +2,56 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/page_background_color">
+
+
+    <LinearLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/page_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <ImageButton
+            android:id="@+id/btn_Back"
+            style="@style/SelectableItemBackgroundBorderless"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="1dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_arrow_left_24"
+            app:tint="@color/iconSecondaryColor"
+            android:contentDescription="@string/privacy_contentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Create notice"
+            android:textColor="@color/text_color"
+            android:textSize="20sp" />
+    </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:layout_below="@id/action_bar"
+        android:background="@color/page_color">
 
         <EditText
             android:id="@+id/notesTitle"
@@ -17,7 +61,11 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:padding="15dp"
-            android:hint="Title..."/>
+            android:hint="Title"
+            android:textCursorDrawable="@drawable/cursor_color"
+            android:fontFamily="@font/inter_medium"
+            android:textSize="18sp"
+            android:background="@null"/>
 
 
 
@@ -25,12 +73,17 @@
             android:id="@+id/noticeData"
             android:layout_width="match_parent"
             android:layout_height="300sp"
-            android:layout_marginTop="16dp"
             android:gravity="start"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:padding="15dp"
-            android:hint="Notes..."/>
+            android:hint="Note"
+            android:textSize="16sp"
+            android:background="@null"
+            android:textCursorDrawable="@drawable/cursor_color"
+
+            android:focusable="true"
+            android:focusableInTouchMode="true"/>
 
         <Button
             android:id="@+id/uploadAttachmentsBtn"
@@ -39,7 +92,10 @@
             android:layout_margin="20dp"
             android:padding="15dp"
             android:text="Upload attachments"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            android:fontFamily="@font/inter_medium"
+            android:background="@color/transparent"/>
 
 
         <RelativeLayout
@@ -125,8 +181,8 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/doneNotesBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
@@ -134,6 +190,8 @@
         android:layout_marginTop="26dp"
         android:layout_marginEnd="26dp"
         android:layout_marginBottom="26dp"
-        android:src="@drawable/ic_tick_mark" />
+        android:src="@drawable/ic_right_black"
+        android:tint="@color/white_constant"
+        app:backgroundTint="@color/iconPrimaryColor"/>
 
 </RelativeLayout>

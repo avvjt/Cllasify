@@ -3,7 +3,49 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.Notice">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/page_background_color"
+    tools:context=".Activities.Notice"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/action_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/page_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <ImageButton
+            android:id="@+id/btn_Back"
+            style="@style/SelectableItemBackgroundBorderless"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="1dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_arrow_left_24"
+            app:tint="@color/iconSecondaryColor"
+            android:contentDescription="@string/privacy_contentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Notice"
+            android:textColor="@color/text_color"
+            android:textSize="20sp" />
+    </LinearLayout>
+
 
 
 
@@ -12,7 +54,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:paddingBottom="70dp">
+        android:paddingBottom="70dp"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/action_bar">
 
 
         <TextView
@@ -21,7 +65,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="Seems like no notice haven't added yet"
-            android:textSize="18dp" />
+            android:textSize="16sp"
+            android:fontFamily="@font/inter_medium"/>
 
     </RelativeLayout>
 
@@ -29,7 +74,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/noticeRv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/action_bar"
+        android:scrollbarSize="1dp"
+        android:background="@color/page_color"
+        android:padding="10dp"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/newNoticeBtn"
@@ -39,6 +89,8 @@
         android:layout_alignParentBottom="true"
         android:layout_marginRight="26dp"
         android:layout_marginBottom="26dp"
-        android:src="@drawable/ic_add" />
+        android:src="@drawable/ic_add"
+        android:tint="@color/white_constant"
+        app:backgroundTint="@color/iconPrimaryColor"/>
 
 </RelativeLayout>

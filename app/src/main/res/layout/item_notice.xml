@@ -2,19 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="105dp"
-        android:layout_margin="7dp"
-        app:cardCornerRadius="10dp">
+        android:layout_margin="5dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="2dp"
+        app:strokeWidth="2dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="6dp"
-            android:orientation="vertical">
+            android:padding="10dp"
+            android:orientation="vertical"
+            android:background="@color/doubt_background">
 
             <TextView
                 android:id="@+id/notesTitle"
@@ -23,17 +27,22 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:padding="5dp"
-                android:text="Title" />
+                android:text=""
+                android:textColor="@color/text_color"
+                android:fontFamily="@font/inter_medium"
+                android:textSize="16sp"/>
 
             <TextView
                 android:id="@+id/notesData"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:fontFamily="@font/inter_bold"
+                android:fontFamily="@font/inter_regular"
                 android:maxLines="2"
+                android:textColor="@color/text_color"
                 android:padding="5dp"
-                android:text="Subtitle" />
+                android:text=""
+                android:textSize="15sp"/>
 
 
             <TextView
@@ -41,8 +50,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
+                android:textSize="14sp"
+                android:fontFamily="@font/inter_italic"
                 android:text="20 February 2021"
-                android:textColor="@color/black" />
+                android:textColor="@color/text_color"
+                android:gravity="end"/>
 
         </LinearLayout>
 
