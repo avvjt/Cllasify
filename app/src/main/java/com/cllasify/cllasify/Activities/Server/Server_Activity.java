@@ -557,6 +557,7 @@ public class Server_Activity extends AppCompatActivity {
                     textViewSubjectName.setVisibility(View.GONE);
                     textViewGroupName.setVisibility(View.GONE);
                     rv_GrpMemberList.setVisibility(View.GONE);
+                    btn_lnotice.setVisibility(View.GONE);
                     rv_GrpTeacherList.setVisibility(View.GONE);
                     groupSection.setVisibility(View.GONE);
                     tv_GroupMember.setVisibility(View.GONE);
@@ -1604,10 +1605,12 @@ public class Server_Activity extends AppCompatActivity {
                                                                          if (snapshot.hasChild("classAdminList")) {
                                                                              Log.d("STUCHK", "onSUBS: yes");
                                                                              rv_GrpTeacherList.setVisibility(View.VISIBLE);
+                                                                             btn_lnotice.setVisibility(View.VISIBLE);
                                                                              adminListText.setVisibility(View.VISIBLE);
                                                                          } else {
                                                                              Log.d("STUCHK", "onSUBS: nooo");
                                                                              rv_GrpTeacherList.setVisibility(View.GONE);
+                                                                             btn_lnotice.setVisibility(View.GONE);
                                                                              adminListText.setVisibility(View.GONE);
                                                                          }
                                                                      }
@@ -2236,6 +2239,7 @@ public class Server_Activity extends AppCompatActivity {
                 FriendListTextt.setVisibility(View.VISIBLE);
                 rv_GrpTeacherList.setVisibility(View.GONE);
                 rv_GrpMemberList.setVisibility(View.GONE);
+                btn_lnotice.setVisibility(View.GONE);
                 friendSection.setVisibility(View.VISIBLE);
                 onlyAdminLayout.setVisibility(View.GONE);
                 btn_studentFees.setVisibility(View.GONE);
@@ -2934,6 +2938,7 @@ public class Server_Activity extends AppCompatActivity {
                 tv_GroupMember.setVisibility(View.VISIBLE);
                 adminListText.setVisibility(View.VISIBLE);
                 rv_GrpTeacherList.setVisibility(View.VISIBLE);
+                btn_lnotice.setVisibility(View.VISIBLE);
                 if (listGrpMemberList != null) {
                     rv_GrpMemberList.setVisibility(View.VISIBLE);
                 }

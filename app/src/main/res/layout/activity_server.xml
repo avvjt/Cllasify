@@ -176,8 +176,8 @@
                         android:id="@+id/recyclerViewClassList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
-                        android:layout_marginBottom="32dp" />
+                        android:layout_marginBottom="32dp"
+                        android:visibility="gone" />
 
 
                 </LinearLayout>
@@ -374,10 +374,13 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
 
-                                <include layout="@layout/shimmer_item"/>
-                                <include layout="@layout/shimmer_item"/>
-                                <include layout="@layout/shimmer_item"/>
-                                <include layout="@layout/shimmer_item"/>
+                                <include layout="@layout/shimmer_item" />
+
+                                <include layout="@layout/shimmer_item" />
+
+                                <include layout="@layout/shimmer_item" />
+
+                                <include layout="@layout/shimmer_item" />
 
                             </LinearLayout>
 
@@ -391,23 +394,23 @@
                             android:id="@+id/rv_ChatDashboard"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:visibility="gone"
                             android:layout_above="@+id/ll_bottom_send"
                             android:layout_alignParentEnd="true"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="0dp"
                             android:paddingStart="10dp"
-                            android:paddingEnd="1dp" />
+                            android:paddingEnd="1dp"
+                            android:visibility="gone" />
 
 
                         <ProgressBar
                             android:id="@+id/uploadProgress"
+                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="5dp"
-                            android:visibility="gone"
-                            android:progressDrawable="@drawable/custom_progress_bg"
                             android:layout_above="@+id/ll_bottom_send"
-                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"/>
+                            android:progressDrawable="@drawable/custom_progress_bg"
+                            android:visibility="gone" />
 
                         <LinearLayout
                             android:id="@+id/ll_bottom_send"
@@ -415,8 +418,8 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentBottom="true"
                             android:layout_marginStart="15dp"
-                            android:visibility="gone"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
                             <EditText
                                 android:id="@+id/et_ctext"
@@ -673,7 +676,6 @@
                         </LinearLayout>
 
 
-
                     </LinearLayout>
 
                     <View
@@ -688,8 +690,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:visibility="gone"
-                        android:padding="30dp">
+                        android:padding="30dp"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="32dp"
@@ -723,7 +725,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:padding="30dp">
+                        android:padding="30dp"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="32dp"
