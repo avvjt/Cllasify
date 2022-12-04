@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/page_color"
     tools:context=".Activities.Admission_Structure">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
         <LinearLayout
@@ -17,239 +17,263 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="25dp">
+
+
+                <TextView
+                    android:id="@+id/tv_groupname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_vertical"
+                    android:fontFamily="@font/youtube_sans_dark_extrabold"
+                    android:text="Admission Form"
+                    android:textColor="@color/text_color"
+                    android:textSize="25sp"
+                    android:transitionName="name_shared" />
+
+                <TextView
+                    android:id="@+id/fees_amt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:fontFamily="@font/youtube_sans_dark_medium"
+                    android:text="Fees: ₹0"
+                    android:textSize="15dp" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/date_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="date" />
-
-            <TextView
-                android:id="@+id/name_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="name" />
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/youtube_sans_dark_medium"
+                android:text="Date"
+                android:textSize="15dp" />
 
             <EditText
                 android:id="@+id/name_et"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp" />
-
-            <TextView
-                android:id="@+id/dob_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="dob" />
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/custom_et"
+                android:fontFamily="@font/youtube_sans_dark_medium"
+                android:hint="Name"
+                android:paddingStart="15dp"
+                android:textSize="15dp" />
 
             <EditText
                 android:id="@+id/dob_et"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp" />
-
-            <TextView
-                android:id="@+id/father_name_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="father_name_et" />
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/custom_et"
+                android:fontFamily="@font/youtube_sans_dark_medium"
+                android:hint="Date of Birth"
+                android:paddingStart="15dp"
+                android:textSize="15dp" />
 
             <EditText
                 android:id="@+id/father_name_et"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp" />
-
-            <TextView
-                android:id="@+id/mother_name_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="mother_name_tv" />
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/custom_et"
+                android:fontFamily="@font/youtube_sans_dark_medium"
+                android:hint="Father's Name"
+                android:paddingStart="15dp"
+                android:textSize="15dp" />
 
             <EditText
                 android:id="@+id/mother_name_et"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp" />
-
-            <TextView
-                android:id="@+id/address_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="address" />
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/custom_et"
+                android:fontFamily="@font/youtube_sans_dark_medium"
+                android:hint="Mother's Name"
+                android:paddingStart="15dp"
+                android:textSize="15dp" />
 
             <EditText
                 android:id="@+id/address_et"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp" />
-
-            <TextView
-                android:id="@+id/phone_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="phone_tv" />
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/custom_et"
+                android:fontFamily="@font/youtube_sans_dark_medium"
+                android:hint="Adress"
+                android:paddingStart="15dp"
+                android:textSize="15dp" />
 
             <EditText
                 android:id="@+id/phone_et"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp" />
-
-            <TextView
-                android:id="@+id/religion_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="religion" />
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/custom_et"
+                android:fontFamily="@font/youtube_sans_dark_medium"
+                android:hint="Phone Number"
+                android:paddingStart="15dp"
+                android:textSize="15dp" />
 
             <EditText
                 android:id="@+id/religion_et"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp" />
-
-            <TextView
-                android:id="@+id/cast_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="cast" />
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/custom_et"
+                android:fontFamily="@font/youtube_sans_dark_medium"
+                android:hint="Religion"
+                android:paddingStart="15dp"
+                android:textSize="15dp" />
 
             <EditText
                 android:id="@+id/cast_et"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp" />
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/custom_et"
+                android:fontFamily="@font/youtube_sans_dark_medium"
+                android:hint="Cast"
+                android:paddingStart="15dp"
+                android:textSize="15dp" />
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/attachment_btn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_below="@+id/ll_admission"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="10dp"
-            android:src="@drawable/ic_clippy_16" />
-
-        <RelativeLayout
-            android:id="@+id/document"
+        <TextView
+            android:id="@+id/warning_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/attachment_btn"
-            android:visibility="gone"
+            android:layout_below="@+id/ll_admission"
             android:layout_centerInParent="true"
-            android:background="@drawable/background_doubt"
-            android:orientation="horizontal"
-            android:padding="20dp">
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/download_btn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:src="@drawable/ic_arrow_down_16"
-                android:visibility="gone" />
-
-
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/doc_button"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:background="@drawable/pdf_pic" />
-
-            <TextView
-                android:id="@+id/tv_pdfName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_toEndOf="@+id/doc_button"
-                android:text="Result.pdf"
-                android:ellipsize="end"
-                android:fontFamily="@font/inter_regular"
-                android:maxLines="2"
-                android:padding="5dp"
-                android:textColor="@color/text_color"
-                android:textSize="14sp" />
-
-            <!--Useless don't need-->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_Username"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="You started a thread"
-                    android:textColor="@color/black"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/tv_DateTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Time"
-                    android:textColor="@color/black"
-                    android:textSize="14sp"
-                    android:visibility="gone" />
-            </LinearLayout>
-
-
-        </RelativeLayout>
-
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/youtube_sans_dark_extrabold"
+            android:text="Submitting the result is mandatory"
+            android:textColor="@color/text_color"
+            android:textSize="15dp" />
 
         <RelativeLayout
-            android:id="@+id/progress_layout"
-            android:layout_width="wrap_content"
-            android:layout_below="@+id/attachment_btn"
+            android:id="@+id/doc_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/warning_tv"
             android:layout_centerInParent="true"
-            android:visibility="gone"
-            android:layout_toEndOf="@+id/document"
-            android:layout_height="wrap_content">
-            <ProgressBar
-                android:id="@+id/uploadProgress"
+            android:layout_margin="20dp"
+            android:gravity="center">
+
+
+            <Button
+                android:id="@+id/attachment_btn"
                 android:layout_width="wrap_content"
-                android:progressDrawable="@drawable/custom_progress_bg"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/percentage"
-                android:layout_width="30dp"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="25dp"
-                android:fontFamily="@font/inter_bold"
-                android:gravity="center"
-                android:text="0%"
-                android:textColor="@color/black" />
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/custom_outline_btn"
+                android:fontFamily="@font/youtube_sans_dark_extrabold"
+                android:text="Attach"
+                android:textAllCaps="false" />
+
+
+            <RelativeLayout
+                android:id="@+id/document"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_toEndOf="@+id/attachment_btn"
+                android:background="@drawable/background_doubt"
+                android:orientation="horizontal"
+                android:padding="20dp"
+                android:visibility="gone"                       >
+
+                <RelativeLayout
+                    android:id="@+id/progress_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginEnd="10dp">
+
+                    <ProgressBar
+                        android:id="@+id/uploadProgress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/splash_start"
+                        android:indeterminateTintMode="src_atop"
+                        android:progressDrawable="@drawable/custom_progress_bg" />
+
+                    <TextView
+                        android:id="@+id/percentage"
+                        android:layout_width="30dp"
+                        android:layout_height="20dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="25dp"
+                        android:fontFamily="@font/inter_bold"
+                        android:gravity="center"
+                        android:text="0%"
+                        android:textColor="@color/black" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_toEndOf="@+id/progress_layout">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/doc_button"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/pdf_pic" />
+
+                    <TextView
+                        android:id="@+id/tv_pdfName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_toEndOf="@+id/doc_button"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/inter_regular"
+                        android:maxLines="2"
+                        android:padding="5dp"
+                        android:text="Result.pdf"
+                        android:textColor="@color/text_color"
+                        android:textSize="14sp" />
+                </RelativeLayout>
+
+
+            </RelativeLayout>
+
+
         </RelativeLayout>
-
-
 
         <Button
             android:id="@+id/pay_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/document"
+            android:layout_below="@+id/doc_layout"
             android:layout_centerInParent="true"
-            android:layout_margin="10dp" />
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/custom_outline_btn" />
 
     </RelativeLayout>
 

@@ -1,9 +1,5 @@
 package com.cllasify.cllasify.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -15,11 +11,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.cllasify.cllasify.ModelClasses.Class_Admission;
 import com.cllasify.cllasify.ModelClasses.Class_Group;
@@ -45,17 +44,20 @@ import com.razorpay.PaymentResultWithDataListener;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.util.Locale;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Objects;
 
 public class Admission_Structure extends AppCompatActivity implements PaymentResultWithDataListener, ExternalWalletListener {
 
     String userID, admissionFee, groupPushId, classPushId, dateTimeCC, adminGroupID, userEmail, subGroupName, userName, groupName;
     Button pay_btn;
-    ImageView attachment_btn;
+    Button attachment_btn;
     private Uri fileUri;
     String displayName;
     EditText name_et, dob_et, father_name_et, mother_name_et, address_et, phone_et, religion_et, cast_et;
     String name_tv, dob_tv, father_name_tv, mother_name_tv, address_tv, phone_tv, religion_tv, cast_tv;
+    TextView date_tv, fees_amt;
 
     RelativeLayout document, progress_layout;
     String fileUrl;
@@ -83,6 +85,13 @@ public class Admission_Structure extends AppCompatActivity implements PaymentRes
         uploadProgress = findViewById(R.id.uploadProgress);
         percentage = findViewById(R.id.percentage);
 
+        Calendar calenderCC = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormatCC = new SimpleDateFormat("dd-MMM-yyyy");
+        String dateTime = simpleDateFormatCC.format(calenderCC.getTime());
+
+        date_tv = findViewById(R.id.date_tv);
+        fees_amt = findViewById(R.id.fees_amt);
+
         userID = getIntent().getStringExtra("userID");
         admissionFee = getIntent().getStringExtra("admissionFee");
         groupPushId = getIntent().getStringExtra("groupPushId");
@@ -97,6 +106,9 @@ public class Admission_Structure extends AppCompatActivity implements PaymentRes
         pay_btn = findViewById(R.id.pay_btn);
         attachment_btn = findViewById(R.id.attachment_btn);
 
+        date_tv.setText("On: " + dateTime);
+        fees_amt.setText("Fees: " + admissionFee);
+        pay_btn.setText("Pay: " + admissionFee);
 
         pay_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,12 +198,12 @@ public class Admission_Structure extends AppCompatActivity implements PaymentRes
         refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String subjectUniPushId = snapshot.child("subjectUniPushId").getValue().toString().trim();
-                String uniPushClassId = snapshot.child("uniPushClassId").getValue().toString().trim();
-                String groupPushId = snapshot.child("clickedGroupPushId").getValue().toString().trim();
+//                String subjectUniPushId = snapshot.child("subjectUniPushId").getValue().toString().trim();
+//                String uniPushClassId = snapshot.child("uniPushClassId").getValue().toString().trim();
+//                String groupPushId = snapshot.child("clickedGroupPushId").getValue().toString().trim();
 
                 DatabaseReference allDocumentReference = FirebaseDatabase.getInstance().getReference().
-                        child("Groups").child("Documents").child(groupPushId).child(uniPushClassId).child(subjectUniPushId).child("All_Document");
+                        child("Groups").child("Documents").child(groupPushId).child(classPushId).child(Objects.requireNonNull(refSaveCurrentData.getKey())).child("All_Document");
 
                 String fileUriPath = fileUri.toString();
 
