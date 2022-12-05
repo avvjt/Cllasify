@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -62,11 +63,21 @@ public class Create_Notice extends AppCompatActivity {
     ProgressBar uploadProgress;
     TextView percentage;
     private int currentProgress = 0;
+    ImageButton btn_Back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_notice);
+
+        btn_Back = findViewById(R.id.btn_Back);
+
+        btn_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         doneNotesBtn = findViewById(R.id.doneNotesBtn);
         notesTitle = findViewById(R.id.notesTitle);

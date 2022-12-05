@@ -67,27 +67,27 @@ import com.cllasify.cllasify.Activities.Fees_Structure;
 import com.cllasify.cllasify.Activities.Notice;
 import com.cllasify.cllasify.Activities.Notification_Activity;
 import com.cllasify.cllasify.Activities.Profile.Profile_Activity;
-import com.cllasify.cllasify.Activities.Student_Fees_Pay;
+import com.cllasify.cllasify.Activities.Server.PDFBACK.OnBackPressedListener;
+import com.cllasify.cllasify.Activities.getStarted;
 import com.cllasify.cllasify.Adapters.Adapter_All_Friends;
 import com.cllasify.cllasify.Adapters.Adapter_ClassGroup;
 import com.cllasify.cllasify.Adapters.Adaptor_FriendsList;
 import com.cllasify.cllasify.Adapters.Adaptor_QueryGroup;
 import com.cllasify.cllasify.Adapters.Adaptor_ShowGroup;
 import com.cllasify.cllasify.Adapters.Adaptor_ShowGrpMember;
-import com.cllasify.cllasify.ModelClasses.Class_Group;
-import com.cllasify.cllasify.Fragments.WebView_Fragment;
+import com.cllasify.cllasify.Adapters.MessageAdapter;
+import com.cllasify.cllasify.Fragments.DoubtFragment;
+import com.cllasify.cllasify.Fragments.Fees_Frag;
 import com.cllasify.cllasify.Fragments.Friend_Chat_Activity;
+import com.cllasify.cllasify.Fragments.WebView_Fragment;
+import com.cllasify.cllasify.ModelClasses.Class_Group;
 import com.cllasify.cllasify.ModelClasses.Class_Group_Names;
 import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
-import com.cllasify.cllasify.Utility.Constant;
 import com.cllasify.cllasify.ModelClasses.FriendsListClass;
-import com.cllasify.cllasify.Adapters.MessageAdapter;
-import com.cllasify.cllasify.Activities.Server.PDFBACK.OnBackPressedListener;
-import com.cllasify.cllasify.R;
-import com.cllasify.cllasify.Activities.getStarted;
-import com.cllasify.cllasify.Fragments.DoubtFragment;
-import com.cllasify.cllasify.Utility.NetworkBroadcast;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
+import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Utility.Constant;
+import com.cllasify.cllasify.Utility.NetworkBroadcast;
 import com.cllasify.cllasify.Utility.SharePref;
 import com.discord.panels.OverlappingPanelsLayout;
 import com.discord.panels.PanelState;
@@ -725,9 +725,11 @@ public class Server_Activity extends AppCompatActivity {
         Log.d("ADMMMM", "is admin : " + checking);
         if (checking) {
             onlyAdminLayout.setVisibility(View.VISIBLE);
+            btn_lteachFees.setVisibility(View.VISIBLE);
             btn_studentFees.setVisibility(View.GONE);
         } else {
             onlyAdminLayout.setVisibility(View.GONE);
+            btn_lteachFees.setVisibility(View.GONE);
             btn_studentFees.setVisibility(View.VISIBLE);
         }
     }
@@ -935,9 +937,9 @@ public class Server_Activity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     Intent intent = new Intent(Server_Activity.this, Notice.class);
-                    intent.putExtra("groupPushId",groupPushId);
-                    intent.putExtra("classUniPushId",classUniPushId);
-                    intent.putExtra("subjectUniPushId",subjectUniPushId);
+                    intent.putExtra("groupPushId", groupPushId);
+                    intent.putExtra("classUniPushId", classUniPushId);
+                    intent.putExtra("subjectUniPushId", subjectUniPushId);
                     startActivity(intent);
                 }
             });
@@ -1025,10 +1027,21 @@ public class Server_Activity extends AppCompatActivity {
                                                 Toast.makeText(Server_Activity.this, "Already " + feesStat, Toast.LENGTH_SHORT).show();
                                             }
                                             if (feesStat.equals("unpaid")) {
+
+                                                Fees_Frag fees_frag = Fees_Frag.newInstance();
+
+                                                Bundle bundle = new Bundle();
+                                                bundle.putString("uniGroupPushId", groupPushId);
+                                                bundle.putString("uniClassPushId", classUniPushId);
+                                                fees_frag.setArguments(bundle);
+                                                fees_frag.show(getSupportFragmentManager(), Fees_Frag.TAG);
+
+                                                /*
                                                 Intent intent = new Intent(Server_Activity.this, Student_Fees_Pay.class);
                                                 intent.putExtra("uniGroupPushId", groupPushId);
                                                 intent.putExtra("uniClassPushId", classUniPushId);
                                                 startActivity(intent);
+                                                */
                                             }
 
 
@@ -2242,6 +2255,7 @@ public class Server_Activity extends AppCompatActivity {
                 btn_lnotice.setVisibility(View.GONE);
                 friendSection.setVisibility(View.VISIBLE);
                 onlyAdminLayout.setVisibility(View.GONE);
+                btn_lteachFees.setVisibility(View.VISIBLE);
                 btn_studentFees.setVisibility(View.GONE);
 
                 imageViewAddPanelAddGroup.setVisibility(View.GONE);

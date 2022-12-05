@@ -201,7 +201,6 @@
                 android:tint="@color/white_constant"
                 app:backgroundTint="@color/iconPrimaryColor"/>
 
-
         </RelativeLayout>
     </RelativeLayout>
 

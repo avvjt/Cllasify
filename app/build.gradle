@@ -108,7 +108,7 @@ dependencies {
     //noinspection LifecycleAnnotationProcessorWithJava8
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
-    //picasso ----> for save the image in the imageview (profilePic)
+    //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
 
     implementation "android.arch.lifecycle:extensions:1.1.1"
@@ -122,7 +122,7 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
     //Razorpay
-    implementation 'com.razorpay:checkout:1.6.24'
+    implementation 'com.razorpay:checkout:1.6.26'
 
     implementation 'com.github.Dimezis:BlurView:version-2.0.3'
 

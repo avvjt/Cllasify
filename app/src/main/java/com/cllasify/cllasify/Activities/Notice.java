@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ public class Notice extends AppCompatActivity {
     RecyclerView noticeRv;
     RelativeLayout emptll;
     FirebaseUser currentUser;
+    ImageButton btn_Back;
 
     NotesAdapter notesAdapter;
     List<Class_Notice> noticeList;
@@ -54,6 +56,15 @@ public class Notice extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice);
+
+        btn_Back = findViewById(R.id.btn_Back);
+
+        btn_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
 
         groupPushId = getIntent().getStringExtra("groupPushId");
         classUniPushId = getIntent().getStringExtra("classUniPushId");
@@ -97,7 +108,7 @@ public class Notice extends AppCompatActivity {
                             @Override
                             public void onClick(int pos) {
 
-                                Toast.makeText(Notice.this, "" + noticeList.get(pos).getKey(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(Notice.this, "" + noticeList.get(pos).getKey(), Toast.LENGTH_SHORT).show();
 
 
                                 Intent intent = new Intent(Notice.this, Update_Notice.class);

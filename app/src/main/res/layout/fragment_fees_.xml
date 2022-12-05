@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_color"
+    tools:context=".Activities.Student_Fees_Pay">
+
+
+    <RelativeLayout
+        android:id="@+id/fees_headline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp">
+
+
+        <TextView
+            android:id="@+id/tv_pay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center_vertical"
+            android:fontFamily="@font/youtube_sans_dark_extrabold"
+            android:text="Annual Fees Payment"
+            android:textColor="@color/text_color"
+            android:textSize="25sp"
+            android:transitionName="name_shared" />
+
+        <TextView
+            android:id="@+id/fees_ammount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:fontFamily="@font/youtube_sans_dark_medium"
+            android:text="Fees: ₹0"
+            android:textColor="@color/text_color"
+            android:textSize="15dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fees_headline"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp">
+
+        <TextView
+            android:id="@+id/school_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/youtube_sans_dark_extrabold"
+            android:text="School name"
+            android:textColor="@color/text_color"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/class_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/school_tv"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/youtube_sans_dark_extrabold"
+            android:text="Class"
+            android:textColor="@color/text_color"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/pay_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/custom_outline_btn"
+            android:textColor="@color/text_color" />
+
+    </RelativeLayout>
+
+
+    <ProgressBar
+        android:id="@+id/fees_prog"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
+
+</RelativeLayout>

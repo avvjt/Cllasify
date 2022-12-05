@@ -7,7 +7,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="105dp"
+        android:layout_height="wrap_content"
         android:layout_margin="5dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="2dp"
@@ -52,7 +52,6 @@
                 android:padding="5dp"
                 android:textSize="14sp"
                 android:fontFamily="@font/inter_italic"
-                android:text="20 February 2021"
                 android:textColor="@color/text_color"
                 android:gravity="end"/>
 

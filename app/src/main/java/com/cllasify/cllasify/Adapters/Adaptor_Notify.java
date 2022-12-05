@@ -93,7 +93,7 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
         currentUser = firebaseAuth.getCurrentUser();
         userID = currentUser.getUid();
 
-        holder.tv_ReqDate.setText(reqDate);
+        holder.tv_ReqDate.setText("Requested on :" + reqDate);
 
 
         String reqUserID = class_GroupDetails.userId;
@@ -179,7 +179,7 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
 
                             if (NotifyCategory.equals("AdmissionRejected")) {
 
-                                    holder.btn_Status.setText("Rejected");
+                                holder.btn_Status.setText("Rejected");
 
                                 if (snapshot.child("Name").exists()) {
                                     String userNameRealtime = snapshot.child("Name").getValue().toString();
@@ -628,6 +628,243 @@ public class Adaptor_Notify extends RecyclerView.Adapter<Adaptor_Notify.MyViewHo
                 }
             });
 
+            btn_Status.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+
+                        Class_Group user = mDatalistNew.get(getAdapterPosition());
+                        Class_Admission class_admission = user.class_admission;
+                        String reqUserID = user.userId;
+                        String currUserId = user.adminUserId;
+                        String groupName = user.groupName;
+                        String userName = user.userName;
+                        String notPushId = user.getPosition();
+                        String classPushid = user.subGroupName;
+                        String pushid = user.subGroupName;
+                        String groupPushId = user.groupPositionId;
+                        String notifyReq = user.notifyCategory;
+                        String classUni = user.classUniPushId;
+                        String grpJoiningStatus = user.notifyCategory;
+
+                        if (position != RecyclerView.NO_POSITION) {
+
+                            if (reqUserID != null && notifyReq != null) {
+
+
+                                if (notifyReq.equals("AdmissionAccepted")) {
+
+                                    Log.d("ReqCLICK", "onClick: " + "\nnotifyReq: " + notifyReq);
+
+
+                                    DatabaseReference refAccUserNotifyFriend = FirebaseDatabase.getInstance().getReference().
+                                            child("Notification").child("Received_Req").child(userID).child(notPushId);
+
+                                    refAccUserNotifyFriend.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                            mListener.reqClick(reqUserID, currUserId, groupName, userName, notPushId, user.classUniPushId, groupPushId, notifyReq, classPushid, pushid, grpJoiningStatus);
+
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+                                }
+                                if (notifyReq.equals("AdmissionRejected")) {
+
+
+                                    DatabaseReference refAccUserNotifyFriend = FirebaseDatabase.getInstance().getReference().
+                                            child("Notification").child("Received_Req").child(userID).child(notPushId);
+
+                                    refAccUserNotifyFriend.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                            mListener.reqClick(reqUserID, currUserId, groupName, userName, notPushId, user.classUniPushId, groupPushId, notifyReq, classPushid, pushid, grpJoiningStatus);
+
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+                                }
+
+
+                                if (notifyReq.equals("Friend_Request")) {
+
+
+                                    DatabaseReference refAccUserNotifyFriend = FirebaseDatabase.getInstance().getReference().
+                                            child("Notification").child("Received_Req").child(userID).child(notPushId);
+
+                                    refAccUserNotifyFriend.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.child("grpJoiningStatus").getValue().toString().equals("Approve")) {
+
+                                                btn_Status.setText("Approved");
+
+
+                                                Toast.makeText(context.getApplicationContext(), "Already approved", Toast.LENGTH_SHORT).show();
+                                            } else if (snapshot.child("grpJoiningStatus").getValue().toString().equals("Reject")) {
+
+                                                btn_Status.setText("Rejected");
+
+                                                Toast.makeText(context.getApplicationContext(), "Rejected", Toast.LENGTH_SHORT).show();
+                                            } else {
+
+                                                btn_Status.setText("Pending");
+
+                                                mListener.reqClick(reqUserID, currUserId, groupName, userName, notPushId, user.classUniPushId, groupPushId, notifyReq, classPushid, pushid, grpJoiningStatus);
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+                                }
+
+                            }
+
+                            if (reqUserID != null && groupPushId != null && classUni != null) {
+
+
+                                if (notifyReq.equals("Group_AdmissionReq")) {
+
+                                    Log.d("ReqCLICK", "onClick: " + class_admission.getName() + "\ngrpJoiningStatus: " + user.grpJoiningStatus + "\nreqUserID: " + reqUserID + "\ncurrUserId: " + currUserId +
+                                            "\ngroupName: " + groupName + "\nuserName: " + userName + "\nnotPushId: " + notPushId + "\nclassUniPushId: " + user.classUniPushId +
+                                            "\ngroupPushId: " + groupPushId + "\nnotifyReq: " + notifyReq + "\nclassPushid: " + classPushid + "\npushid: " + pushid);
+
+                                    DatabaseReference refAccUserNotify = FirebaseDatabase.getInstance().getReference().
+                                            child("Groups").child("All_GRPs").child(groupPushId).child(user.classUniPushId).child("groupAdmissionReqs").child(notPushId);
+
+                                    refAccUserNotify.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                                            if (snapshot.child("grpJoiningStatus").getValue().toString().equals("Approve")) {
+
+                                                btn_Status.setText("Approved");
+
+                                                Toast.makeText(context.getApplicationContext(), "Already approved", Toast.LENGTH_SHORT).show();
+                                            } else if (snapshot.child("grpJoiningStatus").getValue().toString().equals("Reject")) {
+
+                                                btn_Status.setText("Rejected");
+
+
+                                                Toast.makeText(context.getApplicationContext(), "Rejected", Toast.LENGTH_SHORT).show();
+                                            } else {
+
+                                                btn_Status.setText("Pending");
+
+
+                                                mListener.reqAdmissionClick(class_admission, reqUserID, currUserId, groupName, userName, notPushId, user.classUniPushId, groupPushId, notifyReq, classPushid, pushid);
+
+                                            }
+
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                }
+
+                                if (notifyReq.equals("Group_JoiningReq")) {
+
+                                    DatabaseReference refAccUserNotify = FirebaseDatabase.getInstance().getReference().
+                                            child("Groups").child("All_GRPs").child(groupPushId).child(user.classUniPushId).child("groupJoiningReqs").child(notPushId);
+
+                                    refAccUserNotify.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.child("grpJoiningStatus").getValue().toString().equals("Approve")) {
+
+                                                btn_Status.setText("Approved");
+
+
+                                                Toast.makeText(context.getApplicationContext(), "Already approved", Toast.LENGTH_SHORT).show();
+                                            } else if (snapshot.child("grpJoiningStatus").getValue().toString().equals("Reject")) {
+
+                                                btn_Status.setText("Rejected");
+
+
+                                                Toast.makeText(context.getApplicationContext(), "Rejected", Toast.LENGTH_SHORT).show();
+                                            } else {
+
+                                                btn_Status.setText("Pending");
+
+
+                                                mListener.reqClick(reqUserID, currUserId, groupName, userName, notPushId, user.classUniPushId, groupPushId, notifyReq, classPushid, pushid, grpJoiningStatus);
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                }
+                                if (notifyReq.equals("Group_JoiningReq_Teacher")) {
+                                    DatabaseReference refAccUserNotifyTeacher = FirebaseDatabase.getInstance().getReference().
+                                            child("Notification").child("Received_Req").child(groupPushId).child("groupTeacherJoiningReqs").child(notPushId);
+
+                                    refAccUserNotifyTeacher.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.child("grpJoiningStatus").getValue().toString().equals("Approve")) {
+
+                                                btn_Status.setText("Approved");
+
+
+                                                Toast.makeText(context.getApplicationContext(), "Already approved", Toast.LENGTH_SHORT).show();
+                                            } else if (snapshot.child("grpJoiningStatus").getValue().toString().equals("Reject")) {
+
+                                                btn_Status.setText("Rejected");
+
+
+                                                Toast.makeText(context.getApplicationContext(), "Rejected", Toast.LENGTH_SHORT).show();
+                                            } else {
+
+                                                btn_Status.setText("Pending");
+
+
+                                                mListener.reqClick(reqUserID, currUserId, groupName, userName, notPushId, user.classUniPushId, groupPushId, notifyReq, classPushid, pushid, grpJoiningStatus);
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
+                                }
+
+                            }
+                        }
+                    }
+                }
+            });
 
         }
     }
