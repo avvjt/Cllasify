@@ -92,7 +92,6 @@
                     android:layout_marginStart="20dp"
                     android:fontFamily="@font/inter_semibold"
                     android:maxLines="2"
-                    android:text="@string/demo_school_name"
                     android:textColor="@color/text_color"
                     android:textSize="19sp"
                     android:transitionName="name_shared" />

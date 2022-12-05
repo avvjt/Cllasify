@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +31,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adapters.Adaptor_ShowGrpClass;
-import com.cllasify.cllasify.ModelClasses.Class_Admission;
 import com.cllasify.cllasify.ModelClasses.Class_Group;
 import com.cllasify.cllasify.ModelClasses.Class_Group_Names;
 import com.cllasify.cllasify.R;
@@ -262,9 +260,53 @@ public class Discover_Item extends AppCompatActivity {
 
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_Universal_Group");
+
+
+        databaseReference.child(groupPushId).child("ServerEmail").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Log.d("SCHEMAIL", "onDataChange: " + snapshot.getValue());
+                    emailLayout.setVisibility(View.VISIBLE);
+                    serverEmail = snapshot.getValue(String.class);
+                    schoolEmail.setText(serverEmail);
+                }
+                if (!(snapshot.exists()) || snapshot.getValue().toString().equals("")) {
+                    emailLayout.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        databaseReference.child(groupPushId).child("ServerBio").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    bioLayout.setVisibility(View.VISIBLE);
+                    String serverBio = snapshot.getValue(String.class);
+                    schBio.setText(serverBio);
+                }
+                if (!(snapshot.exists()) || snapshot.getValue().toString().equals("")) {
+                    bioLayout.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                /*
                 if (snapshot.child(groupPushId).child("ServerBio").exists()) {
                     bioLayout.setVisibility(View.VISIBLE);
                     String serverBio = snapshot.child(groupPushId).child("ServerBio").getValue(String.class);
@@ -281,6 +323,8 @@ public class Discover_Item extends AppCompatActivity {
                 if (!(snapshot.exists()) || snapshot.getValue().toString().equals("")) {
                     emailLayout.setVisibility(View.GONE);
                 }
+
+                */
                 if (snapshot.child(groupPushId).child("serverProfilePic").exists()) {
                     String serverLogo = snapshot.child(groupPushId).child("serverProfilePic").getValue(String.class);
                     Glide.with(Discover_Item.this).load(serverLogo).into(schoolLogoImg);
