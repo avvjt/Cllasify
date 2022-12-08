@@ -20,7 +20,6 @@
 
     <item name="android:navigationBarColor">@color/page_color</item>
 
-
 </style>
 
     <!--Set all animation files for activity transitions-->
