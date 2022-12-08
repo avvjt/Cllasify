@@ -17,6 +17,10 @@
     <item name="android:statusBarColor">@color/page_color</item>
 <!--    <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>-->
     <!-- Customize your theme here. -->
+
+    <item name="android:navigationBarColor">@color/page_color</item>
+
+
 </style>
 
     <!--Set all animation files for activity transitions-->
@@ -193,9 +197,7 @@
 
     <style name="SplashScreen" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
-
-
-
+        <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
 
     </style>

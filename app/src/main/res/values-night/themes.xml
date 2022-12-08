@@ -16,6 +16,9 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@color/page_color</item>
         <!-- Customize your theme here. -->
+
+        <item name="android:navigationBarColor">@color/page_color</item>
+
     </style>
 
 

@@ -133,13 +133,47 @@ public class getStarted extends AppCompatActivity {
     }
 
     @Override
+    protected void onPostResume() {
+        videoView.resume();
+        super.onPostResume();
+    }
+
+    @Override
+    protected void onRestart() {
+        videoView.start();
+        super.onRestart();
+    }
+
+    @Override
+    protected void onPause() {
+        videoView.suspend();
+        super.onPause();
+    }
+
+
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.Theme_Cllasify);
+        setContentView(R.layout.activity_get_started);
+//        setTheme(R.style.Theme_Cllasify);
+
+        videoView = findViewById(R.id.video_view);
+        Uri uri= Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.cllasify_intro);
+        videoView.setVideoURI(uri);
+        videoView.start();
+
+        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                mediaPlayer.setLooping(true);
+            }
+        });
+
         checkDarkLightDefault();
         checkDarkLightDefaultStatusBar();
-        setContentView(R.layout.activity_get_started);
 
+        Window window = getWindow();
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
             setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
             getWindow().setFlags(
@@ -158,6 +192,7 @@ public class getStarted extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= 21) {
             setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
+            getWindow().setNavigationBarColor(Color.parseColor("#17181C"));
             getWindow().setFlags(
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
@@ -165,17 +200,7 @@ public class getStarted extends AppCompatActivity {
         }
 
 
-        videoView = findViewById(R.id.video_view);
-        Uri uri= Uri.parse("android.resource://"+getPackageName()+"/"+R.raw.cllasify_intro);
-        videoView.setVideoURI(uri);
-        videoView.start();
 
-        videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                mediaPlayer.setLooping(true);
-            }
-        });
 
         broadcastReceiver = new NetworkBroadcast();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
@@ -222,6 +247,7 @@ public class getStarted extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
+        videoView.stopPlayback();
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);
     }
