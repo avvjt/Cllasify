@@ -19,7 +19,6 @@
     <!-- Customize your theme here. -->
 </style>
 
-
     <!--Set all animation files for activity transitions-->
     <style name="ActivityAnimation" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
