@@ -717,6 +717,9 @@
 
                     </LinearLayout>
 
+
+                    <!--Notice option-->
+
                     <LinearLayout
                         android:id="@+id/btn_notice"
                         style="@style/SelectableItemBackground"
@@ -732,10 +735,10 @@
                         <ImageView
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:background="@drawable/cust_orange_corner"
+                            android:background="@drawable/backgroud_notice"
                             android:contentDescription="@string/servers_contentDescription"
                             android:padding="7dp"
-                            android:src="@drawable/button_solid_unfollow"
+                            android:src="@drawable/ic_saved"
                             app:tint="@color/white_constant" />
 
                         <TextView
