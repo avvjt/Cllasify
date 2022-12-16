@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -235,7 +236,7 @@ public class Admission_Joining_Reqs extends Fragment {
 
                 Button btn_accept = bottomSheetDialog.findViewById(R.id.btn_accept);
                 Button btn_reject = bottomSheetDialog.findViewById(R.id.btn_reject);
-                RelativeLayout btn_pdf = bottomSheetDialog.findViewById(R.id.document);
+                LinearLayout btn_pdf = bottomSheetDialog.findViewById(R.id.document);
 
 
                 TextView name, dob, father_name, mother_name, address, phone, religion, cast, date;
