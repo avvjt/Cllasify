@@ -11,8 +11,8 @@ android {
         applicationId "com.cllasify.cllasify"
         minSdkVersion 23
         targetSdkVersion 33
-        versionCode 24
-        versionName "2.0.14"
+        versionCode 26
+        versionName "2.0.16"
         vectorDrawables.useSupportLibrary = true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

@@ -1,5 +1,6 @@
 package com.cllasify.cllasify.Activities.Profile;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityOptions;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
@@ -38,11 +39,12 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.Activities.Settings.Documentation_Videos;
 import com.cllasify.cllasify.Activities.Settings.Privacy;
-import com.cllasify.cllasify.R;
-import com.cllasify.cllasify.Activities.getStarted;
-import com.cllasify.cllasify.Utility.NetworkBroadcast;
 import com.cllasify.cllasify.Activities.Settings.Terms;
+import com.cllasify.cllasify.Activities.getStarted;
+import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Utility.NetworkBroadcast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
@@ -88,7 +90,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
     RadioGroup rg_Theme;
 
-    TextView tv_notiConfig, tv_Feedback;
+    TextView tv_notiConfig, tv_Feedback, tv_documentation;
     LinearLayout ll_profileSetting;
     CircleImageView prof_pic;
 
@@ -136,6 +138,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
         super.onPause();
     }
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,6 +167,7 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
         btn_Submit = findViewById(R.id.btn_Submit);
         btn_Cancel = findViewById(R.id.btn_Cancel);
+        tv_documentation = findViewById(R.id.tv_documentation);
 
         rg_Theme = findViewById(R.id.rg_Theme);
 
@@ -309,6 +313,14 @@ public class AccountSetting_Activity extends AppCompatActivity {
 
                 editSetting();
 
+            }
+        });
+
+        tv_documentation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AccountSetting_Activity.this, Documentation_Videos.class);
+                startActivity(intent);
             }
         });
 

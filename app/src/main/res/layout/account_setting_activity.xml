@@ -272,6 +272,21 @@
                     android:layout_marginTop="5dp"/>
 
                 <TextView
+                    android:id="@+id/tv_documentation"
+                    style="@style/SelectableItemBackground"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/inter_regular"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="1dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="15dp"
+                    android:text="Documentation videos"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp"
+                    android:layout_marginTop="5dp"/>
+
+                <TextView
                     android:id="@+id/tv_rateUs"
                     style="@style/SelectableItemBackground"
                     android:layout_width="match_parent"

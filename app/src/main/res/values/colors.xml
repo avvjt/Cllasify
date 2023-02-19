@@ -11,9 +11,7 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF6200EE</color>
     <color name="teal_700">#FF6200EE</color>
-
     <!-- Customize theme here. -->
-
     <color name="page_color">#ffffff</color>
     <color name="page_background_color">#eff0f5</color>
     <color name="text_color">#050505</color>
