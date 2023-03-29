@@ -318,7 +318,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
 
         if (holder.prof_pics_chat_doubt != null) {
 
+            Glide.with(context.getApplicationContext()).load(chat.get(pos).getDoc_Name()).into(holder.prof_pics_chat_doubt);
 
+/*
             DatabaseReference refUserProfPic = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(reqUserID);
             //chat.get(pos).getReportUsers()
             refUserProfPic.addValueEventListener(new ValueEventListener() {
@@ -346,7 +348,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.ViewHold
             });
 
             Glide.with(context.getApplicationContext()).load(chat.get(pos).getDoc_Name()).into(holder.prof_pics_chat_doubt);
-
+*/
         }
     }
 

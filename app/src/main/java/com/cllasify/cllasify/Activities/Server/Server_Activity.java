@@ -119,6 +119,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.razorpay.ExternalWalletListener;
+import com.razorpay.PaymentData;
+import com.razorpay.PaymentResultWithDataListener;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -134,7 +137,7 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class Server_Activity extends AppCompatActivity {
+public class Server_Activity extends AppCompatActivity implements PaymentResultWithDataListener, ExternalWalletListener {
 
     private BroadcastReceiver broadcastReceiver;
 
@@ -2255,7 +2258,7 @@ public class Server_Activity extends AppCompatActivity {
                 btn_lnotice.setVisibility(View.GONE);
                 friendSection.setVisibility(View.VISIBLE);
                 onlyAdminLayout.setVisibility(View.GONE);
-                btn_lteachFees.setVisibility(View.VISIBLE);
+                btn_lteachFees.setVisibility(View.GONE);
                 btn_studentFees.setVisibility(View.GONE);
 
                 imageViewAddPanelAddGroup.setVisibility(View.GONE);
@@ -4002,6 +4005,72 @@ public class Server_Activity extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    public void onExternalWalletSelected(String s, PaymentData paymentData) {
+
+    }
+
+    @Override
+    public void onPaymentSuccess(String s, PaymentData paymentData) {
+
+        Toast.makeText(getApplicationContext(), "Payment Successful :\nPayment Data: " + paymentData.getData(), Toast.LENGTH_SHORT).show();
+
+        String currUserID = SharePref.getDataFromPref(Constant.USER_ID);
+
+        DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+        refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String groupPushId = Objects.requireNonNull(snapshot.child("clickedGroupPushId").getValue()).toString().trim();
+                String uniPushClassId = Objects.requireNonNull(snapshot.child("uniPushClassId").getValue()).toString().trim();
+
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups");
+
+                databaseReference.child("All_GRPs").child(groupPushId).child(uniPushClassId)
+                        .child("classStudentList").child(currUserID).child("annualFees").setValue("Paid");
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+//        String uniGrpPushId = getIntent().getStringExtra("uniGroupPushId");
+//        String uniClassPushId = getIntent().getStringExtra("uniClassPushId");
+
+
+
+
+/*
+        alertDialogBuilder.setMessage("Payment Successful :\nPayment ID: " + s + "\nPayment Data: " + paymentData.getData());
+        alertDialogBuilder.show();
+*/
+    }
+
+
+    @Override
+    public void onPaymentError(int i, String s, PaymentData paymentData) {
+        try {
+            Toast.makeText(getApplicationContext(), "Payment Failed:\nPayment Data: " + paymentData.getData(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        /*
+        try {
+            alertDialogBuilder.setMessage("Payment Failed:\nPayment Data: " + paymentData.getData());
+            alertDialogBuilder.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+         */
     }
 
 }
