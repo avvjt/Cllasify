@@ -273,7 +273,6 @@
 
                 <TextView
                     android:id="@+id/tv_documentation"
-                    android:visibility="gone"
                     style="@style/SelectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

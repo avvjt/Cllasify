@@ -221,18 +221,15 @@ public class Fees_Frag extends BottomSheetDialogFragment implements PaymentResul
 
     }
 
-
     @Override
     public void onPaymentSuccess(String s, PaymentData paymentData) {
-
+/*
         final Activity activity = (Server_Activity) getActivity();
 
 
-//        String uniGrpPushId = getIntent().getStringExtra("uniGroupPushId");
-//        String uniClassPushId = getIntent().getStringExtra("uniClassPushId");
+        String uniGrpPushId = getIntent().getStringExtra("uniGroupPushId");
+        String uniClassPushId = getIntent().getStringExtra("uniClassPushId");
 
-        String uniGrpPushId = getArguments().getString("uniGroupPushId");
-        String uniClassPushId = getArguments().getString("uniClassPushId");
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups");
 
@@ -243,9 +240,9 @@ public class Fees_Frag extends BottomSheetDialogFragment implements PaymentResul
 
         alertDialogBuilder.setMessage("Payment Successful :\nPayment ID: " + s + "\nPayment Data: " + paymentData.getData());
         alertDialogBuilder.show();
+*/
 
     }
-
 
     @Override
     public void onPaymentError(int i, String s, PaymentData paymentData) {
