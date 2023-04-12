@@ -119,6 +119,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.razorpay.ExternalWalletListener;
+import com.razorpay.PaymentData;
+import com.razorpay.PaymentResultWithDataListener;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -134,7 +137,7 @@ import java.util.Objects;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
-public class Server_Activity extends AppCompatActivity {
+public class Server_Activity extends AppCompatActivity implements PaymentResultWithDataListener, ExternalWalletListener {
 
     private BroadcastReceiver broadcastReceiver;
 
@@ -183,7 +186,8 @@ public class Server_Activity extends AppCompatActivity {
     //Linear Layouts
     LinearLayout onlyAdminLayout, groupSection, ll_AddJoinGrp, ll_ChatDoubtDashboard,
             endPanelLinearLayout, friendSection, rightPanelMems, rightPanelMember,
-            ib_servSettings, btn_lteachattend, FriendListText, btn_joinNotification, btn_lteachFees, btn_lnotice, btn_studentFees;
+            ib_servSettings, btn_lteachattend, FriendListText, btn_joinNotification, btn_lteachFees,btn_routineStructure,btn_subjectPriority, btn_lnotice, btn_studentFees,btn_studentRoutine;
+
 
 
     //Buttons
@@ -295,6 +299,10 @@ public class Server_Activity extends AppCompatActivity {
         ib_FrndP_csubmit = findViewById(R.id.ib_FrndP_csubmit);
         btn_lteachattend = findViewById(R.id.btn_lteachattend);
         btn_lteachFees = findViewById(R.id.btn_feesStructure);
+        btn_routineStructure = findViewById(R.id.btn_routineStructure);
+        btn_subjectPriority = findViewById(R.id.btn_subjectPriority);
+        btn_studentRoutine = findViewById(R.id.btn_studentRoutine);
+
         btn_lnotice = findViewById(R.id.btn_notice);
 
         btn_lTeachExam = findViewById(R.id.btn_lteachexam);
@@ -726,11 +734,19 @@ public class Server_Activity extends AppCompatActivity {
         if (checking) {
             onlyAdminLayout.setVisibility(View.VISIBLE);
             btn_lteachFees.setVisibility(View.VISIBLE);
+            btn_routineStructure.setVisibility(View.VISIBLE);
+            btn_subjectPriority.setVisibility(View.VISIBLE);
+
             btn_studentFees.setVisibility(View.GONE);
+            btn_studentRoutine.setVisibility(View.GONE);
         } else {
             onlyAdminLayout.setVisibility(View.GONE);
             btn_lteachFees.setVisibility(View.GONE);
+            btn_routineStructure.setVisibility(View.GONE);
+            btn_subjectPriority.setVisibility(View.GONE);
+
             btn_studentFees.setVisibility(View.VISIBLE);
+            btn_studentRoutine.setVisibility(View.VISIBLE);
         }
     }
 
@@ -931,6 +947,7 @@ public class Server_Activity extends AppCompatActivity {
             btn_joinNotification.setEnabled(true);
             btn_lteachattend.setEnabled(true);
             btn_lteachFees.setEnabled(true);
+            btn_studentRoutine.setEnabled(true);
             btn_lnotice.setEnabled(true);
 
             btn_lnotice.setOnClickListener(new View.OnClickListener() {
@@ -2255,8 +2272,11 @@ public class Server_Activity extends AppCompatActivity {
                 btn_lnotice.setVisibility(View.GONE);
                 friendSection.setVisibility(View.VISIBLE);
                 onlyAdminLayout.setVisibility(View.GONE);
-                btn_lteachFees.setVisibility(View.VISIBLE);
+                btn_routineStructure.setVisibility(View.VISIBLE);
+                btn_subjectPriority.setVisibility(View.VISIBLE);
+
                 btn_studentFees.setVisibility(View.GONE);
+                btn_studentRoutine.setVisibility(View.GONE);
 
                 imageViewAddPanelAddGroup.setVisibility(View.GONE);
                 endPanelAllFriendsRecyclerView.setVisibility(View.VISIBLE);
@@ -2894,6 +2914,15 @@ public class Server_Activity extends AppCompatActivity {
                 shimmer_effect.setVisibility(View.GONE);
                 recyclerViewClassList.setVisibility(View.GONE);
 
+                btn_studentRoutine.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showToast();
+                        btn_studentRoutine.setEnabled(false);
+                    }
+                });
+
+
                 btn_studentFees.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -2917,6 +2946,23 @@ public class Server_Activity extends AppCompatActivity {
                         btn_lteachattend.setEnabled(false);
                     }
                 });
+
+                btn_routineStructure.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showToast();
+                        btn_routineStructure.setEnabled(false);
+                    }
+                });
+
+                btn_subjectPriority.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showToast();
+                        btn_subjectPriority.setEnabled(false);
+                    }
+                });
+
                 btn_lteachFees.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -4002,6 +4048,72 @@ public class Server_Activity extends AppCompatActivity {
         }
 
 
+    }
+
+    @Override
+    public void onExternalWalletSelected(String s, PaymentData paymentData) {
+
+    }
+
+    @Override
+    public void onPaymentSuccess(String s, PaymentData paymentData) {
+
+        Toast.makeText(getApplicationContext(), "Payment Successful :\nPayment Data: " + paymentData.getData(), Toast.LENGTH_SHORT).show();
+
+        String currUserID = SharePref.getDataFromPref(Constant.USER_ID);
+
+        DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+        refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String groupPushId = Objects.requireNonNull(snapshot.child("clickedGroupPushId").getValue()).toString().trim();
+                String uniPushClassId = Objects.requireNonNull(snapshot.child("uniPushClassId").getValue()).toString().trim();
+
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups");
+
+                databaseReference.child("All_GRPs").child(groupPushId).child(uniPushClassId)
+                        .child("classStudentList").child(currUserID).child("annualFees").setValue("Paid");
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+//        String uniGrpPushId = getIntent().getStringExtra("uniGroupPushId");
+//        String uniClassPushId = getIntent().getStringExtra("uniClassPushId");
+
+
+
+
+/*
+        alertDialogBuilder.setMessage("Payment Successful :\nPayment ID: " + s + "\nPayment Data: " + paymentData.getData());
+        alertDialogBuilder.show();
+*/
+    }
+
+
+    @Override
+    public void onPaymentError(int i, String s, PaymentData paymentData) {
+        try {
+            Toast.makeText(getApplicationContext(), "Payment Failed:\nPayment Data: " + paymentData.getData(), Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        /*
+        try {
+            alertDialogBuilder.setMessage("Payment Failed:\nPayment Data: " + paymentData.getData());
+            alertDialogBuilder.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+         */
     }
 
 }
