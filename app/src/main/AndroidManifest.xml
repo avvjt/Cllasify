@@ -31,6 +31,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
         <activity
+            android:name=".Activities.Routine.Student_Routine"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Routine.Priority_Subject"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Routine.Routine_Structure"
+            android:exported="false" />
+        <activity
             android:name=".Activities.Update_Notice"
             android:exported="false" />
         <activity

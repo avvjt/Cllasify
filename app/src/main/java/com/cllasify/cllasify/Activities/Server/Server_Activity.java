@@ -67,6 +67,7 @@ import com.cllasify.cllasify.Activities.Fees_Structure;
 import com.cllasify.cllasify.Activities.Notice;
 import com.cllasify.cllasify.Activities.Notification_Activity;
 import com.cllasify.cllasify.Activities.Profile.Profile_Activity;
+import com.cllasify.cllasify.Activities.Routine.Priority_Subject;
 import com.cllasify.cllasify.Activities.Server.PDFBACK.OnBackPressedListener;
 import com.cllasify.cllasify.Activities.getStarted;
 import com.cllasify.cllasify.Adapters.Adapter_All_Friends;
@@ -186,8 +187,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
     //Linear Layouts
     LinearLayout onlyAdminLayout, groupSection, ll_AddJoinGrp, ll_ChatDoubtDashboard,
             endPanelLinearLayout, friendSection, rightPanelMems, rightPanelMember,
-            ib_servSettings, btn_lteachattend, FriendListText, btn_joinNotification, btn_lteachFees,btn_routineStructure,btn_subjectPriority, btn_lnotice, btn_studentFees,btn_studentRoutine;
-
+            ib_servSettings, btn_lteachattend, FriendListText, btn_joinNotification, btn_lteachFees, btn_routineStructure, btn_subjectPriority, btn_lnotice, btn_studentFees, btn_studentRoutine;
 
 
     //Buttons
@@ -796,9 +796,9 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
                                                 recyclerViewClassList.setVisibility(View.VISIBLE);
 
-                                                Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                                Log.d("CHKSUB1", "onClick: " + dataSnapshot1.getValue());
                                                 Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
-                                                Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
+                                                Log.d("CHKSUB2", "onDataChange: " + object.getSubjectName());
                                                 subjectDetailsModelList.add(object);
 
                                             }
@@ -809,9 +809,9 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                                             List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
 
                                             for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classStudentList").getChildren()) {
-                                                Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                                Log.d("CHKSUB3", "onClick: " + dataSnapshot1.getValue());
                                                 Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
-                                                Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
+                                                Log.d("CHKSUB4", "onDataChange: " + class_student_details.getUserName());
                                                 class_student_detailsList.add(class_student_details);
 
                                             }
@@ -880,9 +880,9 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
                                                     recyclerViewClassList.setVisibility(View.VISIBLE);
 
-                                                    Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                                    Log.d("CHKSUB5", "onClick: " + dataSnapshot1.getValue());
                                                     Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
-                                                    Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
+                                                    Log.d("CHKSUB6", "onDataChange: " + object.getSubjectName());
                                                     subjectDetailsModelList.add(object);
                                                 }
 
@@ -892,9 +892,9 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                                                 List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
 
                                                 for (DataSnapshot dataSnapshot1 : snapshot.child("classStudentList").getChildren()) {
-                                                    Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                                    Log.d("CHKSUB7", "onClick: " + dataSnapshot1.getValue());
                                                     Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
-                                                    Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
+                                                    Log.d("CHKSUB8", "onDataChange: " + class_student_details.getUserName());
                                                     class_student_detailsList.add(class_student_details);
 
                                                 }
@@ -947,8 +947,18 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
             btn_joinNotification.setEnabled(true);
             btn_lteachattend.setEnabled(true);
             btn_lteachFees.setEnabled(true);
-            btn_studentRoutine.setEnabled(true);
+            btn_subjectPriority.setEnabled(true);
+            btn_routineStructure.setEnabled(true);
             btn_lnotice.setEnabled(true);
+
+            btn_subjectPriority.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(Server_Activity.this, Priority_Subject.class);
+                    startActivity(intent);
+                }
+            });
+
 
             btn_lnotice.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1772,7 +1782,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
         }
     }
-
+/*
     private void checkLoading() {
         DatabaseReference databaseReferenceTemp = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID).child("clickedGroupPushId");
 
@@ -1826,9 +1836,9 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
                                             recyclerViewClassList.setVisibility(View.VISIBLE);
 
-                                            Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                            Log.d("CHKSUB9", "onClick: " + dataSnapshot1.getValue());
                                             Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
-                                            Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
+                                            Log.d("CHKSUB10", "onDataChange: " + object.getSubjectName());
                                             subjectDetailsModelList.add(object);
 
                                         }
@@ -1839,9 +1849,9 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                                         List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
 
                                         for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classStudentList").getChildren()) {
-                                            Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                            Log.d("CHKSUB11", "onClick: " + dataSnapshot1.getValue());
                                             Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
-                                            Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
+                                            Log.d("CHKSUB12", "onDataChange: " + class_student_details.getUserName());
                                             class_student_detailsList.add(class_student_details);
 
                                         }
@@ -1918,9 +1928,9 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
                                                 recyclerViewClassList.setVisibility(View.VISIBLE);
 
-                                                Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                                Log.d("CHKSUB13", "onClick: " + dataSnapshot1.getValue());
                                                 Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
-                                                Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
+                                                Log.d("CHKSUB14", "onDataChange: " + object.getSubjectName());
                                                 subjectDetailsModelList.add(object);
                                             }
 
@@ -1930,9 +1940,9 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                                             List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
 
                                             for (DataSnapshot dataSnapshot1 : snapshot.child("classStudentList").getChildren()) {
-                                                Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                                Log.d("CHKSUB15", "onClick: " + dataSnapshot1.getValue());
                                                 Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
-                                                Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
+                                                Log.d("CHKSUB16", "onDataChange: " + class_student_details.getUserName());
                                                 class_student_detailsList.add(class_student_details);
 
                                             }
@@ -1990,7 +2000,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
             }
         });
     }
-
+*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -3090,9 +3100,9 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
                                                         recyclerViewClassList.setVisibility(View.VISIBLE);
 
-                                                        Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+//                                                        Log.d("CHKSUB17", "onClick: " + dataSnapshot1.getValue());
                                                         Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
-                                                        Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
+//                                                        Log.d("CHKSUB18", "BonDataChange: " + object.getSubjectName());
                                                         subjectDetailsModelList.add(object);
 
                                                     }
@@ -3103,9 +3113,9 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                                                     List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
 
                                                     for (DataSnapshot dataSnapshot1 : snapshot.child("classStudentList").getChildren()) {
-                                                        Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+//                                                        Log.d("CHKSUB19", "onClick: " + dataSnapshot1.getValue());
                                                         Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
-                                                        Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
+//                                                        Log.d("CHKSUB20", "BonDataChange: " + class_student_details.getUserName());
                                                         class_student_detailsList.add(class_student_details);
 
                                                     }
@@ -3156,9 +3166,9 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
                                                             recyclerViewClassList.setVisibility(View.VISIBLE);
 
-                                                            Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+//                                                            Log.d("CHKSUB21", "onClick: " + dataSnapshot1.getValue());
                                                             Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
-                                                            Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
+//                                                            Log.d("CHKSUB22", "VonDataChange: " + object.getSubjectName());
                                                             subjectDetailsModelList.add(object);
 
                                                         }
@@ -3169,9 +3179,9 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                                                         List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
 
                                                         for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classStudentList").getChildren()) {
-                                                            Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                                                            Log.d("CHKSUB23", "onClick: " + dataSnapshot1.getValue());
                                                             Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
-                                                            Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
+                                                            Log.d("CHKSUB24", "VonDataChange: " + class_student_details.getUserName());
                                                             class_student_detailsList.add(class_student_details);
 
                                                         }

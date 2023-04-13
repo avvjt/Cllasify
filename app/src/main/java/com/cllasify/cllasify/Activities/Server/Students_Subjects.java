@@ -247,9 +247,9 @@ public class Students_Subjects extends AppCompatActivity {
 
                     subjectDetailsModelList.clear();
                     for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
-                        Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                        Log.d("CHKSUB25", "onClick: " + dataSnapshot1.getValue());
                         Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
-                        Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
+                        Log.d("CHKSUB26", "onDataChange: " + object.getSubjectName());
                         subjectDetailsModelList.add(object);
 
                     }
@@ -289,7 +289,7 @@ public class Students_Subjects extends AppCompatActivity {
                     for (DataSnapshot dataSnapshot1 : snapshot.child("classAdminList").getChildren()) {
                         Log.d("CHKINGTECH", "onClick: " + dataSnapshot1.getValue());
                         Class_Student_Details object = dataSnapshot1.getValue(Class_Student_Details.class);
-                        Log.d("CHKSUB", "onDataChange: " + object.getUserId());
+                        Log.d("CHKSUB27", "onDataChange: " + object.getUserId());
                         class_admin_detailsList.add(object);
 
                     }

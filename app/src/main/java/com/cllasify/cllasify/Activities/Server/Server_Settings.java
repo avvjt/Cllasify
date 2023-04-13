@@ -346,9 +346,9 @@ public class Server_Settings extends AppCompatActivity {
                     List<Subject_Details_Model> subjectDetailsModelList = new ArrayList<>();
 
                     for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
-                        Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                        Log.d("CHKSUB28", "onClick: " + dataSnapshot1.getValue());
                         Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
-                        Log.d("CHKSUB", "onDataChange: " + object.getSubjectName());
+                        Log.d("CHKSUB29", "onDataChange: " + object.getSubjectName());
                         subjectDetailsModelList.add(object);
 
                     }
@@ -359,9 +359,9 @@ public class Server_Settings extends AppCompatActivity {
                     List<Class_Student_Details> class_student_detailsList = new ArrayList<>();
 
                     for (DataSnapshot dataSnapshot1 : snapshot.child("classStudentList").getChildren()) {
-                        Log.d("CHKSUB", "onClick: " + dataSnapshot1.getValue());
+                        Log.d("CHKSUB30", "onClick: " + dataSnapshot1.getValue());
                         Class_Student_Details class_student_details = dataSnapshot1.getValue(Class_Student_Details.class);
-                        Log.d("CHKSUB", "onDataChange: " + class_student_details.getUserName());
+                        Log.d("CHKSUB31", "onDataChange: " + class_student_details.getUserName());
                         class_student_detailsList.add(class_student_details);
 
                     }
