@@ -20,11 +20,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Priority_Subject extends AppCompatActivity {
 
-    List<String> subjects;
+    ArrayList<String> subjects = new ArrayList<>();
 
 
     AutoCompleteTextView autoCompleteTextView;
@@ -38,7 +39,7 @@ public class Priority_Subject extends AppCompatActivity {
 
 
 //        String groupPushId = getIntent().getStringExtra("groupPushId");
-/*
+
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child("Uni_Group_No_4_Just testing");
 
 
@@ -47,8 +48,16 @@ public class Priority_Subject extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
 
-                    Log.d("SUBS", "onDataChange: " + dataSnapshot.getRef());
+                    Log.d("QQSUBS", "onDataChange: " + dataSnapshot.getRef());
 
+                    for (DataSnapshot dataSnapshot1 : dataSnapshot.child("classSubjectData").getChildren()) {
+
+                        Subject_Details_Model object = dataSnapshot1.getValue(Subject_Details_Model.class);
+                        Log.d("QQSUBS", "onDataChange: " + object.getSubjectName());
+                        subjects.add(object.getSubjectName());
+
+
+                    }
 
                 }
             }
@@ -59,7 +68,7 @@ public class Priority_Subject extends AppCompatActivity {
             }
         });
 
-*/
+
         autoCompleteTextView = findViewById(R.id.primaryACT);
 
         adapterItems = new ArrayAdapter<String>(this, R.layout.priority_list_item, subjects);
