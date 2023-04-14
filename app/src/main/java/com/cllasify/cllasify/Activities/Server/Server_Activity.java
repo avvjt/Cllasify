@@ -68,6 +68,7 @@ import com.cllasify.cllasify.Activities.Notice;
 import com.cllasify.cllasify.Activities.Notification_Activity;
 import com.cllasify.cllasify.Activities.Profile.Profile_Activity;
 import com.cllasify.cllasify.Activities.Routine.Priority_Subject;
+import com.cllasify.cllasify.Activities.Routine.Routine_Structure;
 import com.cllasify.cllasify.Activities.Server.PDFBACK.OnBackPressedListener;
 import com.cllasify.cllasify.Activities.getStarted;
 import com.cllasify.cllasify.Adapters.Adapter_All_Friends;
@@ -951,11 +952,79 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
             btn_routineStructure.setEnabled(true);
             btn_lnotice.setEnabled(true);
 
+            btn_routineStructure.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+                    refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.getChildrenCount() > 0) {
+
+                                if (snapshot.child("clickedGroupPushId").exists()) {
+
+                                    String groupPushId = snapshot.child("clickedGroupPushId").getValue().toString().trim();
+                                    String classPushId = snapshot.child("uniPushClassId").getValue().toString().trim();
+                                    String className = snapshot.child("clickedClassName").getValue().toString().trim();
+
+                                    Intent intent = new Intent(Server_Activity.this, Routine_Structure.class);
+                                    intent.putExtra("groupPushId",groupPushId);
+                                    intent.putExtra("classPushId",classPushId);
+                                    intent.putExtra("className",className);
+
+                                    startActivity(intent);
+
+                                }
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+
+                }
+            });
+
+
             btn_subjectPriority.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent(Server_Activity.this, Priority_Subject.class);
-                    startActivity(intent);
+
+                    DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+                    refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.getChildrenCount() > 0) {
+
+                                if (snapshot.child("clickedGroupPushId").exists()) {
+
+                                    String groupPushId = snapshot.child("clickedGroupPushId").getValue().toString().trim();
+
+                                    Intent intent = new Intent(Server_Activity.this, Priority_Subject.class);
+                                    intent.putExtra("groupPushId",groupPushId);
+                                    startActivity(intent);
+
+                                }
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+
                 }
             });
 
