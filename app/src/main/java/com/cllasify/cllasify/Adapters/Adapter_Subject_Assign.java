@@ -23,7 +23,7 @@ import com.cllasify.cllasify.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adapter_Teacher_Assign extends RecyclerView.Adapter<Adapter_Teacher_Assign.ViewHolder> {
+public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject_Assign.ViewHolder> {
 
 
     Context context;
@@ -49,46 +49,32 @@ public class Adapter_Teacher_Assign extends RecyclerView.Adapter<Adapter_Teacher
         this.uniPush = uniPush;
     }
 
-    public Adapter_Teacher_Assign(Context context) {
+    public Adapter_Subject_Assign(Context context) {
         this.context = context;
     }
 
     @NonNull
     @Override
-    public Adapter_Teacher_Assign.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View rootview = LayoutInflater.from(context).inflate(R.layout.teacher_assignment_item, parent, false);
+    public Adapter_Subject_Assign.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View rootview = LayoutInflater.from(context).inflate(R.layout.sub_assignment_item, parent, false);
         return new ViewHolder(rootview);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter_Teacher_Assign.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Adapter_Subject_Assign.ViewHolder holder, int position) {
 
         int period = position + 1;
 
+        holder.subjectTopic.setText("Period: " + period);
 
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.item_fall_down);
         holder.itemView.startAnimation(animation);
         lastPosition = holder.getAdapterPosition();
 
-        Log.d("CHKINGTECH", "onClick: " + classStudentList.get(position).getUserName());
-        teacher.add(classStudentList.get(position).getUserName());
+//        Log.d("CHKINGTECH", "onClick: " + classStudentList.get(position).getUserName());
 
-        adapterItems = new ArrayAdapter<String>(context, R.layout.priority_list_item, teacher);
-        holder.autoTvTeacher.setAdapter(adapterItems);
-
-        holder.autoTvTeacher.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                itemPrimary = adapterView.getItemAtPosition(i).toString();
-//                doneBtn.setEnabled(true);
-
-            }
-        });
-
-
-/*
-//        subs.add(subjectDetailsModelList.get(position).getSubjectName());
-        teacher.add(classStudentList.get(position).getUserName());
+        subs.add(subjectDetailsModelList.get(position).getSubjectName());
+//        teacher.add(classStudentList.get(position).getUserName());
 
         adapterItems = new ArrayAdapter<String>(context, R.layout.priority_list_item, subs);
         holder.autoTvSub.setAdapter(adapterItems);
@@ -101,7 +87,6 @@ public class Adapter_Teacher_Assign extends RecyclerView.Adapter<Adapter_Teacher
 
             }
         });
-        */
 /*
         DatabaseReference databaseReferenceGetTeachers = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(grpPushId);
 
@@ -143,7 +128,7 @@ public class Adapter_Teacher_Assign extends RecyclerView.Adapter<Adapter_Teacher
 
     @Override
     public int getItemCount() {
-        return classStudentList.size();
+        return subjectDetailsModelList.size();
     }
 
     public void setSubjectDetailsModelList(List<Subject_Details_Model> subjectDetailsModelList) {
@@ -162,10 +147,11 @@ public class Adapter_Teacher_Assign extends RecyclerView.Adapter<Adapter_Teacher
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            autoTvTeacher = itemView.findViewById(R.id.assignTeacher);
+            subjectTopic = itemView.findViewById(R.id.period_subject);
+            autoTvSub = itemView.findViewById(R.id.assignSubs);
 
-            autoTvTeacher.setFocusable(false);
-            autoTvTeacher.setClickable(true);
+            autoTvSub.setFocusable(false);
+            autoTvSub.setClickable(true);
 
 
         }

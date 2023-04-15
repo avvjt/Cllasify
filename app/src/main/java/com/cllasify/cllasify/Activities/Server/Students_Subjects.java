@@ -287,9 +287,7 @@ public class Students_Subjects extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                     for (DataSnapshot dataSnapshot1 : snapshot.child("classAdminList").getChildren()) {
-                        Log.d("CHKINGTECH", "onClick: " + dataSnapshot1.getValue());
                         Class_Student_Details object = dataSnapshot1.getValue(Class_Student_Details.class);
-                        Log.d("CHKSUB27", "onDataChange: " + object.getUserId());
                         class_admin_detailsList.add(object);
 
                     }
