@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bottom_rounded_bg"
     android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -12,9 +12,9 @@
         android:id="@+id/period_subject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:text="1st Period"
         app:layout_constraintBottom_toTopOf="@+id/tv_selectSubject"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,13 +28,38 @@
         android:layout_margin="10dp"
         android:hint="Select Subject"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0">
+        app:layout_constraintEnd_toStartOf="@+id/tv_selectTeacher"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent">
 
 
         <AutoCompleteTextView
             android:id="@+id/assignSubs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12dp" />
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tv_selectTeacher"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="166dp"
+        android:layout_height="55dp"
+        android:layout_margin="10dp"
+        android:layout_marginEnd="24dp"
+        android:hint="Select Teacher"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/tv_selectSubject"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.938">
+
+
+        <AutoCompleteTextView
+            android:id="@+id/assignTeacher"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12dp" />

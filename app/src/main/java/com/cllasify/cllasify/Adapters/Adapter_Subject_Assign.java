@@ -1,7 +1,6 @@
 package com.cllasify.cllasify.Adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.R;
 
@@ -28,7 +26,7 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
 
     Context context;
     List<Subject_Details_Model> subjectDetailsModelList;
-    List<Class_Student_Details> classStudentList;
+    List<String> classStudentList;
     String uniPush;
 
     int lastPosition = -1;
@@ -37,9 +35,11 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
 
     ArrayList<String> subs = new ArrayList<>();
     ArrayList<String> teacher = new ArrayList<>();
+    List<String> newTeacher1 = new ArrayList<>();
+    List<String> newTeacher2 = new ArrayList<>();
 
     String itemPrimary = "null";
-
+    boolean isSaturday = false;
 
     public String getUniPush() {
         return uniPush;
@@ -51,6 +51,14 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
 
     public Adapter_Subject_Assign(Context context) {
         this.context = context;
+    }
+
+    public boolean isSaturday() {
+        return isSaturday;
+    }
+
+    public void setSaturday(boolean saturday) {
+        isSaturday = saturday;
     }
 
     @NonNull
@@ -71,10 +79,8 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
         holder.itemView.startAnimation(animation);
         lastPosition = holder.getAdapterPosition();
 
-//        Log.d("CHKINGTECH", "onClick: " + classStudentList.get(position).getUserName());
 
         subs.add(subjectDetailsModelList.get(position).getSubjectName());
-//        teacher.add(classStudentList.get(position).getUserName());
 
         adapterItems = new ArrayAdapter<String>(context, R.layout.priority_list_item, subs);
         holder.autoTvSub.setAdapter(adapterItems);
@@ -87,31 +93,8 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
 
             }
         });
-/*
-        DatabaseReference databaseReferenceGetTeachers = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(grpPushId);
 
-        databaseReferenceGetTeachers.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                for (DataSnapshot dataSnapshot1 : snapshot.child("classAdminList").getChildren()) {
-                    Log.d("CHKINGTECH", "onClick: " + dataSnapshot1.getValue());
-                    Class_Student_Details object = dataSnapshot1.getValue(Class_Student_Details.class);
-                    Log.d("CHKSUB27", "onDataChange: " + object.getUserId());
-                    classStudentList.add(object);
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-*/
-/*
-        adapterItems = new ArrayAdapter<String>(context, R.layout.priority_list_item, teacher);
+        adapterItems = new ArrayAdapter<String>(context, R.layout.priority_list_item, classStudentList);
         holder.autoTvTeacher.setAdapter(adapterItems);
 
         holder.autoTvTeacher.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -122,20 +105,24 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
 
             }
         });
-*/
+
 
     }
 
     @Override
     public int getItemCount() {
-        return subjectDetailsModelList.size();
+        if (isSaturday == true) {
+            return 4;
+        } else {
+            return subjectDetailsModelList.size();
+        }
     }
 
     public void setSubjectDetailsModelList(List<Subject_Details_Model> subjectDetailsModelList) {
         this.subjectDetailsModelList = subjectDetailsModelList;
     }
 
-    public void setClassStudentList(List<Class_Student_Details> classStudentList) {
+    public void setClassStudentList(List<String> classStudentList) {
         this.classStudentList = classStudentList;
     }
 
@@ -152,7 +139,25 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
 
             autoTvSub.setFocusable(false);
             autoTvSub.setClickable(true);
+            autoTvTeacher = itemView.findViewById(R.id.assignTeacher);
 
+            autoTvTeacher.setFocusable(false);
+            autoTvTeacher.setClickable(true);
+/*
+
+            for (int pos = 0; pos < classStudentList.size(); pos++) {
+//                newTeacher1.add(classStudentList.get(pos).getUserName());
+
+                if (!classStudentList.contains(newTeacher1.get(pos))) {
+                    newTeacher2.add(newTeacher1.get(pos));
+                }
+/*
+                if (classStudentList.get(pos).getUserName().equals(newTeacher1.get(pos))) {
+                    Toast.makeText(context, "cant add", Toast.LENGTH_SHORT).show();
+
+                } else {
+                }
+                */
 
         }
     }

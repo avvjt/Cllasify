@@ -163,6 +163,10 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
+            android:name=".Activities.Attendance_Activity_Teacher"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".Activities.Settings.Documentation_Videos"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />

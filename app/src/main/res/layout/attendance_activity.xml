@@ -54,17 +54,17 @@
             android:textColor="@color/text_color"
             android:textSize="18sp"/>
 
-        <ImageButton
-            android:id="@+id/btn_attendance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/menu_attendance"
-            android:background="@color/transparent"
-            android:spinnerMode="dropdown"
-            android:layout_marginEnd="20dp"
-            android:layout_centerInParent="true"
-            android:layout_alignParentEnd="true"
-            android:contentDescription="@string/attends_contentDescription" />
+            <ImageButton
+                android:id="@+id/btn_attendance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="20dp"
+                android:background="@color/transparent"
+                android:contentDescription="@string/attends_contentDescription"
+                android:spinnerMode="dropdown"
+                android:src="@drawable/menu_attendance" />
 
         </RelativeLayout>
 

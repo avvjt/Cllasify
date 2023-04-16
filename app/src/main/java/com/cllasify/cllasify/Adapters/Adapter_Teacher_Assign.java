@@ -143,7 +143,7 @@ public class Adapter_Teacher_Assign extends RecyclerView.Adapter<Adapter_Teacher
 
     @Override
     public int getItemCount() {
-        return classStudentList.size();
+        return subjectDetailsModelList.size();
     }
 
     public void setSubjectDetailsModelList(List<Subject_Details_Model> subjectDetailsModelList) {

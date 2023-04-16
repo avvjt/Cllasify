@@ -1,16 +1,19 @@
 package com.cllasify.cllasify.Activities.Routine;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cllasify.cllasify.Activities.Attendance_Activity_Teacher;
 import com.cllasify.cllasify.Adapters.Adapter_Subject_Assign;
-import com.cllasify.cllasify.Adapters.Adapter_Teacher_Assign;
 import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.R;
@@ -27,22 +30,23 @@ public class Routine_Structure extends AppCompatActivity {
     String grpPushId, classPushId, className;
 
 
-    Adapter_Teacher_Assign adapter_teacher_assignMonday, adapter_teacher_assignTuesday, adapter_teacher_assignWednesday,
+    Adapter_Subject_Assign adapter_teacher_assignMonday, adapter_teacher_assignTuesday, adapter_teacher_assignWednesday,
             adapter_teacher_assignThursday, adapter_teacher_assignFriday, adapter_teacher_assignSaturday;
 
-    Adapter_Subject_Assign adapter_subject_assignMonday, adapter_subject_assignTuesday, adapter_subject_assignWednesday,
-            adapter_subject_assignThursday, adapter_subject_assignFriday, adapter_subject_assignSaturday;
-    List<Subject_Details_Model> subjectDetailsModelListMonday, subjectDetailsModelListTuesday, subjectDetailsModelListWednesday, subjectDetailsModelListThursday, subjectDetailsModelListFriday, subjectDetailsModelListSaturday;
+    List<Subject_Details_Model> subjectDetailsModelListMonday, subjectDetailsModelListTuesday,
+            subjectDetailsModelListWednesday, subjectDetailsModelListThursday, subjectDetailsModelListFriday, subjectDetailsModelListSaturday;
 
-    List<Class_Student_Details> classStudentListMonday, classStudentListTuesday, classStudentListWednesday, classStudentListThursday, classStudentListFriday, classStudentListSaturday;
+    List<String> classStudentListMonday, classStudentListTuesday, classStudentListWednesday,
+            classStudentListThursday, classStudentListFriday, classStudentListSaturday;
 
     RecyclerView rv_monday, rv_tuesday, rv_wednesday, rv_thursday, rv_friday, rv_saturday;
     RecyclerView rv_mondayTeacher, rv_tuesdayTeacher, rv_wednesdayTeacher, rv_thursdayTeacher, rv_fridayTeacher, rv_saturdayTeacher;
 
     TextView tvClassName;
-
+    Button attAP, done;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_routine_structure);
@@ -53,6 +57,24 @@ public class Routine_Structure extends AppCompatActivity {
             className = getIntent().getStringExtra("className");
 
         }
+
+        attAP = findViewById(R.id.teachAP);
+        done = findViewById(R.id.btn_done);
+
+        attAP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Routine_Structure.this, Attendance_Activity_Teacher.class);
+                startActivity(intent);
+            }
+        });
+
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(Routine_Structure.this, "Processing routine", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //Recycler View Initialization
         rv_monday = findViewById(R.id.rv_monday);
@@ -95,8 +117,9 @@ public class Routine_Structure extends AppCompatActivity {
 
         //Monday
         subjectDetailsModelListMonday = new ArrayList<>();
+        classStudentListMonday = new ArrayList<>();
 
-        adapter_subject_assignMonday = new Adapter_Subject_Assign(Routine_Structure.this);
+        adapter_teacher_assignMonday = new Adapter_Subject_Assign(Routine_Structure.this);
         rv_monday.setLayoutManager(new LinearLayoutManager(Routine_Structure.this));
 
         databaseReferenceGetStudent.addValueEventListener(new ValueEventListener() {
@@ -108,10 +131,33 @@ public class Routine_Structure extends AppCompatActivity {
                     subjectDetailsModelListMonday.add(object);
 
                 }
-                adapter_subject_assignMonday.setUniPush(classPushId);
-                adapter_subject_assignMonday.setSubjectDetailsModelList(subjectDetailsModelListMonday);
-                rv_monday.setAdapter(adapter_subject_assignMonday);
-                adapter_subject_assignMonday.notifyDataSetChanged();
+
+
+                databaseReferenceGetTeachers.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        classStudentListMonday.clear();
+                        for (DataSnapshot dataSnapshot1 : snapshot.child("classAdminList").getChildren()) {
+                            Class_Student_Details object = dataSnapshot1.getValue(Class_Student_Details.class);
+                            classStudentListMonday.add(object.getUserName());
+
+                        }
+
+
+                        adapter_teacher_assignMonday.setUniPush(classPushId);
+                        adapter_teacher_assignMonday.setClassStudentList(classStudentListMonday);
+                        adapter_teacher_assignMonday.setSubjectDetailsModelList(subjectDetailsModelListMonday);
+                        rv_monday.setAdapter(adapter_teacher_assignMonday);
+                        adapter_teacher_assignMonday.notifyDataSetChanged();
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
 
             }
 
@@ -122,38 +168,10 @@ public class Routine_Structure extends AppCompatActivity {
         });
 
 
-        classStudentListMonday = new ArrayList<>();
-
-        adapter_teacher_assignMonday = new Adapter_Teacher_Assign(Routine_Structure.this);
-        rv_mondayTeacher.setLayoutManager(new LinearLayoutManager(Routine_Structure.this));
-
-        databaseReferenceGetTeachers.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                classStudentListMonday.clear();
-                for (DataSnapshot dataSnapshot1 : snapshot.child("classAdminList").getChildren()) {
-                    Log.d("CHKINGTECH", "onClick: " + dataSnapshot1.getValue());
-                    Class_Student_Details object = dataSnapshot1.getValue(Class_Student_Details.class);
-                    Log.d("CHKSUB27", "onDataChange: " + object.getUserId());
-                    classStudentListMonday.add(object);
-
-                }
-                adapter_teacher_assignMonday.setUniPush(classPushId);
-                adapter_teacher_assignMonday.setClassStudentList(classStudentListMonday);
-                rv_mondayTeacher.setAdapter(adapter_teacher_assignMonday);
-                adapter_teacher_assignMonday.notifyDataSetChanged();
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-/*
         //Tuesday
         subjectDetailsModelListTuesday = new ArrayList<>();
+        classStudentListTuesday = new ArrayList<>();
+
         adapter_teacher_assignTuesday = new Adapter_Subject_Assign(Routine_Structure.this);
         rv_tuesday.setLayoutManager(new LinearLayoutManager(Routine_Structure.this));
 
@@ -166,10 +184,34 @@ public class Routine_Structure extends AppCompatActivity {
                     subjectDetailsModelListTuesday.add(object);
 
                 }
-                adapter_teacher_assignTuesday.setUniPush(classPushId);
-                adapter_teacher_assignTuesday.setSubjectDetailsModelList(subjectDetailsModelListTuesday);
-                rv_tuesday.setAdapter(adapter_teacher_assignTuesday);
-                adapter_teacher_assignTuesday.notifyDataSetChanged();
+
+
+                databaseReferenceGetTeachers.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        classStudentListTuesday.clear();
+                        for (DataSnapshot dataSnapshot1 : snapshot.child("classAdminList").getChildren()) {
+                            Class_Student_Details object = dataSnapshot1.getValue(Class_Student_Details.class);
+                            classStudentListTuesday.add(object.getUserName());
+
+                        }
+
+
+                        adapter_teacher_assignTuesday.setClassStudentList(classStudentListTuesday);
+
+
+                        adapter_teacher_assignTuesday.setUniPush(classPushId);
+                        adapter_teacher_assignTuesday.setSubjectDetailsModelList(subjectDetailsModelListTuesday);
+                        rv_tuesday.setAdapter(adapter_teacher_assignTuesday);
+                        adapter_teacher_assignTuesday.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
 
             }
 
@@ -182,6 +224,8 @@ public class Routine_Structure extends AppCompatActivity {
 
         //Wednesday
         subjectDetailsModelListWednesday = new ArrayList<>();
+        classStudentListWednesday = new ArrayList<>();
+
         adapter_teacher_assignWednesday = new Adapter_Subject_Assign(Routine_Structure.this);
         rv_wednesday.setLayoutManager(new LinearLayoutManager(Routine_Structure.this));
 
@@ -194,10 +238,33 @@ public class Routine_Structure extends AppCompatActivity {
                     subjectDetailsModelListWednesday.add(object);
 
                 }
-                adapter_teacher_assignWednesday.setUniPush(classPushId);
-                adapter_teacher_assignWednesday.setSubjectDetailsModelList(subjectDetailsModelListWednesday);
-                rv_wednesday.setAdapter(adapter_teacher_assignWednesday);
-                adapter_teacher_assignWednesday.notifyDataSetChanged();
+
+                databaseReferenceGetTeachers.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        classStudentListWednesday.clear();
+                        for (DataSnapshot dataSnapshot1 : snapshot.child("classAdminList").getChildren()) {
+                            Class_Student_Details object = dataSnapshot1.getValue(Class_Student_Details.class);
+                            classStudentListWednesday.add(object.getUserName());
+
+                        }
+
+
+                        adapter_teacher_assignWednesday.setClassStudentList(classStudentListWednesday);
+
+
+                        adapter_teacher_assignWednesday.setUniPush(classPushId);
+                        adapter_teacher_assignWednesday.setSubjectDetailsModelList(subjectDetailsModelListWednesday);
+                        rv_wednesday.setAdapter(adapter_teacher_assignWednesday);
+                        adapter_teacher_assignWednesday.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
 
             }
 
@@ -210,6 +277,8 @@ public class Routine_Structure extends AppCompatActivity {
 
         //Thursday
         subjectDetailsModelListThursday = new ArrayList<>();
+        classStudentListThursday = new ArrayList<>();
+
         adapter_teacher_assignThursday = new Adapter_Subject_Assign(Routine_Structure.this);
         rv_thursday.setLayoutManager(new LinearLayoutManager(Routine_Structure.this));
 
@@ -222,10 +291,33 @@ public class Routine_Structure extends AppCompatActivity {
                     subjectDetailsModelListThursday.add(object);
 
                 }
-                adapter_teacher_assignThursday.setUniPush(classPushId);
-                adapter_teacher_assignThursday.setSubjectDetailsModelList(subjectDetailsModelListThursday);
-                rv_thursday.setAdapter(adapter_teacher_assignThursday);
-                adapter_teacher_assignThursday.notifyDataSetChanged();
+
+                databaseReferenceGetTeachers.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        classStudentListThursday.clear();
+                        for (DataSnapshot dataSnapshot1 : snapshot.child("classAdminList").getChildren()) {
+                            Class_Student_Details object = dataSnapshot1.getValue(Class_Student_Details.class);
+                            classStudentListThursday.add(object.getUserName());
+
+                        }
+
+
+                        adapter_teacher_assignThursday.setClassStudentList(classStudentListThursday);
+
+
+                        adapter_teacher_assignThursday.setUniPush(classPushId);
+                        adapter_teacher_assignThursday.setSubjectDetailsModelList(subjectDetailsModelListThursday);
+                        rv_thursday.setAdapter(adapter_teacher_assignThursday);
+                        adapter_teacher_assignThursday.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
 
             }
 
@@ -238,6 +330,9 @@ public class Routine_Structure extends AppCompatActivity {
 
         //Friday
         subjectDetailsModelListFriday = new ArrayList<>();
+        classStudentListFriday = new ArrayList<>();
+
+
         adapter_teacher_assignFriday = new Adapter_Subject_Assign(Routine_Structure.this);
         rv_friday.setLayoutManager(new LinearLayoutManager(Routine_Structure.this));
 
@@ -250,10 +345,34 @@ public class Routine_Structure extends AppCompatActivity {
                     subjectDetailsModelListFriday.add(object);
 
                 }
-                adapter_teacher_assignFriday.setUniPush(classPushId);
-                adapter_teacher_assignFriday.setSubjectDetailsModelList(subjectDetailsModelListFriday);
-                rv_friday.setAdapter(adapter_teacher_assignFriday);
-                adapter_teacher_assignFriday.notifyDataSetChanged();
+
+
+                databaseReferenceGetTeachers.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        classStudentListFriday.clear();
+                        for (DataSnapshot dataSnapshot1 : snapshot.child("classAdminList").getChildren()) {
+                            Class_Student_Details object = dataSnapshot1.getValue(Class_Student_Details.class);
+                            classStudentListFriday.add(object.getUserName());
+
+                        }
+
+
+                        adapter_teacher_assignFriday.setClassStudentList(classStudentListFriday);
+
+
+                        adapter_teacher_assignFriday.setUniPush(classPushId);
+                        adapter_teacher_assignFriday.setSubjectDetailsModelList(subjectDetailsModelListFriday);
+                        rv_friday.setAdapter(adapter_teacher_assignFriday);
+                        adapter_teacher_assignFriday.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
 
             }
 
@@ -266,6 +385,9 @@ public class Routine_Structure extends AppCompatActivity {
 
         //Saturday
         subjectDetailsModelListSaturday = new ArrayList<>();
+        classStudentListSaturday = new ArrayList<>();
+
+
         adapter_teacher_assignSaturday = new Adapter_Subject_Assign(Routine_Structure.this);
         rv_saturday.setLayoutManager(new LinearLayoutManager(Routine_Structure.this));
 
@@ -278,10 +400,35 @@ public class Routine_Structure extends AppCompatActivity {
                     subjectDetailsModelListSaturday.add(object);
 
                 }
-                adapter_teacher_assignSaturday.setUniPush(classPushId);
-                adapter_teacher_assignSaturday.setSubjectDetailsModelList(subjectDetailsModelListSaturday);
-                rv_saturday.setAdapter(adapter_teacher_assignSaturday);
-                adapter_teacher_assignSaturday.notifyDataSetChanged();
+
+
+                databaseReferenceGetTeachers.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        classStudentListSaturday.clear();
+                        for (DataSnapshot dataSnapshot1 : snapshot.child("classAdminList").getChildren()) {
+                            Class_Student_Details object = dataSnapshot1.getValue(Class_Student_Details.class);
+                            classStudentListSaturday.add(object.getUserName());
+
+                        }
+
+
+                        adapter_teacher_assignSaturday.setClassStudentList(classStudentListSaturday);
+
+
+                        adapter_teacher_assignSaturday.setUniPush(classPushId);
+                        adapter_teacher_assignSaturday.setSaturday(true);
+                        adapter_teacher_assignSaturday.setSubjectDetailsModelList(subjectDetailsModelListSaturday);
+                        rv_saturday.setAdapter(adapter_teacher_assignSaturday);
+                        adapter_teacher_assignSaturday.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
 
             }
 
@@ -290,6 +437,6 @@ public class Routine_Structure extends AppCompatActivity {
 
             }
         });
-*/
+
     }
 }
