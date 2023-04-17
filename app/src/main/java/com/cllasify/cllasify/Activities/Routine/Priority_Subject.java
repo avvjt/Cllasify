@@ -95,7 +95,7 @@ public class Priority_Subject extends AppCompatActivity {
         */
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(grpPushId);
-        DatabaseReference dbPriority = FirebaseDatabase.getInstance().getReference().child("Groups").child("Routine").child("individualStructure").child(userID);
+        DatabaseReference dbPriority = FirebaseDatabase.getInstance().getReference().child("Groups").child("Routine").child(grpPushId).child("individualStructure").child(userID);
 
         dbPriority.addValueEventListener(new ValueEventListener() {
             @Override

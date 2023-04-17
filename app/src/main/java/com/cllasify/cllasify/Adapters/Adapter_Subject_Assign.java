@@ -15,7 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
+import com.cllasify.cllasify.ModelClasses.Class_Routine;
 import com.cllasify.cllasify.R;
 
 import java.util.ArrayList;
@@ -25,9 +25,11 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
 
 
     Context context;
-    List<Subject_Details_Model> subjectDetailsModelList;
+    List<String> subjectDetailsModelList;
     List<String> classStudentList;
+    List<String> classStudentIDList;
     String uniPush;
+    List<String> periods;
 
     int lastPosition = -1;
 
@@ -38,7 +40,9 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
     List<String> newTeacher1 = new ArrayList<>();
     List<String> newTeacher2 = new ArrayList<>();
 
-    String itemPrimary = "null";
+    String itemSub = "null";
+    String itemTeacher = "null";
+
     boolean isSaturday = false;
 
     public String getUniPush() {
@@ -61,6 +65,20 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
         isSaturday = saturday;
     }
 
+    public String getItemSub() {
+        return itemSub;
+    }
+
+    public String getItemTeacher() {
+        return itemTeacher;
+    }
+
+    List<Class_Routine> class_routines = new ArrayList<>();
+
+    public List<Class_Routine> getClass_routines() {
+        return class_routines;
+    }
+
     @NonNull
     @Override
     public Adapter_Subject_Assign.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -74,23 +92,27 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
         int period = position + 1;
 
         holder.subjectTopic.setText("Period: " + period);
+        Class_Routine clRoutine = new Class_Routine();
+
+
+        clRoutine.setPeriod(period);
 
         Animation animation = AnimationUtils.loadAnimation(context, R.anim.item_fall_down);
         holder.itemView.startAnimation(animation);
         lastPosition = holder.getAdapterPosition();
 
+        setPeriods(periods);
 
-        subs.add(subjectDetailsModelList.get(position).getSubjectName());
-
-        adapterItems = new ArrayAdapter<String>(context, R.layout.priority_list_item, subs);
+        adapterItems = new ArrayAdapter<String>(context, R.layout.priority_list_item, subjectDetailsModelList);
         holder.autoTvSub.setAdapter(adapterItems);
 
         holder.autoTvSub.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                itemPrimary = adapterView.getItemAtPosition(i).toString();
+                itemSub = adapterView.getItemAtPosition(i).toString();
 //                doneBtn.setEnabled(true);
-
+                subs.add(itemSub);
+                clRoutine.setSubject(itemSub);
             }
         });
 
@@ -100,11 +122,17 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
         holder.autoTvTeacher.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                itemPrimary = adapterView.getItemAtPosition(i).toString();
+                itemTeacher = adapterView.getItemAtPosition(i).toString();
 //                doneBtn.setEnabled(true);
+                teacher.add(itemTeacher);
+                clRoutine.setTeacher(itemTeacher);
+                clRoutine.setId(classStudentIDList.get(i));
+
 
             }
         });
+
+        class_routines.add(clRoutine);
 
 
     }
@@ -114,16 +142,24 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
         if (isSaturday == true) {
             return 4;
         } else {
-            return subjectDetailsModelList.size();
+            return 8;
         }
     }
 
-    public void setSubjectDetailsModelList(List<Subject_Details_Model> subjectDetailsModelList) {
+    public void setPeriods(List<String> periods) {
+        this.periods = periods;
+    }
+
+    public void setSubjectDetailsModelList(List<String> subjectDetailsModelList) {
         this.subjectDetailsModelList = subjectDetailsModelList;
     }
 
     public void setClassStudentList(List<String> classStudentList) {
         this.classStudentList = classStudentList;
+    }
+
+    public void setClassStudentIDList(List<String> classStudentIDList) {
+        this.classStudentIDList = classStudentIDList;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
