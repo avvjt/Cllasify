@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Activities.Attendance_Activity_Teacher;
+import com.cllasify.cllasify.Activities.Server.Server_Activity;
 import com.cllasify.cllasify.Adapters.Adapter_Subject_Assign;
 import com.cllasify.cllasify.ModelClasses.Class_Routine;
 import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
@@ -35,18 +36,15 @@ public class Routine_Structure extends AppCompatActivity {
     String grpPushId, classPushId, className;
 
 
-    Adapter_Subject_Assign adapter_teacher_assignMonday, adapter_teacher_assignTuesday, adapter_teacher_assignWednesday,
-            adapter_teacher_assignThursday, adapter_teacher_assignFriday, adapter_teacher_assignSaturday;
+    Adapter_Subject_Assign adapter_teacher_assignMonday, adapter_teacher_assignTuesday, adapter_teacher_assignWednesday, adapter_teacher_assignThursday, adapter_teacher_assignFriday, adapter_teacher_assignSaturday;
 
-    List<String> subjectDetailsModelListMonday, subjectDetailsModelListTuesday,
-            subjectDetailsModelListWednesday, subjectDetailsModelListThursday, subjectDetailsModelListFriday, subjectDetailsModelListSaturday;
+    List<String> subjectDetailsModelListMonday, subjectDetailsModelListTuesday, subjectDetailsModelListWednesday, subjectDetailsModelListThursday, subjectDetailsModelListFriday, subjectDetailsModelListSaturday;
 
-    List<String> classStudentListMonday, classStudentListTuesday, classStudentListWednesday,
-            classStudentListThursday, classStudentListFriday, classStudentListSaturday;
+    List<String> classStudentListMonday, classStudentListTuesday, classStudentListWednesday, classStudentListThursday, classStudentListFriday, classStudentListSaturday;
 
-    List<String> classStudentIDListMonday, classStudentIDListTuesday, classStudentIDListWednesday,
-            classStudentIDListThursday, classStudentIDListFriday, classStudentIDListSaturday;
+    List<String> classStudentIDListMonday, classStudentIDListTuesday, classStudentIDListWednesday, classStudentIDListThursday, classStudentIDListFriday, classStudentIDListSaturday;
 
+    List<String> weekdays;
 
     RecyclerView rv_monday, rv_tuesday, rv_wednesday, rv_thursday, rv_friday, rv_saturday;
     RecyclerView rv_mondayTeacher, rv_tuesdayTeacher, rv_wednesdayTeacher, rv_thursdayTeacher, rv_fridayTeacher, rv_saturdayTeacher;
@@ -72,6 +70,7 @@ public class Routine_Structure extends AppCompatActivity {
         done = findViewById(R.id.btn_done);
         routine_more = findViewById(R.id.routine_more);
 
+
         attAP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,40 +94,56 @@ public class Routine_Structure extends AppCompatActivity {
                 //Monday
                 for (int i = 0; i < clRoutineMonday.size(); i++) {
 
-                    Class_Routine class_routineMonday = new Class_Routine(clRoutineMonday.get(i).getPeriod(),
-                            clRoutineMonday.get(i).getId(), clRoutineMonday.get(i).getSubject(), clRoutineMonday.get(i).getTeacher());
+                    Class_Routine class_routineMonday = new Class_Routine(clRoutineMonday.get(i).getPeriod(), clRoutineMonday.get(i).getId(), clRoutineMonday.get(i).getTeacher(), clRoutineMonday.get(i).getSubject(), classPushId, className);
+                    Class_Routine class_routineTuesday = new Class_Routine(clRoutineTuesday.get(i).getPeriod(), clRoutineTuesday.get(i).getId(), clRoutineTuesday.get(i).getTeacher(), clRoutineTuesday.get(i).getSubject(), classPushId, className);
+                    Class_Routine class_routineWednesday = new Class_Routine(clRoutineWednesday.get(i).getPeriod(), clRoutineWednesday.get(i).getId(), clRoutineWednesday.get(i).getTeacher(), clRoutineWednesday.get(i).getSubject(), classPushId, className);
+                    Class_Routine class_routineThursday = new Class_Routine(clRoutineThursday.get(i).getPeriod(), clRoutineThursday.get(i).getId(), clRoutineThursday.get(i).getTeacher(), clRoutineThursday.get(i).getSubject(), classPushId, className);
+                    Class_Routine class_routineFriday = new Class_Routine(clRoutineFriday.get(i).getPeriod(), clRoutineFriday.get(i).getId(), clRoutineFriday.get(i).getTeacher(), clRoutineFriday.get(i).getSubject(), classPushId, className);
 
-                    String teachUserId = class_routineMonday.getId();
-                    int period = class_routineMonday.getPeriod();
 
                     Log.d("ROUTDATAMonday", "period: " + class_routineMonday.getPeriod());
                     Log.d("ROUTDATAMonday", "id: " + class_routineMonday.getId());
                     Log.d("ROUTDATAMonday", "subject: " + class_routineMonday.getSubject());
                     Log.d("ROUTDATAMonday", "teacher: " + class_routineMonday.getTeacher());
 
-                    DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
-                            .child("Routine").child(grpPushId).child("schedule");
+
+                    String teachUserId = class_routineMonday.getId();
+                    int period = class_routineMonday.getPeriod();
+
+
+                    DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups").child("Routine").child(grpPushId).child("schedule");
 
                     if (teachUserId != null) {
                         dbRoutineStructure.child(teachUserId).child("Monday").child(String.valueOf(period)).setValue(class_routineMonday);
+                        dbRoutineStructure.child(teachUserId).child("Tuesday").child(String.valueOf(period)).setValue(class_routineTuesday);
+                        dbRoutineStructure.child(teachUserId).child("Wednesday").child(String.valueOf(period)).setValue(class_routineWednesday);
+                        dbRoutineStructure.child(teachUserId).child("Thursday").child(String.valueOf(period)).setValue(class_routineThursday);
+                        dbRoutineStructure.child(teachUserId).child("Friday").child(String.valueOf(period)).setValue(class_routineFriday);
+                    }
+
+
+                }
+
+
+                //Saturday
+                for (int i = 0; i < clRoutineSaturday.size(); i++) {
+
+                    Class_Routine class_routineSaturday = new Class_Routine(clRoutineSaturday.get(i).getPeriod(), clRoutineSaturday.get(i).getId(), clRoutineSaturday.get(i).getTeacher(), clRoutineSaturday.get(i).getSubject(), classPushId, className);
+
+                    String teachUserId = class_routineSaturday.getId();
+                    int period = class_routineSaturday.getPeriod();
+
+
+                    DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups").child("Routine").child(grpPushId).child("schedule");
+
+                    if (teachUserId != null) {
+                        dbRoutineStructure.child(teachUserId).child("Saturday").child(String.valueOf(period)).setValue(class_routineSaturday);
                     }
 
                 }
 
-
-                //Tuesday
-                for (int i = 0; i < clRoutineTuesday.size(); i++) {
-
-
-                    Class_Routine class_routineTues = new Class_Routine(clRoutineTuesday.get(i).getPeriod(),
-                            clRoutineTuesday.get(i).getId(), clRoutineTuesday.get(i).getSubject(), clRoutineTuesday.get(i).getTeacher());
-
-                    Log.d("ROUTDATATuesday", "period: " + class_routineTues.getPeriod());
-                    Log.d("ROUTDATATuesday", "id: " + class_routineTues.getId());
-                    Log.d("ROUTDATATuesday", "subject: " + class_routineTues.getSubject());
-                    Log.d("ROUTDATATuesday", "teacher: " + class_routineTues.getTeacher());
-
-                }
+                Intent intent = new Intent(Routine_Structure.this, Server_Activity.class);
+                startActivity(intent);
 
             }
         });
@@ -235,29 +250,6 @@ public class Routine_Structure extends AppCompatActivity {
 
                         //Put this while opening routine structure button
 
-/*
-                        done.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                for (int pos = 1; pos < 9; pos++) {
-
-                                    Log.d("DEMOCHK", "onClick: " + pos);
-
-                                    DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
-                                            .child("Routine").child(grpPushId).child("schedule");
-
-                                    for (int teachList = 0; teachList < classStudentIDListMonday.size(); teachList++) {
-
-                                        Class_Routine class_routineMon = new Class_Routine(pos, classStudentIDListMonday.get(teachList), "", "");
-
-
-                                        dbRoutineStructure.child(classStudentIDListMonday.get(teachList)).child("Monday").child(String.valueOf(pos)).setValue(class_routineMon);
-                                    }
-
-                                }
-                            }
-                        });
-*/
 
                     }
 

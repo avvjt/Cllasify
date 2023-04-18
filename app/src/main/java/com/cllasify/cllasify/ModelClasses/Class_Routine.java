@@ -3,16 +3,36 @@ package com.cllasify.cllasify.ModelClasses;
 public class Class_Routine {
 
     int period;
-    String id,teacher,subject;
+    String id, teacher, subject, classID, className;
 
     public Class_Routine() {
     }
 
-    public Class_Routine(int period, String id, String teacher, String subject) {
+
+    public Class_Routine(int period, String id, String teacher, String subject, String classID, String className) {
         this.period = period;
         this.id = id;
         this.teacher = teacher;
         this.subject = subject;
+        this.classID = classID;
+        this.className = className;
+    }
+
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public String getClassID() {
+        return classID;
+    }
+
+    public void setClassID(String classID) {
+        this.classID = classID;
     }
 
     public int getPeriod() {

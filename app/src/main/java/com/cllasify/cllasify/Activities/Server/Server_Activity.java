@@ -16,7 +16,6 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
@@ -32,7 +31,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.URLUtil;
 import android.widget.Button;
@@ -51,7 +49,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -84,6 +81,7 @@ import com.cllasify.cllasify.Fragments.Friend_Chat_Activity;
 import com.cllasify.cllasify.Fragments.WebView_Fragment;
 import com.cllasify.cllasify.ModelClasses.Class_Group;
 import com.cllasify.cllasify.ModelClasses.Class_Group_Names;
+import com.cllasify.cllasify.ModelClasses.Class_Routine;
 import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
 import com.cllasify.cllasify.ModelClasses.FriendsListClass;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
@@ -130,6 +128,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -197,6 +196,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
     //Image Buttons
     ImageButton ib_cattach, ib_csubmit, ib_doubtSubmit, ImageViewRecentChat, ib_FrndP_csubmit, swipe_left, swipe_right, ib_pdf_btn;
 
+    List<String> classStudentListMonday;
 
     TabLayout tabLayout, tabL_ChatView;
     BottomNavigationView bottomNavigationView;
@@ -952,9 +952,14 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
             btn_routineStructure.setEnabled(true);
             btn_lnotice.setEnabled(true);
 
+            classStudentListMonday = new ArrayList();
+
+            List<String> weekList = Arrays.asList(new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"});
+
             btn_routineStructure.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
 
                     DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
 
@@ -969,12 +974,76 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                                     String classPushId = snapshot.child("uniPushClassId").getValue().toString().trim();
                                     String className = snapshot.child("clickedClassName").getValue().toString().trim();
 
-                                    Intent intent = new Intent(Server_Activity.this, Routine_Structure.class);
-                                    intent.putExtra("groupPushId",groupPushId);
-                                    intent.putExtra("classPushId",classPushId);
-                                    intent.putExtra("className",className);
+                                    DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
+                                            .child("Routine").child(groupPushId).child("schedule");
 
-                                    startActivity(intent);
+                                    DatabaseReference databaseReferenceGetTeachers = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(groupPushId);
+
+
+                                    dbRoutineStructure.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            if (snapshot.hasChildren()) {
+                                                Intent intent = new Intent(Server_Activity.this, Routine_Structure.class);
+                                                intent.putExtra("groupPushId", groupPushId);
+                                                intent.putExtra("classPushId", classPushId);
+                                                intent.putExtra("className", className);
+
+                                                startActivity(intent);
+                                            } else {
+                                                for (int pos = 1; pos < 9; pos++) {
+
+                                                    Log.d("DEMOCHK", "onClick: " + pos);
+
+
+                                                    int finalPos = pos;
+                                                    databaseReferenceGetTeachers.addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                            classStudentListMonday.clear();
+                                                            for (DataSnapshot dataSnapshot1 : snapshot.child("classAdminList").getChildren()) {
+                                                                Class_Student_Details object = dataSnapshot1.getValue(Class_Student_Details.class);
+                                                                classStudentListMonday.add(object.getUserId());
+                                                            }
+
+
+                                                            for (int teachList = 0; teachList < classStudentListMonday.size(); teachList++) {
+
+                                                                Class_Routine class_routineMon = new Class_Routine(finalPos, classStudentListMonday.get(teachList), "", "Subject", classPushId, "Class Name");
+
+                                                                for (int week = 0; week < weekList.size(); week++) {
+                                                                    dbRoutineStructure.child(classStudentListMonday.get(teachList)).child(weekList.get(week)).child(String.valueOf(finalPos)).setValue(class_routineMon);
+
+                                                                }
+
+                                                            }
+
+
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+
+                                                    Intent intent = new Intent(Server_Activity.this, Routine_Structure.class);
+                                                    intent.putExtra("groupPushId", groupPushId);
+                                                    intent.putExtra("classPushId", classPushId);
+                                                    intent.putExtra("className", className);
+
+                                                    startActivity(intent);
+                                                }
+
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+
 
                                 }
 
@@ -986,7 +1055,6 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
                         }
                     });
-
 
 
                 }
@@ -1009,7 +1077,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                                     String groupPushId = snapshot.child("clickedGroupPushId").getValue().toString().trim();
 
                                     Intent intent = new Intent(Server_Activity.this, Priority_Subject.class);
-                                    intent.putExtra("groupPushId",groupPushId);
+                                    intent.putExtra("groupPushId", groupPushId);
                                     startActivity(intent);
 
                                 }
@@ -1022,7 +1090,6 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
                         }
                     });
-
 
 
                 }

@@ -1,9 +1,5 @@
 package com.cllasify.cllasify.Activities.Routine;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,8 +11,14 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cllasify.cllasify.Activities.Server.Server_Activity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.cllasify.cllasify.Adapters.Adapter_Weekdays_Assign;
 import com.cllasify.cllasify.ModelClasses.Class_Individual_Routine;
+import com.cllasify.cllasify.ModelClasses.Class_Routine;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.R;
 import com.google.android.material.textfield.TextInputLayout;
@@ -49,6 +51,11 @@ public class Priority_Subject extends AppCompatActivity {
 
     TextView tvPrimary, tvSecondary;
 
+    RecyclerView rv_assignedMonday,rv_assignedTuesday,rv_assignedWednesday,rv_assignedThursday,rv_assignedFriday,rv_assignedSaturday;
+    Adapter_Weekdays_Assign adapter_weekdays_assignMonday,adapter_weekdays_assignTuesday,adapter_weekdays_assignWednesday,adapter_weekdays_assignThursday,
+            adapter_weekdays_assignFriday,adapter_weekdays_assignSaturday;
+    List<Class_Routine> class_routinesMonday,class_routinesTuesday,class_routinesWednesday,class_routinesThursday,class_routinesFriday,class_routinesSaturday;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +68,11 @@ public class Priority_Subject extends AppCompatActivity {
         userID = currentUser.getUid();
         userName = currentUser.getDisplayName();
 
+
+        if (getIntent().hasExtra("groupPushId")) {
+            grpPushId = getIntent().getStringExtra("groupPushId");
+        }
+
         autoTvPrimary = findViewById(R.id.primaryACT);
         autoTvSecondary = findViewById(R.id.secondaryACT);
 
@@ -71,11 +83,141 @@ public class Priority_Subject extends AppCompatActivity {
         tvSecondary = findViewById(R.id.secondarySub);
 
         doneBtn = findViewById(R.id.doneBtn);
+        rv_assignedMonday = findViewById(R.id.rv_assigned_monday);
+        class_routinesMonday = new ArrayList<>();
+
+        rv_assignedTuesday = findViewById(R.id.rv_assigned_tuesday);
+        class_routinesTuesday = new ArrayList<>();
+
+        rv_assignedWednesday = findViewById(R.id.rv_assigned_wednesday);
+        class_routinesWednesday = new ArrayList<>();
+
+        rv_assignedThursday = findViewById(R.id.rv_assigned_thursday);
+        class_routinesThursday = new ArrayList<>();
+
+        rv_assignedFriday = findViewById(R.id.rv_assigned_friday);
+        class_routinesFriday = new ArrayList<>();
 
 
-        if (getIntent().hasExtra("groupPushId")) {
-            grpPushId = getIntent().getStringExtra("groupPushId");
-        }
+        rv_assignedSaturday = findViewById(R.id.rv_assigned_saturday);
+        class_routinesSaturday = new ArrayList<>();
+
+        adapter_weekdays_assignMonday = new Adapter_Weekdays_Assign(Priority_Subject.this);
+        rv_assignedMonday.setLayoutManager(new LinearLayoutManager(Priority_Subject.this));
+
+        adapter_weekdays_assignTuesday = new Adapter_Weekdays_Assign(Priority_Subject.this);
+        rv_assignedTuesday.setLayoutManager(new LinearLayoutManager(Priority_Subject.this));
+
+        adapter_weekdays_assignWednesday = new Adapter_Weekdays_Assign(Priority_Subject.this);
+        rv_assignedWednesday.setLayoutManager(new LinearLayoutManager(Priority_Subject.this));
+
+        adapter_weekdays_assignThursday = new Adapter_Weekdays_Assign(Priority_Subject.this);
+        rv_assignedThursday.setLayoutManager(new LinearLayoutManager(Priority_Subject.this));
+
+        adapter_weekdays_assignFriday = new Adapter_Weekdays_Assign(Priority_Subject.this);
+        rv_assignedFriday.setLayoutManager(new LinearLayoutManager(Priority_Subject.this));
+
+        adapter_weekdays_assignSaturday = new Adapter_Weekdays_Assign(Priority_Subject.this);
+        rv_assignedSaturday.setLayoutManager(new LinearLayoutManager(Priority_Subject.this));
+
+        DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups").child("Routine").child(grpPushId).child("schedule").child(userID);
+        dbRoutineStructure.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                class_routinesMonday.clear();
+
+                for (DataSnapshot dataSnapshot : snapshot.child("Monday").getChildren()) {
+
+                    Log.d("DATAVAL", "onDataChange: " + dataSnapshot);
+
+                    Class_Routine class_routine = dataSnapshot.getValue(Class_Routine.class);
+                    class_routinesMonday.add(class_routine);
+
+                }
+
+                adapter_weekdays_assignMonday.setWeekdays(class_routinesMonday);
+                rv_assignedMonday.setAdapter(adapter_weekdays_assignMonday);
+                adapter_weekdays_assignMonday.notifyDataSetChanged();
+
+
+                for (DataSnapshot dataSnapshot : snapshot.child("Tuesday").getChildren()) {
+
+                    Log.d("DATAVAL", "onDataChange: " + dataSnapshot);
+
+                    Class_Routine class_routine = dataSnapshot.getValue(Class_Routine.class);
+                    class_routinesTuesday.add(class_routine);
+
+                }
+
+                adapter_weekdays_assignTuesday.setWeekdays(class_routinesTuesday);
+                rv_assignedTuesday.setAdapter(adapter_weekdays_assignTuesday);
+                adapter_weekdays_assignTuesday.notifyDataSetChanged();
+
+
+
+                for (DataSnapshot dataSnapshot : snapshot.child("Wednesday").getChildren()) {
+
+                    Log.d("DATAVAL", "onDataChange: " + dataSnapshot);
+
+                    Class_Routine class_routine = dataSnapshot.getValue(Class_Routine.class);
+                    class_routinesWednesday.add(class_routine);
+
+                }
+
+                adapter_weekdays_assignWednesday.setWeekdays(class_routinesWednesday);
+                rv_assignedWednesday.setAdapter(adapter_weekdays_assignWednesday);
+                adapter_weekdays_assignWednesday.notifyDataSetChanged();
+
+
+
+                for (DataSnapshot dataSnapshot : snapshot.child("Thursday").getChildren()) {
+
+                    Log.d("DATAVAL", "onDataChange: " + dataSnapshot);
+
+                    Class_Routine class_routine = dataSnapshot.getValue(Class_Routine.class);
+                    class_routinesThursday.add(class_routine);
+
+                }
+
+                adapter_weekdays_assignThursday.setWeekdays(class_routinesThursday);
+                rv_assignedThursday.setAdapter(adapter_weekdays_assignThursday);
+                adapter_weekdays_assignThursday.notifyDataSetChanged();
+
+
+                for (DataSnapshot dataSnapshot : snapshot.child("Friday").getChildren()) {
+
+                    Log.d("DATAVAL", "onDataChange: " + dataSnapshot);
+
+                    Class_Routine class_routine = dataSnapshot.getValue(Class_Routine.class);
+                    class_routinesFriday.add(class_routine);
+
+                }
+
+                adapter_weekdays_assignFriday.setWeekdays(class_routinesFriday);
+                rv_assignedFriday.setAdapter(adapter_weekdays_assignFriday);
+                adapter_weekdays_assignFriday.notifyDataSetChanged();
+
+
+                for (DataSnapshot dataSnapshot : snapshot.child("Saturday").getChildren()) {
+
+                    Log.d("DATAVAL", "onDataChange: " + dataSnapshot);
+
+                    Class_Routine class_routine = dataSnapshot.getValue(Class_Routine.class);
+                    class_routinesSaturday.add(class_routine);
+
+                }
+
+                adapter_weekdays_assignSaturday.setWeekdays(class_routinesSaturday);
+                rv_assignedSaturday.setAdapter(adapter_weekdays_assignSaturday);
+                adapter_weekdays_assignSaturday.notifyDataSetChanged();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
 
         autoTvPrimary.setFocusable(false);
