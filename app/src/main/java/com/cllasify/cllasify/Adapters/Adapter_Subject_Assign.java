@@ -1,6 +1,7 @@
 package com.cllasify.cllasify.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +80,10 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
         return class_routines;
     }
 
+    public void setClass_routines(List<Class_Routine> class_routines) {
+        this.class_routines = class_routines;
+    }
+
     @NonNull
     @Override
     public Adapter_Subject_Assign.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -94,6 +99,13 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
         holder.subjectTopic.setText("Period: " + period);
         Class_Routine clRoutine = new Class_Routine();
 
+        Log.d("ALLCHK", "onBindViewHolder: " + class_routines.get(0).getClassName());
+
+        holder.autoTvSub.setText(class_routines.get(position).getSubject());
+
+//        Class_Routine clRoutineAll = class_routines.get(period);
+//
+//        Log.d("ALLCHK", "onBindViewHolder: " + clRoutineAll);
 
         clRoutine.setPeriod(period);
 

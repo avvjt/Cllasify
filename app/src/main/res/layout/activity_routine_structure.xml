@@ -59,25 +59,23 @@
             android:id="@+id/clname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="Class name"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.091"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvroutine"
-            app:layout_constraintVertical_bias="0.01" />
+            app:layout_constraintTop_toBottomOf="@+id/tvroutine" />
 
         <TextView
             android:id="@+id/tvroutine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="Routine: "
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.086"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/action_bar"
-            app:layout_constraintVertical_bias="0.008" />
+            app:layout_constraintTop_toBottomOf="@+id/action_bar" />
 
         <Button
             android:id="@+id/btn_monday"
@@ -93,9 +91,10 @@
             android:textColor="#000000"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.551"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.079" />
+            app:layout_constraintTop_toBottomOf="@+id/clname"
+            app:layout_constraintVertical_bias="0.01" />
 
         <Button
             android:id="@+id/btn_tuesday"
@@ -380,23 +379,13 @@
             android:text="Done"
             android:textAllCaps="false"
             android:textColor="#000000"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.517"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutSaturday" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayoutSaturday"
+            app:layout_constraintVertical_bias="1.0" />
 
-        <Button
-            android:id="@+id/teachAP"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Attendance"
-            android:textAllCaps="false"
-            app:layout_constraintBottom_toTopOf="@+id/btn_monday"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.63"
-            app:layout_constraintStart_toEndOf="@+id/clname"
-            app:layout_constraintTop_toBottomOf="@+id/action_bar"
-            app:layout_constraintVertical_bias="0.421" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

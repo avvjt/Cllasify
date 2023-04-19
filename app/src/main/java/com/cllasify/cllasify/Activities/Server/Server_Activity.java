@@ -954,13 +954,82 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
             classStudentListMonday = new ArrayList();
 
-            List<String> weekList = Arrays.asList(new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"});
+            List<String> weekList = Arrays.asList(new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"});
 
             btn_routineStructure.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
 
 
+                    DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
+                            .child("Routine").child(groupPushId).child("allSchedule").child(classUniPushId);
+
+
+
+                    dbRoutineStructure.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.hasChildren()) {
+                                Intent intent = new Intent(Server_Activity.this, Routine_Structure.class);
+                                intent.putExtra("groupPushId", groupPushId);
+                                intent.putExtra("classPushId", classUniPushId);
+                                intent.putExtra("className", subGroupPushId);
+
+                                startActivity(intent);
+                            } else {
+                                for (int pos = 1; pos < 9; pos++) {
+
+                                    Log.d("DEMOCHK", "onClick: " + pos);
+
+
+                                    int finalPos = pos;
+
+
+                                    Class_Routine class_routineMon = new Class_Routine(finalPos, "", "", "", classUniPushId, subGroupPushId);
+
+                                    for (int week = 0; week < weekList.size(); week++) {
+                                        dbRoutineStructure.child(weekList.get(week)).child(String.valueOf(finalPos)).setValue(class_routineMon);
+
+
+                                    }
+
+
+                                }
+                                for (int pos = 1; pos < 5; pos++) {
+
+                                    Log.d("DEMOCHK", "onClick: " + pos);
+
+
+                                    int finalPos = pos;
+
+
+                                    Class_Routine class_routineMon = new Class_Routine(finalPos, "", "", "", classUniPushId, subGroupPushId);
+
+                                    dbRoutineStructure.child("Saturday").child(String.valueOf(finalPos)).setValue(class_routineMon);
+
+
+                                }
+
+                                Intent intent = new Intent(Server_Activity.this, Routine_Structure.class);
+                                intent.putExtra("groupPushId", groupPushId);
+                                intent.putExtra("classPushId", classUniPushId);
+                                intent.putExtra("className", subGroupPushId);
+
+                                startActivity(intent);
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                    //Use only when the requirement is providing every teacher his own 8 individual periods
+/*
                     DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
 
                     refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -1056,7 +1125,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                         }
                     });
 
-
+*/
                 }
             });
 
