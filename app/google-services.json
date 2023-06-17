@@ -1,50 +1,34 @@
 {
   "project_info": {
-    "project_number": "777056778218",
-    "firebase_url": "https://cllasify-50c6c-default-rtdb.firebaseio.com",
-    "project_id": "cllasify-50c6c",
-    "storage_bucket": "cllasify-50c6c.appspot.com"
+    "project_number": "265448883686",
+    "firebase_url": "https://cllasify-firebase-default-rtdb.firebaseio.com",
+    "project_id": "cllasify-firebase",
+    "storage_bucket": "cllasify-firebase.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:777056778218:android:144ae547d36300d92ca493",
+        "mobilesdk_app_id": "1:265448883686:android:2bdb871a4e8fe6abc68227",
         "android_client_info": {
           "package_name": "com.cllasify.classify"
         }
       },
       "oauth_client": [
         {
-          "client_id": "777056778218-rr482gdgnsmie22jomdqttukd276k6gq.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.cllasify.classify",
-            "certificate_hash": "8174cfc12c0147488e0d8b769a74ebbda1e8bedd"
-          }
-        },
-        {
-          "client_id": "777056778218-rsipnrupfkqp9gakc09rl0m6afs8ugrv.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.cllasify.classify",
-            "certificate_hash": "550f433b31a43c1c23bb583257a89a0904d29011"
-          }
-        },
-        {
-          "client_id": "777056778218-r0ovlhmuonh0o1c7lgql5aplk30r7qi6.apps.googleusercontent.com",
+          "client_id": "265448883686-5360vhh332p0otvvonrcp0kund93hm1q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAzYH2HYd97gVTEMAWRruvPkTpSNCja4M8"
+          "current_key": "AIzaSyAqUo_6kMo3tfU-mMF5PFvu1b2-hecunVI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "777056778218-2eqqpou16ejrqp8hapl820k81geirhmu.apps.googleusercontent.com",
+              "client_id": "265448883686-5360vhh332p0otvvonrcp0kund93hm1q.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
@@ -53,27 +37,35 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:777056778218:android:3134000abde938c72ca493",
+        "mobilesdk_app_id": "1:265448883686:android:b49585c98bb89a58c68227",
         "android_client_info": {
           "package_name": "com.cllasify.cllasify"
         }
       },
       "oauth_client": [
         {
-          "client_id": "777056778218-r0ovlhmuonh0o1c7lgql5aplk30r7qi6.apps.googleusercontent.com",
+          "client_id": "265448883686-14j0ciq0f9nc9kveivae4e53k64tob8i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cllasify.cllasify",
+            "certificate_hash": "8174cfc12c0147488e0d8b769a74ebbda1e8bedd"
+          }
+        },
+        {
+          "client_id": "265448883686-5360vhh332p0otvvonrcp0kund93hm1q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAzYH2HYd97gVTEMAWRruvPkTpSNCja4M8"
+          "current_key": "AIzaSyAqUo_6kMo3tfU-mMF5PFvu1b2-hecunVI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "777056778218-2eqqpou16ejrqp8hapl820k81geirhmu.apps.googleusercontent.com",
+              "client_id": "265448883686-5360vhh332p0otvvonrcp0kund93hm1q.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
