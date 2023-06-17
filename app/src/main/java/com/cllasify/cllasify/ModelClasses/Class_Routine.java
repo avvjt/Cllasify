@@ -3,11 +3,14 @@ package com.cllasify.cllasify.ModelClasses;
 public class Class_Routine {
 
     int period;
-    String id, teacher, subject, classID, className;
+    String id, teacher, subject, classID, className,classPushId;
 
     public Class_Routine() {
     }
 
+    public Class_Routine(String id) {
+        this.id = id;
+    }
 
     public Class_Routine(int period, String id, String teacher, String subject, String classID, String className) {
         this.period = period;
@@ -18,6 +21,15 @@ public class Class_Routine {
         this.className = className;
     }
 
+    public Class_Routine(int period, String id, String teacher, String subject, String classID, String className, String classPushId) {
+        this.period = period;
+        this.id = id;
+        this.teacher = teacher;
+        this.subject = subject;
+        this.classID = classID;
+        this.className = className;
+        this.classPushId = classPushId;
+    }
 
     public String getClassName() {
         return className;
@@ -65,5 +77,25 @@ public class Class_Routine {
 
     public void setSubject(String subject) {
         this.subject = subject;
+    }
+
+    public String getClassPushId() {
+        return classPushId;
+    }
+
+    public void setClassPushId(String classPushId) {
+        this.classPushId = classPushId;
+    }
+
+    @Override
+    public String toString() {
+        return "Class_Routine{" +
+                "period=" + period +
+                ", id='" + id + '\'' +
+                ", teacher='" + teacher + '\'' +
+                ", subject='" + subject + '\'' +
+                ", classID='" + classID + '\'' +
+                ", className='" + className + '\'' +
+                '}';
     }
 }

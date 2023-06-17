@@ -18,6 +18,25 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    signingConfigs {
+        debug {
+            storeFile file("./classify.jks")
+            storePassword "123456"
+            keyAlias "upload"
+            keyPassword "123456"
+        }
+        release {
+            storeFile file("./classify.jks")
+            storePassword "123456"
+            keyAlias "upload"
+            keyPassword "123456"
+        }
+    }
+
+    buildFeatures{
+        viewBinding true
+    }
+
     buildTypes {
         release {
             minifyEnabled false

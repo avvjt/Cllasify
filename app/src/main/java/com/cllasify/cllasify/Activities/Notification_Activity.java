@@ -30,7 +30,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cllasify.cllasify.Adapters.Adaptor_Notify;
 import com.cllasify.cllasify.ModelClasses.Class_Admission;
 import com.cllasify.cllasify.ModelClasses.Class_Group;
-import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
 import com.cllasify.cllasify.Activities.Profile.Profile_Activity;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Activities.Server.Server_Activity;

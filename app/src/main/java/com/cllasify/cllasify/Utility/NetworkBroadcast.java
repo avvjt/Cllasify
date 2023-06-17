@@ -12,15 +12,12 @@ import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.cllasify.cllasify.Activities.Server.Server_Activity;
 import com.cllasify.cllasify.R;
 
 

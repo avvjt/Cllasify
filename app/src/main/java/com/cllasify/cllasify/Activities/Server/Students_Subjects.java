@@ -123,7 +123,7 @@ public class Students_Subjects extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
-        setContentView(R.layout.activity_classview);
+        setContentView(R.layout.activity_class_view);
 
         broadcastReceiver = new NetworkBroadcast();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));

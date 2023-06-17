@@ -530,6 +530,19 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="delete_doubt">Delete Doubt</string>
     <string name="documentation_videos">Documentation Videos</string>
+    <string name="set_6_period_warn">Please set at least 6 period on %s routine</string>
+    <string name="set_4_period_warn">Please set 4 period routine on Saturday</string>
+    <string name="routine">Routine: </string>
+    <string name="class_name_s">Class Name: %s</string>
+    <string name="drop_down">drop down</string>
+    <string name="routine_s">Routine: %s</string>
+    <string name="period_s">Period: %d</string>
+    <string name="primary_subject">Primary Subject</string>
+    <string name="your_primary_subject">Your Primary subject -</string>
+    <string name="select_primary">Select Primary</string>
+    <string name="your_secondary_subject">Your Secondary subject -</string>
+    <string name="select_secondary">Select Secondary</string>
+    <string name="done">Done</string>
 
 
     <!---All java files related strings-->           <!--File name wise -->

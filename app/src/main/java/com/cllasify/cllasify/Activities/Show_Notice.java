@@ -2,7 +2,6 @@ package com.cllasify.cllasify.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -10,11 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.cllasify.cllasify.ModelClasses.Class_Notice;
 import com.cllasify.cllasify.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class Show_Notice extends AppCompatActivity {
 

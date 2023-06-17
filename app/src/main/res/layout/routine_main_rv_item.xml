@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="15dp"
+    app:cardCornerRadius="15dp"
+    android:elevation="0dp"
+    app:cardBackgroundColor="@color/page_color">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/day_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="8dp"
+            android:background="@color/page_color"
+            android:elevation="5dp">
+
+            <TextView
+                android:id="@+id/tv_day_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                tools:text="Monday"
+                tools:ignore="RelativeOverlap" />
+
+            <ImageView
+                android:id="@+id/drop_down"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="4dp"
+                android:contentDescription="@string/drop_down"
+                android:src="@drawable/drop_down" />
+        </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_single_day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/sub_assignment_item"
+            android:paddingHorizontal="8dp"/>
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

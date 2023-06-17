@@ -1,7 +1,5 @@
 package com.cllasify.cllasify.ModelClasses;
 
-import java.util.List;
-
 public class Subject_Details_Model {
 
     private String subjectName,subjectUniPushId;

@@ -6,24 +6,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.cllasify.cllasify.Activities.Server.Create_Class;
-import com.cllasify.cllasify.Activities.Server.Server_Activity;
-import com.cllasify.cllasify.Adapters.Adaptor_ShowGrpMember_Fees;
 import com.cllasify.cllasify.Adapters.NotesAdapter;
-import com.cllasify.cllasify.ModelClasses.Class_Group_Names;
 import com.cllasify.cllasify.ModelClasses.Class_Notice;
-import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
-import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

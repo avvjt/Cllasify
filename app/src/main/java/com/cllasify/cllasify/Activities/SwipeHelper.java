@@ -1,7 +1,5 @@
 package com.cllasify.cllasify.Activities;
 
-import static com.cllasify.cllasify.Activities.Attendance_Activity.getBitmapFromVectorDrawable;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -13,11 +11,8 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import androidx.compose.ui.text.android.LayoutHelper;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.cllasify.cllasify.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

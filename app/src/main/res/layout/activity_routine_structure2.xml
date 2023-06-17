@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_background_color"
+    tools:context=".Activities.Routine.routine_structure.RoutineStructureActivity">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/action_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="@color/page_color"
+            android:elevation="5dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <ImageButton
+                android:id="@+id/btn_Back"
+                style="@style/SelectableItemBackgroundBorderless"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="10dp"
+                android:contentDescription="@string/settings_contentDescription"
+                android:paddingStart="10dp"
+                android:paddingTop="10dp"
+                android:src="@drawable/ic_arrow_left_24"
+                app:tint="@color/iconSecondaryColor"
+                tools:ignore="RtlSymmetry" />
+
+            <ImageButton
+                android:id="@+id/routine_more"
+                style="@style/SelectableItemBackgroundBorderless"
+                android:layout_width="46dp"
+                android:layout_height="46dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:contentDescription="@string/settings_contentDescription"
+                android:src="@drawable/more"
+                app:tint="@color/iconPrimaryColor" />
+
+        </RelativeLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/action_bar">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="15dp"
+                android:paddingVertical="20dp">
+
+                <TextView
+                    android:id="@+id/tv_routine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/routine"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.086"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/action_bar"
+                    tools:text="@string/routine" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="8dp" />
+
+                <TextView
+                    android:id="@+id/tv_class_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.086"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/action_bar"
+                    tools:text="@string/class_name_s" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/routine_main_rv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/routine_main_rv_item" />
+                <Button
+                    android:id="@+id/btn_done"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:background="@drawable/rounded_corner"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="Done"
+                    android:textAllCaps="false"
+                    android:textColor="#000000" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

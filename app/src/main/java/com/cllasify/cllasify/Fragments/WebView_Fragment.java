@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
@@ -25,11 +24,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cllasify.cllasify.Activities.WebViewActivity;
-import com.cllasify.cllasify.Fragments.Friend_Chat_Activity;
 import com.cllasify.cllasify.R;
-
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.voghdev.pdfviewpager.library.RemotePDFViewPager;

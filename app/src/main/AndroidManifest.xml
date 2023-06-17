@@ -22,7 +22,7 @@
         android:required="false" />
 
     <application
-        android:name=".Utility.AppOpenAds"
+        android:name="com.cllasify.cllasify.Utility.AppOpenAds"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -30,148 +30,147 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
+        <activity android:name="com.cllasify.cllasify.Activities.Routine.priority_subject.Priority_Subject"
+            android:exported="false"/>
         <activity
-            android:name=".Activities.Routine.Student_Routine"
+            android:name="com.cllasify.cllasify.Activities.Routine.Student_Routine"
             android:exported="false" />
         <activity
-            android:name=".Activities.Routine.Priority_Subject"
+            android:name="com.cllasify.cllasify.Activities.Routine.routine_structure.RoutineStructureActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.Routine.Routine_Structure"
+            android:name="com.cllasify.cllasify.Activities.Update_Notice"
             android:exported="false" />
         <activity
-            android:name=".Activities.Update_Notice"
+            android:name="com.cllasify.cllasify.Activities.Show_Notice"
             android:exported="false" />
         <activity
-            android:name=".Activities.Show_Notice"
+            android:name="com.cllasify.cllasify.Activities.Create_Notice"
             android:exported="false" />
         <activity
-            android:name=".Activities.Create_Notice"
+            android:name="com.cllasify.cllasify.Activities.Notice"
             android:exported="false" />
         <activity
-            android:name=".Activities.Notice"
+            android:name="com.cllasify.cllasify.Activities.WebViewActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.WebViewActivity"
+            android:name="com.cllasify.cllasify.Activities.Admission_Structure"
             android:exported="false" />
         <activity
-            android:name=".Activities.Admission_Structure"
+            android:name="com.cllasify.cllasify.Activities.Student_Fees_Pay"
             android:exported="false" />
         <activity
-            android:name=".Activities.Student_Fees_Pay"
-            android:exported="false" />
-        <activity
-            android:name=".Activities.Fees_Structure"
+            android:name="com.cllasify.cllasify.Activities.Fees_Structure"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.Settings.About"
+            android:name="com.cllasify.cllasify.Activities.Settings.About"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Settings.Terms"
+            android:name="com.cllasify.cllasify.Activities.Settings.Terms"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Settings.Privacy"
+            android:name="com.cllasify.cllasify.Activities.Settings.Privacy"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Server.Create_Subject"
+            android:name="com.cllasify.cllasify.Activities.Server.Create_Subject"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Server.Create_Class"
+            android:name="com.cllasify.cllasify.Activities.Server.Create_Class"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Server.Create_Server"
+            android:name="com.cllasify.cllasify.Activities.Server.Create_Server"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Attendance_History"
+            android:name="com.cllasify.cllasify.Activities.Attendance_History"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Server.GRPJoinReqs"
+            android:name="com.cllasify.cllasify.Activities.Server.GRPJoinReqs"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Server.Students_Subjects"
+            android:name="com.cllasify.cllasify.Activities.Server.Students_Subjects"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Server.Server_Setting_Specifics"
+            android:name="com.cllasify.cllasify.Activities.Server.Server_Setting_Specifics"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Server.Edit_RollNumber"
+            android:name="com.cllasify.cllasify.Activities.Server.Edit_RollNumber"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Server.Server_Settings"
+            android:name="com.cllasify.cllasify.Activities.Server.Server_Settings"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Fragments.Friend_Chat_Activity"
+            android:name="com.cllasify.cllasify.Fragments.Friend_Chat_Activity"
             android:exported="false"
             tools:ignore="Instantiatable" />
         <activity
-            android:name=".Activities.Discover_Item"
+            android:name="com.cllasify.cllasify.Activities.Discover_Item"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Profile.AccountSetting_Activity"
+            android:name="com.cllasify.cllasify.Activities.Profile.AccountSetting_Activity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Notification_Activity"
+            android:name="com.cllasify.cllasify.Activities.Notification_Activity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Profile.Profile_Activity"
+            android:name="com.cllasify.cllasify.Activities.Profile.Profile_Activity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Discover_Activity"
+            android:name="com.cllasify.cllasify.Activities.Discover_Activity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Server.Server_Activity"
+            android:name="com.cllasify.cllasify.Activities.Server.Server_Activity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Profile.ProfileSetting_Activity"
+            android:name="com.cllasify.cllasify.Activities.Profile.ProfileSetting_Activity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Attendance_Activity"
+            android:name="com.cllasify.cllasify.Activities.Attendance_Activity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Attendance_Activity_Teacher"
+            android:name="com.cllasify.cllasify.Activities.attendance.Attendance_Activity_Teacher"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Settings.Documentation_Videos"
+            android:name="com.cllasify.cllasify.Activities.Settings.Documentation_Videos"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.getStarted"
+            android:name="com.cllasify.cllasify.Activities.getStarted"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/SplashScreen"
@@ -194,7 +193,7 @@
             android:value="ca-app-pub-3940256099942544~3347511713" />
 
         <receiver
-            android:name=".Utility.NetworkBroadcast"
+            android:name="com.cllasify.cllasify.Utility.NetworkBroadcast"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

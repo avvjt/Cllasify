@@ -1,17 +1,12 @@
 package com.cllasify.cllasify.Adapters;
 
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -20,11 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.cllasify.cllasify.Activities.Fees_Structure;
 import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Utility.Constant;

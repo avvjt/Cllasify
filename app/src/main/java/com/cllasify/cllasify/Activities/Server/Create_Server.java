@@ -16,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Utility.NetworkBroadcast;

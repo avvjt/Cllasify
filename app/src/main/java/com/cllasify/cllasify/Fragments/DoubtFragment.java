@@ -1,7 +1,6 @@
 package com.cllasify.cllasify.Fragments;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -27,10 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adapters.Adaptor_QueryAnswer;
 import com.cllasify.cllasify.ModelClasses.Class_Answer;
-import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.R;
-import com.cllasify.cllasify.Utility.Constant;
-import com.cllasify.cllasify.Utility.SharePref;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;

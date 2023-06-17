@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,19 +8,17 @@
     android:orientation="vertical"
     tools:context=".Activities.Attendance_Activity">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <LinearLayout
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:background="@color/page_color"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
         <RelativeLayout
@@ -36,23 +34,23 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerInParent="true"
                 android:layout_marginStart="10dp"
+                android:contentDescription="@string/attends_contentDescription"
                 android:paddingStart="10dp"
                 android:paddingTop="10dp"
-                android:contentDescription="@string/attends_contentDescription"
                 android:src="@drawable/ic_arrow_left_24"
                 app:tint="@color/iconSecondaryColor" />
 
-        <TextView
-            android:id="@+id/tv_titleAttendance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_toEndOf="@+id/btn_Back"
-            android:layout_centerInParent="true"
-            android:fontFamily="@font/inter_semibold"
-            android:text="@string/take_attendance"
-            android:textColor="@color/text_color"
-            android:textSize="18sp"/>
+            <TextView
+                android:id="@+id/tv_titleAttendance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_toEndOf="@+id/btn_Back"
+                android:fontFamily="@font/inter_semibold"
+                android:text="@string/take_attendance"
+                android:textColor="@color/text_color"
+                android:textSize="18sp" />
 
             <ImageButton
                 android:id="@+id/btn_attendance"
@@ -70,26 +68,52 @@
 
     </LinearLayout>
 
-    <!--2 Useless textview-->
-    <TextView
-        android:id="@+id/tv_groupName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+<!--    2 Useless textview-->
 
-    <TextView
-        android:id="@+id/tv_subGroupName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_groupName"
-        android:visibility="gone" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_GrpMemberAttendance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/action_bar"
-        android:layout_alignParentBottom="true"
-        android:layoutAnimation="@anim/layout_from_right"/>
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/action_bar">
+        <TextView
+            android:id="@+id/tv_groupName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/tv_subGroupName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_groupName"
+            android:visibility="gone" />
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_GrpMemberAttendance"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layoutAnimation="@anim/layout_from_right" />
+
+        <Button
+            android:id="@+id/btn_done"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="15dp"
+            android:background="@drawable/rounded_corner"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text="Done"
+            android:textAllCaps="false"
+            android:textColor="#000000" />
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,8 +42,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class Create_Notice extends AppCompatActivity {

@@ -2,7 +2,6 @@ package com.cllasify.cllasify.Activities;
 
 import static com.cllasify.cllasify.Activities.Profile.AccountSetting_Activity.getDefaults;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
@@ -34,7 +33,6 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.cllasify.cllasify.Activities.Server.Server_Activity;
 import com.cllasify.cllasify.R;
-import com.cllasify.cllasify.Utility.Constant;
 import com.cllasify.cllasify.Utility.NetworkBroadcast;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.initialization.InitializationStatus;
@@ -231,7 +229,7 @@ public class getStarted extends AppCompatActivity {
 
                 // Configure Google Sign In
                 GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(
-                        GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken("1085537073642-dq2djhhvidcgmb4c3a5ushet55jk6hf5.apps.googleusercontent.com")
+                        GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken("265448883686-5360vhh332p0otvvonrcp0kund93hm1q.apps.googleusercontent.com")
                         .requestEmail()
                         .build();
 

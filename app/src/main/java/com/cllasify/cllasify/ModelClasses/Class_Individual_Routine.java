@@ -46,4 +46,13 @@ public class Class_Individual_Routine {
         this.secondarySubject = secondarySubject;
     }
 
+    @Override
+    public String toString() {
+        return "Class_Individual_Routine{" +
+                "primarySubject='" + primarySubject + '\'' +
+                ", secondarySubject='" + secondarySubject + '\'' +
+                ", teacherId='" + teacherId + '\'' +
+                ", teacherName='" + teacherName + '\'' +
+                '}';
+    }
 }

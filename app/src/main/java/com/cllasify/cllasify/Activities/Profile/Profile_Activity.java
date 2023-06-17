@@ -1,10 +1,8 @@
 package com.cllasify.cllasify.Activities.Profile;
 
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;

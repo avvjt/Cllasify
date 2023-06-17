@@ -1,14 +1,12 @@
 package com.cllasify.cllasify.Fragments;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,10 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.Toast;
 
-import com.cllasify.cllasify.Activities.Admission_Structure;
-import com.cllasify.cllasify.Activities.Discover_Item;
 import com.cllasify.cllasify.Adapters.Adaptor_Notify;
 import com.cllasify.cllasify.ModelClasses.Class_Admission;
 import com.cllasify.cllasify.ModelClasses.Class_Group;

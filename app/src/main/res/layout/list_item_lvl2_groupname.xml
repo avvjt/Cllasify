@@ -13,33 +13,33 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-    <RelativeLayout
-        android:id="@+id/ll_Group"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_margin="5dp">
-
-        <TextView
-            android:id="@+id/tv_classGroupTitle"
-            android:layout_width="match_parent"
+        <RelativeLayout
+            android:id="@+id/ll_Group"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginBottom="5dp"
-            android:ellipsize="end"
-            android:fontFamily="@font/inter_medium"
-            android:maxLines="2"
-            android:padding="5dp"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:textAllCaps="true"
-            android:textColor="@color/text_color"
-            android:textSize="15sp" />
+            android:layout_weight="1"
+            android:layout_margin="5dp">
+
+            <TextView
+                android:id="@+id/tv_classGroupTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/inter_medium"
+                android:maxLines="2"
+                android:padding="5dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:textAllCaps="true"
+                android:textColor="@color/text_color"
+                android:textSize="15sp" />
 
 
-    </RelativeLayout>
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/drops"

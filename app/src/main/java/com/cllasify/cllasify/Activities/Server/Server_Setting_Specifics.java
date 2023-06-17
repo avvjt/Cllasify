@@ -124,6 +124,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         checkDarkLightDefaultStatusBar();
+        checkDarkLightDefaultStatusBar();
         setContentView(R.layout.activity_server_setting_specifics);
 
         broadcastReceiver = new NetworkBroadcast();

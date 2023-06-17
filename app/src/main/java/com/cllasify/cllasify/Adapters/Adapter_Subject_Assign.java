@@ -1,7 +1,7 @@
 package com.cllasify.cllasify.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +82,7 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
 
     public void setClass_routines(List<Class_Routine> class_routines) {
         this.class_routines = class_routines;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -92,16 +93,16 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter_Subject_Assign.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Adapter_Subject_Assign.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         int period = position + 1;
 
         holder.subjectTopic.setText("Period: " + period);
-        Class_Routine clRoutine = new Class_Routine();
+        Class_Routine clRoutine = class_routines.get(holder.getAdapterPosition());
 
-        Log.d("ALLCHK", "onBindViewHolder: " + class_routines.get(0).getClassName());
 
         holder.autoTvSub.setText(class_routines.get(position).getSubject());
+        holder.autoTvTeacher.setText(class_routines.get(position).getTeacher());
 
 //        Class_Routine clRoutineAll = class_routines.get(period);
 //
@@ -125,6 +126,7 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
 //                doneBtn.setEnabled(true);
                 subs.add(itemSub);
                 clRoutine.setSubject(itemSub);
+                class_routines.set(position, clRoutine);
             }
         });
 
@@ -139,23 +141,14 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
                 teacher.add(itemTeacher);
                 clRoutine.setTeacher(itemTeacher);
                 clRoutine.setId(classStudentIDList.get(i));
-
-
+                class_routines.set(position, clRoutine);
             }
         });
-
-        class_routines.add(clRoutine);
-
-
     }
 
     @Override
     public int getItemCount() {
-        if (isSaturday == true) {
-            return 4;
-        } else {
-            return 8;
-        }
+        return class_routines.size();
     }
 
     public void setPeriods(List<String> periods) {
