@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Adapters.Adapter_Result_Subject;
+import com.cllasify.cllasify.ModelClasses.Class_Result;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Utility.Constant;
@@ -147,6 +147,8 @@ public class Result_Subjects extends AppCompatActivity {
             rv_ShowSubject = findViewById(R.id.subjectList);
             subjectDetailsModelList = new ArrayList<>();
             adapter_topicList = new Adapter_Result_Subject(Result_Subjects.this);
+            adapter_topicList.setStudentUserId(userID);
+            adapter_topicList.setSpecPos(Integer.parseInt(position));
             adapter_topicList.setOnItemClickListener(new Adapter_Result_Subject.OnItemClickListener() {
                 @Override
                 public void clickedSub(String subUniPushId, String subjectName, String position) {
@@ -222,11 +224,17 @@ public class Result_Subjects extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                dialog.dismiss();
 
                 String theoryFull = et_theory_full.getText().toString();
                 String practicalFull = et_practical_full.getText().toString();
                 String theory = et_theory.getText().toString();
                 String practical = et_practical.getText().toString();
+
+                int theoryFullInt = Integer.parseInt(theoryFull);
+                int practicalFullInt = Integer.parseInt(practicalFull);
+                int theoryInt = Integer.parseInt(theory);
+                int practicalInt = Integer.parseInt(practical);
 
 
                 if (TextUtils.isEmpty(theoryFull)) {
@@ -238,7 +246,17 @@ public class Result_Subjects extends AppCompatActivity {
                 } else if (TextUtils.isEmpty(practical)) {
                     et_practical.setError("Practical full marks cannot be empty");
                 } else {
-                    Toast.makeText(Result_Subjects.this, "Filled", Toast.LENGTH_SHORT).show();
+
+                    DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result")
+                            .child(uniGrpPushId).child(uniClassPushId).child(userID).child(subUniPushId);
+
+                    Class_Result class_result = new Class_Result(subjectName, userName, theoryFullInt, practicalFullInt,
+                            theoryInt, practicalInt);
+
+
+                    resDb.setValue(class_result);
+
+
                 }
             }
         });
