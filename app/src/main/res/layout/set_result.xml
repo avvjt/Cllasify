@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_bottomsheet"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:fontFamily="@font/inter_semibold"
+        android:text="Set marks"
+        android:textColor="@color/text_color"
+        android:textSize="18sp" />
+
+
+    <RelativeLayout
+        android:id="@+id/full_marks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/theory_full_marks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:text="Theory full-marks"
+                android:textColor="@color/text_color"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_theory_full"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/theory_full_marks"
+                android:layout_centerInParent="true"
+                android:backgroundTint="@color/iconPrimaryColor"
+                android:gravity="center"
+                android:hint="@string/name_hint"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/iconColor"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:textSize="18sp" />
+
+
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="58dp"
+            android:layout_centerInParent="true"
+            android:background="@color/btn_stroke" />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/practical_full_marks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:text="Practical full-marks"
+                android:textColor="@color/text_color"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_practical_full"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/practical_full_marks"
+                android:layout_centerInParent="true"
+                android:backgroundTint="@color/iconPrimaryColor"
+                android:gravity="center"
+                android:hint="@string/name_hint"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/iconColor"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:textSize="18sp" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/obtained_marks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/theory_marks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="Theory obtained-\nmarks"
+                android:textColor="@color/text_color"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_theory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/theory_marks"
+                android:layout_centerInParent="true"
+                android:backgroundTint="@color/iconPrimaryColor"
+                android:gravity="center"
+                android:hint="@string/name_hint"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/iconColor"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:textSize="18sp" />
+
+
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="58dp"
+            android:layout_centerInParent="true"
+            android:background="@color/btn_stroke" />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/practical_marks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:text="Practical obtained-\nmarks"
+                android:textColor="@color/text_color"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_practical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/practical_marks"
+                android:layout_centerInParent="true"
+                android:backgroundTint="@color/iconPrimaryColor"
+                android:gravity="center"
+                android:hint="@string/name_hint"
+                android:importantForAutofill="no"
+                android:inputType="number"
+                android:textColor="@color/text_color"
+                android:textColorHint="@color/iconColor"
+                android:textCursorDrawable="@drawable/cursor_color"
+                android:textSize="18sp" />
+
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+
+    <Button
+        android:id="@+id/btn_done"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_solid_unfollow"
+        android:elevation="2dp"
+        android:text="Done"
+        android:textColor="@color/black" />
+
+
+</LinearLayout>

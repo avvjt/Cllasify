@@ -18,13 +18,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cllasify.cllasify.ModelClasses.Class_Group_Names;
-import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
-import com.cllasify.cllasify.Utility.Constant;
 import com.cllasify.cllasify.Activities.Server.Edit_RollNumber;
 import com.cllasify.cllasify.Activities.Server.Students_Subjects;
-import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.ModelClasses.Class_Group_Names;
+import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
+import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Utility.Constant;
 import com.cllasify.cllasify.Utility.SharePref;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,8 +36,8 @@ import java.util.List;
 
 public class Adaptor_Server_Setting_Items extends RecyclerView.Adapter<Adaptor_Server_Setting_Items.MyViewHolder> {
 
-    private Context context;
-    private List<Class_Group_Names> mDatalistNew;
+    private final Context context;
+    private final List<Class_Group_Names> mDatalistNew;
 
     private OnItemClickListener mListener;
 

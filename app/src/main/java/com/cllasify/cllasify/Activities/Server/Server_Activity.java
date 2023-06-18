@@ -187,7 +187,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
     //Linear Layouts
     LinearLayout onlyAdminLayout, groupSection, ll_AddJoinGrp, ll_ChatDoubtDashboard,
             endPanelLinearLayout, friendSection, rightPanelMems, rightPanelMember,
-            ib_servSettings, btn_lteachattend, FriendListText, btn_joinNotification, btn_lteachFees, btn_routineStructure, btn_subjectPriority, btn_lnotice, btn_studentFees, btn_studentRoutine;
+            ib_servSettings, btn_lteachattend, FriendListText, btn_joinNotification, btn_lteachFees, btn_routineStructure, btn_result, btn_subjectPriority, btn_lnotice, btn_studentFees, btn_studentRoutine;
 
 
     //Buttons
@@ -301,6 +301,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
         btn_lteachattend = findViewById(R.id.btn_lteachattend);
         btn_lteachFees = findViewById(R.id.btn_feesStructure);
         btn_routineStructure = findViewById(R.id.btn_routineStructure);
+        btn_result = findViewById(R.id.btn_result);
         btn_subjectPriority = findViewById(R.id.btn_subjectPriority);
         btn_studentRoutine = findViewById(R.id.btn_studentRoutine);
 
@@ -442,7 +443,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                 friendToolBar.setVisibility(View.GONE);
                 textViewSubjectName.setVisibility(View.VISIBLE);
 
-                if (flag == true) {
+                if (flag) {
                     FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
                     manager.getBackStackEntryCount();
@@ -451,7 +452,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                     flag = false;
                 }
 
-                if (flagFriend == true) {
+                if (flagFriend) {
                     FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
                     manager.getBackStackEntryCount();
@@ -460,7 +461,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                     flagFriend = false;
                 }
 
-                if (pdf_flag == true) {
+                if (pdf_flag) {
                     FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
                     manager.getBackStackEntryCount();
@@ -719,7 +720,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
     }
 
     private void memVis(boolean b) {
-        if (b == true) {
+        if (b) {
             rightPanelMems.setVisibility(View.VISIBLE);
             rightPanelMember.setVisibility(View.VISIBLE);
         } else {
@@ -736,6 +737,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
             onlyAdminLayout.setVisibility(View.VISIBLE);
             btn_lteachFees.setVisibility(View.VISIBLE);
             btn_routineStructure.setVisibility(View.VISIBLE);
+            btn_result.setVisibility(View.VISIBLE);
             btn_subjectPriority.setVisibility(View.VISIBLE);
 
             btn_studentFees.setVisibility(View.GONE);
@@ -744,10 +746,10 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
             onlyAdminLayout.setVisibility(View.GONE);
             btn_lteachFees.setVisibility(View.GONE);
             btn_routineStructure.setVisibility(View.GONE);
+            btn_result.setVisibility(View.GONE);
             btn_subjectPriority.setVisibility(View.GONE);
-
             btn_studentFees.setVisibility(View.VISIBLE);
-            btn_studentRoutine.setVisibility(View.VISIBLE);
+            btn_studentRoutine.setVisibility(View.GONE);
         }
     }
 
@@ -950,11 +952,12 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
             btn_lteachFees.setEnabled(true);
             btn_subjectPriority.setEnabled(true);
             btn_routineStructure.setEnabled(true);
+            btn_result.setEnabled(true);
             btn_lnotice.setEnabled(true);
 
             classStudentListMonday = new ArrayList();
 
-            List<String> weekList = Arrays.asList(new String[]{"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"});
+            List<String> weekList = Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
 
             btn_routineStructure.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -963,7 +966,6 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
                     DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
                             .child("Routine").child(groupPushId).child("allSchedule").child(classUniPushId);
-
 
 
                     dbRoutineStructure.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -1129,6 +1131,42 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                 }
             });
 
+            btn_result.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+
+                    DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+                    refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.getChildrenCount() > 0) {
+
+                                if (snapshot.child("clickedGroupPushId").exists()) {
+
+                                    String groupPushId = snapshot.child("clickedGroupPushId").getValue().toString().trim();
+                                    String uniClassPushId = snapshot.child("uniPushClassId").getValue().toString().trim();
+
+                                    Intent intent = new Intent(Server_Activity.this, Result_Students.class);
+                                    intent.putExtra("uniGroupPushId", groupPushId);
+                                    intent.putExtra("uniClassPushId", uniClassPushId);
+                                    startActivity(intent);
+
+                                }
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                }
+            });
 
             btn_subjectPriority.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -1479,7 +1517,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                                 dialog.dismiss();
 
                                 ClipboardManager clipboardManager = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                                ClipData data = (ClipData) ClipData.newPlainText("text", chat.getGroupSubGroupComb().toString());
+                                ClipData data = ClipData.newPlainText("text", chat.getGroupSubGroupComb());
                                 clipboardManager.setPrimaryClip(data);
 
                             }
@@ -1530,7 +1568,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                         }
                         Log.d("REPOCHK", "onDataChange: REPORT CHECK" + ru.length);
 
-                        if (chat.getGroupSubGroupComb().trim().equals("This message is reported") || isUser == true || ru.length == 5) {
+                        if (chat.getGroupSubGroupComb().trim().equals("This message is reported") || isUser || ru.length == 5) {
 
 
                             Toast.makeText(getApplicationContext(), "This message is reported", Toast.LENGTH_SHORT).show();
@@ -1558,7 +1596,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                                     dialog.dismiss();
 
                                     ClipboardManager clipboardManager = (ClipboardManager) getApplicationContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                                    ClipData data = (ClipData) ClipData.newPlainText("text", chat.getGroupSubGroupComb().toString());
+                                    ClipData data = ClipData.newPlainText("text", chat.getGroupSubGroupComb());
                                     clipboardManager.setPrimaryClip(data);
 
                                 }
@@ -2488,6 +2526,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                 friendSection.setVisibility(View.VISIBLE);
                 onlyAdminLayout.setVisibility(View.GONE);
                 btn_routineStructure.setVisibility(View.VISIBLE);
+                btn_result.setVisibility(View.VISIBLE);
                 btn_subjectPriority.setVisibility(View.VISIBLE);
 
                 btn_studentFees.setVisibility(View.GONE);
@@ -2551,7 +2590,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                                         if (calendarDate.compareTo(midnight) >= 0) {
 
                                             DateFormat dateFormat = new SimpleDateFormat("hh:mm aa");
-                                            String dateString = dateFormat.format(Long.parseLong(friendStatus)).toString();
+                                            String dateString = dateFormat.format(Long.parseLong(friendStatus));
                                             friend_online_status.setText("Last seen today at " + dateString);
 
                                         } else {
@@ -2576,7 +2615,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
 
 //                            ll_AddJoinGrp.setVisibility(View.GONE);
-                        if (flagFriend == false) {
+                        if (!flagFriend) {
 
                             flagFriend = true;
                         }
@@ -2904,7 +2943,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                     DatabaseReference allDoubtReference = FirebaseDatabase.getInstance().getReference().
                             child("Groups").child("Doubt").child(groupPushId).child(subGroupPushId).child(groupClassSubjects).child("All_Doubt");
 
-                    String pushValue[] = reference.push().toString().split("/");
+                    String[] pushValue = reference.push().toString().split("/");
 
                     Log.d("DOUBTVL", "onClick: " + pushValue[8]);
 
@@ -3170,6 +3209,14 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                     }
                 });
 
+                btn_result.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        showToast();
+                        btn_result.setEnabled(false);
+                    }
+                });
+
                 btn_subjectPriority.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -3195,7 +3242,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
                 memVis(false);
 
-                if (flagFriend == true) {
+                if (flagFriend) {
                     FragmentManager manager = getSupportFragmentManager();
                     FragmentTransaction transaction = manager.beginTransaction();
                     manager.getBackStackEntryCount();
@@ -3448,7 +3495,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
     //Toast for subject select warning
     public void showToast() {
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.toast_subject_select, (ViewGroup) findViewById(R.id.toast));
+        View layout = inflater.inflate(R.layout.toast_subject_select, findViewById(R.id.toast));
         Toast toast = new Toast(getApplicationContext());
         toast.setGravity(Gravity.BOTTOM, 0, 100);
         toast.setDuration(Toast.LENGTH_SHORT);
@@ -3730,7 +3777,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
 
                 overlappingPanels.closePanels();
-                if (flagFriend == false) {
+                if (!flagFriend) {
 
                     flagFriend = true;
                 }
@@ -4045,7 +4092,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                 Log.d("ONLYPATH", "onDataChange: " + onlyPath);
 
 
-                String pushValue[] = allDocumentReference.push().toString().split("/");
+                String[] pushValue = allDocumentReference.push().toString().split("/");
 
                 String push = pushValue[9];
 
@@ -4235,14 +4282,14 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
 //        Toast.makeText(this, "BACK", Toast.LENGTH_SHORT).show();
 
-        if (flag == true) {
+        if (flag) {
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
             manager.getBackStackEntryCount();
             transaction.remove(doubtFragment);
             transaction.commit();
             flag = false;
-        } else if (pdf_flag == true) {
+        } else if (pdf_flag) {
             FragmentManager manager = getSupportFragmentManager();
             FragmentTransaction transaction = manager.beginTransaction();
             manager.getBackStackEntryCount();

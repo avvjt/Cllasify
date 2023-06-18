@@ -30,8 +30,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Cllasify">
-        <activity android:name="com.cllasify.cllasify.Activities.Routine.priority_subject.Priority_Subject"
-            android:exported="false"/>
+        <activity
+            android:name="com.cllasify.cllasify.Activities.Routine.priority_subject.Priority_Subject"
+            android:exported="false" />
+        <activity
+            android:name="com.cllasify.cllasify.Activities.Server.Result_Students"
+            android:exported="false" />
+        <activity
+            android:name="com.cllasify.cllasify.Activities.Server.Result_Subjects"
+            android:exported="false" />
         <activity
             android:name="com.cllasify.cllasify.Activities.Routine.Student_Routine"
             android:exported="false" />

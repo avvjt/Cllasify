@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/subListItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/page_color"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/tv_subjectTopic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="2dp"
+        android:drawablePadding="8dp"
+        android:fontFamily="@font/inter_medium"
+        android:padding="2dp"
+        android:textAllCaps="false"
+        android:textColor="@color/text_color"
+        android:textSize="15sp"
+        app:drawableLeftCompat="@drawable/ic_hashtag_public" />
+
+
+</RelativeLayout>
