@@ -3,6 +3,7 @@ package com.cllasify.cllasify.Activities.Server;
 
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -25,13 +26,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cllasify.cllasify.Activities.Result_Activity;
 import com.cllasify.cllasify.Adapters.Adapter_Result_Subject;
 import com.cllasify.cllasify.ModelClasses.Class_Result;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.R;
-import com.cllasify.cllasify.Utility.Constant;
 import com.cllasify.cllasify.Utility.NetworkBroadcast;
-import com.cllasify.cllasify.Utility.SharePref;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -45,7 +45,6 @@ import java.util.List;
 
 public class Result_Subjects extends AppCompatActivity {
 
-    String currUserID;
     RecyclerView rv_ShowSubject;
     TextView tv_SubjectList, studentName;
     ImageButton btn_Back;
@@ -53,6 +52,12 @@ public class Result_Subjects extends AppCompatActivity {
     Adapter_Result_Subject adapter_topicList;
     List<Subject_Details_Model> subjectDetailsModelList;
     private BroadcastReceiver broadcastReceiver;
+
+    List<String> marks = new ArrayList<>();
+    List<Integer> posss = new ArrayList<>();
+    List<Class_Result> class_results = new ArrayList<>();
+
+    Button done;
 
     public void checkDarkLightDefaultStatusBar() {
         switch (getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK) {
@@ -118,11 +123,11 @@ public class Result_Subjects extends AppCompatActivity {
         broadcastReceiver = new NetworkBroadcast();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
-        currUserID = SharePref.getDataFromPref(Constant.USER_ID);
 
         tv_SubjectList = findViewById(R.id.subjectListText);
         btn_Back = findViewById(R.id.btn_Back);
         studentName = findViewById(R.id.studentName);
+        done = findViewById(R.id.btn_done);
 
 
         btn_Back.setOnClickListener(new View.OnClickListener() {
@@ -141,31 +146,128 @@ public class Result_Subjects extends AppCompatActivity {
             String userName = getIntent().getStringExtra("userName");
             String position = getIntent().getStringExtra("position");
 
-            studentName.setText(userName + "'s Result");
 
-            //Set Subjects
             rv_ShowSubject = findViewById(R.id.subjectList);
             subjectDetailsModelList = new ArrayList<>();
             adapter_topicList = new Adapter_Result_Subject(Result_Subjects.this);
             adapter_topicList.setStudentUserId(userID);
             adapter_topicList.setSpecPos(Integer.parseInt(position));
+
+
+            DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
+
+            refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.getChildrenCount() > 0) {
+                        if (snapshot.child("subjectUniPushId").exists() && snapshot.child("uniPushClassId").exists() && snapshot.child("clickedGroupPushId").exists()) {
+
+
+                            String subjectUniPushId = snapshot.child("subjectUniPushId").getValue().toString().trim();
+                            String uniPushClassId = snapshot.child("uniPushClassId").getValue().toString().trim();
+                            String groupPushId = snapshot.child("clickedGroupPushId").getValue().toString().trim();
+
+                            DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result")
+                                    .child(groupPushId).child(uniPushClassId).child(userID);
+
+                            resDb.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                        if (dataSnapshot.exists()) {
+
+                                            Log.d("RESCHKK", "onDataChange: " + dataSnapshot.getKey());
+
+
+                                            Class_Result class_result = dataSnapshot.getValue(Class_Result.class);
+                                            class_results.add(class_result);
+                                            adapter_topicList.setClass_results(class_results);
+                                            rv_ShowSubject.setAdapter(adapter_topicList);
+                                            adapter_topicList.notifyDataSetChanged();
+                                            /*
+                                            int fullTheory = Integer.parseInt(dataSnapshot.child("theoryFullMarks").getValue().toString());
+                                            int practicalFullMarks = Integer.parseInt(dataSnapshot.child("practicalFullMarks").getValue().toString());
+                                            int theoryMarks = Integer.parseInt(dataSnapshot.child("theoryMarks").getValue().toString());
+                                            int practicalMarks = Integer.parseInt(dataSnapshot.child("practicalMarks").getValue().toString());
+                                            int poss = Integer.parseInt(dataSnapshot.child("position").getValue().toString());
+
+                                            int fullTheoryPractical = fullTheory + practicalFullMarks;
+                                            int theoryPractical = theoryMarks + practicalMarks;
+
+                                            Log.d("RESCHKK", "onDataChange: " + theoryPractical + "/" + fullTheoryPractical + "pos: " + poss);
+
+                                            marks.add(theoryPractical + "/" + fullTheoryPractical);
+                                            posss.add(poss);
+                                            adapter_topicList.setMarks(marks);
+
+                                            rv_ShowSubject.setAdapter(adapter_topicList);
+                                            adapter_topicList.notifyDataSetChanged();
+*/
+                                        }
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+                            /*
+                            resDb.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+
+                                        int fullTheory = Integer.parseInt(snapshot.child("theoryFullMarks").getValue().toString());
+                                        int practicalFullMarks = Integer.parseInt(snapshot.child("practicalFullMarks").getValue().toString());
+                                        int theoryMarks = Integer.parseInt(snapshot.child("theoryMarks").getValue().toString());
+                                        int practicalMarks = Integer.parseInt(snapshot.child("practicalMarks").getValue().toString());
+
+                                        int fullTheoryPractical = fullTheory + practicalFullMarks;
+                                        int theoryPractical = theoryMarks + practicalMarks;
+
+                                        Log.d("RESCHKK", "onDataChange: " + theoryPractical + "/" + fullTheoryPractical + " Pos: " + Integer.parseInt(position));
+
+                                        marks.add(Integer.parseInt(position), String.valueOf(fullTheoryPractical));
+
+                                        adapter_topicList.setMarks(marks);
+
+                                        rv_ShowSubject.setAdapter(adapter_topicList);
+                                        adapter_topicList.notifyDataSetChanged();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+*/
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+            studentName.setText(userName + "'s Result");
+
+
             adapter_topicList.setOnItemClickListener(new Adapter_Result_Subject.OnItemClickListener() {
                 @Override
                 public void clickedSub(String subUniPushId, String subjectName, String position) {
-                    setResult(uniGrpPushId, uniClassPushId, userID, userName, subUniPushId, subjectName);
+                    setResult(uniGrpPushId, uniClassPushId, userID, userName, subUniPushId, subjectName, position);
                 }
 
             });
             rv_ShowSubject.setLayoutManager(new LinearLayoutManager(Result_Subjects.this));
 
-
-        }
-
-
-        if (getIntent().hasExtra("uniGroupPushId") && getIntent().hasExtra("uniClassPushId")) {
-
-            String uniGrpPushId = getIntent().getStringExtra("uniGroupPushId");
-            String uniClassPushId = getIntent().getStringExtra("uniClassPushId");
 
             Log.d("UNICLASS", "onCreate: " + uniClassPushId);
 
@@ -198,12 +300,27 @@ public class Result_Subjects extends AppCompatActivity {
             });
 
 
+            done.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(Result_Subjects.this, Result_Activity.class);
+                    intent.putExtra("uniGroupPushId", uniGrpPushId);
+                    intent.putExtra("uniClassPushId", uniClassPushId);
+                    intent.putExtra("userID", userID);
+                    intent.putExtra("userName", userName);
+                    intent.putExtra("position", position);
+                    startActivity(intent);
+
+                }
+            });
+
         }
 
 
     }
 
-    private void setResult(String uniGrpPushId, String uniClassPushId, String userID, String userName, String subUniPushId, String subjectName) {
+    private void setResult(String uniGrpPushId, String uniClassPushId, String userID, String userName, String subUniPushId, String subjectName, String position) {
 
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -219,12 +336,41 @@ public class Result_Subjects extends AppCompatActivity {
         EditText et_practical = dialog.findViewById(R.id.et_practical);
         Button btn_done = dialog.findViewById(R.id.btn_done);
 
+        DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result")
+                .child(uniGrpPushId).child(uniClassPushId).child(userID).child(subUniPushId);
+
+
+        resDb.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+
+                    Log.d("SUBCHK", "onDataChange: " + snapshot.getKey());
+
+                    String fullTheory = snapshot.child("theoryFullMarks").getValue().toString();
+                    String practicalFullMarks = snapshot.child("practicalFullMarks").getValue().toString();
+                    String theoryMarks = snapshot.child("theoryMarks").getValue().toString();
+                    String practicalMarks = snapshot.child("practicalMarks").getValue().toString();
+
+                    et_theory_full.setText(fullTheory);
+                    et_practical_full.setText(practicalFullMarks);
+                    et_theory.setText(theoryMarks);
+                    et_practical.setText(practicalMarks);
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
         btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                dialog.dismiss();
 
                 String theoryFull = et_theory_full.getText().toString();
                 String practicalFull = et_practical_full.getText().toString();
@@ -250,13 +396,46 @@ public class Result_Subjects extends AppCompatActivity {
                     DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result")
                             .child(uniGrpPushId).child(uniClassPushId).child(userID).child(subUniPushId);
 
+                    DatabaseReference resDbsetDef = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result")
+                            .child(uniGrpPushId).child(uniClassPushId).child(userID);
+
                     Class_Result class_result = new Class_Result(subjectName, userName, theoryFullInt, practicalFullInt,
                             theoryInt, practicalInt);
+/*
+                    resDbsetDef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                if (snapshot.exists()) {
+                                    if (dataSnapshot.child("practicalFullMarks").equals(0)) {
 
+                                        Toast.makeText(Result_Subjects.this, theoryFullInt + " " + practicalFullInt, Toast.LENGTH_SHORT).show();
 
+                                        resDbsetDef.child(dataSnapshot.getKey()).child("practicalFullMarks").setValue(theoryFullInt);
+                                        resDbsetDef.child(dataSnapshot.getKey()).child("theoryFullMarks").setValue(theoryFullInt);
+
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+*/
                     resDb.setValue(class_result);
 
+                    class_results.add(class_result);
+                    adapter_topicList.setClass_results(class_results);
+                    rv_ShowSubject.setAdapter(adapter_topicList);
+                    adapter_topicList.notifyDataSetChanged();
 
+                    dialog.dismiss();
+                    Intent intent = new Intent(getIntent());
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
                 }
             }
         });
@@ -271,6 +450,23 @@ public class Result_Subjects extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        if (getIntent().hasExtra("uniGroupPushId") && getIntent().hasExtra("uniClassPushId")) {
+
+            String groupPushId = getIntent().getStringExtra("uniGroupPushId");
+            String uniClassPushId = getIntent().getStringExtra("uniClassPushId");
+            Intent intent = new Intent(Result_Subjects.this, Result_Students.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            intent.putExtra("uniGroupPushId", groupPushId);
+            intent.putExtra("uniClassPushId", uniClassPushId);
+            startActivity(intent);
+        }
+
+
+    }
 
     @Override
     protected void onDestroy() {

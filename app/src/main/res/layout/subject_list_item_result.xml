@@ -12,8 +12,8 @@
         android:id="@+id/tv_subjectTopic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawablePadding="8dp"
         android:layout_centerInParent="true"
+        android:drawablePadding="8dp"
         android:fontFamily="@font/inter_medium"
         android:padding="2dp"
         android:textAllCaps="false"
@@ -21,41 +21,16 @@
         android:textSize="15sp"
         app:drawableLeftCompat="@drawable/ic_hashtag_public" />
 
-    <TextView
-        android:id="@+id/obtained_marks"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_toStartOf="@+id/of"
-        android:fontFamily="@font/inter_medium"
-        android:padding="2dp"
-        android:text="100"
-        android:textAllCaps="false"
-        android:textColor="@color/text_color"
-        android:textSize="15sp" />
 
     <TextView
-        android:id="@+id/of"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_toStartOf="@+id/full_marks"
-        android:fontFamily="@font/inter_medium"
-        android:padding="2dp"
-        android:text="/"
-        android:textAllCaps="false"
-        android:textColor="@color/text_color"
-        android:textSize="15sp" />
-
-    <TextView
-        android:id="@+id/full_marks"
+        android:id="@+id/marks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
         android:fontFamily="@font/inter_medium"
         android:padding="2dp"
-        android:text="100"
+        android:text="0/0"
         android:textAllCaps="false"
         android:textColor="@color/text_color"
         android:textSize="15sp" />

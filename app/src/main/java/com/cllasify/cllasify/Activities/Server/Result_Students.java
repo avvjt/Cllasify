@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Adapters.Adaptor_Student_Result;
+import com.cllasify.cllasify.ModelClasses.Class_Result;
 import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Utility.Constant;
@@ -143,6 +144,59 @@ public class Result_Students extends AppCompatActivity {
                     intent.putExtra("userName", userName);
                     intent.putExtra("position", position);
                     startActivity(intent);
+
+
+                    DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result")
+                            .child(uniGrpPushId).child(uniClassPushId).child(userID);
+
+
+                    resDb.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+
+                                Log.d("SUBCHK", "onDataChange: " + snapshot.getKey());
+
+                            } else {
+
+                                DatabaseReference setSubs = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
+                                        .child(uniGrpPushId).child(uniClassPushId).child("classSubjectData");
+
+                                setSubs.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+
+                                            Log.d("SUBCHK", "onDataChange: not present" + dataSnapshot.getChildrenCount());
+
+                                            String subVal = dataSnapshot.child("subjectName").getValue().toString();
+
+                                            Class_Result class_result = new Class_Result(subVal, userName, 0, 0,
+                                                    0, 0);
+
+
+                                            resDb.child(dataSnapshot.getKey()).setValue(class_result);
+
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
 
 
                 }

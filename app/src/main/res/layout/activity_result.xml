@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/page_background_color"
-    android:orientation="vertical"
-    tools:context=".Activities.Server.Students_Subjects">
+    tools:context=".Activities.Result_Activity">
 
     <LinearLayout
         android:id="@+id/action_bar"
@@ -50,17 +49,18 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/action_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/action_bar">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginBottom="5dp"
                 android:background="@color/page_color"
                 android:orientation="vertical"
@@ -69,35 +69,14 @@
                 android:paddingEnd="20dp"
                 android:paddingBottom="10dp">
 
-                <TextView
-                    android:id="@+id/subjectListText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/inter_medium"
-                    android:text="@string/subject_list"
-                    android:textColor="@color/text_color"
-                    android:textSize="16sp" />
-
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/subjectList"
+                    android:id="@+id/subjectResultList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layoutAnimation="@anim/layout_from_right"
                     android:nestedScrollingEnabled="false"
                     app:fastScrollEnabled="false" />
-
-
-                <Button
-                    android:id="@+id/btn_done"
-                    android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/button_solid_unfollow"
-                    android:elevation="2dp"
-                    android:text="Done"
-                    android:textColor="@color/black" />
 
 
             </LinearLayout>
@@ -107,4 +86,19 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btn_done"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_solid_unfollow"
+        android:elevation="2dp"
+        android:text="Generate Result"
+        android:textColor="@color/black" />
+
+</RelativeLayout>
