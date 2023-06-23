@@ -1,4 +1,3 @@
-
 package com.cllasify.cllasify.Activities.Server;
 
 import android.app.Dialog;
@@ -20,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,6 +42,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Result_Subjects extends AppCompatActivity {
 
@@ -167,8 +168,7 @@ public class Result_Subjects extends AppCompatActivity {
                             String uniPushClassId = snapshot.child("uniPushClassId").getValue().toString().trim();
                             String groupPushId = snapshot.child("clickedGroupPushId").getValue().toString().trim();
 
-                            DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result")
-                                    .child(groupPushId).child(uniPushClassId).child(userID);
+                            DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(groupPushId).child(uniPushClassId).child(userID);
 
                             resDb.addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -190,16 +190,12 @@ public class Result_Subjects extends AppCompatActivity {
                                             int theoryMarks = Integer.parseInt(dataSnapshot.child("theoryMarks").getValue().toString());
                                             int practicalMarks = Integer.parseInt(dataSnapshot.child("practicalMarks").getValue().toString());
                                             int poss = Integer.parseInt(dataSnapshot.child("position").getValue().toString());
-
                                             int fullTheoryPractical = fullTheory + practicalFullMarks;
                                             int theoryPractical = theoryMarks + practicalMarks;
-
                                             Log.d("RESCHKK", "onDataChange: " + theoryPractical + "/" + fullTheoryPractical + "pos: " + poss);
-
                                             marks.add(theoryPractical + "/" + fullTheoryPractical);
                                             posss.add(poss);
                                             adapter_topicList.setMarks(marks);
-
                                             rv_ShowSubject.setAdapter(adapter_topicList);
                                             adapter_topicList.notifyDataSetChanged();
 */
@@ -218,29 +214,21 @@ public class Result_Subjects extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     if (snapshot.exists()) {
-
                                         int fullTheory = Integer.parseInt(snapshot.child("theoryFullMarks").getValue().toString());
                                         int practicalFullMarks = Integer.parseInt(snapshot.child("practicalFullMarks").getValue().toString());
                                         int theoryMarks = Integer.parseInt(snapshot.child("theoryMarks").getValue().toString());
                                         int practicalMarks = Integer.parseInt(snapshot.child("practicalMarks").getValue().toString());
-
                                         int fullTheoryPractical = fullTheory + practicalFullMarks;
                                         int theoryPractical = theoryMarks + practicalMarks;
-
                                         Log.d("RESCHKK", "onDataChange: " + theoryPractical + "/" + fullTheoryPractical + " Pos: " + Integer.parseInt(position));
-
                                         marks.add(Integer.parseInt(position), String.valueOf(fullTheoryPractical));
-
                                         adapter_topicList.setMarks(marks);
-
                                         rv_ShowSubject.setAdapter(adapter_topicList);
                                         adapter_topicList.notifyDataSetChanged();
                                     }
                                 }
-
                                 @Override
                                 public void onCancelled(@NonNull DatabaseError error) {
-
                                 }
                             });
 */
@@ -336,8 +324,7 @@ public class Result_Subjects extends AppCompatActivity {
         EditText et_practical = dialog.findViewById(R.id.et_practical);
         Button btn_done = dialog.findViewById(R.id.btn_done);
 
-        DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result")
-                .child(uniGrpPushId).child(uniClassPushId).child(userID).child(subUniPushId);
+        DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(uniGrpPushId).child(uniClassPushId).child(userID).child(subUniPushId);
 
 
         resDb.addValueEventListener(new ValueEventListener() {
@@ -367,76 +354,119 @@ public class Result_Subjects extends AppCompatActivity {
             }
         });
 
-        btn_done.setOnClickListener(new View.OnClickListener() {
+        DatabaseReference resDbsetDef = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(uniGrpPushId).child(uniClassPushId).child(userID);
+
+        resDb.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onClick(View view) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                int th = Integer.parseInt(snapshot.child("theoryFullMarks").getValue().toString());
+
+                btn_done.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
 
 
-                String theoryFull = et_theory_full.getText().toString();
-                String practicalFull = et_practical_full.getText().toString();
-                String theory = et_theory.getText().toString();
-                String practical = et_practical.getText().toString();
+                        String theoryFull = et_theory_full.getText().toString();
+                        String practicalFull = et_practical_full.getText().toString();
+                        String theory = et_theory.getText().toString();
+                        String practical = et_practical.getText().toString();
 
-                int theoryFullInt = Integer.parseInt(theoryFull);
-                int practicalFullInt = Integer.parseInt(practicalFull);
-                int theoryInt = Integer.parseInt(theory);
-                int practicalInt = Integer.parseInt(practical);
+                        int theoryFullInt = Integer.parseInt(theoryFull);
+                        int practicalFullInt = Integer.parseInt(practicalFull);
+                        int theoryInt = Integer.parseInt(theory);
+                        int practicalInt = Integer.parseInt(practical);
 
 
-                if (TextUtils.isEmpty(theoryFull)) {
-                    et_theory_full.setError("Theory full marks cannot be empty");
-                } else if (TextUtils.isEmpty(practicalFull)) {
-                    et_practical_full.setError("Practical full marks cannot be empty");
-                } else if (TextUtils.isEmpty(theory)) {
-                    et_theory.setError("Practical full marks cannot be empty");
-                } else if (TextUtils.isEmpty(practical)) {
-                    et_practical.setError("Practical full marks cannot be empty");
-                } else {
+                        if (TextUtils.isEmpty(theoryFull)) {
+                            et_theory_full.setError("Theory full marks cannot be empty");
+                        } else if (TextUtils.isEmpty(practicalFull)) {
+                            et_practical_full.setError("Practical full marks cannot be empty");
+                        } else if (TextUtils.isEmpty(theory)) {
+                            et_theory.setError("Practical full marks cannot be empty");
+                        } else if (TextUtils.isEmpty(practical)) {
+                            et_practical.setError("Practical full marks cannot be empty");
+                        } else {
 
-                    DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result")
-                            .child(uniGrpPushId).child(uniClassPushId).child(userID).child(subUniPushId);
 
-                    DatabaseReference resDbsetDef = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result")
-                            .child(uniGrpPushId).child(uniClassPushId).child(userID);
+                            if (th == 0) {
 
-                    Class_Result class_result = new Class_Result(subjectName, userName, theoryFullInt, practicalFullInt,
-                            theoryInt, practicalInt);
+//                                Toast.makeText(Result_Subjects.this, "0", Toast.LENGTH_SHORT).show();
+
+
+                                resDbsetDef.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                            if (snapshot.exists()) {
+
+
+                                                if (theoryFullInt > 0) {
+//                                                    Toast.makeText(Result_Subjects.this, dataSnapshot.getKey(), Toast.LENGTH_SHORT).show();
+//                                                    resDbsetDef.child(Objects.requireNonNull(dataSnapshot.getKey())).child("theoryFullMarks").setValue(theoryFullInt);
+//                                                    resDbsetDef.child(Objects.requireNonNull(dataSnapshot.getKey())).child("practicalFullMarks").setValue(practicalFullInt);
+
+                                                    Toast.makeText(Result_Subjects.this, ".", Toast.LENGTH_SHORT).show();
+
+                                                    Class_Result class_result = new Class_Result(subjectName, userName, theoryFullInt, practicalFullInt, 0, 0);
+
+                                                    resDbsetDef.child(Objects.requireNonNull(dataSnapshot.getKey())).setValue(class_result);
+
+                                                    class_results.add(class_result);
+                                                    adapter_topicList.setClass_results(class_results);
+                                                    rv_ShowSubject.setAdapter(adapter_topicList);
+                                                    adapter_topicList.notifyDataSetChanged();
+
+                                                    recreate();
+
+                                                    dialog.dismiss();
+
+                                                }
 /*
-                    resDbsetDef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                if (snapshot.exists()) {
-                                    if (dataSnapshot.child("practicalFullMarks").equals(0)) {
+                                                rv_ShowSubject.setAdapter(adapter_topicList);
+                                                adapter_topicList.notifyDataSetChanged();
+                                                recreate();
+                                                dialog.dismiss();
+*/
+                                            }
+                                        }
+                                    }
 
-                                        Toast.makeText(Result_Subjects.this, theoryFullInt + " " + practicalFullInt, Toast.LENGTH_SHORT).show();
-
-                                        resDbsetDef.child(dataSnapshot.getKey()).child("practicalFullMarks").setValue(theoryFullInt);
-                                        resDbsetDef.child(dataSnapshot.getKey()).child("theoryFullMarks").setValue(theoryFullInt);
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
 
                                     }
-                                }
+                                });
+
+                            } else {
+
+//                                Toast.makeText(Result_Subjects.this, "Already exists" + th, Toast.LENGTH_SHORT).show();
+
+
+                                Class_Result class_result = new Class_Result(subjectName, userName, theoryFullInt, practicalFullInt, theoryInt, practicalInt);
+
+                                resDb.setValue(class_result);
+
+                                class_results.add(class_result);
+                                adapter_topicList.setClass_results(class_results);
+                                rv_ShowSubject.setAdapter(adapter_topicList);
+                                adapter_topicList.notifyDataSetChanged();
+
+                                recreate();
+
+                                dialog.dismiss();
+
                             }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
 
                         }
-                    });
-*/
-                    resDb.setValue(class_result);
+                    }
+                });
 
-                    class_results.add(class_result);
-                    adapter_topicList.setClass_results(class_results);
-                    rv_ShowSubject.setAdapter(adapter_topicList);
-                    adapter_topicList.notifyDataSetChanged();
+            }
 
-                    dialog.dismiss();
-                    Intent intent = new Intent(getIntent());
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                    startActivity(intent);
-                }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
@@ -450,20 +480,12 @@ public class Result_Subjects extends AppCompatActivity {
 
     }
 
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
 
-        if (getIntent().hasExtra("uniGroupPushId") && getIntent().hasExtra("uniClassPushId")) {
-
-            String groupPushId = getIntent().getStringExtra("uniGroupPushId");
-            String uniClassPushId = getIntent().getStringExtra("uniClassPushId");
-            Intent intent = new Intent(Result_Subjects.this, Result_Students.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            intent.putExtra("uniGroupPushId", groupPushId);
-            intent.putExtra("uniClassPushId", uniClassPushId);
-            startActivity(intent);
-        }
+        finish();
 
 
     }

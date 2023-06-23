@@ -29,6 +29,8 @@ public class Adapter_Result_Subject extends RecyclerView.Adapter<Adapter_Result_
     List<Subject_Details_Model> subjectDetailsModelList;
     List<Class_Group_Names> class_group_namesList;
     String uniPush, studentUserId;
+
+    boolean totalMarksPresent = false;
     int specPos;
     int lastPosition = -1;
     private OnItemClickListener mListener;
@@ -117,7 +119,6 @@ public class Adapter_Result_Subject extends RecyclerView.Adapter<Adapter_Result_
                 Log.d("GETMARKS1", "onBindViewHolder: " + e.getMessage() + " Pos: " + pos);
             }
         }
-
         holder.subListItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
