@@ -171,13 +171,14 @@ public class Result_Students extends AppCompatActivity {
 
                                             String subVal = dataSnapshot.child("subjectName").getValue().toString();
 
-                                            Class_Result_Info class_result_info = new Class_Result_Info(0, 0, 0, 0, 0, subVal, "");
+                                            Class_Result_Info class_result_info = new Class_Result_Info(0, 0, 0, 0, 0, 0, subVal, "");
 //
 //                                            Class_Result class_result = new Class_Result(userName, "", 0, class_result_info);
 
                                             resDb.child("username").setValue(userName);
                                             resDb.child("totalMarks").setValue(0);
                                             resDb.child("totalGrades").setValue("");
+                                            resDb.child("totalFullMarks").setValue(0);
                                             resDb.child("subjectMarksInfo").child(Objects.requireNonNull(dataSnapshot.getKey())).setValue(class_result_info);
 
 

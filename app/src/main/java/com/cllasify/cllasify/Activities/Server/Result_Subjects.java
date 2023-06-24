@@ -254,6 +254,30 @@ public class Result_Subjects extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
 
+                    DatabaseReference resDbsetDef = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(uniGrpPushId).child(uniClassPushId).child(userID).child("subjectMarksInfo");
+
+
+                    resDbsetDef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                if (snapshot.exists()) {
+
+                                    int total = Integer.parseInt(dataSnapshot.child("totalSubjectMarks").getValue().toString());
+
+                                    Toast.makeText(Result_Subjects.this, "" + total, Toast.LENGTH_SHORT).show();
+
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
                     Intent intent = new Intent(Result_Subjects.this, Result_Activity.class);
                     intent.putExtra("uniGroupPushId", uniGrpPushId);
                     intent.putExtra("uniClassPushId", uniClassPushId);
@@ -271,6 +295,7 @@ public class Result_Subjects extends AppCompatActivity {
     }
 
     private void setResult(String uniGrpPushId, String uniClassPushId, String userID, String userName, String subUniPushId, String subjectName, String position) {
+
 
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -342,8 +367,8 @@ public class Result_Subjects extends AppCompatActivity {
                     int theoryInt = Integer.parseInt(theory);
                     int practicalInt = Integer.parseInt(practical);
 
-
-                    Toast.makeText(Result_Subjects.this, "filled", Toast.LENGTH_SHORT).show();
+                    int totalSubMarks = theoryInt + practicalInt;
+                    int totalFullMarks = theoryFullInt + practicalFullInt;
 
                     DatabaseReference resDbsetDef = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(uniGrpPushId).child(uniClassPushId).child(userID).child("subjectMarksInfo");
 
@@ -356,28 +381,18 @@ public class Result_Subjects extends AppCompatActivity {
 
                             if (th == 0) {
 
-//                                Toast.makeText(Result_Subjects.this, "0", Toast.LENGTH_SHORT).show();
-
-
                                 resDbsetDef.addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                             if (snapshot.exists()) {
 
-
                                                 if (theoryFullInt > 0) {
-//                                                    Toast.makeText(Result_Subjects.this, dataSnapshot.getKey(), Toast.LENGTH_SHORT).show();
-//                                                    resDbsetDef.child(Objects.requireNonNull(dataSnapshot.getKey())).child("theoryFullMarks").setValue(theoryFullInt);
-//                                                    resDbsetDef.child(Objects.requireNonNull(dataSnapshot.getKey())).child("practicalFullMarks").setValue(practicalFullInt);
-
-//                                                    Toast.makeText(Result_Subjects.this, ".", Toast.LENGTH_SHORT).show();
-
-                                                    Class_Result_Info class_result_info = new Class_Result_Info(theoryFullInt, practicalFullInt, theoryInt, practicalInt, 0, subjectName, "");
-
-
-//                                            Class_Result class_result = new Class_Result(userName, "", 0, class_result_info);
+                                                    Class_Result_Info class_result_info = new Class_Result_Info(theoryFullInt, practicalFullInt, 0, 0, 0, 0, subjectName, "");
                                                     resDbsetDef.child(Objects.requireNonNull(dataSnapshot.getKey())).setValue(class_result_info);
+
+                                                    Class_Result_Info class_result_infos = new Class_Result_Info(theoryFullInt, practicalFullInt, theoryInt, practicalInt, totalSubMarks, totalFullMarks, subjectName, "");
+                                                    resDb.setValue(class_result_infos);
 
                                                     class_results.add(class_result_info);
                                                     adapter_topicList.setClass_results(class_results);
@@ -385,16 +400,11 @@ public class Result_Subjects extends AppCompatActivity {
                                                     adapter_topicList.notifyDataSetChanged();
 
                                                     recreate();
-
                                                     dialog.dismiss();
 
+                                                } else {
+                                                    Toast.makeText(Result_Subjects.this, "Set a valid mark!", Toast.LENGTH_SHORT).show();
                                                 }
-/*
-                                                rv_ShowSubject.setAdapter(adapter_topicList);
-                                                adapter_topicList.notifyDataSetChanged();
-                                                recreate();
-                                                dialog.dismiss();
-*/
                                             }
                                         }
                                     }
@@ -407,24 +417,15 @@ public class Result_Subjects extends AppCompatActivity {
 
                             } else {
 
-//                                Toast.makeText(Result_Subjects.this, "Already exists" + th, Toast.LENGTH_SHORT).show();
 
-                                Class_Result_Info class_result_info = new Class_Result_Info(theoryFullInt, practicalFullInt, theoryInt, practicalInt, 0, subjectName, "");
-
-
-//                                Class_Result class_result = new Class_Result(userName, "", 0, class_result_info);
-//                                Class_Result class_result = new Class_Result(subjectName, userName, theoryFullInt, practicalFullInt, theoryInt, practicalInt);
-
+                                Class_Result_Info class_result_info = new Class_Result_Info(theoryFullInt, practicalFullInt, theoryInt, practicalInt, totalSubMarks, totalFullMarks, subjectName, "");
                                 resDbsetDef.child(subUniPushId).setValue(class_result_info);
-
-
                                 class_results.add(class_result_info);
                                 adapter_topicList.setClass_results(class_results);
                                 rv_ShowSubject.setAdapter(adapter_topicList);
                                 adapter_topicList.notifyDataSetChanged();
 
                                 recreate();
-
                                 dialog.dismiss();
 
                             }

@@ -63,7 +63,7 @@ public class Result_Activity extends AppCompatActivity {
 
             studentName.setText(userName + "'s Result");
 
-
+/*
             DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
 
             refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -94,25 +94,6 @@ public class Result_Activity extends AppCompatActivity {
                                             adapter_topicList.setClass_results(class_results);
                                             rv_ShowSubject.setAdapter(adapter_topicList);
                                             adapter_topicList.notifyDataSetChanged();
-                                            /*
-                                            int fullTheory = Integer.parseInt(dataSnapshot.child("theoryFullMarks").getValue().toString());
-                                            int practicalFullMarks = Integer.parseInt(dataSnapshot.child("practicalFullMarks").getValue().toString());
-                                            int theoryMarks = Integer.parseInt(dataSnapshot.child("theoryMarks").getValue().toString());
-                                            int practicalMarks = Integer.parseInt(dataSnapshot.child("practicalMarks").getValue().toString());
-                                            int poss = Integer.parseInt(dataSnapshot.child("position").getValue().toString());
-
-                                            int fullTheoryPractical = fullTheory + practicalFullMarks;
-                                            int theoryPractical = theoryMarks + practicalMarks;
-
-                                            Log.d("RESCHKK", "onDataChange: " + theoryPractical + "/" + fullTheoryPractical + "pos: " + poss);
-
-                                            marks.add(theoryPractical + "/" + fullTheoryPractical);
-                                            posss.add(poss);
-                                            adapter_topicList.setMarks(marks);
-
-                                            rv_ShowSubject.setAdapter(adapter_topicList);
-                                            adapter_topicList.notifyDataSetChanged();
-*/
                                         }
 
                                     }
@@ -123,37 +104,6 @@ public class Result_Activity extends AppCompatActivity {
 
                                 }
                             });
-                            /*
-                            resDb.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (snapshot.exists()) {
-
-                                        int fullTheory = Integer.parseInt(snapshot.child("theoryFullMarks").getValue().toString());
-                                        int practicalFullMarks = Integer.parseInt(snapshot.child("practicalFullMarks").getValue().toString());
-                                        int theoryMarks = Integer.parseInt(snapshot.child("theoryMarks").getValue().toString());
-                                        int practicalMarks = Integer.parseInt(snapshot.child("practicalMarks").getValue().toString());
-
-                                        int fullTheoryPractical = fullTheory + practicalFullMarks;
-                                        int theoryPractical = theoryMarks + practicalMarks;
-
-                                        Log.d("RESCHKK", "onDataChange: " + theoryPractical + "/" + fullTheoryPractical + " Pos: " + Integer.parseInt(position));
-
-                                        marks.add(Integer.parseInt(position), String.valueOf(fullTheoryPractical));
-
-                                        adapter_topicList.setMarks(marks);
-
-                                        rv_ShowSubject.setAdapter(adapter_topicList);
-                                        adapter_topicList.notifyDataSetChanged();
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-*/
 
                         }
                     }
@@ -165,7 +115,7 @@ public class Result_Activity extends AppCompatActivity {
                 }
             });
 
-
+*/
             rv_ShowSubject.setLayoutManager(new LinearLayoutManager(Result_Activity.this));
 
 
