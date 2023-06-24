@@ -66,7 +66,7 @@ public class Edit_RollNumber extends AppCompatActivity {
                 break;
 
             case Configuration.UI_MODE_NIGHT_NO:
-                getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+                getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
                 // edited here
                 getWindow().setStatusBarColor(Color.parseColor("#ffffff"));
 
@@ -155,8 +155,8 @@ public class Edit_RollNumber extends AppCompatActivity {
                 int fromPosition = viewHolder.getAdapterPosition();
                 int toPosition = target.getAdapterPosition();
 //                Toast.makeText(Edit_RollNumber.this, "From" + fromPosition + "gggto" + toPosition, Toast.LENGTH_SHORT).show();
-                Log.d("POSS", "from position: "+listGrpMemberList.get(fromPosition).getUserId());
-                Log.d("POSS", "to Position: "+toPosition);
+                Log.d("POSS", "from position: " + listGrpMemberList.get(fromPosition).getUserId());
+                Log.d("POSS", "to Position: " + toPosition);
                 Collections.swap(listGrpMemberList, fromPosition, toPosition);
                 showGrpMemberList.notifyItemMoved(fromPosition, toPosition);
 
@@ -174,9 +174,9 @@ public class Edit_RollNumber extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (int i = 0;i < listGrpMemberList.size();i++){
-                    Log.d("POSS", "Members position: "+i+" = "+listGrpMemberList.get(i).getUserName());
-                    databaseReferenceSaveRoll.child(listGrpMemberList.get(i).getUserId()).child("rollNumber").setValue(i);
+                for (int i = 0; i < listGrpMemberList.size(); i++) {
+                    Log.d("POSS", "Members position: " + i + " = " + listGrpMemberList.get(i).getUserName());
+                    databaseReferenceSaveRoll.child(listGrpMemberList.get(i).getUserId()).child("rollNumber").setValue(i + 1);
                 }
                 finish();
             }

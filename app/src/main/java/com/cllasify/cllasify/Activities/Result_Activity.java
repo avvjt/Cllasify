@@ -1,8 +1,11 @@
 package com.cllasify.cllasify.Activities;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -12,9 +15,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Adapters.Adapter_Result_Per_Subject;
-import com.cllasify.cllasify.ModelClasses.Class_Result;
+import com.cllasify.cllasify.ModelClasses.Class_Result_Info;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.R;
+import com.gkemon.XMLtoPDF.PdfGenerator;
+import com.gkemon.XMLtoPDF.PdfGeneratorListener;
+import com.gkemon.XMLtoPDF.model.FailureResponse;
+import com.gkemon.XMLtoPDF.model.SuccessResponse;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,12 +38,13 @@ public class Result_Activity extends AppCompatActivity {
     RecyclerView rv_ShowSubject;
     TextView tv_SubjectList, studentName;
     ImageButton btn_Back;
+    Button generate_pdf;
     //Subjects
     Adapter_Result_Per_Subject adapter_topicList;
     List<Subject_Details_Model> subjectDetailsModelList;
     List<String> marks = new ArrayList<>();
     List<Integer> posss = new ArrayList<>();
-    List<Class_Result> class_results = new ArrayList<>();
+    List<Class_Result_Info> class_results = new ArrayList<>();
     private BroadcastReceiver broadcastReceiver;
 
     @Override
@@ -63,7 +71,6 @@ public class Result_Activity extends AppCompatActivity {
 
             studentName.setText(userName + "'s Result");
 
-/*
             DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
 
             refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -77,8 +84,7 @@ public class Result_Activity extends AppCompatActivity {
                             String uniPushClassId = snapshot.child("uniPushClassId").getValue().toString().trim();
                             String groupPushId = snapshot.child("clickedGroupPushId").getValue().toString().trim();
 
-                            DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result")
-                                    .child(groupPushId).child(uniPushClassId).child(userID);
+                            DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(groupPushId).child(uniPushClassId).child(userID).child("subjectMarksInfo");
 
                             resDb.addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -89,7 +95,7 @@ public class Result_Activity extends AppCompatActivity {
                                             Log.d("RESCHKK", "onDataChange: " + dataSnapshot.getKey());
 
 
-                                            Class_Result class_result = dataSnapshot.getValue(Class_Result.class);
+                                            Class_Result_Info class_result = dataSnapshot.getValue(Class_Result_Info.class);
                                             class_results.add(class_result);
                                             adapter_topicList.setClass_results(class_results);
                                             rv_ShowSubject.setAdapter(adapter_topicList);
@@ -114,15 +120,13 @@ public class Result_Activity extends AppCompatActivity {
 
                 }
             });
-
-*/
             rv_ShowSubject.setLayoutManager(new LinearLayoutManager(Result_Activity.this));
 
 
             Log.d("UNICLASS", "onCreate: " + uniClassPushId);
 
             DatabaseReference databaseReferenceGetStudent = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(uniGrpPushId).child(uniClassPushId);
-            databaseReferenceGetStudent.addValueEventListener(new ValueEventListener() {
+            databaseReferenceGetStudent.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -151,6 +155,47 @@ public class Result_Activity extends AppCompatActivity {
 
         }
 
+        Result_Activity result_activity = Result_Activity.this;
+
+        generate_pdf = findViewById(R.id.btn_generate_pdf);
+        generate_pdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PdfGenerator.getBuilder()
+                        .setContext(Result_Activity.this)
+                        .fromViewIDSource()
+                        .fromViewID((Activity) result_activity, R.id.student_result) //The specifi view id you want to print
+                        .setFileName("Allotment_PaperPDF")
+                        .actionAfterPDFGeneration(PdfGenerator.ActionAfterPDFGeneration.OPEN)
+                        .build(new PdfGeneratorListener() {
+                            @Override
+                            public void onFailure(FailureResponse failureResponse) {
+                                super.onFailure(failureResponse);
+                            }
+
+                            @Override
+                            public void showLog(String log) {
+                                super.showLog(log);
+                            }
+
+                            @Override
+                            public void onStartPDFGeneration() {
+                                /*When PDF generation begins to start*/
+                            }
+
+                            @Override
+                            public void onFinishPDFGeneration() {
+                                /*When PDF generation is finished*/
+                            }
+
+                            @Override
+                            public void onSuccess(SuccessResponse response) {
+                                super.onSuccess(response);
+                            }
+                        });
+
+            }
+        });
 
     }
 }

@@ -249,7 +249,8 @@ public class Result_Subjects extends AppCompatActivity {
                 }
             });
 
-
+            final int[] allTotalMarks = {0};
+            final int[] allTotalFullMarks = {0};
             done.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -264,11 +265,17 @@ public class Result_Subjects extends AppCompatActivity {
                                 if (snapshot.exists()) {
 
                                     int total = Integer.parseInt(dataSnapshot.child("totalSubjectMarks").getValue().toString());
+                                    allTotalMarks[0] += total;
 
-                                    Toast.makeText(Result_Subjects.this, "" + total, Toast.LENGTH_SHORT).show();
+                                    int fullTotal = Integer.parseInt(dataSnapshot.child("totalFullMarks").getValue().toString());
+                                    allTotalFullMarks[0] += fullTotal;
 
                                 }
                             }
+
+                            Toast.makeText(Result_Subjects.this, allTotalFullMarks[0] + "\t" + allTotalMarks[0], Toast.LENGTH_SHORT).show();
+
+
                         }
 
                         @Override

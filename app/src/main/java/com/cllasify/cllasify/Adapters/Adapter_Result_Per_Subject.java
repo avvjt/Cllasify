@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.ModelClasses.Class_Group_Names;
-import com.cllasify.cllasify.ModelClasses.Class_Result;
+import com.cllasify.cllasify.ModelClasses.Class_Result_Info;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.R;
 
@@ -29,14 +29,14 @@ public class Adapter_Result_Per_Subject extends RecyclerView.Adapter<Adapter_Res
     int lastPosition = -1;
     List<String> marks = new ArrayList<>();
     List<Integer> posss = new ArrayList<>();
-    List<Class_Result> class_results;
+    List<Class_Result_Info> class_results;
     private OnItemClickListener mListener;
 
     public Adapter_Result_Per_Subject(Context context) {
         this.context = context;
     }
 
-    public void setClass_results(List<Class_Result> class_results) {
+    public void setClass_results(List<Class_Result_Info> class_results) {
         this.class_results = class_results;
     }
 
@@ -86,17 +86,32 @@ public class Adapter_Result_Per_Subject extends RecyclerView.Adapter<Adapter_Res
 
             try {
 
-                Class_Result class_result = class_results.get(position);
+//                Class_Result class_result = class_results.get(pos);
+
+                Class_Result_Info class_result_info = class_results.get(position);
+
+                String subject_name_str = class_result_info.subjectName;
+                String theory_full_marks_str = String.valueOf(class_result_info.theoryFullMarks);
+                String practical_full_marks_str = String.valueOf(class_result_info.practicalFullMarks);
+                String theory_marks_str = String.valueOf(class_result_info.theoryMarks);
+                String practical_marks_str = String.valueOf(class_result_info.practicalMarks);
+                String total_marks_str = String.valueOf(class_result_info.totalSubjectMarks);
+                String grade_str = class_result_info.grade;
 
 
-                holder.subject_name.setText(subjectDetailsModel.getSubjectName());
+                holder.subject_name.setText(subject_name_str);
+                holder.theory_full_marks.setText(theory_full_marks_str);
+                holder.practical_full_marks.setText(practical_full_marks_str);
+                holder.theory_marks.setText(theory_marks_str);
+                holder.practical_marks.setText(practical_marks_str);
+                holder.total_marks.setText(total_marks_str);
+                holder.grade.setText(grade_str);
+
 
             } catch (Exception e) {
                 Log.d("GETMARKS1", "onBindViewHolder: " + e.getMessage() + " Pos: " + position);
             }
         }
-
-
     }
 
     @Override
@@ -127,6 +142,7 @@ public class Adapter_Result_Per_Subject extends RecyclerView.Adapter<Adapter_Res
             theory_marks = itemView.findViewById(R.id.theory_marks);
             practical_marks = itemView.findViewById(R.id.practical_marks);
             total_marks = itemView.findViewById(R.id.total_marks);
+            grade = itemView.findViewById(R.id.grade);
 
         }
     }

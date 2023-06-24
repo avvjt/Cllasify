@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/page_background_color"
+    android:background="#ffffff"
     tools:context=".Activities.Result_Activity">
 
     <LinearLayout
         android:id="@+id/action_bar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        android:background="@color/page_color"
+        android:background="#ffffff"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
@@ -32,7 +32,7 @@
             android:paddingTop="10dp"
             android:paddingEnd="1dp"
             android:src="@drawable/ic_arrow_left_24"
-            app:tint="@color/iconSecondaryColor"
+            app:tint="@color/black_text_result"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <TextView
@@ -42,24 +42,91 @@
             android:layout_gravity="center"
             android:layout_marginStart="5dp"
             android:fontFamily="@font/inter_semibold"
-            android:textColor="@color/text_color"
+            android:textColor="@color/black_text_result"
             android:textSize="20sp" />
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/student_result"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/action_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/action_bar">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="5dp"
-            android:background="@color/page_color"
-            android:padding="20dp"
-            android:orientation="vertical">
+            android:background="#ffffff"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/school_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
+                android:text="School name"
+                android:textColor="@color/black_text_result"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp">
+
+                <TextView
+                    android:id="@+id/student_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name: Sohel Sheikh"
+                    android:textColor="@color/black_text_result"
+                    android:textSize="11sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="25dp"
+                android:layout_weight="3">
+
+
+                <TextView
+                    android:id="@+id/roll_numb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Roll number: 5"
+                    android:textColor="@color/black_text_result"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/class_numb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_weight="1"
+                    android:text="Class: 11"
+                    android:textColor="@color/black_text_result"
+                    android:textSize="11sp" />
+
+                <TextView
+                    android:id="@+id/result_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="Date: 24th June,2023"
+                    android:textColor="@color/black_text_result"
+                    android:textSize="11sp" />
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/full_marks"
@@ -75,7 +142,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerInParent="true"
                     android:text="Subject"
-                    android:textColor="@color/text_color"
+                    android:textColor="@color/black_text_result"
                     android:textSize="14sp" />
 
                 <RelativeLayout
@@ -96,7 +163,7 @@
                         android:layout_marginBottom="5dp"
                         android:gravity="center"
                         android:text="Total \ntheory \nmarks"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/black_text_result"
                         android:textSize="8sp" />
 
                     <TextView
@@ -110,7 +177,7 @@
                         android:layout_toEndOf="@+id/theory_full_marks"
                         android:gravity="center"
                         android:text="Total \npractical \nmarks"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/black_text_result"
                         android:textSize="8sp" />
 
                     <View
@@ -121,7 +188,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
                         android:layout_toEndOf="@+id/practical_full_marks"
-                        android:background="@color/btn_stroke" />
+                        android:background="@color/black_text_result" />
 
                     <TextView
                         android:id="@+id/theory_marks"
@@ -134,7 +201,7 @@
                         android:layout_toEndOf="@+id/divider"
                         android:gravity="center"
                         android:text="Theory \nmarks"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/black_text_result"
                         android:textSize="8sp" />
 
                     <TextView
@@ -148,7 +215,7 @@
                         android:layout_toEndOf="@+id/theory_marks"
                         android:gravity="center"
                         android:text="Practical \nmarks"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/black_text_result"
                         android:textSize="8sp" />
 
 
@@ -160,7 +227,7 @@
                         android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
                         android:layout_toEndOf="@+id/practical_marks"
-                        android:background="@color/btn_stroke" />
+                        android:background="@color/black_text_result" />
 
                     <TextView
                         android:id="@+id/total_marks"
@@ -173,7 +240,7 @@
                         android:layout_toEndOf="@+id/divider2"
                         android:gravity="center"
                         android:text="Total \nmarks"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/black_text_result"
                         android:textSize="8dp" />
 
                     <TextView
@@ -186,7 +253,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_toEndOf="@+id/total_marks"
                         android:text="Grade"
-                        android:textColor="@color/text_color"
+                        android:textColor="@color/black_text_result"
                         android:textSize="8dp" />
                 </RelativeLayout>
 
@@ -204,12 +271,31 @@
                 app:fastScrollEnabled="false" />
 
 
+            <TextView
+                android:id="@+id/marks_by"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Marks: 800/1000"
+                android:textColor="@color/black_text_result"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/grades"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Grade: A+"
+                android:textColor="@color/black_text_result"
+                android:textSize="12sp" />
+
+
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
 
     <Button
-        android:id="@+id/btn_done"
+        android:id="@+id/btn_generate_pdf"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_alignParentBottom="true"
@@ -221,6 +307,6 @@
         android:background="@drawable/button_solid_unfollow"
         android:elevation="2dp"
         android:text="Generate Result"
-        android:textColor="@color/black" />
+        android:textColor="@color/black_text_result" />
 
 </RelativeLayout>

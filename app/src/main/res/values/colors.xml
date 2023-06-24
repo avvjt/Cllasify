@@ -40,6 +40,7 @@
     <color name="doubt_background">#eff0f5</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="black_text_result">#000000</color>
     <color name="more_ops">#3E3E3E</color>
     <color name="white_constant">#FFFFFF</color>
     <color name="black_constant">#000000</color>

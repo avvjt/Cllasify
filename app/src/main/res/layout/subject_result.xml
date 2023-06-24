@@ -3,7 +3,7 @@
     android:id="@+id/full_marks"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/bg_bottomsheet"
+    android:background="#ffffff"
     android:orientation="vertical"
     android:paddingTop="20dp"
     android:paddingBottom="20dp">
@@ -17,7 +17,7 @@
         android:layout_centerInParent="true"
         android:layout_centerVertical="true"
         android:text="Mathematics -"
-        android:textColor="@color/text_color"
+        android:textColor="@color/black_text_result"
         android:textSize="14sp" />
 
     <RelativeLayout
@@ -36,7 +36,7 @@
             android:layout_marginEnd="15dp"
             android:layout_marginBottom="5dp"
             android:text="80"
-            android:textColor="@color/text_color"
+            android:textColor="@color/black_text_result"
             android:textSize="14sp" />
 
         <TextView
@@ -49,7 +49,7 @@
             android:layout_marginEnd="5dp"
             android:layout_toEndOf="@+id/theory_full_marks"
             android:text="20"
-            android:textColor="@color/text_color"
+            android:textColor="@color/black_text_result"
             android:textSize="14sp" />
 
         <View
@@ -60,7 +60,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_toEndOf="@+id/practical_full_marks"
-            android:background="@color/btn_stroke" />
+            android:background="@color/black_text_result" />
 
         <TextView
             android:id="@+id/theory_marks"
@@ -72,7 +72,7 @@
             android:layout_marginEnd="30dp"
             android:layout_toEndOf="@+id/divider"
             android:text="60"
-            android:textColor="@color/text_color"
+            android:textColor="@color/black_text_result"
             android:textSize="14sp" />
 
         <TextView
@@ -85,7 +85,7 @@
             android:layout_marginEnd="5dp"
             android:layout_toEndOf="@+id/theory_marks"
             android:text="15"
-            android:textColor="@color/text_color"
+            android:textColor="@color/black_text_result"
             android:textSize="14sp" />
 
 
@@ -97,7 +97,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_toEndOf="@+id/practical_marks"
-            android:background="@color/btn_stroke" />
+            android:background="@color/black_text_result" />
 
         <TextView
             android:id="@+id/total_marks"
@@ -109,7 +109,7 @@
             android:layout_marginEnd="15dp"
             android:layout_toEndOf="@+id/divider2"
             android:text="75"
-            android:textColor="@color/text_color"
+            android:textColor="@color/black_text_result"
             android:textSize="14sp" />
 
         <TextView
@@ -122,7 +122,7 @@
             android:layout_marginEnd="15dp"
             android:layout_toEndOf="@+id/total_marks"
             android:text="B+"
-            android:textColor="@color/text_color"
+            android:textColor="@color/black_text_result"
             android:textSize="14sp" />
 
     </RelativeLayout>
