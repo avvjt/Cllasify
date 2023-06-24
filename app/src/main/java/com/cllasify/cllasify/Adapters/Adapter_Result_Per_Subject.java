@@ -1,11 +1,10 @@
 package com.cllasify.cllasify.Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -80,6 +79,24 @@ public class Adapter_Result_Per_Subject extends RecyclerView.Adapter<Adapter_Res
     public void onBindViewHolder(@NonNull Adapter_Result_Per_Subject.ViewHolder holder, int position) {
 
 
+        Subject_Details_Model subjectDetailsModel = subjectDetailsModelList.get(position);
+
+
+        if (class_results != null) {
+
+            try {
+
+                Class_Result class_result = class_results.get(position);
+
+
+                holder.subject_name.setText(subjectDetailsModel.getSubjectName());
+
+            } catch (Exception e) {
+                Log.d("GETMARKS1", "onBindViewHolder: " + e.getMessage() + " Pos: " + position);
+            }
+        }
+
+
     }
 
     @Override
@@ -98,14 +115,18 @@ public class Adapter_Result_Per_Subject extends RecyclerView.Adapter<Adapter_Res
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView subjectTopic;
-        ImageButton subjectMore;
-        RelativeLayout subListItem;
+        TextView subject_name, theory_full_marks, practical_full_marks, theory_marks, practical_marks, total_marks, grade;
 
-        TextView marks;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            subject_name = itemView.findViewById(R.id.subject_name);
+            theory_full_marks = itemView.findViewById(R.id.theory_full_marks);
+            practical_full_marks = itemView.findViewById(R.id.practical_full_marks);
+            theory_marks = itemView.findViewById(R.id.theory_marks);
+            practical_marks = itemView.findViewById(R.id.practical_marks);
+            total_marks = itemView.findViewById(R.id.total_marks);
 
         }
     }

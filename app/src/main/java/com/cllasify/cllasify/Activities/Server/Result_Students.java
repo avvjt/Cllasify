@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Adapters.Adaptor_Student_Result;
-import com.cllasify.cllasify.ModelClasses.Class_Result;
+import com.cllasify.cllasify.ModelClasses.Class_Result_Info;
 import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Utility.Constant;
@@ -150,7 +150,7 @@ public class Result_Students extends AppCompatActivity {
                             .child(uniGrpPushId).child(uniClassPushId).child(userID);
 
 
-                    resDb.addValueEventListener(new ValueEventListener() {
+                    resDb.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.exists()) {
@@ -171,11 +171,14 @@ public class Result_Students extends AppCompatActivity {
 
                                             String subVal = dataSnapshot.child("subjectName").getValue().toString();
 
-                                            Class_Result class_result = new Class_Result(subVal, userName, 0, 0,
-                                                    0, 0);
+                                            Class_Result_Info class_result_info = new Class_Result_Info(0, 0, 0, 0, 0, subVal, "");
+//
+//                                            Class_Result class_result = new Class_Result(userName, "", 0, class_result_info);
 
-
-                                            resDb.child(dataSnapshot.getKey()).setValue(class_result);
+                                            resDb.child("username").setValue(userName);
+                                            resDb.child("totalMarks").setValue(0);
+                                            resDb.child("totalGrades").setValue("");
+                                            resDb.child("subjectMarksInfo").child(Objects.requireNonNull(dataSnapshot.getKey())).setValue(class_result_info);
 
 
                                         }

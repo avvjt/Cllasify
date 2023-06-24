@@ -28,7 +28,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Activities.Result_Activity;
 import com.cllasify.cllasify.Adapters.Adapter_Result_Subject;
-import com.cllasify.cllasify.ModelClasses.Class_Result;
+import com.cllasify.cllasify.ModelClasses.Class_Result_Info;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Utility.NetworkBroadcast;
@@ -56,7 +56,7 @@ public class Result_Subjects extends AppCompatActivity {
 
     List<String> marks = new ArrayList<>();
     List<Integer> posss = new ArrayList<>();
-    List<Class_Result> class_results = new ArrayList<>();
+    List<Class_Result_Info> class_results = new ArrayList<>();
 
     Button done;
 
@@ -168,7 +168,7 @@ public class Result_Subjects extends AppCompatActivity {
                             String uniPushClassId = snapshot.child("uniPushClassId").getValue().toString().trim();
                             String groupPushId = snapshot.child("clickedGroupPushId").getValue().toString().trim();
 
-                            DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(groupPushId).child(uniPushClassId).child(userID);
+                            DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(groupPushId).child(uniPushClassId).child(userID).child("subjectMarksInfo");
 
                             resDb.addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -179,26 +179,11 @@ public class Result_Subjects extends AppCompatActivity {
                                             Log.d("RESCHKK", "onDataChange: " + dataSnapshot.getKey());
 
 
-                                            Class_Result class_result = dataSnapshot.getValue(Class_Result.class);
+                                            Class_Result_Info class_result = dataSnapshot.getValue(Class_Result_Info.class);
                                             class_results.add(class_result);
                                             adapter_topicList.setClass_results(class_results);
                                             rv_ShowSubject.setAdapter(adapter_topicList);
                                             adapter_topicList.notifyDataSetChanged();
-                                            /*
-                                            int fullTheory = Integer.parseInt(dataSnapshot.child("theoryFullMarks").getValue().toString());
-                                            int practicalFullMarks = Integer.parseInt(dataSnapshot.child("practicalFullMarks").getValue().toString());
-                                            int theoryMarks = Integer.parseInt(dataSnapshot.child("theoryMarks").getValue().toString());
-                                            int practicalMarks = Integer.parseInt(dataSnapshot.child("practicalMarks").getValue().toString());
-                                            int poss = Integer.parseInt(dataSnapshot.child("position").getValue().toString());
-                                            int fullTheoryPractical = fullTheory + practicalFullMarks;
-                                            int theoryPractical = theoryMarks + practicalMarks;
-                                            Log.d("RESCHKK", "onDataChange: " + theoryPractical + "/" + fullTheoryPractical + "pos: " + poss);
-                                            marks.add(theoryPractical + "/" + fullTheoryPractical);
-                                            posss.add(poss);
-                                            adapter_topicList.setMarks(marks);
-                                            rv_ShowSubject.setAdapter(adapter_topicList);
-                                            adapter_topicList.notifyDataSetChanged();
-*/
                                         }
 
                                     }
@@ -209,29 +194,6 @@ public class Result_Subjects extends AppCompatActivity {
 
                                 }
                             });
-                            /*
-                            resDb.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (snapshot.exists()) {
-                                        int fullTheory = Integer.parseInt(snapshot.child("theoryFullMarks").getValue().toString());
-                                        int practicalFullMarks = Integer.parseInt(snapshot.child("practicalFullMarks").getValue().toString());
-                                        int theoryMarks = Integer.parseInt(snapshot.child("theoryMarks").getValue().toString());
-                                        int practicalMarks = Integer.parseInt(snapshot.child("practicalMarks").getValue().toString());
-                                        int fullTheoryPractical = fullTheory + practicalFullMarks;
-                                        int theoryPractical = theoryMarks + practicalMarks;
-                                        Log.d("RESCHKK", "onDataChange: " + theoryPractical + "/" + fullTheoryPractical + " Pos: " + Integer.parseInt(position));
-                                        marks.add(Integer.parseInt(position), String.valueOf(fullTheoryPractical));
-                                        adapter_topicList.setMarks(marks);
-                                        rv_ShowSubject.setAdapter(adapter_topicList);
-                                        adapter_topicList.notifyDataSetChanged();
-                                    }
-                                }
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                }
-                            });
-*/
 
                         }
                     }
@@ -324,7 +286,7 @@ public class Result_Subjects extends AppCompatActivity {
         EditText et_practical = dialog.findViewById(R.id.et_practical);
         Button btn_done = dialog.findViewById(R.id.btn_done);
 
-        DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(uniGrpPushId).child(uniClassPushId).child(userID).child(subUniPushId);
+        DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(uniGrpPushId).child(uniClassPushId).child(userID).child("subjectMarksInfo").child(subUniPushId);
 
 
         resDb.addValueEventListener(new ValueEventListener() {
@@ -354,39 +316,42 @@ public class Result_Subjects extends AppCompatActivity {
             }
         });
 
-        DatabaseReference resDbsetDef = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(uniGrpPushId).child(uniClassPushId).child(userID);
-
-        resDb.addListenerForSingleValueEvent(new ValueEventListener() {
+        btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                int th = Integer.parseInt(snapshot.child("theoryFullMarks").getValue().toString());
-
-                btn_done.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
+            public void onClick(View view) {
 
 
-                        String theoryFull = et_theory_full.getText().toString();
-                        String practicalFull = et_practical_full.getText().toString();
-                        String theory = et_theory.getText().toString();
-                        String practical = et_practical.getText().toString();
-
-                        int theoryFullInt = Integer.parseInt(theoryFull);
-                        int practicalFullInt = Integer.parseInt(practicalFull);
-                        int theoryInt = Integer.parseInt(theory);
-                        int practicalInt = Integer.parseInt(practical);
+                String theoryFull = et_theory_full.getText().toString();
+                String practicalFull = et_practical_full.getText().toString();
+                String theory = et_theory.getText().toString();
+                String practical = et_practical.getText().toString();
 
 
-                        if (TextUtils.isEmpty(theoryFull)) {
-                            et_theory_full.setError("Theory full marks cannot be empty");
-                        } else if (TextUtils.isEmpty(practicalFull)) {
-                            et_practical_full.setError("Practical full marks cannot be empty");
-                        } else if (TextUtils.isEmpty(theory)) {
-                            et_theory.setError("Practical full marks cannot be empty");
-                        } else if (TextUtils.isEmpty(practical)) {
-                            et_practical.setError("Practical full marks cannot be empty");
-                        } else {
+                if (TextUtils.isEmpty(theoryFull)) {
+                    et_theory_full.setError("Theory full marks cannot be empty");
+                } else if (TextUtils.isEmpty(practicalFull)) {
+                    et_practical_full.setError("Practical full marks cannot be empty");
+                } else if (TextUtils.isEmpty(theory)) {
+                    et_theory.setError("Practical full marks cannot be empty");
+                } else if (TextUtils.isEmpty(practical)) {
+                    et_practical.setError("Practical full marks cannot be empty");
+                } else {
+
+                    int theoryFullInt = Integer.parseInt(theoryFull);
+                    int practicalFullInt = Integer.parseInt(practicalFull);
+                    int theoryInt = Integer.parseInt(theory);
+                    int practicalInt = Integer.parseInt(practical);
+
+
+                    Toast.makeText(Result_Subjects.this, "filled", Toast.LENGTH_SHORT).show();
+
+                    DatabaseReference resDbsetDef = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(uniGrpPushId).child(uniClassPushId).child(userID).child("subjectMarksInfo");
+
+                    resDb.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            int th = Integer.parseInt(snapshot.child("theoryFullMarks").getValue().toString());
 
 
                             if (th == 0) {
@@ -406,13 +371,15 @@ public class Result_Subjects extends AppCompatActivity {
 //                                                    resDbsetDef.child(Objects.requireNonNull(dataSnapshot.getKey())).child("theoryFullMarks").setValue(theoryFullInt);
 //                                                    resDbsetDef.child(Objects.requireNonNull(dataSnapshot.getKey())).child("practicalFullMarks").setValue(practicalFullInt);
 
-                                                    Toast.makeText(Result_Subjects.this, ".", Toast.LENGTH_SHORT).show();
+//                                                    Toast.makeText(Result_Subjects.this, ".", Toast.LENGTH_SHORT).show();
 
-                                                    Class_Result class_result = new Class_Result(subjectName, userName, theoryFullInt, practicalFullInt, 0, 0);
+                                                    Class_Result_Info class_result_info = new Class_Result_Info(theoryFullInt, practicalFullInt, theoryInt, practicalInt, 0, subjectName, "");
 
-                                                    resDbsetDef.child(Objects.requireNonNull(dataSnapshot.getKey())).setValue(class_result);
 
-                                                    class_results.add(class_result);
+//                                            Class_Result class_result = new Class_Result(userName, "", 0, class_result_info);
+                                                    resDbsetDef.child(Objects.requireNonNull(dataSnapshot.getKey())).setValue(class_result_info);
+
+                                                    class_results.add(class_result_info);
                                                     adapter_topicList.setClass_results(class_results);
                                                     rv_ShowSubject.setAdapter(adapter_topicList);
                                                     adapter_topicList.notifyDataSetChanged();
@@ -442,12 +409,16 @@ public class Result_Subjects extends AppCompatActivity {
 
 //                                Toast.makeText(Result_Subjects.this, "Already exists" + th, Toast.LENGTH_SHORT).show();
 
+                                Class_Result_Info class_result_info = new Class_Result_Info(theoryFullInt, practicalFullInt, theoryInt, practicalInt, 0, subjectName, "");
 
-                                Class_Result class_result = new Class_Result(subjectName, userName, theoryFullInt, practicalFullInt, theoryInt, practicalInt);
 
-                                resDb.setValue(class_result);
+//                                Class_Result class_result = new Class_Result(userName, "", 0, class_result_info);
+//                                Class_Result class_result = new Class_Result(subjectName, userName, theoryFullInt, practicalFullInt, theoryInt, practicalInt);
 
-                                class_results.add(class_result);
+                                resDbsetDef.child(subUniPushId).setValue(class_result_info);
+
+
+                                class_results.add(class_result_info);
                                 adapter_topicList.setClass_results(class_results);
                                 rv_ShowSubject.setAdapter(adapter_topicList);
                                 adapter_topicList.notifyDataSetChanged();
@@ -458,15 +429,16 @@ public class Result_Subjects extends AppCompatActivity {
 
                             }
 
+
                         }
-                    }
-                });
 
-            }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
 
+                }
             }
         });
 

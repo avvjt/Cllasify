@@ -2,18 +2,17 @@ package com.cllasify.cllasify.ModelClasses;
 
 public class Class_Result {
 
-    public String subjectName, userName;
-    public int theoryFullMarks, practicalFullMarks, theoryMarks, practicalMarks;
+    public String userName, totalGrade;
+    public int totalMarks;
 
-    public Class_Result(String subjectName, String userName, int theoryFullMarks, int practicalFullMarks, int theoryMarks, int practicalMarks) {
-        this.subjectName = subjectName;
+    public Class_Result_Info class_result_infos;
+
+    public Class_Result(String userName, String totalGrade, int totalMarks) {
         this.userName = userName;
-        this.theoryFullMarks = theoryFullMarks;
-        this.practicalFullMarks = practicalFullMarks;
-        this.theoryMarks = theoryMarks;
-        this.practicalMarks = practicalMarks;
+        this.totalGrade = totalGrade;
+        this.totalMarks = totalMarks;
+        this.class_result_infos = class_result_infos;
     }
-
 
     public Class_Result() {
     }

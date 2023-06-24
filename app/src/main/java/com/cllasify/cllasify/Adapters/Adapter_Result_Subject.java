@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.ModelClasses.Class_Group_Names;
-import com.cllasify.cllasify.ModelClasses.Class_Result;
+import com.cllasify.cllasify.ModelClasses.Class_Result_Info;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,9 +38,9 @@ public class Adapter_Result_Subject extends RecyclerView.Adapter<Adapter_Result_
 
     List<Integer> posss = new ArrayList<>();
 
-    List<Class_Result> class_results;
+    List<Class_Result_Info> class_results;
 
-    public void setClass_results(List<Class_Result> class_results) {
+    public void setClass_results(List<Class_Result_Info> class_results) {
         this.class_results = class_results;
     }
 
@@ -106,11 +106,12 @@ public class Adapter_Result_Subject extends RecyclerView.Adapter<Adapter_Result_
 
             try {
 
-                Class_Result class_result = class_results.get(pos);
+//                Class_Result class_result = class_results.get(pos);
 
+                Class_Result_Info class_result_info = class_results.get(pos);
 
-                int fullTheoryPractical = class_result.theoryFullMarks + class_result.practicalFullMarks;
-                int theoryPractical = class_result.theoryMarks + class_result.practicalMarks;
+                int fullTheoryPractical = class_result_info.theoryFullMarks + class_result_info.practicalFullMarks;
+                int theoryPractical = class_result_info.theoryMarks + class_result_info.practicalMarks;
 
                 String allMarks = theoryPractical + "/" + fullTheoryPractical;
 

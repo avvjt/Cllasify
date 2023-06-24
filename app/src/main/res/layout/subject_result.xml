@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/full_marks"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/bg_bottomsheet"
     android:orientation="vertical"
-    android:padding="20dp">
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp">
 
+
+    <TextView
+        android:id="@+id/subject_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:text="Mathematics -"
+        android:textColor="@color/text_color"
+        android:textSize="14sp" />
 
     <RelativeLayout
-        android:id="@+id/full_marks"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-
-        <TextView
-            android:id="@+id/subject_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerInParent="true"
-            android:text="Mathematics -"
-            android:textColor="@color/text_color"
-            android:textSize="14sp" />
+        android:layout_alignParentEnd="true">
 
 
         <TextView
@@ -35,10 +31,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginBottom="5dp"
             android:text="80"
             android:textColor="@color/text_color"
@@ -62,8 +57,8 @@
             android:layout_width="1dp"
             android:layout_height="20dp"
             android:layout_centerInParent="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_toEndOf="@+id/practical_full_marks"
             android:background="@color/btn_stroke" />
 
@@ -74,7 +69,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
             android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="30dp"
             android:layout_toEndOf="@+id/divider"
             android:text="60"
             android:textColor="@color/text_color"
@@ -99,8 +94,8 @@
             android:layout_width="1dp"
             android:layout_height="20dp"
             android:layout_centerInParent="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             android:layout_toEndOf="@+id/practical_marks"
             android:background="@color/btn_stroke" />
 
@@ -111,7 +106,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
             android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="15dp"
             android:layout_toEndOf="@+id/divider2"
             android:text="75"
             android:textColor="@color/text_color"
@@ -124,14 +119,14 @@
             android:layout_alignParentTop="true"
             android:layout_centerInParent="true"
             android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
+            android:layout_marginEnd="15dp"
             android:layout_toEndOf="@+id/total_marks"
             android:text="B+"
             android:textColor="@color/text_color"
             android:textSize="14sp" />
 
-
     </RelativeLayout>
 
 
-</LinearLayout>
+</RelativeLayout>
+
