@@ -273,7 +273,42 @@ public class Result_Subjects extends AppCompatActivity {
                                 }
                             }
 
-                            Toast.makeText(Result_Subjects.this, allTotalFullMarks[0] + "\t" + allTotalMarks[0], Toast.LENGTH_SHORT).show();
+
+                            DatabaseReference databaseReferenceGetStudent = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
+                                    .child(uniGrpPushId).child(uniClassPushId).child("classStudentList").child(userID);
+
+                            databaseReferenceGetStudent.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    if (snapshot.child("rollNumber").exists()) {
+
+                                        String rollNumber = snapshot.child("rollNumber").getValue().toString();
+
+                                        Intent intent = new Intent(Result_Subjects.this, Result_Activity.class);
+                                        intent.putExtra("uniGroupPushId", uniGrpPushId);
+                                        intent.putExtra("uniClassPushId", uniClassPushId);
+                                        intent.putExtra("userID", userID);
+                                        intent.putExtra("userName", userName);
+                                        intent.putExtra("position", position);
+                                        intent.putExtra("allTotalMarks", String.valueOf(allTotalMarks[0]));
+                                        intent.putExtra("allTotalFullMarks", String.valueOf(allTotalFullMarks[0]));
+                                        intent.putExtra("rollNumber", rollNumber);
+
+                                        startActivity(intent);
+
+
+                                    } else {
+                                        Toast.makeText(Result_Subjects.this, "Please set the roll number before generating the result!\nServer Settings>Select Class>Edit Roll number", Toast.LENGTH_SHORT).show();
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
 
 
                         }
@@ -284,14 +319,6 @@ public class Result_Subjects extends AppCompatActivity {
                         }
                     });
 
-
-                    Intent intent = new Intent(Result_Subjects.this, Result_Activity.class);
-                    intent.putExtra("uniGroupPushId", uniGrpPushId);
-                    intent.putExtra("uniClassPushId", uniClassPushId);
-                    intent.putExtra("userID", userID);
-                    intent.putExtra("userName", userName);
-                    intent.putExtra("position", position);
-                    startActivity(intent);
 
                 }
             });

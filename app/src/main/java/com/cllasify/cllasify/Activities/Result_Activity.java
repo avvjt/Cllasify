@@ -1,12 +1,10 @@
 package com.cllasify.cllasify.Activities;
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -28,25 +26,28 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Result_Activity extends AppCompatActivity {
 
 
-    String currUserID;
     RecyclerView rv_ShowSubject;
-    TextView tv_SubjectList, studentName;
-    ImageButton btn_Back;
+    TextView studentName;
+
+    TextView school_name, marks_by, student_name, roll_numb, class_numb, result_date;
+
     Button generate_pdf;
     //Subjects
     Adapter_Result_Per_Subject adapter_topicList;
     List<Subject_Details_Model> subjectDetailsModelList;
-    List<String> marks = new ArrayList<>();
-    List<Integer> posss = new ArrayList<>();
     List<Class_Result_Info> class_results = new ArrayList<>();
-    private BroadcastReceiver broadcastReceiver;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,9 @@ public class Result_Activity extends AppCompatActivity {
             String userID = getIntent().getStringExtra("userID");
             String userName = getIntent().getStringExtra("userName");
             String position = getIntent().getStringExtra("position");
+            String allTotalMarks = getIntent().getStringExtra("allTotalMarks");
+            String allTotalFullMarks = getIntent().getStringExtra("allTotalFullMarks");
+            String rollNumb = getIntent().getStringExtra("rollNumber");
 
 
             rv_ShowSubject = findViewById(R.id.subjectResultList);
@@ -69,6 +73,25 @@ public class Result_Activity extends AppCompatActivity {
             adapter_topicList.setStudentUserId(userID);
             adapter_topicList.setSpecPos(Integer.parseInt(position));
 
+            school_name = findViewById(R.id.school_name);
+            marks_by = findViewById(R.id.marks_by);
+            student_name = findViewById(R.id.student_name);
+            roll_numb = findViewById(R.id.roll_numb);
+            class_numb = findViewById(R.id.class_numb);
+            result_date = findViewById(R.id.result_date);
+
+
+            marks_by.setText("Marks: " + allTotalMarks + "/" + allTotalFullMarks);
+            student_name.setText("Name: " + userName);
+
+            Date c = Calendar.getInstance().getTime();
+            System.out.println("Current time => " + c);
+
+            SimpleDateFormat df = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
+            String formattedDate = df.format(c);
+
+            result_date.setText("Date: " + formattedDate);
+            roll_numb.setText("Roll number: " + rollNumb);
             studentName.setText(userName + "'s Result");
 
             DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
@@ -130,6 +153,16 @@ public class Result_Activity extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+                    String groupPushID = snapshot.child("groupPushId").getValue().toString();
+
+                    String[] separated = groupPushID.split("_");
+
+
+                    String schoolName = separated[separated.length - 1];
+
+                    school_name.setText(schoolName);
+                    class_numb.setText("Class: " + snapshot.child("className").getValue().toString());
+
 
                     subjectDetailsModelList.clear();
                     for (DataSnapshot dataSnapshot1 : snapshot.child("classSubjectData").getChildren()) {
@@ -164,7 +197,7 @@ public class Result_Activity extends AppCompatActivity {
                 PdfGenerator.getBuilder()
                         .setContext(Result_Activity.this)
                         .fromViewIDSource()
-                        .fromViewID((Activity) result_activity, R.id.student_result) //The specifi view id you want to print
+                        .fromViewID(result_activity, R.id.student_result)
                         .setFileName("Allotment_PaperPDF")
                         .actionAfterPDFGeneration(PdfGenerator.ActionAfterPDFGeneration.OPEN)
                         .build(new PdfGeneratorListener() {
@@ -180,12 +213,12 @@ public class Result_Activity extends AppCompatActivity {
 
                             @Override
                             public void onStartPDFGeneration() {
-                                /*When PDF generation begins to start*/
+
                             }
 
                             @Override
                             public void onFinishPDFGeneration() {
-                                /*When PDF generation is finished*/
+
                             }
 
                             @Override
