@@ -108,6 +108,7 @@
                         </com.google.android.material.textfield.TextInputLayout>
                     </LinearLayout>
                 </LinearLayout>
+
                 <Button
                     android:id="@+id/doneBtn"
                     android:layout_width="match_parent"
@@ -116,15 +117,16 @@
                     android:background="@drawable/rounded_corner"
                     android:paddingStart="15dp"
                     android:paddingEnd="15dp"
-                    android:text="@string/done"
+                    android:text="Done"
                     android:textAllCaps="false"
-                    android:textColor="#000000" />
+                    android:textColor="@color/black" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/mainRv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="50dp"
-                    android:layout_marginHorizontal="15dp"/>
+                    android:layout_marginHorizontal="15dp" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

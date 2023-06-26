@@ -2,10 +2,12 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:textSize="15dp"
+    android:background="@color/page_color"
     android:ellipsize="end"
     android:maxLines="1"
     android:padding="16dp"
-    android:textAppearance="?attr/textAppearanceBody1">
+    android:textAppearance="?attr/textAppearanceBody1"
+    android:textColor="@color/text_color"
+    android:textSize="15dp">
 
 </TextView>

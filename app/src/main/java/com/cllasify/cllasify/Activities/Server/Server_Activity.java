@@ -64,6 +64,7 @@ import com.cllasify.cllasify.Activities.Fees_Structure;
 import com.cllasify.cllasify.Activities.Notice;
 import com.cllasify.cllasify.Activities.Notification_Activity;
 import com.cllasify.cllasify.Activities.Profile.Profile_Activity;
+import com.cllasify.cllasify.Activities.Routine.Routine_Structure;
 import com.cllasify.cllasify.Activities.Routine.priority_subject.Priority_Subject;
 import com.cllasify.cllasify.Activities.Routine.routine_structure.RoutineStructureActivity;
 import com.cllasify.cllasify.Activities.Server.PDFBACK.OnBackPressedListener;
@@ -972,7 +973,7 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             if (snapshot.hasChildren()) {
-                                Intent intent = new Intent(Server_Activity.this, RoutineStructureActivity.class);
+                                Intent intent = new Intent(Server_Activity.this, Routine_Structure.class);
                                 intent.putExtra("groupPushId", groupPushId);
                                 intent.putExtra("classPushId", classUniPushId);
                                 intent.putExtra("className", subGroupPushId);

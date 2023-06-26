@@ -186,49 +186,51 @@ public class Result_Activity extends AppCompatActivity {
                 }
             });
 
+            Result_Activity result_activity = Result_Activity.this;
+
+            generate_pdf = findViewById(R.id.btn_generate_pdf);
+            generate_pdf.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PdfGenerator.getBuilder()
+                            .setContext(Result_Activity.this)
+                            .fromViewIDSource()
+                            .fromViewID(result_activity, R.id.student_result)
+                            .setFileName(userName + "'s Result")
+                            .actionAfterPDFGeneration(PdfGenerator.ActionAfterPDFGeneration.OPEN)
+                            .build(new PdfGeneratorListener() {
+                                @Override
+                                public void onFailure(FailureResponse failureResponse) {
+                                    super.onFailure(failureResponse);
+                                }
+
+                                @Override
+                                public void showLog(String log) {
+                                    super.showLog(log);
+                                }
+
+                                @Override
+                                public void onStartPDFGeneration() {
+
+                                }
+
+                                @Override
+                                public void onFinishPDFGeneration() {
+
+                                }
+
+                                @Override
+                                public void onSuccess(SuccessResponse response) {
+                                    super.onSuccess(response);
+                                }
+                            });
+
+                }
+            });
+
+
         }
 
-        Result_Activity result_activity = Result_Activity.this;
-
-        generate_pdf = findViewById(R.id.btn_generate_pdf);
-        generate_pdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PdfGenerator.getBuilder()
-                        .setContext(Result_Activity.this)
-                        .fromViewIDSource()
-                        .fromViewID(result_activity, R.id.student_result)
-                        .setFileName("Allotment_PaperPDF")
-                        .actionAfterPDFGeneration(PdfGenerator.ActionAfterPDFGeneration.OPEN)
-                        .build(new PdfGeneratorListener() {
-                            @Override
-                            public void onFailure(FailureResponse failureResponse) {
-                                super.onFailure(failureResponse);
-                            }
-
-                            @Override
-                            public void showLog(String log) {
-                                super.showLog(log);
-                            }
-
-                            @Override
-                            public void onStartPDFGeneration() {
-
-                            }
-
-                            @Override
-                            public void onFinishPDFGeneration() {
-
-                            }
-
-                            @Override
-                            public void onSuccess(SuccessResponse response) {
-                                super.onSuccess(response);
-                            }
-                        });
-
-            }
-        });
 
     }
 }

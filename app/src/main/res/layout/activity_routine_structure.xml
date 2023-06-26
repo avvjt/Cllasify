@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_scroll"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/page_background_color"
@@ -32,6 +33,7 @@
                 android:layout_width="46dp"
                 android:layout_height="46dp"
                 android:layout_alignParentStart="true"
+                android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:contentDescription="@string/settings_contentDescription"
@@ -41,12 +43,26 @@
                 app:tint="@color/iconSecondaryColor"
                 tools:ignore="RtlSymmetry" />
 
+            <TextView
+                android:id="@+id/classNameTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/btn_Back"
+                android:fontFamily="@font/inter_semibold"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+
+
             <ImageButton
                 android:id="@+id/routine_more"
                 style="@style/SelectableItemBackgroundBorderless"
                 android:layout_width="46dp"
                 android:layout_height="46dp"
                 android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
                 android:layout_marginEnd="20dp"
                 android:contentDescription="@string/settings_contentDescription"
                 android:src="@drawable/more"
@@ -54,28 +70,6 @@
 
         </RelativeLayout>
 
-
-        <TextView
-            android:id="@+id/clname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Class name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.091"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvroutine" />
-
-        <TextView
-            android:id="@+id/tvroutine"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Routine: "
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.086"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/action_bar" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -86,7 +80,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.551"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/clname"
+            app:layout_constraintTop_toBottomOf="@+id/action_bar"
             app:layout_constraintVertical_bias="0.01">
 
 
@@ -108,7 +102,7 @@
                     android:paddingEnd="15dp"
                     android:text="Monday"
                     android:textAllCaps="false"
-                    android:textColor="#000000" />
+                    android:textColor="@color/black" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/constraintLayoutMonday"
@@ -166,7 +160,7 @@
                     android:paddingEnd="15dp"
                     android:text="Tuesday"
                     android:textAllCaps="false"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.551"
                     app:layout_constraintStart_toStartOf="parent"
@@ -189,6 +183,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="15dp"
                         android:nestedScrollingEnabled="false"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -217,7 +212,7 @@
                     android:paddingEnd="15dp"
                     android:text="Wednesday"
                     android:textAllCaps="false"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.448"
                     app:layout_constraintStart_toStartOf="parent"
@@ -240,6 +235,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="15dp"
                         android:nestedScrollingEnabled="false"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -268,7 +264,7 @@
                     android:paddingEnd="15dp"
                     android:text="Thrusday"
                     android:textAllCaps="false"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -291,6 +287,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="15dp"
                         android:nestedScrollingEnabled="false"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -321,7 +318,7 @@
                     android:paddingEnd="15dp"
                     android:text="Friday"
                     android:textAllCaps="false"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.448"
                     app:layout_constraintStart_toStartOf="parent"
@@ -344,6 +341,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="15dp"
                         android:nestedScrollingEnabled="false"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -372,7 +370,7 @@
                     android:paddingEnd="15dp"
                     android:text="Saturday"
                     android:textAllCaps="false"
-                    android:textColor="#000000"
+                    android:textColor="@color/black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.448"
                     app:layout_constraintStart_toStartOf="parent"
@@ -395,6 +393,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="15dp"
                         android:nestedScrollingEnabled="false"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
@@ -416,12 +415,9 @@
                 android:paddingEnd="15dp"
                 android:text="Done"
                 android:textAllCaps="false"
-                android:textColor="#000000" />
+                android:textColor="@color/black" />
 
         </LinearLayout>
-
-
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

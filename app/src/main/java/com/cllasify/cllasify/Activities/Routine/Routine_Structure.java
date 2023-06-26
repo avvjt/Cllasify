@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -53,10 +54,10 @@ public class Routine_Structure extends AppCompatActivity {
 
     List<String> weekdays;
 
-    private List<Class_Student_Details> teachersList = new ArrayList<>();
-    private List<String> weekList = Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+    private final List<Class_Student_Details> teachersList = new ArrayList<>();
+    private final List<String> weekList = Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
 
-    private Map<String, List<Class_Routine>> classRoutines = new HashMap<>();
+    private final Map<String, List<Class_Routine>> classRoutines = new HashMap<>();
     List<Class_Routine> clRoutineMonday = new ArrayList<>();
     List<Class_Routine> clRoutineTuesday = new ArrayList<>();
     List<Class_Routine> clRoutineWednesday = new ArrayList<>();
@@ -81,6 +82,8 @@ public class Routine_Structure extends AppCompatActivity {
             classPushId = getIntent().getStringExtra("classPushId");
             className = getIntent().getStringExtra("className");
 
+            binding.classNameTV.setText(className + "'s Routine");
+
         }
         initAdapters();
         initView();
@@ -93,25 +96,27 @@ public class Routine_Structure extends AppCompatActivity {
                 .child("Routine").child(grpPushId).child("allSchedule").child(classPushId);
         fetchTeachers();
 
+        binding.viewScroll.fullScroll(ScrollView.FOCUS_UP);
+
         binding.btnDone.setOnClickListener(view -> {
             startAddingNewRoutines();
         });
-        binding.btnMonday.setOnClickListener(v->{
+        binding.btnMonday.setOnClickListener(v -> {
             toggleViewVisibility(binding.rvAssignedMonday);
         });
-        binding.btnTuesday.setOnClickListener(v->{
+        binding.btnTuesday.setOnClickListener(v -> {
             toggleViewVisibility(binding.rvAssignedTuesday);
         });
-        binding.btnWednesday.setOnClickListener(v->{
+        binding.btnWednesday.setOnClickListener(v -> {
             toggleViewVisibility(binding.rvAssignedWednesday);
         });
-        binding.btnThursday.setOnClickListener(v->{
+        binding.btnThursday.setOnClickListener(v -> {
             toggleViewVisibility(binding.rvAssignedThursday);
         });
-        binding.btnFriday.setOnClickListener(v->{
+        binding.btnFriday.setOnClickListener(v -> {
             toggleViewVisibility(binding.rvAssignedFriday);
         });
-        binding.btnSaturday.setOnClickListener(v->{
+        binding.btnSaturday.setOnClickListener(v -> {
             toggleViewVisibility(binding.rvAssignedSaturday);
         });
         fetchPreviousRoutines();
@@ -132,7 +137,7 @@ public class Routine_Structure extends AppCompatActivity {
         initPopupMenu();
     }
 
-    private void toggleViewVisibility(View view){
+    private void toggleViewVisibility(View view) {
         if (view.getVisibility() == View.VISIBLE) {
             // Hide the content with animation
             view.animate()
@@ -277,7 +282,7 @@ public class Routine_Structure extends AppCompatActivity {
     }
 
 
-    private void fetchPreviousRoutines(){
+    private void fetchPreviousRoutines() {
         databaseReferenceGetStudent.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -402,7 +407,7 @@ public class Routine_Structure extends AppCompatActivity {
     }
 
 
-    private void startAddingNewRoutines(){
+    private void startAddingNewRoutines() {
         // Monday
         clRoutineMonday = adapter_teacher_assignMonday.getClass_routines();
         if (Util.countRoutineData(clRoutineMonday) < 6) {
