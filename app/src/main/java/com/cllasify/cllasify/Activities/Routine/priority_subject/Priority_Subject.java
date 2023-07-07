@@ -1,5 +1,6 @@
 package com.cllasify.cllasify.Activities.Routine.priority_subject;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -7,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -76,6 +78,7 @@ public class Priority_Subject extends AppCompatActivity {
         binding.secondaryACT.setFocusable(false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void observeStates() {
         viewModel.getIsLoading().observe(this, isLoading -> {
             int progressVisibility = (isLoading) ? View.VISIBLE : View.GONE;
@@ -120,7 +123,7 @@ public class Priority_Subject extends AppCompatActivity {
     }
 
 
-
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void initACT() {
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<>(this, R.layout.priority_list_item,
                 subject.stream().map(Subject_Details_Model::getSubjectName).collect(Collectors.toList())

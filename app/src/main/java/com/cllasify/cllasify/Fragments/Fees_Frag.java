@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.cllasify.cllasify.Activities.Server.Server_Activity;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Utility.Constant;
 import com.cllasify.cllasify.Utility.NetworkBroadcast;
@@ -55,7 +55,7 @@ public class Fees_Frag extends BottomSheetDialogFragment implements PaymentResul
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final Activity activity = (Server_Activity) getActivity();
+        final Activity activity = getActivity();
 
         View v = inflater.inflate(R.layout.fragment_fees_, container, false);
 
@@ -152,7 +152,7 @@ public class Fees_Frag extends BottomSheetDialogFragment implements PaymentResul
 
     public void startPayment(String amount, String groupPushId, String className, String userName) {
 
-        final Activity activity = (Server_Activity) getActivity();
+        final Activity activity = getActivity();
 
         final Checkout co = new Checkout();
         co.setFullScreenDisable(true);
@@ -170,12 +170,12 @@ public class Fees_Frag extends BottomSheetDialogFragment implements PaymentResul
                     try {
 
                         String groupName = snapshot.child("groupName").getValue().toString().trim();
-                        String groupPic = snapshot.child("serverProfilePic").getValue().toString().trim();
+//                        String groupPic = snapshot.child("serverProfilePic").getValue().toString().trim();
 
 
                         JSONObject options = new JSONObject();
                         options.put("name", groupName);
-                        options.put("description", "Paid by " + userName + " from " + groupName + " of " + className);//set server name,class & student name here
+                        options.put("description", "Paid by -" + userName + "- from -" + groupName + "- of -" + className);//set server name,class & student name here
 //            options.put("send_sms_hash", true);
                         options.put("currency", "INR");
                         options.put("amount", amount);
@@ -184,6 +184,9 @@ public class Fees_Frag extends BottomSheetDialogFragment implements PaymentResul
 
                     } catch (Exception e) {
                         Toast.makeText(activity, "Error in payment: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                        Log.d("PAYMENTERROR", "onDataChange: " + e.getMessage());
+
                         e.printStackTrace();
                     }
 
