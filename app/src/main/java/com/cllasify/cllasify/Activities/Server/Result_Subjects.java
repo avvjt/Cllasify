@@ -274,8 +274,7 @@ public class Result_Subjects extends AppCompatActivity {
                             }
 
 
-                            DatabaseReference databaseReferenceGetStudent = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs")
-                                    .child(uniGrpPushId).child(uniClassPushId).child("classStudentList").child(userID);
+                            DatabaseReference databaseReferenceGetStudent = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(uniGrpPushId).child(uniClassPushId).child("classStudentList").child(userID);
 
                             databaseReferenceGetStudent.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
@@ -404,8 +403,31 @@ public class Result_Subjects extends AppCompatActivity {
                     int totalSubMarks = theoryInt + practicalInt;
                     int totalFullMarks = theoryFullInt + practicalFullInt;
 
+                    String grade = "";
+
+                    int percentageMarks = (totalSubMarks * 100) / totalFullMarks;
+
+                    if (percentageMarks < 30) {
+                        grade = "F";
+                    } else if (percentageMarks >= 30 && percentageMarks <= 39) {
+                        grade = "P";
+                    } else if (percentageMarks >= 40 && percentageMarks <= 49) {
+                        grade = "C";
+                    } else if (percentageMarks >= 50 && percentageMarks <= 59) {
+                        grade = "B";
+                    } else if (percentageMarks >= 60 && percentageMarks <= 69) {
+                        grade = "B+";
+                    } else if (percentageMarks >= 70 && percentageMarks <= 79) {
+                        grade = "A";
+                    } else if (percentageMarks >= 80 && percentageMarks <= 89) {
+                        grade = "A+";
+                    } else if (percentageMarks >= 90 && percentageMarks <= 100) {
+                        grade = "O";
+                    }
+
                     DatabaseReference resDbsetDef = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(uniGrpPushId).child(uniClassPushId).child(userID).child("subjectMarksInfo");
 
+                    String finalGrade = grade;
                     resDb.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -425,7 +447,7 @@ public class Result_Subjects extends AppCompatActivity {
                                                     Class_Result_Info class_result_info = new Class_Result_Info(theoryFullInt, practicalFullInt, 0, 0, 0, 0, subjectName, "");
                                                     resDbsetDef.child(Objects.requireNonNull(dataSnapshot.getKey())).setValue(class_result_info);
 
-                                                    Class_Result_Info class_result_infos = new Class_Result_Info(theoryFullInt, practicalFullInt, theoryInt, practicalInt, totalSubMarks, totalFullMarks, subjectName, "");
+                                                    Class_Result_Info class_result_infos = new Class_Result_Info(theoryFullInt, practicalFullInt, theoryInt, practicalInt, totalSubMarks, totalFullMarks, subjectName, finalGrade);
                                                     resDb.setValue(class_result_infos);
 
                                                     class_results.add(class_result_info);
@@ -452,7 +474,7 @@ public class Result_Subjects extends AppCompatActivity {
                             } else {
 
 
-                                Class_Result_Info class_result_info = new Class_Result_Info(theoryFullInt, practicalFullInt, theoryInt, practicalInt, totalSubMarks, totalFullMarks, subjectName, "");
+                                Class_Result_Info class_result_info = new Class_Result_Info(theoryFullInt, practicalFullInt, theoryInt, practicalInt, totalSubMarks, totalFullMarks, subjectName, finalGrade);
                                 resDbsetDef.child(subUniPushId).setValue(class_result_info);
                                 class_results.add(class_result_info);
                                 adapter_topicList.setClass_results(class_results);

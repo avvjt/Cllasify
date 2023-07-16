@@ -110,8 +110,8 @@ public class Adapter_Result_Subject extends RecyclerView.Adapter<Adapter_Result_
 
                 Class_Result_Info class_result_info = class_results.get(pos);
 
-                int fullTheoryPractical = class_result_info.theoryFullMarks + class_result_info.practicalFullMarks;
-                int theoryPractical = class_result_info.theoryMarks + class_result_info.practicalMarks;
+                int fullTheoryPractical = class_result_info.totalFullMarks;
+                int theoryPractical = class_result_info.totalSubjectMarks;
 
                 String allMarks = theoryPractical + "/" + fullTheoryPractical;
 

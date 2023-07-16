@@ -1,14 +1,16 @@
 package com.cllasify.cllasify.Activities;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Adapters.Adapter_Result_Per_Subject;
@@ -19,9 +21,18 @@ import com.gkemon.XMLtoPDF.PdfGenerator;
 import com.gkemon.XMLtoPDF.PdfGeneratorListener;
 import com.gkemon.XMLtoPDF.model.FailureResponse;
 import com.gkemon.XMLtoPDF.model.SuccessResponse;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Result_Activity extends AppCompatActivity {
 
@@ -29,7 +40,7 @@ public class Result_Activity extends AppCompatActivity {
     RecyclerView rv_ShowSubject;
     TextView studentName;
 
-    TextView school_name, marks_by, student_name, roll_numb, class_numb, result_date;
+    TextView school_name, marks_by, student_name, roll_numb, class_numb, result_date, percentage, gradeTV;
 
     Button generate_pdf;
     //Subjects
@@ -49,58 +60,6 @@ public class Result_Activity extends AppCompatActivity {
 
         Result_Activity result_activity = Result_Activity.this;
 
-        generate_pdf = findViewById(R.id.btn_generate_pdf);
-        generate_pdf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Toast.makeText(result_activity, "started", Toast.LENGTH_SHORT).show();
-
-                PdfGenerator.getBuilder()
-                        .setContext(Result_Activity.this)
-                        .fromViewIDSource()
-                        .fromViewID(result_activity, R.id.student_result)
-                        .setFileName("'s Result")
-                        .savePDFSharedStorage(xmlToPDFLifecycleObserver)
-                        .actionAfterPDFGeneration(PdfGenerator.ActionAfterPDFGeneration.OPEN)
-                        .build(new PdfGeneratorListener() {
-                            @Override
-                            public void onFailure(FailureResponse failureResponse) {
-                                super.onFailure(failureResponse);
-
-                                Log.d("RESL", "onFailure: " + failureResponse.getErrorMessage());
-
-                            }
-
-                            @Override
-                            public void showLog(String log) {
-                                super.showLog(log);
-                            }
-
-                            @Override
-                            public void onStartPDFGeneration() {
-
-                            }
-
-                            @Override
-                            public void onFinishPDFGeneration() {
-
-                            }
-
-                            @Override
-                            public void onSuccess(SuccessResponse response) {
-                                super.onSuccess(response);
-                                Toast.makeText(result_activity, "done", Toast.LENGTH_SHORT).show();
-
-                            }
-                        });
-
-            }
-        });
-
-
-
-/*
         if (getIntent().hasExtra("uniGroupPushId") && getIntent().hasExtra("uniClassPushId")) {
 
             String uniGrpPushId = getIntent().getStringExtra("uniGroupPushId");
@@ -112,6 +71,10 @@ public class Result_Activity extends AppCompatActivity {
             String allTotalFullMarks = getIntent().getStringExtra("allTotalFullMarks");
             String rollNumb = getIntent().getStringExtra("rollNumber");
 
+            int percentageMarks = (Integer.parseInt(allTotalMarks) * 100) / Integer.parseInt(allTotalFullMarks);
+
+
+//            Log.d("RESPERC", "onCreate: " + percentageMarks));
 
             rv_ShowSubject = findViewById(R.id.subjectResultList);
             subjectDetailsModelList = new ArrayList<>();
@@ -126,10 +89,11 @@ public class Result_Activity extends AppCompatActivity {
             roll_numb = findViewById(R.id.roll_numb);
             class_numb = findViewById(R.id.class_numb);
             result_date = findViewById(R.id.result_date);
+            percentage = findViewById(R.id.percentage);
+            gradeTV = findViewById(R.id.grade);
 
-
-            marks_by.setText("Marks: " + allTotalMarks + "/" + allTotalFullMarks);
-            student_name.setText("Name: " + userName);
+            marks_by.setText(allTotalMarks + "/" + allTotalFullMarks);
+            student_name.setText(userName);
 
             Date c = Calendar.getInstance().getTime();
             System.out.println("Current time => " + c);
@@ -137,9 +101,37 @@ public class Result_Activity extends AppCompatActivity {
             SimpleDateFormat df = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
             String formattedDate = df.format(c);
 
-            result_date.setText("Date: " + formattedDate);
-            roll_numb.setText("Roll number: " + rollNumb);
-            studentName.setText(userName + "'s Result");
+            result_date.setText(formattedDate);
+            roll_numb.setText(rollNumb);
+            studentName.setText(userName);
+            percentage.setText(percentageMarks + "%");
+
+            String grade = "";
+
+
+            if (percentageMarks < 30) {
+                grade = "F";
+            } else if (percentageMarks >= 30 && percentageMarks <= 39) {
+                grade = "P";
+            } else if (percentageMarks >= 40 && percentageMarks <= 49) {
+                grade = "C";
+            } else if (percentageMarks >= 50 && percentageMarks <= 59) {
+                grade = "B";
+            } else if (percentageMarks >= 60 && percentageMarks <= 69) {
+                grade = "B+";
+            } else if (percentageMarks >= 70 && percentageMarks <= 79) {
+                grade = "A";
+            } else if (percentageMarks >= 80 && percentageMarks <= 89) {
+                grade = "A+";
+            } else if (percentageMarks >= 90 && percentageMarks <= 100) {
+                grade = "O";
+            }
+
+            if (gradeTV.equals("F")) {
+                gradeTV.setTextColor(Color.RED);
+            }
+
+            gradeTV.setText(" | " + grade);
 
             DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
 
@@ -208,7 +200,7 @@ public class Result_Activity extends AppCompatActivity {
                     String schoolName = separated[separated.length - 1];
 
                     school_name.setText(schoolName);
-                    class_numb.setText("Class: " + snapshot.child("className").getValue().toString());
+                    class_numb.setText(snapshot.child("className").getValue().toString());
 
 
                     subjectDetailsModelList.clear();
@@ -233,7 +225,6 @@ public class Result_Activity extends AppCompatActivity {
                 }
             });
 
-            Result_Activity result_activity = Result_Activity.this;
 
             generate_pdf = findViewById(R.id.btn_generate_pdf);
             generate_pdf.setOnClickListener(new View.OnClickListener() {
@@ -249,11 +240,16 @@ public class Result_Activity extends AppCompatActivity {
                                 @Override
                                 public void onFailure(FailureResponse failureResponse) {
                                     super.onFailure(failureResponse);
+
+                                    Log.d("RESLOG", "onFailure: " + failureResponse.getErrorMessage());
+
                                 }
 
                                 @Override
                                 public void showLog(String log) {
                                     super.showLog(log);
+                                    Log.d("RESLOG", "onFailure: " + log);
+
                                 }
 
                                 @Override
@@ -277,7 +273,7 @@ public class Result_Activity extends AppCompatActivity {
 
 
         }
-*/
+
 
     }
 }

@@ -1,132 +1,251 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/full_marks"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#ffffff"
-    android:orientation="vertical"
-    android:paddingTop="20dp"
-    android:paddingBottom="20dp">
+    android:layout_height="100dp"
+    android:baselineAligned="false"
+    android:orientation="horizontal"
+    android:weightSum="5">
 
 
-    <TextView
-        android:id="@+id/subject_name"
+    <!--First layout layout -->
+    <LinearLayout
+        android:id="@+id/firstLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="true"
-        android:text="Mathematics -"
-        android:textColor="@color/black_text_result"
-        android:textSize="14sp" />
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <RelativeLayout
+        <!--Subject textview -->
+        <TextView
+            android:id="@+id/subject_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="English"
+            android:textAlignment="center"
+            android:textAppearance="@style/mid_text"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+
+    <!--Sec layout -->
+    <LinearLayout
+        android:id="@+id/SecPart"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true">
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!--upper layout -->
+        <LinearLayout
+            android:id="@+id/bottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <!--lastone layout -->
+            <LinearLayout
+                android:id="@+id/lasneLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <!--Subject textview -->
+                <TextView
+                    android:id="@+id/theory_full_marks"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="80"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/valTV"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+            <!--lastsec layout -->
+            <LinearLayout
+                android:id="@+id/lastsecLyout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <!--Project textview -->
+                <TextView
+                    android:id="@+id/practical_full_marks"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="20"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/valTV"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--Third layout -->
+    <LinearLayout
+        android:id="@+id/ThirdPart"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!--upper layout -->
+        <LinearLayout
+            android:id="@+id/bottomLa"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <!--lastone layout -->
+            <LinearLayout
+                android:id="@+id/lastoneLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <!--Subject textview -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="24"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/valTV"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+            <!--lastsec layout -->
+            <LinearLayout
+                android:id="@+id/lastsecLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <!--Project textview -->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="6"
+                    android:textAlignment="center"
+                    android:textAppearance="@style/valTV"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/theory_full_marks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="5dp"
-            android:text="80"
-            android:textColor="@color/black_text_result"
-            android:textSize="14sp" />
+    </LinearLayout>
 
-        <TextView
-            android:id="@+id/practical_full_marks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_toEndOf="@+id/theory_full_marks"
-            android:text="20"
-            android:textColor="@color/black_text_result"
-            android:textSize="14sp" />
+    <!--Forth layout -->
+    <LinearLayout
+        android:id="@+id/ForthPart"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        <View
-            android:id="@+id/divider"
-            android:layout_width="1dp"
-            android:layout_height="20dp"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_toEndOf="@+id/practical_full_marks"
-            android:background="@color/black_text_result" />
+        <!--upper layouttt -->
+        <LinearLayout
+            android:id="@+id/upperLayouttt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/theory_marks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="30dp"
-            android:layout_toEndOf="@+id/divider"
-            android:text="60"
-            android:textColor="@color/black_text_result"
-            android:textSize="14sp" />
+            <!--Marks textview -->
+            <TextView
+                android:id="@+id/theory_marks"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="34"
+                android:textAlignment="center"
+                android:textAppearance="@style/valTV"
+                android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/practical_marks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="5dp"
-            android:layout_toEndOf="@+id/theory_marks"
-            android:text="15"
-            android:textColor="@color/black_text_result"
-            android:textSize="14sp" />
+            <!--Marks textview -->
+            <TextView
+                android:id="@+id/practical_marks"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="20"
+                android:textAlignment="center"
+                android:textAppearance="@style/valTV"
+                android:textSize="16sp" />
 
+            <!--Marks textview -->
+            <TextView
+                android:id="@+id/total_marks"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="54"
+                android:textAlignment="center"
+                android:textAppearance="@style/valTV"
+                android:textSize="16sp" />
 
-        <View
-            android:id="@+id/divider2"
-            android:layout_width="1dp"
-            android:layout_height="20dp"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_toEndOf="@+id/practical_marks"
-            android:background="@color/black_text_result" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/total_marks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="15dp"
-            android:layout_toEndOf="@+id/divider2"
-            android:text="75"
-            android:textColor="@color/black_text_result"
-            android:textSize="14sp" />
+        <!--bottom layouttt -->
+        <LinearLayout
+            android:id="@+id/bottomLayouttt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
+            <!--Subject textview -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="(Fifty four)"
+                android:textAlignment="center"
+                android:textAppearance="@style/mid_text"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--Six layout -->
+    <LinearLayout
+        android:id="@+id/SixPart"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!--Subject textview -->
         <TextView
             android:id="@+id/grade"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerInParent="true"
-            android:layout_marginStart="5dp"
-            android:layout_marginEnd="15dp"
-            android:layout_toEndOf="@+id/total_marks"
-            android:text="B+"
-            android:textColor="@color/black_text_result"
-            android:textSize="14sp" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="B"
+            android:textAlignment="center"
+            android:textAppearance="@style/mid_text"
+            android:textSize="16sp" />
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
-</RelativeLayout>
+</LinearLayout>
 

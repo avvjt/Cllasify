@@ -1,6 +1,7 @@
 package com.cllasify.cllasify.Adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -79,15 +80,15 @@ public class Adapter_Result_Per_Subject extends RecyclerView.Adapter<Adapter_Res
     public void onBindViewHolder(@NonNull Adapter_Result_Per_Subject.ViewHolder holder, int position) {
 
 
-        Subject_Details_Model subjectDetailsModel = subjectDetailsModelList.get(position);
-
-
         if (class_results != null) {
 
             try {
 
+//                Log.d("GETMARKS1", "onBindViewHolder: " + subjectDetailsModel.getSubjectName());
+
 //                Class_Result class_result = class_results.get(pos);
 
+                Subject_Details_Model subjectDetailsModel = subjectDetailsModelList.get(position);
                 Class_Result_Info class_result_info = class_results.get(position);
 
                 String subject_name_str = class_result_info.subjectName;
@@ -99,13 +100,17 @@ public class Adapter_Result_Per_Subject extends RecyclerView.Adapter<Adapter_Res
                 String grade_str = class_result_info.grade;
 
 
-                holder.subject_name.setText(subject_name_str);
+                holder.subject_name.setText(subjectDetailsModel.getSubjectName());
                 holder.theory_full_marks.setText(theory_full_marks_str);
                 holder.practical_full_marks.setText(practical_full_marks_str);
                 holder.theory_marks.setText(theory_marks_str);
                 holder.practical_marks.setText(practical_marks_str);
                 holder.total_marks.setText(total_marks_str);
                 holder.grade.setText(grade_str);
+
+                if (grade_str.equals("F")) {
+                    holder.grade.setTextColor(Color.RED);
+                }
 
 
             } catch (Exception e) {

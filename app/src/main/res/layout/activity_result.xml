@@ -49,7 +49,7 @@
                 android:textAppearance="@style/school_text" />
 
             <TextView
-                android:id="@+id/date"
+                android:id="@+id/result_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -105,7 +105,7 @@
 
 
             <TextView
-                android:id="@+id/classNumb"
+                android:id="@+id/class_numb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/class_name"
@@ -121,7 +121,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/classNumb"
+                android:layout_below="@id/class_numb"
                 android:layout_marginTop="30dp"
                 android:orientation="horizontal"
                 android:weightSum="4">
@@ -161,7 +161,7 @@
                             android:textAppearance="@style/title" />
 
                         <TextView
-                            android:id="@+id/student_Name"
+                            android:id="@+id/student_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/studentName"
@@ -197,7 +197,7 @@
                             android:textAppearance="@style/title" />
 
                         <TextView
-                            android:id="@+id/student_Roll"
+                            android:id="@+id/roll_numb"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/studentRoll"
@@ -233,7 +233,7 @@
                             android:textAppearance="@style/title" />
 
                         <TextView
-                            android:id="@+id/grand_Total"
+                            android:id="@+id/marks_by"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/grandTotal"
@@ -258,23 +258,48 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
-                        android:layout_margin="25dp">
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="25dp"
+                        android:layout_marginBottom="12dp">
 
                         <TextView
-                            android:id="@+id/percentage"
+                            android:id="@+id/percentageTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Percentage"
                             android:textAppearance="@style/title" />
 
                         <TextView
-                            android:id="@+id/percentage_marks"
+                            android:id="@+id/gradeTV"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/percentage"
-                            android:layout_centerInParent="true"
-                            android:text="88%"
-                            android:textAppearance="@style/value" />
+                            android:layout_below="@+id/percentageTV"
+                            android:gravity="center"
+                            android:text="&amp;Grade"
+                            android:textAppearance="@style/title" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/gradeTV"
+                            android:layout_centerInParent="true">
+
+                            <TextView
+                                android:id="@+id/percentage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="88%"
+                                android:textAppearance="@style/value" />
+
+                            <TextView
+                                android:id="@+id/grade"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=" | A+"
+                                android:textAppearance="@style/value" />
+
+                        </LinearLayout>
 
 
                     </RelativeLayout>
@@ -289,12 +314,383 @@
 
 
         <RelativeLayout
-            android:id="@+id/rectangle_1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/student_result_info"
             android:layout_marginTop="20dp"
-            android:background="@drawable/txt_bg" />
+            android:background="@drawable/txt_bg"
+            android:padding="10dp">
+
+
+            <LinearLayout
+                android:id="@+id/masterLayout"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_margin="20dp"
+                android:orientation="horizontal"
+                android:weightSum="6">
+
+
+                <!--First layout layout -->
+                <LinearLayout
+                    android:id="@+id/firstLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <!--Subject textview -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Subjects"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/mid_text"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+
+                <!--Sec layout -->
+                <LinearLayout
+                    android:id="@+id/SecPart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <!--upper layout -->
+                    <LinearLayout
+                        android:id="@+id/upperLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <!--Full marks textview -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Full marks"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/mid_text"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <!--bottom layout -->
+                    <LinearLayout
+                        android:id="@+id/bottomLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <!--lastone layout -->
+                        <LinearLayout
+                            android:id="@+id/lastoneLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <!--Subject textview -->
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Theory"
+                                android:textAlignment="center"
+                                android:textAppearance="@style/valTV"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+                        <!--lastsec layout -->
+                        <LinearLayout
+                            android:id="@+id/lastsecLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <!--Project textview -->
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Project"
+                                android:textAlignment="center"
+                                android:textAppearance="@style/valTV"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Third layout -->
+                <LinearLayout
+                    android:id="@+id/ThirdPart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <!--upper layoutt -->
+                    <LinearLayout
+                        android:id="@+id/upperLayoutt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <!--Full marks textview -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Pass marks"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/mid_text"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <!--bottom layoutt -->
+                    <LinearLayout
+                        android:id="@+id/bottomLayoutt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <!--lastone layoutt -->
+                        <LinearLayout
+                            android:id="@+id/lastoneLayoutt"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <!--Subject textview -->
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Theory"
+                                android:textAlignment="center"
+                                android:textAppearance="@style/valTV"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+                        <!--lastsec layoutt -->
+                        <LinearLayout
+                            android:id="@+id/lastsecLayoutt"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <!--Project textview -->
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Project"
+                                android:textAlignment="center"
+                                android:textAppearance="@style/valTV"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+                <!--Forth layout -->
+                <LinearLayout
+                    android:id="@+id/ForthPart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <!--upper layouttt -->
+                    <LinearLayout
+                        android:id="@+id/upperLayouttt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <!--Marks textview -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Marks"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/mid_text"
+                            android:textSize="16sp" />
+
+                    </LinearLayout>
+
+                    <!--bottom layouttt -->
+                    <LinearLayout
+                        android:id="@+id/bottomLayouttt"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <!--lastone layouttt -->
+                        <LinearLayout
+                            android:id="@+id/lastoneLayouttt"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <!--Subject textview -->
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Theory"
+                                android:textAlignment="center"
+                                android:textAppearance="@style/valTV"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                        <!--lastsec layouttt -->
+                        <LinearLayout
+                            android:id="@+id/lastsecLayouttt"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <!--Project textview -->
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:text="Project"
+                                android:textAlignment="center"
+                                android:textAppearance="@style/valTV"
+                                android:textSize="12sp" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Fifth layout -->
+                <LinearLayout
+                    android:id="@+id/FifthPart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <!--first vertical -->
+                    <LinearLayout
+                        android:id="@+id/firstvertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <!--Total textview -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="Total"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/mid_text"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <!--sec vertical -->
+                    <LinearLayout
+                        android:id="@+id/secvertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <!--In figure textview -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="In figures"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/valTV"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <!--third vertical -->
+                    <LinearLayout
+                        android:id="@+id/thirdvertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <!--In words textview -->
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="In words"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/valTV"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <!--Six layout -->
+                <LinearLayout
+                    android:id="@+id/SixPart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <!--Subject textview -->
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="Subject \nGrade"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/mid_text"
+                        android:textSize="16sp" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/subjectResultList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/masterLayout" />
+
+
+        </RelativeLayout>
 
 
     </RelativeLayout>
