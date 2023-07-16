@@ -3,16 +3,18 @@ package com.cllasify.cllasify.Activities;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.cllasify.cllasify.Adapters.Adapter_Result_Per_Subject;
 import com.cllasify.cllasify.ModelClasses.Class_Result_Info;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
@@ -34,11 +36,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class Result_Activity extends AppCompatActivity {
 
 
     RecyclerView rv_ShowSubject;
-    TextView studentName;
 
     TextView school_name, marks_by, student_name, roll_numb, class_numb, result_date, percentage, gradeTV;
 
@@ -48,6 +51,7 @@ public class Result_Activity extends AppCompatActivity {
     List<Subject_Details_Model> subjectDetailsModelList;
     List<Class_Result_Info> class_results = new ArrayList<>();
     private PdfGenerator.XmlToPDFLifecycleObserver xmlToPDFLifecycleObserver;
+    CircleImageView userProfilePic;
 
     @SuppressLint({"SetTextI18n", "MissingInflatedId"})
     @Override
@@ -78,11 +82,11 @@ public class Result_Activity extends AppCompatActivity {
 
             rv_ShowSubject = findViewById(R.id.subjectResultList);
             subjectDetailsModelList = new ArrayList<>();
-            studentName = findViewById(R.id.studentName);
             adapter_topicList = new Adapter_Result_Per_Subject(Result_Activity.this);
             adapter_topicList.setStudentUserId(userID);
             adapter_topicList.setSpecPos(Integer.parseInt(position));
 
+            userProfilePic = findViewById(R.id.userProfilePic);
             school_name = findViewById(R.id.school_name);
             marks_by = findViewById(R.id.marks_by);
             student_name = findViewById(R.id.student_name);
@@ -101,9 +105,38 @@ public class Result_Activity extends AppCompatActivity {
             SimpleDateFormat df = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
             String formattedDate = df.format(c);
 
+            DatabaseReference refUserStatus = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(userID);
+            refUserStatus.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                    if (snapshot.child("profilePic").exists()) {
+                        String profilePic = snapshot.child("profilePic").getValue().toString();
+
+                        if (profilePic != null) {
+                            if (!(Result_Activity.this).isFinishing()) {
+                                Glide.with(Result_Activity.this).load(profilePic).into(userProfilePic);
+                            }
+                        }
+
+                    } else {
+                        if (!(Result_Activity.this).isFinishing()) {
+                            Glide.with(Result_Activity.this).load(R.drawable.maharaji).into(userProfilePic);
+                        }
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
             result_date.setText(formattedDate);
             roll_numb.setText(rollNumb);
-            studentName.setText(userName);
             percentage.setText(percentageMarks + "%");
 
             String grade = "";
@@ -225,52 +258,69 @@ public class Result_Activity extends AppCompatActivity {
                 }
             });
 
+            Toast.makeText(result_activity, "Generating result please wait...", Toast.LENGTH_SHORT).show();
 
+            if (getIntent().getStringExtra("generateResult").equals("true")) {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
+
+                        PdfGenerator.getBuilder()
+                                .setContext(Result_Activity.this)
+                                .fromViewIDSource()
+                                .fromViewID(result_activity, R.id.student_result)
+                                .setFileName(userName + "'s Result")
+                                .actionAfterPDFGeneration(PdfGenerator.ActionAfterPDFGeneration.OPEN)
+                                .build(new PdfGeneratorListener() {
+                                    @Override
+                                    public void onFailure(FailureResponse failureResponse) {
+                                        super.onFailure(failureResponse);
+
+                                    }
+
+                                    @Override
+                                    public void showLog(String log) {
+                                        super.showLog(log);
+
+                                    }
+
+                                    @Override
+                                    public void onStartPDFGeneration() {
+
+                                    }
+
+                                    @Override
+                                    public void onFinishPDFGeneration() {
+
+                                    }
+
+                                    @Override
+                                    public void onSuccess(SuccessResponse response) {
+                                        super.onSuccess(response);
+                                    }
+                                });
+
+
+                    }
+                }, 1000);
+
+
+            }
+
+/*
             generate_pdf = findViewById(R.id.btn_generate_pdf);
             generate_pdf.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    PdfGenerator.getBuilder()
-                            .setContext(Result_Activity.this)
-                            .fromViewIDSource()
-                            .fromViewID(result_activity, R.id.student_result)
-                            .setFileName(userName + "'s Result")
-                            .actionAfterPDFGeneration(PdfGenerator.ActionAfterPDFGeneration.OPEN)
-                            .build(new PdfGeneratorListener() {
-                                @Override
-                                public void onFailure(FailureResponse failureResponse) {
-                                    super.onFailure(failureResponse);
 
-                                    Log.d("RESLOG", "onFailure: " + failureResponse.getErrorMessage());
 
-                                }
 
-                                @Override
-                                public void showLog(String log) {
-                                    super.showLog(log);
-                                    Log.d("RESLOG", "onFailure: " + log);
-
-                                }
-
-                                @Override
-                                public void onStartPDFGeneration() {
-
-                                }
-
-                                @Override
-                                public void onFinishPDFGeneration() {
-
-                                }
-
-                                @Override
-                                public void onSuccess(SuccessResponse response) {
-                                    super.onSuccess(response);
-                                }
-                            });
 
                 }
             });
-
+*/
 
         }
 

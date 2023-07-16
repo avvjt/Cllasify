@@ -213,6 +213,7 @@
 
             <!--Subject textview -->
             <TextView
+                android:id="@+id/numb_words"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"

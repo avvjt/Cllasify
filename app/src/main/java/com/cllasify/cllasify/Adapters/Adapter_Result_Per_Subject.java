@@ -15,6 +15,7 @@ import com.cllasify.cllasify.ModelClasses.Class_Group_Names;
 import com.cllasify.cllasify.ModelClasses.Class_Result_Info;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.R;
+import com.cllasify.cllasify.Utility.NumbConverter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,6 +100,8 @@ public class Adapter_Result_Per_Subject extends RecyclerView.Adapter<Adapter_Res
                 String total_marks_str = String.valueOf(class_result_info.totalSubjectMarks);
                 String grade_str = class_result_info.grade;
 
+                String return_val_in_english = NumbConverter.convert(Long.parseLong(total_marks_str));
+
 
                 holder.subject_name.setText(subjectDetailsModel.getSubjectName());
                 holder.theory_full_marks.setText(theory_full_marks_str);
@@ -107,6 +110,7 @@ public class Adapter_Result_Per_Subject extends RecyclerView.Adapter<Adapter_Res
                 holder.practical_marks.setText(practical_marks_str);
                 holder.total_marks.setText(total_marks_str);
                 holder.grade.setText(grade_str);
+                holder.numb_words.setText(return_val_in_english);
 
                 if (grade_str.equals("F")) {
                     holder.grade.setTextColor(Color.RED);
@@ -135,8 +139,7 @@ public class Adapter_Result_Per_Subject extends RecyclerView.Adapter<Adapter_Res
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView subject_name, theory_full_marks, practical_full_marks, theory_marks, practical_marks, total_marks, grade;
-
+        TextView subject_name, theory_full_marks, practical_full_marks, theory_marks, practical_marks, total_marks, grade, numb_words;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -148,6 +151,7 @@ public class Adapter_Result_Per_Subject extends RecyclerView.Adapter<Adapter_Res
             practical_marks = itemView.findViewById(R.id.practical_marks);
             total_marks = itemView.findViewById(R.id.total_marks);
             grade = itemView.findViewById(R.id.grade);
+            numb_words = itemView.findViewById(R.id.numb_words);
 
         }
     }

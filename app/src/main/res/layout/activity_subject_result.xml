@@ -96,7 +96,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/button_solid_unfollow"
                     android:elevation="2dp"
-                    android:text="Done"
+                    android:text="Generate Result"
                     android:textColor="@color/black" />
 
 

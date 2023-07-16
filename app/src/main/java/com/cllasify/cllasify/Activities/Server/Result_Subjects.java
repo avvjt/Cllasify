@@ -293,6 +293,7 @@ public class Result_Subjects extends AppCompatActivity {
                                         intent.putExtra("allTotalMarks", String.valueOf(allTotalMarks[0]));
                                         intent.putExtra("allTotalFullMarks", String.valueOf(allTotalFullMarks[0]));
                                         intent.putExtra("rollNumber", rollNumber);
+                                        intent.putExtra("generateResult", "true");
 
                                         startActivity(intent);
 
