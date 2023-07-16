@@ -1,315 +1,303 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:layout_width="794dp"
+    android:layout_height="1123dp"
     tools:context=".Activities.Result_Activity">
 
-    <LinearLayout
-        android:id="@+id/action_bar"
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="#ffffff"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-        <ImageButton
-            android:id="@+id/btn_Back"
-            style="@style/SelectableItemBackgroundBorderless"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
-            android:contentDescription="@string/classview_contentDescription"
-            android:paddingStart="10dp"
-            android:paddingTop="10dp"
-            android:paddingEnd="1dp"
-            android:src="@drawable/ic_arrow_left_24"
-            app:tint="@color/black_text_result"
-            tools:ignore="SpeakableTextPresentCheck" />
+    <Button
+        android:id="@+id/btn_generate_pdf"
+        android:layout_width="150dp"
+        android:layout_height="44dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/button_solid_unfollow"
+        android:elevation="2dp"
+        android:text="Generate Result"
+        android:textColor="@color/black_text_result" />
 
-        <TextView
-            android:id="@+id/studentName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="5dp"
-            android:fontFamily="@font/inter_semibold"
-            android:textColor="@color/black_text_result"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <androidx.core.widget.NestedScrollView
+    <RelativeLayout
         android:id="@+id/student_result"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/action_bar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/action_bar">
+        android:layout_below="@+id/btn_generate_pdf"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
+        android:background="#EAEDF2"
+        android:padding="20dp">
 
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/student_result_info"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:background="#ffffff"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/school_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_centerInParent="true"
-                android:textColor="@color/black_text_result"
-                android:textSize="14sp" />
+                android:layout_alignParentTop="true"
+                android:gravity="top"
+                android:text="School name"
+                android:textAppearance="@style/school_text" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="top"
+                android:text="Date - 20.1.23"
+                android:textAppearance="@style/large_text" />
+
+            <TextView
+                android:id="@+id/schl_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/school_name"
+                android:gravity="top"
+                android:text="The following is the statement of the marks and grade obtained by"
+                android:textAppearance="@style/bio" />
+
+
+            <TextView
+                android:id="@+id/test_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/schl_text"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="70dp"
+                android:text="Test name"
+                android:textAppearance="@style/mid_text" />
+
+
+            <TextView
+                android:id="@+id/senior_scho"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/test_name"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/txt_bg"
+                android:padding="20dp"
+                android:text="SENIOR SCHOOL CERTIFICATE EXAMINATION"
+                android:textAppearance="@style/inner_text" />
+
+
+            <TextView
+                android:id="@+id/class_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/schl_text"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="70dp"
+                android:layout_marginEnd="10dp"
+                android:text="Class name"
+                android:textAppearance="@style/mid_text" />
+
+
+            <TextView
+                android:id="@+id/classNumb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/class_name"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/txt_bg"
+                android:padding="20dp"
+                android:text="Class XI"
+                android:textAppearance="@style/inner_text" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp">
-
-                <TextView
-                    android:id="@+id/student_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black_text_result"
-                    android:textSize="11sp" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="25dp"
-                android:layout_weight="3">
-
-
-                <TextView
-                    android:id="@+id/class_numb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:textColor="@color/black_text_result"
-                    android:textSize="11sp" />
-
-                <TextView
-                    android:id="@+id/roll_numb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="@color/black_text_result"
-                    android:textSize="11sp" />
-
-
-                <TextView
-                    android:id="@+id/result_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:textColor="@color/black_text_result"
-                    android:textSize="11sp" />
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:id="@+id/full_marks"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-
-                <TextView
-                    android:id="@+id/subject_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
-                    android:text="Subject"
-                    android:textColor="@color/black_text_result"
-                    android:textSize="14sp" />
+                android:layout_below="@id/classNumb"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:weightSum="4">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginStart="60dp">
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/user_bg">
 
-
-                    <TextView
-                        android:id="@+id/theory_full_marks"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:gravity="center"
-                        android:text="Total \ntheory \nmarks"
-                        android:textColor="@color/black_text_result"
-                        android:textSize="8sp" />
-
-                    <TextView
-                        android:id="@+id/practical_full_marks"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/civ_UserProfilePic"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentStart="true"
                         android:layout_centerInParent="true"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_toEndOf="@+id/theory_full_marks"
-                        android:gravity="center"
-                        android:text="Total \npractical \nmarks"
-                        android:textColor="@color/black_text_result"
-                        android:textSize="8sp" />
+                        android:layout_marginStart="15dp"
+                        android:src="@drawable/maharaji" />
 
-                    <View
-                        android:id="@+id/divider"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_toEndOf="@+id/practical_full_marks"
-                        android:background="@color/black_text_result" />
+                        android:layout_marginTop="25dp"
+                        android:layout_marginEnd="25dp"
+                        android:layout_marginBottom="25dp"
 
-                    <TextView
-                        android:id="@+id/theory_marks"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerInParent="true"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_toEndOf="@+id/divider"
-                        android:gravity="center"
-                        android:text="Theory \nmarks"
-                        android:textColor="@color/black_text_result"
-                        android:textSize="8sp" />
+                        android:layout_toEndOf="@+id/civ_UserProfilePic">
 
-                    <TextView
-                        android:id="@+id/practical_marks"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerInParent="true"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_toEndOf="@+id/theory_marks"
-                        android:gravity="center"
-                        android:text="Practical \nmarks"
-                        android:textColor="@color/black_text_result"
-                        android:textSize="8sp" />
+                        <TextView
+                            android:id="@+id/studentName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Student Name"
+                            android:textAppearance="@style/title" />
+
+                        <TextView
+                            android:id="@+id/student_Name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/studentName"
+                            android:layout_centerInParent="true"
+                            android:text="John Doe"
+                            android:textAppearance="@style/value" />
 
 
-                    <View
-                        android:id="@+id/divider2"
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:layout_centerInParent="true"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_toEndOf="@+id/practical_marks"
-                        android:background="@color/black_text_result" />
+                    </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/total_marks"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerInParent="true"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_toEndOf="@+id/divider2"
-                        android:gravity="center"
-                        android:text="Total \nmarks"
-                        android:textColor="@color/black_text_result"
-                        android:textSize="8dp" />
 
-                    <TextView
-                        android:id="@+id/grade"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerInParent="true"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_toEndOf="@+id/total_marks"
-                        android:text="Grade"
-                        android:textColor="@color/black_text_result"
-                        android:textSize="8dp" />
                 </RelativeLayout>
 
-
-            </RelativeLayout>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/subjectResultList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layoutAnimation="@anim/layout_from_right"
-                android:nestedScrollingEnabled="false"
-                app:fastScrollEnabled="false" />
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/user_bg">
 
 
-            <TextView
-                android:id="@+id/marks_by"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/black_text_result"
-                android:textSize="12sp" />
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="25dp">
 
-            <TextView
-                android:id="@+id/percentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/black_text_result"
-                android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/studentRoll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Student Roll no."
+                            android:textAppearance="@style/title" />
 
-            <TextView
-                android:id="@+id/grades"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textColor="@color/black_text_result"
-                android:textSize="12sp" />
+                        <TextView
+                            android:id="@+id/student_Roll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/studentRoll"
+                            android:layout_centerInParent="true"
+                            android:text="10"
+                            android:textAppearance="@style/value" />
 
 
-        </LinearLayout>
+                    </RelativeLayout>
 
-    </androidx.core.widget.NestedScrollView>
 
-    <Button
-        android:id="@+id/btn_generate_pdf"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_weight="1"
-        android:background="@drawable/button_solid_unfollow"
-        android:elevation="2dp"
-        android:text="Generate Result"
-        android:textColor="@color/black_text_result" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/user_bg">
+
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="25dp">
+
+                        <TextView
+                            android:id="@+id/grandTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Grand total"
+                            android:textAppearance="@style/title" />
+
+                        <TextView
+                            android:id="@+id/grand_Total"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/grandTotal"
+                            android:layout_centerInParent="true"
+                            android:text="788"
+                            android:textAppearance="@style/value" />
+
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/user_bg">
+
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_margin="25dp">
+
+                        <TextView
+                            android:id="@+id/percentage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Percentage"
+                            android:textAppearance="@style/title" />
+
+                        <TextView
+                            android:id="@+id/percentage_marks"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/percentage"
+                            android:layout_centerInParent="true"
+                            android:text="88%"
+                            android:textAppearance="@style/value" />
+
+
+                    </RelativeLayout>
+
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/rectangle_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/student_result_info"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/txt_bg" />
+
+
+    </RelativeLayout>
+
 
 </RelativeLayout>

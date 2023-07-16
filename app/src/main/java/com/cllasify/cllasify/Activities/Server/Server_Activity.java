@@ -66,7 +66,6 @@ import com.cllasify.cllasify.Activities.Notification_Activity;
 import com.cllasify.cllasify.Activities.Profile.Profile_Activity;
 import com.cllasify.cllasify.Activities.Routine.Routine_Structure;
 import com.cllasify.cllasify.Activities.Routine.priority_subject.Priority_Subject;
-import com.cllasify.cllasify.Activities.Routine.routine_structure.RoutineStructureActivity;
 import com.cllasify.cllasify.Activities.Server.PDFBACK.OnBackPressedListener;
 import com.cllasify.cllasify.Activities.getStarted;
 import com.cllasify.cllasify.Adapters.Adapter_All_Friends;
@@ -1012,14 +1011,14 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
 
                                 }
-
+/*
                                 Intent intent = new Intent(Server_Activity.this, RoutineStructureActivity.class);
                                 intent.putExtra("groupPushId", groupPushId);
                                 intent.putExtra("classPushId", classUniPushId);
                                 intent.putExtra("className", subGroupPushId);
 
                                 startActivity(intent);
-
+*/
 
                             }
                         }

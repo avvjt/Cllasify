@@ -6,10 +6,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Adapters.Adapter_Result_Per_Subject;
@@ -20,18 +19,9 @@ import com.gkemon.XMLtoPDF.PdfGenerator;
 import com.gkemon.XMLtoPDF.PdfGeneratorListener;
 import com.gkemon.XMLtoPDF.model.FailureResponse;
 import com.gkemon.XMLtoPDF.model.SuccessResponse;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class Result_Activity extends AppCompatActivity {
 
@@ -46,14 +36,71 @@ public class Result_Activity extends AppCompatActivity {
     Adapter_Result_Per_Subject adapter_topicList;
     List<Subject_Details_Model> subjectDetailsModelList;
     List<Class_Result_Info> class_results = new ArrayList<>();
+    private PdfGenerator.XmlToPDFLifecycleObserver xmlToPDFLifecycleObserver;
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "MissingInflatedId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
+        xmlToPDFLifecycleObserver = new PdfGenerator.XmlToPDFLifecycleObserver(this);
+        getLifecycle().addObserver(xmlToPDFLifecycleObserver);
 
+        Result_Activity result_activity = Result_Activity.this;
+
+        generate_pdf = findViewById(R.id.btn_generate_pdf);
+        generate_pdf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(result_activity, "started", Toast.LENGTH_SHORT).show();
+
+                PdfGenerator.getBuilder()
+                        .setContext(Result_Activity.this)
+                        .fromViewIDSource()
+                        .fromViewID(result_activity, R.id.student_result)
+                        .setFileName("'s Result")
+                        .savePDFSharedStorage(xmlToPDFLifecycleObserver)
+                        .actionAfterPDFGeneration(PdfGenerator.ActionAfterPDFGeneration.OPEN)
+                        .build(new PdfGeneratorListener() {
+                            @Override
+                            public void onFailure(FailureResponse failureResponse) {
+                                super.onFailure(failureResponse);
+
+                                Log.d("RESL", "onFailure: " + failureResponse.getErrorMessage());
+
+                            }
+
+                            @Override
+                            public void showLog(String log) {
+                                super.showLog(log);
+                            }
+
+                            @Override
+                            public void onStartPDFGeneration() {
+
+                            }
+
+                            @Override
+                            public void onFinishPDFGeneration() {
+
+                            }
+
+                            @Override
+                            public void onSuccess(SuccessResponse response) {
+                                super.onSuccess(response);
+                                Toast.makeText(result_activity, "done", Toast.LENGTH_SHORT).show();
+
+                            }
+                        });
+
+            }
+        });
+
+
+
+/*
         if (getIntent().hasExtra("uniGroupPushId") && getIntent().hasExtra("uniClassPushId")) {
 
             String uniGrpPushId = getIntent().getStringExtra("uniGroupPushId");
@@ -230,7 +277,7 @@ public class Result_Activity extends AppCompatActivity {
 
 
         }
-
+*/
 
     }
 }

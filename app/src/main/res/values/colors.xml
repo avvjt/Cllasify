@@ -47,7 +47,7 @@
     <color name="msg_button">#DFE2F3</color>
     <color name="icon_round_background">#EDEDED</color>
     <color name="selected">#7033C1</color>
-
+    <color name="result_bg">#7033C1</color>
 
     <color name="shimmer_color">#BFBDBD</color>
 

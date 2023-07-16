@@ -103,21 +103,65 @@ public class Routine_Structure extends AppCompatActivity {
         });
         binding.btnMonday.setOnClickListener(v -> {
             toggleViewVisibility(binding.rvAssignedMonday);
+
+            binding.rvAssignedTuesday.setVisibility(View.GONE);
+            binding.rvAssignedWednesday.setVisibility(View.GONE);
+            binding.rvAssignedThursday.setVisibility(View.GONE);
+            binding.rvAssignedFriday.setVisibility(View.GONE);
+            binding.rvAssignedSaturday.setVisibility(View.GONE);
+
+
         });
         binding.btnTuesday.setOnClickListener(v -> {
             toggleViewVisibility(binding.rvAssignedTuesday);
+
+            binding.rvAssignedMonday.setVisibility(View.GONE);
+            binding.rvAssignedWednesday.setVisibility(View.GONE);
+            binding.rvAssignedThursday.setVisibility(View.GONE);
+            binding.rvAssignedFriday.setVisibility(View.GONE);
+            binding.rvAssignedSaturday.setVisibility(View.GONE);
+
         });
         binding.btnWednesday.setOnClickListener(v -> {
             toggleViewVisibility(binding.rvAssignedWednesday);
+
+            binding.rvAssignedMonday.setVisibility(View.GONE);
+            binding.rvAssignedTuesday.setVisibility(View.GONE);
+            binding.rvAssignedThursday.setVisibility(View.GONE);
+            binding.rvAssignedFriday.setVisibility(View.GONE);
+            binding.rvAssignedSaturday.setVisibility(View.GONE);
+
         });
         binding.btnThursday.setOnClickListener(v -> {
             toggleViewVisibility(binding.rvAssignedThursday);
+
+            binding.rvAssignedMonday.setVisibility(View.GONE);
+            binding.rvAssignedTuesday.setVisibility(View.GONE);
+            binding.rvAssignedWednesday.setVisibility(View.GONE);
+            binding.rvAssignedFriday.setVisibility(View.GONE);
+            binding.rvAssignedSaturday.setVisibility(View.GONE);
+
         });
         binding.btnFriday.setOnClickListener(v -> {
             toggleViewVisibility(binding.rvAssignedFriday);
+
+            binding.rvAssignedMonday.setVisibility(View.GONE);
+            binding.rvAssignedTuesday.setVisibility(View.GONE);
+            binding.rvAssignedWednesday.setVisibility(View.GONE);
+            binding.rvAssignedThursday.setVisibility(View.GONE);
+            binding.rvAssignedSaturday.setVisibility(View.GONE);
+
         });
         binding.btnSaturday.setOnClickListener(v -> {
             toggleViewVisibility(binding.rvAssignedSaturday);
+
+
+            binding.rvAssignedMonday.setVisibility(View.GONE);
+            binding.rvAssignedTuesday.setVisibility(View.GONE);
+            binding.rvAssignedWednesday.setVisibility(View.GONE);
+            binding.rvAssignedThursday.setVisibility(View.GONE);
+            binding.rvAssignedFriday.setVisibility(View.GONE);
+
         });
         fetchPreviousRoutines();
     }
