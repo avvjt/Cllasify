@@ -7,129 +7,197 @@
     android:background="@color/page_background_color"
     android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar">
 
-    <androidx.core.widget.NestedScrollView
+    <LinearLayout
+        android:id="@+id/action_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@color/page_color"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+        <ImageButton
+            android:id="@+id/btn_Back"
+            style="@style/SelectableItemBackgroundBorderless"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="1dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_arrow_left_24"
+            app:tint="@color/iconSecondaryColor"
+            android:contentDescription="@string/privacy_contentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_gravity="center"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/inter_semibold"
+            android:text="Subject Priority"
+            android:textColor="@color/text_color"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/layoutHolder"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/action_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-<!--                Action Bar-->
                 <LinearLayout
-                    android:id="@+id/action_bar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@color/page_color"
-                    android:padding="15dp"
-                    android:elevation="5dp">
-<!--                    Primary-->
+                    android:orientation="vertical">
+                    <!--                Action Bar-->
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:id="@+id/action_bar1"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="8dp"
-                        android:orientation="vertical"
-                        android:gravity="start|center_vertical">
-                        <TextView
-                            android:id="@+id/period_primary_subject"
-                            android:layout_width="wrap_content"
+                        android:orientation="horizontal"
+                        android:background="@color/page_color"
+                        android:padding="15dp"
+                        android:elevation="5dp">
+                        <!--                    Primary-->
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/your_primary_subject"
-                            app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.5" />
-                        <View
-                            android:layout_width="wrap_content"
-                            android:layout_height="8dp"/>
-                        <TextView
-                            android:id="@+id/primarySub"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="Maths"/>
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/textInputLayoutPrimary"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/select_primary">
-                            <AutoCompleteTextView
-                                android:id="@+id/primaryACT"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            android:orientation="vertical"
+                            android:gravity="start|center_vertical">
+                            <TextView
+                                android:id="@+id/period_primary_subject"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/your_primary_subject"
+                                app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.5"
+                                android:fontFamily="@font/inter_medium"
+                                android:textSize="16sp"
+                                android:textColor="@color/text_color"/>
+                            <View
+                                android:layout_width="wrap_content"
+                                android:layout_height="8dp"/>
+                            <TextView
+                                android:id="@+id/primarySub"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="Maths"
+                                android:fontFamily="@font/inter_regular"
+                                android:textSize="15sp"
+                                android:textColor="@color/text_color"/>
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayoutPrimary"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textSize="12dp" />
+                                android:hint="@string/select_primary">
+                                <AutoCompleteTextView
+                                    android:id="@+id/primaryACT"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"
+                                    android:fontFamily="@font/inter_regular"
+                                    android:textColor="@color/text_color"/>
 
 
-                        </com.google.android.material.textfield.TextInputLayout>
-                    </LinearLayout>
-<!--                    Secondary-->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_marginStart="8dp"
-                        android:orientation="vertical"
-                        android:gravity="start|center_vertical">
-                        <TextView
-                            android:id="@+id/period_secondary_subject"
-                            android:layout_width="wrap_content"
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
+                        <!--                    Secondary-->
+                        <LinearLayout
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/your_secondary_subject"
-                            app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.5" />
-                        <View
-                            android:layout_width="wrap_content"
-                            android:layout_height="8dp"/>
-                        <TextView
-                            android:id="@+id/secondarySub"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="Physics"/>
-                        <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/textInputLayoutSecondary"
-                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/select_secondary">
-                            <AutoCompleteTextView
-                                android:id="@+id/secondaryACT"
+                            android:layout_weight="1"
+                            android:layout_marginStart="8dp"
+                            android:orientation="vertical"
+                            android:gravity="start|center_vertical">
+                            <TextView
+                                android:id="@+id/period_secondary_subject"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/your_secondary_subject"
+                                app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.5"
+                                android:fontFamily="@font/inter_medium"
+                                android:textSize="16sp"
+                                android:textColor="@color/text_color"/>
+                            <View
+                                android:layout_width="wrap_content"
+                                android:layout_height="8dp"/>
+                            <TextView
+                                android:id="@+id/secondarySub"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="Physics"
+                                android:fontFamily="@font/inter_regular"
+                                android:textSize="15sp"
+                                android:textColor="@color/text_color"/>
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/textInputLayoutSecondary"
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:textSize="12dp" />
+                                android:hint="@string/select_secondary">
+                                <AutoCompleteTextView
+                                    android:id="@+id/secondaryACT"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="12sp"
+                                    android:fontFamily="@font/inter_regular"
+                                    android:textColor="@color/text_color"/>
 
 
-                        </com.google.android.material.textfield.TextInputLayout>
+                            </com.google.android.material.textfield.TextInputLayout>
+                        </LinearLayout>
                     </LinearLayout>
+
+                    <Button
+                        android:id="@+id/doneBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:background="@drawable/rounded_corner"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:text="Done"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/mainRv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="50dp"
+                        android:layout_marginHorizontal="15dp" />
                 </LinearLayout>
-
-                <Button
-                    android:id="@+id/doneBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="15dp"
-                    android:background="@drawable/rounded_corner"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:text="Done"
-                    android:textAllCaps="false"
-                    android:textColor="@color/black" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/mainRv"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginHorizontal="15dp" />
             </LinearLayout>
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
+
+    </LinearLayout>
+
+
 
     <ProgressBar
         android:id="@+id/progress_bar"

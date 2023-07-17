@@ -538,9 +538,9 @@
     <string name="routine_s">Routine: %s</string>
     <string name="period_s">Period: %d</string>
     <string name="primary_subject">Primary Subject</string>
-    <string name="your_primary_subject">Your Primary subject -</string>
+    <string name="your_primary_subject">Primary Subject</string>
     <string name="select_primary">Select Primary</string>
-    <string name="your_secondary_subject">Your Secondary subject -</string>
+    <string name="your_secondary_subject">Secondary Subject</string>
     <string name="select_secondary">Select Secondary</string>
     <string name="done">Done</string>
 

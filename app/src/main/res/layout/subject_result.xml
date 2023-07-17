@@ -14,7 +14,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/border">
 
         <!--Subject textview -->
         <TextView
@@ -36,7 +37,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/border">
 
         <!--upper layout -->
         <LinearLayout
@@ -96,7 +98,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/border">
 
         <!--upper layout -->
         <LinearLayout
@@ -155,7 +158,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/border">
 
         <!--upper layouttt -->
         <LinearLayout
@@ -175,7 +179,8 @@
                 android:text="34"
                 android:textAlignment="center"
                 android:textAppearance="@style/valTV"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:background="@drawable/border"/>
 
             <!--Marks textview -->
             <TextView
@@ -187,7 +192,8 @@
                 android:text="20"
                 android:textAlignment="center"
                 android:textAppearance="@style/valTV"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:background="@drawable/border"/>
 
             <!--Marks textview -->
             <TextView
@@ -199,7 +205,8 @@
                 android:text="54"
                 android:textAlignment="center"
                 android:textAppearance="@style/valTV"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:background="@drawable/border"/>
 
         </LinearLayout>
 
@@ -232,7 +239,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/border">
 
         <!--Subject textview -->
         <TextView

@@ -333,7 +333,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@drawable/border">
 
                     <!--Subject textview -->
                     <TextView
@@ -354,7 +355,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@drawable/border">
 
                     <!--upper layout -->
                     <LinearLayout
@@ -362,7 +364,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:background="@drawable/border">
 
                         <!--Full marks textview -->
                         <TextView
@@ -372,7 +375,7 @@
                             android:text="Full marks"
                             android:textAlignment="center"
                             android:textAppearance="@style/mid_text"
-                            android:textSize="16sp" />
+                            android:textSize="16sp"/>
 
                     </LinearLayout>
 
@@ -390,7 +393,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:background="@drawable/border">
 
                             <!--Subject textview -->
                             <TextView
@@ -409,7 +413,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:background="@drawable/border">
 
                             <!--Project textview -->
                             <TextView
@@ -440,7 +445,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:background="@drawable/border">
 
                         <!--Full marks textview -->
                         <TextView
@@ -468,7 +474,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:background="@drawable/border">
 
                             <!--Subject textview -->
                             <TextView
@@ -487,7 +494,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:background="@drawable/border">
 
                             <!--Project textview -->
                             <TextView
@@ -520,7 +528,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:background="@drawable/border">
 
                         <!--Marks textview -->
                         <TextView
@@ -548,7 +557,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:background="@drawable/border">
 
                             <!--Subject textview -->
                             <TextView
@@ -568,7 +578,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:background="@drawable/border">
 
                             <!--Project textview -->
                             <TextView
@@ -600,7 +611,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:background="@drawable/border">
 
                         <!--Total textview -->
                         <TextView
@@ -620,7 +632,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:background="@drawable/border">
 
                         <!--In figure textview -->
                         <TextView
@@ -640,7 +653,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:background="@drawable/border">
 
                         <!--In words textview -->
                         <TextView
@@ -662,7 +676,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@drawable/border">
 
                     <!--Subject textview -->
                     <TextView

@@ -509,8 +509,6 @@
 
         </RelativeLayout>
 
-
-
         <!-- End Panel       -->
         <RelativeLayout
             android:id="@+id/end_panel"
@@ -645,237 +643,271 @@
 
                     </LinearLayout>
 
+                    <!--Border Border start for routine/routine/fees -->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/view_divider" />
 
+                    <!--secondary options layout-->
                     <LinearLayout
-                        android:id="@+id/btn_studentRoutine"
-                        style="@style/SelectableItemBackground"
+                        android:id="@+id/onlyLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:visibility="gone"
-                        android:padding="30dp">
+                        android:orientation="vertical"
+                        android:paddingStart="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="20dp"
+                        android:visibility="visible">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:background="@drawable/custom_progress_bg"
-                            android:contentDescription="@string/servers_contentDescription"
-                            android:padding="7dp"
-                            android:src="@drawable/ic_empty_calendar_icon_12dp"
-                            app:tint="@color/white_constant" />
-
-                        <TextView
+                        <!--Student routine option-->
+                        <LinearLayout
+                            android:id="@+id/btn_studentRoutine"
+                            style="@style/SelectableItemBackground"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:fontFamily="@font/inter_regular"
-                            android:text="Student's routine"
-                            android:textColor="@color/text_color"
-                            android:textSize="16sp" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:visibility="gone"
+                            android:padding="30dp">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="@drawable/custom_progress_bg"
+                                android:contentDescription="@string/servers_contentDescription"
+                                android:padding="7dp"
+                                android:src="@drawable/ic_empty_calendar_icon_12dp"
+                                app:tint="@color/white_constant" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:fontFamily="@font/inter_regular"
+                                android:text="Student's routine"
+                                android:textColor="@color/text_color"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <!--subject priority option-->
+                        <LinearLayout
+                            android:id="@+id/btn_subjectPriority"
+                            style="@style/SelectableItemBackground"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:visibility="gone"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="@drawable/backgroud_subjectp"
+                                android:contentDescription="@string/servers_contentDescription"
+                                android:padding="7dp"
+                                android:src="@drawable/ic_filter_16"
+                                app:tint="@color/white_constant" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:fontFamily="@font/inter_regular"
+                                android:text="Subject Priority"
+                                android:textColor="@color/text_color"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <!--routine structure option-->
+                        <LinearLayout
+                            android:id="@+id/btn_routineStructure"
+                            style="@style/SelectableItemBackground"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:visibility="gone"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="@drawable/backgroud_routine"
+                                android:contentDescription="@string/servers_contentDescription"
+                                android:padding="7dp"
+                                android:src="@drawable/ic_workflow_24"
+                                app:tint="@color/white_constant" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:fontFamily="@font/inter_regular"
+                                android:text="Routine Structure"
+                                android:textColor="@color/text_color"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <!--Fees Structure option-->
+                        <LinearLayout
+                            android:id="@+id/btn_feesStructure"
+                            style="@style/SelectableItemBackground"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:visibility="gone"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="@drawable/backgroud_fees"
+                                android:contentDescription="@string/servers_contentDescription"
+                                android:padding="7dp"
+                                android:src="@drawable/ic_fees"
+                                app:tint="@color/white_constant" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:fontFamily="@font/inter_regular"
+                                android:text="@string/fees_structure"
+                                android:textColor="@color/text_color"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <!--Pay fees option-->
+                        <LinearLayout
+                            android:id="@+id/btn_studentFees"
+                            style="@style/SelectableItemBackground"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="30dp"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="@drawable/custom_progress_bg"
+                                android:contentDescription="@string/servers_contentDescription"
+                                android:padding="7dp"
+                                android:src="@drawable/ic_meter_16"
+                                app:tint="@color/white_constant" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:fontFamily="@font/inter_regular"
+                                android:text="Pay Fees"
+                                android:textColor="@color/text_color"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/btn_result"
-                        style="@style/SelectableItemBackground"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="30dp"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:background="@drawable/backgroud_fees"
-                            android:contentDescription="@string/servers_contentDescription"
-                            android:padding="7dp"
-                            android:src="@drawable/ic_fees"
-                            app:tint="@color/white_constant" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:fontFamily="@font/inter_regular"
-                            android:text="Result"
-                            android:textColor="@color/text_color"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
-
-
-                    <LinearLayout
-                        android:id="@+id/btn_studentFees"
-                        style="@style/SelectableItemBackground"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:padding="30dp"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:background="@drawable/custom_progress_bg"
-                            android:contentDescription="@string/servers_contentDescription"
-                            android:padding="7dp"
-                            android:src="@drawable/ic_empty_calendar_icon_12dp"
-                            app:tint="@color/white_constant" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:fontFamily="@font/inter_regular"
-                            android:text="Pay Fees"
-                            android:textColor="@color/text_color"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
-
+                    <!--Border start for result and notice-->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/view_divider" />
 
+                    <!--Last options layout-->
                     <LinearLayout
-                        android:id="@+id/btn_routineStructure"
-                        style="@style/SelectableItemBackground"
+                        android:id="@+id/onlyL"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:visibility="gone"
-                        android:padding="30dp">
+                        android:orientation="vertical"
+                        android:paddingStart="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="20dp"
+                        android:visibility="visible">
 
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:background="@drawable/backgroud_fees"
-                            android:contentDescription="@string/servers_contentDescription"
-                            android:padding="7dp"
-                            android:src="@drawable/ic_fees"
-                            app:tint="@color/white_constant" />
-
-                        <TextView
+                        <!--Result option-->
+                        <LinearLayout
+                            android:id="@+id/btn_result"
+                            style="@style/SelectableItemBackground"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:fontFamily="@font/inter_regular"
-                            android:text="Routine Structure"
-                            android:textColor="@color/text_color"
-                            android:textSize="16sp" />
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="10dp"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="@drawable/backgroud_result"
+                                android:contentDescription="@string/servers_contentDescription"
+                                android:padding="7dp"
+                                android:src="@drawable/result"
+                                app:tint="@color/white_constant" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:fontFamily="@font/inter_regular"
+                                android:text="Result"
+                                android:textColor="@color/text_color"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                        <!--Notice option-->
+                        <LinearLayout
+                            android:id="@+id/btn_notice"
+                            style="@style/SelectableItemBackground"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:padding="10dp"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:background="@drawable/backgroud_notice"
+                                android:contentDescription="@string/servers_contentDescription"
+                                android:padding="7dp"
+                                android:src="@drawable/ic_saved"
+                                app:tint="@color/white_constant" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
+                                android:fontFamily="@font/inter_regular"
+                                android:text="Notice"
+                                android:textColor="@color/text_color"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/btn_subjectPriority"
-                        style="@style/SelectableItemBackground"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:visibility="gone"
-                        android:padding="30dp">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:background="@drawable/backgroud_fees"
-                            android:contentDescription="@string/servers_contentDescription"
-                            android:padding="7dp"
-                            android:src="@drawable/ic_fees"
-                            app:tint="@color/white_constant" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:fontFamily="@font/inter_regular"
-                            android:text="Subject Priority"
-                            android:textColor="@color/text_color"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
-
-                    <!--Fees Structure option-->
-                    <LinearLayout
-                        android:id="@+id/btn_feesStructure"
-                        style="@style/SelectableItemBackground"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:visibility="gone"
-                        android:padding="30dp">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:background="@drawable/backgroud_fees"
-                            android:contentDescription="@string/servers_contentDescription"
-                            android:padding="7dp"
-                            android:src="@drawable/ic_fees"
-                            app:tint="@color/white_constant" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:fontFamily="@font/inter_regular"
-                            android:text="@string/fees_structure"
-                            android:textColor="@color/text_color"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
-
-
-                    <!--Notice option-->
-
-                    <LinearLayout
-                        android:id="@+id/btn_notice"
-                        style="@style/SelectableItemBackground"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:visibility="gone"
-                        android:paddingStart="30dp"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="30dp">
-
-                        <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:background="@drawable/backgroud_notice"
-                            android:contentDescription="@string/servers_contentDescription"
-                            android:padding="7dp"
-                            android:src="@drawable/ic_saved"
-                            app:tint="@color/white_constant" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="15dp"
-                            android:fontFamily="@font/inter_regular"
-                            android:text="Notice"
-                            android:textColor="@color/text_color"
-                            android:textSize="16sp" />
-
-                    </LinearLayout>
-
+                    <!--Border end for result and notice-->
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="@color/view_divider" />
+
+
 
                     <!--Friends list recyclerview use in recent chat right panel-->
                     <LinearLayout
