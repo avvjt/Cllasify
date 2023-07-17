@@ -344,6 +344,7 @@ public class Server_Setting_Specifics extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(Server_Setting_Specifics.this, "Failed", Toast.LENGTH_SHORT).show();
+
             }
         });
 

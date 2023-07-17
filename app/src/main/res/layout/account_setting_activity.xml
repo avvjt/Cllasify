@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/page_background_color"
     android:orientation="vertical"
-    tools:context=".Activities.Profile.AccountSetting_Activity"
-    android:background="@color/page_background_color">
+    tools:context=".Activities.Profile.AccountSetting_Activity">
 
 
     <LinearLayout
@@ -29,11 +29,11 @@
             android:layout_height="46dp"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
+            android:contentDescription="@string/contentDescription"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
             android:src="@drawable/ic_arrow_left_24"
             app:tint="@color/iconSecondaryColor"
-            android:contentDescription="@string/contentDescription"
             tools:ignore="RtlSymmetry" />
 
         <TextView
@@ -51,15 +51,15 @@
         android:id="@+id/noti_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="@id/action_bar"
         android:scrollbarSize="1dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/sett"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/page_color"
@@ -81,7 +81,7 @@
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_margin="20dp"
-                        android:transitionName="pic_shared"/>
+                        android:transitionName="pic_shared" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -103,7 +103,7 @@
                                 android:text="@string/name"
                                 android:textColor="@color/text_color"
                                 android:textSize="18sp"
-                                android:transitionName="name_shared"/>
+                                android:transitionName="name_shared" />
 
                             <TextView
                                 android:id="@+id/tv_ProfileSetting"
@@ -131,8 +131,10 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/sett2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/sett"
                 android:layout_marginTop="15dp"
                 android:background="@color/page_color"
                 android:orientation="vertical">
@@ -165,8 +167,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_medium"
                     android:paddingStart="20dp"
-                    android:paddingEnd="1dp"
                     android:paddingTop="10dp"
+                    android:paddingEnd="1dp"
                     android:paddingBottom="5dp"
                     android:text="@string/general"
                     android:textColor="@color/text_background_color"
@@ -179,8 +181,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/inter_regular"
                     android:paddingStart="20dp"
-                    android:paddingEnd="1dp"
                     android:paddingTop="10dp"
+                    android:paddingEnd="1dp"
                     android:paddingBottom="15dp"
                     android:text="@string/theme"
                     android:textColor="@color/text_color"
@@ -190,8 +192,10 @@
 
 
             <LinearLayout
+                android:id="@+id/sett3"
                 android:layout_width="match_parent"
-                android:layout_height="600dp"
+                android:layout_height="1000dp"
+                android:layout_below="@+id/sett2"
                 android:layout_marginTop="15dp"
                 android:background="@color/page_color"
                 android:elevation="2dp"
@@ -200,128 +204,126 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/inter_medium"
                     android:paddingStart="20dp"
-                    android:paddingEnd="1dp"
                     android:paddingTop="10dp"
+                    android:paddingEnd="1dp"
                     android:paddingBottom="5dp"
                     android:text="@string/more_options"
                     android:textColor="@color/text_background_color"
-                    android:textSize="16sp"
-                    android:layout_marginTop="5dp"/>
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_aboutUs"
                     style="@style/SelectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/inter_regular"
                     android:paddingStart="20dp"
-                    android:paddingEnd="1dp"
                     android:paddingTop="10dp"
+                    android:paddingEnd="1dp"
                     android:paddingBottom="15dp"
                     android:text="@string/about_us"
-                    android:visibility="gone"
                     android:textColor="@color/text_color"
                     android:textSize="16sp"
-                    android:layout_marginTop="5dp"/>
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tv_Feedback"
                     style="@style/SelectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/inter_regular"
                     android:paddingStart="20dp"
-                    android:paddingEnd="1dp"
                     android:paddingTop="10dp"
+                    android:paddingEnd="1dp"
                     android:paddingBottom="15dp"
                     android:text="@string/share_feedback"
                     android:textColor="@color/text_color"
-                    android:textSize="16sp"
-                    android:layout_marginTop="5dp"/>
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_termsServices"
                     style="@style/SelectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/inter_regular"
                     android:paddingStart="20dp"
-                    android:paddingEnd="1dp"
                     android:paddingTop="10dp"
+                    android:paddingEnd="1dp"
                     android:paddingBottom="15dp"
                     android:text="@string/terms_of_service"
                     android:textColor="@color/text_color"
-                    android:textSize="16sp"
-                    android:layout_marginTop="5dp"/>
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_privacyPolicy"
                     style="@style/SelectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/inter_regular"
                     android:paddingStart="20dp"
-                    android:paddingEnd="1dp"
                     android:paddingTop="10dp"
+                    android:paddingEnd="1dp"
                     android:paddingBottom="15dp"
                     android:text="@string/option_privacy_policy"
                     android:textColor="@color/text_color"
-                    android:textSize="16sp"
-                    android:layout_marginTop="5dp"/>
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_documentation"
                     style="@style/SelectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/inter_regular"
                     android:paddingStart="20dp"
-                    android:paddingEnd="1dp"
                     android:paddingTop="10dp"
+                    android:paddingEnd="1dp"
                     android:paddingBottom="15dp"
                     android:text="Documentation videos"
                     android:textColor="@color/text_color"
-                    android:textSize="16sp"
-                    android:layout_marginTop="5dp"/>
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_rateUs"
                     style="@style/SelectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/inter_regular"
                     android:paddingStart="20dp"
-                    android:paddingEnd="1dp"
                     android:paddingTop="10dp"
+                    android:paddingEnd="1dp"
                     android:paddingBottom="15dp"
                     android:text="@string/rate_us"
                     android:textColor="@color/text_color"
-                    android:textSize="16sp"
-                    android:layout_marginTop="5dp"/>
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/tv_SignOut"
                     style="@style/SelectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/inter_regular"
                     android:paddingStart="20dp"
-                    android:paddingEnd="1dp"
                     android:paddingTop="10dp"
+                    android:paddingEnd="1dp"
                     android:paddingBottom="15dp"
                     android:text="@string/sign_out"
                     android:textColor="@color/text_color"
-                    android:textSize="16sp"
-                    android:layout_marginTop="5dp"/>
-
-
+                    android:textSize="16sp" />
 
 
             </LinearLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 
 
