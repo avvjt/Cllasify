@@ -44,24 +44,18 @@
 
     </RelativeLayout>
 
-    <ScrollView
-        android:id="@+id/testt"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/bottom_nav"
-        android:layout_below="@id/action_bar"
-        android:scrollbarSize="1dp">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/main"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/page_color"
+            android:background="@color/page_color"
                 android:orientation="vertical"
                 android:paddingBottom="20dp"
                 android:elevation="2dp"
@@ -240,9 +234,10 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="600dp"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:visibility="visible"
+                android:layout_below="@+id/main"
                 android:layout_marginTop="15dp"
                 android:background="@color/page_color"
                 android:elevation="1dp">
@@ -274,14 +269,13 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     app:drawableEndCompat="@drawable/ic_right_arrow"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
             </LinearLayout>
 
-        </LinearLayout>
+    </RelativeLayout>
 
 
 
-    </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"

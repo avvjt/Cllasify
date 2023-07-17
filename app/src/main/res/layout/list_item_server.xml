@@ -24,7 +24,6 @@
             android:id="@+id/schImg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/school_bg"
             android:elevation="2dp"
             android:scaleType="centerCrop" />
 
@@ -121,8 +120,7 @@
         android:layout_width="match_parent"
         android:layout_height="320dp"
         android:contentDescription="@string/item_contentDescription"
-        android:scaleType="centerCrop"
-        android:src="@drawable/school_bg" />
+        android:scaleType="centerCrop" />
 
     <eightbitlab.com.blurview.BlurView
         android:id="@+id/blurView"

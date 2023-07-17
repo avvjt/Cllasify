@@ -31,7 +31,7 @@ import eightbitlab.com.blurview.RenderScriptBlur;
 
 public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGroup.MyViewHolder> {
 
-    private Context context;
+    private final Context context;
     private List<Class_Group> mDatalistNew;
 
     private OnItemClickListener mListener;
@@ -66,6 +66,9 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
 
+
+        Glide.with(context.getApplicationContext()).load(R.drawable.explore_bg).into(holder.schoolLogoImg);
+        Glide.with(context.getApplicationContext()).load(R.drawable.explore_bg).into(holder.schImg);
 
         float radius = 25f;
 
@@ -103,8 +106,8 @@ public class Adaptor_SearchGroup extends RecyclerView.Adapter<Adaptor_SearchGrou
                     Glide.with(context.getApplicationContext()).load(snapshot.getValue()).into(holder.schoolLogoImg);
                     Glide.with(context.getApplicationContext()).load(snapshot.getValue()).into(holder.schImg);
                 } else {
-                    Glide.with(context.getApplicationContext()).load(R.drawable.ic_logotext).into(holder.schoolLogoImg);
-                    Glide.with(context.getApplicationContext()).load(R.drawable.school_bg).into(holder.schImg);
+                    Glide.with(context.getApplicationContext()).load(R.drawable.explore_bg).into(holder.schoolLogoImg);
+                    Glide.with(context.getApplicationContext()).load(R.drawable.explore_bg).into(holder.schImg);
                 }
             }
 
