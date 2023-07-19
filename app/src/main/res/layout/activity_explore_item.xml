@@ -7,7 +7,7 @@
     android:background="@color/page_color"
     android:orientation="vertical"
     android:visibility="visible"
-    tools:context=".Activities.Discover_Item">
+    tools:context=".Activities.RightPanel.Discover_Item">
 
     <LinearLayout
         android:id="@+id/action_bar"

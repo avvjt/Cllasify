@@ -1,9 +1,4 @@
-package com.cllasify.cllasify.Activities;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.cllasify.cllasify.Activities.RightPanel;
 
 import android.content.Intent;
 import android.graphics.Color;
@@ -14,6 +9,12 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.cllasify.cllasify.Activities.Server.SwipeHelper;
 import com.cllasify.cllasify.Adapters.NotesAdapter;
 import com.cllasify.cllasify.ModelClasses.Class_Notice;
 import com.cllasify.cllasify.R;

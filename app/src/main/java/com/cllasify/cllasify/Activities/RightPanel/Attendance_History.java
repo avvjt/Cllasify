@@ -1,11 +1,5 @@
 
-package com.cllasify.cllasify.Activities;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.cllasify.cllasify.Activities.RightPanel;
 
 import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
@@ -16,6 +10,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Adapters.Adaptor_Attendance;
 import com.cllasify.cllasify.ModelClasses.Class_Group;

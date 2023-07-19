@@ -1,4 +1,4 @@
-package com.cllasify.cllasify.Activities;
+package com.cllasify.cllasify.Activities.RightPanel;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -223,7 +223,7 @@ public class Update_Notice extends AppCompatActivity {
                 Log.d("ONLYPATH", "onDataChange: " + onlyPath);
 
 
-                String pushValue[] = allDocumentReference.push().toString().split("/");
+                String[] pushValue = allDocumentReference.push().toString().split("/");
 
                 String push = pushValue[9];
 

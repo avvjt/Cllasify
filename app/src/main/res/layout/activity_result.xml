@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="794dp"
     android:layout_height="1123dp"
-    tools:context=".Activities.Result_Activity">
+    android:background="#EAEDF2"
+    tools:context=".Activities.RightPanel.Result_Activity">
 
 
     <Button
@@ -11,15 +12,15 @@
         android:layout_width="150dp"
         android:layout_height="44dp"
         android:layout_alignParentTop="true"
-        android:visibility="gone"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+        android:textColor="@color/black_text_result"
         android:layout_weight="1"
         android:background="@drawable/button_solid_unfollow"
         android:elevation="2dp"
         android:text="Generate Result"
-        android:textColor="@color/black_text_result" />
+        android:visibility="gone" />
 
     <RelativeLayout
         android:id="@+id/student_result"
@@ -333,8 +334,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:background="@drawable/border">
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
 
                     <!--Subject textview -->
                     <TextView
@@ -355,8 +356,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:background="@drawable/border">
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
 
                     <!--upper layout -->
                     <LinearLayout
@@ -364,8 +365,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:background="@drawable/border">
+                        android:background="@drawable/border"
+                        android:orientation="vertical">
 
                         <!--Full marks textview -->
                         <TextView
@@ -375,7 +376,7 @@
                             android:text="Full marks"
                             android:textAlignment="center"
                             android:textAppearance="@style/mid_text"
-                            android:textSize="16sp"/>
+                            android:textSize="16sp" />
 
                     </LinearLayout>
 
@@ -393,8 +394,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:background="@drawable/border">
+                            android:background="@drawable/border"
+                            android:orientation="horizontal">
 
                             <!--Subject textview -->
                             <TextView
@@ -413,8 +414,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:background="@drawable/border">
+                            android:background="@drawable/border"
+                            android:orientation="horizontal">
 
                             <!--Project textview -->
                             <TextView
@@ -445,8 +446,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:background="@drawable/border">
+                        android:background="@drawable/border"
+                        android:orientation="vertical">
 
                         <!--Full marks textview -->
                         <TextView
@@ -474,8 +475,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:background="@drawable/border">
+                            android:background="@drawable/border"
+                            android:orientation="horizontal">
 
                             <!--Subject textview -->
                             <TextView
@@ -494,8 +495,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:background="@drawable/border">
+                            android:background="@drawable/border"
+                            android:orientation="horizontal">
 
                             <!--Project textview -->
                             <TextView
@@ -528,8 +529,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:background="@drawable/border">
+                        android:background="@drawable/border"
+                        android:orientation="vertical">
 
                         <!--Marks textview -->
                         <TextView
@@ -557,8 +558,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:background="@drawable/border">
+                            android:background="@drawable/border"
+                            android:orientation="horizontal">
 
                             <!--Subject textview -->
                             <TextView
@@ -578,8 +579,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:background="@drawable/border">
+                            android:background="@drawable/border"
+                            android:orientation="horizontal">
 
                             <!--Project textview -->
                             <TextView
@@ -611,8 +612,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:background="@drawable/border">
+                        android:background="@drawable/border"
+                        android:orientation="vertical">
 
                         <!--Total textview -->
                         <TextView
@@ -632,8 +633,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:background="@drawable/border">
+                        android:background="@drawable/border"
+                        android:orientation="vertical">
 
                         <!--In figure textview -->
                         <TextView
@@ -653,8 +654,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:background="@drawable/border">
+                        android:background="@drawable/border"
+                        android:orientation="vertical">
 
                         <!--In words textview -->
                         <TextView
@@ -676,8 +677,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:background="@drawable/border">
+                    android:background="@drawable/border"
+                    android:orientation="vertical">
 
                     <!--Subject textview -->
                     <TextView

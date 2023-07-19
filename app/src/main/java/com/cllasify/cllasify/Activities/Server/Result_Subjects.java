@@ -26,7 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cllasify.cllasify.Activities.Result_Activity;
+import com.cllasify.cllasify.Activities.RightPanel.Result_Activity;
 import com.cllasify.cllasify.Adapters.Adapter_Result_Subject;
 import com.cllasify.cllasify.ModelClasses.Class_Result_Info;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
@@ -155,6 +155,36 @@ public class Result_Subjects extends AppCompatActivity {
             adapter_topicList.setSpecPos(Integer.parseInt(position));
 
 
+            DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(uniGrpPushId).child(uniClassPushId).child(userID).child("subjectMarksInfo");
+
+            resDb.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        if (dataSnapshot.exists()) {
+
+                            Log.d("RESCHKK", "onDataChange: " + dataSnapshot.getKey());
+                            Class_Result_Info class_result = dataSnapshot.getValue(Class_Result_Info.class);
+                            class_results.add(class_result);
+
+                        }
+
+                    }
+                    adapter_topicList.setClass_results(class_results);
+                    rv_ShowSubject.setAdapter(adapter_topicList);
+                    adapter_topicList.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+/*
             DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
 
             refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -164,7 +194,7 @@ public class Result_Subjects extends AppCompatActivity {
                         if (snapshot.child("subjectUniPushId").exists() && snapshot.child("uniPushClassId").exists() && snapshot.child("clickedGroupPushId").exists()) {
 
 
-                            String subjectUniPushId = snapshot.child("subjectUniPushId").getValue().toString().trim();
+//                            String subjectUniPushId = snapshot.child("subjectUniPushId").getValue().toString().trim();
                             String uniPushClassId = snapshot.child("uniPushClassId").getValue().toString().trim();
                             String groupPushId = snapshot.child("clickedGroupPushId").getValue().toString().trim();
 
@@ -204,7 +234,7 @@ public class Result_Subjects extends AppCompatActivity {
 
                 }
             });
-
+*/
 
             studentName.setText(userName + "'s Result");
 
@@ -261,6 +291,7 @@ public class Result_Subjects extends AppCompatActivity {
                     resDbsetDef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                 if (snapshot.exists()) {
 
@@ -375,6 +406,9 @@ public class Result_Subjects extends AppCompatActivity {
             }
         });
 
+        DatabaseReference resDbsetDef = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result")
+                .child(uniGrpPushId).child(uniClassPushId).child(userID).child("subjectMarksInfo");
+
         btn_done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -403,7 +437,38 @@ public class Result_Subjects extends AppCompatActivity {
 
                     int totalSubMarks = theoryInt + practicalInt;
                     int totalFullMarks = theoryFullInt + practicalFullInt;
+/*
+                    final int[] setTotalSubMarks = {totalSubMarks};
+                    final int[] setTotalFullMarks = {totalFullMarks};
 
+                    DatabaseReference resTotalMarks = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result")
+                            .child(uniGrpPushId).child(uniClassPushId).child(userID);
+
+                    resTotalMarks.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
+                            Toast.makeText(Result_Subjects.this, "" + snapshot.child("totalFullMarks").getValue(), Toast.LENGTH_SHORT).show();
+
+                            int fbTotalSubMarks = Integer.parseInt(snapshot.child("totalMarks").getValue().toString());
+                            int fbTotalFullMarks = Integer.parseInt(snapshot.child("totalFullMarks").getValue().toString());
+
+                            setTotalSubMarks[0] += fbTotalSubMarks;
+                            setTotalFullMarks[0] += fbTotalFullMarks;
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                    resTotalMarks.child("totalMarks").setValue(setTotalSubMarks[0]);
+                    resTotalMarks.child("totalFullMarks").setValue(setTotalFullMarks[0]);
+*/
                     String grade = "";
 
                     int percentageMarks = (totalSubMarks * 100) / totalFullMarks;
@@ -426,7 +491,6 @@ public class Result_Subjects extends AppCompatActivity {
                         grade = "O";
                     }
 
-                    DatabaseReference resDbsetDef = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(uniGrpPushId).child(uniClassPushId).child(userID).child("subjectMarksInfo");
 
                     String finalGrade = grade;
                     resDb.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -455,7 +519,6 @@ public class Result_Subjects extends AppCompatActivity {
                                                     adapter_topicList.setClass_results(class_results);
                                                     rv_ShowSubject.setAdapter(adapter_topicList);
                                                     adapter_topicList.notifyDataSetChanged();
-
                                                     recreate();
                                                     dialog.dismiss();
 
@@ -474,14 +537,12 @@ public class Result_Subjects extends AppCompatActivity {
 
                             } else {
 
-
                                 Class_Result_Info class_result_info = new Class_Result_Info(theoryFullInt, practicalFullInt, theoryInt, practicalInt, totalSubMarks, totalFullMarks, subjectName, finalGrade);
                                 resDbsetDef.child(subUniPushId).setValue(class_result_info);
                                 class_results.add(class_result_info);
                                 adapter_topicList.setClass_results(class_results);
                                 rv_ShowSubject.setAdapter(adapter_topicList);
                                 adapter_topicList.notifyDataSetChanged();
-
                                 recreate();
                                 dialog.dismiss();
 

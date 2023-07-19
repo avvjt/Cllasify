@@ -1,7 +1,4 @@
-package com.cllasify.cllasify.Activities;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+package com.cllasify.cllasify.Activities.RightPanel;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,6 +11,9 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Utility.Constant;

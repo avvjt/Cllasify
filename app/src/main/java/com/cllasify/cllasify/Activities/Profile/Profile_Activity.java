@@ -24,11 +24,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.cllasify.cllasify.Activities.Discover_Activity;
 import com.cllasify.cllasify.Activities.Notification_Activity;
-import com.cllasify.cllasify.R;
-import com.cllasify.cllasify.Activities.getStarted;
+import com.cllasify.cllasify.Activities.RightPanel.Discover_Activity;
 import com.cllasify.cllasify.Activities.Server.Server_Activity;
+import com.cllasify.cllasify.Activities.getStarted;
+import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.Utility.NetworkBroadcast;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.admanager.AdManagerAdRequest;

@@ -1,4 +1,4 @@
-package com.cllasify.cllasify.Activities;
+package com.cllasify.cllasify.Activities.RightPanel;
 
 import android.content.BroadcastReceiver;
 import android.content.DialogInterface;
@@ -39,15 +39,16 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.cllasify.cllasify.Activities.Notification_Activity;
+import com.cllasify.cllasify.Activities.Profile.Profile_Activity;
+import com.cllasify.cllasify.Activities.Server.Server_Activity;
 import com.cllasify.cllasify.Adapters.Adaptor_SearchGroup;
 import com.cllasify.cllasify.Adapters.Adaptor_ShowGrpClass;
 import com.cllasify.cllasify.Adapters.Adaptor_ShowGrpMember;
 import com.cllasify.cllasify.ModelClasses.Class_Group;
 import com.cllasify.cllasify.ModelClasses.Class_Group_Names;
-import com.cllasify.cllasify.Utility.MySingleton;
-import com.cllasify.cllasify.Activities.Profile.Profile_Activity;
 import com.cllasify.cllasify.R;
-import com.cllasify.cllasify.Activities.Server.Server_Activity;
+import com.cllasify.cllasify.Utility.MySingleton;
 import com.cllasify.cllasify.Utility.NetworkBroadcast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;

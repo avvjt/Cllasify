@@ -1,4 +1,4 @@
-package com.cllasify.cllasify.Activities;
+package com.cllasify.cllasify.Activities.RightPanel;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -117,7 +117,7 @@ public class Admission_Structure extends AppCompatActivity implements PaymentRes
                 if (name_et.getText().toString().length() == 0 || dob_et.getText().toString().length() == 0 || father_name_et.getText().toString().length() == 0
                         || mother_name_et.getText().toString().trim().length() == 0 || address_et.getText().toString().trim().length() == 0 ||
                         phone_et.getText().toString().trim().length() == 0 || religion_et.getText().toString().trim().length() == 0 ||
-                        cast_et.getText().toString().trim().length() == 0 || fileAdded == false) {
+                        cast_et.getText().toString().trim().length() == 0 || !fileAdded) {
                     Toast.makeText(Admission_Structure.this, "Please fill up the above details" + name_et.getText().toString().length(), Toast.LENGTH_SHORT).show();
 
                 } else {
@@ -212,7 +212,7 @@ public class Admission_Structure extends AppCompatActivity implements PaymentRes
                 Log.d("ONLYPATH", "onDataChange: " + onlyPath);
 
 
-                String pushValue[] = allDocumentReference.push().toString().split("/");
+                String[] pushValue = allDocumentReference.push().toString().split("/");
 
                 String push = pushValue[9];
 

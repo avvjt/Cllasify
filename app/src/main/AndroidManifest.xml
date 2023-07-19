@@ -34,7 +34,7 @@
             android:name=".Activities.Routine.Routine_Structure"
             android:exported="false" />
         <activity
-            android:name=".Activities.Result_Activity"
+            android:name=".Activities.RightPanel.Result_Activity"
             android:exported="false" />
         <activity
             android:name=".Activities.Routine.priority_subject.Priority_Subject"
@@ -52,28 +52,28 @@
             android:name=".Activities.Routine.routine_structure.RoutineStructureActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.Update_Notice"
+            android:name=".Activities.RightPanel.Update_Notice"
             android:exported="false" />
         <activity
-            android:name=".Activities.Show_Notice"
+            android:name=".Activities.RightPanel.Show_Notice"
             android:exported="false" />
         <activity
-            android:name=".Activities.Create_Notice"
+            android:name=".Activities.RightPanel.Create_Notice"
             android:exported="false" />
         <activity
-            android:name=".Activities.Notice"
+            android:name=".Activities.RightPanel.Notice"
             android:exported="false" />
         <activity
             android:name=".Activities.WebViewActivity"
             android:exported="false" />
         <activity
-            android:name=".Activities.Admission_Structure"
+            android:name=".Activities.RightPanel.Admission_Structure"
             android:exported="false" />
         <activity
-            android:name=".Activities.Student_Fees_Pay"
+            android:name=".Activities.RightPanel.Student_Fees_Pay"
             android:exported="false" />
         <activity
-            android:name=".Activities.Fees_Structure"
+            android:name=".Activities.RightPanel.Fees_Structure"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -108,7 +108,7 @@
             android:windowSoftInputMode="adjustResize"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Attendance_History"
+            android:name=".Activities.RightPanel.Attendance_History"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
@@ -142,7 +142,7 @@
             android:exported="false"
             tools:ignore="Instantiatable" />
         <activity
-            android:name=".Activities.Discover_Item"
+            android:name=".Activities.RightPanel.Discover_Item"
             android:exported="false"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
@@ -159,7 +159,7 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Discover_Activity"
+            android:name=".Activities.RightPanel.Discover_Activity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
@@ -171,7 +171,7 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".Activities.Attendance_Activity"
+            android:name=".Activities.RightPanel.Attendance_Activity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity

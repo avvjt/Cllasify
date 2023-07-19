@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cllasify.cllasify.Activities.Show_Notice;
+import com.cllasify.cllasify.Activities.RightPanel.Show_Notice;
 import com.cllasify.cllasify.ModelClasses.Class_Notice;
 import com.cllasify.cllasify.R;
 
@@ -18,7 +18,7 @@ import java.util.List;
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.notesViewHolder> {
 
     List<Class_Notice> notice;
-    private Context context;
+    private final Context context;
 
     public NotesAdapter(Context context) {
         this.context = context;

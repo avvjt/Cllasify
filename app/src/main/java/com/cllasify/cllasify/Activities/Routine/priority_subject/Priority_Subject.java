@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -37,7 +36,6 @@ public class Priority_Subject extends AppCompatActivity {
 
     private Class_Individual_Routine prioritySub;
 
-    ImageButton btn_Back;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +51,15 @@ public class Priority_Subject extends AppCompatActivity {
         viewModel.setBasicData(groupPushId);
         adapter = new AdapterPrioritySubjectMain(this);
         initView();
-        btn_Back = findViewById(R.id.btn_Back);
+
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+
         binding.doneBtn.setOnClickListener(v -> {
             if (prioritySub.getPrimarySubject() == null) {
                 Toast.makeText(this, "Select Primary subject", Toast.LENGTH_SHORT).show();

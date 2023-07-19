@@ -27,12 +27,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cllasify.cllasify.Activities.Profile.Profile_Activity;
+import com.cllasify.cllasify.Activities.RightPanel.Discover_Activity;
+import com.cllasify.cllasify.Activities.Server.Server_Activity;
 import com.cllasify.cllasify.Adapters.Adaptor_Notify;
 import com.cllasify.cllasify.ModelClasses.Class_Admission;
 import com.cllasify.cllasify.ModelClasses.Class_Group;
-import com.cllasify.cllasify.Activities.Profile.Profile_Activity;
 import com.cllasify.cllasify.R;
-import com.cllasify.cllasify.Activities.Server.Server_Activity;
 import com.cllasify.cllasify.Utility.NetworkBroadcast;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;

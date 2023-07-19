@@ -1,6 +1,7 @@
-package com.cllasify.cllasify.Activities;
+package com.cllasify.cllasify.Activities.RightPanel;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.cllasify.cllasify.Activities.Server.Server_Activity;
 import com.cllasify.cllasify.Adapters.Adapter_Result_Per_Subject;
 import com.cllasify.cllasify.ModelClasses.Class_Result_Info;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
@@ -95,6 +97,7 @@ public class Result_Activity extends AppCompatActivity {
             result_date = findViewById(R.id.result_date);
             percentage = findViewById(R.id.percentage);
             gradeTV = findViewById(R.id.grade);
+            generate_pdf = findViewById(R.id.btn_generate_pdf);
 
             marks_by.setText(allTotalMarks + "/" + allTotalFullMarks);
             student_name.setText(userName);
@@ -168,46 +171,26 @@ public class Result_Activity extends AppCompatActivity {
 
             DatabaseReference refSaveCurrentData = FirebaseDatabase.getInstance().getReference().child("Groups").child("Temp").child(userID);
 
-            refSaveCurrentData.addListenerForSingleValueEvent(new ValueEventListener() {
+            DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(uniGrpPushId).child(uniClassPushId).child(userID).child("subjectMarksInfo");
+
+            resDb.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.getChildrenCount() > 0) {
-                        if (snapshot.child("subjectUniPushId").exists() && snapshot.child("uniPushClassId").exists() && snapshot.child("clickedGroupPushId").exists()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        if (dataSnapshot.exists()) {
+
+                            Log.d("RESCHKK", "onDataChange: " + dataSnapshot.getKey());
 
 
-                            String subjectUniPushId = snapshot.child("subjectUniPushId").getValue().toString().trim();
-                            String uniPushClassId = snapshot.child("uniPushClassId").getValue().toString().trim();
-                            String groupPushId = snapshot.child("clickedGroupPushId").getValue().toString().trim();
-
-                            DatabaseReference resDb = FirebaseDatabase.getInstance().getReference().child("Groups").child("Result").child(groupPushId).child(uniPushClassId).child(userID).child("subjectMarksInfo");
-
-                            resDb.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                                        if (dataSnapshot.exists()) {
-
-                                            Log.d("RESCHKK", "onDataChange: " + dataSnapshot.getKey());
-
-
-                                            Class_Result_Info class_result = dataSnapshot.getValue(Class_Result_Info.class);
-                                            class_results.add(class_result);
-                                            adapter_topicList.setClass_results(class_results);
-                                            rv_ShowSubject.setAdapter(adapter_topicList);
-                                            adapter_topicList.notifyDataSetChanged();
-                                        }
-
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
+                            Class_Result_Info class_result = dataSnapshot.getValue(Class_Result_Info.class);
+                            class_results.add(class_result);
 
                         }
+
                     }
+                    adapter_topicList.setClass_results(class_results);
+                    rv_ShowSubject.setAdapter(adapter_topicList);
+                    adapter_topicList.notifyDataSetChanged();
                 }
 
                 @Override
@@ -266,41 +249,80 @@ public class Result_Activity extends AppCompatActivity {
                     @Override
                     public void run() {
 
+                        if (android.os.Build.VERSION.SDK_INT > 31) {
 
-                        PdfGenerator.getBuilder()
-                                .setContext(Result_Activity.this)
-                                .fromViewIDSource()
-                                .fromViewID(result_activity, R.id.student_result)
-                                .setFileName(userName + "'s Result")
-                                .actionAfterPDFGeneration(PdfGenerator.ActionAfterPDFGeneration.OPEN)
-                                .build(new PdfGeneratorListener() {
-                                    @Override
-                                    public void onFailure(FailureResponse failureResponse) {
-                                        super.onFailure(failureResponse);
+                            PdfGenerator.getBuilder().setContext(Result_Activity.this)
+                                    .fromViewIDSource()
+                                    .fromViewID(result_activity, R.id.student_result)
+                                    .setFileName(userName + "'s Result")
+                                    .savePDFSharedStorage(xmlToPDFLifecycleObserver)
+                                    .actionAfterPDFGeneration(PdfGenerator.ActionAfterPDFGeneration.OPEN)
+                                    .build(new PdfGeneratorListener() {
+                                        @Override
+                                        public void onFailure(FailureResponse failureResponse) {
+                                            super.onFailure(failureResponse);
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void showLog(String log) {
-                                        super.showLog(log);
+                                        @Override
+                                        public void showLog(String log) {
+                                            super.showLog(log);
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void onStartPDFGeneration() {
+                                        @Override
+                                        public void onStartPDFGeneration() {
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void onFinishPDFGeneration() {
+                                        @Override
+                                        public void onFinishPDFGeneration() {
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void onSuccess(SuccessResponse response) {
-                                        super.onSuccess(response);
-                                    }
-                                });
+                                        @Override
+                                        public void onSuccess(SuccessResponse response) {
+                                            super.onSuccess(response);
+                                        }
+                                    });
+
+                        } else {
+
+                            PdfGenerator.getBuilder().setContext(Result_Activity.this)
+                                    .fromViewIDSource()
+                                    .fromViewID(result_activity, R.id.student_result)
+                                    .setFileName(userName + "'s Result")
+                                    .actionAfterPDFGeneration(PdfGenerator.ActionAfterPDFGeneration.OPEN)
+                                    .build(new PdfGeneratorListener() {
+                                        @Override
+                                        public void onFailure(FailureResponse failureResponse) {
+                                            super.onFailure(failureResponse);
+
+                                        }
+
+                                        @Override
+                                        public void showLog(String log) {
+                                            super.showLog(log);
+
+                                        }
+
+                                        @Override
+                                        public void onStartPDFGeneration() {
+
+                                        }
+
+                                        @Override
+                                        public void onFinishPDFGeneration() {
+
+                                        }
+
+                                        @Override
+                                        public void onSuccess(SuccessResponse response) {
+                                            super.onSuccess(response);
+                                        }
+                                    });
+
+                        }
 
 
                     }
@@ -309,21 +331,17 @@ public class Result_Activity extends AppCompatActivity {
 
             }
 
-/*
-            generate_pdf = findViewById(R.id.btn_generate_pdf);
-            generate_pdf.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-
-
-
-                }
-            });
-*/
 
         }
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent intent = new Intent(Result_Activity.this, Server_Activity.class);
+        startActivity(intent);
+        super.onBackPressed();
     }
 }

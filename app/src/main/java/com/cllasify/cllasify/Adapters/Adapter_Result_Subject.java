@@ -115,9 +115,11 @@ public class Adapter_Result_Subject extends RecyclerView.Adapter<Adapter_Result_
 
                 String allMarks = theoryPractical + "/" + fullTheoryPractical;
 
+                Log.d("GETMARKS1", "" + allMarks);
+
                 holder.marks.setText(allMarks);
             } catch (Exception e) {
-                Log.d("GETMARKS1", "onBindViewHolder: " + e.getMessage() + " Pos: " + pos);
+                Log.d("GETMARKS2", "onBindViewHolder: " + e.getMessage() + " Pos: " + pos);
             }
         }
         holder.subListItem.setOnClickListener(new View.OnClickListener() {
@@ -157,6 +159,7 @@ public class Adapter_Result_Subject extends RecyclerView.Adapter<Adapter_Result_
             subjectMore = itemView.findViewById(R.id.subjectMore);
             subListItem = itemView.findViewById(R.id.subListItem);
             marks = itemView.findViewById(R.id.marks);
+
 
         }
     }

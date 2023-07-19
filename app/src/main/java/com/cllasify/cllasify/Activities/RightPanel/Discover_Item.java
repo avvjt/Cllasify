@@ -1,4 +1,4 @@
-package com.cllasify.cllasify.Activities;
+package com.cllasify.cllasify.Activities.RightPanel;
 
 import android.app.Dialog;
 import android.content.BroadcastReceiver;

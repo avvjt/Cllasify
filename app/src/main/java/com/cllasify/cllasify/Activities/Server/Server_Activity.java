@@ -58,12 +58,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
-import com.cllasify.cllasify.Activities.Attendance_Activity;
-import com.cllasify.cllasify.Activities.Discover_Activity;
-import com.cllasify.cllasify.Activities.Fees_Structure;
-import com.cllasify.cllasify.Activities.Notice;
 import com.cllasify.cllasify.Activities.Notification_Activity;
 import com.cllasify.cllasify.Activities.Profile.Profile_Activity;
+import com.cllasify.cllasify.Activities.RightPanel.Attendance_Activity;
+import com.cllasify.cllasify.Activities.RightPanel.Discover_Activity;
+import com.cllasify.cllasify.Activities.RightPanel.Fees_Structure;
+import com.cllasify.cllasify.Activities.RightPanel.Notice;
 import com.cllasify.cllasify.Activities.Routine.Routine_Structure;
 import com.cllasify.cllasify.Activities.Routine.priority_subject.Priority_Subject;
 import com.cllasify.cllasify.Activities.Server.PDFBACK.OnBackPressedListener;

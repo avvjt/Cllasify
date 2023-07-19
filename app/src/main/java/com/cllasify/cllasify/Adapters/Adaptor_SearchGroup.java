@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.cllasify.cllasify.Activities.Discover_Activity;
+import com.cllasify.cllasify.Activities.RightPanel.Discover_Activity;
 import com.cllasify.cllasify.ModelClasses.Class_Group;
 import com.cllasify.cllasify.R;
 import com.google.firebase.auth.FirebaseAuth;

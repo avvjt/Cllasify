@@ -87,6 +87,14 @@ public class Routine_Structure extends AppCompatActivity {
         }
         initAdapters();
         initView();
+
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
         databaseReferenceGetTeachers = FirebaseDatabase.getInstance().getReference()
                 .child("Groups").child("Check_Group_Admins").child(grpPushId);
         databaseReferenceGetStudent = FirebaseDatabase.getInstance().getReference()

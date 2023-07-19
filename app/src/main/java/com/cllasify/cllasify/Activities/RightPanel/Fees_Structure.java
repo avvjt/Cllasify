@@ -1,9 +1,4 @@
-package com.cllasify.cllasify.Activities;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+package com.cllasify.cllasify.Activities.RightPanel;
 
 import android.app.Dialog;
 import android.content.BroadcastReceiver;
@@ -22,6 +17,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.cllasify.cllasify.Adapters.Adaptor_ShowGrpMember_Fees;
 import com.cllasify.cllasify.ModelClasses.Class_Student_Details;

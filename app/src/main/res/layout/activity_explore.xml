@@ -7,7 +7,7 @@
     android:id="@+id/disc_full"
 
     android:background="@color/page_background_color"
-    tools:context=".Activities.Discover_Activity">
+    tools:context=".Activities.RightPanel.Discover_Activity">
 
     <ProgressBar
         android:id="@+id/progBar"
@@ -17,7 +17,7 @@
         android:elevation="5dp"
         android:indeterminate="true"
         android:indeterminateTintMode="src_atop"
-        android:indeterminateTint="@color/purple"/>
+        android:indeterminateTint="@color/purple" />
 
 
     <androidx.appcompat.widget.Toolbar

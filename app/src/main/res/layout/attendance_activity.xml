@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/page_color"
     android:orientation="vertical"
-    tools:context=".Activities.Attendance_Activity">
+    tools:context=".Activities.RightPanel.Attendance_Activity">
 
     <LinearLayout
         android:id="@+id/action_bar"

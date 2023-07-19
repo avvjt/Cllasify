@@ -1,8 +1,4 @@
-package com.cllasify.cllasify.Activities;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
+package com.cllasify.cllasify.Activities.RightPanel;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -21,6 +17,10 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.cllasify.cllasify.ModelClasses.Class_Notice;
 import com.cllasify.cllasify.R;
@@ -209,7 +209,7 @@ public class Create_Notice extends AppCompatActivity {
                 Log.d("ONLYPATH", "onDataChange: " + onlyPath);
 
 
-                String pushValue[] = allDocumentReference.push().toString().split("/");
+                String[] pushValue = allDocumentReference.push().toString().split("/");
 
                 String push = pushValue[9];
 

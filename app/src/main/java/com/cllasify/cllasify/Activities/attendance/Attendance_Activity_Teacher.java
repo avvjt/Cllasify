@@ -31,7 +31,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.cllasify.cllasify.Activities.Attendance_History;
+import com.cllasify.cllasify.Activities.RightPanel.Attendance_History;
 import com.cllasify.cllasify.Adapters.TeacherAttendanceAdapter;
 import com.cllasify.cllasify.ModelClasses.User;
 import com.cllasify.cllasify.R;

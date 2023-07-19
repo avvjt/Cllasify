@@ -21,9 +21,7 @@ import com.cllasify.cllasify.Adapters.Adaptor_Student_Result;
 import com.cllasify.cllasify.ModelClasses.Class_Result_Info;
 import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
 import com.cllasify.cllasify.R;
-import com.cllasify.cllasify.Utility.Constant;
 import com.cllasify.cllasify.Utility.NetworkBroadcast;
-import com.cllasify.cllasify.Utility.SharePref;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,7 +36,7 @@ import java.util.Objects;
 
 public class Result_Students extends AppCompatActivity {
 
-    String currUserID;
+    //    String currUserID;
     RecyclerView rv_showStudents;
     TextView tv_studentList, tv_className;
     ImageButton btn_Back;
@@ -111,7 +109,7 @@ public class Result_Students extends AppCompatActivity {
         broadcastReceiver = new NetworkBroadcast();
         registerReceiver(broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
-        currUserID = SharePref.getDataFromPref(Constant.USER_ID);
+//        currUserID = SharePref.getDataFromPref(Constant.USER_ID);
 
         tv_studentList = findViewById(R.id.studentListText);
         btn_Back = findViewById(R.id.btn_Back);
