@@ -27,6 +27,15 @@ public class AdapterAllTeacherSubjectMain extends RecyclerView.Adapter<AdapterAl
     String groupPushId;
     private List<String> routines;
 
+    String day;
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
 
     public AdapterAllTeacherSubjectMain(Context context) {
         this.context = context;
@@ -69,7 +78,7 @@ public class AdapterAllTeacherSubjectMain extends RecyclerView.Adapter<AdapterAl
 
 
         DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
-                .child("Routine").child("Uni_Group_No_13_Experimental School").child("schedule").child(classID).child("Monday");
+                .child("Routine").child("Uni_Group_No_13_Experimental School").child("schedule").child(classID).child(getDay());
 
         Log.d("CHKCLASSVAL", "onBindViewHolder: " + routines.get(position));
 
@@ -94,7 +103,7 @@ public class AdapterAllTeacherSubjectMain extends RecyclerView.Adapter<AdapterAl
 
 //                    Log.d("ROUTCHK", "onDataChange: " + class_routine.getPeriod());
 
-                    adapter.setDay("Monday");
+                    adapter.setDay(getDay());
                     adapter.setWeekdays(classDataListMonday);
                     adapter.notifyDataSetChanged();
                 }
