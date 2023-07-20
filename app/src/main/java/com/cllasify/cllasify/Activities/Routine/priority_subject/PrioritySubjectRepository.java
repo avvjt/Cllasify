@@ -1,11 +1,14 @@
 package com.cllasify.cllasify.Activities.Routine.priority_subject;
 
+import android.os.Build;
+
 import androidx.annotation.NonNull;
 
 import com.cllasify.cllasify.Activities.interfaces.DataFetchListener;
 import com.cllasify.cllasify.ModelClasses.Class_Individual_Routine;
 import com.cllasify.cllasify.ModelClasses.Class_Routine;
 import com.cllasify.cllasify.ModelClasses.SingleDayRoutine;
+import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 import com.cllasify.cllasify.Utility.Util;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -13,7 +16,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,7 +27,7 @@ import java.util.stream.Collectors;
 public class PrioritySubjectRepository {
 
     private final String groupPushId;
-    private final List<String> weekList = Arrays.asList("Today", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+    private final List<String> weekList = Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
     private final String userId;
     private final String username;
 
@@ -106,16 +108,21 @@ public class PrioritySubjectRepository {
         individualRoutineReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<SingleDayRoutine> routines = weekList.stream().map(tempDay -> {
-                    String day = (tempDay.equals("Today")) ? Util.getCurrentDateString() : tempDay;
-                    return new SingleDayRoutine(tempDay, getClassRoutine(snapshot, day));
-                }).collect(Collectors.toList());
+                List<SingleDayRoutine> routines = null;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                    routines = weekList.stream().map(tempDay -> {
+                        String day = (tempDay.equals("Today")) ? Util.getCurrentDateString() : tempDay;
+                        return new SingleDayRoutine(tempDay, getClassRoutine(snapshot, day));
+                    }).collect(Collectors.toList());
+                }
                 listener.onDataLoad(routines);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                listener.onDataLoad(weekList.stream().map(day -> new SingleDayRoutine(day, Collections.emptyList())).collect(Collectors.toList()));
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    listener.onDataLoad(weekList.stream().map(day -> new SingleDayRoutine(day, Collections.emptyList())).collect(Collectors.toList()));
+                }
             }
         });
     }

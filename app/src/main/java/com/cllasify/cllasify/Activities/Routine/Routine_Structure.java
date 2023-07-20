@@ -40,19 +40,13 @@ public class Routine_Structure extends AppCompatActivity {
 
 
     Adapter_Subject_Assign adapter_teacher_assignMonday, adapter_teacher_assignTuesday, adapter_teacher_assignWednesday, adapter_teacher_assignThursday, adapter_teacher_assignFriday, adapter_teacher_assignSaturday;
+    List<String> subjectDetailsModelListMonday;
 
-    Adapter_Subject_Assign adapter_all_teacher_assignMonday, adapter_all_teacher_assignTuesday, adapter_all_teacher_assignWednesday, adapter_all_teacher_assignThursday, adapter_all_teacher_assignFriday, adapter_all_teacher_assignSaturday;
+    List<String> classStudentListMonday;
 
-    List<String> subjectDetailsModelListMonday, subjectDetailsModelListTuesday, subjectDetailsModelListWednesday, subjectDetailsModelListThursday, subjectDetailsModelListFriday, subjectDetailsModelListSaturday;
+    List<Class_Routine> classDataListMonday, classDataListTuesday, classDataListWednesday, classDataListThursday, classDataListFriday, classDataListSaturday;
 
-    List<String> classStudentListMonday, classStudentListTuesday, classStudentListWednesday, classStudentListThursday, classStudentListFriday, classStudentListSaturday;
-
-    List<Class_Routine> classDataListMonday,
-            classDataListTuesday, classDataListWednesday, classDataListThursday, classDataListFriday, classDataListSaturday;
-
-    List<String> classStudentIDListMonday, classStudentIDListTuesday, classStudentIDListWednesday, classStudentIDListThursday, classStudentIDListFriday, classStudentIDListSaturday;
-
-    List<String> weekdays;
+    List<String> classStudentIDListMonday;
 
     private final List<Class_Student_Details> teachersList = new ArrayList<>();
     private final List<String> weekList = Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");

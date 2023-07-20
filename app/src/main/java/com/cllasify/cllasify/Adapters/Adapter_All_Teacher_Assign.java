@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adapter_Weekdays_Assign extends RecyclerView.Adapter<Adapter_Weekdays_Assign.ViewHolder> {
+public class Adapter_All_Teacher_Assign extends RecyclerView.Adapter<Adapter_All_Teacher_Assign.ViewHolder> {
 
 
     Context context;
@@ -31,6 +31,11 @@ public class Adapter_Weekdays_Assign extends RecyclerView.Adapter<Adapter_Weekda
 
     String day;
     String groupPushId;
+
+    public Adapter_All_Teacher_Assign(Context context) {
+        this.context = context;
+        this.weekdays = new ArrayList<>();
+    }
 
     public String getDay() {
         return day;
@@ -54,32 +59,28 @@ public class Adapter_Weekdays_Assign extends RecyclerView.Adapter<Adapter_Weekda
         notifyDataSetChanged();
     }
 
-    public Adapter_Weekdays_Assign(Context context) {
-        this.context = context;
-        this.weekdays = new ArrayList<>();
-    }
-
-
     @NonNull
     @Override
-    public Adapter_Weekdays_Assign.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View rootview = LayoutInflater.from(context).inflate(R.layout.assigned_item, parent, false);
+    public Adapter_All_Teacher_Assign.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View rootview = LayoutInflater.from(context).inflate(R.layout.all_teacher_item, parent, false);
         return new ViewHolder(rootview);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter_Weekdays_Assign.ViewHolder holder, int pos) {
+    public void onBindViewHolder(@NonNull Adapter_All_Teacher_Assign.ViewHolder holder, int pos) {
 
         int position = pos;
-
 
         Class_Routine class_routine = weekdays.get(position);
 
         if (class_routine != null) {
 
+            Log.e("ROUTIIO", class_routine.getSubject());
+
 
             DatabaseReference databaseAllRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
-                    .child("Routine").child(groupPushId).child("allSchedule")
+                    .child("Routine").child("Uni_Group_No_13_Experimental School").child("allSchedule")
+//                    .child("Routine").child(groupPushId).child("allSchedule")
                     .child(class_routine.getClassPushId()).child(getDay()).child(String.valueOf(class_routine.getPeriod())).child("id");
 
 
@@ -88,7 +89,7 @@ public class Adapter_Weekdays_Assign extends RecyclerView.Adapter<Adapter_Weekda
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                     if (class_routine.getId().equals(snapshot.getValue().toString())) {
-                        Log.e("ROUTI", snapshot.getValue().toString() + "\t" + snapshot.getRef());
+//                        Log.e("ROUTI", snapshot.getValue().toString() + "\t" + snapshot.getRef());
 
                         holder.sub.setText(weekdays.get(position).getSubject());
                         holder.period.setText("Period : " + weekdays.get(position).getPeriod());

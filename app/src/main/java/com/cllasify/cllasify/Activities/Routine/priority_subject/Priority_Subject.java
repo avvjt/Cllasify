@@ -50,6 +50,7 @@ public class Priority_Subject extends AppCompatActivity {
         subject = new ArrayList<>();
         viewModel.setBasicData(groupPushId);
         adapter = new AdapterPrioritySubjectMain(this);
+        adapter.setGroupPushId(groupPushId);
         initView();
 
         binding.btnBack.setOnClickListener(new View.OnClickListener() {

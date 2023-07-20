@@ -21,6 +21,16 @@ public class AdapterPrioritySubjectMain extends RecyclerView.Adapter<AdapterPrio
     private final Context context;
     private List<SingleDayRoutine> routines;
 
+    String groupPushId;
+
+    public String getGroupPushId() {
+        return groupPushId;
+    }
+
+    public void setGroupPushId(String groupPushId) {
+        this.groupPushId = groupPushId;
+    }
+
     public AdapterPrioritySubjectMain(Context context) {
         this.context = context;
         routines = new ArrayList<>();
@@ -43,6 +53,8 @@ public class AdapterPrioritySubjectMain extends RecyclerView.Adapter<AdapterPrio
         binding.rvSingleDay.setAdapter(adapter);
         binding.rvSingleDay.setLayoutManager(new LinearLayoutManager(context));
         adapter.setWeekdays(singleDayRoutine.getRoutine());
+        adapter.setGroupPushId(getGroupPushId());
+        adapter.setDay(singleDayRoutine.getDay());
         binding.dayContainer.setOnClickListener(v -> {
             toggleViewVisibility(binding.rvSingleDay);
             binding.dropDown.animate()
