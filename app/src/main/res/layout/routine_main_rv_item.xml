@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginBottom="15dp"
     app:cardCornerRadius="15dp"
     android:elevation="0dp"
@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <RelativeLayout
@@ -43,11 +43,13 @@
                 android:contentDescription="@string/drop_down"
                 android:src="@drawable/drop_down" />
         </RelativeLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_single_day"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingHorizontal="8dp"/>
+            android:layout_height="wrap_content"
+            tools:listitem="@layout/sub_assignment_item"
+            android:paddingHorizontal="8dp" />
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

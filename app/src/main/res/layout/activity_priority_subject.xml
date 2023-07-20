@@ -66,6 +66,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
+
+
+                    <Button
+                        android:id="@+id/generate_all_routine"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:background="@drawable/rounded_corner"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:text="Generate All Routine"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black" />
+
                     <!--                Action Bar-->
                     <LinearLayout
                         android:id="@+id/action_bar1"

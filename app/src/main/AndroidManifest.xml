@@ -34,13 +34,7 @@
 
         <activity
             android:name=".Activities.Routine.All_Routine"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false" />
         <activity
             android:name=".Activities.Routine.Routine_Structure"
             android:exported="false" />
@@ -199,7 +193,11 @@
             android:screenOrientation="portrait"
             android:theme="@style/SplashScreen"
             tools:ignore="LockedOrientationActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <meta-data

@@ -61,13 +61,27 @@ public class AdapterAllTeacherSubjectMain extends RecyclerView.Adapter<AdapterAl
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+        RoutineAllTeacherItemBinding binding = holder.binding;
+
 
         String classID = routines.get(position);
 
+        DatabaseReference userDetailFetch = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(classID);
 
-        RoutineAllTeacherItemBinding binding = holder.binding;
+        userDetailFetch.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-        binding.tvDayName.setText(classID);
+                binding.tvDayName.setText(snapshot.child("Name").getValue().toString());
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         Adapter_All_Teacher_Assign adapter = new Adapter_All_Teacher_Assign(context);
         binding.rvSingleDay.setAdapter(adapter);
