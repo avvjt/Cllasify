@@ -79,7 +79,7 @@ public class Adapter_All_Teacher_Assign extends RecyclerView.Adapter<Adapter_All
 
 
             DatabaseReference databaseAllRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
-                    .child("Routine").child("Uni_Group_No_13_Experimental School").child("allSchedule")
+                    .child("Routine").child(groupPushId).child("allSchedule")
 //                    .child("Routine").child(groupPushId).child("allSchedule")
                     .child(class_routine.getClassPushId()).child(getDay()).child(String.valueOf(class_routine.getPeriod())).child("id");
 
@@ -99,7 +99,7 @@ public class Adapter_All_Teacher_Assign extends RecyclerView.Adapter<Adapter_All
 
 
                         DatabaseReference databaseRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
-                                .child("Routine").child("Uni_Group_No_13_Experimental School").child("schedule")
+                                .child("Routine").child(groupPushId).child("schedule")
                                 .child(class_routine.getId()).child(getDay()).child(String.valueOf(class_routine.getPeriod()));
 
                         databaseRoutineStructure.removeValue();

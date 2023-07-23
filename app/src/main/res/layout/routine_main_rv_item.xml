@@ -48,7 +48,6 @@
             android:id="@+id/rv_single_day"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/sub_assignment_item"
             android:paddingHorizontal="8dp" />
     </LinearLayout>
 

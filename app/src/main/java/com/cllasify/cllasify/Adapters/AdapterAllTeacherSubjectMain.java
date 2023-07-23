@@ -61,6 +61,9 @@ public class AdapterAllTeacherSubjectMain extends RecyclerView.Adapter<AdapterAl
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+
+        Log.d("CHKCLASSVAL", getDay() + "onBindViewHolder: " + getGroupPushId());
+
         RoutineAllTeacherItemBinding binding = holder.binding;
 
 
@@ -85,6 +88,7 @@ public class AdapterAllTeacherSubjectMain extends RecyclerView.Adapter<AdapterAl
 
         Adapter_All_Teacher_Assign adapter = new Adapter_All_Teacher_Assign(context);
         binding.rvSingleDay.setAdapter(adapter);
+        adapter.setGroupPushId(groupPushId);
         binding.rvSingleDay.setLayoutManager(new LinearLayoutManager(context));
 //        binding.rvSingleDay.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
         List<Class_Routine> classDataListMonday = new ArrayList<>();
@@ -92,9 +96,8 @@ public class AdapterAllTeacherSubjectMain extends RecyclerView.Adapter<AdapterAl
 
 
         DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
-                .child("Routine").child("Uni_Group_No_13_Experimental School").child("schedule").child(classID).child(getDay());
+                .child("Routine").child(getGroupPushId()).child("schedule").child(classID).child(getDay());
 
-        Log.d("CHKCLASSVAL", "onBindViewHolder: " + routines.get(position));
 
         dbRoutineStructure.addValueEventListener(new ValueEventListener() {
             @Override

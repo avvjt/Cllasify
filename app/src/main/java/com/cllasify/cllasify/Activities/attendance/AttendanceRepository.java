@@ -28,18 +28,18 @@ public class AttendanceRepository {
     private final String subGroupPushId;
     private final String classPushId;
 
-    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private final FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    private DatabaseReference globalGroupReference = database.getReference().child("Groups");
-    private DatabaseReference usersReference = database.getReference().child("Users").child("Registration");
-    private DatabaseReference teachersReference;
-    private DatabaseReference allScheduleReference;
-    private DatabaseReference singleScheduleReference;
-    private DatabaseReference individualPriorityReference;
+    private final DatabaseReference globalGroupReference = database.getReference().child("Groups");
+    private final DatabaseReference usersReference = database.getReference().child("Users").child("Registration");
+    private final DatabaseReference teachersReference;
+    private final DatabaseReference allScheduleReference;
+    private final DatabaseReference singleScheduleReference;
+    private final DatabaseReference individualPriorityReference;
 
-    private DatabaseReference groupRoutineReference;
+    private final DatabaseReference groupRoutineReference;
 
-    private DatabaseReference attendanceReference;
+    private final DatabaseReference attendanceReference;
 
 
     public AttendanceRepository(String groupPushId, String subGroupPushId, String classPushId) {
@@ -292,7 +292,10 @@ public class AttendanceRepository {
         dbRoutineStructure.setValue(class_routine).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 if (marked != null) {
-                    int current = marked.getOrDefault(class_routine.getId(), 0);
+                    int current = 0;
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                        current = marked.getOrDefault(class_routine.getId(), 0);
+                    }
                     marked.put(class_routine.getId(), current + 1);
                 }
             }

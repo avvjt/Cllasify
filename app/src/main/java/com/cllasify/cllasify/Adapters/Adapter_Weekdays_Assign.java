@@ -98,7 +98,7 @@ public class Adapter_Weekdays_Assign extends RecyclerView.Adapter<Adapter_Weekda
 
 
                         DatabaseReference databaseRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
-                                .child("Routine").child("Uni_Group_No_13_Experimental School").child("schedule")
+                                .child("Routine").child(groupPushId).child("schedule")
                                 .child(class_routine.getId()).child(getDay()).child(String.valueOf(class_routine.getPeriod()));
 
                         databaseRoutineStructure.removeValue();
