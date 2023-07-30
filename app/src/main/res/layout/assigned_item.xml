@@ -9,17 +9,26 @@
         android:id="@+id/periodTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp" />
+        android:layout_margin="15dp"
+        android:fontFamily="@font/inter_regular"
+        android:textSize="16sp"
+        android:textColor="@color/text_color"/>
 
     <TextView
         android:id="@+id/subjectTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp" />
+        android:layout_margin="15dp"
+        android:fontFamily="@font/inter_regular"
+        android:textSize="16sp"
+        android:textColor="@color/text_color"/>
 
     <TextView
         android:id="@+id/classTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp" />
+        android:layout_margin="15dp"
+        android:fontFamily="@font/inter_regular"
+        android:textSize="16sp"
+        android:textColor="@color/text_color"/>
 </LinearLayout>

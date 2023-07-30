@@ -28,10 +28,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:textColor="@color/black"
+                android:fontFamily="@font/inter_medium"
+                android:textColor="@color/text_color"
                 android:textSize="16sp"
-                tools:text="Monday"
-                tools:ignore="RelativeOverlap" />
+                tools:ignore="RelativeOverlap"
+                tools:text="Monday" />
 
             <ImageView
                 android:id="@+id/drop_down"
