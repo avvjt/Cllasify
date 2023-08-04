@@ -64,7 +64,7 @@ import com.cllasify.cllasify.Activities.RightPanel.Attendance_Activity;
 import com.cllasify.cllasify.Activities.RightPanel.Discover_Activity;
 import com.cllasify.cllasify.Activities.RightPanel.Fees_Structure;
 import com.cllasify.cllasify.Activities.RightPanel.Notice;
-import com.cllasify.cllasify.Activities.Routine.Routine_Structure;
+import com.cllasify.cllasify.Activities.Routine.All_Routine;
 import com.cllasify.cllasify.Activities.Routine.priority_subject.Priority_Subject;
 import com.cllasify.cllasify.Activities.Server.PDFBACK.OnBackPressedListener;
 import com.cllasify.cllasify.Activities.getStarted;
@@ -81,7 +81,6 @@ import com.cllasify.cllasify.Fragments.Friend_Chat_Activity;
 import com.cllasify.cllasify.Fragments.WebView_Fragment;
 import com.cllasify.cllasify.ModelClasses.Class_Group;
 import com.cllasify.cllasify.ModelClasses.Class_Group_Names;
-import com.cllasify.cllasify.ModelClasses.Class_Routine;
 import com.cllasify.cllasify.ModelClasses.Class_Student_Details;
 import com.cllasify.cllasify.ModelClasses.FriendsListClass;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
@@ -959,15 +958,21 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
             List<String> weekList = Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
 
+
+            DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
+                    .child("Routine").child(groupPushId).child("allSchedule").child(classUniPushId);
+
+
             btn_routineStructure.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Intent intent = new Intent(Server_Activity.this, All_Routine.class);
+                    intent.putExtra("groupPushId", groupPushId);
+                    intent.putExtra("classPushId", classUniPushId);
+                    intent.putExtra("className", subGroupPushId);
+                    startActivity(intent);
 
-
-                    DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
-                            .child("Routine").child(groupPushId).child("allSchedule").child(classUniPushId);
-
-
+                    /*
                     dbRoutineStructure.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -1011,14 +1016,6 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
 
                                 }
-/*
-                                Intent intent = new Intent(Server_Activity.this, RoutineStructureActivity.class);
-                                intent.putExtra("groupPushId", groupPushId);
-                                intent.putExtra("classPushId", classUniPushId);
-                                intent.putExtra("className", subGroupPushId);
-
-                                startActivity(intent);
-*/
 
                             }
                         }
@@ -1028,7 +1025,79 @@ public class Server_Activity extends AppCompatActivity implements PaymentResultW
 
                         }
                     });
+                    */
 
+/*
+                    dbRoutineStructure.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                Intent intent = new Intent(Server_Activity.this, All_Routine.class);
+                                intent.putExtra("groupPushId", groupPushId);
+                                startActivity(intent);
+                            } else {
+                                dbRoutineStructure.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        if (snapshot.hasChildren()) {
+                                            Intent intent = new Intent(Server_Activity.this, Routine_Structure.class);
+                                            intent.putExtra("groupPushId", groupPushId);
+                                            intent.putExtra("classPushId", classUniPushId);
+                                            intent.putExtra("className", subGroupPushId);
+
+                                            startActivity(intent);
+                                        } else {
+                                            for (int pos = 1; pos < 9; pos++) {
+
+                                                Log.d("DEMOCHK", "onClick: " + pos);
+
+
+                                                int finalPos = pos;
+
+
+                                                Class_Routine class_routineMon = new Class_Routine(finalPos, "", "", "", classUniPushId, subGroupPushId);
+
+                                                for (int week = 0; week < weekList.size(); week++) {
+                                                    dbRoutineStructure.child(weekList.get(week)).child(String.valueOf(finalPos)).setValue(class_routineMon);
+
+
+                                                }
+
+
+                                            }
+                                            for (int pos = 1; pos < 5; pos++) {
+
+                                                Log.d("DEMOCHK", "onClick: " + pos);
+
+
+                                                int finalPos = pos;
+
+
+                                                Class_Routine class_routineMon = new Class_Routine(finalPos, "", "", "", classUniPushId, subGroupPushId);
+
+                                                dbRoutineStructure.child("Saturday").child(String.valueOf(finalPos)).setValue(class_routineMon);
+
+
+                                            }
+
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+                                    }
+                                });
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+*/
 
                     //Use only when the requirement is providing every teacher his own 8 individual periods
 /*

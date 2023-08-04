@@ -2,6 +2,7 @@ package com.cllasify.cllasify.Adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -148,6 +149,9 @@ public class Adapter_Subject_Assign extends RecyclerView.Adapter<Adapter_Subject
 
     @Override
     public int getItemCount() {
+
+        Log.d("CNTITM", "getItemCount: " + class_routines.size());
+
         return class_routines.size();
     }
 

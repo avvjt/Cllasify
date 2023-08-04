@@ -61,92 +61,158 @@ public class AdapterAllTeacherSubjectMain extends RecyclerView.Adapter<AdapterAl
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-
         Log.d("CHKCLASSVAL", getDay() + "onBindViewHolder: " + getGroupPushId());
 
         RoutineAllTeacherItemBinding binding = holder.binding;
 
+        if (routines != null) {
 
-        String classID = routines.get(position);
+            String classID = routines.get(position);
 
-        DatabaseReference userDetailFetch = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(classID);
+            DatabaseReference userDetailFetch = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(classID);
 
-        userDetailFetch.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            userDetailFetch.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                binding.tvDayName.setText(snapshot.child("Name").getValue().toString());
+                    binding.tvDayName.setText(snapshot.child("Name").getValue().toString());
 
-            }
+                }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                }
+            });
+
+            Adapter_All_Teacher_Assign adapter = new Adapter_All_Teacher_Assign(context);
+            binding.rvSingleDay.setAdapter(adapter);
+            adapter.setGroupPushId(groupPushId);
+            binding.rvSingleDay.setLayoutManager(new LinearLayoutManager(context));
+            List<Class_Routine> classDataListMonday = new ArrayList<>();
 
 
-        Adapter_All_Teacher_Assign adapter = new Adapter_All_Teacher_Assign(context);
-        binding.rvSingleDay.setAdapter(adapter);
-        adapter.setGroupPushId(groupPushId);
-        binding.rvSingleDay.setLayoutManager(new LinearLayoutManager(context));
+            DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
+                    .child("Routine").child(getGroupPushId()).child("schedule").child(classID).child(getDay());
+
+
+            dbRoutineStructure.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    if (getDay().equals("Saturday")) {
+                        for (int i = 1; i <= 4; i++) {
+                            Class_Routine class_routine = snapshot.child(String.valueOf(i)).getValue(Class_Routine.class);
+                            classDataListMonday.add(class_routine);
+                            adapter.setDay(getDay());
+                            adapter.setWeekdays(classDataListMonday);
+                            adapter.notifyDataSetChanged();
+                        }
+                    } else {
+                        for (int i = 1; i <= 8; i++) {
+                            Class_Routine class_routine = snapshot.child(String.valueOf(i)).getValue(Class_Routine.class);
+                            classDataListMonday.add(class_routine);
+                            adapter.setDay(getDay());
+                            adapter.setWeekdays(classDataListMonday);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+        }
+
+/*
+        Log.d("CHKCLASSVAL", getDay() + "onBindViewHolder: " + getGroupPushId());
+
+        RoutineAllTeacherItemBinding binding = holder.binding;
+
+        if (routines != null) {
+
+            String classID = routines.get(position);
+
+            DatabaseReference userDetailFetch = FirebaseDatabase.getInstance().getReference().child("Users").child("Registration").child(classID);
+
+            userDetailFetch.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    binding.tvDayName.setText(snapshot.child("Name").getValue().toString());
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+            Adapter_All_Teacher_Assign adapter = new Adapter_All_Teacher_Assign(context);
+            binding.rvSingleDay.setAdapter(adapter);
+            adapter.setGroupPushId(groupPushId);
+            binding.rvSingleDay.setLayoutManager(new LinearLayoutManager(context));
 //        binding.rvSingleDay.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, true));
-        List<Class_Routine> classDataListMonday = new ArrayList<>();
+            List<Class_Routine> classDataListMonday = new ArrayList<>();
 //
 
 
-        DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
-                .child("Routine").child(getGroupPushId()).child("schedule").child(classID).child(getDay());
+            DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
+                    .child("Routine").child(getGroupPushId()).child("schedule").child(classID).child(getDay());
 
 
-        dbRoutineStructure.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
+            dbRoutineStructure.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 //                Log.d("ROUTCHK", "onDataChange: " + snapshot.getKey());
 
 
-                for (int i = 1; i <= 8; i++) {
+                    for (int i = 1; i <= 8; i++) {
 
-                    Class_Routine class_routine = snapshot.child(String.valueOf(i)).getValue(Class_Routine.class);
+                        Class_Routine class_routine = snapshot.child(String.valueOf(i)).getValue(Class_Routine.class);
 
-/*
+
                     Class_Routine class_routine = dataSnapshot.child("Monday").child(String.valueOf(i)).getValue(Class_Routine.class);
                     Log.d("ROUTCHK", "onDataChange: " + class_routine + i);
 
                     classDataListMonday.add(class_routine);
-*/
-                    classDataListMonday.add(class_routine);
+
+                        classDataListMonday.add(class_routine);
 
 //                    Log.d("ROUTCHK", "onDataChange: " + class_routine.getPeriod());
 
-                    adapter.setDay(getDay());
-                    adapter.setWeekdays(classDataListMonday);
-                    adapter.notifyDataSetChanged();
-                }
+                        adapter.setDay(getDay());
+                        adapter.setWeekdays(classDataListMonday);
+                        adapter.notifyDataSetChanged();
+                    }
 
 
 
-                /*
+
                 EveryDayRoutine everyDayRoutine = new EveryDayRoutine("Roronoa Sk", "g5vmLAdL8NaT2kzpO4f4wg2crO62", classDataListMonday);
 
 //                        adapter.setDay("Monday");
 //                        adapter.setWeekdays(classDataListMonday);
                 classDataList.add(everyDayRoutine);
-                */
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
 
 
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
 
-
+        }
+*/
 
         /*
     }

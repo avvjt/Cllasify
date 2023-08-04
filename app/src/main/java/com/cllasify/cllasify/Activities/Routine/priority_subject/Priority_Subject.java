@@ -1,6 +1,5 @@
 package com.cllasify.cllasify.Activities.Routine.priority_subject;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.cllasify.cllasify.Activities.Routine.All_Routine;
 import com.cllasify.cllasify.Activities.Routine.priority_subject.adapters.AdapterPrioritySubjectMain;
 import com.cllasify.cllasify.ModelClasses.Class_Individual_Routine;
 import com.cllasify.cllasify.ModelClasses.Subject_Details_Model;
@@ -55,15 +53,6 @@ public class Priority_Subject extends AppCompatActivity {
         adapter.setGroupPushId(groupPushId);
         initView();
 
-        binding.generateAllRoutine.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Priority_Subject.this, All_Routine.class);
-                intent.putExtra("groupPushId", groupPushId);
-                startActivity(intent);
-
-            }
-        });
 
         binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override

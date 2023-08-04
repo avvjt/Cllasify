@@ -5,11 +5,12 @@
         android:id="@+id/action_atTeach"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="Teacher Attendance"/>
+    <!--
 
-    <item
-        android:id="@+id/action_maxPeriod"
-        android:icon="@android:drawable/ic_menu_help"
-        android:title="Maximum periods" />
-
+        <item
+            android:id="@+id/action_maxPeriod"
+            android:icon="@android:drawable/ic_menu_help"
+            android:title="Maximum periods" />
+    -->
 
 </menu>

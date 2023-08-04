@@ -5,7 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -71,11 +71,19 @@ public class Adapter_All_Teacher_Assign extends RecyclerView.Adapter<Adapter_All
 
         int position = pos;
 
+        int routPosition = pos + 1;
+        holder.period.setText("Period : " + routPosition);
+        holder.sub.setText("_____");
+        holder.classTV.setText("_____");
+
+
         Class_Routine class_routine = weekdays.get(position);
 
         if (class_routine != null) {
 
+
             Log.e("ROUTIIO", class_routine.getSubject());
+//            Log.e("ROUTICHKK", "Period : " + routPosition);
 
 
             DatabaseReference databaseAllRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
@@ -88,11 +96,13 @@ public class Adapter_All_Teacher_Assign extends RecyclerView.Adapter<Adapter_All
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
+
                     if (class_routine.getId().equals(snapshot.getValue().toString())) {
 //                        Log.e("ROUTI", snapshot.getValue().toString() + "\t" + snapshot.getRef());
 
+
                         holder.sub.setText(weekdays.get(position).getSubject());
-                        holder.period.setText("Period : " + weekdays.get(position).getPeriod());
+//                        holder.period.setText("Period : " + weekdays.get(position).getPeriod());
                         holder.classTV.setText(weekdays.get(position).getClassName());
 
                     } else {
@@ -103,6 +113,7 @@ public class Adapter_All_Teacher_Assign extends RecyclerView.Adapter<Adapter_All
                                 .child(class_routine.getId()).child(getDay()).child(String.valueOf(class_routine.getPeriod()));
 
                         databaseRoutineStructure.removeValue();
+
 
 //                        Log.e("ROUTI01", snapshot.getValue().toString() + "\t" + snapshot.getRef());
 
@@ -135,7 +146,7 @@ public class Adapter_All_Teacher_Assign extends RecyclerView.Adapter<Adapter_All
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView sub, period, classTV;
-        LinearLayout period_item;
+        RelativeLayout period_item;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

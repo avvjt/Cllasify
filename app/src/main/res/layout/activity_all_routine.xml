@@ -47,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
+                android:text="All teacher routine"
                 android:layout_marginStart="5dp"
                 android:layout_toEndOf="@+id/btn_Back"
                 android:fontFamily="@font/inter_semibold"
@@ -54,25 +55,25 @@
                 android:textSize="20sp" />
 
 
-            <ImageButton
-                android:id="@+id/routine_more"
-                style="@style/SelectableItemBackgroundBorderless"
-                android:layout_width="46dp"
-                android:layout_height="46dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:layout_marginEnd="20dp"
-                android:contentDescription="@string/settings_contentDescription"
-                android:src="@drawable/more"
-                app:tint="@color/iconPrimaryColor" />
-
         </RelativeLayout>
 
+        <Button
+            android:id="@+id/edit_routine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/action_bar"
+            android:layout_margin="15dp"
+            android:background="@drawable/rounded_corner"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:text="Edit Routine"
+            android:textAllCaps="false"
+            android:textColor="@color/black" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/action_bar"
+            android:layout_below="@+id/edit_routine"
             android:layout_marginTop="15dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"

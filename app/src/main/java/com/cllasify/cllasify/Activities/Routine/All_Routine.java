@@ -1,6 +1,8 @@
 package com.cllasify.cllasify.Activities.Routine;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ScrollView;
 
@@ -9,7 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cllasify.cllasify.Activities.Server.Server_Activity;
 import com.cllasify.cllasify.Adapters.AdapterAllTeacherSubjectMain;
+import com.cllasify.cllasify.ModelClasses.Class_Routine;
 import com.cllasify.cllasify.R;
 import com.cllasify.cllasify.databinding.ActivityAllRoutineBinding;
 import com.google.firebase.database.DataSnapshot;
@@ -19,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class All_Routine extends AppCompatActivity {
@@ -29,6 +34,8 @@ public class All_Routine extends AppCompatActivity {
     private ActivityAllRoutineBinding binding;
 
     private String groupPushId = "";
+    private String classUniPushId = "";
+    private String subGroupPushId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +50,85 @@ public class All_Routine extends AppCompatActivity {
             }
         });
 
+
+        List<String> weekList = Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday");
+
+
         if (getIntent().hasExtra("groupPushId")) {
             groupPushId = getIntent().getStringExtra("groupPushId");
+            classUniPushId = getIntent().getStringExtra("classPushId");
+            subGroupPushId = getIntent().getStringExtra("className");
+
+
+            DatabaseReference dbRoutineStructureDB = FirebaseDatabase.getInstance().getReference().child("Groups")
+                    .child("Routine").child(groupPushId).child("allSchedule").child(classUniPushId);
+            binding.editRoutine.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dbRoutineStructureDB.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.hasChildren()) {
+                                Intent intent = new Intent(All_Routine.this, Routine_Structure.class);
+                                intent.putExtra("groupPushId", groupPushId);
+                                intent.putExtra("classPushId", classUniPushId);
+                                intent.putExtra("className", subGroupPushId);
+
+                                startActivity(intent);
+                            } else {
+                                for (int pos = 1; pos < 9; pos++) {
+
+                                    Log.d("DEMOCHK", "onClick: " + pos);
+
+
+                                    int finalPos = pos;
+
+
+                                    Class_Routine class_routineMon = new Class_Routine(finalPos, "", "", "", classUniPushId, subGroupPushId);
+
+                                    for (int week = 0; week < weekList.size(); week++) {
+                                        dbRoutineStructureDB.child(weekList.get(week)).child(String.valueOf(finalPos)).setValue(class_routineMon);
+
+
+                                    }
+
+
+                                }
+                                for (int pos = 1; pos < 5; pos++) {
+
+                                    Log.d("DEMOCHK", "onClick: " + pos);
+
+
+                                    int finalPos = pos;
+
+
+                                    Class_Routine class_routineMon = new Class_Routine(finalPos, "", "", "", classUniPushId, subGroupPushId);
+
+                                    dbRoutineStructureDB.child("Saturday").child(String.valueOf(finalPos)).setValue(class_routineMon);
+
+
+                                }
+/*
+                                Intent intent = new Intent(Server_Activity.this, RoutineStructureActivity.class);
+                                intent.putExtra("groupPushId", groupPushId);
+                                intent.putExtra("classPushId", classUniPushId);
+                                intent.putExtra("className", subGroupPushId);
+
+                                startActivity(intent);
+*/
+
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+
+                }
+            });
 
             DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
                     .child("Routine").child(groupPushId).child("schedule");
@@ -323,6 +407,16 @@ public class All_Routine extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(All_Routine.this, Server_Activity.class);
+        finish();
+        startActivity(intent);
+
+    }
+
     private void toggleViewVisibility(View view) {
         if (view.getVisibility() == View.VISIBLE) {
             // Hide the content with animation
@@ -341,5 +435,4 @@ public class All_Routine extends AppCompatActivity {
                     .setDuration(150);
         }
     }
-
 }

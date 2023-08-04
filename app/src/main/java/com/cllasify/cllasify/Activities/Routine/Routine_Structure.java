@@ -89,13 +89,9 @@ public class Routine_Structure extends AppCompatActivity {
             }
         });
 
-        databaseReferenceGetTeachers = FirebaseDatabase.getInstance().getReference()
-                .child("Groups").child("Check_Group_Admins").child(grpPushId);
-        databaseReferenceGetStudent = FirebaseDatabase.getInstance().getReference()
-                .child("Groups").child("All_GRPs")
-                .child(grpPushId).child(classPushId);
-        databaseAllRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
-                .child("Routine").child(grpPushId).child("allSchedule").child(classPushId);
+        databaseReferenceGetTeachers = FirebaseDatabase.getInstance().getReference().child("Groups").child("Check_Group_Admins").child(grpPushId);
+        databaseReferenceGetStudent = FirebaseDatabase.getInstance().getReference().child("Groups").child("All_GRPs").child(grpPushId).child(classPushId);
+        databaseAllRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups").child("Routine").child(grpPushId).child("allSchedule").child(classPushId);
         fetchTeachers();
 
         binding.viewScroll.fullScroll(ScrollView.FOCUS_UP);
@@ -180,25 +176,18 @@ public class Routine_Structure extends AppCompatActivity {
         classStudentListMonday = new ArrayList<>();
         classStudentIDListMonday = new ArrayList<>();
 
-        initPopupMenu();
+//        initPopupMenu();
     }
 
     private void toggleViewVisibility(View view) {
         if (view.getVisibility() == View.VISIBLE) {
             // Hide the content with animation
-            view.animate()
-                    .alpha(0.0f)
-                    .translationY(-view.getHeight())
-                    .setDuration(150)
-                    .withEndAction(() -> view.setVisibility(View.GONE));
+            view.animate().alpha(0.0f).translationY(-view.getHeight()).setDuration(150).withEndAction(() -> view.setVisibility(View.GONE));
         } else {
             // Show the content with animation
             view.setVisibility(View.VISIBLE);
             view.setAlpha(0.0f);
-            view.animate()
-                    .translationY(0)
-                    .alpha(1.0f)
-                    .setDuration(150);
+            view.animate().translationY(0).alpha(1.0f).setDuration(150);
         }
     }
 
@@ -214,13 +203,14 @@ public class Routine_Structure extends AppCompatActivity {
     }
 
     private void initRecyclerViews() {
+        /*
         binding.rvAssignedMonday.setNestedScrollingEnabled(false);
         binding.rvAssignedTuesday.setNestedScrollingEnabled(false);
         binding.rvAssignedWednesday.setNestedScrollingEnabled(false);
         binding.rvAssignedThursday.setNestedScrollingEnabled(false);
         binding.rvAssignedFriday.setNestedScrollingEnabled(false);
         binding.rvAssignedSaturday.setNestedScrollingEnabled(false);
-
+*/
         // Setting Adapter
         binding.rvAssignedMonday.setAdapter(adapter_teacher_assignMonday);
         binding.rvAssignedTuesday.setAdapter(adapter_teacher_assignTuesday);
@@ -238,11 +228,7 @@ public class Routine_Structure extends AppCompatActivity {
         binding.rvAssignedSaturday.setLayoutManager(new LinearLayoutManager(Routine_Structure.this));
     }
 
-    private void setupRecyclerViewSubjectsAndClass(
-            List<String> teacherNames,
-            List<String> teacherIds,
-            List<String> subjects
-    ) {
+    private void setupRecyclerViewSubjectsAndClass(List<String> teacherNames, List<String> teacherIds, List<String> subjects) {
 
         // Monday
         adapter_teacher_assignMonday.setUniPush(classPushId);
@@ -286,17 +272,17 @@ public class Routine_Structure extends AppCompatActivity {
 
         dropDownMenu.setOnMenuItemClickListener(item -> {
 
-            switch (item.toString()) {
-                case "Teacher Attendance":
-                    Intent intent = new Intent(Routine_Structure.this, Attendance_Activity_Teacher.class);
-                    intent.putExtra("groupPushId", grpPushId);
-                    intent.putExtra("classPushId", classPushId);
-                    startActivity(intent);
-                    break;
+            if ("Teacher Attendance".equals(item.toString())) {
+                Intent intent = new Intent(Routine_Structure.this, Attendance_Activity_Teacher.class);
+                intent.putExtra("groupPushId", grpPushId);
+                intent.putExtra("classPushId", classPushId);
+                startActivity(intent);
 
+                    /*
                 case "Maximum periods":
 
                     break;
+                    */
             }
 
             return false;
@@ -348,11 +334,7 @@ public class Routine_Structure extends AppCompatActivity {
                             classStudentListMonday.add(object.getUserName());
                             classStudentIDListMonday.add(object.getUserId());
                         }
-                        setupRecyclerViewSubjectsAndClass(
-                                classStudentListMonday,
-                                classStudentIDListMonday,
-                                subjectDetailsModelListMonday
-                        );
+                        setupRecyclerViewSubjectsAndClass(classStudentListMonday, classStudentIDListMonday, subjectDetailsModelListMonday);
                         databaseAllRoutineStructure.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -504,7 +486,17 @@ public class Routine_Structure extends AppCompatActivity {
         Toast.makeText(Routine_Structure.this, "Processing routine, this will may take some time so wait patiently", Toast.LENGTH_SHORT).show();
         setDailyRoutine(0, () -> {
             Toast.makeText(this, "Routine updated", Toast.LENGTH_SHORT).show();
+
             finish();
+            Intent intent = new Intent(Routine_Structure.this, All_Routine.class);
+            intent.putExtra("groupPushId", grpPushId);
+            intent.putExtra("classPushId", classPushId);
+            intent.putExtra("className", className);
+            startActivity(intent);
+
+            DatabaseReference databaseAllRoutineStructureDel = FirebaseDatabase.getInstance().getReference().child("Groups").child("Routine").child(grpPushId).child("schedule");
+
+            databaseAllRoutineStructureDel.child("Friday").removeValue();
         });
     }
 
@@ -522,10 +514,8 @@ public class Routine_Structure extends AppCompatActivity {
             return;
         }
 
-        DatabaseReference databaseAllRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
-                .child("Routine").child(grpPushId).child("allSchedule").child(classPushId);
-        DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
-                .child("Routine").child(grpPushId).child("schedule");
+        DatabaseReference databaseAllRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups").child("Routine").child(grpPushId).child("allSchedule").child(classPushId);
+        DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups").child("Routine").child(grpPushId).child("schedule");
 
         Map<String, Object> allScheduleUpdates = new HashMap<>();
         Map<String, Object> routineUpdates = new HashMap<>();
@@ -558,10 +548,7 @@ public class Routine_Structure extends AppCompatActivity {
         }
 
         Class_Student_Details teacher = teachersList.get(index);
-        DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups")
-                .child("Routine").child(grpPushId).child("schedule")
-                .child(teacher.getUserId())
-                .child(day);
+        DatabaseReference dbRoutineStructure = FirebaseDatabase.getInstance().getReference().child("Groups").child("Routine").child(grpPushId).child("schedule").child(teacher.getUserId()).child(day);
         dbRoutineStructure.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
